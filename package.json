@@ -7,6 +7,7 @@
     "ios": "react-native run-ios",
     "lint": "eslint --cache ./src",
     "format": "prettier --write --cache ./src",
+    "postinstall": "husky install",
     "start": "react-native start",
     "test": "jest"
   },
@@ -40,5 +41,11 @@
   },
   "engines": {
     "node": ">=16"
+  },
+  "lint-staged": {
+    "src/**/*.{ts,tsx}": [
+      "prettier --cache --write",
+      "eslint --cache"
+    ]
   }
 }
