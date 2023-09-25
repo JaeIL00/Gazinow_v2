@@ -7,7 +7,7 @@ permissions:
 on:
   pull_request:
     types: [opened, synchronize]
-    branches: [develop]
+    branches-ignore: [main, release]
 
 jobs:
   test:
