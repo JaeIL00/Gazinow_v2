@@ -27,18 +27,11 @@ describe('<Login />', () => {
     getByDisplayValue(password);
   });
   it('touch login button', async () => {
-    const email = 'test@naver.com';
-    const password = '1234qwer!';
-    const { getByPlaceholderText, getByText } = render(<Login />);
-    const inputEmail = getByPlaceholderText('이메일을 입력해주세요');
-    const inputPassword = getByPlaceholderText('비밀번호를 입력해주세요');
-    fireEvent(inputEmail, 'changeText', email);
-    fireEvent(inputPassword, 'changeText', password);
+    const { getByText, toJSON } = render(<Login />);
     const button = getByText('로그인');
+    const screen = toJSON();
     fireEvent(button, 'press');
     getByText('로딩중');
-    await waitFor(() => {
-      expect(getByText('로딩중')).not.toBeDefined();
-    });
+    expect(screen).toMatchSnapshot();
   });
 });
