@@ -1,7 +1,7 @@
 import { Text } from 'react-native';
 import type { TextProps } from 'react-native/types';
 
-interface NormalTextProps extends TextProps {
+export interface NormalTextProps extends TextProps {
   value: string;
 }
 

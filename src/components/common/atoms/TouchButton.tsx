@@ -1,10 +1,12 @@
 import { Pressable } from 'react-native';
 import type { PressableProps } from 'react-native/types';
 
-interface TouchButtonProps extends PressableProps {}
+export interface TouchButtonProps extends PressableProps {}
 
 const TouchButton = (props: TouchButtonProps) => {
-  return <Pressable {...props} />;
+  const { children } = props;
+
+  return <Pressable {...props}>{children}</Pressable>;
 };
 
 export default TouchButton;
