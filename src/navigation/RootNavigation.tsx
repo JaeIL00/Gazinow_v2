@@ -16,7 +16,7 @@ const screenOption = {
 const RootNavigation = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName={MAIN_BOTTOM_TAB} screenOptions={screenOption}>
+      <Stack.Navigator screenOptions={screenOption}>
         <Stack.Screen name={LOGIN} component={Login} />
         <Stack.Screen name={MAIN_BOTTOM_TAB} component={MainBottomTabNavigation} />
         <Stack.Screen name={SEARCH_NAVIGATION} component={SearchNavigation} />
