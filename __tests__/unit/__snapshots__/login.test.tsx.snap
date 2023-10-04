@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<Login /> Is the Login screen rendering? 1`] = `
+exports[`<Login /> matches snapshot 1`] = `
 <Text>
   로그인 페이지
 </Text>

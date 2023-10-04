@@ -9,4 +9,10 @@ describe('<Login />', () => {
     const json = screen.toJSON();
     expect(json).toMatchSnapshot();
   });
+  it('has input and a button', () => {
+    const { getByText, getByPlaceholderText } = render(<Login />);
+    getByPlaceholderText('이메일을 입력해주세요');
+    getByPlaceholderText('비밀번호를 입력해주세요');
+    getByText('로그인');
+  });
 });
