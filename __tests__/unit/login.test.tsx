@@ -5,6 +5,7 @@ import axios from 'axios';
 import AxiosMockAdapter from 'axios-mock-adapter';
 import MockAdapter from 'axios-mock-adapter';
 import { Login } from '@/components/auth/page';
+import { API_BASE_URL } from '@env';
 
 const mockedNavigation = jest.fn();
 
@@ -55,7 +56,7 @@ describe('<Login />', () => {
   it('touch login button && login fetch successful', async () => {
     const { getByText } = render(<Login />);
     const button = getByText('로그인');
-    mock.onPost('/api/v1/member/login').reply(200);
+    mock.onPost(`${API_BASE_URL}/api/v1/member/login`).reply(200);
     fireEvent(button, 'press');
     await waitFor(() => {
       expect(mockedNavigation).toBeCalledTimes(1);
