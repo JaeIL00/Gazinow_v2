@@ -1,11 +1,11 @@
-import React from 'react';
-import { fireEvent, render, waitFor } from '@testing-library/react-native';
-import { describe, expect, it, jest, beforeAll, afterEach } from '@jest/globals';
-import axios from 'axios';
-import AxiosMockAdapter from 'axios-mock-adapter';
-import MockAdapter from 'axios-mock-adapter';
+import React, { ReactNode } from 'react';
+import { act, fireEvent, render, renderHook, waitFor } from '@testing-library/react-native';
+import { describe, expect, it, jest } from '@jest/globals';
 import { Login } from '@/components/auth/page';
 import { API_BASE_URL } from '@env';
+import { QueryClient, QueryClientProvider } from 'react-query';
+import { useLoginMutation } from '@/hooks/queries';
+import nock from 'nock';
 
 const mockedNavigation = jest.fn();
 
@@ -23,21 +23,33 @@ jest.mock('@react-navigation/native', () => {
   };
 });
 
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: false,
+    },
+  },
+});
+const Wrapper = ({ children }: { children: ReactNode }) => (
+  <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+);
+
 describe('<Login />', () => {
-  let mock: AxiosMockAdapter;
-  beforeAll(() => {
-    mock = new MockAdapter(axios);
-  });
-  afterEach(() => {
-    mock.reset();
-  });
   it('matches snapshot', () => {
-    const screen = render(<Login />);
+    const screen = render(
+      <Wrapper>
+        <Login />
+      </Wrapper>,
+    );
     const json = screen.toJSON();
     expect(json).toMatchSnapshot();
   });
   it('has input and a button', () => {
-    const { getByText, getByPlaceholderText } = render(<Login />);
+    const { getByText, getByPlaceholderText } = render(
+      <Wrapper>
+        <Login />
+      </Wrapper>,
+    );
     getByPlaceholderText('이메일을 입력해주세요');
     getByPlaceholderText('비밀번호를 입력해주세요');
     getByText('로그인');
@@ -45,7 +57,11 @@ describe('<Login />', () => {
   it('changes input', () => {
     const email = 'test@naver.com';
     const password = '1234qwer!';
-    const { getByPlaceholderText, getByDisplayValue } = render(<Login />);
+    const { getByPlaceholderText, getByDisplayValue } = render(
+      <Wrapper>
+        <Login />
+      </Wrapper>,
+    );
     const inputEmail = getByPlaceholderText('이메일을 입력해주세요');
     const inputPassword = getByPlaceholderText('비밀번호를 입력해주세요');
     fireEvent(inputEmail, 'changeText', email);
@@ -53,13 +69,22 @@ describe('<Login />', () => {
     fireEvent(inputPassword, 'changeText', password);
     getByDisplayValue(password);
   });
-  it('touch login button && login fetch successful', async () => {
-    const { getByText } = render(<Login />);
-    const button = getByText('로그인');
-    mock.onPost(`${API_BASE_URL}/api/v1/member/login`).reply(200);
-    fireEvent(button, 'press');
-    await waitFor(() => {
-      expect(mockedNavigation).toBeCalledTimes(1);
+  it('login fetch successful', async () => {
+    const { result } = renderHook(() => useLoginMutation(), {
+      wrapper: Wrapper,
     });
+    nock(API_BASE_URL)
+      .post('/api/v1/member/login', {
+        email: 'email@naver.com',
+        password: 'password',
+      })
+      .reply(200);
+    act(() => {
+      result.current.mutate({
+        email: 'email@naver.com',
+        password: 'password',
+      });
+    });
+    await waitFor(() => expect(result.current.isSuccess).toBe(true));
   });
 });
