@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { View } from 'react-native';
 
 import { Input, NormalText, TextButton } from '@/components/common';
+import { useLoginMutation } from '@/hooks/queries';
 
 const initialFormState = {
   email: '',
@@ -9,18 +10,16 @@ const initialFormState = {
 };
 
 const Login = () => {
+  const { isLoading, mutate: loginFetching } = useLoginMutation();
+
   const [form, setForm] = useState(initialFormState);
-  const [isLoading, setIsLoading] = useState(false);
 
   const changeFormText = (type: 'email' | 'password', text: string) => {
     setForm((prev) => ({ ...prev, [type]: text }));
   };
 
   const submitForm = () => {
-    setIsLoading(true);
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 500);
+    loginFetching(form);
   };
 
   return (
