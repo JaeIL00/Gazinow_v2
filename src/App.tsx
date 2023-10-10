@@ -1,10 +1,10 @@
 import React from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { Provider } from 'react-redux';
-import styled from 'styled-components/native';
+import { styled } from 'styled-components/native';
 
 import { RootNavigation } from '@/navigation';
-import { store } from '@/store/store';
+import store from '@/store/configureStore';
 
 const queryClient = new QueryClient();
 
