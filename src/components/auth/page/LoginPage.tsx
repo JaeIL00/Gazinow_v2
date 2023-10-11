@@ -10,7 +10,7 @@ const initialFormState: LoginFormTypes = {
   password: '',
 };
 
-const Login = () => {
+const LoginPage = () => {
   const [formData, setFormData] = useState<LoginFormTypes>(initialFormState);
 
   const tryLogin = useTryLogin();
@@ -47,4 +47,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default LoginPage;

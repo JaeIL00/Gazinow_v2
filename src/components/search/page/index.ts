@@ -1,1 +1,1 @@
-export { default as SubwaySearch } from './SubwaySearch';
+export { default as SubwaySearchPage } from './SubwaySearchPage';

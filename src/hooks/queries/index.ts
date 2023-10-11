@@ -1,1 +1,1 @@
-export { useLoginMutation, useAutoLoginMutation } from './auth';
+export { useLoginMutation, useAutoLoginMutation } from './authQuery';

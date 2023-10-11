@@ -1,1 +1,1 @@
-export { getAccessToken } from './auth';
+export { getAccessToken } from './authModule';

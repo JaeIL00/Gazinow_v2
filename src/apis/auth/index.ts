@@ -1,1 +1,1 @@
-export { loginFetch, autoLoginFetch } from './auth';
+export { loginFetch, autoLoginFetch } from './authApis';
