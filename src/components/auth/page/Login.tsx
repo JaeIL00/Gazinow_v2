@@ -17,12 +17,12 @@ const Login = () => {
   const dispatch = useAppDispatch();
   const rootNavigation = useRootNavigation();
 
-  const [form, setForm] = useState(initialFormState);
+  const [formData, setFormData] = useState<typeof initialFormState>(initialFormState);
 
   const { isLoading, mutate: loginFetching } = useLoginMutation();
 
   const changeFormText = (type: 'email' | 'password', text: string) => {
-    setForm((prev) => ({ ...prev, [type]: text }));
+    setFormData((prev) => ({ ...prev, [type]: text }));
   };
 
   const loginSuccessHandler = (accessToken: string) => {
@@ -30,8 +30,8 @@ const Login = () => {
     rootNavigation.navigate(MAIN_BOTTOM_TAB);
   };
 
-  const submitForm = () => {
-    loginFetching(form, {
+  const submitFormData = () => {
+    loginFetching(formData, {
       onSuccess: ({ data }) => {
         const { accessToken } = data;
         loginSuccessHandler(accessToken);
@@ -47,17 +47,17 @@ const Login = () => {
     <View>
       <Input
         placeholder="이메일을 입력해주세요"
-        value={form.email}
+        value={formData.email}
         onChangeText={(text) => changeFormText('email', text)}
         inputMode="email"
       />
       <Input
         placeholder="비밀번호를 입력해주세요"
-        value={form.password}
+        value={formData.password}
         onChangeText={(text) => changeFormText('password', text)}
         secureTextEntry
       />
-      <TextButton value="로그인" onPress={submitForm} />
+      <TextButton value="로그인" onPress={submitFormData} />
 
       {isLoading && <NormalText value="로딩중" />}
     </View>
