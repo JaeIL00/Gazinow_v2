@@ -1,12 +1,14 @@
 import { useState } from 'react';
 import { View } from 'react-native';
+import EncryptedStorage from 'react-native-encrypted-storage';
 
 import { Input, NormalText, TextButton } from '@/components/common';
-import { MAIN_BOTTOM_TAB } from '@/constants/navigation';
+import { MAIN_BOTTOM_TAB, AUTH_STORAGE_KEY } from '@/constants';
 import { useLoginMutation } from '@/hooks/queries';
 import { useRootNavigation } from '@/navigation/RootNavigation';
 import { useAppDispatch } from '@/store';
 import { getAccessToken } from '@/store/modules';
+import type { LoginFetchResponse } from '@/types/apis';
 
 const initialFormState = {
   email: '',
@@ -25,16 +27,26 @@ const Login = () => {
     setFormData((prev) => ({ ...prev, [type]: text }));
   };
 
-  const loginSuccessHandler = (accessToken: string) => {
-    dispatch(getAccessToken(accessToken));
+  const setUserToken = async (data: LoginFetchResponse) => {
+    try {
+      const jsonData = JSON.stringify(data);
+      await EncryptedStorage.setItem(AUTH_STORAGE_KEY, jsonData);
+    } catch (error) {
+      // debug
+      console.error('Fail token set storage from login response');
+    }
+  };
+
+  const loginSuccessHandler = async (data: LoginFetchResponse) => {
+    await setUserToken(data);
+    dispatch(getAccessToken(data.accessToken));
     rootNavigation.navigate(MAIN_BOTTOM_TAB);
   };
 
   const submitFormData = () => {
     loginFetching(formData, {
       onSuccess: ({ data }) => {
-        const { accessToken } = data;
-        loginSuccessHandler(accessToken);
+        loginSuccessHandler(data);
       },
       onError: (error) => {
         // debug

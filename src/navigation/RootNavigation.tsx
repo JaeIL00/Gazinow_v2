@@ -3,7 +3,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import type { StackNavigationProp } from '@react-navigation/stack';
 
 import { Login } from '@/components/auth/page';
-import { LOGIN, MAIN_BOTTOM_TAB, SEARCH_NAVIGATION } from '@/constants/navigation';
+import { LOGIN, MAIN_BOTTOM_TAB, SEARCH_NAVIGATION } from '@/constants';
 import { MainBottomTabNavigation, SearchNavigation } from '@/navigation';
 import { useAppSelect } from '@/store';
 import type { RootStackParamList } from '@/types/navigation';
