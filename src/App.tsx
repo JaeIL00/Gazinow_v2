@@ -1,12 +1,21 @@
 import React from 'react';
-import styled from 'styled-components/native';
+import { QueryClient, QueryClientProvider } from 'react-query';
+import { Provider } from 'react-redux';
+import { styled } from 'styled-components/native';
 
 import { RootNavigation } from '@/navigation';
+import { store } from '@/store';
+
+const queryClient = new QueryClient();
 
 const App = (): JSX.Element => {
   return (
     <SafeArea>
-      <RootNavigation />
+      <Provider store={store}>
+        <QueryClientProvider client={queryClient}>
+          <RootNavigation />
+        </QueryClientProvider>
+      </Provider>
     </SafeArea>
   );
 };

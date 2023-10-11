@@ -40,8 +40,10 @@ node_modules/
 npm-debug.log
 yarn-error.log
 
-.env
+.env.development
+.env.production
 .eslintcache
+/mocks
 
 # fastlane
 #

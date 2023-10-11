@@ -1,7 +1,7 @@
 import { Text } from 'react-native';
 
-const SubwaySearch = () => {
+const SubwaySearchPage = () => {
   return <Text>지하철역 검색</Text>;
 };
 
-export default SubwaySearch;
+export default SubwaySearchPage;

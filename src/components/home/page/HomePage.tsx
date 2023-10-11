@@ -1,9 +1,9 @@
 import { Pressable, Text, View } from 'react-native';
 
-import { SEARCH_NAVIGATION, SUBWAY_SEARCH } from '@/constants/navigation';
+import { SEARCH_NAVIGATION, SUBWAY_SEARCH } from '@/constants';
 import { useRootNavigation } from '@/navigation/RootNavigation';
 
-const Home = () => {
+const HomePage = () => {
   const rootNavigation = useRootNavigation();
 
   const navigateSubwaySearch = () => {
@@ -20,4 +20,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default HomePage;

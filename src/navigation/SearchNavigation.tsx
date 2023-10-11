@@ -1,9 +1,9 @@
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createStackNavigator } from '@react-navigation/stack';
 
-import { SubwaySearch } from '@/components/search/page';
-import { SUBWAY_SEARCH } from '@/constants/navigation';
+import { SubwaySearchPage } from '@/components/search/page';
+import { SUBWAY_SEARCH } from '@/constants';
 
-const Stack = createNativeStackNavigator();
+const Stack = createStackNavigator();
 
 const screenOption = {
   headerShown: false,
@@ -12,7 +12,7 @@ const screenOption = {
 const SearchNavigation = () => {
   return (
     <Stack.Navigator screenOptions={screenOption}>
-      <Stack.Screen name={SUBWAY_SEARCH} component={SubwaySearch} />
+      <Stack.Screen name={SUBWAY_SEARCH} component={SubwaySearchPage} />
     </Stack.Navigator>
   );
 };
