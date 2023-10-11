@@ -1,64 +1,30 @@
 import { useEffect, useState } from 'react';
 import { View } from 'react-native';
-import EncryptedStorage from 'react-native-encrypted-storage';
 
-import { Input, NormalText, TextButton } from '@/components/common';
-import { MAIN_BOTTOM_TAB, AUTH_STORAGE_KEY } from '@/constants';
-import { useTryAutoLogin } from '@/hooks';
-import { useLoginMutation } from '@/hooks/queries';
-import { useRootNavigation } from '@/navigation/RootNavigation';
-import { useAppDispatch } from '@/store';
-import { getAccessToken } from '@/store/modules';
-import type { LoginFetchResponse, TokenTypes } from '@/types/apis';
+import { Input, TextButton } from '@/components/common';
+import { useTryLogin } from '@/hooks';
+import { LoginFormTypes } from '@/types/apis';
 
-const initialFormState = {
+const initialFormState: LoginFormTypes = {
   email: '',
   password: '',
 };
 
 const Login = () => {
-  const dispatch = useAppDispatch();
-  const rootNavigation = useRootNavigation();
+  const [formData, setFormData] = useState<LoginFormTypes>(initialFormState);
 
-  const [formData, setFormData] = useState<typeof initialFormState>(initialFormState);
-
-  const autoLogin = useTryAutoLogin();
-  const { isLoading, mutate: loginFetching } = useLoginMutation();
+  const tryLogin = useTryLogin();
 
   const changeFormText = (type: 'email' | 'password', text: string) => {
     setFormData((prev) => ({ ...prev, [type]: text }));
   };
 
-  const setUserToken = async (data: TokenTypes) => {
-    try {
-      const jsonData = JSON.stringify(data);
-      await EncryptedStorage.setItem(AUTH_STORAGE_KEY, jsonData);
-    } catch (error) {
-      // debug
-      console.error('Fail token set storage from login response');
-    }
-  };
-
-  const loginSuccessHandler = async (data: LoginFetchResponse) => {
-    await setUserToken(data);
-    dispatch(getAccessToken(data.accessToken));
-    rootNavigation.navigate(MAIN_BOTTOM_TAB);
-  };
-
   const submitFormData = () => {
-    loginFetching(formData, {
-      onSuccess: ({ data }) => {
-        loginSuccessHandler(data);
-      },
-      onError: (error) => {
-        // debug
-        console.error('Login fetching error ', error);
-      },
-    });
+    tryLogin('submit', formData);
   };
 
   useEffect(() => {
-    autoLogin();
+    tryLogin('auto');
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -77,8 +43,6 @@ const Login = () => {
         secureTextEntry
       />
       <TextButton value="로그인" onPress={submitFormData} />
-
-      {isLoading && <NormalText value="로딩중" />}
     </View>
   );
 };

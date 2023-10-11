@@ -1,8 +1,8 @@
 import mockData from '../../../mocks/loginResponse.json';
 import axiosInstance from '../axiosInstance';
-import type { LoginFetchProps, LoginFetchResponse, TokenTypes } from '@/types/apis';
+import type { LoginFormTypes, LoginFetchResponse, TokenTypes } from '@/types/apis';
 
-export const loginFetch = async (data: LoginFetchProps) => {
+export const loginFetch = async (data: LoginFormTypes) => {
   // 추후 서버 연결
   // return await axiosInstance.post<LoginFetchResponse>('/api/v1/member/login', data);
 

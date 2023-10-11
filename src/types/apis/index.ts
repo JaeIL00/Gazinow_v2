@@ -1,1 +1,1 @@
-export type { LoginFetchProps, LoginFetchResponse, TokenTypes } from './authTypes';
+export type { LoginFormTypes, LoginFetchResponse, TokenTypes } from './authTypes';

@@ -1,1 +1,1 @@
-export { default as useTryAutoLogin } from './useTryAutoLogin';
+export { default as useTryLogin } from './useTryLogin';
