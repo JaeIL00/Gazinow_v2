@@ -2,7 +2,11 @@ import { useState } from 'react';
 import { View } from 'react-native';
 
 import { Input, NormalText, TextButton } from '@/components/common';
+import { MAIN_BOTTOM_TAB } from '@/constants/navigation';
 import { useLoginMutation } from '@/hooks/queries';
+import { useRootNavigation } from '@/navigation/RootNavigation';
+import { useAppDispatch } from '@/store';
+import { getAccessToken } from '@/store/modules';
 
 const initialFormState = {
   email: '',
@@ -10,16 +14,33 @@ const initialFormState = {
 };
 
 const Login = () => {
-  const { isLoading, mutate: loginFetching } = useLoginMutation();
+  const dispatch = useAppDispatch();
+  const rootNavigation = useRootNavigation();
 
   const [form, setForm] = useState(initialFormState);
+
+  const { isLoading, mutate: loginFetching } = useLoginMutation();
 
   const changeFormText = (type: 'email' | 'password', text: string) => {
     setForm((prev) => ({ ...prev, [type]: text }));
   };
 
+  const loginSuccessHandler = (accessToken: string) => {
+    dispatch(getAccessToken(accessToken));
+    rootNavigation.navigate(MAIN_BOTTOM_TAB);
+  };
+
   const submitForm = () => {
-    loginFetching(form);
+    loginFetching(form, {
+      onSuccess: ({ data }) => {
+        const { accessToken } = data;
+        loginSuccessHandler(accessToken);
+      },
+      onError: (error) => {
+        // debug
+        console.error('Login fetching error ', error);
+      },
+    });
   };
 
   return (

@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import { styled } from 'styled-components/native';
 
 import { RootNavigation } from '@/navigation';
-import store from '@/store/configureStore';
+import { store } from '@/store';
 
 const queryClient = new QueryClient();
 
