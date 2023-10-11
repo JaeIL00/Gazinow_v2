@@ -1,14 +1,15 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { View } from 'react-native';
 import EncryptedStorage from 'react-native-encrypted-storage';
 
 import { Input, NormalText, TextButton } from '@/components/common';
 import { MAIN_BOTTOM_TAB, AUTH_STORAGE_KEY } from '@/constants';
+import { useTryAutoLogin } from '@/hooks';
 import { useLoginMutation } from '@/hooks/queries';
 import { useRootNavigation } from '@/navigation/RootNavigation';
 import { useAppDispatch } from '@/store';
 import { getAccessToken } from '@/store/modules';
-import type { LoginFetchResponse } from '@/types/apis';
+import type { LoginFetchResponse, TokenTypes } from '@/types/apis';
 
 const initialFormState = {
   email: '',
@@ -21,13 +22,14 @@ const Login = () => {
 
   const [formData, setFormData] = useState<typeof initialFormState>(initialFormState);
 
+  const autoLogin = useTryAutoLogin();
   const { isLoading, mutate: loginFetching } = useLoginMutation();
 
   const changeFormText = (type: 'email' | 'password', text: string) => {
     setFormData((prev) => ({ ...prev, [type]: text }));
   };
 
-  const setUserToken = async (data: LoginFetchResponse) => {
+  const setUserToken = async (data: TokenTypes) => {
     try {
       const jsonData = JSON.stringify(data);
       await EncryptedStorage.setItem(AUTH_STORAGE_KEY, jsonData);
@@ -54,6 +56,11 @@ const Login = () => {
       },
     });
   };
+
+  useEffect(() => {
+    autoLogin();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <View>

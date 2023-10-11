@@ -1,1 +1,1 @@
-export { useLoginMutation } from './auth';
+export { useLoginMutation, useAutoLoginMutation } from './auth';

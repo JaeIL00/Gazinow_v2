@@ -3,7 +3,9 @@ export interface LoginFetchProps {
   password: string;
 }
 
-export interface LoginFetchResponse {
+export interface TokenTypes {
   accessToken: string;
   refreshToken: string;
 }
+
+export interface LoginFetchResponse extends TokenTypes {}
