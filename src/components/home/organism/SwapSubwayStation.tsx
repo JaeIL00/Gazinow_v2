@@ -1,29 +1,71 @@
 import styled from '@emotion/native';
-import type { PressableProps } from 'react-native';
+import { useState } from 'react';
 
 import IconButton from '../../common/molecules/IconButton';
 import TextButton from '../../common/molecules/TextButton';
-import { BG_LIGHT_GRAY } from '@/constants';
+import { BG_LIGHT_GRAY, SEARCH_NAVIGATION, SUBWAY_SEARCH } from '@/constants';
+import { useRootNavigation } from '@/navigation/RootNavigation';
 
-interface SwapSubwayStationProps extends PressableProps {}
+interface SwapProps extends ContainerStyleProps {}
 
-const SwapSubwayStation = (props: SwapSubwayStationProps) => {
-  const { onPress } = props;
+const initStation = {
+  departure: '출발역',
+  arrival: '도착역',
+};
+
+const SwapSubwayStation = ({ isWrap }: SwapProps) => {
+  const rootNavigation = useRootNavigation();
+
+  const [subwayStation, setSubwayStation] = useState<typeof initStation>(initStation);
+
+  const navigateSubwaySearch = (type: 'departure' | 'arrival') => {
+    rootNavigation.navigate(SEARCH_NAVIGATION, { screen: SUBWAY_SEARCH, where: type });
+  };
+
+  const swapStation = () => {
+    setSubwayStation(({ departure, arrival }) => ({
+      departure: arrival,
+      arrival: departure,
+    }));
+  };
 
   return (
-    <Container>
+    <Container isWrap={isWrap}>
       <InnerBox>
-        <StationButton value="출발역" textSize="16px" onPress={onPress} />
-        <StationButton value="도착역" textSize="16px" onPress={onPress} />
+        <StationButton
+          value={subwayStation.departure}
+          textSize="16px"
+          onPress={() => navigateSubwaySearch('departure')}
+        />
+        <StationButton
+          value={subwayStation.arrival}
+          textSize="16px"
+          onPress={() => navigateSubwaySearch('arrival')}
+        />
       </InnerBox>
-      <IconButton iconName="exchange_gray" iconWidth="20px" iconHeight="20px" />
+      <IconButton
+        iconName="exchange_gray"
+        iconWidth="20px"
+        iconHeight="20px"
+        onPress={swapStation}
+      />
     </Container>
   );
 };
 
 export default SwapSubwayStation;
 
-const Container = styled.View`
+interface ContainerStyleProps {
+  isWrap: boolean;
+}
+const Container = styled.View<ContainerStyleProps>`
+  ${({ isWrap }) =>
+    isWrap &&
+    `
+      padding: 19px 17px 21px 14px;
+  	  background-color: #fff;
+  	  border-radius: 14px;
+  `}
   flex-direction: row;
   align-items: center;
 `;

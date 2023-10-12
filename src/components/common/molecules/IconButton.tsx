@@ -12,7 +12,7 @@ const IconButton = (props: IconButtonProps) => {
   const { iconName, iconWidth, iconHeight, onPress } = props;
 
   return (
-    <Button onPress={onPress} iconWidth={iconWidth} iconHeight={iconHeight}>
+    <Button onPress={onPress} iconWidth={iconWidth} iconHeight={iconHeight} hitSlop={10}>
       <IconImage source={iconPath[iconName]} />
     </Button>
   );
