@@ -1,7 +1,7 @@
 import { createStackNavigator } from '@react-navigation/stack';
 
-import { SubwaySearchPage } from '@/components/search/page';
 import { SUBWAY_SEARCH } from '@/constants';
+import { SubwaySearchPage } from '@/pages/search';
 
 const Stack = createStackNavigator();
 

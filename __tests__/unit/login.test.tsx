@@ -1,7 +1,7 @@
 import React, { ReactNode } from 'react';
 import { act, fireEvent, render, renderHook, waitFor } from '@testing-library/react-native';
 import { describe, expect, it, jest } from '@jest/globals';
-import { Login } from '@/components/auth/page';
+import { Login } from '@/pages/auth';
 import { API_BASE_URL } from '@env';
 import { QueryClient, QueryClientProvider, UseMutateFunction } from 'react-query';
 import { useLoginMutation } from '@/hooks/queries';
