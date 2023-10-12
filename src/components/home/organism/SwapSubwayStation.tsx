@@ -1,8 +1,7 @@
 import styled from '@emotion/native';
 import { useState } from 'react';
 
-import IconButton from '../../common/molecules/IconButton';
-import TextButton from '../../common/molecules/TextButton';
+import { IconButton, TextButton } from '@/components/common/molecules';
 import { COLOR, SEARCH_NAVIGATION, SUBWAY_SEARCH } from '@/constants';
 import { useRootNavigation } from '@/navigation/RootNavigation';
 
