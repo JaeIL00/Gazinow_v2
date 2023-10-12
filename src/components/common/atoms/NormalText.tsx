@@ -1,14 +1,22 @@
-import { Text } from 'react-native';
+import styled from '@emotion/native';
 import type { TextProps } from 'react-native/types';
 
-export interface NormalTextProps extends TextProps {
+interface NormalTextProps extends TextProps, TextStyleProps {
   value: string;
+  textSize: string;
 }
 
 const NormalText = (props: NormalTextProps) => {
   const { value } = props;
 
-  return <Text>{value}</Text>;
+  return <Normal {...props}>{value}</Normal>;
 };
 
 export default NormalText;
+
+interface TextStyleProps {
+  textSize: string;
+}
+const Normal = styled.Text<TextStyleProps>`
+  font-size: ${({ textSize }) => textSize};
+`;

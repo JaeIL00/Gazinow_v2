@@ -1,6 +1,8 @@
-import { Pressable, Text, View } from 'react-native';
+import styled from '@emotion/native';
+import { Text } from 'react-native';
 
-import { SEARCH_NAVIGATION, SUBWAY_SEARCH } from '@/constants';
+import { SwapSubwayStation } from '@/components/common';
+import { SEARCH_NAVIGATION, SUBWAY_SEARCH, WHITE } from '@/constants';
 import { useRootNavigation } from '@/navigation/RootNavigation';
 
 const HomePage = () => {
@@ -11,13 +13,22 @@ const HomePage = () => {
   };
 
   return (
-    <View>
+    <Container>
       <Text>홈 페이지</Text>
-      <Pressable onPress={navigateSubwaySearch}>
-        <Text>지하철검색 페이지 이동</Text>
-      </Pressable>
-    </View>
+      <SwapStationBox>
+        <SwapSubwayStation onPress={navigateSubwaySearch} />
+      </SwapStationBox>
+    </Container>
   );
 };
 
 export default HomePage;
+
+const Container = styled.View`
+  padding: 0 16px;
+`;
+const SwapStationBox = styled.View`
+  padding: 19px 17px 21px 14px;
+  background-color: ${WHITE};
+  border-radius: 14px;
+`;

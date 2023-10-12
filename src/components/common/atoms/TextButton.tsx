@@ -1,31 +1,19 @@
 import { Pressable } from 'react-native';
-import type {
-  GestureResponderEvent,
-  PressableProps,
-  StyleProp,
-  TextStyle,
-  ViewStyle,
-} from 'react-native/types';
+import type { PressableProps } from 'react-native/types';
 
-import { NormalText } from '@/components/common';
-import type { NormalTextProps } from '@/components/common/atoms/NormalText';
+import NormalText from './NormalText';
 
-interface TextButtonProps extends PressableProps, NormalTextProps {
-  children?: React.ReactNode | undefined;
-  disabled?: boolean | undefined;
-  onPress?: ((event: GestureResponderEvent) => void) | undefined;
-  onPressIn?: ((event: GestureResponderEvent) => void) | undefined;
-  onPressOut?: ((event: GestureResponderEvent) => void) | undefined;
-  onLongPress?: ((event: GestureResponderEvent) => void) | undefined;
-  style?: StyleProp<ViewStyle | TextStyle> | undefined;
+interface TextButtonProps extends PressableProps {
+  value: string;
+  textSize: string;
 }
 
 const TextButton = (props: TextButtonProps) => {
-  const { value } = props;
+  const { value, style, textSize, onPress } = props;
 
   return (
-    <Pressable {...props}>
-      <NormalText {...props} value={value} />
+    <Pressable onPress={onPress} style={style}>
+      <NormalText value={value} textSize={textSize} />
     </Pressable>
   );
 };

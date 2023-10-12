@@ -1,21 +1,34 @@
-import { Image, Pressable } from 'react-native';
+import styled from '@emotion/native';
 import type { PressableProps } from 'react-native/types';
 
 import { iconPath } from '@/assets/icons/iconPath';
 import type { IconPathTypes } from '@/assets/icons/iconPath';
 
-interface IconButtonProps extends PressableProps {
+interface IconButtonProps extends PressableProps, IconStyleProps {
   iconName: keyof IconPathTypes;
 }
 
 const IconButton = (props: IconButtonProps) => {
-  const { iconName } = props;
+  const { iconName, iconWidth, iconHeight, onPress } = props;
 
   return (
-    <Pressable {...props}>
-      <Image source={iconPath[iconName]} />
-    </Pressable>
+    <Button onPress={onPress} iconWidth={iconWidth} iconHeight={iconHeight}>
+      <IconImage source={iconPath[iconName]} />
+    </Button>
   );
 };
 
 export default IconButton;
+
+interface IconStyleProps {
+  iconWidth: string;
+  iconHeight: string;
+}
+const Button = styled.Pressable<IconStyleProps>`
+  width: ${({ iconWidth }) => iconWidth};
+  height: ${({ iconHeight }) => iconHeight};
+`;
+const IconImage = styled.Image`
+  width: 100%;
+  height: 100%;
+`;
