@@ -1,8 +1,8 @@
 import styled from '@emotion/native';
 import type { PressableProps } from 'react-native';
 
-import IconButton from '../atoms/IconButton';
-import TextButton from '../atoms/TextButton';
+import IconButton from '../../common/molecules/IconButton';
+import TextButton from '../../common/molecules/TextButton';
 import { BG_LIGHT_GRAY } from '@/constants';
 
 interface SwapSubwayStationProps extends PressableProps {}

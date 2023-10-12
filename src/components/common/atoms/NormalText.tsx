@@ -3,7 +3,6 @@ import type { TextProps } from 'react-native/types';
 
 interface NormalTextProps extends TextProps, TextStyleProps {
   value: string;
-  textSize: string;
 }
 
 const NormalText = (props: NormalTextProps) => {
@@ -15,8 +14,8 @@ const NormalText = (props: NormalTextProps) => {
 export default NormalText;
 
 interface TextStyleProps {
-  textSize: string;
+  textSize?: string;
 }
 const Normal = styled.Text<TextStyleProps>`
-  font-size: ${({ textSize }) => textSize};
+  font-size: ${({ textSize = '16px' }) => textSize};
 `;

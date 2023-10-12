@@ -1,11 +1,11 @@
 import { Pressable } from 'react-native';
 import type { PressableProps } from 'react-native/types';
 
-import NormalText from './NormalText';
+import { NormalText } from '@/components/common/atoms';
 
 interface TextButtonProps extends PressableProps {
   value: string;
-  textSize: string;
+  textSize?: string;
 }
 
 const TextButton = (props: TextButtonProps) => {

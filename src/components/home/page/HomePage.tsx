@@ -1,7 +1,7 @@
 import styled from '@emotion/native';
 import { Text } from 'react-native';
 
-import { SwapSubwayStation } from '@/components/common';
+import { SwapSubwayStation } from '@/components/home/organism';
 import { SEARCH_NAVIGATION, SUBWAY_SEARCH, WHITE } from '@/constants';
 import { useRootNavigation } from '@/navigation/RootNavigation';
 

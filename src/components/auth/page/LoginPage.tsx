@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import { View } from 'react-native';
 
-import { Input, TextButton } from '@/components/common';
+import { Input } from '@/components/common/atoms';
+import { TextButton } from '@/components/common/molecules';
 import { useTryLogin } from '@/hooks';
 import { LoginFormTypes } from '@/types/apis';
 
