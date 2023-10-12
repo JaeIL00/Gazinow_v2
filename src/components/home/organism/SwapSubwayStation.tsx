@@ -1,5 +1,6 @@
 import styled from '@emotion/native';
 import { useState } from 'react';
+import { Shadow } from 'react-native-shadow-2';
 
 import { IconButton, TextButton } from '@/components/common/molecules';
 import { COLOR, SEARCH_NAVIGATION, SUBWAY_SEARCH } from '@/constants';
@@ -29,7 +30,7 @@ const SwapSubwayStation = ({ isWrap }: SwapProps) => {
   };
 
   return (
-    <Container isWrap={isWrap}>
+    <Container isWrap={isWrap} offset={[0, 4]} distance={34} startColor="rgba(0, 0, 0, 0.05)">
       <InnerBox>
         <StationButton
           value={subwayStation.departure}
@@ -61,7 +62,7 @@ export default SwapSubwayStation;
 interface ContainerStyleProps {
   isWrap: boolean;
 }
-const Container = styled.View<ContainerStyleProps>`
+const Container = styled(Shadow)<ContainerStyleProps>`
   ${({ isWrap }) =>
     isWrap &&
     `
