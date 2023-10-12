@@ -3,7 +3,7 @@ import { useState } from 'react';
 
 import IconButton from '../../common/molecules/IconButton';
 import TextButton from '../../common/molecules/TextButton';
-import { BG_LIGHT_GRAY, SEARCH_NAVIGATION, SUBWAY_SEARCH, WHITE } from '@/constants';
+import { COLOR, SEARCH_NAVIGATION, SUBWAY_SEARCH } from '@/constants';
 import { useRootNavigation } from '@/navigation/RootNavigation';
 
 interface SwapProps extends ContainerStyleProps {}
@@ -36,12 +36,14 @@ const SwapSubwayStation = ({ isWrap }: SwapProps) => {
           value={subwayStation.departure}
           textSize="16px"
           textWeight="Regular"
+          lineHeight="21px"
           onPress={() => navigateSubwaySearch('departure')}
         />
         <StationButton
           value={subwayStation.arrival}
           textSize="16px"
           textWeight="Regular"
+          lineHeight="21px"
           onPress={() => navigateSubwaySearch('arrival')}
         />
       </InnerBox>
@@ -65,7 +67,7 @@ const Container = styled.View<ContainerStyleProps>`
     isWrap &&
     `
       padding: 19px 17px 21px 14px;
-  	  background-color: ${WHITE};
+  	  background-color: ${COLOR.WHITE};
   	  border-radius: 14px;
   `}
   flex-direction: row;
@@ -77,7 +79,7 @@ const InnerBox = styled.View`
   gap: 8px;
 `;
 const StationButton = styled(TextButton)`
-  background-color: ${BG_LIGHT_GRAY};
+  background-color: ${COLOR.BG_LIGHT_GRAY};
   width: 100%;
   height: 41px;
   border-radius: 8px;
