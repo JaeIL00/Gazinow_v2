@@ -43,7 +43,7 @@ const LoginPage = () => {
         onChangeText={(text) => changeFormText('password', text)}
         secureTextEntry
       />
-      <TextButton value="로그인" onPress={submitFormData} />
+      <TextButton value="로그인" textSize="16px" textWeight="Regular" onPress={submitFormData} />
     </View>
   );
 };
