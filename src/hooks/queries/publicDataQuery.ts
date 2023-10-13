@@ -13,13 +13,14 @@ const setInfoStorage = async (data: SubwayInfoResponse) => {
     await AsyncStorage.setItem(SUBWAY_INFO_STORAGE_KEY, response);
   } catch (error) {
     // debug
-    console.error('Failed subway info set storage');
+    console.error('Failed subway info set storage ', error);
   }
 };
 
 export const useSubwayInfoQuery = () => {
   const dispatch = useAppDispatch();
-  const { isSuccess } = useQuery('subwayInfo', subwayInfoFetch, {
+  const { isSuccess, refetch: subwayInfoFetching } = useQuery('subwayInfo', subwayInfoFetch, {
+    enabled: false,
     onSuccess({ data }) {
       setInfoStorage(data);
       dispatch(getPublicSubwayInfo(data));
@@ -30,5 +31,5 @@ export const useSubwayInfoQuery = () => {
     },
   });
 
-  return { isSuccess };
+  return { isSuccess, subwayInfoFetching };
 };
