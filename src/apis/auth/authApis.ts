@@ -1,5 +1,5 @@
 import mockData from '../../../mocks/loginResponse.json';
-import axiosInstance from '../axiosInstance';
+import { axiosInstance } from '../axiosInstance';
 import type { LoginFormTypes, LoginFetchResponse, TokenTypes } from '@/types/apis';
 
 export const loginFetch = async (data: LoginFormTypes) => {
