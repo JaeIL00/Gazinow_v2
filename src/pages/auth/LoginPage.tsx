@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import { View } from 'react-native';
 
-import { Input, TextButton } from '@/components/common';
+import { Input } from '@/components/common/atoms';
+import { TextButton } from '@/components/common/molecules';
 import { useTryLogin } from '@/hooks';
 import { LoginFormTypes } from '@/types/apis';
 
@@ -42,7 +43,13 @@ const LoginPage = () => {
         onChangeText={(text) => changeFormText('password', text)}
         secureTextEntry
       />
-      <TextButton value="로그인" onPress={submitFormData} />
+      <TextButton
+        value="로그인"
+        textSize="16px"
+        textWeight="Regular"
+        onPress={submitFormData}
+        lineHeight="21px"
+      />
     </View>
   );
 };

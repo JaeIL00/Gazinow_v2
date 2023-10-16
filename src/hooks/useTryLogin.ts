@@ -13,7 +13,7 @@ const getTokenStorage = async () => {
     return token ? JSON.parse(token) : token;
   } catch (error) {
     // debug
-    console.error('Fail token get storage from login feature');
+    console.error('Failed token get storage from login feature');
   }
 };
 
@@ -23,7 +23,7 @@ const setTokenStorage = async (data: TokenTypes) => {
     await EncryptedStorage.setItem(AUTH_STORAGE_KEY, jsonData);
   } catch (error) {
     // debug
-    console.error('Fail token set storage from login response');
+    console.error('Failed token set storage from login response');
   }
 };
 

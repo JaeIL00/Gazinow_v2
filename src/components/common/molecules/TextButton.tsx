@@ -1,26 +1,30 @@
-import type { GestureResponderEvent, StyleProp, TextStyle, ViewStyle } from 'react-native/types';
+import { Pressable } from 'react-native';
+import type { PressableProps } from 'react-native/types';
 
-import { NormalTextProps } from '../atoms/NormalText';
-import { TouchButtonProps } from '../atoms/TouchButton';
-import { NormalText, TouchButton } from '@/components/common';
+import { FontText } from '@/components/common/atoms';
+import { COLOR } from '@/constants';
 
-interface TextButtonProps extends TouchButtonProps, NormalTextProps {
-  children?: React.ReactNode | undefined;
-  disabled?: boolean | undefined;
-  onPress?: ((event: GestureResponderEvent) => void) | undefined;
-  onPressIn?: ((event: GestureResponderEvent) => void) | undefined;
-  onPressOut?: ((event: GestureResponderEvent) => void) | undefined;
-  onLongPress?: ((event: GestureResponderEvent) => void) | undefined;
-  style?: StyleProp<ViewStyle | TextStyle> | undefined;
+interface TextButtonProps extends PressableProps {
+  value: string;
+  textSize: string;
+  textWeight: 'Bold' | 'SemiBold' | 'Medium' | 'Regular';
+  textColor?: keyof typeof COLOR;
+  lineHeight: string;
 }
 
 const TextButton = (props: TextButtonProps) => {
-  const { value } = props;
+  const { value, style, textSize, textWeight, textColor, lineHeight, onPress } = props;
 
   return (
-    <TouchButton {...props}>
-      <NormalText {...props} value={value} />
-    </TouchButton>
+    <Pressable onPress={onPress} style={style}>
+      <FontText
+        value={value}
+        textSize={textSize}
+        textWeight={textWeight}
+        textColor={textColor}
+        lineHeight={lineHeight}
+      />
+    </Pressable>
   );
 };
 

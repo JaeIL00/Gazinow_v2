@@ -1,18 +1,26 @@
 import { createStackNavigator } from '@react-navigation/stack';
+import type { StackScreenProps } from '@react-navigation/stack';
 
-import { SubwaySearchPage } from '@/components/search/page';
 import { SUBWAY_SEARCH } from '@/constants';
+import { SubwaySearchPage } from '@/pages/search';
+import { RootStackParamList, SearchStackParamList } from '@/types/navigation';
 
-const Stack = createStackNavigator();
+type NavigationProps = StackScreenProps<RootStackParamList, 'SearchNavigation'>;
+
+const Stack = createStackNavigator<SearchStackParamList>();
 
 const screenOption = {
   headerShown: false,
 };
 
-const SearchNavigation = () => {
+const SearchNavigation = ({ route }: NavigationProps) => {
   return (
     <Stack.Navigator screenOptions={screenOption}>
-      <Stack.Screen name={SUBWAY_SEARCH} component={SubwaySearchPage} />
+      <Stack.Screen
+        name={SUBWAY_SEARCH}
+        component={SubwaySearchPage}
+        initialParams={{ where: route.params.where }}
+      />
     </Stack.Navigator>
   );
 };

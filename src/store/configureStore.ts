@@ -1,10 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
 
-import auth from '@/store/modules/authModule';
+import { auth, publicData } from '@/store/modules';
 
 const store = configureStore({
   reducer: {
     auth,
+    publicData,
   },
 });
 
