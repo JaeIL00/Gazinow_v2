@@ -1,22 +1,27 @@
 import React from 'react';
-import {SafeAreaView, StatusBar, useColorScheme} from 'react-native';
-import {Colors} from 'react-native/Libraries/NewAppScreen';
+import { QueryClient, QueryClientProvider } from 'react-query';
+import { Provider } from 'react-redux';
+import { styled } from 'styled-components/native';
+
+import { RootNavigation } from '@/navigation';
+import { store } from '@/store';
+
+const queryClient = new QueryClient();
 
 const App = (): JSX.Element => {
-  const isDarkMode = useColorScheme() === 'dark';
-
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
-
   return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
-      />
-    </SafeAreaView>
+    <SafeArea>
+      <Provider store={store}>
+        <QueryClientProvider client={queryClient}>
+          <RootNavigation />
+        </QueryClientProvider>
+      </Provider>
+    </SafeArea>
   );
 };
 
 export default App;
+
+const SafeArea = styled.SafeAreaView`
+  flex: 1;
+`;
