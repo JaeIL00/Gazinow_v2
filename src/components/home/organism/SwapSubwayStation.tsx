@@ -49,7 +49,7 @@ const SwapSubwayStation = ({ isWrap }: SwapProps) => {
       </InnerBox>
       <IconButton
         isFontIcon={false}
-        iconName="exchange_gray"
+        imagePath="exchange_gray"
         iconWidth="20px"
         iconHeight="20px"
         onPress={swapStation}
