@@ -2,12 +2,15 @@ import styled from '@emotion/native';
 
 import { Input } from '@/components/common/atoms';
 import { IconButton } from '@/components/common/molecules';
+import { useAppSelect } from '@/store';
 
 const SearchInputBox = () => {
+  const stationType = useAppSelect(({ subwaySearch }) => subwaySearch.stationType);
+
   return (
     <Container>
       <IconButton isFontIcon iconName="arrow-back-sharp" iconWidth="19.5" iconColor="#49454F" />
-      <SearchInput placeholder="출발역을 검색해보세요" placeholderTextColor="#BEBEBE" />
+      <SearchInput placeholder={`${stationType}역을 검색해보세요`} placeholderTextColor="#BEBEBE" />
       <IconButton
         isFontIcon
         iconName="close-circle"

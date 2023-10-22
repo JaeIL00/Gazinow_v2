@@ -1,9 +1,9 @@
 export type RootStackParamList = {
   Login: undefined;
   MainBottomTab: undefined;
-  SearchNavigation: { screen: 'SubwaySearch'; where: 'departure' | 'arrival' };
+  SearchNavigation: { screen: 'SubwaySearch' };
 };
 
 export type SearchStackParamList = {
-  SubwaySearch: { where: 'departure' | 'arrival' };
+  SubwaySearch: undefined;
 };

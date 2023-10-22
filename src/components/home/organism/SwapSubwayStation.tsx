@@ -5,6 +5,8 @@ import { Shadow } from 'react-native-shadow-2';
 import { IconButton, TextButton } from '@/components/common/molecules';
 import { COLOR, SEARCH_NAVIGATION, SUBWAY_SEARCH } from '@/constants';
 import { useRootNavigation } from '@/navigation/RootNavigation';
+import { useAppDispatch } from '@/store';
+import { getStationType } from '@/store/modules/subwaySearchModule';
 
 interface SwapProps extends ContainerStyleProps {}
 
@@ -15,11 +17,13 @@ const initStation = {
 
 const SwapSubwayStation = ({ isWrap }: SwapProps) => {
   const rootNavigation = useRootNavigation();
+  const dispatch = useAppDispatch();
 
   const [subwayStation, setSubwayStation] = useState<typeof initStation>(initStation);
 
-  const navigateSubwaySearch = (type: 'departure' | 'arrival') => {
-    rootNavigation.navigate(SEARCH_NAVIGATION, { screen: SUBWAY_SEARCH, where: type });
+  const navigateSubwaySearch = (type: '출발' | '도착') => {
+    dispatch(getStationType(type));
+    rootNavigation.navigate(SEARCH_NAVIGATION, { screen: SUBWAY_SEARCH });
   };
 
   const swapStation = () => {
@@ -37,14 +41,14 @@ const SwapSubwayStation = ({ isWrap }: SwapProps) => {
           textSize="16px"
           textWeight="Regular"
           lineHeight="21px"
-          onPress={() => navigateSubwaySearch('departure')}
+          onPress={() => navigateSubwaySearch('출발')}
         />
         <StationButton
           value={subwayStation.arrival}
           textSize="16px"
           textWeight="Regular"
           lineHeight="21px"
-          onPress={() => navigateSubwaySearch('arrival')}
+          onPress={() => navigateSubwaySearch('도착')}
         />
       </InnerBox>
       <IconButton
