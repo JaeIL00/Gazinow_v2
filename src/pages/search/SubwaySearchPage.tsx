@@ -1,7 +1,7 @@
-import { Text } from 'react-native';
+import { SearchInputBox } from '@/components/search/organism';
 
 const SubwaySearchPage = () => {
-  return <Text>지하철역 검색</Text>;
+  return <SearchInputBox />;
 };
 
 export default SubwaySearchPage;
