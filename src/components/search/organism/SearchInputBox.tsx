@@ -4,11 +4,15 @@ import { useCallback, useState } from 'react';
 import { Input } from '@/components/common/atoms';
 import { IconButton } from '@/components/common/molecules';
 import { useRootNavigation } from '@/navigation/RootNavigation';
-import { useAppSelect } from '@/store';
+import { useAppDispatch, useAppSelect } from '@/store';
+import { getSearchResult } from '@/store/modules';
+import { textSearchFilter } from '@/utils';
 
 const SearchInputBox = () => {
   const rootNavigation = useRootNavigation();
+  const dispatch = useAppDispatch();
   const stationType = useAppSelect(({ subwaySearch }) => subwaySearch.stationType);
+  const subwayInfoList = useAppSelect(({ publicData }) => publicData.subwayInfo);
 
   const [searchText, setSearchText] = useState<string>('');
 
@@ -19,6 +23,16 @@ const SearchInputBox = () => {
 
   const changeSearchText = useCallback((text: string) => {
     setSearchText(text);
+    const result = subwayInfoList.filter((info) => {
+      const searchLength = text.length;
+      const wordToCheck = info.stnKrNm.slice(0, searchLength);
+      return textSearchFilter(text, wordToCheck);
+    });
+    const sortedResult = result.sort((a, b) =>
+      a.stnKrNm < b.stnKrNm ? -1 : a.stnKrNm > b.stnKrNm ? 1 : 0,
+    );
+    dispatch(getSearchResult(sortedResult));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const deleteInputText = useCallback(() => {

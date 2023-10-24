@@ -4,13 +4,13 @@ import type { PayloadAction } from '@reduxjs/toolkit';
 import { SubwayInfoResponse } from '@/types/apis';
 
 interface InitialStateTypes {
-  searchResult: SubwayInfoResponse;
   stationType: null | '출발' | '도착';
+  searchResult: SubwayInfoResponse;
 }
 
 const initialState: InitialStateTypes = {
-  searchResult: [],
   stationType: null,
+  searchResult: [],
 };
 
 const subwaySearchSlice = createSlice({

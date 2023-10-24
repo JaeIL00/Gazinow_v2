@@ -1,11 +1,12 @@
 import styled from '@emotion/native';
 
-import { SearchInputBox } from '@/components/search/organism';
+import { SearchInputBox, SearchResultList } from '@/components/search/organism';
 
 const SubwaySearchPage = () => {
   return (
     <Container>
       <SearchInputBox />
+      <SearchResultList />
     </Container>
   );
 };
