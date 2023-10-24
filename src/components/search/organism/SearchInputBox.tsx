@@ -54,6 +54,7 @@ const SearchInputBox = () => {
         placeholderTextColor="#BEBEBE"
         inputMode="search"
         onChangeText={changeSearchText}
+        autoFocus
       />
       <IconButton
         isFontIcon
