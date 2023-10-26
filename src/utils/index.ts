@@ -1,1 +1,1 @@
-export { default as textSearchFilter } from './textSearchFilter';
+export { default as textSearchRegExp } from './textSearchRegExp';

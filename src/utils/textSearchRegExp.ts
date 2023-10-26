@@ -52,7 +52,7 @@ const makeRegExp = (type: WordType, acc: string, cur: string, idx?: number) => {
   } else return acc;
 };
 
-const madfasdf = (searchKeyword: string) => {
+const textSearchRegExp = (searchKeyword: string) => {
   const regex = searchKeyword.split('').reduce((acc, cur, _, arr) => {
     const idx = INITIAL_CONSONANTS.indexOf(cur);
     const isJungsung =
@@ -65,8 +65,4 @@ const madfasdf = (searchKeyword: string) => {
   return new RegExp(regex);
 };
 
-const textSearchFilter = (searchKeyword: string, targetWord: string) => {
-  return madfasdf(searchKeyword).test(targetWord);
-};
-
-export default textSearchFilter;
+export default textSearchRegExp;

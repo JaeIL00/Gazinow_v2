@@ -6,7 +6,7 @@ import { IconButton } from '@/components/common/molecules';
 import { useRootNavigation } from '@/navigation/RootNavigation';
 import { useAppDispatch, useAppSelect } from '@/store';
 import { getSearchResult } from '@/store/modules';
-import { textSearchFilter } from '@/utils';
+import { textSearchRegExp } from '@/utils';
 
 const SearchInputBox = () => {
   const rootNavigation = useRootNavigation();
@@ -16,17 +16,21 @@ const SearchInputBox = () => {
 
   const [searchText, setSearchText] = useState<string>('');
 
-  const backToScreen = useCallback(() => {
+  const backToScreen = () => {
     rootNavigation.goBack();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  };
 
-  const changeSearchText = useCallback((text: string) => {
+  const changeSearchText = (text: string) => {
     setSearchText(text);
+    findSubwayStation(text);
+  };
+
+  const findSubwayStation = useCallback((text: string) => {
+    const searchRegExp = textSearchRegExp(text);
     const result = subwayInfoList.filter((info) => {
       const searchLength = text.length;
       const wordToCheck = info.stnKrNm.slice(0, searchLength);
-      return textSearchFilter(text, wordToCheck);
+      return searchRegExp.test(wordToCheck);
     });
     const sortedResult = result.sort((a, b) =>
       a.stnKrNm < b.stnKrNm ? -1 : a.stnKrNm > b.stnKrNm ? 1 : 0,
@@ -35,9 +39,9 @@ const SearchInputBox = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const deleteInputText = useCallback(() => {
+  const deleteInputText = () => {
     setSearchText('');
-  }, []);
+  };
 
   return (
     <Container>
