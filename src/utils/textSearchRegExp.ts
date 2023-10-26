@@ -1,32 +1,13 @@
-const INITIAL_CONSONANTS = [
-  'ㄱ',
-  'ㄲ',
-  'ㄴ',
-  'ㄷ',
-  'ㄸ',
-  'ㄹ',
-  'ㅁ',
-  'ㅂ',
-  'ㅃ',
-  'ㅅ',
-  'ㅆ',
-  'ㅇ',
-  'ㅈ',
-  'ㅉ',
-  'ㅊ',
-  'ㅋ',
-  'ㅌ',
-  'ㅍ',
-  'ㅎ',
-];
-
-const HANGEUL_START_CHARCODE = 44032; // 가
-
-const CHARCODE_DIFF_INIT_CONSONANTS = 588; // 까 - 가
-const CHARCODE_DIFF_FINAL_CONSONANTS = 28; // 개 - 가
-const CHARCODE_INNER_RANGE = -1; // 글자가 해당하는 범위의 끝 글자
-const CHOSUNG = 'cho';
-const JUNGSUNG = 'jung';
+import {
+  CHARCODE_DIFF_FINAL_CONSONANTS,
+  CHARCODE_DIFF_INIT_CONSONANTS,
+  CHARCODE_INNER_RANGE,
+  CHOSUNG,
+  DUMMY_VALUE,
+  HANGEUL_START_CHARCODE,
+  INITIAL_CONSONANTS,
+  JUNGSUNG,
+} from '@/constants/constants';
 
 type WordType = typeof CHOSUNG | typeof JUNGSUNG;
 
@@ -42,7 +23,7 @@ const hangeulRangeReg = (jongsung: number, chosung?: number, cur?: string) => {
 
 const makeRegExp = (type: WordType, acc: string, cur: string, chosungIndex?: number) => {
   if (type === JUNGSUNG) {
-    return acc.replace(cur, `[${cur}-${hangeulRangeReg(CHARCODE_INNER_RANGE, 999999, cur)}]`);
+    return acc.replace(cur, `[${cur}-${hangeulRangeReg(CHARCODE_INNER_RANGE, DUMMY_VALUE, cur)}]`);
   } else if (type === CHOSUNG && chosungIndex) {
     const nextChosung = chosungIndex + 1;
     return acc.replace(
