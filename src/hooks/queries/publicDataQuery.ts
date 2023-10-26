@@ -4,7 +4,7 @@ import { useQuery } from 'react-query';
 import { subwayInfoFetch } from '@/apis/publicData';
 import { SUBWAY_INFO_STORAGE_KEY } from '@/constants';
 import { useAppDispatch } from '@/store';
-import { getPublicSubwayInfo } from '@/store/modules';
+import { getSubwayPublicData } from '@/store/modules';
 import { SubwayInfoResponse } from '@/types/apis';
 
 const setInfoStorage = async (data: SubwayInfoResponse) => {
@@ -23,7 +23,7 @@ export const useSubwayInfoQuery = () => {
     enabled: false,
     onSuccess({ data }) {
       setInfoStorage(data);
-      dispatch(getPublicSubwayInfo(data));
+      dispatch(getSubwayPublicData(data));
     },
     onError(error) {
       // debug

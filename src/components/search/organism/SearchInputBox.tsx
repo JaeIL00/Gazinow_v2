@@ -11,8 +11,7 @@ import { textSearchRegExp } from '@/utils';
 const SearchInputBox = () => {
   const rootNavigation = useRootNavigation();
   const dispatch = useAppDispatch();
-  const stationType = useAppSelect(({ subwaySearch }) => subwaySearch.stationType);
-  const subwayInfoList = useAppSelect(({ publicData }) => publicData.subwayInfo);
+  const { stationType, subwayPublicData } = useAppSelect(({ subwaySearch }) => subwaySearch);
 
   const [searchText, setSearchText] = useState<string>('');
 
@@ -27,7 +26,7 @@ const SearchInputBox = () => {
 
   const findSubwayStation = useCallback((text: string) => {
     const searchRegExp = textSearchRegExp(text);
-    const result = subwayInfoList.filter((info) => {
+    const result = subwayPublicData.filter((info) => {
       const searchLength = text.length;
       const wordToCheck = info.stnKrNm.slice(0, searchLength);
       return searchRegExp.test(wordToCheck);

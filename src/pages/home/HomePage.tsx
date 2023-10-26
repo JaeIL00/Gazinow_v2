@@ -7,7 +7,7 @@ import { SwapSubwayStation } from '@/components/home/organism';
 import { SUBWAY_INFO_STORAGE_KEY } from '@/constants';
 import { useSubwayInfoQuery } from '@/hooks/queries';
 import { useAppDispatch } from '@/store';
-import { getPublicSubwayInfo } from '@/store/modules';
+import { getSubwayPublicData } from '@/store/modules';
 
 const getSubwayInfoStorage = async () => {
   try {
@@ -26,7 +26,7 @@ const HomePage = () => {
 
   const checkSavedSubwayInfo = async () => {
     const data = await getSubwayInfoStorage();
-    if (data) dispatch(getPublicSubwayInfo(data));
+    if (data) dispatch(getSubwayPublicData(data));
     else subwayInfoFetching();
   };
 
