@@ -41,6 +41,7 @@
 	<string></string>
 	<key>UIAppFonts</key>
 	<array>
+		<string>Feather.ttf</string>
 		<string>Ionicons.ttf</string>
 		<string>Pretendard-Regular.otf</string>
 		<string>Pretendard-Mediun.otf</string>

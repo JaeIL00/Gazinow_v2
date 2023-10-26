@@ -18,7 +18,7 @@ export default FontText;
 interface TextStyleProps {
   textSize: string;
   textWeight: 'Bold' | 'SemiBold' | 'Medium' | 'Regular';
-  textColor?: keyof typeof COLOR;
+  textColor?: string;
   lineHeight: string;
 }
 const Normal = styled.Text<TextStyleProps>`

@@ -3,6 +3,7 @@ import { useCallback, useState } from 'react';
 
 import { Input } from '@/components/common/atoms';
 import { IconButton } from '@/components/common/molecules';
+import { COLOR } from '@/constants';
 import { useRootNavigation } from '@/navigation/RootNavigation';
 import { useAppDispatch, useAppSelect } from '@/store';
 import { getSearchResult } from '@/store/modules';
@@ -54,7 +55,7 @@ const SearchInputBox = () => {
       <SearchInput
         value={searchText}
         placeholder={`${stationType}역을 검색해보세요`}
-        placeholderTextColor="#BEBEBE"
+        placeholderTextColor={COLOR.BE_GRAY}
         inputMode="search"
         onChangeText={changeSearchText}
         autoFocus
@@ -78,7 +79,7 @@ const Container = styled.View`
   border-radius: 28px;
   border: 1px solid #d4d4d4;
   padding: 4px 16px 4px 18.25px;
-  margin-top: 16px;
+  margin: 16px 16px 0;
 `;
 
 const SearchInput = styled(Input)`
