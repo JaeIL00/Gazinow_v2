@@ -4,4 +4,4 @@ export type SubwayInfoResponse = {
   lineNm: string;
   convX: string;
   convY: string;
-}[];
+};

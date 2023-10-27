@@ -4,4 +4,7 @@ export {
   getSubwayPublicData,
   getStationType,
   getSearchResult,
+  getSeletedStation,
 } from './subwaySearchModule';
+
+export type { StationDataTypes } from './subwaySearchModule';

@@ -7,7 +7,7 @@ import {
   HANGEUL_START_CHARCODE,
   INITIAL_CONSONANTS,
   JUNGSUNG,
-} from '@/constants/constants';
+} from '@/constants';
 
 type WordType = typeof CHOSUNG | typeof JUNGSUNG;
 

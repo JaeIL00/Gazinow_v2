@@ -3,10 +3,38 @@ import Icon from 'react-native-vector-icons/Feather';
 
 import { FontText } from '@/components/common/atoms';
 import { COLOR } from '@/constants';
-import { useAppSelect } from '@/store';
+import { useRootNavigation } from '@/navigation/RootNavigation';
+import { useAppDispatch, useAppSelect } from '@/store';
+import { getSeletedStation } from '@/store/modules';
+import type { SubwayInfoResponse } from '@/types/apis';
 
 const SearchResultList = () => {
-  const resultData = useAppSelect(({ subwaySearch }) => subwaySearch.searchResult);
+  const rootNavigation = useRootNavigation();
+  const dispatch = useAppDispatch();
+  const {
+    searchResult: resultData,
+    stationType,
+    selectedStation,
+  } = useAppSelect(({ subwaySearch }) => subwaySearch);
+
+  const saveStationData = (data: SubwayInfoResponse) => {
+    if (stationType) {
+      const freshData = {
+        name: data.stnKrNm,
+        latitude: data.convY,
+        longitude: data.convX,
+      };
+      dispatch(
+        getSeletedStation({
+          actionType: stationType === '출발역' ? 'departure' : 'arrival',
+          stationData: freshData,
+        }),
+      );
+      selectedStation.departure.latitude || selectedStation.arrival.latitude
+        ? console.log('경로 검색 화면 이동')
+        : rootNavigation.pop();
+    }
+  };
 
   return (
     <Container>
@@ -22,7 +50,7 @@ const SearchResultList = () => {
 
       <Ul>
         {resultData.map((station) => (
-          <Li key={station.outStnNum}>
+          <Li key={station.outStnNum} onPress={() => saveStationData(station)}>
             <Icon name="clock" size={25} color={COLOR.BE_GRAY} />
             <StationInfoBox>
               <FontText
@@ -37,7 +65,7 @@ const SearchResultList = () => {
                 textSize="14px"
                 textWeight="Regular"
                 lineHeight="21px"
-                textColor="#999"
+                textColor={COLOR.GRAY_999}
               />
             </StationInfoBox>
           </Li>
@@ -59,7 +87,7 @@ const Header = styled.View`
 const Ul = styled.ScrollView`
   margin-top: 6px;
 `;
-const Li = styled.View`
+const Li = styled.Pressable`
   flex-direction: row;
   gap: 7px;
   padding: 12px 16px;

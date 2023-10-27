@@ -2,13 +2,12 @@ import { Pressable } from 'react-native';
 import type { PressableProps } from 'react-native/types';
 
 import { FontText } from '@/components/common/atoms';
-import { COLOR } from '@/constants';
 
 interface TextButtonProps extends PressableProps {
   value: string;
   textSize: string;
   textWeight: 'Bold' | 'SemiBold' | 'Medium' | 'Regular';
-  textColor?: keyof typeof COLOR;
+  textColor?: string;
   lineHeight: string;
 }
 

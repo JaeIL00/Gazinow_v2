@@ -1,54 +1,76 @@
 import styled from '@emotion/native';
-import { useState } from 'react';
+import { useLayoutEffect, useState } from 'react';
 import { Shadow } from 'react-native-shadow-2';
 
 import { IconButton, TextButton } from '@/components/common/molecules';
-import { COLOR, SEARCH_NAVIGATION, SUBWAY_SEARCH } from '@/constants';
+import {
+  COLOR,
+  SEARCH_NAVIGATION,
+  SUBWAY_SEARCH,
+  ARRIVAL_STATION,
+  DEPARTURE_STATION,
+} from '@/constants';
 import { useRootNavigation } from '@/navigation/RootNavigation';
-import { useAppDispatch } from '@/store';
-import { getStationType } from '@/store/modules/subwaySearchModule';
+import { useAppDispatch, useAppSelect } from '@/store';
+import { getStationType } from '@/store/modules';
+import type { StationDataTypes } from '@/store/modules';
 
 interface SwapProps extends ContainerStyleProps {}
 
-const initStation = {
-  departure: '출발역',
-  arrival: '도착역',
-};
+interface InitStationTypes {
+  departure: StationDataTypes;
+  arrival: StationDataTypes;
+}
+
+type StationTypes = typeof DEPARTURE_STATION | typeof ARRIVAL_STATION;
 
 const SwapSubwayStation = ({ isWrap }: SwapProps) => {
   const rootNavigation = useRootNavigation();
   const dispatch = useAppDispatch();
+  const selectedStation = useAppSelect(({ subwaySearch }) => subwaySearch.selectedStation);
 
-  const [subwayStation, setSubwayStation] = useState<typeof initStation>(initStation);
+  const [subwayStation, setSubwayStation] = useState<InitStationTypes>(selectedStation);
 
-  const navigateSubwaySearch = (type: '출발' | '도착') => {
+  const navigateSubwaySearch = (type: StationTypes) => {
     dispatch(getStationType(type));
-    rootNavigation.navigate(SEARCH_NAVIGATION, { screen: SUBWAY_SEARCH });
+    rootNavigation.push(SEARCH_NAVIGATION, { screen: SUBWAY_SEARCH });
   };
 
   const swapStation = () => {
     setSubwayStation(({ departure, arrival }) => ({
-      departure: arrival,
-      arrival: departure,
+      departure: {
+        ...arrival,
+        name: arrival.name === ARRIVAL_STATION ? DEPARTURE_STATION : arrival.name,
+      },
+      arrival: {
+        ...departure,
+        name: departure.name === DEPARTURE_STATION ? ARRIVAL_STATION : departure.name,
+      },
     }));
   };
+
+  useLayoutEffect(() => {
+    setSubwayStation(selectedStation);
+  }, [selectedStation]);
 
   return (
     <Container isWrap={isWrap} offset={[0, 4]} distance={34} startColor="rgba(0, 0, 0, 0.05)">
       <InnerBox>
         <StationButton
-          value={subwayStation.departure}
+          value={subwayStation.departure.name ? subwayStation.departure.name : DEPARTURE_STATION}
           textSize="16px"
           textWeight="Regular"
           lineHeight="21px"
-          onPress={() => navigateSubwaySearch('출발')}
+          textColor={subwayStation.departure.latitude ? COLOR.BASIC_BLACK : COLOR.GRAY_999}
+          onPress={() => navigateSubwaySearch(DEPARTURE_STATION)}
         />
         <StationButton
-          value={subwayStation.arrival}
+          value={subwayStation.arrival.name ? subwayStation.arrival.name : ARRIVAL_STATION}
           textSize="16px"
           textWeight="Regular"
           lineHeight="21px"
-          onPress={() => navigateSubwaySearch('도착')}
+          textColor={subwayStation.arrival.latitude ? COLOR.BASIC_BLACK : COLOR.GRAY_999}
+          onPress={() => navigateSubwaySearch(ARRIVAL_STATION)}
         />
       </InnerBox>
       <IconButton
