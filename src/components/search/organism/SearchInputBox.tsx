@@ -29,11 +29,11 @@ const SearchInputBox = () => {
     const searchRegExp = textSearchRegExp(text);
     const result = subwayPublicData.filter((info) => {
       const searchLength = text.length;
-      const wordToCheck = info.stnKrNm.slice(0, searchLength);
+      const wordToCheck = info.STATION_NM.slice(0, searchLength);
       return searchRegExp.test(wordToCheck);
     });
     const sortedResult = result.sort((a, b) =>
-      a.stnKrNm < b.stnKrNm ? -1 : a.stnKrNm > b.stnKrNm ? 1 : 0,
+      a.STATION_NM < b.STATION_NM ? -1 : a.STATION_NM > b.STATION_NM ? 1 : 0,
     );
     dispatch(getSearchResult(sortedResult));
     // eslint-disable-next-line react-hooks/exhaustive-deps

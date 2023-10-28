@@ -1,2 +1,2 @@
 export type { LoginFormTypes, LoginFetchResponse, TokenTypes } from './authTypes';
-export type { SubwayInfoResponse } from './publicDataTypes';
+export type { SubwayInfoResponse, SubwayPublicDataTypes } from './publicDataTypes';

@@ -5,14 +5,13 @@ import { subwayInfoFetch } from '@/apis/publicData';
 import { SUBWAY_INFO_STORAGE_KEY } from '@/constants';
 import { useAppDispatch } from '@/store';
 import { getSubwayPublicData } from '@/store/modules';
-import { SubwayInfoResponse } from '@/types/apis';
+import type { SubwayPublicDataTypes } from '@/types/apis';
 
-const setInfoStorage = async (data: SubwayInfoResponse['SearchSTNBySubwayLineInfo']['row']) => {
+const setInfoStorage = async (data: SubwayPublicDataTypes[]) => {
   try {
     const sortedArr = data.sort((a, b) =>
       a.STATION_NM < b.STATION_NM ? -1 : a.STATION_NM > b.STATION_NM ? 1 : 0,
     );
-    console.log(sortedArr);
     const response = JSON.stringify(sortedArr);
     await AsyncStorage.setItem(SUBWAY_INFO_STORAGE_KEY, response);
   } catch (error) {

@@ -1,18 +1,17 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 
-import { SubwayInfoResponse } from '@/types/apis';
+import type { SubwayPublicDataTypes } from '@/types/apis';
 
 export interface StationDataTypes {
   name: string;
-  latitude: string;
-  longitude: string;
+  code: string;
 }
 
 interface InitialStateTypes {
-  subwayPublicData: SubwayInfoResponse['SearchSTNBySubwayLineInfo']['row'];
+  subwayPublicData: SubwayPublicDataTypes[];
   stationType: null | '출발역' | '도착역';
-  searchResult: SubwayInfoResponse[];
+  searchResult: SubwayPublicDataTypes[];
   selectedStation: {
     departure: StationDataTypes;
     arrival: StationDataTypes;
@@ -26,13 +25,11 @@ const initialState: InitialStateTypes = {
   selectedStation: {
     departure: {
       name: '',
-      latitude: '',
-      longitude: '',
+      code: '',
     },
     arrival: {
       name: '',
-      latitude: '',
-      longitude: '',
+      code: '',
     },
   },
 };
@@ -41,10 +38,7 @@ const subwaySearchSlice = createSlice({
   name: 'subwaySearch',
   initialState,
   reducers: {
-    getSubwayPublicData: (
-      state,
-      action: PayloadAction<SubwayInfoResponse['SearchSTNBySubwayLineInfo']['row']>,
-    ) => {
+    getSubwayPublicData: (state, action: PayloadAction<InitialStateTypes['subwayPublicData']>) => {
       state.subwayPublicData = action.payload;
     },
     getStationType: (state, action: PayloadAction<InitialStateTypes['stationType']>) => {

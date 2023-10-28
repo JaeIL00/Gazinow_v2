@@ -61,7 +61,7 @@ const SwapSubwayStation = ({ isWrap }: SwapProps) => {
           textSize="16px"
           textWeight="Regular"
           lineHeight="21px"
-          textColor={subwayStation.departure.latitude ? COLOR.BASIC_BLACK : COLOR.GRAY_999}
+          textColor={subwayStation.departure.name ? COLOR.BASIC_BLACK : COLOR.GRAY_999}
           onPress={() => navigateSubwaySearch(DEPARTURE_STATION)}
         />
         <StationButton
@@ -69,7 +69,7 @@ const SwapSubwayStation = ({ isWrap }: SwapProps) => {
           textSize="16px"
           textWeight="Regular"
           lineHeight="21px"
-          textColor={subwayStation.arrival.latitude ? COLOR.BASIC_BLACK : COLOR.GRAY_999}
+          textColor={subwayStation.arrival.name ? COLOR.BASIC_BLACK : COLOR.GRAY_999}
           onPress={() => navigateSubwaySearch(ARRIVAL_STATION)}
         />
       </InnerBox>

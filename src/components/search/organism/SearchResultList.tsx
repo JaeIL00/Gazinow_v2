@@ -6,7 +6,7 @@ import { COLOR } from '@/constants';
 import { useRootNavigation } from '@/navigation/RootNavigation';
 import { useAppDispatch, useAppSelect } from '@/store';
 import { getSeletedStation } from '@/store/modules';
-import type { SubwayInfoResponse } from '@/types/apis';
+import type { SubwayPublicDataTypes } from '@/types/apis';
 
 const SearchResultList = () => {
   const rootNavigation = useRootNavigation();
@@ -17,12 +17,11 @@ const SearchResultList = () => {
     selectedStation,
   } = useAppSelect(({ subwaySearch }) => subwaySearch);
 
-  const saveStationData = (data: SubwayInfoResponse) => {
+  const saveStationData = (data: SubwayPublicDataTypes) => {
     if (stationType) {
       const freshData = {
-        name: data.stnKrNm,
-        latitude: data.convY,
-        longitude: data.convX,
+        name: data.STATION_NM,
+        code: data.STATION_CD,
       };
       dispatch(
         getSeletedStation({
@@ -30,7 +29,7 @@ const SearchResultList = () => {
           stationData: freshData,
         }),
       );
-      selectedStation.departure.latitude || selectedStation.arrival.latitude
+      selectedStation.departure.name || selectedStation.arrival.name
         ? console.log('경로 검색 화면 이동')
         : rootNavigation.pop();
     }
@@ -50,18 +49,18 @@ const SearchResultList = () => {
 
       <Ul>
         {resultData.map((station) => (
-          <Li key={station.outStnNum} onPress={() => saveStationData(station)}>
+          <Li key={station.STATION_CD} onPress={() => saveStationData(station)}>
             <Icon name="clock" size={25} color={COLOR.BE_GRAY} />
             <StationInfoBox>
               <FontText
-                value={station.stnKrNm}
+                value={station.STATION_NM}
                 textSize="16px"
                 textWeight="Medium"
                 lineHeight="21px"
                 textColor="#000"
               />
               <FontText
-                value={station.lineNm}
+                value={station.LINE_NUM}
                 textSize="14px"
                 textWeight="Regular"
                 lineHeight="21px"
