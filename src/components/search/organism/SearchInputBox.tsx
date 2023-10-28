@@ -22,7 +22,7 @@ const SearchInputBox = () => {
 
   const changeSearchText = (text: string) => {
     setSearchText(text);
-    findSubwayStation(text);
+    if (text) findSubwayStation(text);
   };
 
   const findSubwayStation = useCallback((text: string) => {
