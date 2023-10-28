@@ -10,7 +10,7 @@ export interface StationDataTypes {
 }
 
 interface InitialStateTypes {
-  subwayPublicData: SubwayInfoResponse[];
+  subwayPublicData: SubwayInfoResponse['SearchSTNBySubwayLineInfo']['row'];
   stationType: null | '출발역' | '도착역';
   searchResult: SubwayInfoResponse[];
   selectedStation: {
@@ -41,7 +41,10 @@ const subwaySearchSlice = createSlice({
   name: 'subwaySearch',
   initialState,
   reducers: {
-    getSubwayPublicData: (state, action: PayloadAction<SubwayInfoResponse[]>) => {
+    getSubwayPublicData: (
+      state,
+      action: PayloadAction<SubwayInfoResponse['SearchSTNBySubwayLineInfo']['row']>,
+    ) => {
       state.subwayPublicData = action.payload;
     },
     getStationType: (state, action: PayloadAction<InitialStateTypes['stationType']>) => {

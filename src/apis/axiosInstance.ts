@@ -1,4 +1,4 @@
-import { API_BASE_URL, T_DATA_BASE_URL } from '@env';
+import { API_BASE_URL, SEOUL_PUBLIC_BASE_URL } from '@env';
 import axios from 'axios';
 
 export const axiosInstance = axios.create({
@@ -6,5 +6,5 @@ export const axiosInstance = axios.create({
 });
 
 export const publicDataInstance = axios.create({
-  baseURL: T_DATA_BASE_URL,
+  baseURL: SEOUL_PUBLIC_BASE_URL,
 });
