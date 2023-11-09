@@ -1,5 +1,6 @@
 import styled from '@emotion/native';
-import { useCallback, useState } from 'react';
+import { debounce } from 'lodash';
+import { useMemo, useState } from 'react';
 
 import { Input } from '@/components/common/atoms';
 import { IconButton } from '@/components/common/molecules';
@@ -25,19 +26,23 @@ const SearchInputBox = () => {
     if (text) findSubwayStation(text);
   };
 
-  const findSubwayStation = useCallback((text: string) => {
-    const searchRegExp = textSearchRegExp(text);
-    const result = subwayPublicData.filter((info) => {
-      const searchLength = text.length;
-      const wordToCheck = info.STATION_NM.slice(0, searchLength);
-      return searchRegExp.test(wordToCheck);
-    });
-    const sortedResult = result.sort((a, b) =>
-      a.STATION_NM < b.STATION_NM ? -1 : a.STATION_NM > b.STATION_NM ? 1 : 0,
-    );
-    dispatch(getSearchResult(sortedResult));
+  const findSubwayStation = useMemo(
+    () =>
+      debounce((text: string) => {
+        const searchRegExp = textSearchRegExp(text);
+        const result = subwayPublicData.filter((info) => {
+          const searchLength = text.length;
+          const wordToCheck = info.STATION_NM.slice(0, searchLength);
+          return searchRegExp.test(wordToCheck);
+        });
+        const sortedResult = result.sort((a, b) =>
+          a.STATION_NM < b.STATION_NM ? -1 : a.STATION_NM > b.STATION_NM ? 1 : 0,
+        );
+        dispatch(getSearchResult(sortedResult));
+      }, 200),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    [],
+  );
 
   const deleteInputText = () => {
     setSearchText('');
