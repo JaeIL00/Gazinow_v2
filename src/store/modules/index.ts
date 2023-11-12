@@ -3,6 +3,7 @@ export {
   default as subwaySearch,
   getSubwayPublicData,
   getStationType,
+  changeinputStatus,
   getSearchResult,
   getSeletedStation,
 } from './subwaySearchModule';

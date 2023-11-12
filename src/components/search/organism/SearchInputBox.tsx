@@ -7,7 +7,7 @@ import { IconButton } from '@/components/common/molecules';
 import { COLOR } from '@/constants';
 import { useRootNavigation } from '@/navigation/RootNavigation';
 import { useAppDispatch, useAppSelect } from '@/store';
-import { getSearchResult } from '@/store/modules';
+import { changeinputStatus, getSearchResult } from '@/store/modules';
 import { textSearchRegExp } from '@/utils';
 
 const SearchInputBox = () => {
@@ -23,6 +23,7 @@ const SearchInputBox = () => {
 
   const changeSearchText = (text: string) => {
     setSearchText(text);
+    dispatch(changeinputStatus(!!text));
     if (text) findSubwayStation(text);
   };
 

@@ -14,6 +14,7 @@ const SearchResultList = () => {
   const {
     searchResult: resultData,
     stationType,
+    inputStatus,
     selectedStation,
   } = useAppSelect(({ subwaySearch }) => subwaySearch);
 
@@ -35,19 +36,52 @@ const SearchResultList = () => {
     }
   };
 
+  // 입력어가 없으면 최근검색
+  if (!inputStatus) {
+    return (
+      <Container>
+        <Header>
+          <FontText
+            value="최근검색"
+            textSize="14px"
+            textWeight="Regular"
+            lineHeight="24px"
+            textColor="#757575"
+          />
+        </Header>
+
+        <Ul marginTop="18px">
+          {resultData.map((station) => (
+            <Li key={station.STATION_CD} onPress={() => saveStationData(station)}>
+              <Icon name="clock" size={25} color={COLOR.BE_GRAY} />
+              <StationInfoBox>
+                <FontText
+                  value={station.STATION_NM}
+                  textSize="16px"
+                  textWeight="Medium"
+                  lineHeight="21px"
+                  textColor="#000"
+                />
+                <FontText
+                  value={station.LINE_NUM}
+                  textSize="14px"
+                  textWeight="Regular"
+                  lineHeight="21px"
+                  textColor={COLOR.GRAY_999}
+                />
+              </StationInfoBox>
+            </Li>
+          ))}
+        </Ul>
+      </Container>
+    );
+  }
+
   return (
     <Container>
-      <Header>
-        <FontText
-          value="최근검색"
-          textSize="14px"
-          textWeight="Regular"
-          lineHeight="24px"
-          textColor="#757575"
-        />
-      </Header>
-
-      <Ul>
+      {/* 입력어가 있고 && 검색 결과가 있으면 결과 표시 */}
+      {/* 입력어가 있고 && 검색 결과가 없으면 없음 표시 */}
+      <Ul marginTop="28px">
         {resultData.map((station) => (
           <Li key={station.STATION_CD} onPress={() => saveStationData(station)}>
             <Icon name="clock" size={25} color={COLOR.BE_GRAY} />
@@ -83,8 +117,8 @@ const Header = styled.View`
   padding-left: 16px;
   margin-top: 18px;
 `;
-const Ul = styled.ScrollView`
-  margin-top: 6px;
+const Ul = styled.ScrollView<{ marginTop: string }>`
+  margin-top: ${({ marginTop }) => marginTop};
 `;
 const Li = styled.Pressable`
   flex-direction: row;
