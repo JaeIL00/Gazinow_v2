@@ -1,6 +1,7 @@
 import styled from '@emotion/native';
 import Icon from 'react-native-vector-icons/Feather';
 
+import { iconPath } from '@/assets/icons/iconPath';
 import { FontText } from '@/components/common/atoms';
 import { COLOR } from '@/constants';
 import { useRootNavigation } from '@/navigation/RootNavigation';
@@ -84,7 +85,7 @@ const SearchResultList = () => {
       <Ul marginTop="28px">
         {resultData.map((station) => (
           <Li key={station.STATION_CD} onPress={() => saveStationData(station)}>
-            <Icon name="clock" size={25} color={COLOR.BE_GRAY} />
+            <LocateIcon source={iconPath['location_pin_gray']} width={25} height={25} />
             <StationInfoBox>
               <FontText
                 value={station.STATION_NM}
@@ -129,4 +130,8 @@ const Li = styled.Pressable`
 `;
 const StationInfoBox = styled.View`
   gap: 2.95px;
+`;
+const LocateIcon = styled.Image`
+  width: 25px;
+  height: 25px;
 `;
