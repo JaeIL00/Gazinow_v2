@@ -25,6 +25,7 @@ const SearchInputBox = () => {
     setSearchText(text);
     dispatch(changeinputStatus(!!text));
     if (text) findSubwayStation(text);
+    else dispatch(getSearchResult([]));
   };
 
   const findSubwayStation = useMemo(

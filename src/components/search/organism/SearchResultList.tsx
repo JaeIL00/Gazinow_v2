@@ -6,10 +6,14 @@ import { FontText } from '@/components/common/atoms';
 import { COLOR } from '@/constants';
 import { useRootNavigation } from '@/navigation/RootNavigation';
 import { useAppDispatch, useAppSelect } from '@/store';
-import { getSeletedStation } from '@/store/modules';
-import type { SubwayPublicDataTypes } from '@/types/apis';
+import { changeinputStatus, getSeletedStation } from '@/store/modules';
+import type { SearchHistoryTypes } from '@/types/apis';
 
-const SearchResultList = () => {
+interface SearchResultListProps {
+  historyList: SearchHistoryTypes[];
+}
+
+const SearchResultList = ({ historyList }: SearchResultListProps) => {
   const rootNavigation = useRootNavigation();
   const dispatch = useAppDispatch();
   const {
@@ -19,21 +23,32 @@ const SearchResultList = () => {
     selectedStation,
   } = useAppSelect(({ subwaySearch }) => subwaySearch);
 
-  const saveStationData = (data: SubwayPublicDataTypes) => {
-    if (stationType) {
-      const freshData = {
-        name: data.STATION_NM,
-        code: data.STATION_CD,
-      };
+  const saveStationData = (data: {
+    stationName: string;
+    stationLine: string;
+    stationCode: number;
+  }) => {
+    const freshData = {
+      name: data.stationName,
+      code: data.stationCode + '',
+    };
+    dispatch(changeinputStatus(false));
+    if (stationType === '출발역') {
       dispatch(
         getSeletedStation({
-          actionType: stationType === '출발역' ? 'departure' : 'arrival',
+          actionType: 'departure',
           stationData: freshData,
         }),
       );
-      selectedStation.departure.name || selectedStation.arrival.name
-        ? console.log('경로 검색 화면 이동')
-        : rootNavigation.pop();
+      selectedStation.arrival.name ? console.log('경로 검색 화면 이동') : rootNavigation.pop();
+    } else if (stationType === '도착역') {
+      dispatch(
+        getSeletedStation({
+          actionType: 'arrival',
+          stationData: freshData,
+        }),
+      );
+      selectedStation.departure.name ? console.log('경로 검색 화면 이동') : rootNavigation.pop();
     }
   };
 
@@ -52,19 +67,28 @@ const SearchResultList = () => {
         </Header>
 
         <Ul marginTop="18px">
-          {resultData.map((station) => (
-            <Li key={station.STATION_CD} onPress={() => saveStationData(station)}>
+          {historyList.map((history) => (
+            <Li
+              key={history.id}
+              onPress={() =>
+                saveStationData({
+                  stationName: history.stationName,
+                  stationCode: history.stationCode,
+                  stationLine: history.stationLine,
+                })
+              }
+            >
               <Icon name="clock" size={25} color={COLOR.BE_GRAY} />
               <StationInfoBox>
                 <FontText
-                  value={station.STATION_NM}
+                  value={history.stationName}
                   textSize="16px"
                   textWeight="Medium"
                   lineHeight="21px"
                   textColor="#000"
                 />
                 <FontText
-                  value={station.LINE_NUM}
+                  value={history.stationLine}
                   textSize="14px"
                   textWeight="Regular"
                   lineHeight="21px"
@@ -84,7 +108,16 @@ const SearchResultList = () => {
       {/* 입력어가 있고 && 검색 결과가 없으면 없음 표시 */}
       <Ul marginTop="28px">
         {resultData.map((station) => (
-          <Li key={station.STATION_CD} onPress={() => saveStationData(station)}>
+          <Li
+            key={station.STATION_CD}
+            onPress={() =>
+              saveStationData({
+                stationName: station.STATION_NM,
+                stationCode: Number(station.STATION_CD),
+                stationLine: station.LINE_NUM,
+              })
+            }
+          >
             <LocateIcon source={iconPath['location_pin_gray']} width={25} height={25} />
             <StationInfoBox>
               <FontText
