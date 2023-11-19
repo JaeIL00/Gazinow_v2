@@ -1,7 +1,7 @@
+import styled from '@emotion/native';
 import React from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { Provider } from 'react-redux';
-import { styled } from 'styled-components/native';
 
 import { RootNavigation } from '@/navigation';
 import { store } from '@/store';

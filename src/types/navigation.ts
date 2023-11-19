@@ -3,3 +3,7 @@ export type RootStackParamList = {
   MainBottomTab: undefined;
   SearchNavigation: { screen: 'SubwaySearch' };
 };
+
+export type SearchStackParamList = {
+  SubwaySearch: undefined;
+};

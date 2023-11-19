@@ -1,8 +1,10 @@
-import { API_BASE_URL } from '@env';
+import { API_BASE_URL, SEOUL_PUBLIC_BASE_URL } from '@env';
 import axios from 'axios';
 
-const axiosInstance = axios.create({
+export const axiosInstance = axios.create({
   baseURL: API_BASE_URL,
 });
 
-export default axiosInstance;
+export const publicDataInstance = axios.create({
+  baseURL: SEOUL_PUBLIC_BASE_URL,
+});

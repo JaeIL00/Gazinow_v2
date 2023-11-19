@@ -2,9 +2,9 @@ import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import type { StackNavigationProp } from '@react-navigation/stack';
 
-import { LoginPage } from '@/components/auth/page';
 import { LOGIN, MAIN_BOTTOM_TAB, SEARCH_NAVIGATION } from '@/constants';
 import { MainBottomTabNavigation, SearchNavigation } from '@/navigation';
+import { LoginPage } from '@/pages/auth';
 import { useAppSelect } from '@/store';
 import type { RootStackParamList } from '@/types/navigation';
 

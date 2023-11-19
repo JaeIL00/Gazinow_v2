@@ -1,9 +1,10 @@
 import { createStackNavigator } from '@react-navigation/stack';
 
-import { SubwaySearchPage } from '@/components/search/page';
 import { SUBWAY_SEARCH } from '@/constants';
+import { SubwaySearchPage } from '@/pages/search';
+import { SearchStackParamList } from '@/types/navigation';
 
-const Stack = createStackNavigator();
+const Stack = createStackNavigator<SearchStackParamList>();
 
 const screenOption = {
   headerShown: false,

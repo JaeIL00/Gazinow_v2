@@ -1,10 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
 
-import auth from '@/store/modules/authModule';
+import { auth, subwaySearch } from '@/store/modules';
 
 const store = configureStore({
   reducer: {
     auth,
+    subwaySearch,
   },
 });
 
