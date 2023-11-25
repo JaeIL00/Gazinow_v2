@@ -61,7 +61,7 @@ const SearchInputBox = () => {
       />
       <SearchInput
         value={searchText}
-        placeholder={`${stationType}역을 검색해보세요`}
+        placeholder={`${stationType}을 검색해보세요`}
         placeholderTextColor={COLOR.BE_GRAY}
         inputMode="search"
         onChangeText={changeSearchText}
