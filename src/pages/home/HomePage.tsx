@@ -47,4 +47,6 @@ export default HomePage;
 
 const Container = styled.View`
   padding: 0 16px;
+  background-color: white;
+  flex: 1;
 `;

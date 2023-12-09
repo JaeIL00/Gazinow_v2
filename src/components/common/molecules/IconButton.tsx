@@ -1,11 +1,13 @@
 import styled from '@emotion/native';
 import type { PressableProps } from 'react-native/types';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import FontAwesome from 'react-native-vector-icons/Ionicons';
 
 import { iconPath } from '@/assets/icons/iconPath';
 import type { IconPathTypes } from '@/assets/icons/iconPath';
 
 interface IconButtonProps extends PressableProps, IconStyleProps {
+  iconType?: string;
   isFontIcon: boolean;
   iconName?: string;
   imagePath?: keyof IconPathTypes;
@@ -13,12 +15,18 @@ interface IconButtonProps extends PressableProps, IconStyleProps {
 }
 
 const IconButton = (props: IconButtonProps) => {
-  const { isFontIcon, iconName, imagePath, iconWidth, iconHeight, iconColor, onPress } = props;
+  const { iconType, isFontIcon, iconName, imagePath, iconWidth, iconHeight, iconColor, onPress } =
+    props;
 
   if (isFontIcon && iconName) {
     return (
       <Button onPress={onPress} hitSlop={10}>
-        <Ionicons name={iconName} size={Number(iconWidth)} color={iconColor} />
+        {iconType === 'Ionicons' && (
+          <Ionicons name={iconName} size={Number(iconWidth)} color={iconColor} />
+        )}
+        {iconType === 'FontAwesome' && (
+          <FontAwesome name={iconName} size={Number(iconWidth)} color={iconColor} />
+        )}
       </Button>
     );
   } else if (imagePath) {

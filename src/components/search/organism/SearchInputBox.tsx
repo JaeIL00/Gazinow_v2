@@ -53,6 +53,7 @@ const SearchInputBox = () => {
   return (
     <Container>
       <IconButton
+        iconType="Ionicons"
         isFontIcon
         iconName="arrow-back-sharp"
         iconWidth="19.5"
@@ -68,6 +69,7 @@ const SearchInputBox = () => {
         autoFocus
       />
       <IconButton
+        iconType="Ionicons"
         isFontIcon
         iconName="close-circle"
         iconWidth="19.5"

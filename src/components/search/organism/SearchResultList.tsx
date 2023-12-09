@@ -5,6 +5,7 @@ import { iconPath } from '@/assets/icons/iconPath';
 import { FontText } from '@/components/common/atoms';
 import { COLOR } from '@/constants';
 import { useRootNavigation } from '@/navigation/RootNavigation';
+import { useSearchNavigation } from '@/navigation/SearchNavigation';
 import { useAppDispatch, useAppSelect } from '@/store';
 import { changeinputStatus, getSeletedStation } from '@/store/modules';
 import type { SearchHistoryTypes } from '@/types/apis';
@@ -15,6 +16,7 @@ interface SearchResultListProps {
 
 const SearchResultList = ({ historyList }: SearchResultListProps) => {
   const rootNavigation = useRootNavigation();
+  const searchNavigation = useSearchNavigation();
   const dispatch = useAppDispatch();
   const {
     searchResult: resultData,
@@ -40,7 +42,12 @@ const SearchResultList = ({ historyList }: SearchResultListProps) => {
           stationData: freshData,
         }),
       );
-      selectedStation.arrival.name ? console.log('경로 검색 화면 이동') : rootNavigation.pop();
+      selectedStation.arrival.name
+        ? searchNavigation.navigate('SubwayPathResult', {
+            departure: freshData.code,
+            arrival: selectedStation.arrival.code,
+          })
+        : rootNavigation.pop();
     } else if (stationType === '도착역') {
       dispatch(
         getSeletedStation({
@@ -48,7 +55,12 @@ const SearchResultList = ({ historyList }: SearchResultListProps) => {
           stationData: freshData,
         }),
       );
-      selectedStation.departure.name ? console.log('경로 검색 화면 이동') : rootNavigation.pop();
+      selectedStation.departure.name
+        ? searchNavigation.navigate('SubwayPathResult', {
+            departure: selectedStation.departure.code,
+            arrival: freshData.code,
+          })
+        : rootNavigation.pop();
     }
   };
 
