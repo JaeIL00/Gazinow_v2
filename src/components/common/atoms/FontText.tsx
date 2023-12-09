@@ -24,6 +24,7 @@ interface TextStyleProps {
 const Normal = styled.Text<TextStyleProps>`
   font-size: ${({ textSize }) => textSize};
   font-family: Pretendard-${({ textWeight }) => textWeight};
+  font-weight: ${({ textWeight }) => textWeight.toLowerCase()};
   color: ${({ textColor = COLOR.BASIC_BLACK }) => textColor};
   line-height: ${({ lineHeight }) => lineHeight};
 `;

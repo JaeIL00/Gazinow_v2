@@ -1,13 +1,14 @@
 import styled from '@emotion/native';
 import type { PressableProps } from 'react-native/types';
+import Feather from 'react-native-vector-icons/Feather';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import FontAwesome from 'react-native-vector-icons/Ionicons';
 
 import { iconPath } from '@/assets/icons/iconPath';
 import type { IconPathTypes } from '@/assets/icons/iconPath';
 
 interface IconButtonProps extends PressableProps, IconStyleProps {
-  iconType?: string;
+  iconType?: 'Ionicons' | 'FontAwesome' | 'Feather';
   isFontIcon: boolean;
   iconName?: string;
   imagePath?: keyof IconPathTypes;
@@ -26,6 +27,9 @@ const IconButton = (props: IconButtonProps) => {
         )}
         {iconType === 'FontAwesome' && (
           <FontAwesome name={iconName} size={Number(iconWidth)} color={iconColor} />
+        )}
+        {iconType === 'Feather' && (
+          <Feather name={iconName} size={Number(iconWidth)} color={iconColor} />
         )}
       </Button>
     );

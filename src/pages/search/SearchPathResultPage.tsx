@@ -1,16 +1,23 @@
 import styled, { css } from '@emotion/native';
+import type { NavigationProp } from '@react-navigation/native';
 import { View } from 'react-native';
 
 import { FontText, Space } from '@/components/common/atoms';
 import { IconButton } from '@/components/common/molecules';
 import { SwapSubwayStation } from '@/components/home/organism';
 import { COLOR } from '@/constants';
+import { SUBWAY_PATH_DETAIL } from '@/constants/navigation';
+import { RootStackParamList } from '@/types/navigation';
 
 const dummy = [
   { time: '45분 이상', departureName: '신용산역', departureLine: '4', arrivalLine: '2' },
 ];
 
-const SearchPathResultPage = () => {
+const SearchPathResultPage = ({
+  navigation,
+}: {
+  navigation: NavigationProp<RootStackParamList, 'SearchNavigation'>;
+}) => {
   return (
     <Container>
       <SwapSubwayBox>
@@ -40,7 +47,7 @@ const SearchPathResultPage = () => {
                   lineHeight="13px"
                   textColor="#999"
                 />
-                <DetailButton>
+                <DetailButton onPress={() => navigation.push(SUBWAY_PATH_DETAIL)}>
                   <FontText
                     value="세부정보"
                     textSize="13px"

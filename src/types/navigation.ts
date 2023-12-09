@@ -10,4 +10,5 @@ export type SearchStackParamList = {
     departure: string;
     arrival: string;
   };
+  SubwayPathDetail: undefined;
 };
