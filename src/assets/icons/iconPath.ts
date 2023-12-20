@@ -5,6 +5,7 @@ export interface IconPathTypes {
   location_pin_gray: ImageSourcePropType;
   left_arrow_nonbar: ImageSourcePropType;
   right_arrow_nonbar: ImageSourcePropType;
+  walk_human_gray: ImageSourcePropType;
 }
 
 export const iconPath: IconPathTypes = {
@@ -12,4 +13,5 @@ export const iconPath: IconPathTypes = {
   location_pin_gray: require('@/assets/icons/location_pin_gray.png'),
   left_arrow_nonbar: require('@/assets/icons/left_arrow_nonbar.png'),
   right_arrow_nonbar: require('@/assets/icons/right_arrow_nonbar.png'),
+  walk_human_gray: require('@/assets/icons/walk_human_gray.png'),
 };
