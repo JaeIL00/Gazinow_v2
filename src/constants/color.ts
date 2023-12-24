@@ -4,6 +4,28 @@ const COLOR = {
   BE_GRAY: '#BEBEBE' as const,
   GRAY_999: '#999' as const,
   WHITE: '#ffffff' as const,
+  SUBWAY: {
+    ONE: '#3151C2',
+    TWO: '#0CD77D',
+    THR: '#FF791E',
+    FOU: '#0EB5EB',
+    FIV: '#8F49DB',
+    SIX: '#C36617',
+    SEV: '#919642',
+    EIG: '#DA3182',
+    NIN: '#A49E88',
+    CENTER: '#69C3B3',
+    NEWBOON: '#C12F42',
+    SOOBOON: '#EFAE27',
+    AIRPORT: '#0471AE',
+    GYEUNG: '#063190',
+    WESTSEA: '#70B22C',
+    GYUENGCHOON: '#007A63',
+    EUJUNG: '#EF9848',
+    EVERLAND: '#70B15A',
+    GIMGOLD: '#947325',
+    OOI: '#B9CB03',
+  },
 };
 
 export default COLOR;

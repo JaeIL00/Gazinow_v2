@@ -124,6 +124,38 @@ const SearchPathDetailItem = ({ detailData }: SearchPathDetailItemProps) => {
               onPress={() => setIsOpenPathList((prev) => !prev)}
             />
           </View>
+          {isOpenPathList && (
+            <View style={{ marginTop: 12 }}>
+              {detailData.departure.path.map((item, idx) => (
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    marginLeft: -32,
+                    marginTop: idx !== 0 ? 9 : null,
+                  }}
+                >
+                  <View
+                    style={{
+                      width: 12,
+                      height: 12,
+                      marginRight: 20,
+                      borderWidth: 2,
+                      backgroundColor: '#fff',
+                      borderColor: '#49afef',
+                      borderRadius: 12,
+                    }}
+                  />
+                  <FontText
+                    value={item.name}
+                    textSize="11px"
+                    textWeight="Medium"
+                    lineHeight="13px"
+                    textColor="#49454f"
+                  />
+                </View>
+              ))}
+            </View>
+          )}
           {/* 이슈 박스 */}
         </View>
       </View>
@@ -179,7 +211,6 @@ const SearchPathDetailItem = ({ detailData }: SearchPathDetailItemProps) => {
               overflow: hidden;
             `}
           >
-            {/* 대쉬 보더가 촘촘히해야함 */}
             <View
               style={{
                 marginLeft: 10,

@@ -19,6 +19,70 @@ const dummy = [
           line: '2',
           name: '이수역',
         },
+        {
+          line: '2',
+          name: '사당역',
+        },
+        {
+          line: '2',
+          name: '사당역',
+        },
+        {
+          line: '2',
+          name: '사당역',
+        },
+        {
+          line: '2',
+          name: '사당역',
+        },
+        {
+          line: '2',
+          name: '사당역',
+        },
+        {
+          line: '2',
+          name: '사당역',
+        },
+        {
+          line: '2',
+          name: '사당역',
+        },
+        {
+          line: '2',
+          name: '사당역',
+        },
+        {
+          line: '2',
+          name: '사당역',
+        },
+        {
+          line: '2',
+          name: '사당역',
+        },
+        {
+          line: '2',
+          name: '사당역',
+        },
+        {
+          line: '2',
+          name: '사당역',
+        },
+        {
+          line: '2',
+          name: '사당역',
+        },
+        {
+          line: '2',
+          name: '사당역',
+        },
+        {
+          line: '2',
+          name: '사당역',
+        },
+        {
+          line: '2',
+          name: '사당역',
+        },
       ],
     },
     arrive: {
@@ -28,7 +92,7 @@ const dummy = [
     },
   },
   {
-    line: '4',
+    line: '2',
     time: '21분',
     departure: {
       name: '신용산역',
@@ -124,6 +188,7 @@ const SearchPathResultDetailPage = () => {
       />
       <FlatList
         data={dummy}
+        keyExtractor={(item) => item.departure.name}
         renderItem={({ item }) => <SearchPathDetailItem detailData={item} />}
       />
     </View>
