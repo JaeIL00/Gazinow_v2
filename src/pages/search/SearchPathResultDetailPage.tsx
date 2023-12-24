@@ -5,6 +5,7 @@ import { FlatList, View } from 'react-native';
 import { FontText } from '@/components/common/atoms';
 import { IconButton } from '@/components/common/molecules';
 import { SearchPathDetailItem } from '@/components/search/organism';
+import { useRootNavigation } from '@/navigation/RootNavigation';
 
 const dummy = [
   {
@@ -114,6 +115,7 @@ const dummy = [
 ];
 
 const SearchPathResultDetailPage = () => {
+  const navigation = useRootNavigation();
   const [isBookmarking, setIsBookmarking] = useState<boolean>(false);
 
   return (
@@ -124,9 +126,34 @@ const SearchPathResultDetailPage = () => {
         padding: 0 16px;
       `}
     >
+      {/* header */}
+      <View
+        style={{
+          paddingVertical: 16,
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+        }}
+      >
+        <IconButton
+          isFontIcon={true}
+          iconType="Feather"
+          iconName="chevron-left"
+          iconColor="#3F3F46"
+          iconWidth="24"
+          onPress={() => navigation.goBack()}
+        />
+        <IconButton
+          iconType="FontAwesome"
+          isFontIcon={true}
+          iconName={isBookmarking ? 'bookmark' : 'bookmark-o'}
+          iconWidth="24"
+          iconColor={isBookmarking ? '#346BF7' : '#999'}
+          onPress={() => setIsBookmarking((prev) => !prev)}
+        />
+      </View>
       <View
         style={css`
-          padding-top: 38px;
           flex-direction: row;
           align-items: center;
           justify-content: space-between;
@@ -168,15 +195,6 @@ const SearchPathResultDetailPage = () => {
             </View>
           </View>
         </View>
-        <IconButton
-          iconType="FontAwesome"
-          isFontIcon={true}
-          iconName={isBookmarking ? 'bookmark' : 'bookmark-o'}
-          iconWidth="35"
-          iconHeight="35"
-          iconColor="#999"
-          onPress={() => setIsBookmarking((prev) => !prev)}
-        />
       </View>
       <View
         style={css`
