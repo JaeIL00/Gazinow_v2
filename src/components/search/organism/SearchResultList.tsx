@@ -7,8 +7,10 @@ import { COLOR } from '@/constants';
 import { useRootNavigation } from '@/navigation/RootNavigation';
 import { useSearchNavigation } from '@/navigation/SearchNavigation';
 import { useAppDispatch, useAppSelect } from '@/store';
-import { changeinputStatus, getSeletedStation } from '@/store/modules';
+import { getSeletedStation } from '@/store/modules';
 import type { SearchHistoryTypes } from '@/types/apis';
+import { useSearchSubwayName } from '@/hooks/queries/searchQuery';
+import { getSearchText } from '@/store/modules/subwaySearchModule';
 
 interface SearchResultListProps {
   historyList: SearchHistoryTypes[];
@@ -18,54 +20,45 @@ const SearchResultList = ({ historyList }: SearchResultListProps) => {
   const rootNavigation = useRootNavigation();
   const searchNavigation = useSearchNavigation();
   const dispatch = useAppDispatch();
-  const {
-    searchResult: resultData,
-    stationType,
-    inputStatus,
-    selectedStation,
-  } = useAppSelect(({ subwaySearch }) => subwaySearch);
+  const { searchText, stationType, selectedStation } = useAppSelect(
+    ({ subwaySearch }) => subwaySearch,
+  );
 
-  const saveStationData = (data: {
-    stationName: string;
-    stationLine: string;
-    stationCode: number;
-  }) => {
-    const freshData = {
-      name: data.stationName,
-      code: data.stationCode + '',
-    };
-    dispatch(changeinputStatus(false));
+  const { searchResultData } = useSearchSubwayName(searchText);
+
+  const saveStationData = (data: { name: string; line: string }) => {
+    dispatch(getSearchText(''));
     if (stationType === '출발역') {
       dispatch(
         getSeletedStation({
           actionType: 'departure',
-          stationData: freshData,
+          stationData: data,
         }),
       );
       selectedStation.arrival.name
         ? searchNavigation.navigate('SubwayPathResult', {
-            departure: freshData.code,
-            arrival: selectedStation.arrival.code,
+            departure: data,
+            arrival: selectedStation.arrival,
           })
         : rootNavigation.pop();
     } else if (stationType === '도착역') {
       dispatch(
         getSeletedStation({
           actionType: 'arrival',
-          stationData: freshData,
+          stationData: data,
         }),
       );
       selectedStation.departure.name
         ? searchNavigation.navigate('SubwayPathResult', {
-            departure: selectedStation.departure.code,
-            arrival: freshData.code,
+            departure: selectedStation.departure,
+            arrival: data,
           })
         : rootNavigation.pop();
     }
   };
 
   // 입력어가 없으면 최근검색
-  if (!inputStatus) {
+  if (!searchText) {
     return (
       <Container>
         <Header>
@@ -84,9 +77,8 @@ const SearchResultList = ({ historyList }: SearchResultListProps) => {
               key={history.id}
               onPress={() =>
                 saveStationData({
-                  stationName: history.stationName,
-                  stationCode: history.stationCode,
-                  stationLine: history.stationLine,
+                  name: history.stationName,
+                  line: history.stationLine,
                 })
               }
             >
@@ -119,28 +111,27 @@ const SearchResultList = ({ historyList }: SearchResultListProps) => {
       {/* 입력어가 있고 && 검색 결과가 있으면 결과 표시 */}
       {/* 입력어가 있고 && 검색 결과가 없으면 없음 표시 */}
       <Ul marginTop="28px">
-        {resultData.map((station) => (
+        {searchResultData.map((station) => (
           <Li
-            key={station.STATION_CD}
+            key={station.name + station.line}
             onPress={() =>
               saveStationData({
-                stationName: station.STATION_NM,
-                stationCode: Number(station.STATION_CD),
-                stationLine: station.LINE_NUM,
+                name: station.name,
+                line: station.line,
               })
             }
           >
             <LocateIcon source={iconPath['location_pin_gray']} width={25} height={25} />
             <StationInfoBox>
               <FontText
-                value={station.STATION_NM}
+                value={station.name}
                 textSize="16px"
                 textWeight="Medium"
                 lineHeight="21px"
                 textColor="#000"
               />
               <FontText
-                value={station.LINE_NUM}
+                value={station.line}
                 textSize="14px"
                 textWeight="Regular"
                 lineHeight="21px"
