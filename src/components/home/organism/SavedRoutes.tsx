@@ -13,17 +13,17 @@ const SavedRoutes = () => {
   ];
 
   const savedRoutes = [
-    { savedrouteName: '출근' },
-    { savedrouteName: '본가' },
-    { savedrouteName: '퇴근' },
+    { savedRouteName: '출근' },
+    { savedRouteName: '본가' },
+    { savedRouteName: '퇴근' },
   ];
 
   const renderSavedRoutes = () => {
-    return savedRoutes.map(({ savedrouteName }, index) => (
+    return savedRoutes.map(({ savedRouteName }, index) => (
       <View key={index} style={styles.containerRoutes}>
         <View style={styles.containerRenderTitle}>
           <FontText
-            value={savedrouteName}
+            value={savedRouteName}
             textSize="22px"
             textWeight="Bold"
             lineHeight="29px"
@@ -82,7 +82,13 @@ const SavedRoutes = () => {
     hideDeletePopup();
   };
 
-  const DeleteModal = ({ isVisible, onCancel, onDelete }) => {
+  interface DeleteModalProps {
+    isVisible: boolean;
+    onCancel: () => void;
+    onDelete: () => void;
+  }
+
+  const DeleteModal: React.FC<DeleteModalProps> = ({ isVisible, onCancel, onDelete }) => {
     return (
       <Modal
         animationType="fade"
@@ -257,7 +263,7 @@ const styles = StyleSheet.create({
   cancelButton: {
     flex: 1,
     marginRight: 5,
-    backgroundColor: '#fff',
+    backgroundColor: COLOR.WHITE,
     borderWidth: 1,
     borderColor: 'black',
     borderRadius: 5,
@@ -267,7 +273,7 @@ const styles = StyleSheet.create({
   deleteButton: {
     flex: 1,
     marginLeft: 5,
-    backgroundColor: 'black',
+    backgroundColor: COLOR.BASIC_BLACK,
     borderRadius: 5,
     padding: 10,
     alignItems: 'center',
