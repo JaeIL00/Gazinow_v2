@@ -21,9 +21,24 @@ interface TextStyleProps {
   textColor?: string;
   lineHeight: string;
 }
+const weight = (weightText: TextStyleProps['textWeight']) => {
+  switch (weightText) {
+    case 'Bold':
+      return '700';
+    case 'SemiBold':
+      return '600';
+    case 'Medium':
+      return '500';
+    case 'Regular':
+      return '400';
+    default:
+      return '400';
+  }
+};
 const Normal = styled.Text<TextStyleProps>`
   font-size: ${({ textSize }) => textSize};
   font-family: Pretendard-${({ textWeight }) => textWeight};
+  font-weight: ${({ textWeight }) => weight(textWeight)};
   color: ${({ textColor = COLOR.BASIC_BLACK }) => textColor};
   line-height: ${({ lineHeight }) => lineHeight};
 `;

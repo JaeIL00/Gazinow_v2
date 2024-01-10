@@ -3,6 +3,7 @@ import { useSerarchHistory } from '@/hooks/queries';
 
 const SubwaySearchPage = () => {
   const { data: history } = useSerarchHistory();
+  console.log(history);
 
   return (
     <>

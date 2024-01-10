@@ -6,4 +6,9 @@ export type RootStackParamList = {
 
 export type SearchStackParamList = {
   SubwaySearch: undefined;
+  SubwayPathResult: {
+    departure: { name: string; line: string };
+    arrival: { name: string; line: string };
+  };
+  SubwayPathDetail: undefined;
 };

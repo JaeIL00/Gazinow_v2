@@ -12,5 +12,12 @@ export {
   INITIAL_CONSONANTS,
   DUMMY_VALUE,
 } from './constants';
-export { SEARCH_NAVIGATION, SUBWAY_SEARCH, MAIN_BOTTOM_TAB, LOGIN, HOME } from './navigation';
+export {
+  SEARCH_NAVIGATION,
+  SUBWAY_SEARCH,
+  SUBWAY_PATH_RESULT,
+  MAIN_BOTTOM_TAB,
+  LOGIN,
+  HOME,
+} from './navigation';
 export { default as COLOR } from './color';
