@@ -3,7 +3,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useEffect } from 'react';
 import { Text } from 'react-native';
 
-import { SwapSubwayStation } from '@/components/home/organism';
+import { SwapSubwayStation, SavedRouteIssues } from '@/components/home/organism';
 import { SUBWAY_INFO_STORAGE_KEY } from '@/constants';
 import { useSubwayInfoQuery } from '@/hooks/queries';
 import { useAppDispatch } from '@/store';
@@ -39,6 +39,7 @@ const HomePage = () => {
     <Container>
       <Text>홈 페이지</Text>
       <SwapSubwayStation isWrap={true} />
+      <SavedRouteIssues/>
     </Container>
   );
 };
