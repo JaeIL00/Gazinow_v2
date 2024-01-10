@@ -15,12 +15,13 @@ const screenOption = {
 };
 
 const RootNavigation = () => {
-  const accessToken = useAppSelect(({ auth }) => auth.accessToken);
+  // const accessToken = useAppSelect(({ auth }) => auth.accessToken);
 
   return (
     <NavigationContainer>
-      <Stack.Navigator screenOptions={screenOption}>
-        {!accessToken && <Stack.Screen name={LOGIN} component={LoginPage} />}
+      <Stack.Navigator screenOptions={screenOption} initialRouteName={MAIN_BOTTOM_TAB}>
+        {/* {!accessToken && <Stack.Screen name={LOGIN} component={LoginPage} />} */}
+        <Stack.Screen name={LOGIN} component={LoginPage} />
         <Stack.Screen name={MAIN_BOTTOM_TAB} component={MainBottomTabNavigation} />
         <Stack.Screen name={SEARCH_NAVIGATION} component={SearchNavigation} />
       </Stack.Navigator>

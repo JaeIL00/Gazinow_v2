@@ -1,7 +1,11 @@
 import { AxiosError } from 'axios';
 
 import { axiosInstance } from '../axiosInstance';
-import { SearchPathsTypes, SearchSubwayNameTypes } from '@/types/apis/searchTypes';
+import {
+  SearchHistoryTypes,
+  SearchPathsTypes,
+  SearchSubwayNameTypes,
+} from '@/types/apis/searchTypes';
 
 export const searchSubwayName = async (params: { subwayName: string }) => {
   try {
@@ -16,26 +20,13 @@ export const searchSubwayName = async (params: { subwayName: string }) => {
 };
 
 export const searchHistoryFetch = async () => {
-  // 추후 서버 연결
-  // return await axiosInstance.post<LoginFetchResponse>('/api/v1/member/login', data);
-
-  // mock
-  const mockData = [
-    {
-      id: 0,
-      stationName: '분당',
-      stationLine: '1호선',
-      stationCode: 242,
-    },
-    {
-      id: 1,
-      stationName: '금정',
-      stationLine: '4호선',
-      stationCode: 42,
-    },
-  ];
-
-  return mockData;
+  try {
+    const res = await axiosInstance.get<SearchHistoryTypes>('/api/v1/recentSearch');
+    return res.data;
+  } catch (err) {
+    const er = err as AxiosError;
+    throw er;
+  }
 };
 
 export const searchPathsFetch = async (params: {

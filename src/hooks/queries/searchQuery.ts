@@ -44,7 +44,7 @@ export const useSearchSubwayName = (subwayName: string) => {
 };
 
 export const useSerarchHistory = () => {
-  const { data } = useQuery('searchHistory', searchHistoryFetch);
+  const { data } = useQuery(['searchHistory'], searchHistoryFetch);
   return { data };
 };
 

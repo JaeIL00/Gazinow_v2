@@ -13,7 +13,7 @@ import { useSearchSubwayName } from '@/hooks/queries/searchQuery';
 import { getSearchText } from '@/store/modules/subwaySearchModule';
 
 interface SearchResultListProps {
-  historyList: SearchHistoryTypes[];
+  historyList: SearchHistoryTypes;
 }
 
 const SearchResultList = ({ historyList }: SearchResultListProps) => {
@@ -72,7 +72,7 @@ const SearchResultList = ({ historyList }: SearchResultListProps) => {
         </Header>
 
         <Ul marginTop="18px">
-          {historyList.map((history) => (
+          {historyList.data.map((history) => (
             <Li
               key={history.id}
               onPress={() =>

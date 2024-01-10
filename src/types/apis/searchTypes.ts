@@ -30,10 +30,7 @@ export interface SearchSubwayNameTypes {
 }
 
 export interface SearchHistoryTypes {
-  id: number;
-  stationName: string;
-  stationLine: string;
-  stationCode: number;
+  data: { id: number; stationName: string; stationLine: string; stationCode: number }[];
 }
 
 export interface SearchPathsTypes {
