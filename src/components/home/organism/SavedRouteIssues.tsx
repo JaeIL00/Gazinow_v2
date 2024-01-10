@@ -16,10 +16,7 @@ const SavedRouteIssues = () => {
     <TouchableOpacity
       key={text}
       onPress={() => handleButtonClick(text)}
-      style={[
-        styles.button,
-        { backgroundColor: activeButton === text ? '#474747' : 'white' },
-      ]}
+      style={[styles.button, { backgroundColor: activeButton === text ? '#474747' : 'white' }]}
     >
       <Text style={{ fontSize: 18, color: activeButton === text ? 'white' : 'black' }}>{text}</Text>
     </TouchableOpacity>
@@ -39,7 +36,6 @@ const SavedRouteIssues = () => {
 
   return (
     <View style={styles.container}>
-
       {/* 이슈/저장경로/최근검색 버튼 */}
       <View style={styles.navContainer}>
         <View style={styles.textContainer}>
@@ -59,12 +55,7 @@ const SavedRouteIssues = () => {
         </View>
         <View style={styles.rightContainer}>
           <Text style={styles.textMoreInfo}>세부정보</Text>
-          <IconButton
-            isFontIcon={false}
-            imagePath="more_gray"
-            iconWidth="10px"
-            iconHeight="20px"
-          />
+          <IconButton isFontIcon={false} imagePath="more_gray" iconWidth="10px" iconHeight="20px" />
         </View>
       </View>
 
@@ -78,12 +69,7 @@ const SavedRouteIssues = () => {
           iconHeight="30px"
         />
         <Text style={[styles.buttonIssues, styles.textIssues]}>폭우로 인한 4호선 운행정지</Text>
-        <IconButton
-          isFontIcon={false}
-          imagePath="more_gray"
-          iconWidth="10px"
-          iconHeight="20px"
-        />
+        <IconButton isFontIcon={false} imagePath="more_gray" iconWidth="10px" iconHeight="20px" />
       </View>
 
       {/* 대체경로 */}
@@ -141,7 +127,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#F2F2F2',
     width: 999,
-    marginStart: -99
+    marginStart: -99,
   },
 
   horizontalContainer: {
@@ -265,7 +251,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
   },
-
 });
 
 export default SavedRouteIssues;
