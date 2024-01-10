@@ -1,4 +1,4 @@
-import mockData from '../../../mocks/loginResponse.json';
+// import mockData from '../../../mocks/loginResponse.json';
 import { axiosInstance } from '../axiosInstance';
 import type { LoginFormTypes, LoginFetchResponse, TokenTypes } from '@/types/apis';
 
@@ -7,7 +7,7 @@ export const loginFetch = async (data: LoginFormTypes) => {
   // return await axiosInstance.post<LoginFetchResponse>('/api/v1/member/login', data);
 
   // mock
-  return mockData;
+  // return mockData;
 };
 
 export const autoLoginFetch = async (data: TokenTypes) => {
@@ -15,5 +15,5 @@ export const autoLoginFetch = async (data: TokenTypes) => {
   // return await axiosInstance.post<LoginFetchResponse>('/api/v1/member/reissue', data);
 
   // mock
-  return mockData;
+  // return mockData;
 };
