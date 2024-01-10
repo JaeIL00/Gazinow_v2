@@ -1,16 +1,24 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { IconButton } from '@/components/common/molecules';
+import { FontText } from '@/components/common/atoms';
+import { COLOR } from '@/constants';
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
 const SavedRouteIssues = () => {
-  const [activeButton, setActiveButton] = useState('이슈');
+  const [activeButton, setActiveButton] = useState<'이슈' | '저장경로' | '최근검색'>('이슈');
+
   const subwayRoutes = [
-    { line: '4', station: '혜화' },
-    { line: '2', station: '동대문역사문화공원' },
-    { line: '2', station: '잠실' },
+    { line: 'line4', station: '혜화', color: COLOR.LINE4 },
+    { line: 'line2', station: '동대문역사문화공원', color: COLOR.LINE2 },
+    { line: 'line2', station: '잠실', color: COLOR.LINE2 },
   ];
 
   const handleButtonClick = (buttonText: string) => setActiveButton(buttonText);
+
+  const handleTextClick = () => {
+    // navigation.
+  }
 
   const renderButton = (text: string) => (
     <TouchableOpacity
@@ -18,18 +26,30 @@ const SavedRouteIssues = () => {
       onPress={() => handleButtonClick(text)}
       style={[styles.button, { backgroundColor: activeButton === text ? '#474747' : 'white' }]}
     >
-      <Text style={{ fontSize: 18, color: activeButton === text ? 'white' : 'black' }}>{text}</Text>
+      <FontText
+        value={text}
+        textSize="16px"
+        textWeight="Medium"
+        lineHeight="31px"
+        textColor={activeButton === text ? 'white' : 'black'}
+      />
     </TouchableOpacity>
   );
 
   const renderSubwayRoute = () => {
-    return subwayRoutes.map(({ line, station }, index, array) => (
-      <View key={index} style={styles.iconContainer}>
-        {/* {index < array.length - 1 && <View style={styles.line} />} */}
-        <View style={styles.circle2}>
-          <Text style={styles.iconText}>{line}</Text>
+    return subwayRoutes.map(({ line, station, color }, index) => (
+      <View key={line + station}>
+        <View style={styles.iconContainer}>
+          <IconButton isFontIcon={false} imagePath={line} iconWidth="25px" iconHeight="25px" />
+          {index < subwayRoutes.length - 1 && <View style={styles.greenLine}></View>}
         </View>
-        <Text style={styles.stationName}>{station}</Text>
+        <FontText
+          value={station}
+          textSize="16px"
+          textWeight="Medium"
+          lineHeight="21px"
+          textColor={color}
+        />
       </View>
     ));
   };
@@ -38,10 +58,16 @@ const SavedRouteIssues = () => {
     <View style={styles.container}>
       {/* 이슈/저장경로/최근검색 버튼 */}
       <View style={styles.navContainer}>
-        <View style={styles.textContainer}>
-          {['이슈', '저장경로', '최근검색'].map(renderButton)}
-        </View>
-        <Text style={styles.textEditRoute}>저장경로 편집</Text>
+        <View style={styles.textContainer}>{['이슈', '저장경로', '최근검색'].map(renderButton)}</View>
+        <TouchableWithoutFeedback onPress={handleTextClick}>
+          <FontText
+            value="저장경로 편집"
+            textSize="16px"
+            textWeight="Medium"
+            lineHeight="21px"
+            textColor={COLOR.GRAY_999}
+          />
+        </TouchableWithoutFeedback>
       </View>
 
       {/* 중앙선 */}
@@ -50,12 +76,30 @@ const SavedRouteIssues = () => {
       {/* 출근길/세부정보 */}
       <View style={styles.horizontalContainer}>
         <View style={styles.textContainer}>
-          <Text style={styles.textSavedRoute}>출근길</Text>
-          <Text style={styles.grayEllipse}>42분 이상 예상</Text>
+          <FontText style={styles.textRightMargin}
+            value="출근길"
+            textSize="20px"
+            textWeight="Bold"
+            lineHeight="21px"
+            textColor={COLOR.BASIC_BLACK}
+          />
+          <FontText style={styles.grayEllipse}
+            value="42분 이상 예상"
+            textSize="16px"
+            textWeight="Medium"
+            lineHeight="21px"
+            textColor={COLOR.GRAY_999}
+          />
         </View>
-        <View style={styles.rightContainer}>
-          <Text style={styles.textMoreInfo}>세부정보</Text>
-          <IconButton isFontIcon={false} imagePath="more_gray" iconWidth="10px" iconHeight="20px" />
+        <View style={styles.textContainer}>
+          <FontText style={styles.textRightMargin}
+            value="세부정보"
+            textSize="16px"
+            textWeight="Medium"
+            lineHeight="21px"
+            textColor={COLOR.GRAY_999}
+          />
+          <IconButton isFontIcon={false} imagePath="more_gray" iconWidth="8px" iconHeight="14px" />
         </View>
       </View>
 
@@ -64,29 +108,48 @@ const SavedRouteIssues = () => {
       <View style={styles.issuesContainer}>
         <IconButton
           isFontIcon={false}
-          imagePath="issue_rain_bottom"
+          imagePath="issue_rain_circle"
           iconWidth="30px"
           iconHeight="30px"
         />
-        <Text style={[styles.buttonIssues, styles.textIssues]}>폭우로 인한 4호선 운행정지</Text>
-        <IconButton isFontIcon={false} imagePath="more_gray" iconWidth="10px" iconHeight="20px" />
+        <FontText style={styles.buttonIssues}
+          value="폭우로 인한 4호선 운행정지"
+          textSize="18px"
+          textWeight="Bold"
+          lineHeight="21px"
+          textColor={COLOR.BASIC_BLACK}
+        />
+        <IconButton isFontIcon={false} imagePath="more_gray" iconWidth="12px" iconHeight="20px" />
       </View>
 
       {/* 대체경로 */}
       <View style={styles.grayRectg}>
         <View style={styles.horizontalContainer2}>
           <View style={styles.textContainer}>
-            <Text style={styles.textSavedRoute}>대체 경로</Text>
-            <Text style={styles.grayEllipse}>평균 42분</Text>
-          </View>
-          <View style={styles.rightContainer}>
-            <Text style={styles.textMoreInfo}>세부정보</Text>
-            <IconButton
-              isFontIcon={false}
-              imagePath="more_gray"
-              iconWidth="10px"
-              iconHeight="20px"
+            <FontText style={styles.textRightMargin}
+              value="대체 경로"
+              textSize="20px"
+              textWeight="Bold"
+              lineHeight="21px"
+              textColor={COLOR.BASIC_BLACK}
             />
+            <FontText
+              value="평균 42분"
+              textSize="14px"
+              textWeight="Regular"
+              lineHeight="15px"
+              textColor={COLOR.BASIC_BLACK}
+            />
+          </View>
+          <View style={styles.textContainer}>
+            <FontText style={styles.textRightMargin}
+              value="세부정보"
+              textSize="16px"
+              textWeight="Medium"
+              lineHeight="21px"
+              textColor={COLOR.GRAY_999}
+            />
+            <IconButton isFontIcon={false} imagePath="more_gray" iconWidth="8px" iconHeight="14px" />
           </View>
         </View>
 
@@ -97,17 +160,23 @@ const SavedRouteIssues = () => {
 };
 
 const styles = StyleSheet.create({
+  iconContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  greenLine: {
+    width: 50,
+    height: 2,
+    backgroundColor: '#00B140',
+  },
   container: {
-    // flex: 1,
     marginTop: 20,
-    padding: 20,
+    padding: 17,
     backgroundColor: 'white',
     borderRadius: 15,
   },
   navContainer: {
-    // borderBottomColor: 'black',
-    // borderBottomWidth: 1,
-    paddingBottom: 20,
+    paddingBottom: 17,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -118,8 +187,6 @@ const styles = StyleSheet.create({
     borderColor: '#EBEBEB',
     borderRadius: 40,
     paddingHorizontal: 10,
-    paddingBottom: 7,
-    paddingTop: 3,
     marginRight: 6,
   },
 
@@ -140,31 +207,16 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
   },
-  rightContainer: {
-    flexDirection: 'row',
-    alignItems: 'flex-end',
-  },
-  textEditRoute: {
-    fontSize: 16,
-  },
-  textMoreInfo: {
-    fontSize: 16,
-    marginRight: 5,
-  },
-  textSavedRoute: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: '#181818',
+
+  textRightMargin: {
     marginRight: 10,
   },
+
   grayEllipse: {
-    fontSize: 16,
     backgroundColor: '#f0f0f0',
     borderRadius: 40,
     paddingHorizontal: 8,
-    paddingTop: 2,
-    paddingBottom: 6,
-    marginTop: 5,
+    paddingVertical: 2,
   },
 
   container2: {
@@ -172,45 +224,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-  },
-  line4: {
-    flex: 1,
-    borderBottomWidth: 2,
-    borderColor: '#0EB5EB',
-  },
-  line2: {
-    flex: 1,
-    borderBottomWidth: 2,
-    borderColor: '#00B140',
-  },
-  iconContainer: {
-    alignItems: 'center',
-  },
-  circle4: {
-    width: 25,
-    height: 25,
-    borderRadius: 15,
-    backgroundColor: '#0EB5EB',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  circle2: {
-    width: 25,
-    height: 25,
-    borderRadius: 15,
-    backgroundColor: '#00B140',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  iconText: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    color: 'white',
-  },
-  stationName: {
-    fontSize: 16,
-    marginTop: 10,
-    color: '#00B140',
   },
 
   issuesContainer: {
@@ -228,25 +241,18 @@ const styles = StyleSheet.create({
   },
   buttonIssues: {
     flex: 1,
-  },
-  textIssues: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: '#181818',
     marginLeft: 10,
   },
 
   grayRectg: {
     fontSize: 16,
-    backgroundColor: '#f0f0f0',
+    backgroundColor: COLOR.BG_LIGHT_GRAY,
     borderRadius: 13,
     width: 'auto',
     height: 'auto',
-    // marginTop: 15,
     padding: 20,
   },
   horizontalContainer2: {
-    // marginVertical: 20,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
