@@ -9,7 +9,7 @@ import type { RootStackParamList } from '@/types/navigation';
 import { tokenReissueFetch } from '@/apis/auth';
 import { useMutation } from 'react-query';
 import { useEffect } from 'react';
-import { getEncryptedStorage } from '@/utils';
+import { getEncryptedStorage, removeEncryptedStorage, setEncryptedStorage } from '@/utils';
 import { View } from 'react-native';
 import { FontText } from '@/components/common/atoms';
 
@@ -28,8 +28,16 @@ const RootNavigation = () => {
           const rootNavigation = useRootNavigation();
 
           const { mutate } = useMutation(tokenReissueFetch, {
-            onSuccess: () => rootNavigation.replace(MAIN_BOTTOM_TAB),
-            onError: () => rootNavigation.replace(LOGIN),
+            onSuccess: async ({ newAccessToken, newRefreshToken }) => {
+              await setEncryptedStorage('access_token', newAccessToken);
+              await setEncryptedStorage('refresh_token', newRefreshToken);
+              rootNavigation.replace(MAIN_BOTTOM_TAB);
+            },
+            onError: () => {
+              removeEncryptedStorage('access_token');
+              removeEncryptedStorage('refresh_token');
+              rootNavigation.replace(LOGIN);
+            },
           });
 
           const firstAuthorization = async () => {

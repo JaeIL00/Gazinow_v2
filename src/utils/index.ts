@@ -1,1 +1,1 @@
-export { getEncryptedStorage, setEncryptedStorage } from './storage';
+export { getEncryptedStorage, setEncryptedStorage, removeEncryptedStorage } from './storage';

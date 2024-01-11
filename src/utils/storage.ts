@@ -19,3 +19,12 @@ export const setEncryptedStorage = async <T>(key: string, data: T) => {
     console.error('Failed token set storage from login response');
   }
 };
+
+export const removeEncryptedStorage = async (key: string) => {
+  try {
+    await EncryptedStorage.removeItem(key);
+  } catch (error) {
+    // debug
+    console.error('Failed token set storage from login response');
+  }
+};

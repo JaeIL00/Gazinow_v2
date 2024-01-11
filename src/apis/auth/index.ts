@@ -25,7 +25,7 @@ export const tokenReissueFetch = async ({
 }) => {
   try {
     const res = await axios.post<{ data: LoginFetchResponse }>(
-      'api/v1/member/reissue',
+      '/api/v1/member/reissue',
       {
         accessToken,
         refreshToken,
@@ -34,9 +34,14 @@ export const tokenReissueFetch = async ({
         baseURL: API_BASE_URL,
       },
     );
-    return { freshAccessToken: res.data.data.accessToken };
+    console.log(res);
+    return {
+      newAccessToken: res.data.data.accessToken,
+      newRefreshToken: res.data.data.refreshToken,
+    };
   } catch (err) {
     const er = err as AxiosError;
+    console.log(er.request);
     throw er;
   }
 };
