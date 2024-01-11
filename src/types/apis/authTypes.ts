@@ -3,9 +3,17 @@ export interface LoginFormTypes {
   password: string;
 }
 
-export interface TokenTypes {
+export interface LoginFetchResponse {
+  grantType: 'Bearer';
+  memberId: number;
+  nickName: string;
+  email: string;
   accessToken: string;
   refreshToken: string;
+  accessTokenExpirationTime: number;
+  refreshTokenExpirationTime: number;
+  notificationByKeyword: boolean;
+  notificationByRepost: boolean;
+  notificationByLike: boolean;
+  firebaseToken: boolean;
 }
-
-export interface LoginFetchResponse extends TokenTypes {}

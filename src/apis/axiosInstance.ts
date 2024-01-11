@@ -1,9 +1,12 @@
 import { API_BASE_URL } from '@env';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios, { AxiosError } from 'axios';
 
 import { createNavigationContainerRef } from '@react-navigation/native';
 import { RootStackParamList } from '@/types/navigation';
+import { getEncryptedStorage, setEncryptedStorage } from '@/utils';
+import { LOGIN } from '@/constants';
+import EncryptedStorage from 'react-native-encrypted-storage';
+import { tokenReissueFetch } from './auth';
 
 const navigationRef = createNavigationContainerRef<RootStackParamList>();
 
@@ -19,8 +22,7 @@ export const axiosInstance = axios.create({
 });
 
 axiosInstance.interceptors.request.use(async (requestConfig) => {
-  const token = await AsyncStorage.getItem('access_token');
-
+  const token = await getEncryptedStorage('access_token');
   requestConfig.headers.Authorization = `Bearer ${token}`;
 
   return requestConfig;
@@ -35,26 +37,39 @@ axiosInstance.interceptors.response.use(
     }
 
     // access token is not valid
-    const refreshToken = await AsyncStorage.getItem('refresh_token');
+    const accessToken = await getEncryptedStorage('access_token');
+    const refreshToken = await getEncryptedStorage('refresh_token');
 
     if (!refreshToken) {
-      return navigate('Login');
+      return navigate(LOGIN);
     }
 
-    const response = await axios.post('api/v1/member/reissue', null, {
-      baseURL: API_BASE_URL,
-      headers: { Authorization: `Bearer ${refreshToken}` },
+    const response = await axios.post(
+      'api/v1/member/reissue',
+      {
+        accessToken,
+        refreshToken,
+      },
+      {
+        baseURL: API_BASE_URL,
+        headers: { Authorization: `Bearer ${refreshToken}` },
+      },
+    );
+
+    const { freshAccessToken } = await tokenReissueFetch({
+      accessToken,
+      refreshToken,
     });
 
     if (response.status === 200) {
       // refresh token is valid
-      AsyncStorage.setItem('access_token', response.data.access_token);
+      await setEncryptedStorage('access_token', freshAccessToken);
       return axiosInstance(error.config || {});
     } else {
       // refresh token is not valid
-      await AsyncStorage.removeItem('access_token');
-      await AsyncStorage.removeItem('refresh_token');
-      return navigate('Login');
+      await EncryptedStorage.removeItem('access_token');
+      await EncryptedStorage.removeItem('refresh_token');
+      return navigate(LOGIN);
     }
   },
 );

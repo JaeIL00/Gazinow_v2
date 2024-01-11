@@ -1,13 +1,13 @@
 import { useMutation } from 'react-query';
 
-import { loginFetch, autoLoginFetch } from '@/apis/auth';
+import { loginFetch } from '@/apis/auth';
+import { LoginFetchResponse } from '@/types/apis';
 
-export const useLoginMutation = () => {
-  const { mutate: loginFetching } = useMutation(loginFetch);
-  return { loginFetching };
-};
-
-export const useAutoLoginMutation = () => {
-  const { mutate: autoLoginFetching } = useMutation(autoLoginFetch);
-  return { autoLoginFetching };
+export const useLoginMutation = ({
+  onSuccess,
+}: {
+  onSuccess: (data: LoginFetchResponse) => void;
+}) => {
+  const { mutate: loginMutate } = useMutation(loginFetch, { onSuccess });
+  return { loginMutate };
 };

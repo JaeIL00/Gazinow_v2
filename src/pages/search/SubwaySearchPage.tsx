@@ -1,5 +1,5 @@
 import { SearchInputBox, SearchResultList } from '@/components/search/organism';
-import { useSerarchHistory } from '@/hooks/queries';
+import { useSerarchHistory } from '@/hooks';
 
 const SubwaySearchPage = () => {
   const { data: history } = useSerarchHistory();

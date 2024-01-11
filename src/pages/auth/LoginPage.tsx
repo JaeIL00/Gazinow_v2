@@ -3,8 +3,10 @@ import { View } from 'react-native';
 
 import { Input } from '@/components/common/atoms';
 import { TextButton } from '@/components/common/molecules';
-import { useTryLogin } from '@/hooks';
 import { LoginFormTypes } from '@/types/apis';
+import { useLoginMutation } from '@/hooks';
+import { setEncryptedStorage } from '@/utils';
+import { useRootNavigation } from '@/navigation/RootNavigation';
 
 const initialFormState: LoginFormTypes = {
   email: '',
@@ -12,22 +14,25 @@ const initialFormState: LoginFormTypes = {
 };
 
 const LoginPage = () => {
-  const [formData, setFormData] = useState<LoginFormTypes>(initialFormState);
+  const navigation = useRootNavigation();
 
-  const tryLogin = useTryLogin();
+  const { loginMutate } = useLoginMutation({
+    onSuccess: async ({ accessToken, refreshToken }) => {
+      await setEncryptedStorage('access_token', accessToken);
+      await setEncryptedStorage('refresh_token', refreshToken);
+      navigation.replace('MainBottomTab');
+    },
+  });
+
+  const [formData, setFormData] = useState<LoginFormTypes>(initialFormState);
 
   const changeFormText = (type: 'email' | 'password', text: string) => {
     setFormData((prev) => ({ ...prev, [type]: text }));
   };
 
   const submitFormData = () => {
-    tryLogin('submit', formData);
+    loginMutate(formData);
   };
-
-  useEffect(() => {
-    tryLogin('auto');
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   return (
     <View>

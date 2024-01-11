@@ -19,7 +19,7 @@ interface TextStyleProps {
   textSize: string;
   textWeight: 'Bold' | 'SemiBold' | 'Medium' | 'Regular';
   textColor?: string;
-  lineHeight: string;
+  lineHeight?: string;
 }
 const weight = (weightText: TextStyleProps['textWeight']) => {
   switch (weightText) {

@@ -1,4 +1,5 @@
 export type RootStackParamList = {
+  Temp: undefined;
   Login: undefined;
   MainBottomTab: undefined;
   SearchNavigation: { screen: 'SubwaySearch' };
