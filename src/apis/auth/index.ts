@@ -34,14 +34,12 @@ export const tokenReissueFetch = async ({
         baseURL: API_BASE_URL,
       },
     );
-    console.log(res);
     return {
       newAccessToken: res.data.data.accessToken,
       newRefreshToken: res.data.data.refreshToken,
     };
   } catch (err) {
     const er = err as AxiosError;
-    console.log(er.request);
     throw er;
   }
 };
