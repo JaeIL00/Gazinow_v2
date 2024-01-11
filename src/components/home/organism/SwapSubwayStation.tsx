@@ -54,7 +54,13 @@ const SwapSubwayStation = ({ isWrap }: SwapProps) => {
   }, [selectedStation]);
 
   return (
-    <Container isWrap={isWrap} offset={[0, 4]} distance={34} startColor="rgba(0, 0, 0, 0.05)">
+    <Container
+      isWrap={isWrap}
+      offset={[0, 4]}
+      distance={34}
+      startColor="rgba(0,0,0,0.05)"
+      disabled={!isWrap}
+    >
       <InnerBox>
         <StationButton
           value={subwayStation.departure.name ? subwayStation.departure.name : DEPARTURE_STATION}
@@ -106,7 +112,7 @@ const InnerBox = styled.View`
   gap: 8px;
 `;
 const StationButton = styled(TextButton)`
-  background-color: ${COLOR.BG_LIGHT_GRAY};
+  background-color: ${COLOR.LIGHT_GRAY};
   width: 100%;
   height: 41px;
   border-radius: 8px;

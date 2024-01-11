@@ -4,6 +4,9 @@ export interface IconPathTypes {
   exchange_gray: ImageSourcePropType;
   location_pin_gray: ImageSourcePropType;
   noIssue: ImageSourcePropType;
+  left_arrow_nonbar: ImageSourcePropType;
+  right_arrow_nonbar: ImageSourcePropType;
+  walk_human_gray: ImageSourcePropType;
   issue_rain: ImageSourcePropType;
   issue_rain_circle: ImageSourcePropType;
   more_gray: ImageSourcePropType;
@@ -34,6 +37,9 @@ export const iconPath: IconPathTypes = {
   exchange_gray: require('@/assets/icons/exchange_gray.png'),
   location_pin_gray: require('@/assets/icons/location_pin_gray.png'),
   noIssue: require('@/assets/icons/noIssue.png'),
+  left_arrow_nonbar: require('@/assets/icons/left_arrow_nonbar.png'),
+  right_arrow_nonbar: require('@/assets/icons/right_arrow_nonbar.png'),
+  walk_human_gray: require('@/assets/icons/walk_human_gray.png'),
   issue_rain: require('@/assets/icons/issueRain.png'),
   issue_rain_circle: require('@/assets/icons/issueRainCircle.png'),
   more_gray: require('@/assets/icons/moreBtn.png'),

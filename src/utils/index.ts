@@ -1,1 +1,1 @@
-export { default as textSearchRegExp } from './textSearchRegExp';
+export { getEncryptedStorage, setEncryptedStorage, removeEncryptedStorage } from './storage';

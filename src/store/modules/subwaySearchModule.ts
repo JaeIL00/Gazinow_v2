@@ -1,18 +1,14 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 
-import type { SubwayPublicDataTypes } from '@/types/apis';
-
 export interface StationDataTypes {
   name: string;
-  code: string;
+  line: string;
 }
 
 interface InitialStateTypes {
-  subwayPublicData: SubwayPublicDataTypes[];
   stationType: null | '출발역' | '도착역';
-  inputStatus: boolean;
-  searchResult: SubwayPublicDataTypes[];
+  searchText: string;
   selectedStation: {
     departure: StationDataTypes;
     arrival: StationDataTypes;
@@ -20,18 +16,16 @@ interface InitialStateTypes {
 }
 
 const initialState: InitialStateTypes = {
-  subwayPublicData: [],
   stationType: null,
-  inputStatus: false,
-  searchResult: [],
+  searchText: '',
   selectedStation: {
     departure: {
       name: '',
-      code: '',
+      line: '',
     },
     arrival: {
       name: '',
-      code: '',
+      line: '',
     },
   },
 };
@@ -40,17 +34,11 @@ const subwaySearchSlice = createSlice({
   name: 'subwaySearch',
   initialState,
   reducers: {
-    getSubwayPublicData: (state, action: PayloadAction<InitialStateTypes['subwayPublicData']>) => {
-      state.subwayPublicData = action.payload;
-    },
     getStationType: (state, action: PayloadAction<InitialStateTypes['stationType']>) => {
       state.stationType = action.payload;
     },
-    changeinputStatus: (state, action: PayloadAction<InitialStateTypes['inputStatus']>) => {
-      state.inputStatus = action.payload;
-    },
-    getSearchResult: (state, action: PayloadAction<InitialStateTypes['searchResult']>) => {
-      state.searchResult = action.payload;
+    getSearchText: (state, action: PayloadAction<InitialStateTypes['searchText']>) => {
+      state.searchText = action.payload;
     },
     getSeletedStation: (
       state,
@@ -65,11 +53,5 @@ const subwaySearchSlice = createSlice({
   },
 });
 
-export const {
-  getSubwayPublicData,
-  getStationType,
-  changeinputStatus,
-  getSearchResult,
-  getSeletedStation,
-} = subwaySearchSlice.actions;
+export const { getStationType, getSearchText, getSeletedStation } = subwaySearchSlice.actions;
 export default subwaySearchSlice.reducer;
