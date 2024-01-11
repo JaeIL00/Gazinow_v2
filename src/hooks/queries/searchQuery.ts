@@ -1,9 +1,9 @@
 import { useQuery } from 'react-query';
 
-import { searchHistoryFetch, searchPathsFetch, searchSubwayName } from '@/apis/search/searchApi';
 import { AxiosResponse } from 'axios';
 import { SearchSubwayNameTypes } from '@/types/apis/searchTypes';
 import { useCallback, useState } from 'react';
+import { searchHistoryFetch, searchPathsFetch, searchSubwayName } from '@/apis/search';
 
 export const useSearchSubwayName = (subwayName: string) => {
   const [resultList, setResultList] = useState<SearchSubwayNameTypes[]>([]);

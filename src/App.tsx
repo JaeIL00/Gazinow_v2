@@ -5,6 +5,7 @@ import { Provider } from 'react-redux';
 
 import { RootNavigation } from '@/navigation';
 import { store } from '@/store';
+import { NavigationContainer } from '@react-navigation/native';
 
 const queryClient = new QueryClient();
 
@@ -13,7 +14,9 @@ const App = (): JSX.Element => {
     <SafeArea>
       <Provider store={store}>
         <QueryClientProvider client={queryClient}>
-          <RootNavigation />
+          <NavigationContainer>
+            <RootNavigation />
+          </NavigationContainer>
         </QueryClientProvider>
       </Provider>
     </SafeArea>
