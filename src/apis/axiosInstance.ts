@@ -56,14 +56,14 @@ axiosInstance.interceptors.response.use(
       },
     );
 
-    const { freshAccessToken } = await tokenReissueFetch({
+    const { newAccessToken } = await tokenReissueFetch({
       accessToken,
       refreshToken,
     });
 
     if (response.status === 200) {
       // refresh token is valid
-      await setEncryptedStorage('access_token', freshAccessToken);
+      await setEncryptedStorage('access_token', newAccessToken);
       return axiosInstance(error.config || {});
     } else {
       // refresh token is not valid
