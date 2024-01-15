@@ -6,10 +6,7 @@ import { COLOR } from '@/constants';
 import { SubwayRoute } from '@/components/savedRoutes';
 import { RecommendedRoutes, IssuesBanner } from '@/components/home/organism';
 
-// '저장한 경로가 없어요.'
-// '최근 검색한 경로가 없어요.'
-// '저장한 경로에 이슈가 없어요.'
-const RoutingBox = () => {
+const IssueBox = () => {
     const hasSavedRoutes = true;
 
     if (hasSavedRoutes) {
@@ -21,7 +18,7 @@ const RoutingBox = () => {
                             value="출근길  "
                             textSize="20px"
                             textWeight="Bold"
-                            lineHeight="21px"
+                            lineHeight="25px"
                             textColor={COLOR.BASIC_BLACK}
                         />
                         <FontText style={styles.grayEllipse}
@@ -50,7 +47,7 @@ const RoutingBox = () => {
         );
     } else {
         return <FontText style={styles.messageStyle}
-            value="저장한 경로가 없어요."
+            value="저장한 경로에 이슈가 없어요."
             textSize="16px"
             textWeight="Medium"
             lineHeight="500px"
@@ -78,7 +75,6 @@ const styles = StyleSheet.create({
         paddingHorizontal: 8,
         paddingVertical: 2,
     },
-
     containerSubwayRoute: {
         marginTop: 40,
         flexDirection: 'row',
@@ -86,4 +82,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default RoutingBox;
+export default IssueBox;

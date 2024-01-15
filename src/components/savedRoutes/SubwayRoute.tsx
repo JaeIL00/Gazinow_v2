@@ -44,12 +44,12 @@ const styles = StyleSheet.create({
         paddingHorizontal: 10,
     },
     transferLine: {
-        width: 100,
+        // width: 100,
         // flex: 1,
         height: 2,
-        position: 'absolute',
+        // position: 'absolute',
         left: 68,
-        bottom: 55
+        bottom: 55,
     },
     // issueContainer: {
     //     left: 10,

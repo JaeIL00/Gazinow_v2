@@ -1,35 +1,28 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import { FontText } from '@/components/common/atoms';
 import { COLOR } from '@/constants';
-import axios from 'axios';
 import { SubwayRoute } from '@/components/savedRoutes';
 import { DeleteModal } from '@/components/savedRoutes';
+import { axiosInstance } from '@/apis/axiosInstance';
+import { AxiosError } from 'axios';
+import { useQuery } from 'react-query';
 
 const RenderSavedRoutes = () => {
-    const [routes, setRoutes] = useState([]);
     const [popupVisible, setPopupVisible] = useState(false);
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await axios.get('http://13.125.6.104:8080/api/v1/my_find_road/get_roads', {
-                    headers: {
-                        'Accept': 'application/json',
-                        'Authorization': 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJyeWQxMDIyN0BnbWFpbC5jb20iLCJhdXRoIjoiUk9MRV9VU0VSIiwiZXhwIjoxNzA0OTgwNjA0fQ.fYyv1M0dxFumBgnpMbHiXdJIHfqL-gi6C93QOvGxe1I'
-                    },
-                });
-                setRoutes(response.data.data.map(item => ({ roadName: item.roadName })));
-            } catch (error) {
-                console.error('Error:', error);
-            }
-        };
-
-        fetchData();
-    }, []);
-
+    const { data: savedRoutes } = useQuery('getRoads', async () => {
+        try {
+            const res = await axiosInstance.get('/api/v1/my_find_road/get_roads');
+            return res.data.data;
+        } catch (err) {
+            const er = err as AxiosError;
+            throw er;
+        }
+    });
+    
     const renderSavedRoutes = () => (
-        routes.map(({ roadName }, index) => (
+        savedRoutes.map(({ roadName }, index) => (
             <View key={index} style={styles.containerRoutes}>
                 <View style={styles.containerRenderTitle}>
                     <FontText
@@ -94,7 +87,7 @@ const styles = StyleSheet.create({
     },
     borderLine: {
         borderWidth: 1,
-        borderColor: '#F2F2F2',
+        borderColor: COLOR.LIGHT_GRAY,
         width: 999,
         marginStart: -99,
         marginTop: 30,

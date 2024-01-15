@@ -1,21 +1,26 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
-import { IconButton } from '@/components/common/molecules';
+import { IconButton, TextButton } from '@/components/common/molecules';
 import { FontText } from '@/components/common/atoms';
 import { COLOR } from '@/constants';
 import { SubwayRoute } from '@/components/savedRoutes';
 import styled from '@emotion/native';
 
 const RecommendedRoutes = () => {
+
+  const routeDetail = () => {
+    console.log('dddd')
+  }
+
   return (
     <Container>
       <View style={styles.titleContainer}>
         <View style={styles.textContainer}>
-          <FontText style={styles.textRightMargin}
-            value="대체 경로"
+          <FontText
+            value="대체 경로  "
             textSize="20px"
             textWeight="Bold"
-            lineHeight="21px"
+            lineHeight="25px"
             textColor={COLOR.BASIC_BLACK}
           />
           <FontText
@@ -27,12 +32,13 @@ const RecommendedRoutes = () => {
           />
         </View>
         <View style={styles.textContainer}>
-          <FontText style={styles.textRightMargin}
-            value="세부정보"
+          <TextButton
+            value="세부정보  "
             textSize="16px"
+            textColor={COLOR.GRAY_999}
             textWeight="Medium"
             lineHeight="21px"
-            textColor={COLOR.GRAY_999}
+            onPress={routeDetail}
           />
           <IconButton isFontIcon={false} imagePath="more_gray" iconWidth="8px" iconHeight="14px" />
         </View>
@@ -54,9 +60,6 @@ const styles = StyleSheet.create({
   textContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-  },
-  textRightMargin: {
-    marginRight: 10,
   },
   containerSubwayRoute: {
     marginTop: 40,

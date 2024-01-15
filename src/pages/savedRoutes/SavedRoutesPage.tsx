@@ -1,25 +1,24 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import { IconButton } from '@/components/common/molecules';
 import styled from '@emotion/native';
 import { FontText } from '@/components/common/atoms';
-import { COLOR } from '@/constants';
+import { COLOR, EDIT_ROUTE_NAVIGATION, ADD_NEW_ROUTE_PAGE } from '@/constants';
 import { RenderSavedRoutes } from '@/components/savedRoutes';
+import { useEditRouteNavigation } from '@/navigation/EditRouteNavigation';
 
 const SavedRoutes = () => {
+  const editRouteNavigation = useEditRouteNavigation();
   return (
     <Container>
-      <View style={styles.header}>
-        <IconButton isFontIcon={false} imagePath="backBtn" iconWidth="20px" iconHeight="30px" />
-        <FontText value="  저장한 경로" textSize="22px" textWeight="Bold" lineHeight="29px" textColor={COLOR.BASIC_BLACK} />
-      </View>
-
       <View style={styles.container}>
         <RenderSavedRoutes />
-        <View style={styles.containerAdd}>
-          <IconButton isFontIcon={false} imagePath="addRoute" iconWidth="20px" iconHeight="20px" />
-          <FontText value="  추가하기" textSize="16px" textWeight="Medium" lineHeight="21px" textColor={COLOR.GRAY_999} />
-        </View>
+        <TouchableOpacity onPress={()=> editRouteNavigation.navigate(EDIT_ROUTE_NAVIGATION, { screen: ADD_NEW_ROUTE_PAGE})}>
+          <View style={styles.containerAdd}>
+            <IconButton isFontIcon={false} imagePath="addRoute" iconWidth="20px" iconHeight="20px" />
+            <FontText value="  추가하기" textSize="16px" textWeight="Medium" lineHeight="21px" textColor={COLOR.GRAY_999} />
+          </View>
+        </TouchableOpacity>
       </View>
     </Container>
   );
@@ -28,6 +27,7 @@ const SavedRoutes = () => {
 const Container = styled.View`
   padding: 0 16px;
   flex-direction: column;
+  background-color: ${COLOR.LIGHT_GRAY};
 `;
 
 const styles = StyleSheet.create({
@@ -40,11 +40,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'row',
-  },
-  header: {
-    marginVertical: 30,
-    flexDirection: 'row',
-    alignItems: 'center',
   },
 });
 
