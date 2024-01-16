@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { View, StyleSheet, TouchableOpacity } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, StyleSheet } from 'react-native';
 import { FontText } from '@/components/common/atoms';
 import { COLOR } from '@/constants';
 import { SubwayRoute } from '@/components/savedRoutes';
@@ -7,22 +7,30 @@ import { DeleteModal } from '@/components/savedRoutes';
 import { axiosInstance } from '@/apis/axiosInstance';
 import { AxiosError } from 'axios';
 import { useQuery } from 'react-query';
+import { TextButton } from '../common/molecules';
 
 const RenderSavedRoutes = () => {
     const [popupVisible, setPopupVisible] = useState(false);
+    const [routeToDelete, setRouteToDelete] = useState<number | null>(null);
+    const [savedRoutes, setSavedRoutes] = useState([]);
 
-    const { data: savedRoutes } = useQuery('getRoads', async () => {
+    const { data: savedRoutesData } = useQuery('getRoads', async () => {
         try {
             const res = await axiosInstance.get('/api/v1/my_find_road/get_roads');
+            // console.log("e",res.data.data[0].id)
             return res.data.data;
         } catch (err) {
             const er = err as AxiosError;
             throw er;
         }
     });
+
+    useEffect(() => {
+        setSavedRoutes(savedRoutesData || []);
+    }, [savedRoutesData]);
     
     const renderSavedRoutes = () => (
-        savedRoutes.map(({ roadName }, index) => (
+        savedRoutes.map(({ id, roadName }: { id: number, roadName: string }, index: number) => (
             <View key={index} style={styles.containerRoutes}>
                 <View style={styles.containerRenderTitle}>
                     <FontText
@@ -32,15 +40,14 @@ const RenderSavedRoutes = () => {
                         lineHeight="29px"
                         textColor={COLOR.BASIC_BLACK}
                     />
-                    <TouchableOpacity onPress={showDeletePopup}>
-                        <FontText
-                            value="삭제"
-                            textSize="16px"
-                            textWeight="Medium"
-                            lineHeight="21px"
-                            textColor={COLOR.GRAY_999}
-                        />
-                    </TouchableOpacity>
+                    <TextButton
+                        value="삭제"
+                        textSize="16px"
+                        textColor={COLOR.GRAY_999}
+                        textWeight="Medium"
+                        onPress={() => showDeletePopup(id)}
+                        lineHeight="21px"
+                    />
                 </View>
 
                 <View style={styles.containerSubwayRoute}>
@@ -52,10 +59,23 @@ const RenderSavedRoutes = () => {
         ))
     );
 
-    const showDeletePopup = () => setPopupVisible(true);
+    const showDeletePopup = (id: number) => {
+        // console.log(id);
+        setRouteToDelete(id);
+        setPopupVisible(true);
+    };
+
     const hideDeletePopup = () => setPopupVisible(false);
-    const handleDelete = () => {
-        // 삭제 로직 추가
+
+    const handleDelete = async () => {
+        try {
+            await axiosInstance.delete(`/api/v1/my_find_road/delete_route?id=${routeToDelete}`);
+            const updatedRoutes = savedRoutes.filter(route => route.id !== routeToDelete);
+            setSavedRoutes(updatedRoutes);
+        } catch (err) {
+            const er = err as AxiosError;
+            throw er;
+        }
         hideDeletePopup();
     };
 

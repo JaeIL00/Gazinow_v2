@@ -4,7 +4,8 @@ import type { StackNavigationProp } from '@react-navigation/stack';
 
 import { SearchStackParamList, EditRouteStackParamList } from '@/types/navigation';
 import { SavedRoutesPage, AddNewRoutePage } from '@/pages/savedRoutes';
-import { COLOR, SAVED_ROUTES_PAGE, ADD_NEW_ROUTE_PAGE } from '@/constants';
+import { COLOR, SAVED_ROUTES_PAGE, ADD_NEW_ROUTE_PAGE, SUBWAY_SEARCH } from '@/constants';
+import { SubwaySearchPage } from '@/pages/search';
 
 const Stack = createStackNavigator<SearchStackParamList>();
 
@@ -18,8 +19,9 @@ const screenOption = {
 const EditRouteNavigation = () => {
   return (
     <Stack.Navigator screenOptions={screenOption}>
-      <Stack.Screen name={SAVED_ROUTES_PAGE} component={SavedRoutesPage} options={{title: '저장경로 편집'}}/>
-      <Stack.Screen name={ADD_NEW_ROUTE_PAGE} component={AddNewRoutePage} options={{title: '새 경로 저장'}}/>
+      <Stack.Screen name={SAVED_ROUTES_PAGE} component={SavedRoutesPage} options={{ title: '저장경로 편집' }} />
+      <Stack.Screen name={ADD_NEW_ROUTE_PAGE} component={AddNewRoutePage} options={{ title: '새 경로 저장' }} />
+      <Stack.Screen name={SUBWAY_SEARCH} component={SubwaySearchPage} />
     </Stack.Navigator>
   );
 };
