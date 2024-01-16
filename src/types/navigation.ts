@@ -3,13 +3,19 @@ export type RootStackParamList = {
   Login: undefined;
   MainBottomTab: undefined;
   SearchNavigation: { screen: 'SubwaySearch' };
-  EditRouteNavigation: undefined;
+  EditRouteNavigation: { screen: string };
 };
 
-export type EditRouteStackParamList ={
+export type EditRouteStackParamList = {
   SavedRoutesPage: undefined;
   AddNewRoutePage: undefined;
-}
+  SubwaySearch: undefined;
+  SubwayPathResult: {
+    departure: { name: string; line: string };
+    arrival: { name: string; line: string };
+  };
+  SubwayPathDetail: undefined;
+};
 
 export type SearchStackParamList = {
   SubwaySearch: undefined;

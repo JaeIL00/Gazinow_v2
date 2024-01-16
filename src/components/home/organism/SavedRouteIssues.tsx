@@ -4,11 +4,10 @@ import { FontText } from '@/components/common/atoms';
 import { COLOR, EDIT_ROUTE_NAVIGATION, SAVED_ROUTES_PAGE } from '@/constants';
 import { IssueBox, SavedRouteBox, RecentSearchBox } from '@/components/home/organism';
 import { TextButton } from '@/components/common/molecules';
-import { useNavigation } from '@react-navigation/native';
-import { SavedRoutesPage } from '@/pages/savedRoutes';
-import { useEditRouteNavigation } from '@/navigation/EditRouteNavigation';
+import { useRootNavigation } from '@/navigation/RootNavigation';
+
 const SavedRouteIssues = () => {
-  const editRouteNavigation = useEditRouteNavigation();
+  const rootNavigation = useRootNavigation();
   const [activeButton, setActiveButton] = useState<'저장경로' | '최근검색' | '이슈'>('저장경로');
 
   const handleButtonClick = (buttonText: string) => setActiveButton(buttonText);
@@ -52,7 +51,7 @@ const SavedRouteIssues = () => {
           textSize="16px"
           textColor={COLOR.GRAY_999}
           textWeight="Medium"
-          onPress={() => editRouteNavigation.navigate(EDIT_ROUTE_NAVIGATION, { screen: SAVED_ROUTES_PAGE})}
+          onPress={() => rootNavigation.navigate(EDIT_ROUTE_NAVIGATION, { screen: SAVED_ROUTES_PAGE })}
           lineHeight="21px"
         />
       </View>

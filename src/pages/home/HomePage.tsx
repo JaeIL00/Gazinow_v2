@@ -7,7 +7,7 @@ const HomePage = () => {
   return (
     <Container>
       <Text>홈 페이지</Text>
-      <SwapSubwayStation isWrap={true} />
+      <SwapSubwayStation isWrap={true} showHeader={false} />
       <SavedRouteIssues />
     </Container>
   );

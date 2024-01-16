@@ -5,10 +5,9 @@ import { SwapSubwayStation } from '@/components/home/organism';
 import { COLOR } from '@/constants';
 
 const AddNewRoutePage = () => {
-  //   const editRouteNavigation = useEditRouteNavigation();
   return (
     <Container>
-      <SwapSubwayStation isWrap={true} />
+      <SwapSubwayStation isWrap={true} showHeader={true} />
     </Container>
   );
 };

@@ -9,13 +9,14 @@ import {
   SUBWAY_SEARCH,
   ARRIVAL_STATION,
   DEPARTURE_STATION,
+  EDIT_ROUTE_NAVIGATION,
 } from '@/constants';
 import { useRootNavigation } from '@/navigation/RootNavigation';
 import { useAppDispatch, useAppSelect } from '@/store';
 import { getStationType } from '@/store/modules';
 import type { StationDataTypes } from '@/store/modules';
 
-interface SwapProps extends ContainerStyleProps {}
+interface SwapProps extends ContainerStyleProps { }
 
 interface InitStationTypes {
   departure: StationDataTypes;
@@ -24,7 +25,7 @@ interface InitStationTypes {
 
 type StationTypes = typeof DEPARTURE_STATION | typeof ARRIVAL_STATION;
 
-const SwapSubwayStation = ({ isWrap }: SwapProps) => {
+const SwapSubwayStation = ({ isWrap, showHeader }: SwapProps) => {
   const rootNavigation = useRootNavigation();
   const dispatch = useAppDispatch();
   const selectedStation = useAppSelect(({ subwaySearch }) => subwaySearch.selectedStation);
@@ -33,7 +34,9 @@ const SwapSubwayStation = ({ isWrap }: SwapProps) => {
 
   const navigateSubwaySearch = (type: StationTypes) => {
     dispatch(getStationType(type));
-    rootNavigation.push(SEARCH_NAVIGATION, { screen: SUBWAY_SEARCH });
+
+    const navType = showHeader ? EDIT_ROUTE_NAVIGATION : SEARCH_NAVIGATION;
+    rootNavigation.push(navType, { screen: SUBWAY_SEARCH });
   };
 
   const swapStation = () => {
@@ -60,6 +63,7 @@ const SwapSubwayStation = ({ isWrap }: SwapProps) => {
       distance={34}
       startColor="rgba(0,0,0,0.05)"
       disabled={!isWrap}
+      showHeader={showHeader}
     >
       <InnerBox>
         <StationButton
@@ -94,8 +98,9 @@ export default SwapSubwayStation;
 
 interface ContainerStyleProps {
   isWrap: boolean;
+  showHeader: boolean;
 }
-const Container = styled(Shadow)<ContainerStyleProps>`
+const Container = styled(Shadow) <ContainerStyleProps>`
   ${({ isWrap }) =>
     isWrap &&
     `
