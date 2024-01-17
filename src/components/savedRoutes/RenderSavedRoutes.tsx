@@ -17,7 +17,6 @@ const RenderSavedRoutes = () => {
     const { data: savedRoutesData } = useQuery('getRoads', async () => {
         try {
             const res = await axiosInstance.get('/api/v1/my_find_road/get_roads');
-            // console.log("e",res.data.data[0].id)
             return res.data.data;
         } catch (err) {
             const er = err as AxiosError;

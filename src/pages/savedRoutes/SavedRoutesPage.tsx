@@ -13,7 +13,7 @@ const SavedRoutes = () => {
     <Container>
       <View style={styles.container}>
         <RenderSavedRoutes />
-        <TouchableOpacity onPress={()=> rootNavigation.navigate(EDIT_ROUTE_NAVIGATION, { screen: ADD_NEW_ROUTE_PAGE})}>
+        <TouchableOpacity onPress={() => rootNavigation.navigate(EDIT_ROUTE_NAVIGATION, { screen: ADD_NEW_ROUTE_PAGE })}>
           <View style={styles.containerAdd}>
             <IconButton isFontIcon={false} imagePath="addRoute" iconWidth="20px" iconHeight="20px" />
             <FontText value="  추가하기" textSize="16px" textWeight="Medium" lineHeight="21px" textColor={COLOR.GRAY_999} />

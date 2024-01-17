@@ -1,25 +1,27 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
 import styled from '@emotion/native';
 import { SwapSubwayStation } from '@/components/home/organism';
 import { COLOR } from '@/constants';
 
 const AddNewRoutePage = () => {
   return (
-    <Container>
-      <SwapSubwayStation isWrap={true} showHeader={true} />
-    </Container>
+      <SwapSubwayBox>
+        <SwapSubwayWrap>
+          <SwapSubwayStation isWrap={false} showHeader={true} />
+        </SwapSubwayWrap>
+      </SwapSubwayBox>
   );
 };
 
-const Container = styled.View`
-  padding: 0 16px;
-  flex-direction: column;
-  background-color: ${COLOR.LIGHT_GRAY};
+const SwapSubwayWrap = styled.View`
+  flex: 1;
 `;
-
-const styles = StyleSheet.create({
-
-});
+const SwapSubwayBox = styled.View`
+  background-color: ${COLOR.WHITE};
+  flex-direction: row;
+  padding: 30px 16px 21px 22px;
+  margin-bottom: 17px;
+  flex: 1;
+`;
 
 export default AddNewRoutePage;

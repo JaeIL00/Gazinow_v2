@@ -2,8 +2,8 @@ export type RootStackParamList = {
   Temp: undefined;
   Login: undefined;
   MainBottomTab: undefined;
-  SearchNavigation: { screen: 'SubwaySearch' };
-  EditRouteNavigation: { screen: string };
+  SearchNavigation: { screen: 'SubwaySearch', route: undefined };
+  EditRouteNavigation: { screen: string, params: { pathId: number } };
 };
 
 export type EditRouteStackParamList = {
@@ -15,6 +15,7 @@ export type EditRouteStackParamList = {
     arrival: { name: string; line: string };
   };
   SubwayPathDetail: undefined;
+  NameNewRoutePage: { screen: string, params: number };
 };
 
 export type SearchStackParamList = {
@@ -23,5 +24,5 @@ export type SearchStackParamList = {
     departure: { name: string; line: string };
     arrival: { name: string; line: string };
   };
-  SubwayPathDetail: undefined;
+  SubwayPathDetail: { pathId: number };
 };
