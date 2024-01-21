@@ -1,36 +1,27 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { FontText } from '@/components/common/atoms';
 import { COLOR } from '@/constants';
 import { SubwayRoute } from '@/components/savedRoutes';
 import { DeleteModal } from '@/components/savedRoutes';
-import { axiosInstance } from '@/apis/axiosInstance';
-import { AxiosError } from 'axios';
-import { useQuery } from 'react-query';
 import { TextButton } from '../common/molecules';
+import { AddRouteTypes } from '@/types/apis';
+import { useDeleteQuery, useRenderQuery } from '@/hooks';
+
+interface RenderSavedRoutesProps {
+    id: number;
+    roadName: AddRouteTypes;
+}
 
 const RenderSavedRoutes = () => {
-    const [popupVisible, setPopupVisible] = useState(false);
+    const [popupVisible, setPopupVisible] = useState<boolean>(false);
     const [routeToDelete, setRouteToDelete] = useState<number | null>(null);
-    const [savedRoutes, setSavedRoutes] = useState([]);
 
-    const { data: savedRoutesData } = useQuery('getRoads', async () => {
-        try {
-            const res = await axiosInstance.get('/api/v1/my_find_road/get_roads');
-            return res.data.data;
-        } catch (err) {
-            const er = err as AxiosError;
-            throw er;
-        }
-    });
+    const { data: savedRoutesData } = useRenderQuery('getRoads', 'my_find_road/get_roads');
 
-    useEffect(() => {
-        setSavedRoutes(savedRoutesData || []);
-    }, [savedRoutesData]);
-    
     const renderSavedRoutes = () => (
-        savedRoutes.map(({ id, roadName }: { id: number, roadName: string }, index: number) => (
-            <View key={index} style={styles.containerRoutes}>
+        savedRoutesData?.map(({ id, roadName }: RenderSavedRoutesProps) => (
+            <View key={id} style={styles.containerRoutes}>
                 <View style={styles.containerRenderTitle}>
                     <FontText
                         value={roadName}
@@ -66,15 +57,9 @@ const RenderSavedRoutes = () => {
 
     const hideDeletePopup = () => setPopupVisible(false);
 
+
     const handleDelete = async () => {
-        try {
-            await axiosInstance.delete(`/api/v1/my_find_road/delete_route?id=${routeToDelete}`);
-            const updatedRoutes = savedRoutes.filter(route => route.id !== routeToDelete);
-            setSavedRoutes(updatedRoutes);
-        } catch (err) {
-            const er = err as AxiosError;
-            throw er;
-        }
+        await useDeleteQuery(routeToDelete);
         hideDeletePopup();
     };
 

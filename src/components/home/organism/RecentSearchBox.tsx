@@ -4,24 +4,13 @@ import { IconButton, TextButton } from '@/components/common/molecules';
 import { FontText } from '@/components/common/atoms';
 import { COLOR } from '@/constants';
 import { SubwayRoute } from '@/components/savedRoutes';
-import { AxiosError } from 'axios';
-import { useQuery } from 'react-query';
-import { axiosInstance } from '@/apis/axiosInstance';
+import { useRenderQuery } from '@/hooks';
 
 const RecentSearchBox = () => {
     const routeDetail = () => {
         //
     };
-
-    const { data: recentSearchData } = useQuery('recentSearch', async () => {
-        try {
-            const res = await axiosInstance.get('/api/v1/recentSearch');
-            return res.data.data;
-        } catch (err) {
-            const er = err as AxiosError;
-            throw er;
-        }
-    });
+    const { data: recentSearchData } = useRenderQuery('recentSearch', 'recentSearch');
 
     const hasRecentSearch = recentSearchData && recentSearchData.length > 0;
 

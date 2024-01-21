@@ -1,29 +1,31 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { IconButton } from '@/components/common/molecules';
 import { FontText } from '@/components/common/atoms';
 import { COLOR } from '@/constants';
 import { SubwayRoute } from '@/components/savedRoutes';
 import { RecommendedRoutes, IssuesBanner } from '@/components/home/organism';
-import { axiosInstance } from '@/apis/axiosInstance';
-import { useQuery } from 'react-query';
-import { AxiosError } from 'axios';
+import { useRenderQuery } from '@/hooks';
 
 const SavedRouteBox = () => {
-    const [hasSavedRoutes, setHasSavedRoutes] = useState(false);
-
-    const { data: savedRoutes } = useQuery('getRoads', async () => {
-        try {
-            const res = await axiosInstance.get('/api/v1/my_find_road/get_roads');
-            setHasSavedRoutes(res.data.data.length > 0);
-            return res.data.data;
-        } catch (err) {
-            const er = err as AxiosError;
-            throw er;
+    const [isRoutesExist, setIsRoutesExist] = useState<boolean>(false);
+    const { data: savedRoutes, isLoading, isError } = useRenderQuery('getRoads', 'my_find_road/get_roads');
+    useEffect(() => {
+        if (!isLoading && !isError) {
+            setIsRoutesExist(savedRoutes.length > 0);
         }
-    });
+    }, [savedRoutes, isLoading, isError]);
 
-    if (hasSavedRoutes) {
+    // const { data: savedRoutes } = useQuery('getRoads', async () => {
+    //     // const { data: savedRoutes } = 
+    //     const res = useRenderQuery('getRoads', 'my_find_road/get_roads');
+    //     setIsRoutesExist(res.data.data.length > 0);
+    //     return res.data.data;
+    //     // setIsRoutesExist(routesData.length > 0);
+    //     // return routesData;
+    //   });
+
+    if (isRoutesExist) {
         const firstSavedRoute = savedRoutes ? savedRoutes[0] : [];
         return (
             <View>
