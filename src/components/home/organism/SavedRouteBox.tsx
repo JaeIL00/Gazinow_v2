@@ -1,76 +1,63 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { IconButton } from '@/components/common/molecules';
 import { FontText } from '@/components/common/atoms';
 import { COLOR } from '@/constants';
 import { SubwayRoute } from '@/components/savedRoutes';
 import { RecommendedRoutes, IssuesBanner } from '@/components/home/organism';
-import { axiosInstance } from '@/apis/axiosInstance';
-import { useQuery } from 'react-query';
-import { AxiosError } from 'axios';
+import { useGetSavedRoutesQuery } from '@/hooks';
 
 const SavedRouteBox = () => {
-    const [hasSavedRoutes, setHasSavedRoutes] = useState(false);
+    const { data: savedRoutes } = useGetSavedRoutesQuery();
+    const isRoutesExist = savedRoutes && savedRoutes.length > 0;
 
-    const { data: savedRoutes } = useQuery('getRoads', async () => {
-        try {
-            const res = await axiosInstance.get('/api/v1/my_find_road/get_roads');
-            setHasSavedRoutes(res.data.data.length > 0);
-            return res.data.data;
-        } catch (err) {
-            const er = err as AxiosError;
-            throw er;
-        }
-    });
-
-    if (hasSavedRoutes) {
-        const firstSavedRoute = savedRoutes ? savedRoutes[0] : [];
-        return (
-            <View>
-                <View style={styles.titleContainer}>
-                    <View style={styles.textContainer}>
-                        <FontText
-                            value={`${firstSavedRoute.roadName}  `}
-                            textSize="20px"
-                            textWeight="Bold"
-                            lineHeight="25px"
-                            textColor={COLOR.BASIC_BLACK}
-                        />
-                        <FontText style={styles.grayEllipse}
-                            value="42분 이상 예상"
-                            textSize="16px"
-                            textWeight="Medium"
-                            lineHeight="21px"
-                            textColor={COLOR.GRAY_999}
-                        />
-                    </View>
-                    <View style={styles.textContainer}>
-                        <FontText
-                            value="세부정보  "
-                            textSize="16px"
-                            textWeight="Medium"
-                            lineHeight="21px"
-                            textColor={COLOR.GRAY_999}
-                        />
-                        <IconButton isFontIcon={false} imagePath="more_gray" iconWidth="8px" iconHeight="14px" />
-                    </View>
+    const renderSavedRoutes = () => (
+        <View>
+            <View style={styles.titleContainer}>
+                <View style={styles.textContainer}>
+                    <FontText
+                        value={`${savedRoutes[0].roadName}  `}
+                        textSize="20px"
+                        textWeight="Bold"
+                        lineHeight="25px"
+                        textColor={COLOR.BASIC_BLACK}
+                    />
+                    <FontText style={styles.grayEllipse}
+                        value="42분 이상 예상"
+                        textSize="16px"
+                        textWeight="Medium"
+                        lineHeight="21px"
+                        textColor={COLOR.GRAY_999}
+                    />
                 </View>
-                <View style={styles.containerSubwayRoute}><SubwayRoute /></View>
-                <IssuesBanner />
-                <RecommendedRoutes />
+                <View style={styles.textContainer}>
+                    <FontText
+                        value="세부정보  "
+                        textSize="16px"
+                        textWeight="Medium"
+                        lineHeight="21px"
+                        textColor={COLOR.GRAY_999}
+                    />
+                    <IconButton isFontIcon={false} imagePath="more_gray" iconWidth="8px" iconHeight="14px" />
+                </View>
             </View>
-        );
-    } else {
-        return (
-            <FontText style={styles.messageStyle}
-                value="저장한 경로가 없어요"
-                textSize="16px"
-                textWeight="Medium"
-                lineHeight="500px"
-                textColor={COLOR.GRAY_999}
-            />
-        );
-    }
+            <View style={styles.containerSubwayRoute}><SubwayRoute /></View>
+            <IssuesBanner />
+            <RecommendedRoutes />
+        </View>
+    );
+
+    const renderNoSavedRoutes = () => (
+        <FontText style={styles.messageStyle}
+            value="저장한 경로가 없어요"
+            textSize="16px"
+            textWeight="Medium"
+            lineHeight="500px"
+            textColor={COLOR.GRAY_999}
+        />
+    );
+
+    return isRoutesExist ? renderSavedRoutes() : renderNoSavedRoutes();
 };
 
 const styles = StyleSheet.create({

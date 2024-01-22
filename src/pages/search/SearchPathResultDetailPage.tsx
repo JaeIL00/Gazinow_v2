@@ -114,9 +114,10 @@ const dummy = [
   },
 ];
 
-const SearchPathResultDetailPage = () => {
+const SearchPathResultDetailPage = ({ route }) => {
   const navigation = useRootNavigation();
   const [isBookmarking, setIsBookmarking] = useState<boolean>(false);
+  console.log("이전 페이지에서 상세 조회한 경로의 index: ", route.params.pathId)
 
   return (
     <View

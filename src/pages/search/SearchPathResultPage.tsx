@@ -47,7 +47,7 @@ const SearchPathResultPage = ({
                   lineHeight="13px"
                   textColor="#999"
                 />
-                <DetailButton onPress={() => navigation.push(SUBWAY_PATH_DETAIL)}>
+                <DetailButton onPress={() => navigation.navigate(SUBWAY_PATH_DETAIL)}>
                   <FontText
                     value="세부정보"
                     textSize="13px"

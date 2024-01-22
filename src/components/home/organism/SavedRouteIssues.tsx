@@ -4,11 +4,10 @@ import { FontText } from '@/components/common/atoms';
 import { COLOR, EDIT_ROUTE_NAVIGATION, SAVED_ROUTES_PAGE } from '@/constants';
 import { IssueBox, SavedRouteBox, RecentSearchBox } from '@/components/home/organism';
 import { TextButton } from '@/components/common/molecules';
-import { useNavigation } from '@react-navigation/native';
-import { SavedRoutesPage } from '@/pages/savedRoutes';
-import { useEditRouteNavigation } from '@/navigation/EditRouteNavigation';
+import { useRootNavigation } from '@/navigation/RootNavigation';
+
 const SavedRouteIssues = () => {
-  const editRouteNavigation = useEditRouteNavigation();
+  const rootNavigation = useRootNavigation();
   const [activeButton, setActiveButton] = useState<'저장경로' | '최근검색' | '이슈'>('저장경로');
 
   const handleButtonClick = (buttonText: string) => setActiveButton(buttonText);
@@ -28,20 +27,7 @@ const SavedRouteIssues = () => {
       />
     </TouchableOpacity>
   );
-
-  const renderContent = () => {
-    switch (activeButton) {
-      case '저장경로':
-        return <SavedRouteBox />;
-      case '최근검색':
-        return <RecentSearchBox />;
-      case '이슈':
-        return <IssueBox />;
-      default:
-        return null;
-    }
-  };
-
+  
   return (
     <View style={styles.container}>
       {/* 이슈/저장경로/최근검색 버튼 */}
@@ -52,7 +38,7 @@ const SavedRouteIssues = () => {
           textSize="16px"
           textColor={COLOR.GRAY_999}
           textWeight="Medium"
-          onPress={() => editRouteNavigation.navigate(EDIT_ROUTE_NAVIGATION, { screen: SAVED_ROUTES_PAGE})}
+          onPress={() => rootNavigation.navigate(EDIT_ROUTE_NAVIGATION, { screen: SAVED_ROUTES_PAGE })}
           lineHeight="21px"
         />
       </View>
@@ -61,7 +47,12 @@ const SavedRouteIssues = () => {
       <View style={styles.borderLine}></View>
 
       {/* 버튼에 따라 다른 컴포넌트를 렌더링 */}
-      {renderContent()}
+      {{
+        '저장경로': <SavedRouteBox />,
+        '최근검색': <RecentSearchBox />,
+        '이슈': <IssueBox />,
+      }[activeButton]}
+
     </View>
   );
 };
