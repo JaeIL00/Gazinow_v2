@@ -6,7 +6,7 @@ import { SubwayRoute } from '@/components/savedRoutes';
 import { DeleteModal } from '@/components/savedRoutes';
 import { TextButton } from '../common/molecules';
 import { AddRouteTypes } from '@/types/apis';
-import { useDeleteQuery, useRenderQuery } from '@/hooks';
+import { useDeleteQuery, useGetSavedRoutesQuery } from '@/hooks';
 
 interface RenderSavedRoutesProps {
     id: number;
@@ -17,7 +17,7 @@ const RenderSavedRoutes = () => {
     const [popupVisible, setPopupVisible] = useState<boolean>(false);
     const [routeToDelete, setRouteToDelete] = useState<number | null>(null);
 
-    const { data: savedRoutesData } = useRenderQuery('getRoads', 'my_find_road/get_roads');
+    const { data: savedRoutesData } = useGetSavedRoutesQuery();
 
     const renderSavedRoutes = () => (
         savedRoutesData?.map(({ id, roadName }: RenderSavedRoutesProps) => (
