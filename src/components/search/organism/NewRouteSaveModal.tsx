@@ -131,7 +131,7 @@ const NewRouteSaveModal = ({ freshData, closeModal, onBookmark }: NewRouteSaveMo
               style={{
                 paddingVertical: 12,
                 borderRadius: 5,
-                backgroundColor: COLOR.GRAY_DDD,
+                backgroundColor: routeName.length > 0 ? COLOR.BASIC_BLACK : COLOR.GRAY_DDD,
                 flex: 1,
                 alignItems: 'center',
               }}
