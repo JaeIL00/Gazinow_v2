@@ -5,6 +5,7 @@ import { SearchSubwayNameTypes, SubwayStrEnd } from '@/types/apis/searchTypes';
 import { useCallback, useState } from 'react';
 import {
   searchHistoryFetch,
+  searchPathDeleteFetch,
   searchPathSaveFetch,
   searchPathsFetch,
   searchSubwayName,
@@ -65,4 +66,12 @@ export const useSavedSubwayRoute = ({ onSuccess }: { onSuccess: () => void }) =>
   });
 
   return { data, mutate };
+};
+
+export const useDeleteSavedSubwayRoute = ({ onSuccess }: { onSuccess: () => void }) => {
+  const { data, mutate } = useMutation(searchPathDeleteFetch, {
+    onSuccess,
+  });
+
+  return { data, deleteMutate: mutate };
 };

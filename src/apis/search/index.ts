@@ -50,10 +50,17 @@ export const searchPathsFetch = async (params: {
 
 export const searchPathSaveFetch = async (data: SavedRoute) => {
   try {
-    const res = await axiosInstance.post<{ data: SearchPathsTypes }>(
-      '/api/v1/my_find_road/add_route',
-      data,
-    );
+    const res = await axiosInstance.post('/api/v1/my_find_road/add_route', data);
+    return res.data.data;
+  } catch (err) {
+    const er = err as AxiosError;
+    throw er;
+  }
+};
+
+export const searchPathDeleteFetch = async (params: { id: number }) => {
+  try {
+    const res = await axiosInstance.delete('/api/v1/my_find_road/delete_route', { params });
     return res.data.data;
   } catch (err) {
     const er = err as AxiosError;

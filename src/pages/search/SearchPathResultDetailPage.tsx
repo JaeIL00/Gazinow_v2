@@ -8,10 +8,17 @@ import { NewRouteSaveModal, SearchPathDetailItem } from '@/components/search/org
 import { useRootNavigation } from '@/navigation/RootNavigation';
 import { useRoute } from '@react-navigation/native';
 import { Path, SubPath } from '@/types/apis/searchTypes';
+import { useDeleteSavedSubwayRoute } from '@/hooks/queries/searchQuery';
 
 const SearchPathResultDetailPage = () => {
   const route = useRoute();
   const navigation = useRootNavigation();
+
+  const { deleteMutate } = useDeleteSavedSubwayRoute({
+    onSuccess: () => {
+      setIsBookmarking(false);
+    },
+  });
 
   const [isBookmarking, setIsBookmarking] = useState<boolean>(false);
   const [isSaveRouteModalOpen, setIsSaveRouteModalOpen] = useState<boolean>(false);
@@ -20,6 +27,14 @@ const SearchPathResultDetailPage = () => {
     const { subPaths } = route.params as Path;
     return Object.values(subPaths).filter((item) => !!item.lanes.length && !!item.subways.length);
   }, [route]);
+
+  const bookmarkHandler = () => {
+    if (isBookmarking) {
+      deleteMutate({ id: 8 }); // 백엔드: 저장 아이디
+    } else {
+      setIsSaveRouteModalOpen(true);
+    }
+  };
   return (
     <View
       style={css`
@@ -51,8 +66,7 @@ const SearchPathResultDetailPage = () => {
           iconName={isBookmarking ? 'bookmark' : 'bookmark-o'}
           iconWidth="24"
           iconColor={isBookmarking ? '#346BF7' : '#999'}
-          // onPress={() => setIsBookmarking((prev) => !prev)}
-          onPress={() => setIsSaveRouteModalOpen(true)}
+          onPress={bookmarkHandler}
         />
         {isSaveRouteModalOpen && (
           <NewRouteSaveModal
