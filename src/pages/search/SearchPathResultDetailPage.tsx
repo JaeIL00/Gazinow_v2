@@ -1,123 +1,23 @@
 import { css } from '@emotion/native';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { FlatList, View } from 'react-native';
 
 import { FontText } from '@/components/common/atoms';
 import { IconButton } from '@/components/common/molecules';
 import { SearchPathDetailItem } from '@/components/search/organism';
 import { useRootNavigation } from '@/navigation/RootNavigation';
-
-const dummy = [
-  {
-    line: '4',
-    time: '21분',
-    departure: {
-      name: '신용산역',
-      arrow: '진접 방향',
-      fast: '6-4',
-      path: [
-        {
-          line: '2',
-          name: '이수역',
-        },
-        {
-          line: '2',
-          name: '사당역',
-        },
-        {
-          line: '2',
-          name: '사당역',
-        },
-        {
-          line: '2',
-          name: '사당역',
-        },
-        {
-          line: '2',
-          name: '사당역',
-        },
-        {
-          line: '2',
-          name: '사당역',
-        },
-        {
-          line: '2',
-          name: '사당역',
-        },
-        {
-          line: '2',
-          name: '사당역',
-        },
-        {
-          line: '2',
-          name: '사당역',
-        },
-        {
-          line: '2',
-          name: '사당역',
-        },
-        {
-          line: '2',
-          name: '사당역',
-        },
-        {
-          line: '2',
-          name: '사당역',
-        },
-        {
-          line: '2',
-          name: '사당역',
-        },
-        {
-          line: '2',
-          name: '사당역',
-        },
-        {
-          line: '2',
-          name: '사당역',
-        },
-        {
-          line: '2',
-          name: '사당역',
-        },
-        {
-          line: '2',
-          name: '사당역',
-        },
-      ],
-    },
-    arrive: {
-      name: '사당역',
-      door: '왼쪽',
-      trans: '도보 10분', // null 또는 환승시간으로 환승되는 역인지 구분
-    },
-  },
-  {
-    line: '2',
-    time: '21분',
-    departure: {
-      name: '신용산역',
-      arrow: '진접 방향',
-      fast: '6-4',
-      path: [
-        {
-          line: '2',
-          name: '이수역',
-        },
-      ],
-    },
-    arrive: {
-      name: '사당역',
-      door: '왼쪽',
-      trans: null, // null 또는 환승시간으로 환승되는 역인지 구분
-    },
-  },
-];
+import { useRoute } from '@react-navigation/native';
+import { SubPath } from '@/types/apis/searchTypes';
 
 const SearchPathResultDetailPage = () => {
+  const route = useRoute();
+  const freshData: SubPath[] = useMemo(() => {
+    const data = route.params as SubPath;
+    return Object.values(data).filter((item) => !!item.lanes.length && !!item.subways.length);
+  }, [route]);
+  console.log(freshData);
   const navigation = useRootNavigation();
   const [isBookmarking, setIsBookmarking] = useState<boolean>(false);
-
   return (
     <View
       style={css`
@@ -205,9 +105,12 @@ const SearchPathResultDetailPage = () => {
         `}
       />
       <FlatList
-        data={dummy}
-        keyExtractor={(item) => item.departure.name}
-        renderItem={({ item }) => <SearchPathDetailItem detailData={item} />}
+        data={freshData}
+        keyExtractor={(item) => item.distance + item.sectionTime + ''}
+        ListFooterComponent={<View style={{ height: 100 }} />}
+        renderItem={({ item, index }) => (
+          <SearchPathDetailItem data={item} isLastLane={freshData.length - 1 === index} />
+        )}
       />
     </View>
   );

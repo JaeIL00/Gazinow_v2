@@ -5,34 +5,19 @@ import { Image, View } from 'react-native';
 import { iconPath } from '@/assets/icons/iconPath';
 import { FontText } from '@/components/common/atoms';
 import { IconButton } from '@/components/common/molecules';
+import { SubPath } from '@/types/apis/searchTypes';
+import { subwayLineColor, subwayNameCutting } from '@/utils';
 
 interface SearchPathDetailItemProps {
-  detailData: {
-    line: string;
-    time: string;
-    departure: {
-      name: string;
-      arrow: string;
-      fast: string;
-      path: {
-        line: string;
-        name: string;
-      }[];
-    };
-    arrive: {
-      name: string;
-      door: string;
-      trans: string | null;
-    };
-  };
+  data: SubPath;
+  isLastLane: boolean;
 }
 
-const SearchPathDetailItem = ({ detailData }: SearchPathDetailItemProps) => {
+const SearchPathDetailItem = ({ data, isLastLane }: SearchPathDetailItemProps) => {
   const [isOpenPathList, setIsOpenPathList] = useState<boolean>(false);
-
+  const lastIdx = data.subways.length - 1;
   return (
     <View
-      key={detailData.arrive.door}
       style={css`
         margin-left: 31px;
       `}
@@ -49,7 +34,7 @@ const SearchPathDetailItem = ({ detailData }: SearchPathDetailItemProps) => {
             style={css`
               width: 24px;
               height: 24px;
-              background-color: #49afef;
+              background-color: ${subwayLineColor(data.lanes[0].subwayCode)};
               border-radius: 24px;
             `}
           />
@@ -60,21 +45,22 @@ const SearchPathDetailItem = ({ detailData }: SearchPathDetailItemProps) => {
               margin-left: 9px;
               margin-top: -10px;
               margin-bottom: -30px;
-              background-color: #49afef;
+              background-color: ${subwayLineColor(data.lanes[0].subwayCode)};
             `}
           />
         </View>
         <View
           style={css`
             margin-left: 14px;
+            flex: 1;
           `}
         >
           <FontText
-            value={detailData.departure.name}
+            value={subwayNameCutting(data.subways[0].stationName.replace('역', ''))}
             textSize="14px"
             textWeight="SemiBold"
             lineHeight="21px"
-            textColor="#49AFEF"
+            textColor={subwayLineColor(data.lanes[0].subwayCode)}
           />
           <View
             style={css`
@@ -82,29 +68,40 @@ const SearchPathDetailItem = ({ detailData }: SearchPathDetailItemProps) => {
             `}
           >
             <FontText
-              value={detailData.departure.arrow + ' | '}
+              value={' | '} // 백엔드: 지하철 방향
               textSize="11px"
               textWeight="Medium"
               lineHeight="13px"
               textColor="#999"
             />
             <FontText
-              value={'빠른환승' + detailData.departure.fast}
+              value={'빠른환승'} // 백엔드: 빠른환승 문 번호
               textSize="11px"
               textWeight="Medium"
               lineHeight="13px"
               textColor="#999"
             />
           </View>
+
+          {/* 이슈박스 */}
+          <View
+            style={{
+              height: 54,
+              borderRadius: 10,
+              borderWidth: 1,
+              borderColor: 'rgba(0, 0, 0, 0.06)',
+              marginVertical: 8,
+            }}
+          />
+
           <View
             style={css`
               flex-direction: row;
               align-items: center;
-              margin-top: 8px;
             `}
           >
             <FontText
-              value={detailData.departure.path.length + '개역 (' + detailData.time + ')'}
+              value={data.stationCount + 1 + '개역 (' + data.sectionTime + '분)'}
               textSize="11px"
               textWeight="Medium"
               lineHeight="13px"
@@ -126,8 +123,9 @@ const SearchPathDetailItem = ({ detailData }: SearchPathDetailItemProps) => {
           </View>
           {isOpenPathList && (
             <View style={{ marginTop: 12 }}>
-              {detailData.departure.path.map((item, idx) => (
+              {data.subways.map((item, idx) => (
                 <View
+                  key={item.stationName.length + item.stationName}
                   style={{
                     flexDirection: 'row',
                     marginLeft: -32,
@@ -141,12 +139,12 @@ const SearchPathDetailItem = ({ detailData }: SearchPathDetailItemProps) => {
                       marginRight: 20,
                       borderWidth: 2,
                       backgroundColor: '#fff',
-                      borderColor: '#49afef',
+                      borderColor: subwayLineColor(data.lanes[0].subwayCode),
                       borderRadius: 12,
                     }}
                   />
                   <FontText
-                    value={item.name}
+                    value={item.stationName}
                     textSize="11px"
                     textWeight="Medium"
                     lineHeight="13px"
@@ -170,7 +168,7 @@ const SearchPathDetailItem = ({ detailData }: SearchPathDetailItemProps) => {
           style={css`
             width: 24px;
             height: 24px;
-            background-color: #49afef;
+            background-color: ${subwayLineColor(data.lanes[0].subwayCode)};
             border-radius: 24px;
           `}
         />
@@ -181,14 +179,14 @@ const SearchPathDetailItem = ({ detailData }: SearchPathDetailItemProps) => {
           `}
         >
           <FontText
-            value={detailData.arrive.name}
+            value={subwayNameCutting(data.subways[lastIdx].stationName.replace('역', ''))}
             textSize="14px"
             textWeight="SemiBold"
             lineHeight="21px"
-            textColor="#49AFEF"
+            textColor={subwayLineColor(data.lanes[0].subwayCode)}
           />
           <FontText
-            value={'내리는 문: ' + detailData.arrive.door}
+            value={'내리는 문: '} // 백엔드: 내리는문 좌우
             textSize="11px"
             textWeight="Medium"
             lineHeight="13px"
@@ -196,7 +194,7 @@ const SearchPathDetailItem = ({ detailData }: SearchPathDetailItemProps) => {
           />
         </View>
       </View>
-      {detailData.arrive.trans && (
+      {!isLastLane && (
         <View
           style={css`
             margin-top: -20px;

@@ -1,10 +1,11 @@
 import { NavigatorScreenParams } from '@react-navigation/native';
+import { SubPath } from './apis/searchTypes';
 
 export type RootStackParamList = {
   Temp: undefined;
   Login: undefined;
   MainBottomTab: NavigatorScreenParams<{ Home: undefined }>;
-  SearchNavigation: NavigatorScreenParams<SearchStackParamList>;
+  SearchNavigation: { screen: keyof SearchStackParamList; params: SubPath[] };
 };
 
 export type SearchStackParamList = {
@@ -13,5 +14,5 @@ export type SearchStackParamList = {
     departure: { name: string; line: string };
     arrival: { name: string; line: string };
   };
-  SubwayPathDetail: undefined;
+  SubwayPathDetail: { state: SubPath[] };
 };

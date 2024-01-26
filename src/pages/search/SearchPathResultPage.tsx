@@ -58,7 +58,15 @@ const SearchPathResultPage = () => {
                 }}
               >
                 <FontText value="소요시간" textSize="11px" textWeight="SemiBold" textColor="#999" />
-                <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <TouchableOpacity
+                  style={{ flexDirection: 'row', alignItems: 'center' }}
+                  onPress={() =>
+                    rootNavigation.push('SearchNavigation', {
+                      screen: 'SubwayPathDetail',
+                      params: subPaths,
+                    })
+                  }
+                >
                   <FontText
                     value="세부정보"
                     textSize="13px"
