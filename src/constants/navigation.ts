@@ -1,3 +1,7 @@
+export const EDIT_ROUTE_NAVIGATION = 'EditRouteNavigation' as const;
+export const SAVED_ROUTES_PAGE = 'SavedRoutesPage' as const;
+export const ADD_NEW_ROUTE_PAGE = 'AddNewRoutePage' as const;
+export const NAME_NEW_ROUTE_PAGE = 'NameNewRoutePage' as const;
 export const SEARCH_NAVIGATION = 'SearchNavigation' as const;
 export const SUBWAY_SEARCH = 'SubwaySearch' as const;
 export const SUBWAY_PATH_RESULT = 'SubwayPathResult' as const;
