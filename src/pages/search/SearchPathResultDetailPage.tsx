@@ -1,124 +1,40 @@
 import { css } from '@emotion/native';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { FlatList, View } from 'react-native';
 
 import { FontText } from '@/components/common/atoms';
 import { IconButton } from '@/components/common/molecules';
-import { SearchPathDetailItem } from '@/components/search/organism';
+import { NewRouteSaveModal, SearchPathDetailItem } from '@/components/search/organism';
 import { useRootNavigation } from '@/navigation/RootNavigation';
+import { useRoute } from '@react-navigation/native';
+import { Path, SubPath } from '@/types/apis/searchTypes';
+import { useDeleteSavedSubwayRoute } from '@/hooks/queries/searchQuery';
 
-const dummy = [
-  {
-    line: '4',
-    time: '21분',
-    departure: {
-      name: '신용산역',
-      arrow: '진접 방향',
-      fast: '6-4',
-      path: [
-        {
-          line: '2',
-          name: '이수역',
-        },
-        {
-          line: '2',
-          name: '사당역',
-        },
-        {
-          line: '2',
-          name: '사당역',
-        },
-        {
-          line: '2',
-          name: '사당역',
-        },
-        {
-          line: '2',
-          name: '사당역',
-        },
-        {
-          line: '2',
-          name: '사당역',
-        },
-        {
-          line: '2',
-          name: '사당역',
-        },
-        {
-          line: '2',
-          name: '사당역',
-        },
-        {
-          line: '2',
-          name: '사당역',
-        },
-        {
-          line: '2',
-          name: '사당역',
-        },
-        {
-          line: '2',
-          name: '사당역',
-        },
-        {
-          line: '2',
-          name: '사당역',
-        },
-        {
-          line: '2',
-          name: '사당역',
-        },
-        {
-          line: '2',
-          name: '사당역',
-        },
-        {
-          line: '2',
-          name: '사당역',
-        },
-        {
-          line: '2',
-          name: '사당역',
-        },
-        {
-          line: '2',
-          name: '사당역',
-        },
-      ],
-    },
-    arrive: {
-      name: '사당역',
-      door: '왼쪽',
-      trans: '도보 10분', // null 또는 환승시간으로 환승되는 역인지 구분
-    },
-  },
-  {
-    line: '2',
-    time: '21분',
-    departure: {
-      name: '신용산역',
-      arrow: '진접 방향',
-      fast: '6-4',
-      path: [
-        {
-          line: '2',
-          name: '이수역',
-        },
-      ],
-    },
-    arrive: {
-      name: '사당역',
-      door: '왼쪽',
-      trans: null, // null 또는 환승시간으로 환승되는 역인지 구분
-    },
-  },
-];
-
-const SearchPathResultDetailPage = ({ route }) => {
+const SearchPathResultDetailPage = () => {
+  const route = useRoute();
   const navigation = useRootNavigation();
-  const [isBookmarking, setIsBookmarking] = useState<boolean>(false);
-  console.log("이전 페이지에서 상세 조회한 경로의 index: ", route.params.pathId)
 
+  const { deleteMutate } = useDeleteSavedSubwayRoute({
+    onSuccess: () => {
+      setIsBookmarking(false);
+    },
+  });
+
+  const [isBookmarking, setIsBookmarking] = useState<boolean>(false);
+  const [isSaveRouteModalOpen, setIsSaveRouteModalOpen] = useState<boolean>(false);
+
+  const freshSubPathData: SubPath[] = useMemo(() => {
+    const { subPaths } = route.params as Path;
+    return Object.values(subPaths).filter((item) => !!item.lanes.length && !!item.subways.length);
+  }, [route]);
+
+  const bookmarkHandler = () => {
+    if (isBookmarking) {
+      deleteMutate({ id: 8 }); // 백엔드: 저장 아이디
+    } else {
+      setIsSaveRouteModalOpen(true);
+    }
+  };
   return (
     <View
       style={css`
@@ -150,8 +66,15 @@ const SearchPathResultDetailPage = ({ route }) => {
           iconName={isBookmarking ? 'bookmark' : 'bookmark-o'}
           iconWidth="24"
           iconColor={isBookmarking ? '#346BF7' : '#999'}
-          onPress={() => setIsBookmarking((prev) => !prev)}
+          onPress={bookmarkHandler}
         />
+        {isSaveRouteModalOpen && (
+          <NewRouteSaveModal
+            freshData={{ ...(route.params as Path), subPaths: freshSubPathData }}
+            closeModal={() => setIsSaveRouteModalOpen(false)}
+            onBookmark={() => setIsBookmarking(true)}
+          />
+        )}
       </View>
       <View
         style={css`
@@ -206,9 +129,12 @@ const SearchPathResultDetailPage = ({ route }) => {
         `}
       />
       <FlatList
-        data={dummy}
-        keyExtractor={(item) => item.departure.name}
-        renderItem={({ item }) => <SearchPathDetailItem detailData={item} />}
+        data={freshSubPathData}
+        keyExtractor={(item) => item.distance + item.sectionTime + ''}
+        ListFooterComponent={<View style={{ height: 100 }} />}
+        renderItem={({ item, index }) => (
+          <SearchPathDetailItem data={item} isLastLane={freshSubPathData.length - 1 === index} />
+        )}
       />
     </View>
   );

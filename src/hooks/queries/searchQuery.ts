@@ -1,9 +1,15 @@
-import { useQuery } from 'react-query';
+import { useMutation, useQuery } from 'react-query';
 
 import { AxiosResponse } from 'axios';
-import { SearchSubwayNameTypes } from '@/types/apis/searchTypes';
+import { SearchSubwayNameTypes, SubwayStrEnd } from '@/types/apis/searchTypes';
 import { useCallback, useState } from 'react';
-import { searchHistoryFetch, searchPathsFetch, searchSubwayName } from '@/apis/search';
+import {
+  searchHistoryFetch,
+  searchPathDeleteFetch,
+  searchPathSaveFetch,
+  searchPathsFetch,
+  searchSubwayName,
+} from '@/apis/search';
 
 export const useSearchSubwayName = (subwayName: string) => {
   const [resultList, setResultList] = useState<SearchSubwayNameTypes[]>([]);
@@ -48,13 +54,24 @@ export const useSerarchHistory = () => {
   return { data };
 };
 
-export const useSearchPaths = (params: {
-  strSubwayName: string;
-  strSubwayLine: string;
-  endSubwayName: string;
-  endSubwayLine: string;
-}) => {
+export const useSearchPaths = (params: SubwayStrEnd) => {
   const { data } = useQuery(['search_paths', params], () => searchPathsFetch(params));
 
   return { data };
+};
+
+export const useSavedSubwayRoute = ({ onSuccess }: { onSuccess: () => void }) => {
+  const { data, mutate } = useMutation(searchPathSaveFetch, {
+    onSuccess,
+  });
+
+  return { data, mutate };
+};
+
+export const useDeleteSavedSubwayRoute = ({ onSuccess }: { onSuccess: () => void }) => {
+  const { data, mutate } = useMutation(searchPathDeleteFetch, {
+    onSuccess,
+  });
+
+  return { data, deleteMutate: mutate };
 };

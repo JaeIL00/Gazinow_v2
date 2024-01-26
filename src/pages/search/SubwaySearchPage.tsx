@@ -5,7 +5,6 @@ import styled from '@emotion/native';
 
 const SubwaySearchPage = () => {
   const { data: history } = useSerarchHistory();
-  console.log(history);
 
   return (
     <SearchPageContainer>

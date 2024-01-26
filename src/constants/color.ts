@@ -3,6 +3,7 @@ const COLOR = {
   LIGHT_GRAY: '#F9F9F9' as const,
   BE_GRAY: '#BEBEBE' as const,
   GRAY_999: '#999' as const,
+  GRAY_DDD: '#ddd' as const,
   WHITE: '#ffffff' as const,
   LINE1: '#3151C2' as const,
   LINE2: '#00A84D' as const,
@@ -13,17 +14,17 @@ const COLOR = {
   LINE7: '#919642' as const,
   LINE8: '#DA3182' as const,
   LINE9: '#A49E88' as const,
-  LINEEGB: '#EF9848' as const,
-  LINEEL: '#70B15A' as const,
-  LINEGG: '#947325' as const,
-  LINEGH: '#0471AE' as const,
-  LINEKC: '#007A63' as const,
-  LINEKJ: '#69C3B3' as const,
-  LINEKK: '#063190' as const,
-  LINENBD: '#C12F42' as const,
-  LINESBD: '#EFAE27' as const,
-  LINESH: '#70B22C' as const,
-  LINEUS: '#B9CB03' as const,
+  LINEEGB: '#EF9848' as const, // 의정부
+  LINEEL: '#70B15A' as const, // 에버라인
+  LINEGG: '#947325' as const, // 김포골드
+  LINEGH: '#0471AE' as const, // 공항철도
+  LINEKC: '#007A63' as const, // 경춘선
+  LINEKJ: '#69C3B3' as const, // 경의중앙
+  LINEKK: '#063190' as const, // 경강선
+  LINENBD: '#C12F42' as const, // 신분당
+  LINESBD: '#EFAE27' as const, // 수인분당
+  LINESH: '#70B22C' as const, // 서해선
+  LINEUS: '#B9CB03' as const, // 우이신설
 };
 
 export default COLOR;

@@ -1,7 +1,8 @@
 import styled from '@emotion/native';
-import type { TextProps } from 'react-native/types';
+import type { StyleProp, TextProps } from 'react-native/types';
 
 import { COLOR } from '@/constants';
+import { TextStyle } from 'react-native';
 
 interface NormalTextProps extends TextProps, TextStyleProps {
   value: string;
@@ -20,6 +21,7 @@ interface TextStyleProps {
   textWeight: 'Bold' | 'SemiBold' | 'Medium' | 'Regular';
   textColor?: string;
   lineHeight?: string;
+  textAlign?: 'center';
 }
 const weight = (weightText: TextStyleProps['textWeight']) => {
   switch (weightText) {
@@ -41,4 +43,5 @@ const Normal = styled.Text<TextStyleProps>`
   font-weight: ${({ textWeight }) => weight(textWeight)};
   color: ${({ textColor = COLOR.BASIC_BLACK }) => textColor};
   line-height: ${({ lineHeight }) => lineHeight};
+  text-align: ${({ textAlign }) => textAlign};
 `;

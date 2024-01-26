@@ -16,7 +16,7 @@ import { useAppDispatch, useAppSelect } from '@/store';
 import { getStationType } from '@/store/modules';
 import type { StationDataTypes } from '@/store/modules';
 
-interface SwapProps extends ContainerStyleProps { }
+interface SwapProps extends ContainerStyleProps {}
 
 interface InitStationTypes {
   departure: StationDataTypes;
@@ -36,7 +36,8 @@ const SwapSubwayStation = ({ isWrap, showHeader }: SwapProps) => {
     dispatch(getStationType(type));
 
     const navType = showHeader ? EDIT_ROUTE_NAVIGATION : SEARCH_NAVIGATION;
-    rootNavigation.navigate(navType, { screen: SUBWAY_SEARCH });
+    rootNavigation.navigate(EDIT_ROUTE_NAVIGATION, { screen: SUBWAY_SEARCH });
+    rootNavigation.navigate(SEARCH_NAVIGATION, { screen: SUBWAY_SEARCH });
   };
 
   const swapStation = () => {
@@ -98,9 +99,9 @@ export default SwapSubwayStation;
 
 interface ContainerStyleProps {
   isWrap: boolean;
-  showHeader: boolean;
+  showHeader?: boolean;
 }
-const Container = styled(Shadow) <ContainerStyleProps>`
+const Container = styled(Shadow)<ContainerStyleProps>`
   ${({ isWrap }) =>
     isWrap &&
     `
