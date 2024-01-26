@@ -6,7 +6,7 @@ export type RootStackParamList = {
   Login: undefined;
   MainBottomTab: NavigatorScreenParams<{ Home: undefined }>;
   SearchNavigation: { screen: keyof SearchStackParamList; params?: Path; route?: undefined };
-  EditRouteNavigation: { screen: string; params: { pathId: number } };
+  EditRouteNavigation: { screen: keyof EditRouteStackParamList; params?: { pathId: number } };
 };
 
 export type EditRouteStackParamList = {
