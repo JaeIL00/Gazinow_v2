@@ -11,10 +11,13 @@ import { StationDataTypes } from '@/store/modules';
 import { iconPath } from '@/assets/icons/iconPath';
 import { SubwaySimplePath } from '@/components/search/organism';
 import { useRootNavigation } from '@/navigation/RootNavigation';
+import dayjs from 'dayjs';
+import 'dayjs/locale/ko';
+
+dayjs.locale('ko');
 
 const SearchPathResultPage = () => {
   const rootNavigation = useRootNavigation();
-
   const { params } = useRoute() as {
     params: {
       departure: StationDataTypes;
@@ -46,9 +49,29 @@ const SearchPathResultPage = () => {
         </SwapSubwayWrap>
       </SwapSubwayBox>
 
+      <View
+        style={{
+          backgroundColor: COLOR.WHITE,
+          paddingHorizontal: 16,
+          paddingVertical: 14,
+          borderBottomColor: '#EBEBEB',
+          borderBottomWidth: 1,
+        }}
+      >
+        <FontText
+          value={'오늘 ' + dayjs().format('A HH시 mm분') + ' 기준'}
+          textSize="16px"
+          textWeight="Regular"
+          textColor="#49454F"
+        />
+      </View>
+
       <View style={{ backgroundColor: COLOR.WHITE }}>
         {data?.paths.map((item) => (
-          <View style={{ paddingHorizontal: 18, paddingBottom: 24, paddingTop: 20 }}>
+          <View
+            key={item.firstStartStation + item.totalTime}
+            style={{ paddingHorizontal: 18, paddingBottom: 24, paddingTop: 20 }}
+          >
             <View>
               <View
                 style={{
@@ -57,7 +80,12 @@ const SearchPathResultPage = () => {
                   justifyContent: 'space-between',
                 }}
               >
-                <FontText value="소요시간" textSize="11px" textWeight="SemiBold" textColor="#999" />
+                <FontText
+                  value="평균 소요시간"
+                  textSize="11px"
+                  textWeight="SemiBold"
+                  textColor="#999"
+                />
                 <TouchableOpacity
                   style={{ flexDirection: 'row', alignItems: 'center' }}
                   onPress={() =>
