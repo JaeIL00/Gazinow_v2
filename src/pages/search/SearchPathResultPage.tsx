@@ -1,23 +1,34 @@
-import styled, { css } from '@emotion/native';
-import type { NavigationProp } from '@react-navigation/native';
-import { View } from 'react-native';
+import styled from '@emotion/native';
+import { useRoute } from '@react-navigation/native';
+import { TouchableOpacity, View } from 'react-native';
 
 import { FontText, Space } from '@/components/common/atoms';
 import { IconButton } from '@/components/common/molecules';
 import { SwapSubwayStation } from '@/components/home/organism';
 import { COLOR } from '@/constants';
-import { SUBWAY_PATH_DETAIL } from '@/constants/navigation';
-import { RootStackParamList } from '@/types/navigation';
+import { useSearchPaths } from '@/hooks';
+import { StationDataTypes } from '@/store/modules';
+import { iconPath } from '@/assets/icons/iconPath';
+import { SubwaySimplePath } from '@/components/search/organism';
+import { useRootNavigation } from '@/navigation/RootNavigation';
 
-const dummy = [
-  { time: '45분 이상', departureName: '신용산역', departureLine: '4', arrivalLine: '2' },
-];
+const SearchPathResultPage = () => {
+  const rootNavigation = useRootNavigation();
 
-const SearchPathResultPage = ({
-  navigation,
-}: {
-  navigation: NavigationProp<RootStackParamList, 'SearchNavigation'>;
-}) => {
+  const { params } = useRoute() as {
+    params: {
+      departure: StationDataTypes;
+      arrival: StationDataTypes;
+    };
+  };
+
+  const { data } = useSearchPaths({
+    strSubwayName: params.departure.name,
+    strSubwayLine: params.departure.line,
+    endSubwayName: params.arrival.name,
+    endSubwayLine: params.arrival.line,
+  });
+
   return (
     <Container>
       <SwapSubwayBox>
@@ -27,7 +38,7 @@ const SearchPathResultPage = ({
             imagePath="left_arrow_nonbar"
             iconWidth="9px"
             iconHeight="16px"
-            onPress={() => {}}
+            onPress={() => rootNavigation.replace('MainBottomTab', { screen: 'Home' })}
           />
         </LeftIconBox>
         <SwapSubwayWrap>
@@ -36,53 +47,40 @@ const SearchPathResultPage = ({
       </SwapSubwayBox>
 
       <View style={{ backgroundColor: COLOR.WHITE }}>
-        {dummy.map((item) => (
-          <PathInner>
+        {data?.paths.map(({ totalTime, subPaths, lastEndStation }) => (
+          <View style={{ paddingHorizontal: 18, paddingBottom: 24, paddingTop: 20 }}>
             <View>
-              <PathTitleInfoBox>
-                <FontText
-                  value="소요시간"
-                  textSize="11px"
-                  textWeight="SemiBold"
-                  lineHeight="13px"
-                  textColor="#999"
-                />
-                <DetailButton onPress={() => navigation.push(SUBWAY_PATH_DETAIL)}>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                }}
+              >
+                <FontText value="소요시간" textSize="11px" textWeight="SemiBold" textColor="#999" />
+                <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center' }}>
                   <FontText
                     value="세부정보"
                     textSize="13px"
                     textWeight="Regular"
-                    lineHeight="19px"
                     textColor="#999"
                   />
                   <Space width="4px" />
-                  <IconButton
-                    isFontIcon={false}
-                    imagePath="right_arrow_nonbar"
-                    iconWidth="4.5px"
-                    iconHeight="8px"
-                    onPress={() => {}}
-                  />
-                </DetailButton>
-              </PathTitleInfoBox>
-              <Space height="4px" />
+                  <MoreIcon source={iconPath['right_arrow_nonbar']} />
+                </TouchableOpacity>
+              </View>
+              <View style={{ height: 4 }} />
               <FontText
-                value={item.time}
+                value={totalTime + '분 이상'}
                 textSize="20px"
                 textWeight="SemiBold"
-                lineHeight="25px"
                 textColor={COLOR.BASIC_BLACK}
               />
             </View>
 
-            {/* 경로 그래프 */}
-            <View
-              style={css(
-                `flexDirection: row; backgroundColor: orange;
-                `,
-              )}
-            ></View>
-          </PathInner>
+            {/* 지하철 경로 UI */}
+            <SubwaySimplePath pathData={subPaths} />
+          </View>
         ))}
       </View>
     </Container>
@@ -111,10 +109,9 @@ const DetailButton = styled.Pressable`
   flex-direction: row;
   align-items: center;
 `;
-const PathTitleInfoBox = styled.View`
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
+const MoreIcon = styled.Image`
+  width: 4.5px;
+  height: 8px;
 `;
 const PathInner = styled.View`
   padding: 20px 16px 24px;

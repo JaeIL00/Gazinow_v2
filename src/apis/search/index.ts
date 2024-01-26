@@ -35,5 +35,13 @@ export const searchPathsFetch = async (params: {
   endSubwayName: string;
   endSubwayLine: string;
 }) => {
-  return await axiosInstance.get<SearchPathsTypes>('/api/v1/find_road', { params });
+  try {
+    const res = await axiosInstance.get<{ data: SearchPathsTypes }>('/api/v1/find_road', {
+      params,
+    });
+    return res.data.data;
+  } catch (err) {
+    const er = err as AxiosError;
+    throw er;
+  }
 };

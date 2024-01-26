@@ -1,7 +1,7 @@
 import { useQuery } from 'react-query';
 
 import { AxiosResponse } from 'axios';
-import { SearchSubwayNameTypes } from '@/types/apis/searchTypes';
+import { SearchSubwayNameTypes, SubwayStrEnd } from '@/types/apis/searchTypes';
 import { useCallback, useState } from 'react';
 import { searchHistoryFetch, searchPathsFetch, searchSubwayName } from '@/apis/search';
 
@@ -48,12 +48,7 @@ export const useSerarchHistory = () => {
   return { data };
 };
 
-export const useSearchPaths = (params: {
-  strSubwayName: string;
-  strSubwayLine: string;
-  endSubwayName: string;
-  endSubwayLine: string;
-}) => {
+export const useSearchPaths = (params: SubwayStrEnd) => {
   const { data } = useQuery(['search_paths', params], () => searchPathsFetch(params));
 
   return { data };
