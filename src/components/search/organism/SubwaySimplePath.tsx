@@ -71,13 +71,16 @@ const SubwaySimplePath = ({ pathData }: SubwaySimplePathProps) => {
               flexDirection: 'row',
             }}
           >
-            {freshLanesPathData.map(({ lanes }, idx) => (
-              <>
-                {idx >= 3 && maxLength - 1 !== idx && (
-                  <PathBar subwayCode={lanes[0].subwayCode} isFirst={3 === idx} isLast={false} />
-                )}
-              </>
-            ))}
+            {freshLanesPathData.map(({ lanes }, idx) => {
+              console.log({ idx, maxLength }, idx >= 3, maxLength - 1 !== idx);
+              return (
+                <>
+                  {idx >= 3 && maxLength - 1 !== idx && (
+                    <PathBar subwayCode={lanes[0].subwayCode} isFirst={3 === idx} isLast={false} />
+                  )}
+                </>
+              );
+            })}
           </View>
 
           {/* 지하철 호선 및 이름 */}

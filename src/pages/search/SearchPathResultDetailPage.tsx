@@ -4,20 +4,22 @@ import { FlatList, View } from 'react-native';
 
 import { FontText } from '@/components/common/atoms';
 import { IconButton } from '@/components/common/molecules';
-import { SearchPathDetailItem } from '@/components/search/organism';
+import { NewRouteSaveModal, SearchPathDetailItem } from '@/components/search/organism';
 import { useRootNavigation } from '@/navigation/RootNavigation';
 import { useRoute } from '@react-navigation/native';
-import { SubPath } from '@/types/apis/searchTypes';
+import { Path, SubPath } from '@/types/apis/searchTypes';
 
 const SearchPathResultDetailPage = () => {
   const route = useRoute();
-  const freshData: SubPath[] = useMemo(() => {
-    const data = route.params as SubPath;
-    return Object.values(data).filter((item) => !!item.lanes.length && !!item.subways.length);
-  }, [route]);
-  console.log(freshData);
   const navigation = useRootNavigation();
+
   const [isBookmarking, setIsBookmarking] = useState<boolean>(false);
+  const [isSaveRouteModalOpen, setIsSaveRouteModalOpen] = useState<boolean>(false);
+
+  const freshSubPathData: SubPath[] = useMemo(() => {
+    const { subPaths } = route.params as Path;
+    return Object.values(subPaths).filter((item) => !!item.lanes.length && !!item.subways.length);
+  }, [route]);
   return (
     <View
       style={css`
@@ -49,8 +51,16 @@ const SearchPathResultDetailPage = () => {
           iconName={isBookmarking ? 'bookmark' : 'bookmark-o'}
           iconWidth="24"
           iconColor={isBookmarking ? '#346BF7' : '#999'}
-          onPress={() => setIsBookmarking((prev) => !prev)}
+          // onPress={() => setIsBookmarking((prev) => !prev)}
+          onPress={() => setIsSaveRouteModalOpen(true)}
         />
+        {isSaveRouteModalOpen && (
+          <NewRouteSaveModal
+            freshData={{ ...(route.params as Path), subPaths: freshSubPathData }}
+            closeModal={() => setIsSaveRouteModalOpen(false)}
+            onBookmark={() => setIsBookmarking(true)}
+          />
+        )}
       </View>
       <View
         style={css`
@@ -105,11 +115,11 @@ const SearchPathResultDetailPage = () => {
         `}
       />
       <FlatList
-        data={freshData}
+        data={freshSubPathData}
         keyExtractor={(item) => item.distance + item.sectionTime + ''}
         ListFooterComponent={<View style={{ height: 100 }} />}
         renderItem={({ item, index }) => (
-          <SearchPathDetailItem data={item} isLastLane={freshData.length - 1 === index} />
+          <SearchPathDetailItem data={item} isLastLane={freshSubPathData.length - 1 === index} />
         )}
       />
     </View>

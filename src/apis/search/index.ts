@@ -2,9 +2,11 @@ import { AxiosError } from 'axios';
 
 import { axiosInstance } from '../axiosInstance';
 import {
+  SavedRoute,
   SearchHistoryTypes,
   SearchPathsTypes,
   SearchSubwayNameTypes,
+  SubPath,
 } from '@/types/apis/searchTypes';
 
 export const searchSubwayName = async (params: { subwayName: string }) => {
@@ -39,6 +41,19 @@ export const searchPathsFetch = async (params: {
     const res = await axiosInstance.get<{ data: SearchPathsTypes }>('/api/v1/find_road', {
       params,
     });
+    return res.data.data;
+  } catch (err) {
+    const er = err as AxiosError;
+    throw er;
+  }
+};
+
+export const searchPathSaveFetch = async (data: SavedRoute) => {
+  try {
+    const res = await axiosInstance.post<{ data: SearchPathsTypes }>(
+      '/api/v1/my_find_road/add_route',
+      data,
+    );
     return res.data.data;
   } catch (err) {
     const er = err as AxiosError;

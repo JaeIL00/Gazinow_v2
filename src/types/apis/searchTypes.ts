@@ -114,3 +114,7 @@ export interface SubwayStrEnd {
   endSubwayName: string;
   endSubwayLine: string;
 }
+
+export interface SavedRoute extends Path {
+  roadName: string;
+}

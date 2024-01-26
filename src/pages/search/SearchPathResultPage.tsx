@@ -47,7 +47,7 @@ const SearchPathResultPage = () => {
       </SwapSubwayBox>
 
       <View style={{ backgroundColor: COLOR.WHITE }}>
-        {data?.paths.map(({ totalTime, subPaths, lastEndStation }) => (
+        {data?.paths.map((item) => (
           <View style={{ paddingHorizontal: 18, paddingBottom: 24, paddingTop: 20 }}>
             <View>
               <View
@@ -63,7 +63,7 @@ const SearchPathResultPage = () => {
                   onPress={() =>
                     rootNavigation.push('SearchNavigation', {
                       screen: 'SubwayPathDetail',
-                      params: subPaths,
+                      params: item,
                     })
                   }
                 >
@@ -79,7 +79,7 @@ const SearchPathResultPage = () => {
               </View>
               <View style={{ height: 4 }} />
               <FontText
-                value={totalTime + '분 이상'}
+                value={item.totalTime + '분 이상'}
                 textSize="20px"
                 textWeight="SemiBold"
                 textColor={COLOR.BASIC_BLACK}
@@ -87,7 +87,7 @@ const SearchPathResultPage = () => {
             </View>
 
             {/* 지하철 경로 UI */}
-            <SubwaySimplePath pathData={subPaths} />
+            <SubwaySimplePath pathData={item.subPaths} />
           </View>
         ))}
       </View>

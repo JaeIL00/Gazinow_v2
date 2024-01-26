@@ -3,6 +3,7 @@ const COLOR = {
   LIGHT_GRAY: '#F9F9F9' as const,
   BE_GRAY: '#BEBEBE' as const,
   GRAY_999: '#999' as const,
+  GRAY_DDD: '#ddd' as const,
   WHITE: '#ffffff' as const,
   LINE1: '#3151C2' as const,
   LINE2: '#00A84D' as const,
