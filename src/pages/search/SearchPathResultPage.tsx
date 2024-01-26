@@ -107,7 +107,11 @@ const SearchPathResultPage = () => {
               </View>
               <View style={{ height: 4 }} />
               <FontText
-                value={item.totalTime + '분 이상'}
+                value={
+                  item.totalTime > 60
+                    ? Math.floor(item.totalTime / 60) + '시간 ' + (item.totalTime % 60) + '분 이상'
+                    : item.totalTime + '분 이상'
+                }
                 textSize="20px"
                 textWeight="SemiBold"
                 textColor={COLOR.BASIC_BLACK}
