@@ -4,15 +4,16 @@ import { AxiosResponse } from 'axios';
 import { SearchSubwayNameTypes, SubwayStrEnd } from '@/types/apis/searchTypes';
 import { useCallback, useState } from 'react';
 import {
+  searchAddHistoryFetch,
   searchHistoryFetch,
   searchPathDeleteFetch,
   searchPathSaveFetch,
   searchPathsFetch,
   searchSubwayName,
 } from '@/apis/search';
+import { subwayFreshLineName } from '@/utils';
 
 export const useSearchSubwayName = (subwayName: string) => {
-  const [resultList, setResultList] = useState<SearchSubwayNameTypes[]>([]);
   const { data } = useQuery(
     ['search-subway-name', subwayName],
     () => searchSubwayName({ subwayName }),
@@ -21,31 +22,8 @@ export const useSearchSubwayName = (subwayName: string) => {
     },
   );
 
-  // 인천선 === 인천1
-  // 인천2호선 === 인천2
-  // 용인경전철 === 애버라인
-  // 우이신설경전철 === 우이신설
-  // 김포도시철도 === 김포골드
-  const freshLineName = useCallback((list: SearchSubwayNameTypes['data']) => {
-    return list.map((item) => {
-      switch (item.line) {
-        case '인천선':
-          return { name: item.name, line: '인천1' };
-        case '인천2호선':
-          return { name: item.name, line: '인천2' };
-        case '용인경전철':
-          return { name: item.name, line: '애버라인' };
-        case '우이신설경전철':
-          return { name: item.name, line: '우이신설' };
-        case '김포도시철도':
-          return { name: item.name, line: '김포골드' };
-        default:
-          return item;
-      }
-    });
-  }, []);
   return {
-    searchResultData: data ? freshLineName(data) : [],
+    searchResultData: data ? subwayFreshLineName(data) : [],
   };
 };
 
@@ -74,4 +52,20 @@ export const useDeleteSavedSubwayRoute = ({ onSuccess }: { onSuccess: () => void
   });
 
   return { data, deleteMutate: mutate };
+};
+export const useAddResetSearch = ({
+  onSuccess,
+}: {
+  onSuccess: (data: {
+    // 백엔드 : stationCode 대응
+    id?: number;
+    stationName: string;
+    stationLine: string;
+  }) => void;
+}) => {
+  const { data, mutate } = useMutation(searchAddHistoryFetch, {
+    onSuccess,
+  });
+
+  return { data, addRecentMutate: mutate };
 };
