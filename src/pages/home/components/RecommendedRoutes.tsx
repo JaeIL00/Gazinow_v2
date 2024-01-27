@@ -7,10 +7,9 @@ import { SubwayRoute } from '@/components/savedRoutes';
 import styled from '@emotion/native';
 
 const RecommendedRoutes = () => {
-
   const routeDetail = () => {
-    console.log('dddd')
-  }
+    console.log('dddd');
+  };
 
   return (
     <Container>
@@ -44,15 +43,17 @@ const RecommendedRoutes = () => {
         </View>
       </View>
 
-      <View style={styles.containerSubwayRoute}><SubwayRoute /></View>
+      <View style={styles.containerSubwayRoute}>
+        <SubwayRoute />
+      </View>
     </Container>
   );
 };
 
 const Container = styled.View`
-  backgroundColor: #F2F2F2;
+  backgroundcolor: #f2f2f2;
   padding: 0 16px;
-  borderRadius: 13px;
+  borderradius: 13px;
   padding: 20px;
 `;
 

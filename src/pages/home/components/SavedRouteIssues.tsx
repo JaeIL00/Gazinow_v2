@@ -2,9 +2,11 @@ import React, { useState } from 'react';
 import { View, TouchableOpacity, StyleSheet } from 'react-native';
 import { FontText } from '@/components/common/atoms';
 import { COLOR, EDIT_ROUTE_NAVIGATION, SAVED_ROUTES_PAGE } from '@/constants';
-import { IssueBox, SavedRouteBox, RecentSearchBox } from '@/components/home/organism';
 import { TextButton } from '@/components/common/molecules';
 import { useRootNavigation } from '@/navigation/RootNavigation';
+import SavedRouteBox from './SavedRouteBox';
+import RecentSearchBox from './RecentSearchBox';
+import IssueBox from './IssueBox';
 
 const categoryName: ['저장경로', '최근검색', '이슈'] = ['저장경로', '최근검색', '이슈'];
 

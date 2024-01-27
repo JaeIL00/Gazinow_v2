@@ -4,7 +4,6 @@ import { TouchableOpacity, View } from 'react-native';
 
 import { FontText, Space } from '@/components/common/atoms';
 import { IconButton } from '@/components/common/molecules';
-import { SwapSubwayStation } from '@/components/home/organism';
 import { COLOR } from '@/constants';
 import { useSearchPaths } from '@/hooks';
 import { StationDataTypes } from '@/store/modules';
@@ -13,6 +12,7 @@ import { SubwaySimplePath } from '@/components/search/organism';
 import { useRootNavigation } from '@/navigation/RootNavigation';
 import dayjs from 'dayjs';
 import 'dayjs/locale/ko';
+import { SwapSubwayStation } from '@/global/components';
 
 dayjs.locale('ko');
 

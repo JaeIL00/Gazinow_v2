@@ -1,15 +1,15 @@
 import React from 'react';
 import styled from '@emotion/native';
-import { SwapSubwayStation } from '@/components/home/organism';
 import { COLOR } from '@/constants';
+import { SwapSubwayStation } from '@/global/components';
 
 const AddNewRoutePage = () => {
   return (
-      <SwapSubwayBox>
-        <SwapSubwayWrap>
-          <SwapSubwayStation isWrap={false} showHeader={true} />
-        </SwapSubwayWrap>
-      </SwapSubwayBox>
+    <SwapSubwayBox>
+      <SwapSubwayWrap>
+        <SwapSubwayStation isWrap={false} showHeader={true} />
+      </SwapSubwayWrap>
+    </SwapSubwayBox>
   );
 };
 

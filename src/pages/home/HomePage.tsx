@@ -1,7 +1,7 @@
 import styled from '@emotion/native';
 import { Text } from 'react-native';
-
-import { SwapSubwayStation, SavedRouteIssues } from '@/components/home/organism';
+import { SavedRouteIssues } from './components';
+import { SwapSubwayStation } from '@/global/components';
 
 const HomePage = () => {
   return (

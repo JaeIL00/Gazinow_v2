@@ -3,14 +3,18 @@ import type { NavigationProp } from '@react-navigation/native';
 import { TouchableOpacity, View } from 'react-native';
 
 import { FontText, Space } from '@/components/common/atoms';
-import { SwapSubwayStation } from '@/components/home/organism';
 import { COLOR } from '@/constants';
-import { EDIT_ROUTE_NAVIGATION, NAME_NEW_ROUTE_PAGE, SUBWAY_PATH_DETAIL } from '@/constants/navigation';
+import {
+  EDIT_ROUTE_NAVIGATION,
+  NAME_NEW_ROUTE_PAGE,
+  SUBWAY_PATH_DETAIL,
+} from '@/constants/navigation';
 import { RootStackParamList } from '@/types/navigation';
 import React, { useState } from 'react';
 import { useRootNavigation } from '@/navigation/RootNavigation';
 import { SubwayRoute } from '@/components/savedRoutes';
 import { StyleSheet } from 'react-native';
+import { SwapSubwayStation } from '@/global/components';
 
 const dummy = [
   { time: '45분', departureName: '신용산역', departureLine: '4', arrivalLine: '2' },
@@ -24,7 +28,7 @@ const SelectNewRoutePage = ({
 }) => {
   const rootNavigation = useRootNavigation();
   const [selectedRouteIndex, setSelectedRouteIndex] = useState<number | null>(null);
-  console.log(selectedRouteIndex)
+  console.log(selectedRouteIndex);
 
   return (
     <Container>
@@ -34,9 +38,13 @@ const SelectNewRoutePage = ({
         </Container>
       </SwapSubwayBox>
       <Container>
-        <View >
+        <View>
           {dummy.map((item, index) => (
-            <PathInner onPress={() => { navigation.navigate(SUBWAY_PATH_DETAIL, { pathId: index }) }}>
+            <PathInner
+              onPress={() => {
+                navigation.navigate(SUBWAY_PATH_DETAIL, { pathId: index });
+              }}
+            >
               <View>
                 <PathTitleInfoBox>
                   <View>
@@ -56,11 +64,16 @@ const SelectNewRoutePage = ({
                       textColor={COLOR.BASIC_BLACK}
                     />
                   </View>
-                  <RadioButtonContainer selected={selectedRouteIndex === index} onPress={() => setSelectedRouteIndex(index)}>
+                  <RadioButtonContainer
+                    selected={selectedRouteIndex === index}
+                    onPress={() => setSelectedRouteIndex(index)}
+                  >
                     {selectedRouteIndex === index && <InnerCircle />}
                   </RadioButtonContainer>
                 </PathTitleInfoBox>
-                <SubwayRouteContainer><SubwayRoute /></SubwayRouteContainer>
+                <SubwayRouteContainer>
+                  <SubwayRoute />
+                </SubwayRouteContainer>
               </View>
 
               {/* 경로 그래프 */}
@@ -75,9 +88,13 @@ const SelectNewRoutePage = ({
         </View>
       </Container>
 
-      <BottomBtn onPress={() => {
-        rootNavigation.navigate(EDIT_ROUTE_NAVIGATION, { screen: NAME_NEW_ROUTE_PAGE, params: { pathId: selectedRouteIndex } })
-      }}
+      <BottomBtn
+        onPress={() => {
+          rootNavigation.navigate(EDIT_ROUTE_NAVIGATION, {
+            screen: NAME_NEW_ROUTE_PAGE,
+            params: { pathId: selectedRouteIndex },
+          });
+        }}
         disabled={selectedRouteIndex === null}
       >
         <FontText
@@ -95,9 +112,9 @@ const SelectNewRoutePage = ({
 export default SelectNewRoutePage;
 
 const SubwayRouteContainer = styled.View`
-  marginTop: 40;
-  flexDirection: row;
-  justifyContent: space-between;
+  margintop: 40;
+  flexdirection: row;
+  justifycontent: space-between;
 `;
 const Container = styled.View`
   background-color: ${COLOR.WHITE};
@@ -131,8 +148,8 @@ const RadioButtonContainer = styled.Pressable`
   ${(props) =>
     props.selected &&
     css`
-    border-color: blue;
-  `}
+      border-color: blue;
+    `}
 `;
 const InnerCircle = styled.View`
   width: 11px;
@@ -147,9 +164,5 @@ const BottomBtn = styled.Pressable`
   align-items: center;
   bottom: 41;
   ${({ disabled }) =>
-    disabled ?
-      `background-color : #dddddd`
-      :
-      `background-color : ${COLOR.BASIC_BLACK};`
-  }
+    disabled ? `background-color : #dddddd` : `background-color : ${COLOR.BASIC_BLACK};`}
 `;
