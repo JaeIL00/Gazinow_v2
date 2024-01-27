@@ -4,7 +4,7 @@ import type { StackNavigationProp } from '@react-navigation/stack';
 
 import { SUBWAY_SEARCH, SUBWAY_PATH_RESULT } from '@/global/constants';
 import { SUBWAY_PATH_DETAIL } from '@/global/constants/navigation';
-import { SearchPathResultDetail, SearchPathResultPage, SubwaySearchPage } from '@/pages/search';
+import { SearchPathResultDetail, SearchPathResultPage, SubwaySearchPage } from '@/screens/search';
 import { SearchStackParamList } from '@/global/types/navigation';
 
 const Stack = createStackNavigator<SearchStackParamList>();

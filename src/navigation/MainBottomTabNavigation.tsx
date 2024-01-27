@@ -1,7 +1,7 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import { HOME } from '@/global/constants';
-import { HomePage } from '@/pages/home';
+import { HomePage } from '@/screens/home';
 import { CompositeScreenProps } from '@react-navigation/native';
 import { StackScreenProps } from '@react-navigation/stack';
 import { RootStackParamList } from '@/global/types/navigation';

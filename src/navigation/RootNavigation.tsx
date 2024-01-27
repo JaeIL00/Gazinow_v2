@@ -9,7 +9,7 @@ import {
   SEARCH_NAVIGATION,
 } from '@/global/constants';
 import { EditRouteNavigation, MainBottomTabNavigation, SearchNavigation } from '@/navigation';
-import { LoginPage } from '@/pages/auth';
+import { LoginPage } from '@/screens/auth';
 import type { RootStackParamList } from '@/global/types/navigation';
 import { tokenReissueFetch } from '@/global/apis/auth';
 import { useMutation } from 'react-query';

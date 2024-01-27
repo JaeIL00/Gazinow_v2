@@ -8,7 +8,7 @@ import {
   AddNewRoutePage,
   SelectNewRoutePage,
   NameNewRoutePage,
-} from '@/pages/savedRoutes';
+} from '@/screens/savedRoutes';
 import {
   COLOR,
   SAVED_ROUTES_PAGE,
@@ -16,7 +16,7 @@ import {
   SUBWAY_SEARCH,
   SUBWAY_PATH_RESULT,
 } from '@/global/constants';
-import { SearchPathResultDetail, SubwaySearchPage } from '@/pages/search';
+import { SearchPathResultDetail, SubwaySearchPage } from '@/screens/search';
 import { NAME_NEW_ROUTE_PAGE, SUBWAY_PATH_DETAIL } from '@/global/constants/navigation';
 
 const Stack = createStackNavigator<EditRouteStackParamList>();
