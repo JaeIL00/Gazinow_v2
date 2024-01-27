@@ -6,13 +6,15 @@ import { IssueBox, SavedRouteBox, RecentSearchBox } from '@/components/home/orga
 import { TextButton } from '@/components/common/molecules';
 import { useRootNavigation } from '@/navigation/RootNavigation';
 
+const categoryName: ['저장경로', '최근검색', '이슈'] = ['저장경로', '최근검색', '이슈'];
+
 const SavedRouteIssues = () => {
   const rootNavigation = useRootNavigation();
   const [activeButton, setActiveButton] = useState<'저장경로' | '최근검색' | '이슈'>('저장경로');
 
-  const handleButtonClick = (buttonText: string) => setActiveButton(buttonText);
+  const handleButtonClick = (buttonText: typeof activeButton) => setActiveButton(buttonText);
 
-  const renderButton = (text: string) => (
+  const renderButton = (text: typeof activeButton) => (
     <TouchableOpacity
       key={text}
       onPress={() => handleButtonClick(text)}
@@ -27,18 +29,20 @@ const SavedRouteIssues = () => {
       />
     </TouchableOpacity>
   );
-  
+
   return (
     <View style={styles.container}>
       {/* 이슈/저장경로/최근검색 버튼 */}
       <View style={styles.navContainer}>
-        <View style={styles.textContainer}>{['저장경로', '최근검색', '이슈'].map(renderButton)}</View>
+        <View style={styles.textContainer}>{categoryName.map(renderButton)}</View>
         <TextButton
           value="저장경로 편집"
           textSize="16px"
           textColor={COLOR.GRAY_999}
           textWeight="Medium"
-          onPress={() => rootNavigation.navigate(EDIT_ROUTE_NAVIGATION, { screen: SAVED_ROUTES_PAGE })}
+          onPress={() =>
+            rootNavigation.navigate(EDIT_ROUTE_NAVIGATION, { screen: SAVED_ROUTES_PAGE })
+          }
           lineHeight="21px"
         />
       </View>
@@ -47,12 +51,13 @@ const SavedRouteIssues = () => {
       <View style={styles.borderLine}></View>
 
       {/* 버튼에 따라 다른 컴포넌트를 렌더링 */}
-      {{
-        '저장경로': <SavedRouteBox />,
-        '최근검색': <RecentSearchBox />,
-        '이슈': <IssueBox />,
-      }[activeButton]}
-
+      {
+        {
+          저장경로: <SavedRouteBox />,
+          최근검색: <RecentSearchBox />,
+          이슈: <IssueBox />,
+        }[activeButton]
+      }
     </View>
   );
 };
