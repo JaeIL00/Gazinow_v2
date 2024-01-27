@@ -1,5 +1,4 @@
 import { Path, SubPath } from '@/global/apis/entity';
-import { NavigatorScreenParams } from '@react-navigation/native';
 
 export type RootStackParamList = {
   Temp: undefined;
@@ -7,25 +6,37 @@ export type RootStackParamList = {
   MainBottomTab: { screen: 'Home' };
   SearchNavigation: { screen: keyof SearchStackParamList; params?: Path; route?: undefined };
   EditRouteNavigation: { screen: keyof EditRouteStackParamList; params?: { pathId: number } };
+  MyNavigation: { screen: keyof MyStackParamList };
 };
 
 export type EditRouteStackParamList = {
-  SavedRoutesPage: undefined;
-  AddNewRoutePage: undefined;
-  SubwaySearch: undefined;
+  SavedRoutes: undefined;
+  AddNewRoute: undefined;
+  SubwaySearch: { isBackBtn: boolean };
   SubwayPathResult: {
     departure: { name: string; line: string };
     arrival: { name: string; line: string };
   };
   SubwayPathDetail: undefined;
-  NameNewRoutePage: { screen: string; params: number };
+  NameNewRoute: { screen: string; params: number };
 };
 
 export type SearchStackParamList = {
-  SubwaySearch: undefined;
+  SubwaySearch: { isBackBtn: boolean };
   SubwayPathResult: {
     departure: { name: string; line: string };
     arrival: { name: string; line: string };
   };
   SubwayPathDetail: { state?: SubPath[]; pathId?: number };
+};
+
+export type MyStackParamList = {
+  Nickname: undefined;
+  MyRoot: undefined;
+  ChangeNickname: undefined;
+  AccountManage: undefined;
+  NotificationSettings: undefined;
+  ChangePw: undefined;
+  ConfirmQuit: undefined;
+  Contract: undefined;
 };

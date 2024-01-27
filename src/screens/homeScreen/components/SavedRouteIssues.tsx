@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, TouchableOpacity, StyleSheet } from 'react-native';
 import { FontText, TextButton } from '@/global/ui';
-import { COLOR, EDIT_ROUTE_NAVIGATION, SAVED_ROUTES_PAGE } from '@/global/constants';
+import { COLOR, EDIT_ROUTE_NAVIGATION, SAVED_ROUTES } from '@/global/constants';
 import { useRootNavigation } from '@/navigation/RootNavigation';
 import SavedRouteBox from './SavedRouteBox';
 import RecentSearchBox from './RecentSearchBox';
@@ -41,9 +41,7 @@ const SavedRouteIssues = () => {
           textSize="16px"
           textColor={COLOR.GRAY_999}
           textWeight="Medium"
-          onPress={() =>
-            rootNavigation.navigate(EDIT_ROUTE_NAVIGATION, { screen: SAVED_ROUTES_PAGE })
-          }
+          onPress={() => rootNavigation.navigate(EDIT_ROUTE_NAVIGATION, { screen: SAVED_ROUTES })}
           lineHeight="21px"
         />
       </View>

@@ -12,22 +12,6 @@ import {
 } from '../entity';
 
 /**
- * 로그인 요청 axios
- */
-export const loginFetch = async (data: LoginFormTypes) => {
-  try {
-    const res = await axiosInstance.post<{ data: LoginFetchResponse }>(
-      '/api/v1/member/login',
-      data,
-    );
-    return res.data.data;
-  } catch (err) {
-    const er = err as AxiosError;
-    throw er;
-  }
-};
-
-/**
  * 인증 토근 재인증 axios
  */
 export const tokenReissueFetch = async ({

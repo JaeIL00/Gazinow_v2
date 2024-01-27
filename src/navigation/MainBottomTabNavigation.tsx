@@ -1,7 +1,8 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-import { HOME } from '@/global/constants';
+import { HOME, MY_ROOT } from '@/global/constants';
 import HomeScreen from '@/screens/homeScreen';
+import MyRootScreen from '@/screens/MyRootScreen';
 
 const Tab = createBottomTabNavigator();
 
@@ -12,7 +13,8 @@ const screenOption = {
 const MainBottomTabNavigation = () => {
   return (
     <Tab.Navigator initialRouteName={HOME} screenOptions={screenOption}>
-      <Tab.Screen name={HOME} component={HomeScreen} />
+      <Tab.Screen name={HOME} component={HomeScreen} options={{ tabBarLabel: '홈' }} />
+      <Tab.Screen name={MY_ROOT} component={MyRootScreen} options={{ tabBarLabel: '마이' }} />
     </Tab.Navigator>
   );
 };

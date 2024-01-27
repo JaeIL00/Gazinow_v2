@@ -9,6 +9,9 @@ export interface IconPathTypes {
   more_gray: ImageSourcePropType;
   backBtn: ImageSourcePropType;
   addRoute: ImageSourcePropType;
+  checked: ImageSourcePropType;
+  x_circle: ImageSourcePropType;
+  x: ImageSourcePropType;
 }
 
 export const iconPath: IconPathTypes = {
@@ -20,4 +23,7 @@ export const iconPath: IconPathTypes = {
   more_gray: require('@/assets/icons/moreBtn.png'),
   backBtn: require('@/assets/icons/icon_tapbar.png'),
   addRoute: require('@/assets/icons/plus-circle.png'),
+  checked: require('@/assets/icons/checked.png'),
+  x_circle: require('@/assets/icons/x-circle.png'),
+  x: require('@/assets/icons/x.png'),
 };

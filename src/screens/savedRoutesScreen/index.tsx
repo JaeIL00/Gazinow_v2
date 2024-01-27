@@ -2,7 +2,7 @@ import React from 'react';
 import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import { IconButton, FontText } from '@/global/ui';
 import styled from '@emotion/native';
-import { COLOR, EDIT_ROUTE_NAVIGATION, ADD_NEW_ROUTE_PAGE } from '@/global/constants';
+import { COLOR, EDIT_ROUTE_NAVIGATION, ADD_NEW_ROUTE } from '@/global/constants';
 import { useRootNavigation } from '@/navigation/RootNavigation';
 import RenderSavedRoutes from './components/RenderSavedRoutes';
 
@@ -13,9 +13,7 @@ const SavedRoutesScreen = () => {
       <View style={styles.container}>
         <RenderSavedRoutes />
         <TouchableOpacity
-          onPress={() =>
-            rootNavigation.navigate(EDIT_ROUTE_NAVIGATION, { screen: ADD_NEW_ROUTE_PAGE })
-          }
+          onPress={() => rootNavigation.navigate(EDIT_ROUTE_NAVIGATION, { screen: ADD_NEW_ROUTE })}
         >
           <View style={styles.containerAdd}>
             <IconButton

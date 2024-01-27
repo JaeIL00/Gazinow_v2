@@ -14,18 +14,6 @@ import { subwayFreshLineName } from '@/global/utils';
 import { LoginFetchResponse, SubwayStrEnd } from '../entity';
 
 /**
- * 로그인 요청 훅
- */
-export const useLoginMutation = ({
-  onSuccess,
-}: {
-  onSuccess: (data: LoginFetchResponse) => void;
-}) => {
-  const { mutate: loginMutate } = useMutation(loginFetch, { onSuccess });
-  return { loginMutate };
-};
-
-/**
  * 검색한 지하철 경로 조회 훅
  */
 export const useGetSearchRoutesQuery = () => {

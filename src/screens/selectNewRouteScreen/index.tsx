@@ -6,7 +6,7 @@ import { FontText, Space } from '@/global/ui';
 import { COLOR } from '@/global/constants';
 import {
   EDIT_ROUTE_NAVIGATION,
-  NAME_NEW_ROUTE_PAGE,
+  NAME_NEW_ROUTE,
   SUBWAY_PATH_DETAIL,
 } from '@/global/constants/navigation';
 import { RootStackParamList } from '@/navigation/types/navigation';
@@ -91,7 +91,7 @@ const SelectNewRouteScreen = ({
       <BottomBtn
         onPress={() => {
           rootNavigation.navigate(EDIT_ROUTE_NAVIGATION, {
-            screen: NAME_NEW_ROUTE_PAGE,
+            screen: NAME_NEW_ROUTE,
             params: { pathId: selectedRouteIndex },
           });
         }}
@@ -112,7 +112,7 @@ const SelectNewRouteScreen = ({
 export default SelectNewRouteScreen;
 
 const SubwayRouteContainer = styled.View`
-  margintop: 40;
+  margintop: 40px;
   flexdirection: row;
   justifycontent: space-between;
 `;
@@ -162,7 +162,7 @@ const BottomBtn = styled.Pressable`
   margin-horizontal: 16px;
   border-radius: 5px;
   align-items: center;
-  bottom: 41;
+  bottom: 41px;
   ${({ disabled }) =>
     disabled ? `background-color : #dddddd` : `background-color : ${COLOR.BASIC_BLACK};`}
 `;
