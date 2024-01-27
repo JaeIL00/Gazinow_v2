@@ -5,26 +5,22 @@ import { AxiosError } from 'axios';
 import { useState } from 'react';
 import { axiosInstance } from '@/global/apis/axiosInstance';
 import { FontText, Space, TextButton } from '@/global/ui';
-import { COLOR } from '@/global/constants';
+import { COLOR, LOGIN } from '@/global/constants';
 import MyTabModal from '../../global/components/MyTabModal';
+import { useQuitMutation } from '@/global/apis/hook';
 
 const ConfirmQuitScreen = () => {
   const nickName = '사용자17349245';
   const navigation = useRootNavigation();
   const [popupVisible, setPopupVisible] = useState(false);
 
-  const handleConfirm = async () => {
-    console.log('탈퇴 버튼 클릭');
+  const { quitMutate } = useQuitMutation({
+    onSuccess: () => navigation.reset({ routes: [{ name: LOGIN }] }),
+  });
 
-    try {
-      await axiosInstance.delete('/api/v1/member/delete_member', {
-        data: true,
-      });
-      console.log('탈퇴 요청 성공');
-    } catch (err) {
-      const error = err as AxiosError;
-      console.error('탈퇴 요청 실패:', error.response?.data);
-    }
+  const handleConfirm = () => {
+    quitMutate();
+
     hideModal();
   };
 
@@ -55,6 +51,7 @@ const ConfirmQuitScreen = () => {
           textWeight="Regular"
           lineHeight="26px"
           textColor={COLOR.WHITE}
+          onPress={() => navigation.goBack()}
         />
       </BottomBtn>
       <QuitBtn>

@@ -63,5 +63,9 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+
+	<!-- gazi -->
+	<key>NSRemindersUsageDescription</key>
+	<string>My description about why I need this capability</string>
 </dict>
 </plist>

@@ -1,14 +1,10 @@
 import styled from '@emotion/native';
-import { debounce } from 'lodash';
-import { useCallback, useState } from 'react';
-
+import { useState } from 'react';
 import { useRootNavigation } from '@/navigation/RootNavigation';
-import { useAppDispatch } from '@/store';
-import { getSearchText } from '@/store/modules/subwaySearchModule';
 import { Image } from 'react-native';
 import { iconPath } from '@/assets/icons/iconPath';
 import { AxiosError } from 'axios';
-import { FontText, IconButton, Input, TextButton } from '@/global/ui';
+import { FontText, IconButton, Input, Space, TextButton } from '@/global/ui';
 import { COLOR } from '@/global/constants';
 import { axiosInstance } from '@/global/apis/axiosInstance';
 
@@ -26,39 +22,45 @@ const ChangeNickNameScreen = () => {
       />
     ),
   });
-  const dispatch = useAppDispatch();
-
-  const submitNickname = (newNickname: string) => {
-    try {
-      axiosInstance.post(`/api/v1/member/change_nickname`, { nickName: newNickname });
-      console.log(newNickname);
-    } catch (err) {
-      const error = err as AxiosError;
-      console.log(error);
-    }
-  };
 
   const [newNickname, setNewNickname] = useState<string>('');
-
-  const changeNickname = (text: string) => {
-    setNewNickname(text);
-    sendSearchText(text);
-  };
-
-  const sendSearchText = useCallback(
-    debounce((text: string) => {
-      dispatch(getSearchText(text));
-      console.log('dkdk');
-    }, 500),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [],
-  );
+  const [isNicknameValid, setIsNicknameValid] = useState<boolean>(true);
+  const [errorMessage, setErrorMessage] = useState<string>('');
 
   const deleteInputText = () => {
     setNewNickname('');
   };
+  const changeNickname = (text: string) => {
+    setNewNickname(text);
+  };
 
-  const isVaildNickname = false;
+  const submitNickname = async (newNickname: string) => {
+    try {
+      const response = await axiosInstance.post(`/api/v1/member/change_nickname`, {
+        nickName: newNickname,
+      });
+      if (response.status === 200) {
+        navigation.goBack();
+      }
+    } catch (err) {
+      const error = err as AxiosError;
+      setIsNicknameValid(false);
+      setErrorMessage(getErrorMessage(error.response?.status));
+    }
+  };
+
+  const getErrorMessage = (status: number | undefined) => {
+    switch (status) {
+      case 409:
+        return '중복된 닉네임입니다.';
+      case 404:
+        return '회원이 존재하지 않습니다. 다시 로그인해주세요.';
+      case 400:
+        return '7글자 이하의 한글, 알파벳, 숫자를 입력해주세요.\n한글 자모음 단독으로 입력 불가';
+      default:
+        return '닉네임 변경에 실패하였습니다. 다시 시도해주세요.';
+    }
+  };
 
   return (
     <>
@@ -80,25 +82,15 @@ const ChangeNickNameScreen = () => {
           onPress={deleteInputText}
         />
       </Container>
-      {isVaildNickname ? (
-        <ConfirmContainer>
-          <Image source={iconPath.checked} style={{ width: 14, height: 10 }} />
-          <FontText
-            value=" 사용 가능한 닉네임입니다"
-            textSize="14px"
-            textWeight="Medium"
-            lineHeight="20px"
-            textColor="#0BC73F"
-          />
-        </ConfirmContainer>
-      ) : (
+      {!isNicknameValid && (
         <ConfirmContainer>
           <Image source={iconPath.x_circle} style={{ width: 14, height: 14 }} />
+          <Space width="5px" />
           <FontText
-            value=" 중복된 닉네임입니다"
+            value={errorMessage}
             textSize="14px"
             textWeight="Medium"
-            lineHeight="20px"
+            lineHeight="16px"
             textColor="#EB5147"
           />
         </ConfirmContainer>
@@ -120,7 +112,6 @@ const Container = styled.View`
 const ConfirmContainer = styled.View`
   margin: 8px 25px;
   flex-direction: row;
-  align-items: center;
 `;
 const SearchInput = styled(Input)`
   height: 36px;

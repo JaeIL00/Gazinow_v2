@@ -8,19 +8,44 @@ import {
   ACCOUNT_MANAGE,
   CHANGE_NICKNAME,
   CONTRACT,
+  NOTIFICATION,
   NOTIFICATION_SETTINGS,
 } from '@/global/constants/navigation';
+import { RESULTS, requestNotifications } from 'react-native-permissions';
+
 interface RenderMenuProps {
   text: string;
   onPress?: () => void;
   versionInfo?: string;
 }
 
+const ALLOWED_PERMISSIONS = {
+  [RESULTS.GRANTED]: true,
+  [RESULTS.LIMITED]: true,
+  [RESULTS.UNAVAILABLE]: true,
+  [RESULTS.BLOCKED]: false,
+  [RESULTS.DENIED]: false,
+};
+
+const requestNotificationPermission = async () => {
+  const { status } = await requestNotifications(['alert']);
+  return ALLOWED_PERMISSIONS[status];
+};
+
 const MyRootScreen = () => {
   const nickName = '사용자17349245';
   const userEmail = 'abcdef@naver.com';
   const versionInfo = '0.0.0';
   const navigation = useRootNavigation();
+
+  const confirmUserNotificationOn = async () => {
+    const result = await requestNotificationPermission();
+    if (!result) {
+      navigation.push(MY_NAVIGATION, { screen: NOTIFICATION });
+    } else {
+      navigation.push(MY_NAVIGATION, { screen: NOTIFICATION_SETTINGS });
+    }
+  };
 
   const renderMenu = ({ text, onPress, versionInfo }: RenderMenuProps) => (
     <MenuContainer onPress={onPress}>
@@ -80,10 +105,8 @@ const MyRootScreen = () => {
         text: '계정 관리',
         onPress: () => navigation.push(MY_NAVIGATION, { screen: ACCOUNT_MANAGE }),
       })}
-      {renderMenu({
-        text: '알림 설정',
-        onPress: () => navigation.push(MY_NAVIGATION, { screen: NOTIFICATION_SETTINGS }),
-      })}
+      {renderMenu({ text: '알림 설정', onPress: () => confirmUserNotificationOn() })}
+      {/* {renderMenu({ text: '알림 설정', onPress: () => navigation.push(MY_PAGE_NAVIGATION, { screen: NOTIFICATION_SETTINGS_PAGE }) })} */}
       {renderMenu({
         text: '약관 및 정책',
         onPress: () => navigation.push(MY_NAVIGATION, { screen: CONTRACT }),

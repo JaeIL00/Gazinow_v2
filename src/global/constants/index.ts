@@ -29,5 +29,6 @@ export {
   CONFIRM_QUIT,
   CONTRACT,
   NOTIFICATION_SETTINGS,
+  NOTIFICATION_ON,
 } from './navigation';
 export { default as COLOR } from './color';

@@ -5,7 +5,7 @@ import type { StackNavigationProp } from '@react-navigation/stack';
 import styled from '@emotion/native';
 import { IconButton } from '@/global/ui';
 import { EditRouteStackParamList, MyStackParamList } from './types/navigation';
-import MyRootScreen from '@/screens/MyRootScreen';
+import MyRootScreen from '@/screens/myRootScreen';
 import {
   MY_ROOT,
   ACCOUNT_MANAGE,
@@ -14,13 +14,16 @@ import {
   CONFIRM_QUIT,
   CONTRACT,
   NOTIFICATION_SETTINGS,
+  NOTIFICATION_ON,
 } from '@/global/constants';
 import ChangeNickNameScreen from '@/screens/changeNickNameScreen';
 import AccountManageScreen from '@/screens/accountManageScreen';
-import NotificationSettingsScreen from '@/screens/notificationSettingsScreen/NotificationSettingsPage';
+import NotificationSettingsScreen from '@/screens/notificationSettingsScreen';
 import ChangePwScreen from '@/screens/changePwScreen';
 import ConfirmQuitScreen from '@/screens/confirmQuitScreen';
 import ContractScreen from '@/screens/contractScreen';
+import { NOTIFICATION } from '@/global/constants/navigation';
+import NotificationOnScreen from '@/screens/notificationOnScreen';
 
 const Stack = createStackNavigator<MyStackParamList>();
 
@@ -94,6 +97,14 @@ const MyNavigation = () => {
       <Stack.Screen
         name={NOTIFICATION_SETTINGS}
         component={NotificationSettingsScreen}
+        options={({ navigation }) => ({
+          title: '알림 설정',
+          ...renderHeaderLeft(navigation),
+        })}
+      />
+      <Stack.Screen
+        name={NOTIFICATION}
+        component={NotificationOnScreen}
         options={({ navigation }) => ({
           title: '알림 설정',
           ...renderHeaderLeft(navigation),

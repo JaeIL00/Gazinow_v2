@@ -1,15 +1,21 @@
 import { subwayFreshLineName } from '@/global/utils';
 import axios, { AxiosError } from 'axios';
 import { axiosInstance } from '../axiosInstance';
+import { SavedRoute, SearchPathsTypes, SearchSubwayNameTypes, SubwayLine } from '../entity';
+import { LoginFetchResponse, LogoutFetchData } from '@/screens/loginScreen/apis/entity';
 import { API_BASE_URL } from '@env';
-import {
-  LoginFetchResponse,
-  LoginFormTypes,
-  SavedRoute,
-  SearchPathsTypes,
-  SearchSubwayNameTypes,
-  SubwayLine,
-} from '../entity';
+
+/**
+ * 인증 토근 재인증 axios
+ */
+export const logoutFetch = async ({ accessToken, refreshToken }: LogoutFetchData) => {
+  try {
+    await axiosInstance.post('/api/v1/member/logout', { accessToken, refreshToken });
+  } catch (err) {
+    const er = err as AxiosError;
+    throw er;
+  }
+};
 
 /**
  * 인증 토근 재인증 axios
@@ -36,6 +42,18 @@ export const tokenReissueFetch = async ({
       newAccessToken: res.data.data.accessToken,
       newRefreshToken: res.data.data.refreshToken,
     };
+  } catch (err) {
+    const er = err as AxiosError;
+    throw er;
+  }
+};
+
+/**
+ * 회원 탈퇴 axios
+ */
+export const quitFetch = async () => {
+  try {
+    await axiosInstance.delete('/api/v1/member/delete_member', { data: {} });
   } catch (err) {
     const er = err as AxiosError;
     throw er;

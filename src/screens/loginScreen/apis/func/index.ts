@@ -17,15 +17,3 @@ export const loginFetch = async (data: LoginFormTypes) => {
     throw er;
   }
 };
-
-/**
- * 인증 토근 재인증 axios
- */
-export const logoutFetch = async ({ accessToken, refreshToken }: LogoutFetchData) => {
-  try {
-    await axiosInstance.post('/api/v1/member/logout', { accessToken, refreshToken });
-  } catch (err) {
-    const er = err as AxiosError;
-    throw er;
-  }
-};

@@ -36,6 +36,7 @@ export type MyStackParamList = {
   ChangeNickname: undefined;
   AccountManage: undefined;
   NotificationSettings: undefined;
+  Notification: undefined;
   ChangePw: undefined;
   ConfirmQuit: undefined;
   Contract: undefined;

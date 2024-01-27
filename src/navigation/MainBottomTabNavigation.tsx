@@ -2,7 +2,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import { HOME, MY_ROOT } from '@/global/constants';
 import HomeScreen from '@/screens/homeScreen';
-import MyRootScreen from '@/screens/MyRootScreen';
+import MyRootScreen from '@/screens/myRootScreen';
 
 const Tab = createBottomTabNavigator();
 

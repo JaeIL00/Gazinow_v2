@@ -17,3 +17,4 @@ export const NOTIFICATION_SETTINGS = 'NotificationSettings' as const;
 export const CHANGE_PW = 'ChangePw' as const;
 export const CONFIRM_QUIT = 'ConfirmQuit' as const;
 export const CONTRACT = 'Contract' as const;
+export const NOTIFICATION = 'Notification' as const;
