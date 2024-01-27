@@ -12,8 +12,9 @@ export {
   DUMMY_VALUE,
 } from './constants';
 export {
-  ADD_NEW_ROUTE_PAGE,
-  SAVED_ROUTES_PAGE,
+  MY_NAVIGATION,
+  ADD_NEW_ROUTE,
+  SAVED_ROUTES,
   EDIT_ROUTE_NAVIGATION,
   SEARCH_NAVIGATION,
   SUBWAY_SEARCH,
@@ -21,5 +22,13 @@ export {
   MAIN_BOTTOM_TAB,
   LOGIN,
   HOME,
+  MY_ROOT,
+  ACCOUNT_MANAGE,
+  CHANGE_NICKNAME,
+  CHANGE_PW,
+  CONFIRM_QUIT,
+  CONTRACT,
+  NOTIFICATION_SETTINGS,
+  NOTIFICATION_ON,
 } from './navigation';
 export { default as COLOR } from './color';

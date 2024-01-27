@@ -18,7 +18,11 @@ const screenOption = {
 const SearchNavigation = () => {
   return (
     <Stack.Navigator screenOptions={screenOption}>
-      <Stack.Screen name={SUBWAY_SEARCH} component={SubwaySearchScreen} />
+      <Stack.Screen
+        name={SUBWAY_SEARCH}
+        component={SubwaySearchScreen}
+        initialParams={{ isBackBtn: true }}
+      />
       <Stack.Screen name={SUBWAY_PATH_RESULT} component={SearchPathResultScreen} />
       <Stack.Screen name={SUBWAY_PATH_DETAIL} component={SearchPathResultDetailScreen} />
     </Stack.Navigator>

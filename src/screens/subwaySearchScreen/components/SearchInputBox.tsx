@@ -8,7 +8,7 @@ import { useRootNavigation } from '@/navigation/RootNavigation';
 import { useAppDispatch, useAppSelect } from '@/store';
 import { getSearchText } from '@/store/modules/subwaySearchModule';
 
-const SearchInputBox = () => {
+const SearchInputBox = ({ isBackBtn }: { isBackBtn: boolean }) => {
   const rootNavigation = useRootNavigation();
   const dispatch = useAppDispatch();
   const { stationType } = useAppSelect(({ subwaySearch }) => subwaySearch);
@@ -38,15 +38,18 @@ const SearchInputBox = () => {
 
   return (
     <Container>
-      <IconButton
-        iconType="Ionicons"
-        isFontIcon
-        iconName="arrow-back-sharp"
-        iconWidth="19.5"
-        iconColor="#49454F"
-        onPress={backToScreen}
-      />
+      {isBackBtn && (
+        <IconButton
+          iconType="Ionicons"
+          isFontIcon
+          iconName="arrow-back-sharp"
+          iconWidth="19.5"
+          iconColor="#49454F"
+          onPress={backToScreen}
+        />
+      )}
       <SearchInput
+        isBackBtn={isBackBtn}
         value={searchText}
         placeholder={`${stationType}을 검색해보세요`}
         placeholderTextColor={COLOR.BE_GRAY}
@@ -77,9 +80,10 @@ const Container = styled.View`
   margin: 16px 16px 0;
 `;
 
-const SearchInput = styled(Input)`
+const SearchInput = styled(Input)<{ isBackBtn: boolean }>`
   height: 36px;
   flex: 1;
+  margin-left: ${({ isBackBtn }) => (isBackBtn ? '18.25px' : '3px')};
   margin-left: 18.25px;
   margin-right: 31.2px;
 `;

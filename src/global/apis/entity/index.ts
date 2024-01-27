@@ -32,32 +32,6 @@ export interface AddRouteTypes {
 }
 
 /**
- * 로그인폼
- */
-export interface LoginFormTypes {
-  email: string;
-  password: string;
-}
-
-/**
- * 로그인 응답
- */
-export interface LoginFetchResponse {
-  grantType: 'Bearer';
-  memberId: number;
-  nickName: string;
-  email: string;
-  accessToken: string;
-  refreshToken: string;
-  accessTokenExpirationTime: number;
-  refreshTokenExpirationTime: number;
-  notificationByKeyword: boolean;
-  notificationByRepost: boolean;
-  notificationByLike: boolean;
-  firebaseToken: boolean;
-}
-
-/**
  * 지하철 호선 이름
  */
 export type SubwayLine =

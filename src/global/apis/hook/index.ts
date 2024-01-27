@@ -1,4 +1,4 @@
-import { loginFetch } from '../func';
+import { quitFetch } from '../func';
 import { AxiosError } from 'axios';
 import { axiosInstance } from '@/global/apis/axiosInstance';
 import { useMutation, useQuery } from 'react-query';
@@ -11,18 +11,11 @@ import {
   searchSubwayName,
 } from '@/global/apis/func';
 import { subwayFreshLineName } from '@/global/utils';
-import { LoginFetchResponse, SubwayStrEnd } from '../entity';
+import { SubwayStrEnd } from '../entity';
 
-/**
- * 로그인 요청 훅
- */
-export const useLoginMutation = ({
-  onSuccess,
-}: {
-  onSuccess: (data: LoginFetchResponse) => void;
-}) => {
-  const { mutate: loginMutate } = useMutation(loginFetch, { onSuccess });
-  return { loginMutate };
+export const useQuitMutation = ({ onSuccess }: { onSuccess: () => void }) => {
+  const { mutate: quitMutate } = useMutation(quitFetch, { onSuccess });
+  return { quitMutate };
 };
 
 /**

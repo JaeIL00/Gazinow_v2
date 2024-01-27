@@ -53,17 +53,24 @@ const RenderSavedRoutes = () => {
     setPopupVisible(true);
   };
 
-  const hideDeletePopup = () => setPopupVisible(false);
+  const hideModal = () => setPopupVisible(false);
 
-  const handleDelete = async () => {
+  const handleConfirm = async () => {
     await useDeleteQuery(routeToDelete);
-    hideDeletePopup();
+    hideModal();
   };
 
   return (
     <View>
       {renderSavedRoutes()}
-      <DeleteModal isVisible={popupVisible} onCancel={hideDeletePopup} onDelete={handleDelete} />
+      <MyTabModal
+        isVisible={popupVisible}
+        onCancel={hideModal}
+        onConfirm={handleConfirm}
+        title="경로를 삭제하시겠습니까?"
+        confirmText="삭제"
+        cancelText="취소"
+      />
     </View>
   );
 };
