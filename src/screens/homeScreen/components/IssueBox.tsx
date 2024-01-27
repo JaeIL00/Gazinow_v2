@@ -2,9 +2,9 @@ import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { IconButton, FontText } from '@/global/ui';
 import { COLOR } from '@/global/constants';
-import { SubwayRoute } from '@/screens/savedRoutes/components';
 import IssuesBanner from './IssuesBanner';
 import RecommendedRoutes from './RecommendedRoutes';
+import SubwayRoute from '@/screens/selectNewRouteScreen/components/SubwayRoute';
 
 const IssueBox = () => {
   const hasSavedRoutes = true;

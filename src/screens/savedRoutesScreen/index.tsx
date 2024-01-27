@@ -3,10 +3,10 @@ import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import { IconButton, FontText } from '@/global/ui';
 import styled from '@emotion/native';
 import { COLOR, EDIT_ROUTE_NAVIGATION, ADD_NEW_ROUTE_PAGE } from '@/global/constants';
-import { RenderSavedRoutes } from '@/screens/savedRoutes/components';
 import { useRootNavigation } from '@/navigation/RootNavigation';
+import RenderSavedRoutes from './components/RenderSavedRoutes';
 
-const SavedRoutes = () => {
+const SavedRoutesScreen = () => {
   const rootNavigation = useRootNavigation();
   return (
     <Container>
@@ -57,4 +57,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SavedRoutes;
+export default SavedRoutesScreen;

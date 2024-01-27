@@ -3,7 +3,7 @@ import { Text } from 'react-native';
 import { SavedRouteIssues } from './components';
 import { SwapSubwayStation } from '@/global/components';
 
-const HomePage = () => {
+const HomeScreen = () => {
   return (
     <Container>
       <Text>홈 페이지</Text>
@@ -13,7 +13,7 @@ const HomePage = () => {
   );
 };
 
-export default HomePage;
+export default HomeScreen;
 
 const Container = styled.View`
   padding: 0 16px;

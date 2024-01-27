@@ -7,15 +7,14 @@ import { COLOR } from '@/global/constants';
 import { useSearchPaths } from '@/hooks';
 import { StationDataTypes } from '@/store/modules';
 import { iconPath } from '@/assets/icons/iconPath';
-import { SubwaySimplePath } from '@/screens/search/components';
 import { useRootNavigation } from '@/navigation/RootNavigation';
 import dayjs from 'dayjs';
 import 'dayjs/locale/ko';
-import { SwapSubwayStation } from '@/global/components';
+import { SubwaySimplePath, SwapSubwayStation } from '@/global/components';
 
 dayjs.locale('ko');
 
-const SearchPathResultPage = () => {
+const SearchPathResultScreen = () => {
   const rootNavigation = useRootNavigation();
   const { params } = useRoute() as {
     params: {
@@ -126,7 +125,7 @@ const SearchPathResultPage = () => {
   );
 };
 
-export default SearchPathResultPage;
+export default SearchPathResultScreen;
 
 const Container = styled.View`
   flex: 1;

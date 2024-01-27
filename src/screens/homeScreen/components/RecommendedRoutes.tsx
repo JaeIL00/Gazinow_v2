@@ -2,8 +2,8 @@ import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { IconButton, TextButton, FontText } from '@/global/ui';
 import { COLOR } from '@/global/constants';
-import { SubwayRoute } from '@/screens/savedRoutes/components';
 import styled from '@emotion/native';
+import SubwayRoute from '@/screens/selectNewRouteScreen/components/SubwayRoute';
 
 const RecommendedRoutes = () => {
   const routeDetail = () => {

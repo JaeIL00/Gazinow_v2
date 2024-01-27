@@ -2,9 +2,9 @@ import { FontText, Input, Space, TextButton } from '@/global/ui';
 import { COLOR } from '@/global/constants';
 import { Path, SubPath } from '@/global/types/apis/searchTypes';
 import { Modal, View } from 'react-native';
-import SubwaySimplePath from './SubwaySimplePath';
 import { useState } from 'react';
 import { useSavedSubwayRoute } from '@/hooks/queries/searchQuery';
+import { SubwaySimplePath } from '@/global/components';
 
 interface NewRouteSaveModalProps {
   freshData: Path;

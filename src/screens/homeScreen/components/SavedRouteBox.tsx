@@ -1,30 +1,30 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
-import { IconButton, TextButton, FontText } from '@/global/ui';
+import { IconButton, FontText } from '@/global/ui';
 import { COLOR } from '@/global/constants';
-import { SubwayRoute } from '@/screens/savedRoutes/components';
-import { useGetSearchRoutesQuery } from '@/hooks';
+import { useGetSavedRoutesQuery } from '@/hooks';
+import IssuesBanner from './IssuesBanner';
+import RecommendedRoutes from './RecommendedRoutes';
+import SubwayRoute from '@/screens/selectNewRouteScreen/components/SubwayRoute';
 
-const RecentSearchBox = () => {
-  const routeDetail = () => {
-    //
-  };
+const SavedRouteBox = () => {
+  const { data: savedRoutes } = useGetSavedRoutesQuery();
+  const isRoutesExist = savedRoutes && savedRoutes.length > 0;
 
-  const { data: recentSearchData } = useGetSearchRoutesQuery();
-
-  const renderRecentSearch = () => (
+  const renderSavedRoutes = () => (
     <View>
       <View style={styles.titleContainer}>
         <View style={styles.textContainer}>
           <FontText
-            value={`${recentSearchData[0].stationName} -> ${recentSearchData[0].destination}`}
+            value={`${savedRoutes[0].roadName}  `}
             textSize="20px"
             textWeight="Bold"
             lineHeight="25px"
             textColor={COLOR.BASIC_BLACK}
           />
           <FontText
-            value={`${recentSearchData[0].duration} 소요`}
+            style={styles.grayEllipse}
+            value="42분 이상 예상"
             textSize="16px"
             textWeight="Medium"
             lineHeight="21px"
@@ -32,13 +32,12 @@ const RecentSearchBox = () => {
           />
         </View>
         <View style={styles.textContainer}>
-          <TextButton
+          <FontText
             value="세부정보  "
             textSize="16px"
-            textColor={COLOR.GRAY_999}
             textWeight="Medium"
             lineHeight="21px"
-            onPress={routeDetail}
+            textColor={COLOR.GRAY_999}
           />
           <IconButton isFontIcon={false} imagePath="more_gray" iconWidth="8px" iconHeight="14px" />
         </View>
@@ -46,13 +45,15 @@ const RecentSearchBox = () => {
       <View style={styles.containerSubwayRoute}>
         <SubwayRoute />
       </View>
+      <IssuesBanner />
+      <RecommendedRoutes />
     </View>
   );
 
-  const renderNoRecentSearch = () => (
+  const renderNoSavedRoutes = () => (
     <FontText
       style={styles.messageStyle}
-      value="최근 검색한 경로가 없어요."
+      value="저장한 경로가 없어요"
       textSize="16px"
       textWeight="Medium"
       lineHeight="500px"
@@ -60,9 +61,7 @@ const RecentSearchBox = () => {
     />
   );
 
-  return recentSearchData && recentSearchData.length > 0
-    ? renderRecentSearch()
-    : renderNoRecentSearch();
+  return isRoutesExist ? renderSavedRoutes() : renderNoSavedRoutes();
 };
 
 const styles = StyleSheet.create({
@@ -92,4 +91,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default RecentSearchBox;
+export default SavedRouteBox;

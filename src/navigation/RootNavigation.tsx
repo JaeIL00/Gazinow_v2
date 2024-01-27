@@ -9,7 +9,6 @@ import {
   SEARCH_NAVIGATION,
 } from '@/global/constants';
 import { EditRouteNavigation, MainBottomTabNavigation, SearchNavigation } from '@/navigation';
-import { LoginPage } from '@/screens/auth';
 import type { RootStackParamList } from '@/global/types/navigation';
 import { tokenReissueFetch } from '@/global/apis/auth';
 import { useMutation } from 'react-query';
@@ -17,6 +16,7 @@ import { useEffect } from 'react';
 import { getEncryptedStorage, removeEncryptedStorage, setEncryptedStorage } from '@/global/utils';
 import { View } from 'react-native';
 import { FontText } from '@/global/ui';
+import LoginScreen from '@/screens/loginScreen';
 
 const Stack = createStackNavigator<RootStackParamList>();
 
@@ -70,7 +70,7 @@ const RootNavigation = () => {
           );
         }}
       />
-      <Stack.Screen name={LOGIN} component={LoginPage} />
+      <Stack.Screen name={LOGIN} component={LoginScreen} />
       <Stack.Screen name={MAIN_BOTTOM_TAB} component={MainBottomTabNavigation} />
       <Stack.Screen name={SEARCH_NAVIGATION} component={SearchNavigation} />
       <Stack.Screen name={EDIT_ROUTE_NAVIGATION} component={EditRouteNavigation} />

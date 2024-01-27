@@ -4,20 +4,17 @@ import type { StackNavigationProp } from '@react-navigation/stack';
 
 import { EditRouteStackParamList } from '@/global/types/navigation';
 import {
-  SavedRoutesPage,
-  AddNewRoutePage,
-  SelectNewRoutePage,
-  NameNewRoutePage,
-} from '@/screens/savedRoutes';
-import {
   COLOR,
   SAVED_ROUTES_PAGE,
   ADD_NEW_ROUTE_PAGE,
   SUBWAY_SEARCH,
   SUBWAY_PATH_RESULT,
 } from '@/global/constants';
-import { SearchPathResultDetail, SubwaySearchPage } from '@/screens/search';
 import { NAME_NEW_ROUTE_PAGE, SUBWAY_PATH_DETAIL } from '@/global/constants/navigation';
+import AddNewRouteScreen from '@/screens/addNewRouteScreen';
+import NameNewRouteScreen from '@/screens/nameNewRouteScreen';
+import SavedRoutesScreen from '@/screens/savedRoutesScreen';
+import SelectNewRouteScreen from '@/screens/selectNewRouteScreen';
 
 const Stack = createStackNavigator<EditRouteStackParamList>();
 
@@ -34,14 +31,14 @@ const EditRouteNavigation = () => {
     <Stack.Navigator screenOptions={screenOption}>
       <Stack.Screen
         name={SAVED_ROUTES_PAGE}
-        component={SavedRoutesPage}
+        component={SavedRoutesScreen}
         options={{ headerStyle: { backgroundColor: COLOR.LIGHT_GRAY }, title: '저장경로 편집' }}
       />
-      <Stack.Screen name={ADD_NEW_ROUTE_PAGE} component={AddNewRoutePage} />
-      <Stack.Screen name={SUBWAY_SEARCH} component={SubwaySearchPage} />
-      <Stack.Screen name={SUBWAY_PATH_RESULT} component={SelectNewRoutePage} />
-      <Stack.Screen name={SUBWAY_PATH_DETAIL} component={SearchPathResultDetail} />
-      <Stack.Screen name={NAME_NEW_ROUTE_PAGE} component={NameNewRoutePage} />
+      <Stack.Screen name={ADD_NEW_ROUTE_PAGE} component={AddNewRouteScreen} />
+      {/* <Stack.Screen name={SUBWAY_SEARCH} component={SubwaySearchPage} /> */}
+      <Stack.Screen name={SUBWAY_PATH_RESULT} component={SelectNewRouteScreen} />
+      {/* <Stack.Screen name={SUBWAY_PATH_DETAIL} component={SearchPathResultDetail} /> */}
+      <Stack.Screen name={NAME_NEW_ROUTE_PAGE} component={NameNewRouteScreen} />
     </Stack.Navigator>
   );
 };

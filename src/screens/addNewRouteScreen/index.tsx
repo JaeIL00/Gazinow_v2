@@ -3,7 +3,7 @@ import styled from '@emotion/native';
 import { COLOR } from '@/global/constants';
 import { SwapSubwayStation } from '@/global/components';
 
-const AddNewRoutePage = () => {
+const AddNewRouteScreen = () => {
   return (
     <SwapSubwayBox>
       <SwapSubwayWrap>
@@ -24,4 +24,4 @@ const SwapSubwayBox = styled.View`
   flex: 1;
 `;
 
-export default AddNewRoutePage;
+export default AddNewRouteScreen;

@@ -15,7 +15,7 @@ const dummy = [
   { time: '45분', departureName: '신용산역', departureLine: '4', arrivalLine: '2' },
 ];
 
-const NameNewRoutePage = ({
+const NameNewRouteScreen = ({
   navigation,
   route,
 }: {
@@ -117,7 +117,7 @@ const NameNewRoutePage = ({
   );
 };
 
-export default NameNewRoutePage;
+export default NameNewRouteScreen;
 
 const Container = styled.View`
   background-color: ${COLOR.WHITE};

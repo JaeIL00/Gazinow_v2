@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { View } from 'react-native';
 
 import { Input, TextButton } from '@/global/ui';
@@ -12,7 +12,7 @@ const initialFormState: LoginFormTypes = {
   password: '',
 };
 
-const LoginPage = () => {
+const LoginScreen = () => {
   const navigation = useRootNavigation();
 
   const { loginMutate } = useLoginMutation({
@@ -58,4 +58,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default LoginScreen;

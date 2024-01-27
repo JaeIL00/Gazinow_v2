@@ -12,16 +12,16 @@ import {
 import { RootStackParamList } from '@/global/types/navigation';
 import React, { useState } from 'react';
 import { useRootNavigation } from '@/navigation/RootNavigation';
-import { SubwayRoute } from '@/screens/savedRoutes/components';
 import { StyleSheet } from 'react-native';
 import { SwapSubwayStation } from '@/global/components';
+import SubwayRoute from './components/SubwayRoute';
 
 const dummy = [
   { time: '45분', departureName: '신용산역', departureLine: '4', arrivalLine: '2' },
   { time: '45분', departureName: '신용산역', departureLine: '4', arrivalLine: '2' },
 ];
 
-const SelectNewRoutePage = ({
+const SelectNewRouteScreen = ({
   navigation,
 }: {
   navigation: NavigationProp<RootStackParamList, 'SearchNavigation'>;
@@ -109,7 +109,7 @@ const SelectNewRoutePage = ({
   );
 };
 
-export default SelectNewRoutePage;
+export default SelectNewRouteScreen;
 
 const SubwayRouteContainer = styled.View`
   margintop: 40;
