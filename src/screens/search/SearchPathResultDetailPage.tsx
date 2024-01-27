@@ -3,7 +3,7 @@ import { useMemo, useState } from 'react';
 import { FlatList, View } from 'react-native';
 
 import { FontText, IconButton } from '@/global/ui';
-import { NewRouteSaveModal, SearchPathDetailItem } from '@/components/search/organism';
+import { NewRouteSaveModal, SearchPathDetailItem } from '@/screens/search/components';
 import { useRootNavigation } from '@/navigation/RootNavigation';
 import { useRoute } from '@react-navigation/native';
 import { Path, SubPath } from '@/global/types/apis/searchTypes';

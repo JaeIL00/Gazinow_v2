@@ -7,7 +7,7 @@ import { COLOR } from '@/global/constants';
 import { useSearchPaths } from '@/hooks';
 import { StationDataTypes } from '@/store/modules';
 import { iconPath } from '@/assets/icons/iconPath';
-import { SubwaySimplePath } from '@/components/search/organism';
+import { SubwaySimplePath } from '@/screens/search/components';
 import { useRootNavigation } from '@/navigation/RootNavigation';
 import dayjs from 'dayjs';
 import 'dayjs/locale/ko';

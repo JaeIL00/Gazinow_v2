@@ -1,4 +1,4 @@
-import { SearchInputBox, SearchResultList } from '@/components/search/organism';
+import { SearchInputBox, SearchResultList } from '@/screens/search/components';
 import { COLOR } from '@/global/constants';
 import { useSerarchHistory } from '@/hooks';
 import styled from '@emotion/native';
