@@ -12,7 +12,7 @@ import {
 import { RootStackParamList } from '@/global/types/navigation';
 import React, { useState } from 'react';
 import { useRootNavigation } from '@/navigation/RootNavigation';
-import { SubwayRoute } from '@/components/savedRoutes';
+import { SubwayRoute } from '@/screens/savedRoutes/components';
 import { StyleSheet } from 'react-native';
 import { SwapSubwayStation } from '@/global/components';
 

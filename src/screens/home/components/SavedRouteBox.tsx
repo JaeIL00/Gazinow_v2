@@ -2,7 +2,7 @@ import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { IconButton, FontText } from '@/global/ui';
 import { COLOR } from '@/global/constants';
-import { SubwayRoute } from '@/components/savedRoutes';
+import { SubwayRoute } from '@/screens/savedRoutes/components';
 import { useGetSavedRoutesQuery } from '@/hooks';
 import IssuesBanner from './IssuesBanner';
 import RecommendedRoutes from './RecommendedRoutes';

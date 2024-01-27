@@ -3,7 +3,7 @@ import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import { IconButton, FontText } from '@/global/ui';
 import styled from '@emotion/native';
 import { COLOR, EDIT_ROUTE_NAVIGATION, ADD_NEW_ROUTE_PAGE } from '@/global/constants';
-import { RenderSavedRoutes } from '@/components/savedRoutes';
+import { RenderSavedRoutes } from '@/screens/savedRoutes/components';
 import { useRootNavigation } from '@/navigation/RootNavigation';
 
 const SavedRoutes = () => {

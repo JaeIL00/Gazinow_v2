@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { FontText, TextButton } from '@/global/ui';
 import { COLOR } from '@/global/constants';
-import { SubwayRoute } from '@/components/savedRoutes';
-import { DeleteModal } from '@/components/savedRoutes';
+import { SubwayRoute } from '@/screens/savedRoutes/components';
+import { DeleteModal } from '@/screens/savedRoutes/components';
 import { AddRouteTypes } from '@/global/types/apis';
 import { useDeleteQuery, useGetSavedRoutesQuery } from '@/hooks';
 

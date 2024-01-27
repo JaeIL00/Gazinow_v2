@@ -2,7 +2,7 @@ import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { IconButton, TextButton, FontText } from '@/global/ui';
 import { COLOR } from '@/global/constants';
-import { SubwayRoute } from '@/components/savedRoutes';
+import { SubwayRoute } from '@/screens/savedRoutes/components';
 import { useGetSearchRoutesQuery } from '@/hooks';
 
 const RecentSearchBox = () => {
