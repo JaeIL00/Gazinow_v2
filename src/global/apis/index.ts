@@ -1,2 +1,2 @@
 export { loginFetch } from './auth';
-export { searchSubwayName, searchHistoryFetch, searchPathsFetch } from './search';
+export { searchSubwayName, searchHistoryFetch, searchPathsFetch } from './func';

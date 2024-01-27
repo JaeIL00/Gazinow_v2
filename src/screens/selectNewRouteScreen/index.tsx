@@ -9,7 +9,7 @@ import {
   NAME_NEW_ROUTE_PAGE,
   SUBWAY_PATH_DETAIL,
 } from '@/global/constants/navigation';
-import { RootStackParamList } from '@/global/types/navigation';
+import { RootStackParamList } from '@/navigation/types/navigation';
 import React, { useState } from 'react';
 import { useRootNavigation } from '@/navigation/RootNavigation';
 import { StyleSheet } from 'react-native';

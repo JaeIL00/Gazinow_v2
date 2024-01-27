@@ -2,10 +2,10 @@ import { useState } from 'react';
 import { View } from 'react-native';
 
 import { Input, TextButton } from '@/global/ui';
-import { LoginFormTypes } from '@/global/types/apis';
-import { useLoginMutation } from '@/hooks';
 import { setEncryptedStorage } from '@/global/utils';
 import { useRootNavigation } from '@/navigation/RootNavigation';
+import { useLoginMutation } from '@/global/apis/hook';
+import { LoginFormTypes } from '@/global/apis/entity';
 
 const initialFormState: LoginFormTypes = {
   email: '',

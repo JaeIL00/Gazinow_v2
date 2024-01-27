@@ -1,15 +1,66 @@
-import { AxiosError } from 'axios';
-
+import { subwayFreshLineName } from '@/global/utils';
+import axios, { AxiosError } from 'axios';
 import { axiosInstance } from '../axiosInstance';
+import { API_BASE_URL } from '@env';
 import {
+  LoginFetchResponse,
+  LoginFormTypes,
   SavedRoute,
   SearchPathsTypes,
   SearchSubwayNameTypes,
-  SubPath,
   SubwayLine,
-} from '@/global/types/apis/searchTypes';
-import { subwayFreshLineName } from '@/global/utils';
+} from '../entity';
 
+/**
+ * 로그인 요청 axios
+ */
+export const loginFetch = async (data: LoginFormTypes) => {
+  try {
+    const res = await axiosInstance.post<{ data: LoginFetchResponse }>(
+      '/api/v1/member/login',
+      data,
+    );
+    return res.data.data;
+  } catch (err) {
+    const er = err as AxiosError;
+    throw er;
+  }
+};
+
+/**
+ * 인증 토근 재인증 axios
+ */
+export const tokenReissueFetch = async ({
+  accessToken,
+  refreshToken,
+}: {
+  accessToken: string;
+  refreshToken: string;
+}) => {
+  try {
+    const res = await axios.post<{ data: LoginFetchResponse }>(
+      '/api/v1/member/reissue',
+      {
+        accessToken,
+        refreshToken,
+      },
+      {
+        baseURL: API_BASE_URL,
+      },
+    );
+    return {
+      newAccessToken: res.data.data.accessToken,
+      newRefreshToken: res.data.data.refreshToken,
+    };
+  } catch (err) {
+    const er = err as AxiosError;
+    throw er;
+  }
+};
+
+/**
+ * 지하철역 검색 조회 axios
+ */
 export const searchSubwayName = async (params: { subwayName: string }) => {
   try {
     const res = await axiosInstance.get<SearchSubwayNameTypes>('/api/v1/search/subway', {
@@ -22,6 +73,9 @@ export const searchSubwayName = async (params: { subwayName: string }) => {
   }
 };
 
+/**
+ * 지하철역 검색 히스토리 조회 axios
+ */
 export const searchHistoryFetch = async () => {
   try {
     const res = await axiosInstance.get<SearchSubwayNameTypes>('/api/v1/recentSearch');
@@ -32,6 +86,9 @@ export const searchHistoryFetch = async () => {
   }
 };
 
+/**
+ * 지하철역 검색 히스토리 저장 axios
+ */
 export const searchAddHistoryFetch = async (data: { stationName: string; stationLine: string }) => {
   try {
     const res = await axiosInstance.post<{
@@ -48,6 +105,9 @@ export const searchAddHistoryFetch = async (data: { stationName: string; station
   }
 };
 
+/**
+ * 지하철 경로 검색 조회 axios
+ */
 export const searchPathsFetch = async (params: {
   strSubwayName: string;
   strSubwayLine: string;
@@ -65,6 +125,9 @@ export const searchPathsFetch = async (params: {
   }
 };
 
+/**
+ * 지하철 경로 저장 axios
+ */
 export const searchPathSaveFetch = async (data: SavedRoute) => {
   try {
     const res = await axiosInstance.post('/api/v1/my_find_road/add_route', data);
@@ -75,6 +138,9 @@ export const searchPathSaveFetch = async (data: SavedRoute) => {
   }
 };
 
+/**
+ * 저장된 지하철 경로 삭제 axios
+ */
 export const searchPathDeleteFetch = async (params: { id: number }) => {
   try {
     const res = await axiosInstance.delete('/api/v1/my_find_road/delete_route', { params });

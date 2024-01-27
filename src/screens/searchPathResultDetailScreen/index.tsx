@@ -5,10 +5,10 @@ import { FlatList, View } from 'react-native';
 import { FontText, IconButton } from '@/global/ui';
 import { useRootNavigation } from '@/navigation/RootNavigation';
 import { useRoute } from '@react-navigation/native';
-import { Path, SubPath } from '@/global/types/apis/searchTypes';
-import { useDeleteSavedSubwayRoute } from '@/hooks/queries/searchQuery';
 import NewRouteSaveModal from './components/NewRouteSaveModal';
 import SearchPathDetailItem from './components/SearchPathDetailItem';
+import { useDeleteSavedSubwayRoute } from '@/global/apis/hook';
+import { Path, SubPath } from '@/global/apis/entity';
 
 const SearchPathResultDetailScreen = () => {
   const route = useRoute();

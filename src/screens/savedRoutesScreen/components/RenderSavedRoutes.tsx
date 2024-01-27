@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { FontText, TextButton } from '@/global/ui';
 import { COLOR } from '@/global/constants';
-import { AddRouteTypes } from '@/global/types/apis';
-import { useDeleteQuery, useGetSavedRoutesQuery } from '@/hooks';
 import SubwayRoute from '@/screens/selectNewRouteScreen/components/SubwayRoute';
 import DeleteModal from './DeleteModal';
+import { useGetSavedRoutesQuery } from '@/global/apis/hook';
+import { AddRouteTypes } from '@/global/apis/entity';
 
 interface RenderSavedRoutesProps {
   id: number;

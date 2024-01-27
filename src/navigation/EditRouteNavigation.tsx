@@ -2,7 +2,7 @@ import { useNavigation } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import type { StackNavigationProp } from '@react-navigation/stack';
 
-import { EditRouteStackParamList } from '@/global/types/navigation';
+import { EditRouteStackParamList } from '@/navigation/types/navigation';
 import {
   COLOR,
   SAVED_ROUTES_PAGE,

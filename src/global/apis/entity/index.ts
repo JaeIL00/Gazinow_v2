@@ -1,3 +1,65 @@
+/**
+ * 경로 저장
+ */
+export interface AddRouteTypes {
+  roadName: string;
+  totalTime: number;
+  subwayTransitCount: number;
+  firstStartStation: string;
+  lastEndStation: string;
+  subPaths: [
+    {
+      trafficType: number;
+      distance: number;
+      sectionTime: number;
+      stationCount: number;
+      lanes: [
+        {
+          name: string;
+          subwayCode: number;
+          startName: string;
+          endName: string;
+        },
+      ];
+      subways: [
+        {
+          index: number;
+          stationName: string;
+        },
+      ];
+    },
+  ];
+}
+
+/**
+ * 로그인폼
+ */
+export interface LoginFormTypes {
+  email: string;
+  password: string;
+}
+
+/**
+ * 로그인 응답
+ */
+export interface LoginFetchResponse {
+  grantType: 'Bearer';
+  memberId: number;
+  nickName: string;
+  email: string;
+  accessToken: string;
+  refreshToken: string;
+  accessTokenExpirationTime: number;
+  refreshTokenExpirationTime: number;
+  notificationByKeyword: boolean;
+  notificationByRepost: boolean;
+  notificationByLike: boolean;
+  firebaseToken: boolean;
+}
+
+/**
+ * 지하철 호선 이름
+ */
 export type SubwayLine =
   | '01호선'
   | '02호선'
@@ -22,6 +84,9 @@ export type SubwayLine =
   | '우이신설경전철'
   | '김포도시철도';
 
+/**
+ * 지하철 검색 타입
+ */
 export interface SearchSubwayNameTypes {
   data: {
     id?: number;
@@ -30,10 +95,16 @@ export interface SearchSubwayNameTypes {
   }[];
 }
 
+/**
+ * 지하철 경로 데이터 api 응답
+ */
 export interface SearchPathsTypes {
   paths: Path[];
 }
 
+/**
+ * 지하철 경로 데이터
+ */
 export interface Path {
   totalTime: number;
   subwayTransitCount: number;
@@ -86,6 +157,9 @@ export type SubwayCode =
   | 116
   | 117;
 
+/**
+ * 지하철 경로 호선 데이터
+ */
 export interface Lane {
   name: string;
   subwayCode: SubwayCode;
@@ -93,6 +167,9 @@ export interface Lane {
   endName: string;
 }
 
+/**
+ * 지하철 경로 정보 데이터
+ */
 export interface SubPath {
   trafficType: number;
   distance: number;

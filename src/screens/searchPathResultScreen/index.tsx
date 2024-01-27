@@ -4,13 +4,13 @@ import { TouchableOpacity, View } from 'react-native';
 
 import { FontText, IconButton, Space } from '@/global/ui';
 import { COLOR } from '@/global/constants';
-import { useSearchPaths } from '@/hooks';
 import { StationDataTypes } from '@/store/modules';
 import { iconPath } from '@/assets/icons/iconPath';
 import { useRootNavigation } from '@/navigation/RootNavigation';
 import dayjs from 'dayjs';
 import 'dayjs/locale/ko';
 import { SubwaySimplePath, SwapSubwayStation } from '@/global/components';
+import { useGetSearchPaths } from '@/global/apis/hook';
 
 dayjs.locale('ko');
 
@@ -23,7 +23,7 @@ const SearchPathResultScreen = () => {
     };
   };
 
-  const { data } = useSearchPaths({
+  const { data } = useGetSearchPaths({
     strSubwayName: params.departure.name,
     strSubwayLine: params.departure.line,
     endSubwayName: params.arrival.name,

@@ -8,9 +8,9 @@ import { useRootNavigation } from '@/navigation/RootNavigation';
 import { useSearchNavigation } from '@/navigation/SearchNavigation';
 import { useAppDispatch, useAppSelect } from '@/store';
 import { getSeletedStation } from '@/store/modules';
-import { useAddResetSearch, useSearchSubwayName } from '@/hooks/queries/searchQuery';
 import { getSearchText } from '@/store/modules/subwaySearchModule';
-import { SearchSubwayNameTypes } from '@/global/types/apis/searchTypes';
+import { useAddResetSearch, useSearchSubwayName } from '@/global/apis/hook';
+import { SearchSubwayNameTypes } from '@/global/apis/entity';
 
 interface SearchResultListProps {
   historyList: SearchSubwayNameTypes;

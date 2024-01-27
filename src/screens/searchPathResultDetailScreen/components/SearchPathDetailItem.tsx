@@ -4,8 +4,8 @@ import { Image, View } from 'react-native';
 
 import { iconPath } from '@/assets/icons/iconPath';
 import { FontText, IconButton } from '@/global/ui';
-import { SubPath } from '@/global/types/apis/searchTypes';
 import { subwayLineColor, subwayNameCutting } from '@/global/utils';
+import { SubPath } from '@/global/apis/entity';
 
 interface SearchPathDetailItemProps {
   data: SubPath;

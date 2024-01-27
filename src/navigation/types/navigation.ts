@@ -1,5 +1,5 @@
+import { Path, SubPath } from '@/global/apis/entity';
 import { NavigatorScreenParams } from '@react-navigation/native';
-import { Path, SubPath } from './apis/searchTypes';
 
 export type RootStackParamList = {
   Temp: undefined;

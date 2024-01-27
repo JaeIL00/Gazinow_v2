@@ -1,11 +1,11 @@
 import { COLOR } from '@/global/constants';
-import { useSerarchHistory } from '@/hooks';
 import styled from '@emotion/native';
 import SearchInputBox from './components/SearchInputBox';
 import SearchResultList from './components/SearchResultList';
+import { useGetSearchHistory } from '@/global/apis/hook';
 
 const SubwaySearchScreen = () => {
-  const { data: history } = useSerarchHistory();
+  const { data: history } = useGetSearchHistory();
 
   return (
     <SearchPageContainer>

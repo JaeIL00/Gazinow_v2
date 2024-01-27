@@ -2,10 +2,10 @@ import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { IconButton, FontText } from '@/global/ui';
 import { COLOR } from '@/global/constants';
-import { useGetSavedRoutesQuery } from '@/hooks';
 import IssuesBanner from './IssuesBanner';
 import RecommendedRoutes from './RecommendedRoutes';
 import SubwayRoute from '@/screens/selectNewRouteScreen/components/SubwayRoute';
+import { useGetSavedRoutesQuery } from '@/global/apis/hook';
 
 const SavedRouteBox = () => {
   const { data: savedRoutes } = useGetSavedRoutesQuery();
