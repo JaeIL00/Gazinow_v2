@@ -8,12 +8,12 @@ import { useRootNavigation } from '@/navigation/RootNavigation';
 import { useSearchNavigation } from '@/navigation/SearchNavigation';
 import { useAppDispatch, useAppSelect } from '@/store';
 import { getSeletedStation } from '@/store/modules';
-import type { SearchHistoryTypes } from '@/types/apis';
-import { useSearchSubwayName } from '@/hooks/queries/searchQuery';
+import { useAddResetSearch, useSearchSubwayName } from '@/hooks/queries/searchQuery';
 import { getSearchText } from '@/store/modules/subwaySearchModule';
+import { SearchSubwayNameTypes } from '@/types/apis/searchTypes';
 
 interface SearchResultListProps {
-  historyList: SearchHistoryTypes;
+  historyList: SearchSubwayNameTypes;
 }
 
 const SearchResultList = ({ historyList }: SearchResultListProps) => {
@@ -25,6 +25,14 @@ const SearchResultList = ({ historyList }: SearchResultListProps) => {
   );
 
   const { searchResultData } = useSearchSubwayName(searchText);
+  const { addRecentMutate } = useAddResetSearch({
+    onSuccess: (data) => {
+      saveStationData({
+        name: data.stationName,
+        line: data.stationLine,
+      });
+    },
+  });
 
   const saveStationData = (data: { name: string; line: string }) => {
     dispatch(getSearchText(''));
@@ -55,6 +63,10 @@ const SearchResultList = ({ historyList }: SearchResultListProps) => {
           })
         : rootNavigation.pop();
     }
+  };
+
+  const subwayBtnHandler = ({ stationName, stationLine }: (typeof searchResultData)[0]) => {
+    addRecentMutate({ stationName, stationLine });
   };
 
   // 입력어가 없으면 최근검색
@@ -111,27 +123,19 @@ const SearchResultList = ({ historyList }: SearchResultListProps) => {
       {/* 입력어가 있고 && 검색 결과가 있으면 결과 표시 */}
       {/* 입력어가 있고 && 검색 결과가 없으면 없음 표시 */}
       <Ul marginTop="28px">
-        {searchResultData.map((station) => (
-          <Li
-            key={station.name + station.line}
-            onPress={() =>
-              saveStationData({
-                name: station.name,
-                line: station.line,
-              })
-            }
-          >
+        {searchResultData.map(({ stationLine, stationName }, idx) => (
+          <Li key={idx} onPress={() => subwayBtnHandler({ stationLine, stationName })}>
             <LocateIcon source={iconPath['location_pin_gray']} width={25} height={25} />
             <StationInfoBox>
               <FontText
-                value={station.name}
+                value={stationName}
                 textSize="16px"
                 textWeight="Medium"
                 lineHeight="21px"
                 textColor="#000"
               />
               <FontText
-                value={station.line}
+                value={stationLine}
                 textSize="14px"
                 textWeight="Regular"
                 lineHeight="21px"

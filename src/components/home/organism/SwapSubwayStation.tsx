@@ -35,9 +35,9 @@ const SwapSubwayStation = ({ isWrap, showHeader }: SwapProps) => {
   const navigateSubwaySearch = (type: StationTypes) => {
     dispatch(getStationType(type));
 
-    const navType = showHeader ? EDIT_ROUTE_NAVIGATION : SEARCH_NAVIGATION;
-    rootNavigation.navigate(EDIT_ROUTE_NAVIGATION, { screen: SUBWAY_SEARCH });
-    rootNavigation.navigate(SEARCH_NAVIGATION, { screen: SUBWAY_SEARCH });
+    showHeader
+      ? rootNavigation.navigate(EDIT_ROUTE_NAVIGATION, { screen: SUBWAY_SEARCH })
+      : rootNavigation.navigate(SEARCH_NAVIGATION, { screen: SUBWAY_SEARCH });
   };
 
   const swapStation = () => {

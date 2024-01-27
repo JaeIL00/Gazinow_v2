@@ -1,4 +1,4 @@
-export type subwayLine =
+export type SubwayLine =
   | '01호선'
   | '02호선'
   | '3호선'
@@ -24,13 +24,10 @@ export type subwayLine =
 
 export interface SearchSubwayNameTypes {
   data: {
-    name: string;
-    line: subwayLine;
+    id?: number;
+    stationName: string;
+    stationLine: SubwayLine;
   }[];
-}
-
-export interface SearchHistoryTypes {
-  data: { id: number; stationName: string; stationLine: string; stationCode: number }[];
 }
 
 export interface SearchPathsTypes {
