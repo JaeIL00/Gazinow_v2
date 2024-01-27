@@ -2,14 +2,14 @@ import styled, { css } from '@emotion/native';
 import type { NavigationProp } from '@react-navigation/native';
 import { TouchableOpacity, View } from 'react-native';
 
-import { FontText, Space } from '@/components/common/atoms';
-import { COLOR } from '@/constants';
+import { FontText, Space } from '@/global/ui';
+import { COLOR } from '@/global/constants';
 import {
   EDIT_ROUTE_NAVIGATION,
   NAME_NEW_ROUTE_PAGE,
   SUBWAY_PATH_DETAIL,
-} from '@/constants/navigation';
-import { RootStackParamList } from '@/types/navigation';
+} from '@/global/constants/navigation';
+import { RootStackParamList } from '@/global/types/navigation';
 import React, { useState } from 'react';
 import { useRootNavigation } from '@/navigation/RootNavigation';
 import { SubwayRoute } from '@/components/savedRoutes';

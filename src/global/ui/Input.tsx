@@ -1,7 +1,7 @@
 import styled from '@emotion/native';
 import type { TextInputProps } from 'react-native/types';
 
-import { COLOR } from '@/constants';
+import { COLOR } from '@/global/constants';
 
 interface InputProps extends TextInputProps {}
 

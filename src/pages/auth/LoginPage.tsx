@@ -1,11 +1,10 @@
 import { useEffect, useState } from 'react';
 import { View } from 'react-native';
 
-import { Input } from '@/components/common/atoms';
-import { TextButton } from '@/components/common/molecules';
-import { LoginFormTypes } from '@/types/apis';
+import { Input, TextButton } from '@/global/ui';
+import { LoginFormTypes } from '@/global/types/apis';
 import { useLoginMutation } from '@/hooks';
-import { setEncryptedStorage } from '@/utils';
+import { setEncryptedStorage } from '@/global/utils';
 import { useRootNavigation } from '@/navigation/RootNavigation';
 
 const initialFormState: LoginFormTypes = {
@@ -20,7 +19,7 @@ const LoginPage = () => {
     onSuccess: async ({ accessToken, refreshToken }) => {
       await setEncryptedStorage('access_token', accessToken);
       await setEncryptedStorage('refresh_token', refreshToken);
-      navigation.replace('MainBottomTab');
+      navigation.replace('MainBottomTab', { screen: 'Home' });
     },
   });
 

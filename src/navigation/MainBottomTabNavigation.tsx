@@ -1,10 +1,10 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-import { HOME } from '@/constants';
+import { HOME } from '@/global/constants';
 import { HomePage } from '@/pages/home';
 import { CompositeScreenProps } from '@react-navigation/native';
 import { StackScreenProps } from '@react-navigation/stack';
-import { RootStackParamList } from '@/types/navigation';
+import { RootStackParamList } from '@/global/types/navigation';
 import { BottomTabScreenProps as BottomTabProps } from '@react-navigation/bottom-tabs';
 
 const Tab = createBottomTabNavigator();

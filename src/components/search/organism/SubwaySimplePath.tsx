@@ -1,4 +1,4 @@
-import { SubPath } from '@/types/apis/searchTypes';
+import { SubPath } from '@/global/types/apis/searchTypes';
 import { View } from 'react-native';
 import PathBar from './PathBar';
 import PathLineNumName from './PathLineNumName';

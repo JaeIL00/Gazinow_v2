@@ -2,9 +2,9 @@ import { API_BASE_URL } from '@env';
 import axios, { AxiosError } from 'axios';
 
 import { createNavigationContainerRef } from '@react-navigation/native';
-import { RootStackParamList } from '@/types/navigation';
-import { getEncryptedStorage, setEncryptedStorage } from '@/utils';
-import { LOGIN } from '@/constants';
+import { RootStackParamList } from '@/global/types/navigation';
+import { getEncryptedStorage, setEncryptedStorage } from '@/global/utils';
+import { LOGIN } from '@/global/constants';
 import EncryptedStorage from 'react-native-encrypted-storage';
 import { tokenReissueFetch } from './auth';
 

@@ -2,9 +2,8 @@ import styled from '@emotion/native';
 import { debounce } from 'lodash';
 import { useCallback, useState } from 'react';
 
-import { Input } from '@/components/common/atoms';
-import { IconButton } from '@/components/common/molecules';
-import { COLOR } from '@/constants';
+import { Input, IconButton } from '@/global/ui';
+import { COLOR } from '@/global/constants';
 import { useRootNavigation } from '@/navigation/RootNavigation';
 import { useAppDispatch, useAppSelect } from '@/store';
 import { getSearchText } from '@/store/modules/subwaySearchModule';

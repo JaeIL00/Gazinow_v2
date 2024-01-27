@@ -1,5 +1,5 @@
 import { SearchInputBox, SearchResultList } from '@/components/search/organism';
-import { COLOR } from '@/constants';
+import { COLOR } from '@/global/constants';
 import { useSerarchHistory } from '@/hooks';
 import styled from '@emotion/native';
 

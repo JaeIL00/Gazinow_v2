@@ -1,10 +1,9 @@
-import { FontText, Input, Space } from '@/components/common/atoms';
-import { COLOR } from '@/constants';
-import { Path, SubPath } from '@/types/apis/searchTypes';
+import { FontText, Input, Space, TextButton } from '@/global/ui';
+import { COLOR } from '@/global/constants';
+import { Path, SubPath } from '@/global/types/apis/searchTypes';
 import { Modal, View } from 'react-native';
 import SubwaySimplePath from './SubwaySimplePath';
 import { useState } from 'react';
-import { TextButton } from '@/components/common/molecules';
 import { useSavedSubwayRoute } from '@/hooks/queries/searchQuery';
 
 interface NewRouteSaveModalProps {

@@ -7,8 +7,8 @@ import {
   SearchSubwayNameTypes,
   SubPath,
   SubwayLine,
-} from '@/types/apis/searchTypes';
-import { subwayFreshLineName } from '@/utils';
+} from '@/global/types/apis/searchTypes';
+import { subwayFreshLineName } from '@/global/utils';
 
 export const searchSubwayName = async (params: { subwayName: string }) => {
   try {

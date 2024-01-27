@@ -1,7 +1,7 @@
-import { FontText } from '@/components/common/atoms';
-import { COLOR } from '@/constants';
-import { Lane } from '@/types/apis/searchTypes';
-import { subwayLineColor, subwayLineName, subwayNameCutting } from '@/utils';
+import { FontText } from '@/global/ui';
+import { COLOR } from '@/global/constants';
+import { Lane } from '@/global/types/apis/searchTypes';
+import { subwayLineColor, subwayLineName, subwayNameCutting } from '@/global/utils';
 import { View } from 'react-native';
 
 interface PathLineNumNameProps {

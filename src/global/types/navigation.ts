@@ -4,7 +4,7 @@ import { Path, SubPath } from './apis/searchTypes';
 export type RootStackParamList = {
   Temp: undefined;
   Login: undefined;
-  MainBottomTab: NavigatorScreenParams<{ Home: undefined }>;
+  MainBottomTab: { screen: 'Home' };
   SearchNavigation: { screen: keyof SearchStackParamList; params?: Path; route?: undefined };
   EditRouteNavigation: { screen: keyof EditRouteStackParamList; params?: { pathId: number } };
 };

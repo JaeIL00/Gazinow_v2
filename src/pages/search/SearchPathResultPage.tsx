@@ -2,9 +2,8 @@ import styled from '@emotion/native';
 import { useRoute } from '@react-navigation/native';
 import { TouchableOpacity, View } from 'react-native';
 
-import { FontText, Space } from '@/components/common/atoms';
-import { IconButton } from '@/components/common/molecules';
-import { COLOR } from '@/constants';
+import { FontText, IconButton, Space } from '@/global/ui';
+import { COLOR } from '@/global/constants';
 import { useSearchPaths } from '@/hooks';
 import { StationDataTypes } from '@/store/modules';
 import { iconPath } from '@/assets/icons/iconPath';

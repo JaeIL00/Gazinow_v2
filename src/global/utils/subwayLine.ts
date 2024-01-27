@@ -1,5 +1,5 @@
-import { COLOR } from '@/constants';
-import { SearchSubwayNameTypes, SubwayCode } from '@/types/apis/searchTypes';
+import { COLOR } from '@/global/constants';
+import { SearchSubwayNameTypes, SubwayCode } from '@/global/types/apis/searchTypes';
 /*
 * 인천선 === 인천1
 * 인천2호선 === 인천2

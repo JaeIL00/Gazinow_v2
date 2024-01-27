@@ -2,12 +2,11 @@ import { css } from '@emotion/native';
 import { useMemo, useState } from 'react';
 import { FlatList, View } from 'react-native';
 
-import { FontText } from '@/components/common/atoms';
-import { IconButton } from '@/components/common/molecules';
+import { FontText, IconButton } from '@/global/ui';
 import { NewRouteSaveModal, SearchPathDetailItem } from '@/components/search/organism';
 import { useRootNavigation } from '@/navigation/RootNavigation';
 import { useRoute } from '@react-navigation/native';
-import { Path, SubPath } from '@/types/apis/searchTypes';
+import { Path, SubPath } from '@/global/types/apis/searchTypes';
 import { useDeleteSavedSubwayRoute } from '@/hooks/queries/searchQuery';
 
 const SearchPathResultDetailPage = () => {

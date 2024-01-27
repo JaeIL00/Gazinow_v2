@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { View, TouchableOpacity, StyleSheet } from 'react-native';
-import { FontText } from '@/components/common/atoms';
-import { COLOR, EDIT_ROUTE_NAVIGATION, SAVED_ROUTES_PAGE } from '@/constants';
-import { TextButton } from '@/components/common/molecules';
+import { FontText, TextButton } from '@/global/ui';
+import { COLOR, EDIT_ROUTE_NAVIGATION, SAVED_ROUTES_PAGE } from '@/global/constants';
 import { useRootNavigation } from '@/navigation/RootNavigation';
 import SavedRouteBox from './SavedRouteBox';
 import RecentSearchBox from './RecentSearchBox';

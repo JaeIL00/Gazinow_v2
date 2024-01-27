@@ -3,10 +3,9 @@ import { useState } from 'react';
 import { Image, View } from 'react-native';
 
 import { iconPath } from '@/assets/icons/iconPath';
-import { FontText } from '@/components/common/atoms';
-import { IconButton } from '@/components/common/molecules';
-import { SubPath } from '@/types/apis/searchTypes';
-import { subwayLineColor, subwayNameCutting } from '@/utils';
+import { FontText, IconButton } from '@/global/ui';
+import { SubPath } from '@/global/types/apis/searchTypes';
+import { subwayLineColor, subwayNameCutting } from '@/global/utils';
 
 interface SearchPathDetailItemProps {
   data: SubPath;

@@ -1,7 +1,7 @@
 import styled from '@emotion/native';
 import type { StyleProp, TextProps } from 'react-native/types';
 
-import { COLOR } from '@/constants';
+import { COLOR } from '@/global/constants';
 import { TextStyle } from 'react-native';
 
 interface NormalTextProps extends TextProps, TextStyleProps {

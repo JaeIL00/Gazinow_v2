@@ -1,14 +1,14 @@
 import styled from '@emotion/native';
 import type { NavigationProp } from '@react-navigation/native';
 
-import { FontText, Input } from '@/components/common/atoms';
-import { COLOR } from '@/constants';
-import { RootStackParamList } from '@/types/navigation';
+import { FontText, Input } from '@/global/ui';
+import { COLOR } from '@/global/constants';
+import { RootStackParamList } from '@/global/types/navigation';
 import React, { useState } from 'react';
 import { useRootNavigation } from '@/navigation/RootNavigation';
 import { AxiosError } from 'axios';
-import { axiosInstance } from '@/apis/axiosInstance';
-import { AddRouteTypes } from '@/types/apis';
+import { axiosInstance } from '@/global/apis/axiosInstance';
+import { AddRouteTypes } from '@/global/types/apis';
 
 const dummy = [
   { time: '45분', departureName: '신용산역', departureLine: '4', arrivalLine: '2' },
@@ -16,7 +16,8 @@ const dummy = [
 ];
 
 const NameNewRoutePage = ({
-  navigation, route
+  navigation,
+  route,
 }: {
   navigation: NavigationProp<RootStackParamList, 'SearchNavigation'>;
 }) => {
@@ -28,8 +29,8 @@ const NameNewRoutePage = ({
       roadName: newRouteName,
       totalTime: 0,
       subwayTransitCount: 0,
-      firstStartStation: "string",
-      lastEndStation: "string",
+      firstStartStation: 'string',
+      lastEndStation: 'string',
       subPaths: [
         {
           trafficType: 1,
@@ -38,20 +39,20 @@ const NameNewRoutePage = ({
           stationCount: 0,
           lanes: [
             {
-              name: "string",
+              name: 'string',
               subwayCode: 0,
-              startName: "string",
+              startName: 'string',
               endName: selectedRouteId,
-            }
+            },
           ],
           subways: [
             {
               index: selectedRouteId,
-              stationName: "압구정",
-            }
-          ]
-        }
-      ]
+              stationName: '압구정',
+            },
+          ],
+        },
+      ],
     };
 
     try {
@@ -59,7 +60,7 @@ const NameNewRoutePage = ({
         '/api/v1/my_find_road/add_route',
         newRoute,
       );
-      return res
+      return res;
     } catch (err) {
       const er = err as AxiosError;
       throw er;
@@ -69,13 +70,13 @@ const NameNewRoutePage = ({
   return (
     <Container>
       {/* 경로 그래프 */}
-        <FontText
-          value="새 경로 이름"
-          textSize="14px"
-          textWeight="Medium"
-          lineHeight="21px"
-          textColor={COLOR.BASIC_BLACK}
-        />
+      <FontText
+        value="새 경로 이름"
+        textSize="14px"
+        textWeight="Medium"
+        lineHeight="21px"
+        textColor={COLOR.BASIC_BLACK}
+      />
 
       <InputBox>
         <Input
@@ -84,24 +85,24 @@ const NameNewRoutePage = ({
           onChangeText={(text) => setNewRouteName(text)}
           inputMode="email"
           maxLength={10}
-        >
-        </Input>
+        ></Input>
       </InputBox>
 
       <TextLengthBox>
         <FontText
           value={`${newRouteName?.length ? newRouteName.length : 0}/10`}
-          textSize='12px'
-          textWeight='Regular'
+          textSize="12px"
+          textWeight="Regular"
           textColor={COLOR.GRAY_999}
-          lineHeight='14px'
+          lineHeight="14px"
         />
       </TextLengthBox>
 
-      <BottomBtn onPress={() => {
-        saveRoute(newRouteName, route.params.pathId);
-        rootNavigation.popToTop();
-      }}
+      <BottomBtn
+        onPress={() => {
+          saveRoute(newRouteName, route.params.pathId);
+          rootNavigation.popToTop();
+        }}
         disabled={!newRouteName}
       >
         <FontText
@@ -112,7 +113,6 @@ const NameNewRoutePage = ({
           lineHeight="26px"
         />
       </BottomBtn>
-
     </Container>
   );
 };
@@ -129,7 +129,7 @@ const InputBox = styled.Pressable`
   padding-horizontal: 16px;
   margin-vertical: 7px;
   border-radius: 5px;
-  background-color : ${COLOR.LIGHT_GRAY}
+  background-color: ${COLOR.LIGHT_GRAY};
 `;
 const TextLengthBox = styled.View`
   align-items: flex-end;
@@ -141,9 +141,5 @@ const BottomBtn = styled.Pressable`
   align-items: center;
   bottom: 41;
   ${({ disabled }) =>
-    disabled ?
-      `background-color : #dddddd`
-      :
-      `background-color : ${COLOR.BASIC_BLACK};`
-  }
+    disabled ? `background-color : #dddddd` : `background-color : ${COLOR.BASIC_BLACK};`}
 `;

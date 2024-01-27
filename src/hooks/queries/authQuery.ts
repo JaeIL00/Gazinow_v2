@@ -1,7 +1,7 @@
 import { useMutation } from 'react-query';
 
-import { loginFetch } from '@/apis/auth';
-import { LoginFetchResponse } from '@/types/apis';
+import { loginFetch } from '@/global/apis/auth';
+import { LoginFetchResponse } from '@/global/types/apis';
 
 export const useLoginMutation = ({
   onSuccess,

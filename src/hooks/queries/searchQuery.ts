@@ -1,7 +1,7 @@
 import { useMutation, useQuery } from 'react-query';
 
 import { AxiosResponse } from 'axios';
-import { SearchSubwayNameTypes, SubwayStrEnd } from '@/types/apis/searchTypes';
+import { SearchSubwayNameTypes, SubwayStrEnd } from '@/global/types/apis/searchTypes';
 import { useCallback, useState } from 'react';
 import {
   searchAddHistoryFetch,
@@ -10,8 +10,8 @@ import {
   searchPathSaveFetch,
   searchPathsFetch,
   searchSubwayName,
-} from '@/apis/search';
-import { subwayFreshLineName } from '@/utils';
+} from '@/global/apis/search';
+import { subwayFreshLineName } from '@/global/utils';
 
 export const useSearchSubwayName = (subwayName: string) => {
   const { data } = useQuery(

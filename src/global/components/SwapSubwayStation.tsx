@@ -2,7 +2,7 @@ import styled from '@emotion/native';
 import { useLayoutEffect, useState } from 'react';
 import { Shadow } from 'react-native-shadow-2';
 
-import { IconButton, TextButton } from '@/components/common/molecules';
+import { IconButton, TextButton } from '@/global/ui';
 import {
   COLOR,
   SEARCH_NAVIGATION,
@@ -10,7 +10,7 @@ import {
   ARRIVAL_STATION,
   DEPARTURE_STATION,
   EDIT_ROUTE_NAVIGATION,
-} from '@/constants';
+} from '@/global/constants';
 import { useRootNavigation } from '@/navigation/RootNavigation';
 import { useAppDispatch, useAppSelect } from '@/store';
 import { getStationType } from '@/store/modules';

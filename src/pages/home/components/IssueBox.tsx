@@ -1,8 +1,7 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
-import { IconButton } from '@/components/common/molecules';
-import { FontText } from '@/components/common/atoms';
-import { COLOR } from '@/constants';
+import { IconButton, FontText } from '@/global/ui';
+import { COLOR } from '@/global/constants';
 import { SubwayRoute } from '@/components/savedRoutes';
 import IssuesBanner from './IssuesBanner';
 import RecommendedRoutes from './RecommendedRoutes';

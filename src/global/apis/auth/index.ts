@@ -1,6 +1,6 @@
 import axios, { AxiosError } from 'axios';
 import { axiosInstance } from '../axiosInstance';
-import type { LoginFormTypes, LoginFetchResponse } from '@/types/apis';
+import type { LoginFormTypes, LoginFetchResponse } from '@/global/types/apis';
 import { API_BASE_URL } from '@env';
 
 export const loginFetch = async (data: LoginFormTypes) => {

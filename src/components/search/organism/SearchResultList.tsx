@@ -2,15 +2,15 @@ import styled from '@emotion/native';
 import Icon from 'react-native-vector-icons/Feather';
 
 import { iconPath } from '@/assets/icons/iconPath';
-import { FontText } from '@/components/common/atoms';
-import { COLOR } from '@/constants';
+import { FontText } from '@/global/ui';
+import { COLOR } from '@/global/constants';
 import { useRootNavigation } from '@/navigation/RootNavigation';
 import { useSearchNavigation } from '@/navigation/SearchNavigation';
 import { useAppDispatch, useAppSelect } from '@/store';
 import { getSeletedStation } from '@/store/modules';
 import { useAddResetSearch, useSearchSubwayName } from '@/hooks/queries/searchQuery';
 import { getSearchText } from '@/store/modules/subwaySearchModule';
-import { SearchSubwayNameTypes } from '@/types/apis/searchTypes';
+import { SearchSubwayNameTypes } from '@/global/types/apis/searchTypes';
 
 interface SearchResultListProps {
   historyList: SearchSubwayNameTypes;

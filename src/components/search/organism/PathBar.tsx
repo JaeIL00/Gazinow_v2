@@ -1,5 +1,5 @@
-import { SubwayCode } from '@/types/apis/searchTypes';
-import { subwayLineColor } from '@/utils';
+import { SubwayCode } from '@/global/types/apis/searchTypes';
+import { subwayLineColor } from '@/global/utils';
 import { View } from 'react-native';
 
 interface PathBarProps {

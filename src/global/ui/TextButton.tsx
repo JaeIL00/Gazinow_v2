@@ -1,7 +1,6 @@
 import { Pressable } from 'react-native';
 import type { PressableProps } from 'react-native/types';
-
-import { FontText } from '@/components/common/atoms';
+import FontText from './FontText';
 
 interface TextButtonProps extends PressableProps {
   value: string;

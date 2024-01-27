@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from '@emotion/native';
-import { COLOR } from '@/constants';
+import { COLOR } from '@/global/constants';
 import { SwapSubwayStation } from '@/global/components';
 
 const AddNewRoutePage = () => {
