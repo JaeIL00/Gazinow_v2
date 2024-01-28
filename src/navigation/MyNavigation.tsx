@@ -14,7 +14,7 @@ import {
   CONFIRM_QUIT,
   CONTRACT,
   NOTIFICATION_SETTINGS,
-  NOTIFICATION_ON,
+  NOTIFICATION,
 } from '@/global/constants';
 import ChangeNickNameScreen from '@/screens/changeNickNameScreen';
 import AccountManageScreen from '@/screens/accountManageScreen';
@@ -22,7 +22,6 @@ import NotificationSettingsScreen from '@/screens/notificationSettingsScreen';
 import ChangePwScreen from '@/screens/changePwScreen';
 import ConfirmQuitScreen from '@/screens/confirmQuitScreen';
 import ContractScreen from '@/screens/contractScreen';
-import { NOTIFICATION } from '@/global/constants/navigation';
 import NotificationOnScreen from '@/screens/notificationOnScreen';
 
 const Stack = createStackNavigator<MyStackParamList>();
