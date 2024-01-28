@@ -1,7 +1,7 @@
 import { subwayFreshLineName } from '@/global/utils';
 import axios, { AxiosError } from 'axios';
 import { axiosInstance } from '../axiosInstance';
-import { SavedRoute, SearchPathsTypes, SearchSubwayNameTypes, SubwayLine } from '../entity';
+import { SavedRoute, SearchPathsTypes, SearchStationNameTypes, SubwayLine } from '../entity';
 import { LoginFetchResponse, LogoutFetchData } from '@/screens/loginScreen/apis/entity';
 import { API_BASE_URL } from '@env';
 
@@ -63,9 +63,9 @@ export const quitFetch = async () => {
 /**
  * 지하철역 검색 조회 axios
  */
-export const searchSubwayName = async (params: { subwayName: string }) => {
+export const searchStationName = async (params: { stationName: string }) => {
   try {
-    const res = await axiosInstance.get<SearchSubwayNameTypes>('/api/v1/search/subway', {
+    const res = await axiosInstance.get<SearchStationNameTypes>('/api/v1/search/station', {
       params,
     });
     return res.data.data;
@@ -80,7 +80,7 @@ export const searchSubwayName = async (params: { subwayName: string }) => {
  */
 export const searchHistoryFetch = async () => {
   try {
-    const res = await axiosInstance.get<SearchSubwayNameTypes>('/api/v1/recentSearch');
+    const res = await axiosInstance.get<SearchStationNameTypes>('/api/v1/recentSearch');
     return res.data;
   } catch (err) {
     const er = err as AxiosError;
