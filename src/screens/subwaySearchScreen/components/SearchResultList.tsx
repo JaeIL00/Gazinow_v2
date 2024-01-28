@@ -9,11 +9,11 @@ import { useSearchNavigation } from '@/navigation/SearchNavigation';
 import { useAppDispatch, useAppSelect } from '@/store';
 import { getSeletedStation } from '@/store/modules';
 import { getSearchText } from '@/store/modules/subwaySearchModule';
-import { useAddResetSearch, useSearchSubwayName } from '@/global/apis/hook';
-import { SearchSubwayNameTypes } from '@/global/apis/entity';
+import { useAddResetSearch, useSearchStationName } from '@/global/apis/hook';
+import { SearchStationNameTypes } from '@/global/apis/entity';
 
 interface SearchResultListProps {
-  historyList: SearchSubwayNameTypes;
+  historyList: SearchStationNameTypes;
 }
 
 const SearchResultList = ({ historyList }: SearchResultListProps) => {
@@ -24,7 +24,7 @@ const SearchResultList = ({ historyList }: SearchResultListProps) => {
     ({ subwaySearch }) => subwaySearch,
   );
 
-  const { searchResultData } = useSearchSubwayName(searchText);
+  const { searchResultData } = useSearchStationName(searchText);
   const { addRecentMutate } = useAddResetSearch({
     onSuccess: (data) => {
       saveStationData({
@@ -65,7 +65,7 @@ const SearchResultList = ({ historyList }: SearchResultListProps) => {
     }
   };
 
-  const subwayBtnHandler = ({ stationName, stationLine }: (typeof searchResultData)[0]) => {
+  const stationBtnHandler = ({ stationName, stationLine }: (typeof searchResultData)[0]) => {
     addRecentMutate({ stationName, stationLine });
   };
 
@@ -124,7 +124,7 @@ const SearchResultList = ({ historyList }: SearchResultListProps) => {
       {/* 입력어가 있고 && 검색 결과가 없으면 없음 표시 */}
       <Ul marginTop="28px">
         {searchResultData.map(({ stationLine, stationName }, idx) => (
-          <Li key={idx} onPress={() => subwayBtnHandler({ stationLine, stationName })}>
+          <Li key={idx} onPress={() => stationBtnHandler({ stationLine, stationName })}>
             <LocateIcon source={iconPath['location_pin_gray']} width={25} height={25} />
             <StationInfoBox>
               <FontText

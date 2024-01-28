@@ -1,5 +1,5 @@
 import { COLOR } from '@/global/constants';
-import { SearchSubwayNameTypes, SubwayCode } from '@/global/types/apis/searchTypes';
+import { SearchStationNameTypes, SubwayCode } from '../apis/entity';
 
 // 인천선 === 인천1
 // 인천2호선 === 인천2
@@ -10,7 +10,7 @@ import { SearchSubwayNameTypes, SubwayCode } from '@/global/types/apis/searchTyp
  * 지하철 호선명 변경
  * @param list 응답받은 지하철 검색 결과
  */
-export const subwayFreshLineName = (list: SearchSubwayNameTypes['data']) => {
+export const subwayFreshLineName = (list: SearchStationNameTypes['data']) => {
   return list.map((item) => {
     switch (item.stationLine) {
       case '인천선':

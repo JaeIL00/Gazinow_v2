@@ -1,4 +1,4 @@
-import { quitFetch } from '../func';
+import { quitFetch, searchStationName } from '../func';
 import { AxiosError } from 'axios';
 import { axiosInstance } from '@/global/apis/axiosInstance';
 import { useMutation, useQuery } from 'react-query';
@@ -8,7 +8,6 @@ import {
   searchPathDeleteFetch,
   searchPathSaveFetch,
   searchPathsFetch,
-  searchSubwayName,
 } from '@/global/apis/func';
 import { subwayFreshLineName } from '@/global/utils';
 import { SubwayStrEnd } from '../entity';
@@ -63,12 +62,12 @@ export const useDeleteQuery = async (id: number | null) => {
 /**
  * 지하철역 검색 훅
  */
-export const useSearchSubwayName = (subwayName: string) => {
+export const useSearchStationName = (stationName: string) => {
   const { data } = useQuery(
-    ['search-subway-name', subwayName],
-    () => searchSubwayName({ subwayName }),
+    ['search-subway-name', stationName],
+    () => searchStationName({ stationName }),
     {
-      enabled: !!subwayName,
+      enabled: !!stationName,
     },
   );
 

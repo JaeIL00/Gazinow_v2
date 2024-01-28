@@ -61,7 +61,7 @@ export type SubwayLine =
 /**
  * 지하철 검색 타입
  */
-export interface SearchSubwayNameTypes {
+export interface SearchStationNameTypes {
   data: {
     id?: number;
     stationName: string;
