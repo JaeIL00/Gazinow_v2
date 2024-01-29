@@ -3,62 +3,55 @@ import { FontText, Input } from '@/global/ui';
 import { COLOR } from '@/global/constants';
 import React, { useState } from 'react';
 import { useRootNavigation } from '@/navigation/RootNavigation';
-import { AxiosError } from 'axios';
-import { axiosInstance } from '@/global/apis/axiosInstance';
-import { AddRouteTypes } from '@/global/apis/entity';
 import { useRoute } from '@react-navigation/native';
+import { useSaveMyRoutesQuery } from '@/global/apis/hook';
+import { useQueryClient } from 'react-query';
 
-interface SaveNewRouteProps {
-  newRouteName: string | undefined;
-  pathId: number | undefined;
-}
 const NameNewRouteScreen = () => {
   const { params } = useRoute();
   const { pathId } = params as { pathId: number };
   const navigation = useRootNavigation();
-  const [newRouteName, setNewRouteName] = useState<string>();
+  const [roadName, setRoadName] = useState<string>();
+  const queryClient = useQueryClient();
 
-  const saveRoute = async ({ newRouteName, pathId }: SaveNewRouteProps) => {
-    const newRoute = {
-      roadName: newRouteName,
-      totalTime: 0,
-      subwayTransitCount: 0,
-      firstStartStation: 'string',
-      lastEndStation: 'string',
-      subPaths: [
-        {
-          trafficType: 1,
-          distance: 0,
-          sectionTime: 0,
-          stationCount: 0,
-          lanes: [
-            {
-              name: 'string',
-              subwayCode: 0,
-              startName: 'string',
-              endName: pathId,
-            },
-          ],
-          subways: [
-            {
-              index: pathId,
-              stationName: '압구정',
-            },
-          ],
-        },
-      ],
-    };
+  const { mutate } = useSaveMyRoutesQuery({
+    onSuccess: async () => {
+      await queryClient.invalidateQueries();
+    },
+    onError: async (error: any) => {
+      await queryClient.invalidateQueries();
+      console.error(error);
+    },
+  });
 
-    try {
-      const res = await axiosInstance.post<{ newRoute: AddRouteTypes }>(
-        '/api/v1/my_find_road/add_route',
-        newRoute,
-      );
-      return res;
-    } catch (err) {
-      const er = err as AxiosError;
-      throw er;
-    }
+  const newRoute = {
+    roadName: roadName,
+    totalTime: 0,
+    subwayTransitCount: 0,
+    firstStartStation: 'string',
+    lastEndStation: 'string',
+    subPaths: [
+      {
+        trafficType: 1,
+        distance: 0,
+        sectionTime: 0,
+        stationCount: 0,
+        lanes: [
+          {
+            name: 'string',
+            subwayCode: 0,
+            startName: 'string',
+            endName: pathId,
+          },
+        ],
+        subways: [
+          {
+            index: pathId,
+            stationName: '압구정',
+          },
+        ],
+      },
+    ],
   };
 
   return (
@@ -75,8 +68,8 @@ const NameNewRouteScreen = () => {
       <InputBox>
         <Input
           placeholder="경로 이름을 입력하세요"
-          value={newRouteName}
-          onChangeText={(text) => setNewRouteName(text)}
+          value={roadName}
+          onChangeText={(text) => setRoadName(text)}
           inputMode="email"
           maxLength={10}
         ></Input>
@@ -84,7 +77,7 @@ const NameNewRouteScreen = () => {
 
       <TextLengthBox>
         <FontText
-          value={`${newRouteName?.length ? newRouteName.length : 0}/10`}
+          value={`${roadName?.length ? roadName.length : 0}/10`}
           textSize="12px"
           textWeight="Regular"
           textColor={COLOR.GRAY_999}
@@ -94,10 +87,10 @@ const NameNewRouteScreen = () => {
 
       <BottomBtn
         onPress={() => {
-          saveRoute({ newRouteName, pathId });
+          mutate(newRoute);
           navigation.popToTop();
         }}
-        disabled={!newRouteName}
+        disabled={!roadName}
       >
         <FontText
           value="완료"

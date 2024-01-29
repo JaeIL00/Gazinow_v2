@@ -1,12 +1,18 @@
 import { subwayFreshLineName } from '@/global/utils';
 import axios, { AxiosError } from 'axios';
 import { axiosInstance } from '../axiosInstance';
-import { SavedRoute, SearchPathsTypes, SearchStationNameTypes, SubwayLine } from '../entity';
+import {
+  AddRouteTypes,
+  SavedRoute,
+  SearchPathsTypes,
+  SearchStationNameTypes,
+  SubwayLine,
+} from '../entity';
 import { LoginFetchResponse } from '@/screens/loginScreen/apis/entity';
 import { API_BASE_URL } from '@env';
 
 /**
- * 인증 토근 재인증 axios
+ * 인증 토큰 재인증 axios
  */
 export const tokenReissueFetch = async ({
   accessToken,
@@ -161,6 +167,19 @@ export const getSavedRoutesFetch = async () => {
   try {
     const res = await axiosInstance.get(`/api/v1/my_find_road/get_roads`);
     return res.data.data;
+  } catch (err) {
+    const er = err as AxiosError;
+    throw er;
+  }
+};
+
+/**
+ * 내 경로 저장 axios
+ */
+export const saveMyRoutesFetch = async (newRoute: object) => {
+  try {
+    const res = await axiosInstance.post('/api/v1/my_find_road/add_route', newRoute);
+    return res;
   } catch (err) {
     const er = err as AxiosError;
     throw er;

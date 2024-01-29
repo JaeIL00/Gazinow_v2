@@ -3,11 +3,9 @@ import { View, StyleSheet } from 'react-native';
 import { FontText, TextButton } from '@/global/ui';
 import { COLOR } from '@/global/constants';
 import SubwayRoute from '@/screens/selectNewRouteScreen/components/SubwayRoute';
-import {
-  useDeleteSavedSubwayRoute,
-  useGetSavedRoutesQuery,
-} from '@/global/apis/hook';
+import { useDeleteSavedSubwayRoute, useGetSavedRoutesQuery } from '@/global/apis/hook';
 import MyTabModal from '@/global/components/MyTabModal';
+import { useQueryClient } from 'react-query';
 
 interface RenderSavedRoutesProps {
   id: number;
@@ -17,11 +15,14 @@ interface RenderSavedRoutesProps {
 const RenderSavedRoutes = () => {
   const [popupVisible, setPopupVisible] = useState<boolean>(false);
   const [routeToDelete, setRouteToDelete] = useState<number | null>(null);
+  const queryClient = useQueryClient();
+
   const { deleteMutate } = useDeleteSavedSubwayRoute({
-    onSuccess: () => {
-      // 리렌더링
+    onSuccess: async () => {
+      await queryClient.invalidateQueries();
     },
   });
+  
   const { data: savedRoutesData } = useGetSavedRoutesQuery();
 
   const renderSavedRoutes = () =>
@@ -30,18 +31,18 @@ const RenderSavedRoutes = () => {
         <View style={styles.containerRenderTitle}>
           <FontText
             value={roadName}
-            textSize="22px"
-            textWeight="Bold"
-            lineHeight="29px"
+            textSize="18px"
+            textWeight="SemiBold"
+            lineHeight="23px"
             textColor={COLOR.BASIC_BLACK}
           />
           <TextButton
             value="삭제"
-            textSize="16px"
+            textSize="13px"
             textColor={COLOR.GRAY_999}
             textWeight="Medium"
             onPress={() => showDeletePopup(id)}
-            lineHeight="21px"
+            lineHeight="19px"
           />
         </View>
 

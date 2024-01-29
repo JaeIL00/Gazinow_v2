@@ -2,6 +2,7 @@ import {
   deleteAccountFetch,
   getSavedRoutesFetch,
   getSearchRoutesFetch,
+  saveMyRoutesFetch,
   searchStationName,
 } from '../func';
 import { useMutation, useQuery } from 'react-query';
@@ -109,4 +110,21 @@ export const useGetSearchRoutesQuery = () => {
 export const useGetSavedRoutesQuery = () => {
   const { data } = useQuery(['getRoads'], getSavedRoutesFetch);
   return { data };
+};
+
+/**
+ * 내 경로 저장 훅
+ */
+export const useSaveMyRoutesQuery = ({
+  onSuccess,
+  onError,
+}: {
+  onSuccess: () => void;
+  onError?: (error: any) => void;
+}) => {
+  const { data, mutate } = useMutation(saveMyRoutesFetch, {
+    onSuccess,
+    onError,
+  });
+  return { data, mutate };
 };
