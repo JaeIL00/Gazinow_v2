@@ -19,7 +19,13 @@ const SavedRouteIssues = () => {
     <TouchableOpacity
       key={text}
       onPress={() => handleButtonClick(text)}
-      style={[styles.navButton, { backgroundColor: activeButton === text ? '#474747' : 'white' }]}
+      style={[
+        styles.navButton,
+        {
+          backgroundColor: activeButton === text ? '#474747' : 'white',
+          borderColor: activeButton === text ? 'transparent' : '#EBEBEB',
+        },
+      ]}
     >
       <FontText
         value={text}

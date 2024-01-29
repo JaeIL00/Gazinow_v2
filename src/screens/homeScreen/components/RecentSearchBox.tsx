@@ -18,29 +18,29 @@ const RecentSearchBox = () => {
         <View style={styles.textContainer}>
           <FontText
             value={`${recentSearchData[0].stationName} -> ${recentSearchData[0].destination}`}
-            textSize="20px"
+            textSize="18px"
             textWeight="Bold"
-            lineHeight="25px"
+            lineHeight="23px"
             textColor={COLOR.BASIC_BLACK}
           />
           <FontText
             value={`${recentSearchData[0].duration} 소요`}
-            textSize="16px"
+            textSize="12px"
             textWeight="Medium"
-            lineHeight="21px"
+            lineHeight="14px"
             textColor={COLOR.GRAY_999}
           />
         </View>
         <View style={styles.textContainer}>
           <TextButton
             value="세부정보  "
-            textSize="16px"
+            textSize="13px"
+            textWeight="Regular"
+            lineHeight="19px"
             textColor={COLOR.GRAY_999}
-            textWeight="Medium"
-            lineHeight="21px"
             onPress={routeDetail}
           />
-          <IconButton isFontIcon={false} imagePath="more_gray" iconWidth="8px" iconHeight="14px" />
+          <IconButton isFontIcon={false} imagePath="more_gray" iconWidth="4.5px" iconHeight="8px" />
         </View>
       </View>
       <View style={styles.containerSubwayRoute}>

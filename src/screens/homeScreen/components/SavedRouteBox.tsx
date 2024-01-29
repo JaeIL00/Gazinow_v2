@@ -6,6 +6,7 @@ import IssuesBanner from './IssuesBanner';
 import RecommendedRoutes from './RecommendedRoutes';
 import SubwayRoute from '@/screens/selectNewRouteScreen/components/SubwayRoute';
 import { useGetSavedRoutesQuery } from '@/global/apis/hook';
+import styled from '@emotion/native';
 
 const SavedRouteBox = () => {
   const { data: savedRoutes } = useGetSavedRoutesQuery();
@@ -17,29 +18,30 @@ const SavedRouteBox = () => {
         <View style={styles.textContainer}>
           <FontText
             value={`${savedRoutes[0].roadName}  `}
-            textSize="20px"
+            textSize="18px"
             textWeight="Bold"
-            lineHeight="25px"
+            lineHeight="23px"
             textColor={COLOR.BASIC_BLACK}
           />
-          <FontText
-            style={styles.grayEllipse}
-            value="42분 이상 예상"
-            textSize="16px"
-            textWeight="Medium"
-            lineHeight="21px"
-            textColor={COLOR.GRAY_999}
-          />
+          <GrayEllipse>
+            <FontText
+              value="42분 이상 예상"
+              textSize="12px"
+              textWeight="Medium"
+              lineHeight="14px"
+              textColor={COLOR.GRAY_999}
+            />
+          </GrayEllipse>
         </View>
         <View style={styles.textContainer}>
           <FontText
             value="세부정보  "
-            textSize="16px"
-            textWeight="Medium"
-            lineHeight="21px"
+            textSize="13px"
+            textWeight="Regular"
+            lineHeight="19px"
             textColor={COLOR.GRAY_999}
           />
-          <IconButton isFontIcon={false} imagePath="more_gray" iconWidth="8px" iconHeight="14px" />
+          <IconButton isFontIcon={false} imagePath="more_gray" iconWidth="4.5px" iconHeight="8px" />
         </View>
       </View>
       <View style={styles.containerSubwayRoute}>
@@ -92,3 +94,9 @@ const styles = StyleSheet.create({
 });
 
 export default SavedRouteBox;
+
+const GrayEllipse = styled.View`
+  padding: 4px 6px;
+  border-radius: 16px;
+  background: #f7f7f9;
+`;

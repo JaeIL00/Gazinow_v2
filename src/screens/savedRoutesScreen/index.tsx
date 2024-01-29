@@ -1,10 +1,10 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
-import { IconButton, FontText } from '@/global/ui';
 import styled from '@emotion/native';
-import { COLOR, EDIT_ROUTE_NAVIGATION, ADD_NEW_ROUTE } from '@/global/constants';
 import { useRootNavigation } from '@/navigation/RootNavigation';
 import RenderSavedRoutes from './components/RenderSavedRoutes';
+import { FontText, IconButton } from '@/global/ui';
+import { ADD_NEW_ROUTE, COLOR, EDIT_ROUTE_NAVIGATION } from '@/global/constants';
 
 const SavedRoutesScreen = () => {
   const rootNavigation = useRootNavigation();
@@ -36,11 +36,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     borderRadius: 15,
   },
-  containerAdd: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    flexDirection: 'row',
-  },
 });
 const Container = styled.View`
   padding: 0 16px;
@@ -49,8 +44,8 @@ const Container = styled.View`
 `;
 const AddContainer = styled.Pressable`
   padding: 0px 0px 20px;
-  alignitems: center;
-  justifycontent: center;
+  align-items: center;
+  justify-content: center;
   flex-direction: row;
 `;
 

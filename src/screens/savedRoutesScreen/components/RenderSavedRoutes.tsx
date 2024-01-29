@@ -3,9 +3,9 @@ import { View, StyleSheet } from 'react-native';
 import { FontText, TextButton } from '@/global/ui';
 import { COLOR } from '@/global/constants';
 import SubwayRoute from '@/screens/selectNewRouteScreen/components/SubwayRoute';
-import DeleteModal from './DeleteModal';
-import { useGetSavedRoutesQuery } from '@/global/apis/hook';
+import { useDeleteQuery, useGetSavedRoutesQuery } from '@/global/apis/hook';
 import { AddRouteTypes } from '@/global/apis/entity';
+import MyTabModal from '@/global/components/MyTabModal';
 
 interface RenderSavedRoutesProps {
   id: number;
