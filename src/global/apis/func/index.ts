@@ -185,3 +185,17 @@ export const saveMyRoutesFetch = async (newRoute: object) => {
     throw er;
   }
 };
+
+/**
+ * 닉네임 변경 axios
+ */
+export const changeNicknameFetch = async (newNickname: string) => {
+  try {
+    await axiosInstance.post(`/api/v1/member/change_nickname`, {
+      nickName: newNickname,
+    });
+  } catch (err) {
+    const er = err as AxiosError;
+    throw er;
+  }
+};

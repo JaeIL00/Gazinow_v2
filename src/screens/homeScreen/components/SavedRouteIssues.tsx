@@ -56,7 +56,7 @@ const SavedRouteIssues = () => {
       <View style={styles.borderLine}></View>
 
       {/* 버튼에 따라 다른 컴포넌트를 렌더링 */}
-      <ScrollView nestedScrollEnabled>
+      <ScrollView>
         {
           {
             저장경로: <SavedRouteBox />,

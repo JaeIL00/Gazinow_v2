@@ -1,4 +1,5 @@
 import {
+  changeNicknameFetch,
   deleteAccountFetch,
   getSavedRoutesFetch,
   getSearchRoutesFetch,
@@ -123,6 +124,23 @@ export const useSaveMyRoutesQuery = ({
   onError?: (error: any) => void;
 }) => {
   const { data, mutate } = useMutation(saveMyRoutesFetch, {
+    onSuccess,
+    onError,
+  });
+  return { data, mutate };
+};
+
+/**
+ * 닉네임 변경 훅
+ */
+export const useChangeNicknameQuery = ({
+  onSuccess,
+  onError,
+}: {
+  onSuccess: () => void;
+  onError?: (error: any) => void;
+}) => {
+  const { data, mutate } = useMutation(changeNicknameFetch, {
     onSuccess,
     onError,
   });
