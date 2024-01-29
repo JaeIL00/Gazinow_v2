@@ -1,29 +1,24 @@
 import styled from '@emotion/native';
 import { FontText, Input } from '@/global/ui';
 import { COLOR } from '@/global/constants';
-import { EditRouteStackParamList } from '@/navigation/types/navigation';
 import React, { useState } from 'react';
 import { useRootNavigation } from '@/navigation/RootNavigation';
 import { AxiosError } from 'axios';
 import { axiosInstance } from '@/global/apis/axiosInstance';
 import { AddRouteTypes } from '@/global/apis/entity';
-import { RouteProp } from '@react-navigation/native';
+import { useRoute } from '@react-navigation/native';
 
 interface SaveNewRouteProps {
   newRouteName: string | undefined;
-  selectedRouteId: number | undefined;
+  pathId: number | undefined;
 }
-const NameNewRouteScreen = ({
-  route,
-}: {
-  route: RouteProp<EditRouteStackParamList, 'NameNewRoute'> & {
-    params?: { pathId?: number };
-  };
-}) => {
-  const rootNavigation = useRootNavigation();
+const NameNewRouteScreen = () => {
+  const { params } = useRoute();
+  const { pathId } = params as { pathId: number };
+  const navigation = useRootNavigation();
   const [newRouteName, setNewRouteName] = useState<string>();
 
-  const saveRoute = async ({ newRouteName, selectedRouteId }: SaveNewRouteProps) => {
+  const saveRoute = async ({ newRouteName, pathId }: SaveNewRouteProps) => {
     const newRoute = {
       roadName: newRouteName,
       totalTime: 0,
@@ -41,12 +36,12 @@ const NameNewRouteScreen = ({
               name: 'string',
               subwayCode: 0,
               startName: 'string',
-              endName: selectedRouteId,
+              endName: pathId,
             },
           ],
           subways: [
             {
-              index: selectedRouteId,
+              index: pathId,
               stationName: '압구정',
             },
           ],
@@ -99,8 +94,8 @@ const NameNewRouteScreen = ({
 
       <BottomBtn
         onPress={() => {
-          saveRoute({ newRouteName, selectedRouteId: route.params.pathId });
-          rootNavigation.popToTop();
+          saveRoute({ newRouteName, pathId });
+          navigation.popToTop();
         }}
         disabled={!newRouteName}
       >

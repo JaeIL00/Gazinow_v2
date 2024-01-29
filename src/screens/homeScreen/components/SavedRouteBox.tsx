@@ -56,7 +56,8 @@ const SavedRouteBox = () => {
         <RecommendedRoutes />
       </View>
     );
-  } else {
+  }
+  else {
     return (
       <FontText
         style={styles.messageStyle}

@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
   },
 });
 const Container = styled.View`
-  padding: 0 16px;
+  padding: 0 16px 16px;
   flex-direction: column;
   background-color: ${COLOR.LIGHT_GRAY};
 `;
