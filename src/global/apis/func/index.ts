@@ -2,20 +2,8 @@ import { subwayFreshLineName } from '@/global/utils';
 import axios, { AxiosError } from 'axios';
 import { axiosInstance } from '../axiosInstance';
 import { SavedRoute, SearchPathsTypes, SearchStationNameTypes, SubwayLine } from '../entity';
-import { LoginFetchResponse, LogoutFetchData } from '@/screens/loginScreen/apis/entity';
+import { LoginFetchResponse } from '@/screens/loginScreen/apis/entity';
 import { API_BASE_URL } from '@env';
-
-/**
- * 인증 토근 재인증 axios
- */
-export const logoutFetch = async ({ accessToken, refreshToken }: LogoutFetchData) => {
-  try {
-    await axiosInstance.post('/api/v1/member/logout', { accessToken, refreshToken });
-  } catch (err) {
-    const er = err as AxiosError;
-    throw er;
-  }
-};
 
 /**
  * 인증 토근 재인증 axios
@@ -42,18 +30,6 @@ export const tokenReissueFetch = async ({
       newAccessToken: res.data.data.accessToken,
       newRefreshToken: res.data.data.refreshToken,
     };
-  } catch (err) {
-    const er = err as AxiosError;
-    throw er;
-  }
-};
-
-/**
- * 회원 탈퇴 axios
- */
-export const quitFetch = async () => {
-  try {
-    await axiosInstance.delete('/api/v1/member/delete_member', { data: {} });
   } catch (err) {
     const er = err as AxiosError;
     throw er;
@@ -143,9 +119,47 @@ export const searchPathSaveFetch = async (data: SavedRoute) => {
 /**
  * 저장된 지하철 경로 삭제 axios
  */
-export const searchPathDeleteFetch = async (params: { id: number }) => {
+export const searchPathDeleteFetch = async (params: { id: number | null }) => {
   try {
     const res = await axiosInstance.delete('/api/v1/my_find_road/delete_route', { params });
+    return res.data.data;
+  } catch (err) {
+    const er = err as AxiosError;
+    throw er;
+  }
+};
+
+/**
+ * 회원 탈퇴 axios
+ */
+export const deleteAccountFetch = async () => {
+  try {
+    await axiosInstance.delete('/api/v1/member/delete_member', { data: {} });
+  } catch (err) {
+    const er = err as AxiosError;
+    throw er;
+  }
+};
+
+/**
+ * 검색한 지하철 경로 조회 axios
+ */
+export const getSearchRoutesFetch = async () => {
+  try {
+    const res = await axiosInstance.get(`/api/v1/recentSearch`);
+    return res.data.data;
+  } catch (err) {
+    const er = err as AxiosError;
+    throw er;
+  }
+};
+
+/**
+ * 저장한 지하철 경로 조회 axios
+ */
+export const getSavedRoutesFetch = async () => {
+  try {
+    const res = await axiosInstance.get(`/api/v1/my_find_road/get_roads`);
     return res.data.data;
   } catch (err) {
     const er = err as AxiosError;

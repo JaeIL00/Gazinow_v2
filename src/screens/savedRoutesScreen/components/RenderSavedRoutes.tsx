@@ -3,7 +3,10 @@ import { View, StyleSheet } from 'react-native';
 import { FontText, TextButton } from '@/global/ui';
 import { COLOR } from '@/global/constants';
 import SubwayRoute from '@/screens/selectNewRouteScreen/components/SubwayRoute';
-import { useDeleteSavedRouteQuery, useGetSavedRoutesQuery } from '@/global/apis/hook';
+import {
+  useDeleteSavedSubwayRoute,
+  useGetSavedRoutesQuery,
+} from '@/global/apis/hook';
 import MyTabModal from '@/global/components/MyTabModal';
 
 interface RenderSavedRoutesProps {
@@ -14,7 +17,11 @@ interface RenderSavedRoutesProps {
 const RenderSavedRoutes = () => {
   const [popupVisible, setPopupVisible] = useState<boolean>(false);
   const [routeToDelete, setRouteToDelete] = useState<number | null>(null);
-
+  const { deleteMutate } = useDeleteSavedSubwayRoute({
+    onSuccess: () => {
+      // 리렌더링
+    },
+  });
   const { data: savedRoutesData } = useGetSavedRoutesQuery();
 
   const renderSavedRoutes = () =>
@@ -54,7 +61,7 @@ const RenderSavedRoutes = () => {
   const hideModal = () => setPopupVisible(false);
 
   const handleConfirm = async () => {
-    await useDeleteSavedRouteQuery(routeToDelete);
+    deleteMutate({ id: routeToDelete });
     hideModal();
   };
 
