@@ -1,7 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import type { StackNavigationOptions, StackNavigationProp } from '@react-navigation/stack';
-
 import { EditRouteStackParamList } from '@/navigation/types/navigation';
 import {
   COLOR,
@@ -17,6 +16,8 @@ import SavedRoutesScreen from '@/screens/savedRoutesScreen';
 import SelectNewRouteScreen from '@/screens/selectNewRouteScreen';
 import styled from '@emotion/native';
 import { IconButton } from '@/global/ui';
+import NewRouteSearchScreen from '@/screens/newRouteSearchScreen';
+import NewRoutePathDetailScreen from '@/screens/newRoutePathDetailScreen';
 
 const Stack = createStackNavigator<EditRouteStackParamList>();
 
@@ -87,13 +88,22 @@ const EditRouteNavigation = () => {
         component={AddNewRouteScreen}
         options={({ navigation }) => renderHeader(navigation)}
       />
-      {/* <Stack.Screen name={SUBWAY_SEARCH} component={SubwaySearchScreen} options={({ navigation }) => renderHeader(navigation)} initialParams={{ isBackBtn: false }} /> */}
+      <Stack.Screen
+        name={SUBWAY_SEARCH}
+        component={NewRouteSearchScreen}
+        options={({ navigation }) => renderHeader(navigation)}
+        initialParams={{ isBackBtn: false }}
+      />
       <Stack.Screen
         name={SUBWAY_PATH_RESULT}
         component={SelectNewRouteScreen}
         options={({ navigation }) => renderHeader(navigation)}
       />
-      {/* <Stack.Screen name={SUBWAY_PATH_DETAIL} component={SearchPathResultDetail} options={{ headerShown: false }} /> */}
+      <Stack.Screen
+        name={SUBWAY_PATH_DETAIL}
+        component={NewRoutePathDetailScreen}
+        options={{ headerShown: false }}
+      />
       <Stack.Screen
         name={NAME_NEW_ROUTE}
         component={NameNewRouteScreen}

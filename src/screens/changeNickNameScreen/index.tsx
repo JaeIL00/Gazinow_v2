@@ -3,10 +3,9 @@ import { useState } from 'react';
 import { useRootNavigation } from '@/navigation/RootNavigation';
 import { Image } from 'react-native';
 import { iconPath } from '@/assets/icons/iconPath';
-import { AxiosError } from 'axios';
 import { FontText, IconButton, Input, Space, TextButton } from '@/global/ui';
 import { COLOR } from '@/global/constants';
-import { axiosInstance } from '@/global/apis/axiosInstance';
+import { useChangeNicknameQuery } from '@/global/apis/hook';
 
 const ChangeNickNameScreen = () => {
   const navigation = useRootNavigation();
@@ -18,7 +17,7 @@ const ChangeNickNameScreen = () => {
         textColor={COLOR.GRAY_999}
         textWeight="Medium"
         lineHeight="21px"
-        onPress={() => submitNickname(newNickname)}
+        onPress={() => mutate(newNickname)}
       />
     ),
   });
@@ -30,24 +29,17 @@ const ChangeNickNameScreen = () => {
   const deleteInputText = () => {
     setNewNickname('');
   };
-  const changeNickname = (text: string) => {
-    setNewNickname(text);
-  };
 
-  const submitNickname = async (newNickname: string) => {
-    try {
-      const response = await axiosInstance.post(`/api/v1/member/change_nickname`, {
-        nickName: newNickname,
-      });
-      if (response.status === 200) {
-        navigation.goBack();
-      }
-    } catch (err) {
-      const error = err as AxiosError;
+  const { mutate } = useChangeNicknameQuery({
+    onSuccess: async () => {
+      navigation.goBack();
+    },
+    onError: async (error: any) => {
       setIsNicknameValid(false);
       setErrorMessage(getErrorMessage(error.response?.status));
-    }
-  };
+      console.error(error);
+    },
+  });
 
   const getErrorMessage = (status: number | undefined) => {
     switch (status) {
@@ -70,7 +62,7 @@ const ChangeNickNameScreen = () => {
           placeholder={`새 닉네임을 입력하세요`}
           placeholderTextColor={COLOR.BE_GRAY}
           inputMode="search"
-          onChangeText={changeNickname}
+          onChangeText={setNewNickname}
           autoFocus
         />
         <IconButton

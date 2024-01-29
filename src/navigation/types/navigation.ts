@@ -5,7 +5,10 @@ export type RootStackParamList = {
   Login: undefined;
   MainBottomTab: { screen: 'Home' };
   SearchNavigation: { screen: keyof SearchStackParamList; params?: Path; route?: undefined };
-  EditRouteNavigation: { screen: keyof EditRouteStackParamList; params?: { pathId: number } };
+  EditRouteNavigation: {
+    screen: keyof EditRouteStackParamList;
+    params?: { pathId: number | null };
+  };
   MyNavigation: { screen: keyof MyStackParamList };
 };
 
@@ -18,7 +21,10 @@ export type EditRouteStackParamList = {
     arrival: { stationName: string; stationLine: SubwayLine };
   };
   SubwayPathDetail: undefined;
-  NameNewRoute: { screen: string; params: number };
+  NameNewRoute: {
+    screen: string;
+    params?: { pathId?: number };
+  };
 };
 
 export type SearchStackParamList = {
@@ -27,7 +33,7 @@ export type SearchStackParamList = {
     departure: { stationName: string; stationLine: SubwayLine };
     arrival: { stationName: string; stationLine: SubwayLine };
   };
-  SubwayPathDetail: { state?: SubPath[]; pathId?: number };
+  SubwayPathDetail: { state?: SubPath[]; pathId?: number | null };
 };
 
 export type MyStackParamList = {

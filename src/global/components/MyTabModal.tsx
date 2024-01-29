@@ -63,9 +63,9 @@ const MyTabModal = ({
 };
 const ModalContainer = styled.View`
   flex: 1;
-  justifycontent: center;
-  alignitems: center;
-  backgroundcolor: rgba(0, 0, 0, 0.3);
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.3);
 `;
 const PopupContainer = styled.View`
   width: 350px;
@@ -73,12 +73,7 @@ const PopupContainer = styled.View`
   padding: 30px;
   background-color: #fff;
   border-radius: 10px;
-  alignitems: center;
-`;
-const ButtonContainer = styled.View`
-  flex-Direction: row,
-  justify-Content: space-between,
-  margin-Top: 40px,
+  align-items: center;
 `;
 
 const CancelButton = styled.Pressable<{ btnColor?: string }>`
@@ -95,10 +90,10 @@ const CancelButton = styled.Pressable<{ btnColor?: string }>`
 const DeleteButton = styled.Pressable`
   flex: 1;
   margin-left: 5px;
-  backgroundcolor: ${COLOR.BASIC_BLACK};
-  borderradius: 5px;
+  background-color: ${COLOR.BASIC_BLACK};
+  border-radius: 5px;
   padding: 10px;
-  alignitems: center;
+  align-items: center;
 `;
 
 const styles = StyleSheet.create({

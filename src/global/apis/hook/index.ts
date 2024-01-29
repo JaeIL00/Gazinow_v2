@@ -1,6 +1,11 @@
-import { quitFetch, searchStationName } from '../func';
-import { AxiosError } from 'axios';
-import { axiosInstance } from '@/global/apis/axiosInstance';
+import {
+  changeNicknameFetch,
+  deleteAccountFetch,
+  getSavedRoutesFetch,
+  getSearchRoutesFetch,
+  saveMyRoutesFetch,
+  searchStationName,
+} from '../func';
 import { useMutation, useQuery } from 'react-query';
 import {
   searchAddHistoryFetch,
@@ -11,53 +16,6 @@ import {
 } from '@/global/apis/func';
 import { subwayFreshLineName } from '@/global/utils';
 import { SubwayLine, SubwayStrEnd } from '../entity';
-
-export const useQuitMutation = ({ onSuccess }: { onSuccess: () => void }) => {
-  const { mutate: quitMutate } = useMutation(quitFetch, { onSuccess });
-  return { quitMutate };
-};
-
-/**
- * 검색한 지하철 경로 조회 훅
- */
-export const useGetSearchRoutesQuery = () => {
-  return useQuery('recentSearch', async () => {
-    try {
-      const res = await axiosInstance.get(`/api/v1/recentSearch`);
-      return res.data.data;
-    } catch (err) {
-      const er = err as AxiosError;
-      throw er;
-    }
-  });
-};
-
-/**
- * 저장한 지하철 경로 조회 훅
- */
-export const useGetSavedRoutesQuery = () => {
-  return useQuery('getRoads', async () => {
-    try {
-      const res = await axiosInstance.get(`/api/v1/my_find_road/get_roads`);
-      return res.data.data;
-    } catch (err) {
-      const er = err as AxiosError;
-      throw er;
-    }
-  });
-};
-
-/**
- * 저장한 경로 삭제 훅
- */
-export const useDeleteQuery = async (id: number | null) => {
-  try {
-    await axiosInstance.delete(`/api/v1/my_find_road/delete_route?id=${id}`);
-  } catch (err) {
-    const error = err as AxiosError;
-    throw error;
-  }
-};
 
 /**
  * 지하철역 검색 훅
@@ -126,4 +84,62 @@ export const useAddRecentSearch = ({
     ? { line: data.stationLine, name: data.stationName }
     : { line: null, name: '' };
   return { data: subwayFreshLineName([freshData]), addRecentMutate: mutate };
+};
+
+/**
+ * 회원 탈퇴 훅
+ */
+export const useDeleteAccountMutation = ({ onSuccess }: { onSuccess: () => void }) => {
+  const { mutate: deleteAccountMutate } = useMutation(deleteAccountFetch, { onSuccess });
+  return { deleteAccountMutate };
+};
+
+/**
+ * 검색한 지하철 경로 조회 훅
+ */
+export const useGetSearchRoutesQuery = () => {
+  const { data } = useQuery(['recentSearch'], getSearchRoutesFetch);
+  return { data };
+};
+
+/**
+ * 저장한 지하철 경로 조회 훅
+ */
+export const useGetSavedRoutesQuery = () => {
+  const { data } = useQuery(['getRoads'], getSavedRoutesFetch);
+  return { data };
+};
+
+/**
+ * 내 경로 저장 훅
+ */
+export const useSaveMyRoutesQuery = ({
+  onSuccess,
+  onError,
+}: {
+  onSuccess: () => void;
+  onError?: (error: any) => void;
+}) => {
+  const { data, mutate } = useMutation(saveMyRoutesFetch, {
+    onSuccess,
+    onError,
+  });
+  return { data, mutate };
+};
+
+/**
+ * 닉네임 변경 훅
+ */
+export const useChangeNicknameQuery = ({
+  onSuccess,
+  onError,
+}: {
+  onSuccess: () => void;
+  onError?: (error: any) => void;
+}) => {
+  const { data, mutate } = useMutation(changeNicknameFetch, {
+    onSuccess,
+    onError,
+  });
+  return { data, mutate };
 };

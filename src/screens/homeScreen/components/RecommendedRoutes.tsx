@@ -16,14 +16,14 @@ const RecommendedRoutes = () => {
         <View style={styles.textContainer}>
           <FontText
             value="대체 경로  "
-            textSize="20px"
-            textWeight="Bold"
-            lineHeight="25px"
+            textSize="16px"
+            textWeight="SemiBold"
+            lineHeight="21px"
             textColor={COLOR.BASIC_BLACK}
           />
           <FontText
             value="평균 42분"
-            textSize="14px"
+            textSize="12px"
             textWeight="Regular"
             lineHeight="15px"
             textColor={COLOR.BASIC_BLACK}
@@ -32,13 +32,13 @@ const RecommendedRoutes = () => {
         <View style={styles.textContainer}>
           <TextButton
             value="세부정보  "
-            textSize="16px"
+            textSize="13px"
             textColor={COLOR.GRAY_999}
-            textWeight="Medium"
-            lineHeight="21px"
+            textWeight="Regular"
+            lineHeight="19px"
             onPress={routeDetail}
           />
-          <IconButton isFontIcon={false} imagePath="more_gray" iconWidth="8px" iconHeight="14px" />
+          <IconButton isFontIcon={false} imagePath="more_gray" iconWidth="4.5px" iconHeight="8px" />
         </View>
       </View>
 
@@ -50,10 +50,10 @@ const RecommendedRoutes = () => {
 };
 
 const Container = styled.View`
-  backgroundcolor: #f2f2f2;
-  padding: 0 16px;
-  borderradius: 13px;
-  padding: 20px;
+  background: #f7f7f9;
+  padding: 16px;
+  border-radius: 8px;
+  margin: 2px;
 `;
 
 const styles = StyleSheet.create({

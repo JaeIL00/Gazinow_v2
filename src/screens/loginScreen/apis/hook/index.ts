@@ -15,7 +15,7 @@ export const useLoginMutation = ({
 };
 
 /**
- * 로그아운 요청 훅
+ * 로그아웃 요청 훅
  */
 export const useLogoutMutation = ({ onSuccess }: { onSuccess: () => void }) => {
   const { mutate: logoutMutate } = useMutation(logoutFetch, { onSuccess });

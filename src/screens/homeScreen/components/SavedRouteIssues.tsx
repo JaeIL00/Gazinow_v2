@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
 import { FontText, TextButton } from '@/global/ui';
 import { COLOR, EDIT_ROUTE_NAVIGATION, SAVED_ROUTES } from '@/global/constants';
 import { useRootNavigation } from '@/navigation/RootNavigation';
@@ -19,13 +19,19 @@ const SavedRouteIssues = () => {
     <TouchableOpacity
       key={text}
       onPress={() => handleButtonClick(text)}
-      style={[styles.navButton, { backgroundColor: activeButton === text ? '#474747' : 'white' }]}
+      style={[
+        styles.navButton,
+        {
+          backgroundColor: activeButton === text ? '#474747' : 'white',
+          borderColor: activeButton === text ? 'transparent' : '#EBEBEB',
+        },
+      ]}
     >
       <FontText
         value={text}
-        textSize="16px"
+        textSize="13px"
         textWeight="Medium"
-        lineHeight="31px"
+        lineHeight="19px"
         textColor={activeButton === text ? 'white' : 'black'}
       />
     </TouchableOpacity>
@@ -38,11 +44,11 @@ const SavedRouteIssues = () => {
         <View style={styles.textContainer}>{categoryName.map(renderButton)}</View>
         <TextButton
           value="저장경로 편집"
-          textSize="16px"
+          textSize="12px"
           textColor={COLOR.GRAY_999}
-          textWeight="Medium"
+          textWeight="Regular"
           onPress={() => rootNavigation.navigate(EDIT_ROUTE_NAVIGATION, { screen: SAVED_ROUTES })}
-          lineHeight="21px"
+          lineHeight="15px"
         />
       </View>
 
@@ -50,13 +56,15 @@ const SavedRouteIssues = () => {
       <View style={styles.borderLine}></View>
 
       {/* 버튼에 따라 다른 컴포넌트를 렌더링 */}
-      {
+      <ScrollView>
         {
-          저장경로: <SavedRouteBox />,
-          최근검색: <RecentSearchBox />,
-          이슈: <IssueBox />,
-        }[activeButton]
-      }
+          {
+            저장경로: <SavedRouteBox />,
+            최근검색: <RecentSearchBox />,
+            이슈: <IssueBox />,
+          }[activeButton]
+        }
+      </ScrollView>
     </View>
   );
 };
@@ -64,12 +72,13 @@ const SavedRouteIssues = () => {
 const styles = StyleSheet.create({
   container: {
     marginTop: 20,
-    padding: 17,
+    marginBottom: 215,
+    padding: 16,
     backgroundColor: 'white',
     borderRadius: 15,
   },
   navContainer: {
-    paddingBottom: 17,
+    paddingBottom: 16,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -78,9 +87,10 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     borderWidth: 1,
     borderColor: '#EBEBEB',
-    borderRadius: 40,
+    borderRadius: 17,
+    paddingVertical: 4,
     paddingHorizontal: 10,
-    marginRight: 6,
+    marginRight: 8,
   },
   borderLine: {
     borderWidth: 1,

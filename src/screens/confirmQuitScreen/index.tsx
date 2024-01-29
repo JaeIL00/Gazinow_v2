@@ -1,26 +1,22 @@
 import styled from '@emotion/native';
-
 import { useRootNavigation } from '@/navigation/RootNavigation';
-import { AxiosError } from 'axios';
 import { useState } from 'react';
-import { axiosInstance } from '@/global/apis/axiosInstance';
 import { FontText, Space, TextButton } from '@/global/ui';
 import { COLOR, LOGIN } from '@/global/constants';
 import MyTabModal from '../../global/components/MyTabModal';
-import { useQuitMutation } from '@/global/apis/hook';
+import { useDeleteAccountMutation } from '@/global/apis/hook';
 
 const ConfirmQuitScreen = () => {
   const nickName = '사용자17349245';
   const navigation = useRootNavigation();
   const [popupVisible, setPopupVisible] = useState(false);
 
-  const { quitMutate } = useQuitMutation({
+  const { deleteAccountMutate } = useDeleteAccountMutation({
     onSuccess: () => navigation.reset({ routes: [{ name: LOGIN }] }),
   });
 
   const handleConfirm = () => {
-    quitMutate();
-
+    deleteAccountMutate();
     hideModal();
   };
 

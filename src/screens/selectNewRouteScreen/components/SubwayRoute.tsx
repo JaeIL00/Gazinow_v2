@@ -14,7 +14,7 @@ const SubwayRoute = () => {
     return routes.map(({ line, station, color, issue }, index) => (
       <View key={index}>
         <View style={styles.stationContainer}>
-          <IconButton isFontIcon={false} imagePath={line} iconWidth="25px" iconHeight="25px" />
+          {/* <IconButton isFontIcon={false} imagePath={line} iconWidth="25px" iconHeight="25px" /> */}
           <FontText
             style={styles.stationName}
             value={station}
