@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, ScrollView } from 'react-native';
 import styled from '@emotion/native';
 import { useRootNavigation } from '@/navigation/RootNavigation';
 import RenderSavedRoutes from './components/RenderSavedRoutes';
@@ -10,21 +10,30 @@ const SavedRoutesScreen = () => {
   const rootNavigation = useRootNavigation();
   return (
     <Container>
-      <View style={styles.container}>
-        <RenderSavedRoutes />
-        <AddContainer
-          onPress={() => rootNavigation.navigate(EDIT_ROUTE_NAVIGATION, { screen: ADD_NEW_ROUTE })}
-        >
-          <IconButton isFontIcon={false} imagePath="addRoute" iconWidth="20px" iconHeight="20px" />
-          <FontText
-            value="  추가하기"
-            textSize="16px"
-            textWeight="Medium"
-            lineHeight="21px"
-            textColor={COLOR.GRAY_999}
-          />
-        </AddContainer>
-      </View>
+      <ScrollView>
+        <View style={styles.container}>
+          <RenderSavedRoutes />
+          <AddContainer
+            onPress={() =>
+              rootNavigation.navigate(EDIT_ROUTE_NAVIGATION, { screen: ADD_NEW_ROUTE })
+            }
+          >
+            <IconButton
+              isFontIcon={false}
+              imagePath="addRoute"
+              iconWidth="20px"
+              iconHeight="20px"
+            />
+            <FontText
+              value="  추가하기"
+              textSize="16px"
+              textWeight="Medium"
+              lineHeight="21px"
+              textColor={COLOR.GRAY_999}
+            />
+          </AddContainer>
+        </View>
+      </ScrollView>
     </Container>
   );
 };

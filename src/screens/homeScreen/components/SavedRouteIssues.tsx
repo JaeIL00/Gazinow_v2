@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
 import { FontText, TextButton } from '@/global/ui';
 import { COLOR, EDIT_ROUTE_NAVIGATION, SAVED_ROUTES } from '@/global/constants';
 import { useRootNavigation } from '@/navigation/RootNavigation';
@@ -56,13 +56,15 @@ const SavedRouteIssues = () => {
       <View style={styles.borderLine}></View>
 
       {/* 버튼에 따라 다른 컴포넌트를 렌더링 */}
-      {
+      <ScrollView>
         {
-          저장경로: <SavedRouteBox />,
-          최근검색: <RecentSearchBox />,
-          이슈: <IssueBox />,
-        }[activeButton]
-      }
+          {
+            저장경로: <SavedRouteBox />,
+            최근검색: <RecentSearchBox />,
+            이슈: <IssueBox />,
+          }[activeButton]
+        }
+      </ScrollView>
     </View>
   );
 };

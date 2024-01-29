@@ -48,7 +48,6 @@ const RenderSavedRoutes = () => {
     ));
 
   const showDeletePopup = (id: number) => {
-    // console.log(id);
     setRouteToDelete(id);
     setPopupVisible(true);
   };
