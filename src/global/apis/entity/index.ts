@@ -56,16 +56,25 @@ export type SubwayLine =
   | '용인경전철'
   | '의정부경전철'
   | '우이신설경전철'
-  | '김포도시철도';
+  | '김포도시철도'
+  | null;
+
+/**
+ * 지하철 검색 이력 타입
+ */
+export interface SearchHistoryStationNameTypes {
+  id: number;
+  stationName: string;
+  stationLine: SubwayLine;
+}
 
 /**
  * 지하철 검색 타입
  */
 export interface SearchStationNameTypes {
   data: {
-    id?: number;
-    stationName: string;
-    stationLine: SubwayLine;
+    name: string;
+    line: SubwayLine;
   }[];
 }
 

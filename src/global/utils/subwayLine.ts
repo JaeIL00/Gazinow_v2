@@ -1,5 +1,10 @@
 import { COLOR } from '@/global/constants';
-import { SearchStationNameTypes, SubwayCode } from '../apis/entity';
+import {
+  SearchHistoryStationNameTypes,
+  SearchStationNameTypes,
+  SubwayCode,
+  SubwayLine,
+} from '../apis/entity';
 
 // 인천선 === 인천1
 // 인천2호선 === 인천2
@@ -12,19 +17,19 @@ import { SearchStationNameTypes, SubwayCode } from '../apis/entity';
  */
 export const subwayFreshLineName = (list: SearchStationNameTypes['data']) => {
   return list.map((item) => {
-    switch (item.stationLine) {
+    switch (item.line) {
       case '인천선':
-        return { stationName: item.stationName, stationLine: '인천1' };
+        return { stationName: item.name, stationLine: '인천1' as SubwayLine };
       case '인천2호선':
-        return { stationName: item.stationName, stationLine: '인천2' };
+        return { stationName: item.name, stationLine: '인천2' as SubwayLine };
       case '용인경전철':
-        return { stationName: item.stationName, stationLine: '애버라인' };
+        return { stationName: item.name, stationLine: '애버라인' as SubwayLine };
       case '우이신설경전철':
-        return { stationName: item.stationName, stationLine: '우이신설' };
+        return { stationName: item.name, stationLine: '우이신설' as SubwayLine };
       case '김포도시철도':
-        return { stationName: item.stationName, stationLine: '김포골드' };
+        return { stationName: item.name, stationLine: '김포골드' as SubwayLine };
       default:
-        return item;
+        return { stationName: item.name, stationLine: item.line as SubwayLine };
     }
   });
 };
