@@ -6,12 +6,12 @@ import { COLOR } from '@/global/constants';
 const IssuesBanner = () => {
   return (
     <View style={styles.issuesBanner}>
-      <IconButton
+      {/* <IconButton
         isFontIcon={false}
         imagePath="issue_rain_circle"
         iconWidth="23px"
         iconHeight="23px"
-      />
+      /> */}
       <FontText
         style={styles.buttonIssues}
         value="폭우로 인한 4호선 운행정지"

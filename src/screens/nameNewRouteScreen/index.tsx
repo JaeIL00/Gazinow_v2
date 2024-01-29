@@ -1,30 +1,29 @@
 import styled from '@emotion/native';
-import type { NavigationProp } from '@react-navigation/native';
-
 import { FontText, Input } from '@/global/ui';
 import { COLOR } from '@/global/constants';
-import { RootStackParamList } from '@/navigation/types/navigation';
+import { EditRouteStackParamList } from '@/navigation/types/navigation';
 import React, { useState } from 'react';
 import { useRootNavigation } from '@/navigation/RootNavigation';
 import { AxiosError } from 'axios';
 import { axiosInstance } from '@/global/apis/axiosInstance';
 import { AddRouteTypes } from '@/global/apis/entity';
+import { RouteProp } from '@react-navigation/native';
 
-const dummy = [
-  { time: '45분', departureName: '신용산역', departureLine: '4', arrivalLine: '2' },
-  { time: '45분', departureName: '신용산역', departureLine: '4', arrivalLine: '2' },
-];
-
+interface SaveNewRouteProps {
+  newRouteName: string | undefined;
+  selectedRouteId: number | undefined;
+}
 const NameNewRouteScreen = ({
-  navigation,
   route,
 }: {
-  navigation: NavigationProp<RootStackParamList, 'SearchNavigation'>;
+  route: RouteProp<EditRouteStackParamList, 'NameNewRoute'> & {
+    params?: { pathId?: number };
+  };
 }) => {
   const rootNavigation = useRootNavigation();
-  const [newRouteName, setNewRouteName] = useState<string | null>();
+  const [newRouteName, setNewRouteName] = useState<string>();
 
-  const saveRoute = async (newRouteName: string | null | undefined, selectedRouteId: number) => {
+  const saveRoute = async ({ newRouteName, selectedRouteId }: SaveNewRouteProps) => {
     const newRoute = {
       roadName: newRouteName,
       totalTime: 0,
@@ -100,7 +99,7 @@ const NameNewRouteScreen = ({
 
       <BottomBtn
         onPress={() => {
-          saveRoute(newRouteName, route.params.pathId);
+          saveRoute({ newRouteName, selectedRouteId: route.params.pathId });
           rootNavigation.popToTop();
         }}
         disabled={!newRouteName}

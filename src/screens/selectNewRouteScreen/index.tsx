@@ -1,7 +1,5 @@
 import styled, { css } from '@emotion/native';
-import type { NavigationProp } from '@react-navigation/native';
-import { TouchableOpacity, View } from 'react-native';
-
+import { Pressable, View } from 'react-native';
 import { FontText, Space } from '@/global/ui';
 import { COLOR } from '@/global/constants';
 import {
@@ -9,10 +7,8 @@ import {
   NAME_NEW_ROUTE,
   SUBWAY_PATH_DETAIL,
 } from '@/global/constants/navigation';
-import { RootStackParamList } from '@/navigation/types/navigation';
 import React, { useState } from 'react';
 import { useRootNavigation } from '@/navigation/RootNavigation';
-import { StyleSheet } from 'react-native';
 import { SwapSubwayStation } from '@/global/components';
 import SubwayRoute from './components/SubwayRoute';
 
@@ -21,14 +17,10 @@ const dummy = [
   { time: '45분', departureName: '신용산역', departureLine: '4', arrivalLine: '2' },
 ];
 
-const SelectNewRouteScreen = ({
-  navigation,
-}: {
-  navigation: NavigationProp<RootStackParamList, 'SearchNavigation'>;
-}) => {
-  const rootNavigation = useRootNavigation();
+const SelectNewRouteScreen = () => {
+  const navigation = useRootNavigation();
   const [selectedRouteIndex, setSelectedRouteIndex] = useState<number | null>(null);
-  console.log(selectedRouteIndex);
+  console.log('selectedRouteIndex: ', selectedRouteIndex);
 
   return (
     <Container>
@@ -41,8 +33,12 @@ const SelectNewRouteScreen = ({
         <View>
           {dummy.map((item, index) => (
             <PathInner
+              key={index}
               onPress={() => {
-                navigation.navigate(SUBWAY_PATH_DETAIL, { pathId: index });
+                navigation.navigate(EDIT_ROUTE_NAVIGATION, {
+                  screen: SUBWAY_PATH_DETAIL,
+                  params: { pathId: selectedRouteIndex },
+                });
               }}
             >
               <View>
@@ -75,14 +71,7 @@ const SelectNewRouteScreen = ({
                   <SubwayRoute />
                 </SubwayRouteContainer>
               </View>
-
               {/* 경로 그래프 */}
-              <View
-                style={css(
-                  `flexDirection: row; backgroundColor: orange;
-                `,
-                )}
-              ></View>
             </PathInner>
           ))}
         </View>
@@ -90,7 +79,7 @@ const SelectNewRouteScreen = ({
 
       <BottomBtn
         onPress={() => {
-          rootNavigation.navigate(EDIT_ROUTE_NAVIGATION, {
+          navigation.navigate(EDIT_ROUTE_NAVIGATION, {
             screen: NAME_NEW_ROUTE,
             params: { pathId: selectedRouteIndex },
           });
@@ -112,9 +101,9 @@ const SelectNewRouteScreen = ({
 export default SelectNewRouteScreen;
 
 const SubwayRouteContainer = styled.View`
-  margintop: 40px;
-  flexdirection: row;
-  justifycontent: space-between;
+  margin-top: 40px;
+  flex-direction: row;
+  justify-content: space-between;
 `;
 const Container = styled.View`
   background-color: ${COLOR.WHITE};
@@ -137,7 +126,7 @@ const PathInner = styled.Pressable`
   border-bottom-color: #ebebeb;
   border-bottom-width: 1px;
 `;
-const RadioButtonContainer = styled.Pressable`
+const RadioButtonContainer = styled(Pressable)<{ selected?: boolean }>`
   width: 24px;
   height: 24px;
   border-radius: 12px;
