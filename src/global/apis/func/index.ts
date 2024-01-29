@@ -4,11 +4,12 @@ import { axiosInstance } from '../axiosInstance';
 import {
   AddRouteTypes,
   SavedRoute,
+  SearchHistoryStationNameTypes,
   SearchPathsTypes,
   SearchStationNameTypes,
   SubwayLine,
 } from '../entity';
-import { LoginFetchResponse } from '@/screens/loginScreen/apis/entity';
+import { LoginFetchResponse, LogoutFetchData } from '@/screens/loginScreen/apis/entity';
 import { API_BASE_URL } from '@env';
 
 /**
@@ -62,8 +63,10 @@ export const searchStationName = async (params: { stationName: string }) => {
  */
 export const searchHistoryFetch = async () => {
   try {
-    const res = await axiosInstance.get<SearchStationNameTypes>('/api/v1/recentSearch');
-    return res.data;
+    const res = await axiosInstance.get<{ data: SearchHistoryStationNameTypes[] }>(
+      '/api/v1/recentSearch',
+    );
+    return res.data.data;
   } catch (err) {
     const er = err as AxiosError;
     throw er;
@@ -73,16 +76,17 @@ export const searchHistoryFetch = async () => {
 /**
  * 지하철역 검색 히스토리 저장 axios
  */
-export const searchAddHistoryFetch = async (data: { stationName: string; stationLine: string }) => {
+export const searchAddHistoryFetch = async (data: {
+  stationName: string;
+  stationLine: SubwayLine;
+}) => {
   try {
-    const res = await axiosInstance.post<{
-      // 백엔드 : stationCode 대응
-      id?: number;
-      stationName: string;
-      stationLine: SubwayLine;
-    }>('/api/v1/recentSearch/add', data);
-
-    return subwayFreshLineName([res.data])[0];
+    const res = await axiosInstance.post<{ data: SearchHistoryStationNameTypes }>(
+      '/api/v1/recentSearch/add',
+      data,
+    );
+    console.log(res.data);
+    return res.data.data;
   } catch (err) {
     const er = err as AxiosError;
     throw er;

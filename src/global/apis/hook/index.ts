@@ -15,7 +15,7 @@ import {
   searchPathsFetch,
 } from '@/global/apis/func';
 import { subwayFreshLineName } from '@/global/utils';
-import { SubwayStrEnd } from '../entity';
+import { SubwayLine, SubwayStrEnd } from '../entity';
 
 /**
  * 지하철역 검색 훅
@@ -72,21 +72,18 @@ export const useDeleteSavedSubwayRoute = ({ onSuccess }: { onSuccess: () => void
 
   return { data, deleteMutate: mutate };
 };
-export const useAddResetSearch = ({
+export const useAddRecentSearch = ({
   onSuccess,
 }: {
-  onSuccess: (data: {
-    // 백엔드 : stationCode 대응
-    id?: number;
-    stationName: string;
-    stationLine: string;
-  }) => void;
+  onSuccess: (data: { id: number; stationName: string; stationLine: SubwayLine }) => void;
 }) => {
   const { data, mutate } = useMutation(searchAddHistoryFetch, {
     onSuccess,
   });
-
-  return { data, addRecentMutate: mutate };
+  const freshData = data
+    ? { line: data.stationLine, name: data.stationName }
+    : { line: null, name: '' };
+  return { data: subwayFreshLineName([freshData]), addRecentMutate: mutate };
 };
 
 /**

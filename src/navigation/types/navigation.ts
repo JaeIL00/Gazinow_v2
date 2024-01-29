@@ -1,4 +1,4 @@
-import { Path, SubPath } from '@/global/apis/entity';
+import { Path, SubPath, SubwayLine } from '@/global/apis/entity';
 
 export type RootStackParamList = {
   Temp: undefined;
@@ -17,8 +17,8 @@ export type EditRouteStackParamList = {
   AddNewRoute: undefined;
   SubwaySearch: { isBackBtn: boolean };
   SubwayPathResult: {
-    departure: { name: string; line: string };
-    arrival: { name: string; line: string };
+    departure: { stationName: string; stationLine: SubwayLine };
+    arrival: { stationName: string; stationLine: SubwayLine };
   };
   SubwayPathDetail: undefined;
   NameNewRoute: {
@@ -30,8 +30,8 @@ export type EditRouteStackParamList = {
 export type SearchStackParamList = {
   SubwaySearch: { isBackBtn: boolean };
   SubwayPathResult: {
-    departure: { name: string; line: string };
-    arrival: { name: string; line: string };
+    departure: { stationName: string; stationLine: SubwayLine };
+    arrival: { stationName: string; stationLine: SubwayLine };
   };
   SubwayPathDetail: { state?: SubPath[]; pathId?: number | null };
 };

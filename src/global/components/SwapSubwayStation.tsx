@@ -44,11 +44,13 @@ const SwapSubwayStation = ({ isWrap, showHeader }: SwapProps) => {
     setSubwayStation(({ departure, arrival }) => ({
       departure: {
         ...arrival,
-        name: arrival.name === ARRIVAL_STATION ? DEPARTURE_STATION : arrival.name,
+        stationName:
+          arrival.stationName === ARRIVAL_STATION ? DEPARTURE_STATION : arrival.stationName,
       },
       arrival: {
         ...departure,
-        name: departure.name === DEPARTURE_STATION ? ARRIVAL_STATION : departure.name,
+        stationName:
+          departure.stationName === DEPARTURE_STATION ? ARRIVAL_STATION : departure.stationName,
       },
     }));
   };
@@ -68,19 +70,25 @@ const SwapSubwayStation = ({ isWrap, showHeader }: SwapProps) => {
     >
       <InnerBox>
         <StationButton
-          value={subwayStation.departure.name ? subwayStation.departure.name : DEPARTURE_STATION}
+          value={
+            subwayStation.departure.stationName
+              ? subwayStation.departure.stationName
+              : DEPARTURE_STATION
+          }
           textSize="16px"
           textWeight="Regular"
           lineHeight="21px"
-          textColor={subwayStation.departure.name ? COLOR.BASIC_BLACK : COLOR.GRAY_999}
+          textColor={subwayStation.departure.stationName ? COLOR.BASIC_BLACK : COLOR.GRAY_999}
           onPress={() => navigateSubwaySearch(DEPARTURE_STATION)}
         />
         <StationButton
-          value={subwayStation.arrival.name ? subwayStation.arrival.name : ARRIVAL_STATION}
+          value={
+            subwayStation.arrival.stationName ? subwayStation.arrival.stationName : ARRIVAL_STATION
+          }
           textSize="16px"
           textWeight="Regular"
           lineHeight="21px"
-          textColor={subwayStation.arrival.name ? COLOR.BASIC_BLACK : COLOR.GRAY_999}
+          textColor={subwayStation.arrival.stationName ? COLOR.BASIC_BLACK : COLOR.GRAY_999}
           onPress={() => navigateSubwaySearch(ARRIVAL_STATION)}
         />
       </InnerBox>

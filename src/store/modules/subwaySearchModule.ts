@@ -1,9 +1,10 @@
+import { SubwayLine } from '@/global/apis/entity';
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 
 export interface StationDataTypes {
-  name: string;
-  line: string;
+  stationName: string;
+  stationLine: SubwayLine;
 }
 
 interface InitialStateTypes {
@@ -20,12 +21,12 @@ const initialState: InitialStateTypes = {
   searchText: '',
   selectedStation: {
     departure: {
-      name: '',
-      line: '',
+      stationName: '',
+      stationLine: null,
     },
     arrival: {
-      name: '',
-      line: '',
+      stationName: '',
+      stationLine: null,
     },
   },
 };
