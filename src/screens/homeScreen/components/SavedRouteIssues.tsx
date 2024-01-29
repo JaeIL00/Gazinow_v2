@@ -56,7 +56,7 @@ const SavedRouteIssues = () => {
       <View style={styles.borderLine}></View>
 
       {/* 버튼에 따라 다른 컴포넌트를 렌더링 */}
-      <ScrollView>
+      <ScrollView nestedScrollEnabled>
         {
           {
             저장경로: <SavedRouteBox />,
@@ -72,7 +72,7 @@ const SavedRouteIssues = () => {
 const styles = StyleSheet.create({
   container: {
     marginTop: 20,
-    marginBottom: 220,
+    marginBottom: 215,
     padding: 16,
     backgroundColor: 'white',
     borderRadius: 15,
