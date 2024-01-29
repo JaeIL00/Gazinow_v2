@@ -87,13 +87,17 @@ const EditRouteNavigation = () => {
         component={AddNewRouteScreen}
         options={({ navigation }) => renderHeader(navigation)}
       />
-      {/* <Stack.Screen name={SUBWAY_SEARCH} component={SubwaySearchScreen} options={({ navigation }) => renderHeader(navigation)} initialParams={{ isBackBtn: false }} /> */}
+
+      <Stack.Screen name={SUBWAY_SEARCH} component={SubwaySearchScreen} options={({ navigation }) => renderHeader(navigation)} initialParams={{ isBackBtn: false }} />
+      
       <Stack.Screen
         name={SUBWAY_PATH_RESULT}
         component={SelectNewRouteScreen}
         options={({ navigation }) => renderHeader(navigation)}
       />
-      {/* <Stack.Screen name={SUBWAY_PATH_DETAIL} component={SearchPathResultDetail} options={{ headerShown: false }} /> */}
+      
+      <Stack.Screen name={SUBWAY_PATH_DETAIL} component={SearchPathResultDetail} options={{ headerShown: false }} />
+
       <Stack.Screen
         name={NAME_NEW_ROUTE}
         component={NameNewRouteScreen}
