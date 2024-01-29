@@ -12,7 +12,7 @@ const RecentSearchBox = () => {
 
   const { data: recentSearchData } = useGetSearchRoutesQuery();
 
-  if (recentSearchData.length > 0) {
+  if (recentSearchData?.length > 0) {
     return (
       <View>
         <View style={styles.titleContainer}>

@@ -29,9 +29,9 @@ const SavedRouteIssues = () => {
     >
       <FontText
         value={text}
-        textSize="16px"
+        textSize="13px"
         textWeight="Medium"
-        lineHeight="31px"
+        lineHeight="19px"
         textColor={activeButton === text ? 'white' : 'black'}
       />
     </TouchableOpacity>
@@ -44,11 +44,11 @@ const SavedRouteIssues = () => {
         <View style={styles.textContainer}>{categoryName.map(renderButton)}</View>
         <TextButton
           value="저장경로 편집"
-          textSize="16px"
+          textSize="12px"
           textColor={COLOR.GRAY_999}
-          textWeight="Medium"
+          textWeight="Regular"
           onPress={() => rootNavigation.navigate(EDIT_ROUTE_NAVIGATION, { screen: SAVED_ROUTES })}
-          lineHeight="21px"
+          lineHeight="15px"
         />
       </View>
 
@@ -72,12 +72,12 @@ const SavedRouteIssues = () => {
 const styles = StyleSheet.create({
   container: {
     marginTop: 20,
-    padding: 17,
+    padding: 16,
     backgroundColor: 'white',
     borderRadius: 15,
   },
   navContainer: {
-    paddingBottom: 17,
+    paddingBottom: 16,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -86,9 +86,10 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     borderWidth: 1,
     borderColor: '#EBEBEB',
-    borderRadius: 40,
+    borderRadius: 17,
+    paddingVertical: 4,
     paddingHorizontal: 10,
-    marginRight: 6,
+    marginRight: 8,
   },
   borderLine: {
     borderWidth: 1,

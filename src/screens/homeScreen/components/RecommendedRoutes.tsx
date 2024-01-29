@@ -53,6 +53,7 @@ const Container = styled.View`
   background: #f7f7f9;
   padding: 16px;
   border-radius: 8px;
+  margin: 2px;
 `;
 
 const styles = StyleSheet.create({

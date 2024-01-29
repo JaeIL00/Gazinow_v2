@@ -17,6 +17,6 @@ export default HomeScreen;
 
 const Container = styled.View`
   padding: 0 16px;
-  background-color: white;
+  // background-color: white;
   flex: 1;
 `;
