@@ -45,7 +45,7 @@ const RecommendedRoutes = () => {
       <View style={styles.containerSubwayRoute}>
         <SubwayRoute />
       </View>
-          </Container>
+    </Container>
   );
 };
 

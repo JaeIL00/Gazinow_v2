@@ -12,59 +12,61 @@ const RecentSearchBox = () => {
 
   const { data: recentSearchData } = useGetSearchRoutesQuery();
 
-  const renderRecentSearch = () => (
-    <View>
-      <View style={styles.titleContainer}>
-        <View style={styles.textContainer}>
-          <FontText
-            value={`${recentSearchData[0].stationName} -> ${recentSearchData[0].destination}`}
-            textSize="18px"
-            textWeight="Bold"
-            lineHeight="23px"
-            textColor={COLOR.BASIC_BLACK}
-          />
-          <FontText
-            value={`${recentSearchData[0].duration} 소요`}
-            textSize="12px"
-            textWeight="Medium"
-            lineHeight="14px"
-            textColor={COLOR.GRAY_999}
-          />
+  if (recentSearchData.length > 0) {
+    return (
+      <View>
+        <View style={styles.titleContainer}>
+          <View style={styles.textContainer}>
+            <FontText
+              value={`${recentSearchData[0].stationName} -> ${recentSearchData[0].destination}`}
+              textSize="18px"
+              textWeight="Bold"
+              lineHeight="23px"
+              textColor={COLOR.BASIC_BLACK}
+            />
+            <FontText
+              value={`${recentSearchData[0].duration} 소요`}
+              textSize="12px"
+              textWeight="Medium"
+              lineHeight="14px"
+              textColor={COLOR.GRAY_999}
+            />
+          </View>
+          <View style={styles.textContainer}>
+            <TextButton
+              value="세부정보  "
+              textSize="13px"
+              textWeight="Regular"
+              lineHeight="19px"
+              textColor={COLOR.GRAY_999}
+              onPress={routeDetail}
+            />
+            <IconButton
+              isFontIcon={false}
+              imagePath="more_gray"
+              iconWidth="4.5px"
+              iconHeight="8px"
+            />
+          </View>
         </View>
-        <View style={styles.textContainer}>
-          <TextButton
-            value="세부정보  "
-            textSize="13px"
-            textWeight="Regular"
-            lineHeight="19px"
-            textColor={COLOR.GRAY_999}
-            onPress={routeDetail}
-          />
-          <IconButton isFontIcon={false} imagePath="more_gray" iconWidth="4.5px" iconHeight="8px" />
+        <View style={styles.containerSubwayRoute}>
+          <SubwayRoute />
         </View>
       </View>
-      <View style={styles.containerSubwayRoute}>
-        <SubwayRoute />
-      </View>
-    </View>
-  );
-
-  const renderNoRecentSearch = () => (
-    <FontText
-      style={styles.messageStyle}
-      value="최근 검색한 경로가 없어요."
-      textSize="16px"
-      textWeight="Medium"
-      lineHeight="500px"
-      textColor={COLOR.GRAY_999}
-    />
-  );
-
-  return recentSearchData && recentSearchData.length > 0
-    ? renderRecentSearch()
-    : renderNoRecentSearch();
+    );
+  } else {
+    return (
+      <FontText
+        style={styles.messageStyle}
+        value="최근 검색한 경로가 없어요."
+        textSize="16px"
+        textWeight="Medium"
+        lineHeight="500px"
+        textColor={COLOR.GRAY_999}
+      />
+    );
+  }
 };
-
 const styles = StyleSheet.create({
   messageStyle: {
     textAlign: 'center',
