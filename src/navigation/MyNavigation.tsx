@@ -1,7 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import type { StackNavigationProp } from '@react-navigation/stack';
-
+import type { StackNavigationOptions, StackNavigationProp } from '@react-navigation/stack';
 import styled from '@emotion/native';
 import { IconButton } from '@/global/ui';
 import { EditRouteStackParamList, MyStackParamList } from './types/navigation';
@@ -34,8 +33,8 @@ const renderHeaderLeft = (
       <IconButton
         isFontIcon={false}
         imagePath="backBtn"
-        iconWidth="27px"
-        iconHeight="20px"
+        iconWidth="24px"
+        iconHeight="24px"
         onPress={() => navigation.goBack()}
       />
     </HeaderLeft>
@@ -44,15 +43,16 @@ const renderHeaderLeft = (
 
 const renderHeaderNickname = (
   navigation: StackNavigationProp<EditRouteStackParamList, keyof EditRouteStackParamList>,
-) => ({
+): StackNavigationOptions => ({
   title: '닉네임 수정',
+  headerTitleStyle: { color: '#171717', fontSize: 18, lineHeight: 23, fontWeight: '500' },
   headerLeft: () => (
     <HeaderLeft>
       <IconButton
         isFontIcon={false}
         imagePath="x"
-        iconWidth="23px"
-        iconHeight="23px"
+        iconWidth="24px"
+        iconHeight="24px"
         onPress={() => navigation.goBack()}
       />
     </HeaderLeft>
@@ -61,15 +61,16 @@ const renderHeaderNickname = (
 
 const renderHeaderChangePw = (
   navigation: StackNavigationProp<EditRouteStackParamList, keyof EditRouteStackParamList>,
-) => ({
+): StackNavigationOptions => ({
   title: '비밀번호 변경',
+  headerTitleStyle: { color: '#171717', fontSize: 18, lineHeight: 23, fontWeight: '500' },
   headerLeft: () => (
     <HeaderLeft>
       <IconButton
         isFontIcon={false}
         imagePath="backBtn"
-        iconWidth="27px"
-        iconHeight="20px"
+        iconWidth="24px"
+        iconHeight="24px"
         onPress={() => navigation.goBack()}
       />
     </HeaderLeft>

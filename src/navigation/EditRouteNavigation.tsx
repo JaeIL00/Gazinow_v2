@@ -21,24 +21,19 @@ import NewRoutePathDetailScreen from '@/screens/newRoutePathDetailScreen';
 
 const Stack = createStackNavigator<EditRouteStackParamList>();
 
-const screenOption: StackNavigationOptions = {
-  headerShown: true,
-  headerTintColor: COLOR.BASIC_BLACK,
-  headerTitleStyle: { fontWeight: '600', fontSize: 20 },
-  title: '새 경로 저장',
-  headerTitleAlign: 'center',
-};
-
 const renderHeader = (
   navigation: StackNavigationProp<EditRouteStackParamList, keyof EditRouteStackParamList>,
-) => ({
+): StackNavigationOptions => ({
+  title: '새 경로 저장',
+  headerTitleAlign: 'center',
+  headerTitleStyle: { color: '#171717', fontSize: 18, lineHeight: 23, fontWeight: '500' },
   headerLeft: () => (
     <HeaderLeft>
       <IconButton
         isFontIcon={false}
         imagePath="backBtn"
-        iconWidth="27px"
-        iconHeight="20px"
+        iconWidth="24px"
+        iconHeight="24px"
         onPress={() => navigation.goBack()}
       />
     </HeaderLeft>
@@ -48,8 +43,8 @@ const renderHeader = (
       <IconButton
         isFontIcon={false}
         imagePath="x"
-        iconWidth="27px"
-        iconHeight="20px"
+        iconWidth="24px"
+        iconHeight="24px"
         onPress={() => navigation.popToTop()}
       />
     </HeaderRight>
@@ -61,14 +56,15 @@ const renderHeaderLeft = (
 ): StackNavigationOptions => ({
   title: '저장한 경로',
   headerTitleAlign: 'left',
+  headerTitleStyle: { color: '#171717', fontSize: 18, lineHeight: 23, fontWeight: '500' },
   headerStyle: { backgroundColor: COLOR.LIGHT_GRAY },
   headerLeft: () => (
     <HeaderLeft>
       <IconButton
         isFontIcon={false}
         imagePath="backBtn"
-        iconWidth="27px"
-        iconHeight="20px"
+        iconWidth="24px"
+        iconHeight="24px"
         onPress={() => navigation.goBack()}
       />
     </HeaderLeft>
@@ -77,7 +73,7 @@ const renderHeaderLeft = (
 
 const EditRouteNavigation = () => {
   return (
-    <Stack.Navigator screenOptions={screenOption}>
+    <Stack.Navigator>
       <Stack.Screen
         name={SAVED_ROUTES}
         component={SavedRoutesScreen}
