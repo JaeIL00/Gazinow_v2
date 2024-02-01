@@ -1,6 +1,6 @@
 import styled from '@emotion/native';
 import { useRoute } from '@react-navigation/native';
-import { TouchableOpacity, View } from 'react-native';
+import { ScrollView, TouchableOpacity, View } from 'react-native';
 
 import { FontText, IconButton, Space } from '@/global/ui';
 import { COLOR } from '@/global/constants';
@@ -24,10 +24,10 @@ const SearchPathResultScreen = () => {
   };
 
   const { data } = useGetSearchPaths({
-    strSubwayName: params.departure.name,
-    strSubwayLine: params.departure.line,
-    endSubwayName: params.arrival.name,
-    endSubwayLine: params.arrival.line,
+    strStationName: params.departure.stationName,
+    strStationLine: params.departure.stationLine,
+    endStationName: params.arrival.stationName,
+    endStationLine: params.arrival.stationLine,
   });
 
   return (
@@ -65,10 +65,16 @@ const SearchPathResultScreen = () => {
       </View>
 
       <View style={{ backgroundColor: COLOR.WHITE }}>
-        {data?.paths.map((item) => (
+        {data?.paths.map((item, idx) => (
           <View
             key={item.firstStartStation + item.totalTime}
-            style={{ paddingHorizontal: 18, paddingBottom: 24, paddingTop: 20 }}
+            style={{
+              paddingHorizontal: 18,
+              paddingBottom: 24,
+              paddingTop: 20,
+              borderBottomColor: data.paths.length - 1 !== idx ? '#EBEBEB' : 'none',
+              borderBottomWidth: data.paths.length - 1 !== idx ? 1 : 0,
+            }}
           >
             <View>
               <View
@@ -117,7 +123,7 @@ const SearchPathResultScreen = () => {
             </View>
 
             {/* 지하철 경로 UI */}
-            <SubwaySimplePath pathData={item.subPaths} />
+            <SubwaySimplePath pathData={item.subPaths} arriveStationName={item.lastEndStation} />
           </View>
         ))}
       </View>
