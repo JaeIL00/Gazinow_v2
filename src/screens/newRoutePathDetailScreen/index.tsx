@@ -23,9 +23,14 @@ const NewRoutePathDetailScreen = () => {
   // const [isBookmarking, setIsBookmarking] = useState<boolean>(false);
   // const [isSaveRouteModalOpen, setIsSaveRouteModalOpen] = useState<boolean>(false);
 
+  // const freshSubPathData: SubPath[] = useMemo(() => {
+  //   const { subPaths } = route.params as Path;
+  //   return Object.values(subPaths).filter((item) => !!item.lanes.length && !!item.stations.length);
+  // }, [route]);
+
   const freshSubPathData: SubPath[] = useMemo(() => {
     const { subPaths } = route.params as Path;
-    return Object.values(subPaths).filter((item) => !!item.lanes.length && !!item.subways.length);
+    return Object.values(subPaths).filter((item) => !!item.lanes.length && !!item.stations.length);
   }, [route]);
 
   // const bookmarkHandler = () => {

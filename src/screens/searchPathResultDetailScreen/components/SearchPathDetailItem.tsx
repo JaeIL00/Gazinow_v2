@@ -14,7 +14,7 @@ interface SearchPathDetailItemProps {
 
 const SearchPathDetailItem = ({ data, isLastLane }: SearchPathDetailItemProps) => {
   const [isOpenPathList, setIsOpenPathList] = useState<boolean>(false);
-  const lastIdx = data.subways.length - 1;
+  const lastIdx = data.stations.length - 1;
   return (
     <View
       style={css`
@@ -33,7 +33,7 @@ const SearchPathDetailItem = ({ data, isLastLane }: SearchPathDetailItemProps) =
             style={css`
               width: 24px;
               height: 24px;
-              background-color: ${subwayLineColor(data.lanes[0].StationCode)};
+              background-color: ${subwayLineColor(data.lanes[0].stationCode)};
               border-radius: 24px;
             `}
           />
@@ -44,7 +44,7 @@ const SearchPathDetailItem = ({ data, isLastLane }: SearchPathDetailItemProps) =
               margin-left: 9px;
               margin-top: -10px;
               margin-bottom: -30px;
-              background-color: ${subwayLineColor(data.lanes[0].StationCode)};
+              background-color: ${subwayLineColor(data.lanes[0].stationCode)};
             `}
           />
         </View>
@@ -55,11 +55,11 @@ const SearchPathDetailItem = ({ data, isLastLane }: SearchPathDetailItemProps) =
           `}
         >
           <FontText
-            value={subwayNameCutting(data.subways[0].stationName.replace('역', ''))}
+            value={subwayNameCutting(data.stations[0].stationName.replace('역', ''))}
             textSize="14px"
             textWeight="SemiBold"
             lineHeight="21px"
-            textColor={subwayLineColor(data.lanes[0].StationCode)}
+            textColor={subwayLineColor(data.lanes[0].stationCode)}
           />
           <View
             style={css`
@@ -122,7 +122,7 @@ const SearchPathDetailItem = ({ data, isLastLane }: SearchPathDetailItemProps) =
           </View>
           {isOpenPathList && (
             <View style={{ marginTop: 12 }}>
-              {data.subways.map((item, idx) => (
+              {data.stations.map((item, idx) => (
                 <View
                   key={item.stationName.length + item.stationName}
                   style={{
@@ -138,7 +138,7 @@ const SearchPathDetailItem = ({ data, isLastLane }: SearchPathDetailItemProps) =
                       marginRight: 20,
                       borderWidth: 2,
                       backgroundColor: '#fff',
-                      borderColor: subwayLineColor(data.lanes[0].StationCode),
+                      borderColor: subwayLineColor(data.lanes[0].stationCode),
                       borderRadius: 12,
                     }}
                   />
@@ -167,7 +167,7 @@ const SearchPathDetailItem = ({ data, isLastLane }: SearchPathDetailItemProps) =
           style={css`
             width: 24px;
             height: 24px;
-            background-color: ${subwayLineColor(data.lanes[0].StationCode)};
+            background-color: ${subwayLineColor(data.lanes[0].stationCode)};
             border-radius: 24px;
           `}
         />
@@ -178,11 +178,11 @@ const SearchPathDetailItem = ({ data, isLastLane }: SearchPathDetailItemProps) =
           `}
         >
           <FontText
-            value={subwayNameCutting(data.subways[lastIdx].stationName.replace('역', ''))}
+            value={subwayNameCutting(data.stations[lastIdx].stationName.replace('역', ''))}
             textSize="14px"
             textWeight="SemiBold"
             lineHeight="21px"
-            textColor={subwayLineColor(data.lanes[0].StationCode)}
+            textColor={subwayLineColor(data.lanes[0].stationCode)}
           />
           <FontText
             value={'내리는 문: '} // 백엔드: 내리는문 좌우
