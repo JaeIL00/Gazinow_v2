@@ -1,18 +1,18 @@
-import { SubwayCode } from '@/global/types/apis/searchTypes';
+import { StationCode } from '@/global/apis/entity';
 import { subwayLineColor } from '@/global/utils';
 import { View } from 'react-native';
 
 interface PathBarProps {
-  subwayCode: SubwayCode;
+  StationCode: StationCode;
   isFirst?: boolean;
   isLast: boolean;
 }
 
-const PathBar = ({ subwayCode, isFirst = true, isLast }: PathBarProps) => {
+const PathBar = ({ StationCode, isFirst, isLast }: PathBarProps) => {
   return (
     <View
       style={{
-        backgroundColor: subwayLineColor(subwayCode),
+        backgroundColor: subwayLineColor(StationCode),
         height: 3,
         flex: 1,
         marginTop: 7.5,

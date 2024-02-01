@@ -25,7 +25,7 @@ const SearchPathResultDetailScreen = () => {
 
   const freshSubPathData: SubPath[] = useMemo(() => {
     const { subPaths } = route.params as Path;
-    return Object.values(subPaths).filter((item) => !!item.lanes.length && !!item.subways.length);
+    return Object.values(subPaths).filter((item) => !!item.lanes.length && !!item.stations.length);
   }, [route]);
 
   const bookmarkHandler = () => {

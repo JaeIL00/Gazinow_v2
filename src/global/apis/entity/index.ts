@@ -16,7 +16,7 @@ export interface AddRouteTypes {
       lanes: [
         {
           name: string;
-          subwayCode: number;
+          StationCode: number;
           startName: string;
           endName: string;
         },
@@ -115,7 +115,7 @@ export interface Path {
  * @param n116 수인분당선
  * @param n117 신림선
  */
-export type SubwayCode =
+export type StationCode =
   | 1
   | 2
   | 3
@@ -145,7 +145,7 @@ export type SubwayCode =
  */
 export interface Lane {
   name: string;
-  subwayCode: SubwayCode;
+  stationCode: StationCode;
   startName: string;
   endName: string;
 }
@@ -159,17 +159,17 @@ export interface SubPath {
   sectionTime: number;
   stationCount: number;
   lanes: Lane[];
-  subways: {
+  stations: {
     index: number;
     stationName: string;
   }[];
 }
 
 export interface SubwayStrEnd {
-  strSubwayName: string;
-  strSubwayLine: string;
-  endSubwayName: string;
-  endSubwayLine: string;
+  strStationName: string;
+  strStationLine: SubwayLine;
+  endStationName: string;
+  endStationLine: SubwayLine;
 }
 
 export interface SavedRoute extends Path {

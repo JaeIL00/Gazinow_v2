@@ -1,16 +1,18 @@
-import { SubPath } from '@/global/types/apis/searchTypes';
 import { View } from 'react-native';
 import PathBar from './PathBar';
 import PathLineNumName from './PathLineNumName';
 import { useMemo } from 'react';
+import { SubPath } from '@/global/apis/entity';
+import React from 'react';
 
 interface SubwaySimplePathProps {
   pathData: SubPath[];
+  arriveStationName: string;
 }
 
-const SubwaySimplePath = ({ pathData }: SubwaySimplePathProps) => {
+const SubwaySimplePath = ({ pathData, arriveStationName }: SubwaySimplePathProps) => {
   const freshLanesPathData = useMemo(() => {
-    return pathData.filter((item) => !!item.lanes.length && !!item.subways.length);
+    return pathData.filter((item) => !!item.lanes.length && !!item.stations.length);
   }, [pathData]);
   const maxLength = freshLanesPathData.length;
 
@@ -34,33 +36,53 @@ const SubwaySimplePath = ({ pathData }: SubwaySimplePathProps) => {
         >
           {/* 지하철 경로 라인, 환승역 3개 이하 */}
           {freshLanesPathData.map(({ lanes }, idx) => {
-            const lastItemNeverRender = maxLength - 1 !== idx;
-            if (maxLength >= 5 && idx < 2) {
-              return <PathBar subwayCode={lanes[0].subwayCode} isLast={1 === idx} />;
-            } else if (maxLength < 5 && lastItemNeverRender) {
-              return <PathBar subwayCode={lanes[0].subwayCode} isLast={maxLength - 2 === idx} />;
+            if (maxLength > 3 && idx <= 1) {
+              return (
+                <PathBar
+                  StationCode={lanes[0].stationCode}
+                  isLast={idx === 1}
+                  isFirst={idx === 0}
+                />
+              );
+            }
+            if (maxLength <= 3) {
+              return (
+                <PathBar
+                  StationCode={lanes[0].stationCode}
+                  isLast={maxLength - 1 === idx}
+                  isFirst={idx === 0}
+                />
+              );
             }
             return <></>;
           })}
         </View>
         {/* 지하철 호선 및 이름, 환승역 3개 이하 */}
-        {freshLanesPathData.map(({ subways, lanes }, idx) => {
-          if (maxLength >= 5 && idx < 3) {
-            return <PathLineNumName lane={lanes[0]} stationName={subways[0].stationName} />;
-          } else if (maxLength < 5) {
-            return <PathLineNumName lane={lanes[0]} stationName={subways[0].stationName} />;
+        {freshLanesPathData.map(({ stations, lanes }, idx) => {
+          if (maxLength > 3 && idx <= 2) {
+            return <PathLineNumName lane={lanes[0]} stationName={stations[0].stationName} />;
+          }
+          if (maxLength <= 3) {
+            return (
+              <>
+                <PathLineNumName lane={lanes[0]} stationName={stations[0].stationName} />
+                {maxLength - 1 === idx && (
+                  <PathLineNumName lane={lanes[0]} stationName={arriveStationName} />
+                )}
+              </>
+            );
           }
           return <></>;
         })}
       </View>
 
       {/* 환승역이 3개 이상일 때 렌더링 */}
-      {maxLength >= 5 && (
+      {maxLength > 3 && (
         <View
           style={{
-            marginRight: maxLength === 5 ? 0 : 18,
+            marginRight: maxLength === 3 ? 0 : 18,
             position: 'relative',
-            width: maxLength === 5 ? '50%' : '100%',
+            width: maxLength === 3 ? '50%' : '100%',
           }}
         >
           {/* 지하철 경로 라인 */}
@@ -73,8 +95,12 @@ const SubwaySimplePath = ({ pathData }: SubwaySimplePathProps) => {
           >
             {freshLanesPathData.map(({ lanes }, idx) => (
               <>
-                {idx >= 3 && maxLength - 1 !== idx && (
-                  <PathBar subwayCode={lanes[0].subwayCode} isFirst={3 === idx} isLast={false} />
+                {idx >= 2 && (
+                  <PathBar
+                    StationCode={lanes[0].stationCode}
+                    isFirst={idx === 2}
+                    isLast={maxLength === 3 ? false : maxLength - 1 === idx}
+                  />
                 )}
               </>
             ))}
@@ -85,16 +111,20 @@ const SubwaySimplePath = ({ pathData }: SubwaySimplePathProps) => {
             style={{
               flexDirection: 'row',
               justifyContent: 'space-between',
-              marginRight: -21, // 이름 아이템 백그라운드 width값의 절반
             }}
           >
-            {freshLanesPathData.map(({ subways, lanes }, idx) => (
-              <>
-                {idx >= 3 && (
-                  <PathLineNumName lane={lanes[0]} stationName={subways[0].stationName} />
-                )}
-              </>
-            ))}
+            {freshLanesPathData.map(({ stations, lanes }, idx) => {
+              if (idx >= 2) {
+                return (
+                  <>
+                    <PathLineNumName lane={lanes[0]} stationName={stations[0].stationName} />
+                    {maxLength - 1 === idx && (
+                      <PathLineNumName lane={lanes[0]} stationName={arriveStationName} />
+                    )}
+                  </>
+                );
+              }
+            })}
           </View>
         </View>
       )}

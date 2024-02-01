@@ -11,7 +11,11 @@ interface NormalTextProps extends TextProps, TextStyleProps {
 const FontText = (props: NormalTextProps) => {
   const { value } = props;
 
-  return <Normal {...props}>{value}</Normal>;
+  return (
+    <Normal {...props} allowFontScaling={false}>
+      {value}
+    </Normal>
+  );
 };
 
 export default FontText;
