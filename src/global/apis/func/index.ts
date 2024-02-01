@@ -8,6 +8,7 @@ import {
   SearchPathsTypes,
   SearchStationNameTypes,
   SubwayLine,
+  SubwayStrEnd,
 } from '../entity';
 import { LoginFetchResponse, LogoutFetchData } from '@/screens/loginScreen/apis/entity';
 import { API_BASE_URL } from '@env';
@@ -96,12 +97,7 @@ export const searchAddHistoryFetch = async (data: {
 /**
  * 지하철 경로 검색 조회 axios
  */
-export const searchPathsFetch = async (params: {
-  strSubwayName: string;
-  strSubwayLine: string;
-  endSubwayName: string;
-  endSubwayLine: string;
-}) => {
+export const searchPathsFetch = async (params: SubwayStrEnd) => {
   try {
     const res = await axiosInstance.get<{ data: SearchPathsTypes }>('/api/v1/find_road', {
       params,

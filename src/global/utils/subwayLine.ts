@@ -2,7 +2,7 @@ import { COLOR } from '@/global/constants';
 import {
   SearchHistoryStationNameTypes,
   SearchStationNameTypes,
-  SubwayCode,
+  StationCode,
   SubwayLine,
 } from '../apis/entity';
 
@@ -34,8 +34,8 @@ export const subwayFreshLineName = (list: SearchStationNameTypes['data']) => {
   });
 };
 
-export const subwayLineColor = (subwayCode: SubwayCode) => {
-  switch (subwayCode) {
+export const subwayLineColor = (StationCode: StationCode) => {
+  switch (StationCode) {
     case 1:
       return COLOR.LINE1;
     case 2:
@@ -54,6 +54,10 @@ export const subwayLineColor = (subwayCode: SubwayCode) => {
       return COLOR.LINE8;
     case 9:
       return COLOR.LINE9;
+    case 21:
+      return COLOR.LINEIO;
+    case 22:
+      return COLOR.LINEIT;
     case 101:
       return COLOR.LINEGH;
     case 104:
@@ -76,15 +80,15 @@ export const subwayLineColor = (subwayCode: SubwayCode) => {
       return COLOR.LINEGG;
     case 116:
       return COLOR.LINESBD;
-    case 117: // 신림선
-      return COLOR.LINESBD;
+    case 117:
+      return COLOR.LINESL;
     default:
       return '#222';
   }
 };
 
-export const subwayLineName = (subwayCode: SubwayCode) => {
-  switch (subwayCode) {
+export const subwayLineName = (StationCode: StationCode) => {
+  switch (StationCode) {
     case 1:
       return '1';
     case 2:
@@ -103,6 +107,10 @@ export const subwayLineName = (subwayCode: SubwayCode) => {
       return '8';
     case 9:
       return '9';
+    case 21:
+      return '인천1';
+    case 22:
+      return '인천2';
     case 101:
       return `공항\n철도`;
     case 104:
@@ -202,6 +210,10 @@ export const subwayNameCutting = (name: string) => {
       return '지식정보\n단지';
     case '국제업무지구':
       return '국제\n업무지구';
+    case '서울대벤처타운':
+      return '서울대\n벤처타운';
+    case '송도달빛축제공원':
+      return '송도달빛\n축제공원';
     default:
       return name;
   }

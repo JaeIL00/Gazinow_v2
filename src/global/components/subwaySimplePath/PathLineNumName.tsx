@@ -1,8 +1,8 @@
 import { FontText } from '@/global/ui';
 import { COLOR } from '@/global/constants';
-import { Lane } from '@/global/types/apis/searchTypes';
 import { subwayLineColor, subwayLineName, subwayNameCutting } from '@/global/utils';
 import { View } from 'react-native';
+import { Lane } from '@/global/apis/entity';
 
 interface PathLineNumNameProps {
   lane: Lane;
@@ -18,7 +18,7 @@ const PathLineNumName = ({ lane, stationName }: PathLineNumNameProps) => {
           width: 18,
           height: 18,
           borderRadius: 9999,
-          backgroundColor: subwayLineColor(lane.subwayCode),
+          backgroundColor: subwayLineColor(lane.stationCode),
           paddingBottom: 0.5,
           marginBottom: 6,
           justifyContent: 'center',
@@ -26,18 +26,19 @@ const PathLineNumName = ({ lane, stationName }: PathLineNumNameProps) => {
         }}
       >
         <FontText
-          value={subwayLineName(lane.subwayCode)}
-          textSize={lane.subwayCode <= 9 ? '13px' : '6px'}
-          textWeight={lane.subwayCode <= 9 ? 'SemiBold' : 'Bold'}
+          value={subwayLineName(lane.stationCode)}
+          textSize={lane.stationCode <= 9 ? '13px' : '6px'}
+          textWeight={lane.stationCode <= 9 ? 'SemiBold' : 'Bold'}
           textColor={COLOR.WHITE}
         />
+        {lane.stationCode <= 9 && <View style={{ height: 2 }} />}
       </View>
       <View>
         <FontText
           value={subwayNameCutting(stationName.replace('역', ''))}
           textSize="12px"
           textWeight="Medium"
-          textColor={subwayLineColor(lane.subwayCode)}
+          textColor={subwayLineColor(lane.stationCode)}
           textAlign="center"
         />
       </View>

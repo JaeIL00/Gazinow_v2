@@ -33,7 +33,7 @@ const SearchPathDetailItem = ({ data, isLastLane }: SearchPathDetailItemProps) =
             style={css`
               width: 24px;
               height: 24px;
-              background-color: ${subwayLineColor(data.lanes[0].subwayCode)};
+              background-color: ${subwayLineColor(data.lanes[0].StationCode)};
               border-radius: 24px;
             `}
           />
@@ -44,7 +44,7 @@ const SearchPathDetailItem = ({ data, isLastLane }: SearchPathDetailItemProps) =
               margin-left: 9px;
               margin-top: -10px;
               margin-bottom: -30px;
-              background-color: ${subwayLineColor(data.lanes[0].subwayCode)};
+              background-color: ${subwayLineColor(data.lanes[0].StationCode)};
             `}
           />
         </View>
@@ -59,7 +59,7 @@ const SearchPathDetailItem = ({ data, isLastLane }: SearchPathDetailItemProps) =
             textSize="14px"
             textWeight="SemiBold"
             lineHeight="21px"
-            textColor={subwayLineColor(data.lanes[0].subwayCode)}
+            textColor={subwayLineColor(data.lanes[0].StationCode)}
           />
           <View
             style={css`
@@ -138,7 +138,7 @@ const SearchPathDetailItem = ({ data, isLastLane }: SearchPathDetailItemProps) =
                       marginRight: 20,
                       borderWidth: 2,
                       backgroundColor: '#fff',
-                      borderColor: subwayLineColor(data.lanes[0].subwayCode),
+                      borderColor: subwayLineColor(data.lanes[0].StationCode),
                       borderRadius: 12,
                     }}
                   />
@@ -167,7 +167,7 @@ const SearchPathDetailItem = ({ data, isLastLane }: SearchPathDetailItemProps) =
           style={css`
             width: 24px;
             height: 24px;
-            background-color: ${subwayLineColor(data.lanes[0].subwayCode)};
+            background-color: ${subwayLineColor(data.lanes[0].StationCode)};
             border-radius: 24px;
           `}
         />
@@ -182,7 +182,7 @@ const SearchPathDetailItem = ({ data, isLastLane }: SearchPathDetailItemProps) =
             textSize="14px"
             textWeight="SemiBold"
             lineHeight="21px"
-            textColor={subwayLineColor(data.lanes[0].subwayCode)}
+            textColor={subwayLineColor(data.lanes[0].StationCode)}
           />
           <FontText
             value={'내리는 문: '} // 백엔드: 내리는문 좌우

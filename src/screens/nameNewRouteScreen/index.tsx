@@ -39,7 +39,7 @@ const NameNewRouteScreen = () => {
         lanes: [
           {
             name: 'string',
-            subwayCode: 0,
+            StationCode: 0,
             startName: 'string',
             endName: pathId,
           },

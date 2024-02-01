@@ -14,7 +14,7 @@ const COLOR = {
   LINE7: '#919642' as const,
   LINE8: '#DA3182' as const,
   LINE9: '#A49E88' as const,
-  LINEEGB: '#EF9848' as const, // 의정부
+  LINEEGB: '#D99124' as const, // 의정부
   LINEEL: '#70B15A' as const, // 에버라인
   LINEGG: '#947325' as const, // 김포골드
   LINEGH: '#0471AE' as const, // 공항철도
@@ -25,6 +25,9 @@ const COLOR = {
   LINESBD: '#EFAE27' as const, // 수인분당
   LINESH: '#70B22C' as const, // 서해선
   LINEUS: '#B9CB03' as const, // 우이신설
+  LINESL: '#547FB7' as const, // 신림
+  LINEIO: '#94B9EA' as const, // 인천1
+  LINEIT: '#FB9A41' as const, // 인천2
 };
 
 export default COLOR;
