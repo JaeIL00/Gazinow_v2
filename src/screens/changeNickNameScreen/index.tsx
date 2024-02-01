@@ -31,10 +31,10 @@ const ChangeNickNameScreen = () => {
   };
 
   const { mutate } = useChangeNicknameQuery({
-    onSuccess: async () => {
+    onSuccess: () => {
       navigation.goBack();
     },
-    onError: async (error: any) => {
+    onError: (error: any) => {
       setIsNicknameValid(false);
       setErrorMessage(getErrorMessage(error.response?.status));
       console.error(error);

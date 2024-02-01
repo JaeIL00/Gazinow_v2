@@ -22,7 +22,7 @@ const RenderSavedRoutes = () => {
       await queryClient.invalidateQueries();
     },
   });
-  
+
   const { data: savedRoutesData } = useGetSavedRoutesQuery();
 
   const renderSavedRoutes = () =>
@@ -61,7 +61,7 @@ const RenderSavedRoutes = () => {
 
   const hideModal = () => setPopupVisible(false);
 
-  const handleConfirm = async () => {
+  const handleConfirm = () => {
     deleteMutate({ id: routeToDelete });
     hideModal();
   };

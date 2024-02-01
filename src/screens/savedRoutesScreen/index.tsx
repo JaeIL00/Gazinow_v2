@@ -11,30 +11,28 @@ const SavedRoutesScreen = () => {
   return (
     <ScrollView>
       <Container>
-        <ScrollView>
-          <View style={styles.container}>
-            <RenderSavedRoutes />
-            <AddContainer
-              onPress={() =>
-                rootNavigation.navigate(EDIT_ROUTE_NAVIGATION, { screen: ADD_NEW_ROUTE })
-              }
-            >
-              <IconButton
-                isFontIcon={false}
-                imagePath="addRoute"
-                iconWidth="21px"
-                iconHeight="21px"
-              />
-              <FontText
-                value="  경로 추가하기"
-                textSize="14px"
-                textWeight="Medium"
-                lineHeight="21px"
-                textColor={COLOR.GRAY_999}
-              />
-            </AddContainer>
-          </View>
-        </ScrollView>
+        <View style={styles.container}>
+          <RenderSavedRoutes />
+          <AddContainer
+            onPress={() =>
+              rootNavigation.navigate(EDIT_ROUTE_NAVIGATION, { screen: ADD_NEW_ROUTE })
+            }
+          >
+            <IconButton
+              isFontIcon={false}
+              imagePath="addRoute"
+              iconWidth="21px"
+              iconHeight="21px"
+            />
+            <FontText
+              value="  경로 추가하기"
+              textSize="14px"
+              textWeight="Medium"
+              lineHeight="21px"
+              textColor={COLOR.GRAY_999}
+            />
+          </AddContainer>
+        </View>
       </Container>
     </ScrollView>
   );
