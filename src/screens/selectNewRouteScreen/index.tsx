@@ -1,5 +1,5 @@
 import styled, { css } from '@emotion/native';
-import { Pressable, View } from 'react-native';
+import { Pressable, ScrollView, View } from 'react-native';
 import { FontText, Space } from '@/global/ui';
 import { COLOR } from '@/global/constants';
 import {
@@ -9,18 +9,29 @@ import {
 } from '@/global/constants/navigation';
 import React, { useState } from 'react';
 import { useRootNavigation } from '@/navigation/RootNavigation';
-import { SwapSubwayStation } from '@/global/components';
-import SubwayRoute from './components/SubwayRoute';
-
-const dummy = [
-  { time: '45분', departureName: '신용산역', departureLine: '4', arrivalLine: '2' },
-  { time: '45분', departureName: '신용산역', departureLine: '4', arrivalLine: '2' },
-];
+import { SubwaySimplePath, SwapSubwayStation } from '@/global/components';
+import { StationDataTypes } from '@/store/modules';
+import { useGetSearchPaths } from '@/global/apis/hook';
+import { useRoute } from '@react-navigation/native';
 
 const SelectNewRouteScreen = () => {
   const navigation = useRootNavigation();
   const [selectedRouteIndex, setSelectedRouteIndex] = useState<number | null>(null);
   console.log('selectedRouteIndex: ', selectedRouteIndex);
+
+  const { params } = useRoute() as {
+    params: {
+      departure: StationDataTypes;
+      arrival: StationDataTypes;
+    };
+  };
+
+  const { data } = useGetSearchPaths({
+    strStationName: params.departure.stationName,
+    strStationLine: params.departure.stationLine,
+    endStationName: params.arrival.stationName,
+    endStationLine: params.arrival.stationLine,
+  });
 
   return (
     <Container>
@@ -29,11 +40,11 @@ const SelectNewRouteScreen = () => {
           <SwapSubwayStation isWrap={false} showHeader={true} />
         </Container>
       </SwapSubwayBox>
-      <Container>
-        <View>
-          {dummy.map((item, index) => (
+      <SubPathContainer>
+        <ScrollView>
+          {data?.paths.map((item) => (
             <PathInner
-              key={index}
+              key={item.firstStartStation + item.totalTime}
               onPress={() => {
                 navigation.navigate(EDIT_ROUTE_NAVIGATION, {
                   screen: SUBWAY_PATH_DETAIL,
@@ -41,41 +52,36 @@ const SelectNewRouteScreen = () => {
                 });
               }}
             >
-              <View>
-                <PathTitleInfoBox>
-                  <View>
-                    <FontText
-                      value="평균 소요시간"
-                      textSize="11px"
-                      textWeight="SemiBold"
-                      lineHeight="13px"
-                      textColor="#999"
-                    />
-                    <Space height="4px" />
-                    <FontText
-                      value={item.time}
-                      textSize="20px"
-                      textWeight="SemiBold"
-                      lineHeight="25px"
-                      textColor={COLOR.BASIC_BLACK}
-                    />
-                  </View>
-                  <RadioButtonContainer
-                    selected={selectedRouteIndex === index}
-                    onPress={() => setSelectedRouteIndex(index)}
-                  >
-                    {selectedRouteIndex === index && <InnerCircle />}
-                  </RadioButtonContainer>
-                </PathTitleInfoBox>
-                <SubwayRouteContainer>
-                  <SubwayRoute />
-                </SubwayRouteContainer>
-              </View>
-              {/* 경로 그래프 */}
+              <PathTitleInfoBox>
+                <View>
+                  <FontText
+                    value="평균 소요시간"
+                    textSize="11px"
+                    textWeight="SemiBold"
+                    lineHeight="13px"
+                    textColor="#999"
+                  />
+                  <Space height="4px" />
+                  <FontText
+                    value={`${item.totalTime}분`}
+                    textSize="20px"
+                    textWeight="SemiBold"
+                    lineHeight="25px"
+                    textColor={COLOR.BASIC_BLACK}
+                  />
+                </View>
+                <RadioButtonContainer
+                  selected={selectedRouteIndex === item.totalTime}
+                  onPress={() => setSelectedRouteIndex(item.totalTime)}
+                >
+                  {selectedRouteIndex === item.totalTime && <InnerCircle />}
+                </RadioButtonContainer>
+              </PathTitleInfoBox>
+              <SubwaySimplePath pathData={item.subPaths} />
             </PathInner>
           ))}
-        </View>
-      </Container>
+        </ScrollView>
+      </SubPathContainer>
 
       <BottomBtn
         onPress={() => {
@@ -100,13 +106,12 @@ const SelectNewRouteScreen = () => {
 
 export default SelectNewRouteScreen;
 
-const SubwayRouteContainer = styled.View`
-  margin-top: 40px;
-  flex-direction: row;
-  justify-content: space-between;
-`;
 const Container = styled.View`
   background-color: ${COLOR.WHITE};
+  flex: 1;
+`;
+const SubPathContainer = styled.View`
+  padding-bottom: 30px;
   flex: 1;
 `;
 const SwapSubwayBox = styled.View`
