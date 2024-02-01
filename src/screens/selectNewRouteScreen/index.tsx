@@ -13,11 +13,11 @@ import { SubwaySimplePath, SwapSubwayStation } from '@/global/components';
 import { StationDataTypes } from '@/store/modules';
 import { useGetSearchPaths } from '@/global/apis/hook';
 import { useRoute } from '@react-navigation/native';
+import { Path } from '@/global/apis/entity';
 
 const SelectNewRouteScreen = () => {
   const navigation = useRootNavigation();
-  const [selectedRouteIndex, setSelectedRouteIndex] = useState<number | null>(null);
-  console.log('selectedRouteIndex: ', selectedRouteIndex);
+  const [selectedRoutePath, setSelectedRoutePath] = useState<Path | null>(null);
 
   const { params } = useRoute() as {
     params: {
@@ -46,9 +46,9 @@ const SelectNewRouteScreen = () => {
             <PathInner
               key={item.firstStartStation + item.totalTime}
               onPress={() => {
-                navigation.navigate(EDIT_ROUTE_NAVIGATION, {
+                navigation.push(EDIT_ROUTE_NAVIGATION, {
                   screen: SUBWAY_PATH_DETAIL,
-                  params: { pathId: selectedRouteIndex },
+                  params: item,
                 });
               }}
             >
@@ -71,13 +71,13 @@ const SelectNewRouteScreen = () => {
                   />
                 </View>
                 <RadioButtonContainer
-                  selected={selectedRouteIndex === item.totalTime}
-                  onPress={() => setSelectedRouteIndex(item.totalTime)}
+                  selected={selectedRoutePath === item}
+                  onPress={() => setSelectedRoutePath(item)}
                 >
-                  {selectedRouteIndex === item.totalTime && <InnerCircle />}
+                  {selectedRoutePath === item && <InnerCircle />}
                 </RadioButtonContainer>
               </PathTitleInfoBox>
-              <SubwaySimplePath pathData={item.subPaths} />
+              <SubwaySimplePath pathData={item.subPaths} arriveStationName={item.lastEndStation} />
             </PathInner>
           ))}
         </ScrollView>
@@ -87,10 +87,10 @@ const SelectNewRouteScreen = () => {
         onPress={() => {
           navigation.navigate(EDIT_ROUTE_NAVIGATION, {
             screen: NAME_NEW_ROUTE,
-            params: { pathId: selectedRouteIndex },
+            params: selectedRoutePath,
           });
         }}
-        disabled={selectedRouteIndex === null}
+        disabled={selectedRoutePath === null}
       >
         <FontText
           value="다음"
