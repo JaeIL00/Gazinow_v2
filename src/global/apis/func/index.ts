@@ -1,8 +1,6 @@
-import { subwayFreshLineName } from '@/global/utils';
 import axios, { AxiosError } from 'axios';
 import { axiosInstance } from '../axiosInstance';
 import {
-  AddRouteTypes,
   SavedRoute,
   SearchHistoryStationNameTypes,
   SearchPathsTypes,
@@ -10,7 +8,7 @@ import {
   SubwayLine,
   SubwayStrEnd,
 } from '../entity';
-import { LoginFetchResponse, LogoutFetchData } from '@/screens/loginScreen/apis/entity';
+import { LoginFetchResponse } from '@/screens/loginScreen/apis/entity';
 import { API_BASE_URL } from '@env';
 
 /**
@@ -105,7 +103,7 @@ export const searchPathsFetch = async (params: SubwayStrEnd) => {
     return res.data.data;
   } catch (err) {
     const er = err as AxiosError;
-    throw er;
+        throw er;
   }
 };
 

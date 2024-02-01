@@ -1,6 +1,5 @@
 import { COLOR } from '@/global/constants';
 import {
-  SearchHistoryStationNameTypes,
   SearchStationNameTypes,
   StationCode,
   SubwayLine,

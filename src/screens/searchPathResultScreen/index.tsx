@@ -29,7 +29,7 @@ const SearchPathResultScreen = () => {
     endStationName: params.arrival.stationName,
     endStationLine: params.arrival.stationLine,
   });
-
+  
   return (
     <Container>
       <SwapSubwayBox>
