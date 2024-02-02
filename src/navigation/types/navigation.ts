@@ -16,10 +16,7 @@ export type EditRouteStackParamList = {
   SavedRoutes: undefined;
   AddNewRoute: undefined;
   SubwaySearch: { isBackBtn: boolean };
-  SubwayPathResult: {
-    departure: { stationName: string; stationLine: SubwayLine };
-    arrival: { stationName: string; stationLine: SubwayLine };
-  };
+  SubwayPathResult: undefined;
   SubwayPathDetail: undefined;
   NameNewRoute: {
     screen: string;
@@ -29,10 +26,7 @@ export type EditRouteStackParamList = {
 
 export type SearchStackParamList = {
   SubwaySearch: { isBackBtn: boolean };
-  SubwayPathResult: {
-    departure: { stationName: string; stationLine: SubwayLine };
-    arrival: { stationName: string; stationLine: SubwayLine };
-  };
+  SubwayPathResult: undefined;
   SubwayPathDetail: { state?: SubPath[]; pathId?: number | null };
 };
 

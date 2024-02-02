@@ -86,7 +86,6 @@ export const searchAddHistoryFetch = async (data: {
       '/api/v1/recentSearch/add',
       data,
     );
-    console.log(res.data);
     return res.data.data;
   } catch (err) {
     const er = err as AxiosError;

@@ -3,7 +3,7 @@ import Icon from 'react-native-vector-icons/Feather';
 
 import { iconPath } from '@/assets/icons/iconPath';
 import { FontText } from '@/global/ui';
-import { COLOR } from '@/global/constants';
+import { COLOR, SUBWAY_PATH_RESULT } from '@/global/constants';
 import { useRootNavigation } from '@/navigation/RootNavigation';
 import { useSearchNavigation } from '@/navigation/SearchNavigation';
 import { useAppDispatch, useAppSelect } from '@/store';
@@ -11,6 +11,7 @@ import { getSeletedStation } from '@/store/modules';
 import { getSearchText } from '@/store/modules/subwaySearchModule';
 import { useAddRecentSearch, useSearchStationName } from '@/global/apis/hook';
 import { SearchHistoryStationNameTypes, SubwayLine } from '@/global/apis/entity';
+import { useMemo } from 'react';
 
 interface SearchResultListProps {
   historyList: SearchHistoryStationNameTypes[];
@@ -37,6 +38,25 @@ const SearchResultList = ({ historyList }: SearchResultListProps) => {
   const saveStationData = (data: { stationName: string; stationLine: SubwayLine }) => {
     dispatch(getSearchText(''));
     if (stationType === '출발역') {
+      if (selectedStation.arrival.stationName === data.stationName) {
+        dispatch(
+          getSeletedStation({
+            actionType: 'arrival',
+            stationData: {
+              stationLine: null,
+              stationName: '',
+            },
+          }),
+        );
+        dispatch(
+          getSeletedStation({
+            actionType: 'departure',
+            stationData: data,
+          }),
+        );
+        rootNavigation.pop();
+        return;
+      }
       dispatch(
         getSeletedStation({
           actionType: 'departure',
@@ -44,12 +64,28 @@ const SearchResultList = ({ historyList }: SearchResultListProps) => {
         }),
       );
       selectedStation.arrival.stationName
-        ? searchNavigation.navigate('SubwayPathResult', {
-            departure: data,
-            arrival: selectedStation.arrival,
-          })
+        ? searchNavigation.replace(SUBWAY_PATH_RESULT)
         : rootNavigation.pop();
     } else if (stationType === '도착역') {
+      if (selectedStation.departure.stationName === data.stationName) {
+        dispatch(
+          getSeletedStation({
+            actionType: 'departure',
+            stationData: {
+              stationLine: null,
+              stationName: '',
+            },
+          }),
+        );
+        dispatch(
+          getSeletedStation({
+            actionType: 'arrival',
+            stationData: data,
+          }),
+        );
+        rootNavigation.pop();
+        return;
+      }
       dispatch(
         getSeletedStation({
           actionType: 'arrival',
@@ -57,10 +93,7 @@ const SearchResultList = ({ historyList }: SearchResultListProps) => {
         }),
       );
       selectedStation.departure.stationName
-        ? searchNavigation.navigate('SubwayPathResult', {
-            departure: selectedStation.departure,
-            arrival: data,
-          })
+        ? searchNavigation.replace(SUBWAY_PATH_RESULT)
         : rootNavigation.pop();
     }
   };

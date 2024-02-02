@@ -72,7 +72,6 @@ const SavedRouteIssues = () => {
 const styles = StyleSheet.create({
   container: {
     marginTop: 20,
-    marginBottom: 215,
     padding: 16,
     backgroundColor: 'white',
     borderRadius: 15,

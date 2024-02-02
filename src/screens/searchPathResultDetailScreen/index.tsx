@@ -25,8 +25,13 @@ const SearchPathResultDetailScreen = () => {
 
   const freshSubPathData: SubPath[] = useMemo(() => {
     const { subPaths } = route.params as Path;
+    if (!subPaths) return [];
     return Object.values(subPaths).filter((item) => !!item.lanes.length && !!item.stations.length);
   }, [route]);
+
+  const transferCount = useMemo(() => {
+    return freshSubPathData.length <= 1 ? freshSubPathData.length : freshSubPathData.length - 1;
+  }, [freshSubPathData]);
 
   const bookmarkHandler = () => {
     if (isBookmarking) {
@@ -81,6 +86,7 @@ const SearchPathResultDetailScreen = () => {
           flex-direction: row;
           align-items: center;
           justify-content: space-between;
+          padding-left: 10px;
         `}
       >
         <View>
@@ -110,7 +116,7 @@ const SearchPathResultDetailScreen = () => {
                 `}
               />
               <FontText
-                value="환승 1회"
+                value={'환승 ' + transferCount + '회'}
                 textSize="14px"
                 textWeight="Regular"
                 lineHeight="21px"
@@ -122,8 +128,8 @@ const SearchPathResultDetailScreen = () => {
       </View>
       <View
         style={css`
-          margin-bottom: 20px;
-          margin-top: 22px;
+          margin-bottom: 21px;
+          margin-top: 16px;
           height: 1px;
           background-color: #ebebeb;
         `}
