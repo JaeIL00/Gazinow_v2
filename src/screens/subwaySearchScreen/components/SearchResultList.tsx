@@ -64,7 +64,7 @@ const SearchResultList = ({ historyList }: SearchResultListProps) => {
         }),
       );
       selectedStation.arrival.stationName
-        ? searchNavigation.navigate(SUBWAY_PATH_RESULT)
+        ? searchNavigation.replace(SUBWAY_PATH_RESULT)
         : rootNavigation.pop();
     } else if (stationType === '도착역') {
       if (selectedStation.departure.stationName === data.stationName) {
@@ -93,7 +93,7 @@ const SearchResultList = ({ historyList }: SearchResultListProps) => {
         }),
       );
       selectedStation.departure.stationName
-        ? searchNavigation.navigate(SUBWAY_PATH_RESULT)
+        ? searchNavigation.replace(SUBWAY_PATH_RESULT)
         : rootNavigation.pop();
     }
   };

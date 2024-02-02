@@ -32,11 +32,6 @@ const SearchPathResultScreen = () => {
     dispatch(changeIsSearchedPath(true));
   }, []);
 
-  BackHandler.addEventListener('hardwareBackPress', () => {
-    rootNavigation.replace(MAIN_BOTTOM_TAB, { screen: 'Home' });
-    return true;
-  });
-
   return (
     <Container>
       <SwapSubwayBox>
