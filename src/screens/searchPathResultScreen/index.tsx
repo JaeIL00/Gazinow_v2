@@ -1,5 +1,5 @@
 import styled from '@emotion/native';
-import { TouchableOpacity, View } from 'react-native';
+import { ScrollView, TouchableOpacity, View } from 'react-native';
 
 import { FontText, IconButton, Space } from '@/global/ui';
 import { COLOR } from '@/global/constants';
@@ -66,7 +66,7 @@ const SearchPathResultScreen = () => {
         />
       </View>
 
-      <View style={{ backgroundColor: COLOR.WHITE }}>
+      <ScrollView style={{ backgroundColor: COLOR.WHITE }}>
         {data?.paths.map((item, idx) => (
           <View
             key={item.firstStartStation + item.totalTime}
@@ -128,7 +128,7 @@ const SearchPathResultScreen = () => {
             <SubwaySimplePath pathData={item.subPaths} arriveStationName={item.lastEndStation} />
           </View>
         ))}
-      </View>
+      </ScrollView>
     </Container>
   );
 };
