@@ -29,7 +29,7 @@ const HomeScreen = () => {
 
 export default HomeScreen;
 
-const Container = styled.View`
+const Container = styled.ScrollView`
   padding: 0 16px;
   // background-color: white;
   flex: 1;
