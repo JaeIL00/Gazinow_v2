@@ -1,8 +1,8 @@
 import styled from '@emotion/native';
-import { ScrollView, TouchableOpacity, View } from 'react-native';
+import { BackHandler, ScrollView, TouchableOpacity, View } from 'react-native';
 
 import { FontText, IconButton, Space } from '@/global/ui';
-import { COLOR } from '@/global/constants';
+import { COLOR, MAIN_BOTTOM_TAB } from '@/global/constants';
 import { iconPath } from '@/assets/icons/iconPath';
 import { useRootNavigation } from '@/navigation/RootNavigation';
 import dayjs from 'dayjs';
@@ -31,6 +31,11 @@ const SearchPathResultScreen = () => {
   useEffect(() => {
     dispatch(changeIsSearchedPath(true));
   }, []);
+
+  BackHandler.addEventListener('hardwareBackPress', () => {
+    rootNavigation.replace(MAIN_BOTTOM_TAB, { screen: 'Home' });
+    return true;
+  });
 
   return (
     <Container>
