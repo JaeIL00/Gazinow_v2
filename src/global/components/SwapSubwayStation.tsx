@@ -13,7 +13,7 @@ import {
 } from '@/global/constants';
 import { useRootNavigation } from '@/navigation/RootNavigation';
 import { useAppDispatch, useAppSelect } from '@/store';
-import { getStationType } from '@/store/modules';
+import { getSeletedStation, getStationType } from '@/store/modules';
 import type { StationDataTypes } from '@/store/modules';
 
 interface SwapProps extends ContainerStyleProps {}
@@ -41,6 +41,24 @@ const SwapSubwayStation = ({ isWrap, showHeader }: SwapProps) => {
   };
 
   const swapStation = () => {
+    dispatch(
+      getSeletedStation({
+        actionType: 'departure',
+        stationData: {
+          stationLine: subwayStation.arrival.stationLine,
+          stationName: subwayStation.arrival.stationName,
+        },
+      }),
+    );
+    dispatch(
+      getSeletedStation({
+        actionType: 'arrival',
+        stationData: {
+          stationLine: subwayStation.departure.stationLine,
+          stationName: subwayStation.departure.stationName,
+        },
+      }),
+    );
     setSubwayStation(({ departure, arrival }) => ({
       departure: {
         ...arrival,

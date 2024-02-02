@@ -1,7 +1,6 @@
 import { css } from '@emotion/native';
 import { useState } from 'react';
 import { Image, View } from 'react-native';
-import DashedLine from 'react-native-dashed-line';
 
 import { iconPath } from '@/assets/icons/iconPath';
 import { FontText, IconButton } from '@/global/ui';
@@ -58,7 +57,7 @@ const SearchPathDetailItem = ({ data, isLastLane }: SearchPathDetailItemProps) =
           `}
         >
           <FontText
-            value={subwayNameCutting(data.stations[0].stationName.replace('역', ''))}
+            value={subwayNameCutting(data.stations[0].stationName)}
             textSize="14px"
             textWeight="SemiBold"
             lineHeight="21px"
@@ -70,7 +69,7 @@ const SearchPathDetailItem = ({ data, isLastLane }: SearchPathDetailItemProps) =
             `}
           >
             <FontText
-              value={data.way} // 백엔드: 지하철 방향
+              value={data.way + ' 방향'} // 백엔드: 지하철 방향
               textSize="11px"
               textWeight="Medium"
               lineHeight="13px"
@@ -181,7 +180,7 @@ const SearchPathDetailItem = ({ data, isLastLane }: SearchPathDetailItemProps) =
           `}
         >
           <FontText
-            value={subwayNameCutting(data.stations[lastIdx].stationName.replace('역', ''))}
+            value={data.stations[lastIdx].stationName}
             textSize="14px"
             textWeight="SemiBold"
             lineHeight="21px"

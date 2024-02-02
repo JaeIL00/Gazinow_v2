@@ -3,7 +3,7 @@ import Icon from 'react-native-vector-icons/Feather';
 
 import { iconPath } from '@/assets/icons/iconPath';
 import { FontText } from '@/global/ui';
-import { COLOR } from '@/global/constants';
+import { COLOR, SUBWAY_PATH_RESULT } from '@/global/constants';
 import { useRootNavigation } from '@/navigation/RootNavigation';
 import { useSearchNavigation } from '@/navigation/SearchNavigation';
 import { useAppDispatch, useAppSelect } from '@/store';
@@ -44,10 +44,7 @@ const SearchResultList = ({ historyList }: SearchResultListProps) => {
         }),
       );
       selectedStation.arrival.stationName
-        ? searchNavigation.navigate('SubwayPathResult', {
-            departure: data,
-            arrival: selectedStation.arrival,
-          })
+        ? searchNavigation.navigate(SUBWAY_PATH_RESULT)
         : rootNavigation.pop();
     } else if (stationType === '도착역') {
       dispatch(
@@ -57,10 +54,7 @@ const SearchResultList = ({ historyList }: SearchResultListProps) => {
         }),
       );
       selectedStation.departure.stationName
-        ? searchNavigation.navigate('SubwayPathResult', {
-            departure: selectedStation.departure,
-            arrival: data,
-          })
+        ? searchNavigation.navigate(SUBWAY_PATH_RESULT)
         : rootNavigation.pop();
     }
   };
