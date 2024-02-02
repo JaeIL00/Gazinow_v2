@@ -4,7 +4,7 @@ import { Image, View } from 'react-native';
 
 import { iconPath } from '@/assets/icons/iconPath';
 import { FontText, IconButton } from '@/global/ui';
-import { subwayLineColor, subwayNameCutting } from '@/global/utils';
+import { subwayLineColor } from '@/global/utils';
 import { SubPath } from '@/global/apis/entity';
 import { COLOR } from '@/global/constants';
 
@@ -57,7 +57,7 @@ const SearchPathDetailItem = ({ data, isLastLane }: SearchPathDetailItemProps) =
           `}
         >
           <FontText
-            value={subwayNameCutting(data.stations[0].stationName)}
+            value={data.stations[0].stationName}
             textSize="14px"
             textWeight="SemiBold"
             lineHeight="21px"
