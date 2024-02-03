@@ -80,7 +80,7 @@ const NewRouteSaveModal = ({ freshData, closeModal, onBookmark }: NewRouteSaveMo
             <View
               style={{
                 borderRadius: 5,
-                backgroundColor: COLOR.LIGHT_GRAY,
+                backgroundColor: COLOR.GRAY_F9,
                 width: '100%',
                 paddingLeft: 15,
                 paddingTop: 12.31,
@@ -105,7 +105,7 @@ const NewRouteSaveModal = ({ freshData, closeModal, onBookmark }: NewRouteSaveMo
               value={routeName.length + '/10'}
               textSize="12px"
               textWeight="Medium"
-              textColor={COLOR.BE_GRAY}
+              textColor={COLOR.GRAY_BE}
               style={{ textAlign: 'right' }}
             />
           </View>

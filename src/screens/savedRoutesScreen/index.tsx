@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
 const Container = styled.View`
   padding: 0 16px 20px;
   flex-direction: column;
-  background-color: ${COLOR.LIGHT_GRAY};
+  background-color: ${COLOR.GRAY_F9};
   flex: 1;
 `;
 const AddContainer = styled.Pressable`

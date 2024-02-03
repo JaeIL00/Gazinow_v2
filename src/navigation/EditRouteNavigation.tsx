@@ -61,7 +61,7 @@ const renderHeaderLeft = (
 ): StackNavigationOptions => ({
   title: '저장한 경로',
   headerTitleAlign: 'left',
-  headerStyle: { backgroundColor: COLOR.LIGHT_GRAY },
+  headerStyle: { backgroundColor: COLOR.GRAY_F9 },
   headerLeft: () => (
     <HeaderLeft>
       <IconButton

@@ -13,6 +13,7 @@ import { FontText } from '@/global/ui';
 import { tokenReissueFetch } from '@/global/apis/func';
 import MyNavigation from './MyNavigation';
 import SignInScreen from '@/screens/signInScreen';
+import SignUpScreen from '@/screens/signUpScreen';
 
 const Stack = createStackNavigator<RootStackParamList>();
 
@@ -22,7 +23,7 @@ const screenOption = {
 
 const RootNavigation = () => {
   return (
-    <Stack.Navigator screenOptions={screenOption}>
+    <Stack.Navigator screenOptions={screenOption} initialRouteName="SignUp">
       <Stack.Screen
         name={'Temp'}
         component={() => {
@@ -67,6 +68,7 @@ const RootNavigation = () => {
         }}
       />
       <Stack.Screen name={SIGNIN} component={SignInScreen} />
+      <Stack.Screen name="SignUp" component={SignUpScreen} />
       <Stack.Screen name={MAIN_BOTTOM_TAB} component={MainBottomTabNavigation} />
       <Stack.Screen name={EDIT_ROUTE_NAVIGATION} component={EditRouteNavigation} />
       <Stack.Screen name={MY_NAVIGATION} component={MyNavigation} />

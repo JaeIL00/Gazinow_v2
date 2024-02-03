@@ -22,7 +22,7 @@ const RenderSavedRoutes = () => {
       await queryClient.invalidateQueries();
     },
   });
-  
+
   const { data: savedRoutesData } = useGetSavedRoutesQuery();
 
   const renderSavedRoutes = () =>
@@ -97,7 +97,7 @@ const styles = StyleSheet.create({
   },
   borderLine: {
     borderWidth: 1,
-    borderColor: COLOR.LIGHT_GRAY,
+    borderColor: COLOR.GRAY_F9,
     width: 999,
     marginStart: -99,
     marginTop: 30,

@@ -128,7 +128,7 @@ const SearchResultList = ({ historyList }: SearchResultListProps) => {
                 })
               }
             >
-              <Icon name="clock" size={25} color={COLOR.BE_GRAY} />
+              <Icon name="clock" size={25} color={COLOR.GRAY_BE} />
               <StationInfoBox>
                 <FontText
                   value={stationName}

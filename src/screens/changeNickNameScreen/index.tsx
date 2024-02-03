@@ -60,7 +60,7 @@ const ChangeNickNameScreen = () => {
         <SearchInput
           value={newNickname}
           placeholder={`새 닉네임을 입력하세요`}
-          placeholderTextColor={COLOR.BE_GRAY}
+          placeholderTextColor={COLOR.GRAY_BE}
           inputMode="search"
           onChangeText={setNewNickname}
           autoFocus
