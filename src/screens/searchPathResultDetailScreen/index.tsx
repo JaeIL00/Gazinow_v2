@@ -3,16 +3,16 @@ import { useMemo, useState } from 'react';
 import { FlatList, View } from 'react-native';
 
 import { FontText, IconButton } from '@/global/ui';
-import { useRootNavigation } from '@/navigation/RootNavigation';
 import { useRoute } from '@react-navigation/native';
 import NewRouteSaveModal from './components/NewRouteSaveModal';
 import SearchPathDetailItem from './components/SearchPathDetailItem';
 import { useDeleteSavedSubwayRoute } from '@/global/apis/hook';
 import { Path, SubPath } from '@/global/apis/entity';
+import { useHomeNavigation } from '@/navigation/HomeNavigation';
 
 const SearchPathResultDetailScreen = () => {
   const route = useRoute();
-  const navigation = useRootNavigation();
+  const navigation = useHomeNavigation();
 
   const { deleteMutate } = useDeleteSavedSubwayRoute({
     onSuccess: () => {
@@ -24,7 +24,8 @@ const SearchPathResultDetailScreen = () => {
   const [isSaveRouteModalOpen, setIsSaveRouteModalOpen] = useState<boolean>(false);
 
   const freshSubPathData: SubPath[] = useMemo(() => {
-    const { subPaths } = route.params as Path;
+    const { state } = route.params as { state: Path };
+    const subPaths = state.subPaths;
     if (!subPaths) return [];
     return Object.values(subPaths).filter((item) => !!item.lanes.length && !!item.stations.length);
   }, [route]);
