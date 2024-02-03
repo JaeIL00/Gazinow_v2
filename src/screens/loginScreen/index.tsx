@@ -19,7 +19,7 @@ const LoginScreen = () => {
     onSuccess: async ({ accessToken, refreshToken }) => {
       await setEncryptedStorage('access_token', accessToken);
       await setEncryptedStorage('refresh_token', refreshToken);
-      navigation.replace('MainBottomTab', { screen: 'Home' });
+      navigation.replace('MainBottomTab', { screen: 'homeStack' });
     },
   });
 

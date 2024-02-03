@@ -43,15 +43,8 @@ const subwaySearchSlice = createSlice({
     getSearchText: (state, action: PayloadAction<InitialStateTypes['searchText']>) => {
       state.searchText = action.payload;
     },
-    getSeletedStation: (
-      state,
-      action: PayloadAction<{
-        actionType: 'departure' | 'arrival';
-        stationData: StationDataTypes;
-      }>,
-    ) => {
-      const { actionType, stationData } = action.payload;
-      state.selectedStation[actionType] = stationData;
+    getSeletedStation: (state, action: PayloadAction<InitialStateTypes['selectedStation']>) => {
+      state.selectedStation = action.payload;
     },
     changeIsSearchedPath: (state, action: PayloadAction<boolean>) => {
       state.isSearchedPath = action.payload;
