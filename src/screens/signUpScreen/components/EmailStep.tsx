@@ -4,28 +4,42 @@ import { FontText, Input, Space, TextButton } from '@/global/ui';
 import { COLOR } from '@/global/constants';
 import CheckIcon from 'react-native-vector-icons/Feather';
 import CloseIcon from 'react-native-vector-icons/Ionicons';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { useEmailConfirm } from '../apis/hooks';
+import ConfirmEmailModal from './ConfirmEmailModal';
+import BackgroundTimer from 'react-native-background-timer';
+import useBackgroundInterval from '../hooks/useBackgroundInterval';
 
 const emailValidation = new RegExp(
   /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i,
 );
 
+export interface TimerType {
+  minutes: number;
+  seconds: number;
+}
+
 interface EmailStepProps {
   emailValue: string;
-  setStep: React.Dispatch<React.SetStateAction<SignUpStepType>>;
+  setStep: () => void;
   changeEmailValue: (value: string) => void;
 }
 
 const EmailStep = ({ emailValue, setStep, changeEmailValue }: EmailStepProps) => {
-  const { data, emailConfirmMutate } = useEmailConfirm({
+  const { authNumber, emailConfirmMutate } = useEmailConfirm({
     onSuccess: () => {
       setIsSuccess(true);
+      setIsOpenConfirmModal(true);
     },
   });
 
   const [isSuccess, setIsSuccess] = useState<boolean>(false);
   const [isValidEmail, setIsValidEmail] = useState<boolean>(false);
+  const [isOpenConfirmModal, setIsOpenConfirmModal] = useState<boolean>(false);
+  const [timer, setTimer] = useState<TimerType>({
+    minutes: 5,
+    seconds: 0,
+  });
 
   const changeEmailHandler = (text: string) => {
     changeEmailValue(text);
@@ -36,8 +50,28 @@ const EmailStep = ({ emailValue, setStep, changeEmailValue }: EmailStepProps) =>
     setIsSuccess(false);
   };
 
+  const closeModal = () => setIsOpenConfirmModal(false);
+
+  const timerHandler = useCallback(() => {
+    if (timer.seconds > 0) {
+      setTimer((prev) => ({ ...prev, seconds: prev.seconds - 1 }));
+    } else if (timer.seconds === 0) {
+      setTimer((prev) => ({ minutes: prev.minutes - 1, seconds: 59 }));
+    }
+  }, [timer.seconds]);
+
+  useBackgroundInterval(timerHandler, 1000);
+
   return (
     <>
+      {isOpenConfirmModal && authNumber && (
+        <ConfirmEmailModal
+          authNumber={authNumber}
+          timerValue={timer}
+          closeModal={closeModal}
+          setStep={setStep}
+        />
+      )}
       <View style={{ flex: 1 }}>
         <View style={{ marginBottom: 51 }}>
           <FontText

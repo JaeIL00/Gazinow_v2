@@ -38,7 +38,7 @@ const SignUpScreen = () => {
 
       {step === 'email' && (
         <EmailStep
-          setStep={setStep}
+          setStep={() => setStep('password')}
           emailValue={signUpData.email}
           changeEmailValue={(value: string) => changeSignUpValue('email', value)}
         />

@@ -6,7 +6,9 @@ import { AxiosError } from 'axios';
  */
 export const emailConfirmFetch = async (email: string) => {
   try {
-    const res = await axiosInstance.post('/api/v1/member/email-confirm', { email });
+    const res = await axiosInstance.post<{ data: string }>('/api/v1/member/email-confirm', {
+      email,
+    });
     return res.data.data;
   } catch (err) {
     const er = err as AxiosError;

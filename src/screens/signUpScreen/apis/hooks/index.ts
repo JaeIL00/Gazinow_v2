@@ -9,5 +9,5 @@ export const useEmailConfirm = ({ onSuccess }: { onSuccess: () => void }) => {
     onSuccess,
   });
 
-  return { data, emailConfirmMutate: mutate };
+  return { authNumber: data, emailConfirmMutate: mutate };
 };
