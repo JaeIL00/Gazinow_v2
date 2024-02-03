@@ -3,8 +3,7 @@ import { Path, SubPath, SubwayLine } from '@/global/apis/entity';
 export type RootStackParamList = {
   Temp: undefined;
   Login: undefined;
-  MainBottomTab: { screen: 'Home' };
-  SearchNavigation: { screen: keyof SearchStackParamList; params?: Path; route?: undefined };
+  MainBottomTab: { screen: 'homeStack' };
   EditRouteNavigation: {
     screen: keyof EditRouteStackParamList;
     params?: { pathId: number | null };
@@ -24,10 +23,10 @@ export type EditRouteStackParamList = {
   };
 };
 
-export type SearchStackParamList = {
-  SubwaySearch: { isBackBtn: boolean };
+export type HomeStackParamList = {
+  Home: undefined;
   SubwayPathResult: undefined;
-  SubwayPathDetail: { state?: SubPath[]; pathId?: number | null };
+  SubwayPathDetail: { state?: Path | SubPath[]; pathId?: number | null };
 };
 
 export type MyStackParamList = {
