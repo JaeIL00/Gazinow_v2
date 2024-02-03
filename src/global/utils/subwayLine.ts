@@ -161,8 +161,6 @@ export const subwayNameCutting = (name: string) => {
       return '어린이\n대공원';
     case '신대방삼거리':
       return '신대방\n삼거리';
-    case '가산디지털단지':
-      return '가산\n디지털단지';
     case '남한산성입구':
       return '남한산성\n입구';
     case '중앙보훈병원':
