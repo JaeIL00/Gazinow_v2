@@ -42,9 +42,8 @@ const ConfirmEmailModal = ({
       visible
       onRequestClose={() => closeModal()}
       transparent
-      statusBarTranslucent
-      presentationStyle="overFullScreen"
-      style={{ position: 'relative' }}
+      // statusBarTranslucent
+      // presentationStyle="overFullScreen"
     >
       {/* 백그라운드 */}
       <View
