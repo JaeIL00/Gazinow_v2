@@ -62,8 +62,12 @@ const NewRouteSaveModal = ({ freshData, closeModal, onBookmark }: NewRouteSaveMo
             textColor={COLOR.BASIC_BLACK}
           />
 
-          <View style={{ width: '100%', marginVertical: 20 }}>
-            <SubwaySimplePath pathData={freshData.subPaths} />
+          <View style={{ width: '100%', marginVertical: 4 }}>
+            <SubwaySimplePath
+              pathData={freshData.subPaths}
+              arriveStationName={freshData.lastEndStation}
+              betweenPathMargin={16}
+            />
           </View>
 
           <View style={{ width: '100%' }}>
@@ -106,7 +110,7 @@ const NewRouteSaveModal = ({ freshData, closeModal, onBookmark }: NewRouteSaveMo
             />
           </View>
 
-          <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 31.69 }}>
+          <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 20 }}>
             <TextButton
               value="취소"
               textSize="14px"

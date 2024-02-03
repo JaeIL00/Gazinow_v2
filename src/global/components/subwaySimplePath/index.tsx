@@ -8,20 +8,25 @@ import React from 'react';
 interface SubwaySimplePathProps {
   pathData: SubPath[];
   arriveStationName: string;
+  betweenPathMargin: number;
 }
 
-const SubwaySimplePath = ({ pathData, arriveStationName }: SubwaySimplePathProps) => {
+const SubwaySimplePath = ({
+  pathData,
+  arriveStationName,
+  betweenPathMargin,
+}: SubwaySimplePathProps) => {
   const freshLanesPathData = useMemo(() => {
     return pathData.filter((item) => !!item.lanes.length && !!item.stations.length);
   }, [pathData]);
   const maxLength = freshLanesPathData.length;
 
   return (
-    <>
+    <View style={{ marginVertical: 16 }}>
       <View
         style={{
           flexDirection: 'row',
-          marginVertical: 18,
+          marginBottom: maxLength > 3 ? betweenPathMargin : null,
           justifyContent: 'space-between',
           position: 'relative',
         }}
@@ -136,7 +141,7 @@ const SubwaySimplePath = ({ pathData, arriveStationName }: SubwaySimplePathProps
           </View>
         </View>
       )}
-    </>
+    </View>
   );
 };
 

@@ -125,7 +125,11 @@ const SearchPathResultScreen = () => {
             </View>
 
             {/* 지하철 경로 UI */}
-            <SubwaySimplePath pathData={item.subPaths} arriveStationName={item.lastEndStation} />
+            <SubwaySimplePath
+              pathData={item.subPaths}
+              arriveStationName={item.lastEndStation}
+              betweenPathMargin={24}
+            />
           </View>
         ))}
       </ScrollView>
