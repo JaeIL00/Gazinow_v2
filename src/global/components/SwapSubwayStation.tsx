@@ -5,8 +5,6 @@ import { Shadow } from 'react-native-shadow-2';
 import { IconButton, TextButton } from '@/global/ui';
 import {
   COLOR,
-  SEARCH_NAVIGATION,
-  SUBWAY_SEARCH,
   ARRIVAL_STATION,
   DEPARTURE_STATION,
   EDIT_ROUTE_NAVIGATION,
@@ -35,9 +33,9 @@ const SwapSubwayStation = ({ isWrap, showHeader }: SwapProps) => {
   const navigateSubwaySearch = (type: StationTypes) => {
     dispatch(getStationType(type));
 
-    showHeader
-      ? rootNavigation.navigate(EDIT_ROUTE_NAVIGATION, { screen: SUBWAY_SEARCH })
-      : rootNavigation.navigate(SEARCH_NAVIGATION, { screen: SUBWAY_SEARCH });
+    // showHeader
+    //   ? rootNavigation.navigate(EDIT_ROUTE_NAVIGATION, { screen: SUBWAY_SEARCH })
+    //   : rootNavigation.navigate(SEARCH_NAVIGATION, { screen: SUBWAY_SEARCH });
   };
 
   const swapStation = () => {
