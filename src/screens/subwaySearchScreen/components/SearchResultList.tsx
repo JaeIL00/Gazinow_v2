@@ -3,14 +3,15 @@ import Icon from 'react-native-vector-icons/Feather';
 
 import { iconPath } from '@/assets/icons/iconPath';
 import { FontText } from '@/global/ui';
-import { COLOR } from '@/global/constants';
+import { COLOR, SUBWAY_PATH_RESULT } from '@/global/constants';
 import { useRootNavigation } from '@/navigation/RootNavigation';
-import { useSearchNavigation } from '@/navigation/SearchNavigation';
 import { useAppDispatch, useAppSelect } from '@/store';
 import { getSeletedStation } from '@/store/modules';
 import { getSearchText } from '@/store/modules/subwaySearchModule';
 import { useAddRecentSearch, useSearchStationName } from '@/global/apis/hook';
 import { SearchHistoryStationNameTypes, SubwayLine } from '@/global/apis/entity';
+import { useMemo } from 'react';
+import { useHomeNavigation } from '@/navigation/HomeNavigation';
 
 interface SearchResultListProps {
   historyList: SearchHistoryStationNameTypes[];
@@ -18,7 +19,7 @@ interface SearchResultListProps {
 
 const SearchResultList = ({ historyList }: SearchResultListProps) => {
   const rootNavigation = useRootNavigation();
-  const searchNavigation = useSearchNavigation();
+  const homeNavigation = useHomeNavigation();
   const dispatch = useAppDispatch();
   const { searchText, stationType, selectedStation } = useAppSelect(
     ({ subwaySearch }) => subwaySearch,
@@ -37,6 +38,25 @@ const SearchResultList = ({ historyList }: SearchResultListProps) => {
   const saveStationData = (data: { stationName: string; stationLine: SubwayLine }) => {
     dispatch(getSearchText(''));
     if (stationType === '출발역') {
+      if (selectedStation.arrival.stationName === data.stationName) {
+        dispatch(
+          getSeletedStation({
+            actionType: 'arrival',
+            stationData: {
+              stationLine: null,
+              stationName: '',
+            },
+          }),
+        );
+        dispatch(
+          getSeletedStation({
+            actionType: 'departure',
+            stationData: data,
+          }),
+        );
+        rootNavigation.pop();
+        return;
+      }
       dispatch(
         getSeletedStation({
           actionType: 'departure',
@@ -44,12 +64,28 @@ const SearchResultList = ({ historyList }: SearchResultListProps) => {
         }),
       );
       selectedStation.arrival.stationName
-        ? searchNavigation.navigate('SubwayPathResult', {
-            departure: data,
-            arrival: selectedStation.arrival,
-          })
+        ? homeNavigation.navigate(SUBWAY_PATH_RESULT)
         : rootNavigation.pop();
     } else if (stationType === '도착역') {
+      if (selectedStation.departure.stationName === data.stationName) {
+        dispatch(
+          getSeletedStation({
+            actionType: 'departure',
+            stationData: {
+              stationLine: null,
+              stationName: '',
+            },
+          }),
+        );
+        dispatch(
+          getSeletedStation({
+            actionType: 'arrival',
+            stationData: data,
+          }),
+        );
+        rootNavigation.pop();
+        return;
+      }
       dispatch(
         getSeletedStation({
           actionType: 'arrival',
@@ -57,10 +93,7 @@ const SearchResultList = ({ historyList }: SearchResultListProps) => {
         }),
       );
       selectedStation.departure.stationName
-        ? searchNavigation.navigate('SubwayPathResult', {
-            departure: selectedStation.departure,
-            arrival: data,
-          })
+        ? homeNavigation.navigate(SUBWAY_PATH_RESULT)
         : rootNavigation.pop();
     }
   };
@@ -73,7 +106,7 @@ const SearchResultList = ({ historyList }: SearchResultListProps) => {
   // 입력어가 없으면 최근검색
   if (!searchText) {
     return (
-      <Container>
+      <ResultContainer>
         <Header>
           <FontText
             value="최근검색"
@@ -115,12 +148,12 @@ const SearchResultList = ({ historyList }: SearchResultListProps) => {
             </Li>
           ))}
         </Ul>
-      </Container>
+      </ResultContainer>
     );
   }
 
   return (
-    <Container>
+    <ResultContainer>
       {/* 입력어가 있고 && 검색 결과가 있으면 결과 표시 */}
       {/* 입력어가 있고 && 검색 결과가 없으면 없음 표시 */}
       <Ul marginTop="28px">
@@ -146,13 +179,13 @@ const SearchResultList = ({ historyList }: SearchResultListProps) => {
           </Li>
         ))}
       </Ul>
-    </Container>
+    </ResultContainer>
   );
 };
 
 export default SearchResultList;
 
-const Container = styled.View`
+const ResultContainer = styled.View`
   flex: 1;
 `;
 const Header = styled.View`

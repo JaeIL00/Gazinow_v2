@@ -1,35 +1,37 @@
 import styled from '@emotion/native';
-import { useRoute } from '@react-navigation/native';
 import { ScrollView, TouchableOpacity, View } from 'react-native';
 
 import { FontText, IconButton, Space } from '@/global/ui';
 import { COLOR } from '@/global/constants';
-import { StationDataTypes } from '@/store/modules';
 import { iconPath } from '@/assets/icons/iconPath';
-import { useRootNavigation } from '@/navigation/RootNavigation';
 import dayjs from 'dayjs';
 import 'dayjs/locale/ko';
 import { SubwaySimplePath, SwapSubwayStation } from '@/global/components';
 import { useGetSearchPaths } from '@/global/apis/hook';
+import { useAppDispatch, useAppSelect } from '@/store';
+import { changeIsSearchedPath } from '@/store/modules';
+import { useEffect } from 'react';
+import { useHomeNavigation } from '@/navigation/HomeNavigation';
 
 dayjs.locale('ko');
 
 const SearchPathResultScreen = () => {
-  const rootNavigation = useRootNavigation();
-  const { params } = useRoute() as {
-    params: {
-      departure: StationDataTypes;
-      arrival: StationDataTypes;
-    };
-  };
+  const homeNavigation = useHomeNavigation();
+  const dispatch = useAppDispatch();
+
+  const { arrival, departure } = useAppSelect(({ subwaySearch }) => subwaySearch.selectedStation);
 
   const { data } = useGetSearchPaths({
-    strStationName: params.departure.stationName,
-    strStationLine: params.departure.stationLine,
-    endStationName: params.arrival.stationName,
-    endStationLine: params.arrival.stationLine,
+    strStationName: departure.stationName,
+    strStationLine: departure.stationLine,
+    endStationName: arrival.stationName,
+    endStationLine: arrival.stationLine,
   });
-  
+
+  useEffect(() => {
+    dispatch(changeIsSearchedPath(true));
+  }, []);
+
   return (
     <Container>
       <SwapSubwayBox>
@@ -39,7 +41,7 @@ const SearchPathResultScreen = () => {
             imagePath="left_arrow_nonbar"
             iconWidth="9px"
             iconHeight="16px"
-            onPress={() => rootNavigation.replace('MainBottomTab', { screen: 'Home' })}
+            onPress={() => homeNavigation.goBack()}
           />
         </LeftIconBox>
         <SwapSubwayWrap>
@@ -64,7 +66,7 @@ const SearchPathResultScreen = () => {
         />
       </View>
 
-      <View style={{ backgroundColor: COLOR.WHITE }}>
+      <ScrollView style={{ backgroundColor: COLOR.WHITE }}>
         {data?.paths.map((item, idx) => (
           <View
             key={item.firstStartStation + item.totalTime}
@@ -93,9 +95,8 @@ const SearchPathResultScreen = () => {
                 <TouchableOpacity
                   style={{ flexDirection: 'row', alignItems: 'center' }}
                   onPress={() =>
-                    rootNavigation.push('SearchNavigation', {
-                      screen: 'SubwayPathDetail',
-                      params: item,
+                    homeNavigation.push('SubwayPathDetail', {
+                      state: item,
                     })
                   }
                 >
@@ -123,10 +124,14 @@ const SearchPathResultScreen = () => {
             </View>
 
             {/* 지하철 경로 UI */}
-            <SubwaySimplePath pathData={item.subPaths} arriveStationName={item.lastEndStation} />
+            <SubwaySimplePath
+              pathData={item.subPaths}
+              arriveStationName={item.lastEndStation}
+              betweenPathMargin={24}
+            />
           </View>
         ))}
-      </View>
+      </ScrollView>
     </Container>
   );
 };

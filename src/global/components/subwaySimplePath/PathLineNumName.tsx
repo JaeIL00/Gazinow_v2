@@ -35,7 +35,7 @@ const PathLineNumName = ({ lane, stationName }: PathLineNumNameProps) => {
       </View>
       <View>
         <FontText
-          value={subwayNameCutting(stationName.replace('역', ''))}
+          value={subwayNameCutting(stationName)}
           textSize="12px"
           textWeight="Medium"
           textColor={subwayLineColor(lane.stationCode)}

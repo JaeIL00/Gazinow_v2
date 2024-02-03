@@ -14,27 +14,11 @@ const NewRoutePathDetailScreen = () => {
   const route = useRoute();
   const navigation = useRootNavigation();
 
-  // const { deleteMutate } = useDeleteSavedSubwayRoute({
-  //   onSuccess: () => {
-  //     setIsBookmarking(false);
-  //   },
-  // });
-
-  // const [isBookmarking, setIsBookmarking] = useState<boolean>(false);
-  // const [isSaveRouteModalOpen, setIsSaveRouteModalOpen] = useState<boolean>(false);
-
   const freshSubPathData: SubPath[] = useMemo(() => {
     const { subPaths } = route.params as Path;
     return Object.values(subPaths).filter((item) => !!item.lanes.length && !!item.stations.length);
   }, [route]);
 
-  // const bookmarkHandler = () => {
-  //   if (isBookmarking) {
-  //     deleteMutate({ id: 8 }); // 백엔드: 저장 아이디
-  //   } else {
-  //     setIsSaveRouteModalOpen(true);
-  //   }
-  // };
   return (
     <View
       style={css`
@@ -60,21 +44,6 @@ const NewRoutePathDetailScreen = () => {
           iconWidth="24"
           onPress={() => navigation.goBack()}
         />
-        {/* <IconButton
-          iconType="FontAwesome"
-          isFontIcon={true}
-          iconName={isBookmarking ? 'bookmark' : 'bookmark-o'}
-          iconWidth="24"
-          iconColor={isBookmarking ? '#346BF7' : '#999'}
-          onPress={bookmarkHandler}
-        />
-        {isSaveRouteModalOpen && (
-          <NewRouteSaveModal
-            freshData={{ ...(route.params as Path), subPaths: freshSubPathData }}
-            closeModal={() => setIsSaveRouteModalOpen(false)}
-            onBookmark={() => setIsBookmarking(true)}
-          />
-        )} */}
       </View>
       <View
         style={css`

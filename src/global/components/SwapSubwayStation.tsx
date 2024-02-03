@@ -5,15 +5,13 @@ import { Shadow } from 'react-native-shadow-2';
 import { IconButton, TextButton } from '@/global/ui';
 import {
   COLOR,
-  SEARCH_NAVIGATION,
-  SUBWAY_SEARCH,
   ARRIVAL_STATION,
   DEPARTURE_STATION,
   EDIT_ROUTE_NAVIGATION,
 } from '@/global/constants';
 import { useRootNavigation } from '@/navigation/RootNavigation';
 import { useAppDispatch, useAppSelect } from '@/store';
-import { getStationType } from '@/store/modules';
+import { getSeletedStation, getStationType } from '@/store/modules';
 import type { StationDataTypes } from '@/store/modules';
 
 interface SwapProps extends ContainerStyleProps {}
@@ -35,12 +33,30 @@ const SwapSubwayStation = ({ isWrap, showHeader }: SwapProps) => {
   const navigateSubwaySearch = (type: StationTypes) => {
     dispatch(getStationType(type));
 
-    showHeader
-      ? rootNavigation.navigate(EDIT_ROUTE_NAVIGATION, { screen: SUBWAY_SEARCH })
-      : rootNavigation.navigate(SEARCH_NAVIGATION, { screen: SUBWAY_SEARCH });
+    // showHeader
+    //   ? rootNavigation.navigate(EDIT_ROUTE_NAVIGATION, { screen: SUBWAY_SEARCH })
+    //   : rootNavigation.navigate(SEARCH_NAVIGATION, { screen: SUBWAY_SEARCH });
   };
 
   const swapStation = () => {
+    dispatch(
+      getSeletedStation({
+        actionType: 'departure',
+        stationData: {
+          stationLine: subwayStation.arrival.stationLine,
+          stationName: subwayStation.arrival.stationName,
+        },
+      }),
+    );
+    dispatch(
+      getSeletedStation({
+        actionType: 'arrival',
+        stationData: {
+          stationLine: subwayStation.departure.stationLine,
+          stationName: subwayStation.departure.stationName,
+        },
+      }),
+    );
     setSubwayStation(({ departure, arrival }) => ({
       departure: {
         ...arrival,

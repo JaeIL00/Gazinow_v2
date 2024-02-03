@@ -3,9 +3,11 @@ import { Path, SubPath, SubwayLine } from '@/global/apis/entity';
 export type RootStackParamList = {
   Temp: undefined;
   Login: undefined;
-  MainBottomTab: { screen: 'Home' };
-  SearchNavigation: { screen: keyof SearchStackParamList; params?: Path; route?: undefined };
-  EditRouteNavigation: { screen: keyof EditRouteStackParamList; params?: Path | null };
+  MainBottomTab: { screen: 'homeStack' };
+  EditRouteNavigation: {
+    screen: keyof EditRouteStackParamList;
+    params?: { pathId: number | null };
+  };
   MyNavigation: { screen: keyof MyStackParamList };
 };
 
@@ -13,21 +15,15 @@ export type EditRouteStackParamList = {
   SavedRoutes: undefined;
   AddNewRoute: undefined;
   SubwaySearch: { isBackBtn: boolean };
-  SubwayPathResult: {
-    departure: { stationName: string; stationLine: SubwayLine };
-    arrival: { stationName: string; stationLine: SubwayLine };
-  };
+  SubwayPathResult: undefined;
   SubwayPathDetail: undefined;
   NameNewRoute: { screen: string; params?: Path };
 };
 
-export type SearchStackParamList = {
-  SubwaySearch: { isBackBtn: boolean };
-  SubwayPathResult: {
-    departure: { stationName: string; stationLine: SubwayLine };
-    arrival: { stationName: string; stationLine: SubwayLine };
-  };
-  SubwayPathDetail: { state?: SubPath[]; pathId?: number | null };
+export type HomeStackParamList = {
+  Home: undefined;
+  SubwayPathResult: undefined;
+  SubwayPathDetail: { state?: Path | SubPath[]; pathId?: number | null };
 };
 
 export type MyStackParamList = {

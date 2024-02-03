@@ -4,8 +4,9 @@ import { Image, View } from 'react-native';
 
 import { iconPath } from '@/assets/icons/iconPath';
 import { FontText, IconButton } from '@/global/ui';
-import { subwayLineColor, subwayNameCutting } from '@/global/utils';
+import { subwayLineColor } from '@/global/utils';
 import { SubPath } from '@/global/apis/entity';
+import { COLOR } from '@/global/constants';
 
 interface SearchPathDetailItemProps {
   data: SubPath;
@@ -55,7 +56,7 @@ const SearchPathDetailItem = ({ data, isLastLane }: SearchPathDetailItemProps) =
           `}
         >
           <FontText
-            value={subwayNameCutting(data.stations[0].stationName.replace('역', ''))}
+            value={data.stations[0].stationName}
             textSize="14px"
             textWeight="SemiBold"
             lineHeight="21px"
@@ -67,18 +68,18 @@ const SearchPathDetailItem = ({ data, isLastLane }: SearchPathDetailItemProps) =
             `}
           >
             <FontText
-              value={' | '} // 백엔드: 지하철 방향
+              value={data.way + ' 방향'} // 백엔드: 지하철 방향
               textSize="11px"
               textWeight="Medium"
               lineHeight="13px"
-              textColor="#999"
+              textColor={COLOR.GRAY_999}
             />
             <FontText
-              value={'빠른환승'} // 백엔드: 빠른환승 문 번호
+              value={data.door !== 'null' ? ' | 빠른환승 ' + data.door : ''} // 백엔드: 빠른환승 문 번호
               textSize="11px"
               textWeight="Medium"
               lineHeight="13px"
-              textColor="#999"
+              textColor={COLOR.GRAY_999}
             />
           </View>
 
@@ -122,35 +123,39 @@ const SearchPathDetailItem = ({ data, isLastLane }: SearchPathDetailItemProps) =
           </View>
           {isOpenPathList && (
             <View style={{ marginTop: 12 }}>
-              {data.stations.map((item, idx) => (
-                <View
-                  key={item.stationName.length + item.stationName}
-                  style={{
-                    flexDirection: 'row',
-                    marginLeft: -32,
-                    marginTop: idx !== 0 ? 9 : null,
-                  }}
-                >
-                  <View
-                    style={{
-                      width: 12,
-                      height: 12,
-                      marginRight: 20,
-                      borderWidth: 2,
-                      backgroundColor: '#fff',
-                      borderColor: subwayLineColor(data.lanes[0].stationCode),
-                      borderRadius: 12,
-                    }}
-                  />
-                  <FontText
-                    value={item.stationName}
-                    textSize="11px"
-                    textWeight="Medium"
-                    lineHeight="13px"
-                    textColor="#49454f"
-                  />
-                </View>
-              ))}
+              {data.stations.map((item, idx) => {
+                if (data.stations.length - 1 > idx) {
+                  return (
+                    <View
+                      key={item.stationName.length + item.stationName}
+                      style={{
+                        flexDirection: 'row',
+                        marginLeft: -32,
+                        marginTop: idx !== 0 ? 9 : null,
+                      }}
+                    >
+                      <View
+                        style={{
+                          width: 12,
+                          height: 12,
+                          marginRight: 20,
+                          borderWidth: 2,
+                          backgroundColor: COLOR.WHITE,
+                          borderColor: subwayLineColor(data.lanes[0].stationCode),
+                          borderRadius: 12,
+                        }}
+                      />
+                      <FontText
+                        value={item.stationName}
+                        textSize="11px"
+                        textWeight="Medium"
+                        lineHeight="13px"
+                        textColor="#49454f"
+                      />
+                    </View>
+                  );
+                }
+              })}
             </View>
           )}
           {/* 이슈 박스 */}
@@ -178,7 +183,7 @@ const SearchPathDetailItem = ({ data, isLastLane }: SearchPathDetailItemProps) =
           `}
         >
           <FontText
-            value={subwayNameCutting(data.stations[lastIdx].stationName.replace('역', ''))}
+            value={data.stations[lastIdx].stationName}
             textSize="14px"
             textWeight="SemiBold"
             lineHeight="21px"
@@ -189,7 +194,7 @@ const SearchPathDetailItem = ({ data, isLastLane }: SearchPathDetailItemProps) =
             textSize="11px"
             textWeight="Medium"
             lineHeight="13px"
-            textColor="#999"
+            textColor={COLOR.GRAY_999}
           />
         </View>
       </View>
@@ -211,10 +216,11 @@ const SearchPathDetailItem = ({ data, isLastLane }: SearchPathDetailItemProps) =
             <View
               style={{
                 marginLeft: 10,
-                borderLeftWidth: 6,
+                borderLeftWidth: 4,
                 height: 60,
                 zIndex: -1,
-                borderColor: '#999',
+                borderColor: COLOR.GRAY_DDD,
+                borderRadius: 0,
               }}
             />
           </View>

@@ -158,6 +158,8 @@ export interface SubPath {
   distance: number;
   sectionTime: number;
   stationCount: number;
+  way: string; // 지하철 운행 방향
+  door: string; // 빠른환승
   lanes: Lane[];
   stations: {
     index: number;
