@@ -2,7 +2,7 @@ import { Path, SubPath, SubwayLine } from '@/global/apis/entity';
 
 export type RootStackParamList = {
   Temp: undefined;
-  Login: undefined;
+  SignIn: undefined;
   MainBottomTab: { screen: 'homeStack' };
   EditRouteNavigation: {
     screen: keyof EditRouteStackParamList;

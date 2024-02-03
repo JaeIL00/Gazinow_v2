@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import styled from '@emotion/native';
 import { useRootNavigation } from '@/navigation/RootNavigation';
-import { useLogoutMutation } from '../loginScreen/apis/hook';
-import { LOGIN, MY_NAVIGATION } from '@/global/constants';
+import { useLogoutMutation } from '../signInScreen/apis/hook';
+import { SIGNIN, MY_NAVIGATION } from '@/global/constants';
 import { getEncryptedStorage } from '@/global/utils';
 import { TextButton } from '@/global/ui';
 import { CHANGE_PW, CONFIRM_QUIT } from '@/global/constants/navigation';
@@ -18,7 +18,7 @@ const AccountManageScreen = () => {
   const [popupVisible, setPopupVisible] = useState(false);
 
   const { logoutMutate } = useLogoutMutation({
-    onSuccess: () => navigation.reset({ routes: [{ name: LOGIN }] }),
+    onSuccess: () => navigation.reset({ routes: [{ name: SIGNIN }] }),
   });
 
   const handleConfirm = async () => {

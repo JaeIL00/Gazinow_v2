@@ -10,7 +10,7 @@ import {
   SubwayLine,
   SubwayStrEnd,
 } from '../entity';
-import { LoginFetchResponse, LogoutFetchData } from '@/screens/loginScreen/apis/entity';
+import { SignInFetchResponse } from '@/screens/signInScreen/apis/entity';
 import { API_BASE_URL } from '@env';
 
 /**
@@ -24,7 +24,7 @@ export const tokenReissueFetch = async ({
   refreshToken: string;
 }) => {
   try {
-    const res = await axios.post<{ data: LoginFetchResponse }>(
+    const res = await axios.post<{ data: SignInFetchResponse }>(
       '/api/v1/member/reissue',
       {
         accessToken,

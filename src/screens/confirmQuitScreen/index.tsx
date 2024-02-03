@@ -2,7 +2,7 @@ import styled from '@emotion/native';
 import { useRootNavigation } from '@/navigation/RootNavigation';
 import { useState } from 'react';
 import { FontText, Space, TextButton } from '@/global/ui';
-import { COLOR, LOGIN } from '@/global/constants';
+import { COLOR, SIGNIN } from '@/global/constants';
 import MyTabModal from '../../global/components/MyTabModal';
 import { useDeleteAccountMutation } from '@/global/apis/hook';
 
@@ -12,7 +12,7 @@ const ConfirmQuitScreen = () => {
   const [popupVisible, setPopupVisible] = useState(false);
 
   const { deleteAccountMutate } = useDeleteAccountMutation({
-    onSuccess: () => navigation.reset({ routes: [{ name: LOGIN }] }),
+    onSuccess: () => navigation.reset({ routes: [{ name: SIGNIN }] }),
   });
 
   const handleConfirm = () => {

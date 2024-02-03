@@ -4,7 +4,7 @@ import axios, { AxiosError } from 'axios';
 import { createNavigationContainerRef } from '@react-navigation/native';
 import { RootStackParamList } from '@/navigation/types/navigation';
 import { getEncryptedStorage, setEncryptedStorage } from '@/global/utils';
-import { LOGIN } from '@/global/constants';
+import { SIGNIN } from '@/global/constants';
 import EncryptedStorage from 'react-native-encrypted-storage';
 import { tokenReissueFetch } from './func';
 
@@ -41,7 +41,7 @@ axiosInstance.interceptors.response.use(
     const refreshToken = await getEncryptedStorage('refresh_token');
 
     if (!refreshToken) {
-      return navigate(LOGIN);
+      return navigate(SIGNIN);
     }
 
     const response = await axios.post(
@@ -69,7 +69,7 @@ axiosInstance.interceptors.response.use(
       // refresh token is not valid
       await EncryptedStorage.removeItem('access_token');
       await EncryptedStorage.removeItem('refresh_token');
-      return navigate(LOGIN);
+      return navigate(SIGNIN);
     }
   },
 );
