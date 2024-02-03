@@ -124,35 +124,39 @@ const SearchPathDetailItem = ({ data, isLastLane }: SearchPathDetailItemProps) =
           </View>
           {isOpenPathList && (
             <View style={{ marginTop: 12 }}>
-              {data.stations.map((item, idx) => (
-                <View
-                  key={item.stationName.length + item.stationName}
-                  style={{
-                    flexDirection: 'row',
-                    marginLeft: -32,
-                    marginTop: idx !== 0 ? 9 : null,
-                  }}
-                >
-                  <View
-                    style={{
-                      width: 12,
-                      height: 12,
-                      marginRight: 20,
-                      borderWidth: 2,
-                      backgroundColor: COLOR.WHITE,
-                      borderColor: subwayLineColor(data.lanes[0].stationCode),
-                      borderRadius: 12,
-                    }}
-                  />
-                  <FontText
-                    value={item.stationName}
-                    textSize="11px"
-                    textWeight="Medium"
-                    lineHeight="13px"
-                    textColor="#49454f"
-                  />
-                </View>
-              ))}
+              {data.stations.map((item, idx) => {
+                if (data.stations.length - 1 > idx) {
+                  return (
+                    <View
+                      key={item.stationName.length + item.stationName}
+                      style={{
+                        flexDirection: 'row',
+                        marginLeft: -32,
+                        marginTop: idx !== 0 ? 9 : null,
+                      }}
+                    >
+                      <View
+                        style={{
+                          width: 12,
+                          height: 12,
+                          marginRight: 20,
+                          borderWidth: 2,
+                          backgroundColor: COLOR.WHITE,
+                          borderColor: subwayLineColor(data.lanes[0].stationCode),
+                          borderRadius: 12,
+                        }}
+                      />
+                      <FontText
+                        value={item.stationName}
+                        textSize="11px"
+                        textWeight="Medium"
+                        lineHeight="13px"
+                        textColor="#49454f"
+                      />
+                    </View>
+                  );
+                }
+              })}
             </View>
           )}
           {/* 이슈 박스 */}
