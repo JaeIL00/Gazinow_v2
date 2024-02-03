@@ -4,7 +4,7 @@ import { FontText, Input, Space, TextButton } from '@/global/ui';
 import { COLOR } from '@/global/constants';
 import CheckIcon from 'react-native-vector-icons/Feather';
 import CloseIcon from 'react-native-vector-icons/Ionicons';
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useEmailConfirm } from '../apis/hooks';
 import ConfirmEmailModal from './ConfirmEmailModal';
 import BackgroundTimer from 'react-native-background-timer';
@@ -26,7 +26,7 @@ interface EmailStepProps {
 }
 
 const EmailStep = ({ emailValue, setStep, changeEmailValue }: EmailStepProps) => {
-  const { authNumber, emailConfirmMutate } = useEmailConfirm({
+  const { authNumber, resetAuthNumber, emailConfirmMutate } = useEmailConfirm({
     onSuccess: () => {
       setIsSuccess(true);
       setIsOpenConfirmModal(true);
@@ -37,8 +37,8 @@ const EmailStep = ({ emailValue, setStep, changeEmailValue }: EmailStepProps) =>
   const [isValidEmail, setIsValidEmail] = useState<boolean>(false);
   const [isOpenConfirmModal, setIsOpenConfirmModal] = useState<boolean>(false);
   const [timer, setTimer] = useState<TimerType>({
-    minutes: 5,
-    seconds: 0,
+    minutes: 0,
+    seconds: 10,
   });
 
   const changeEmailHandler = (text: string) => {
@@ -50,28 +50,51 @@ const EmailStep = ({ emailValue, setStep, changeEmailValue }: EmailStepProps) =>
     setIsSuccess(false);
   };
 
-  const closeModal = () => setIsOpenConfirmModal(false);
+  const closeModal = () => {
+    resetAuthNumber();
+    resetTimer();
+    setIsOpenConfirmModal(false);
+  };
 
-  const timerHandler = useCallback(() => {
+  const emailConfirmMutateHandler = () => emailConfirmMutate(emailValue);
+
+  const resetTimer = () => {
+    setTimer({
+      minutes: 5,
+      seconds: 0,
+    });
+  };
+
+  const timerHandler = () => {
+    if ((timer.minutes === 0 && timer.seconds === 0) || !isOpenConfirmModal) return;
     if (timer.seconds > 0) {
       setTimer((prev) => ({ ...prev, seconds: prev.seconds - 1 }));
     } else if (timer.seconds === 0) {
       setTimer((prev) => ({ minutes: prev.minutes - 1, seconds: 59 }));
     }
-  }, [timer.seconds]);
+  };
 
   useBackgroundInterval(timerHandler, 1000);
 
+  useEffect(() => {
+    if (timer.minutes === 0 && timer.seconds === 0) {
+      resetAuthNumber();
+    }
+  }, [timer]);
+
   return (
     <>
-      {isOpenConfirmModal && authNumber && (
+      {isOpenConfirmModal && (
         <ConfirmEmailModal
           authNumber={authNumber}
           timerValue={timer}
           closeModal={closeModal}
           setStep={setStep}
+          emailConfirmMutateHandler={emailConfirmMutateHandler}
+          resetTimer={resetTimer}
         />
       )}
+
       <View style={{ flex: 1 }}>
         <View style={{ marginBottom: 51 }}>
           <FontText
@@ -152,10 +175,11 @@ const EmailStep = ({ emailValue, setStep, changeEmailValue }: EmailStepProps) =>
             backgroundColor: isValidEmail ? COLOR.BASIC_BLACK : COLOR.GRAY_DDD,
             borderRadius: 5,
             alignItems: 'center',
-            paddingVertical: 10,
+            justifyContent: 'center',
+            height: 48,
             marginBottom: 24,
           }}
-          onPress={() => emailConfirmMutate(emailValue)}
+          onPress={emailConfirmMutateHandler}
           disabled={!isValidEmail}
         />
         {isSuccess && (
@@ -173,7 +197,7 @@ const EmailStep = ({ emailValue, setStep, changeEmailValue }: EmailStepProps) =>
               textWeight="Bold"
               textColor={COLOR.GRAY_999}
               isTextUnderline
-              onPress={() => emailConfirmMutate(emailValue)}
+              onPress={emailConfirmMutateHandler}
             />
           </View>
         )}
