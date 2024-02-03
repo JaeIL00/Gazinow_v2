@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { KeyboardAvoidingView, Modal, View } from 'react-native';
 import { TimerType } from './EmailStep';
 import CloseIcon from 'react-native-vector-icons/Ionicons';
+import { useHomeNavigation } from '@/navigation/HomeNavigation';
 
 interface ConfirmEmailModalProps {
   authNumber: string;
@@ -11,7 +12,6 @@ interface ConfirmEmailModalProps {
   closeModal: () => void;
   setStep: () => void;
   emailConfirmMutateHandler: () => void;
-  resetTimer: () => void;
 }
 
 const ConfirmEmailModal = ({
@@ -20,7 +20,6 @@ const ConfirmEmailModal = ({
   closeModal,
   setStep,
   emailConfirmMutateHandler,
-  resetTimer,
 }: ConfirmEmailModalProps) => {
   const [authNumberValue, setAuthNumberValue] = useState<string>('');
   const [isNotPass, setIsNotPass] = useState<boolean>(false);
@@ -29,7 +28,6 @@ const ConfirmEmailModal = ({
     timerValue.seconds < 10 ? `0${timerValue.seconds}` : timerValue.seconds + '';
 
   const changeValue = (value: string) => {
-    if (value.length > 4) return;
     setAuthNumberValue(value);
     setIsNotPass(false);
   };
@@ -76,6 +74,7 @@ const ConfirmEmailModal = ({
               iconName="arrow-back-sharp"
               iconWidth="19.5"
               iconColor="#000"
+              onPress={closeModal}
             />
           </View>
 
@@ -109,6 +108,7 @@ const ConfirmEmailModal = ({
                 autoFocus
                 keyboardType="number-pad"
                 style={{ flex: 1 }}
+                maxLength={4}
               />
               <FontText
                 value={timerValue.minutes + ':' + freshTimerSeconds}

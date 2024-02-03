@@ -1,14 +1,16 @@
 import { IconButton } from '@/global/ui';
 import { useState } from 'react';
 import { View } from 'react-native';
-import { EmailStep } from './components';
+import { EmailStep, PasswordStep } from './components';
 import { SignUpParams } from '@/global/apis/entity';
 import { COLOR } from '@/global/constants';
-
-export type SignUpStepType = 'email' | 'password' | 'nickname' | 'complete';
+import { SignUpStepType } from './type';
+import { useRootNavigation } from '@/navigation/RootNavigation';
 
 const SignUpScreen = () => {
-  const [step, setStep] = useState<SignUpStepType>('email');
+  const navigation = useRootNavigation();
+
+  const [step, setStep] = useState<SignUpStepType>('password');
   const [signUpData, setSignUpData] = useState<SignUpParams>({
     email: '',
     password: '',
@@ -22,10 +24,27 @@ const SignUpScreen = () => {
     }));
   };
 
+  const backStepHandler = () => {
+    switch (step) {
+      case 'email':
+        // navigation.reset({routes: [{name:  초기화면으로 이동}]})
+        break;
+      case 'password':
+        setStep('email');
+        break;
+      case 'nickname':
+        setStep('password');
+        break;
+      default:
+        break;
+    }
+  };
+
   return (
     <View
       style={{ paddingTop: 30, paddingHorizontal: 16, flex: 1, backgroundColor: COLOR.GRAY_F9 }}
     >
+      {/* FIXME: 뒤로가기 함수 */}
       <View style={{ marginBottom: 43 }}>
         <IconButton
           iconType="Ionicons"
@@ -33,6 +52,7 @@ const SignUpScreen = () => {
           iconName="arrow-back-sharp"
           iconWidth="19.5"
           iconColor="#000"
+          onPress={backStepHandler}
         />
       </View>
 
@@ -43,7 +63,14 @@ const SignUpScreen = () => {
           changeEmailValue={(value: string) => changeSignUpValue('email', value)}
         />
       )}
-      {step === 'password'}
+      {step === 'password' && (
+        <PasswordStep
+          emailValue={signUpData.email}
+          passwordValue={signUpData.password}
+          changePasswordValue={(value: string) => changeSignUpValue('password', value)}
+          setStep={() => setStep('nickname')}
+        />
+      )}
       {step === 'nickname'}
       {step === 'complete'}
     </View>

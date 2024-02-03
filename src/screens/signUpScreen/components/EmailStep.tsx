@@ -1,13 +1,11 @@
 import { View } from 'react-native';
-import type { SignUpStepType } from '..';
 import { FontText, Input, Space, TextButton } from '@/global/ui';
 import { COLOR } from '@/global/constants';
 import CheckIcon from 'react-native-vector-icons/Feather';
 import CloseIcon from 'react-native-vector-icons/Ionicons';
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useEmailConfirm } from '../apis/hooks';
 import ConfirmEmailModal from './ConfirmEmailModal';
-import BackgroundTimer from 'react-native-background-timer';
 import useBackgroundInterval from '../hooks/useBackgroundInterval';
 
 const emailValidation = new RegExp(
@@ -37,8 +35,8 @@ const EmailStep = ({ emailValue, setStep, changeEmailValue }: EmailStepProps) =>
   const [isValidEmail, setIsValidEmail] = useState<boolean>(false);
   const [isOpenConfirmModal, setIsOpenConfirmModal] = useState<boolean>(false);
   const [timer, setTimer] = useState<TimerType>({
-    minutes: 0,
-    seconds: 10,
+    minutes: 5,
+    seconds: 0,
   });
 
   const changeEmailHandler = (text: string) => {
@@ -91,7 +89,6 @@ const EmailStep = ({ emailValue, setStep, changeEmailValue }: EmailStepProps) =>
           closeModal={closeModal}
           setStep={setStep}
           emailConfirmMutateHandler={emailConfirmMutateHandler}
-          resetTimer={resetTimer}
         />
       )}
 
