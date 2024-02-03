@@ -1,22 +1,22 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
 import { IconButton, FontText } from '@/global/ui';
 import { COLOR } from '@/global/constants';
 import IssuesBanner from './IssuesBanner';
 import RecommendedRoutes from './RecommendedRoutes';
-import SubwayRoute from '@/screens/selectNewRouteScreen/components/SubwayRoute';
 import styled from '@emotion/native';
+import { useGetSavedRoutesQuery } from '@/global/apis/hook';
 
 const IssueBox = () => {
-  const hasSavedRoutes = true;
-
-  if (hasSavedRoutes) {
+  const { data: savedRoutes } = useGetSavedRoutesQuery();
+  const isRoutesExist = savedRoutes && savedRoutes.length > 0;
+  
+  if (isRoutesExist) {
     return (
-      <View>
-        <View style={styles.titleContainer}>
-          <View style={styles.textContainer}>
+      <RouteContainer>
+        <TextContainer>
+          <TextContainer>
             <FontText
-              value="출근길  "
+              value={`${savedRoutes[0].roadName}  `}
               textSize="18px"
               textWeight="Bold"
               lineHeight="23px"
@@ -31,8 +31,8 @@ const IssueBox = () => {
                 textColor={COLOR.GRAY_999}
               />
             </GrayEllipse>
-          </View>
-          <View style={styles.textContainer}>
+          </TextContainer>
+          <TextContainer>
             <FontText
               value="세부정보  "
               textSize="13px"
@@ -46,58 +46,39 @@ const IssueBox = () => {
               iconWidth="4.5px"
               iconHeight="8px"
             />
-          </View>
-        </View>
-        <View style={styles.containerSubwayRoute}>
+          </TextContainer>
+        </TextContainer>
+        {/* <View style={styles.containerSubwayRoute}>
           <SubwayRoute />
-        </View>
+        </View> */}
         <IssuesBanner />
         <RecommendedRoutes />
-      </View>
+      </RouteContainer>
     );
   } else {
     return (
       <FontText
-        style={styles.messageStyle}
         value="저장한 경로에 이슈가 없어요."
         textSize="16px"
         textWeight="Medium"
         lineHeight="500px"
         textColor={COLOR.GRAY_999}
+        textAlign="center"
       />
     );
   }
 };
 
-const styles = StyleSheet.create({
-  messageStyle: {
-    textAlign: 'center',
-  },
-  titleContainer: {
-    marginVertical: 20,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  textContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  grayEllipse: {
-    backgroundColor: '#f0f0f0',
-    borderRadius: 40,
-    paddingHorizontal: 8,
-    paddingVertical: 2,
-  },
-  containerSubwayRoute: {
-    marginTop: 40,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-});
-
 export default IssueBox;
 
+const RouteContainer = styled.View`
+  margin-top: 20px;
+`;
+const TextContainer = styled.View`
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+`;
 const GrayEllipse = styled.View`
   padding: 4px 6px;
   border-radius: 16px;
