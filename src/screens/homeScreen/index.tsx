@@ -1,14 +1,16 @@
 import styled from '@emotion/native';
-import { Text } from 'react-native';
+import { ScrollView, Text } from 'react-native';
 import { SavedRouteIssues } from './components';
 import { SwapSubwayStation } from '@/global/components';
 
 const HomeScreen = () => {
   return (
     <Container>
-      <Text>홈 페이지</Text>
-      <SwapSubwayStation isWrap={true} showHeader={false} />
-      <SavedRouteIssues />
+      <ScrollView>
+        <Text>홈 페이지</Text>
+        <SwapSubwayStation isWrap={true} showHeader={false} />
+        <SavedRouteIssues />
+      </ScrollView>
     </Container>
   );
 };

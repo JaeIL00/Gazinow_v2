@@ -56,15 +56,13 @@ const SavedRouteIssues = () => {
       <View style={styles.borderLine}></View>
 
       {/* 버튼에 따라 다른 컴포넌트를 렌더링 */}
-      <ScrollView>
+      {
         {
-          {
-            저장경로: <SavedRouteBox />,
-            최근검색: <RecentSearchBox />,
-            이슈: <IssueBox />,
-          }[activeButton]
-        }
-      </ScrollView>
+          저장경로: <SavedRouteBox />,
+          최근검색: <RecentSearchBox />,
+          이슈: <IssueBox />,
+        }[activeButton]
+      }
     </View>
   );
 };
@@ -72,7 +70,7 @@ const SavedRouteIssues = () => {
 const styles = StyleSheet.create({
   container: {
     marginTop: 20,
-    marginBottom: 215,
+    marginBottom: 16,
     padding: 16,
     backgroundColor: 'white',
     borderRadius: 15,
