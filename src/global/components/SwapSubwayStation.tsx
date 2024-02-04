@@ -142,7 +142,7 @@ const InnerBox = styled.View`
   gap: 8px;
 `;
 const StationButton = styled(TextButton)`
-  background-color: ${COLOR.LIGHT_GRAY};
+  background-color: ${COLOR.GRAY_F9};
   width: 100%;
   height: 41px;
   border-radius: 8px;

@@ -1,7 +1,7 @@
 /**
  * 로그인폼
  */
-export interface LoginFormTypes {
+export interface SignInFormTypes {
   email: string;
   password: string;
 }
@@ -9,7 +9,7 @@ export interface LoginFormTypes {
 /**
  * 로그인 응답
  */
-export interface LoginFetchResponse {
+export interface SignInFetchResponse {
   grantType: 'Bearer';
   memberId: number;
   nickName: string;

@@ -16,8 +16,17 @@ interface IconButtonProps extends PressableProps, IconStyleProps {
 }
 
 const IconButton = (props: IconButtonProps) => {
-  const { iconType, isFontIcon, iconName, imagePath, iconWidth, iconHeight, iconColor, onPress } =
-    props;
+  const {
+    iconType,
+    isFontIcon,
+    iconName,
+    imagePath,
+    iconWidth,
+    iconHeight,
+    iconColor,
+    onPress,
+    hitSlop = 10,
+  } = props;
 
   if (isFontIcon && iconName) {
     return (
@@ -35,7 +44,7 @@ const IconButton = (props: IconButtonProps) => {
     );
   } else if (imagePath) {
     return (
-      <Button onPress={onPress} iconWidth={iconWidth} iconHeight={iconHeight} hitSlop={10}>
+      <Button onPress={onPress} iconWidth={iconWidth} iconHeight={iconHeight} hitSlop={hitSlop}>
         <IconImage source={iconPath[imagePath]} />
       </Button>
     );

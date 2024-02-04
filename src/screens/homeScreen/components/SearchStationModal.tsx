@@ -90,7 +90,7 @@ const SearchStationModal = ({
         <SearchInput
           value={searchTextValue}
           placeholder={`${searchType}을 검색해보세요`}
-          placeholderTextColor={COLOR.BE_GRAY}
+          placeholderTextColor={COLOR.GRAY_BE}
           inputMode="search"
           onChangeText={changeSearchText}
           autoFocus
@@ -127,7 +127,7 @@ const SearchStationModal = ({
                   })
                 }
               >
-                <Icon name="clock" size={25} color={COLOR.BE_GRAY} />
+                <Icon name="clock" size={25} color={COLOR.GRAY_BE} />
                 <StationInfoBox>
                   <FontText
                     value={stationName}

@@ -1,6 +1,7 @@
-import { Pressable } from 'react-native';
+import { Pressable, View } from 'react-native';
 import type { PressableProps } from 'react-native/types';
 import FontText from './FontText';
+import { COLOR } from '../constants';
 
 interface TextButtonProps extends PressableProps {
   value: string;
@@ -8,13 +9,15 @@ interface TextButtonProps extends PressableProps {
   textWeight: 'Bold' | 'SemiBold' | 'Medium' | 'Regular';
   textColor?: string;
   lineHeight?: string;
+  isTextUnderline?: boolean;
 }
 
 const TextButton = (props: TextButtonProps) => {
-  const { value, style, textSize, textWeight, textColor, lineHeight, onPress } = props;
+  const { value, style, textSize, textWeight, textColor, lineHeight, isTextUnderline, onPress } =
+    props;
 
   return (
-    <Pressable onPress={onPress} style={style}>
+    <Pressable {...props} onPress={onPress} style={style}>
       <FontText
         value={value}
         textSize={textSize}
@@ -22,6 +25,9 @@ const TextButton = (props: TextButtonProps) => {
         textColor={textColor}
         lineHeight={lineHeight}
       />
+      {isTextUnderline && (
+        <View style={{ borderBottomWidth: 1.5, borderBottomColor: COLOR.GRAY_999 }} />
+      )}
     </Pressable>
   );
 };

@@ -52,7 +52,7 @@ const SearchInputBox = ({ isBackBtn }: { isBackBtn: boolean }) => {
         isBackBtn={isBackBtn}
         value={searchText}
         placeholder={`${stationType}을 검색해보세요`}
-        placeholderTextColor={COLOR.BE_GRAY}
+        placeholderTextColor={COLOR.GRAY_BE}
         inputMode="search"
         onChangeText={changeSearchText}
         autoFocus

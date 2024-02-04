@@ -66,7 +66,7 @@ const ChangePwScreen = () => {
         <SearchInput
           value={newNickname}
           placeholder={`비밀번호를 입력해주세요`}
-          placeholderTextColor={COLOR.BE_GRAY}
+          placeholderTextColor={COLOR.GRAY_BE}
           inputMode="search"
           onChangeText={changeNickname}
           autoFocus
@@ -102,7 +102,7 @@ const ChangePwScreen = () => {
         <SearchInput
           value={newNickname}
           placeholder={`변경하실 비밀번호를 입력해주세요`}
-          placeholderTextColor={COLOR.BE_GRAY}
+          placeholderTextColor={COLOR.GRAY_BE}
           inputMode="search"
           onChangeText={changeNickname}
         />
@@ -130,7 +130,7 @@ const ChangePwScreen = () => {
         <SearchInput
           value={newNickname}
           placeholder={`비밀번호를 확인해주세요`}
-          placeholderTextColor={COLOR.BE_GRAY}
+          placeholderTextColor={COLOR.GRAY_BE}
           inputMode="search"
           onChangeText={changeNickname}
         />
@@ -158,7 +158,7 @@ const ChangePwScreen = () => {
         onCancel={handleConfirm}
         title="비밀번호가 변경되었습니다"
         cancelText="확인"
-        btnColor={COLOR.LIGHT_GRAY}
+        btnColor={COLOR.GRAY_F9}
       />
     </Container>
   );
@@ -177,7 +177,7 @@ const InputContainer = styled.View`
   border-radius: 5px;
   padding: 4px 16px 4px 18.25px;
   margin-top: 8px;
-  background-color: ${COLOR.LIGHT_GRAY};
+  background-color: ${COLOR.GRAY_F9};
 `;
 
 const ConfirmContainer = styled.View`

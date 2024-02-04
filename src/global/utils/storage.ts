@@ -6,7 +6,7 @@ export const getEncryptedStorage = async (key: string) => {
     return data ? JSON.parse(data) : data;
   } catch (error) {
     // debug
-    console.error('Failed token get storage from login feature');
+    console.error('Failed token get storage from sign-in feature');
   }
 };
 
@@ -16,7 +16,7 @@ export const setEncryptedStorage = async <T>(key: string, data: T) => {
     await EncryptedStorage.setItem(key, jsonData);
   } catch (error) {
     // debug
-    console.error('Failed token set storage from login response');
+    console.error('Failed token set storage from sign-in response');
   }
 };
 
@@ -25,6 +25,6 @@ export const removeEncryptedStorage = async (key: string) => {
     await EncryptedStorage.removeItem(key);
   } catch (error) {
     // debug
-    console.error('Failed token set storage from login response');
+    console.error('Failed token set storage from sign-in response');
   }
 };
