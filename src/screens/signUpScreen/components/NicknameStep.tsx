@@ -7,6 +7,8 @@ import { useCheckNickname, useSighUp } from '../apis/hooks';
 import { debounce } from 'lodash';
 import CheckIcon from 'react-native-vector-icons/Feather';
 import { SignUpParams } from '../type';
+import { useAppDispatch } from '@/store';
+import { saveUserInfo } from '@/store/modules';
 
 interface NicknameStepProps {
   nicknameValue: string;
@@ -21,9 +23,16 @@ const NicknameStep = ({
   changeNicknameValue,
   setStep,
 }: NicknameStepProps) => {
+  const dispatch = useAppDispatch();
+
   const [checkMessage, setCheckMessage] = useState<string>('');
 
-  const { signUpMutate } = useSighUp({ onSuccess: () => setStep() });
+  const { signUpMutate } = useSighUp({
+    onSuccess: ({ email, nickName }) => {
+      dispatch(saveUserInfo({ email, nickname: nickName }));
+      setStep();
+    },
+  });
   const { data, checkNicknameMutate } = useCheckNickname({
     onSettled: (data, error) => {
       if (!!data) setCheckMessage(data.message);
