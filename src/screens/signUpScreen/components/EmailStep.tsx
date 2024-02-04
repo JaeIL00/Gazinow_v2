@@ -25,13 +25,20 @@ interface EmailStepProps {
 }
 
 const EmailStep = ({ emailValue, setStep, changeEmailValue }: EmailStepProps) => {
-  const { authNumber, resetAuthNumber, emailConfirmMutate } = useEmailConfirm({
+  const { authNumber, isError, resetAuthNumber, emailConfirmMutate } = useEmailConfirm({
     onSuccess: () => {
       setIsSuccess(true);
       setIsOpenConfirmModal(true);
     },
+    onError: (error) => {
+      if (error.message.includes('409')) {
+        setIsValidEmail(false);
+        setErrorMessage('이미 가입된 이메일입니다');
+      }
+    },
   });
 
+  const [errorMessage, setErrorMessage] = useState<string>('');
   const [isSuccess, setIsSuccess] = useState<boolean>(false);
   const [isValidEmail, setIsValidEmail] = useState<boolean>(false);
   const [isOpenConfirmModal, setIsOpenConfirmModal] = useState<boolean>(false);
@@ -42,7 +49,7 @@ const EmailStep = ({ emailValue, setStep, changeEmailValue }: EmailStepProps) =>
 
   const changeEmailHandler = (text: string) => {
     changeEmailValue(text);
-
+    setErrorMessage('');
     if (!text) return;
     const isValid = emailValidation.test(text);
     setIsValidEmail(isValid);
@@ -134,7 +141,7 @@ const EmailStep = ({ emailValue, setStep, changeEmailValue }: EmailStepProps) =>
             />
           </View>
           <View style={{ flexDirection: 'row', alignItems: 'center', marginLeft: 9 }}>
-            {isValidEmail ? (
+            {!errorMessage && isValidEmail && (
               <>
                 <CheckIcon name="check" size={14} color={COLOR.LIGHT_GREEN} />
                 <Space width="3px" />
@@ -145,20 +152,29 @@ const EmailStep = ({ emailValue, setStep, changeEmailValue }: EmailStepProps) =>
                   textColor={COLOR.LIGHT_GREEN}
                 />
               </>
-            ) : (
+            )}
+            {!errorMessage && !isValidEmail && emailValue && (
               <>
-                {emailValue && (
-                  <>
-                    <CloseIcon name="close-circle-outline" size={14} color={COLOR.LIGHT_RED} />
-                    <Space width="3px" />
-                    <FontText
-                      value="이메일 형식이 올바르지 않습니다"
-                      textSize="12px"
-                      textWeight="Medium"
-                      textColor={COLOR.LIGHT_RED}
-                    />
-                  </>
-                )}
+                <CloseIcon name="close-circle-outline" size={14} color={COLOR.LIGHT_RED} />
+                <Space width="3px" />
+                <FontText
+                  value="이메일 형식이 올바르지 않습니다"
+                  textSize="12px"
+                  textWeight="Medium"
+                  textColor={COLOR.LIGHT_RED}
+                />
+              </>
+            )}
+            {errorMessage && (
+              <>
+                <CloseIcon name="close-circle-outline" size={14} color={COLOR.LIGHT_RED} />
+                <Space width="3px" />
+                <FontText
+                  value={errorMessage}
+                  textSize="12px"
+                  textWeight="Medium"
+                  textColor={COLOR.LIGHT_RED}
+                />
               </>
             )}
           </View>

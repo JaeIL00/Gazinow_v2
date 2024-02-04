@@ -2,24 +2,32 @@ import { useMutation } from 'react-query';
 import { checkNicknameFetch, emailConfirmFetch, signUpFetch } from '../func';
 import { useState } from 'react';
 import { SightUpResponse } from '../../type';
+import { AxiosError } from 'axios';
 
 /**
  * 이메일 인증 요청 axios
  */
-export const useEmailConfirm = ({ onSuccess }: { onSuccess: () => void }) => {
+export const useEmailConfirm = ({
+  onSuccess,
+  onError,
+}: {
+  onSuccess: () => void;
+  onError: (error: AxiosError) => void;
+}) => {
   const [authNumber, setAuthNumber] = useState<string>('');
-  const { mutate } = useMutation(emailConfirmFetch, {
+  const { isError, mutate } = useMutation(emailConfirmFetch, {
     onSuccess: (data) => {
       setAuthNumber(data);
       onSuccess();
     },
+    onError,
   });
 
   const resetAuthNumber = () => {
     setAuthNumber('');
   };
 
-  return { authNumber, resetAuthNumber, emailConfirmMutate: mutate };
+  return { authNumber, isError, resetAuthNumber, emailConfirmMutate: mutate };
 };
 
 /**
