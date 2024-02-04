@@ -1,7 +1,7 @@
 import { COLOR } from '@/global/constants';
 import { FontText, IconButton, Space, TextButton } from '@/global/ui';
-import { useState } from 'react';
-import { Modal, Pressable, View } from 'react-native';
+import { useEffect, useRef, useState } from 'react';
+import { Animated, Dimensions, Modal, Pressable, View } from 'react-native';
 import CheckIcon from 'react-native-vector-icons/Feather';
 import { WebView } from 'react-native-webview';
 
@@ -23,6 +23,10 @@ interface SubscribeTermsModalProps {
 }
 
 const SubscribeTermsModal = ({ setStep, closeModal }: SubscribeTermsModalProps) => {
+  const height = Dimensions.get('window').height;
+
+  const animRef = useRef(new Animated.Value(height)).current;
+
   const [openUrl, setOpenUrl] = useState<string>('');
   const [agreeTerms, setAgreeTerms] = useState<AgreeTermsType[]>([]);
 
@@ -72,6 +76,14 @@ const SubscribeTermsModal = ({ setStep, closeModal }: SubscribeTermsModalProps) 
     }
   };
 
+  useEffect(() => {
+    Animated.timing(animRef, {
+      toValue: 0,
+      duration: 600,
+      useNativeDriver: true,
+    }).start();
+  }, []);
+
   return (
     <Modal
       visible
@@ -111,17 +123,19 @@ const SubscribeTermsModal = ({ setStep, closeModal }: SubscribeTermsModalProps) 
             style={{
               backgroundColor: '#00000099',
               flex: 1,
-              paddingTop: 265,
+              // paddingTop: '69%',
+              justifyContent: 'flex-end',
             }}
           >
-            <View
+            <Animated.View
               style={{
-                flex: 1,
+                height: '65%',
                 backgroundColor: COLOR.WHITE,
                 borderTopStartRadius: 14,
                 borderTopEndRadius: 14,
                 paddingTop: 33,
                 paddingHorizontal: 16,
+                transform: [{ translateY: animRef }],
               }}
             >
               <Pressable
@@ -231,7 +245,7 @@ const SubscribeTermsModal = ({ setStep, closeModal }: SubscribeTermsModalProps) 
                 onPress={setStep}
                 disabled={!isCheckAll}
               />
-            </View>
+            </Animated.View>
           </View>
         </>
       )}
