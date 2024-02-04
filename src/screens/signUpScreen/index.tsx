@@ -1,7 +1,7 @@
 import { IconButton } from '@/global/ui';
 import { useState } from 'react';
 import { View } from 'react-native';
-import { EmailStep, NicknameStep, PasswordStep } from './components';
+import { CompleteStep, EmailStep, NicknameStep, PasswordStep } from './components';
 import { COLOR } from '@/global/constants';
 import { SignUpParams, SignUpStepType } from './type';
 import { useRootNavigation } from '@/navigation/RootNavigation';
@@ -43,15 +43,15 @@ const SignUpScreen = () => {
     <View
       style={{ paddingTop: 30, paddingHorizontal: 16, flex: 1, backgroundColor: COLOR.GRAY_F9 }}
     >
-      {/* FIXME: 뒤로가기 함수 */}
       <View style={{ marginBottom: 43 }}>
         <IconButton
           iconType="Ionicons"
           isFontIcon
           iconName="arrow-back-sharp"
           iconWidth="19.5"
-          iconColor="#000"
+          iconColor={step === 'complete' ? 'transparent' : '#000'}
           onPress={backStepHandler}
+          disabled={step === 'complete'}
         />
       </View>
 
@@ -78,7 +78,7 @@ const SignUpScreen = () => {
           setStep={() => setStep('complete')}
         />
       )}
-      {step === 'complete'}
+      {step === 'complete' && <CompleteStep />}
     </View>
   );
 };
