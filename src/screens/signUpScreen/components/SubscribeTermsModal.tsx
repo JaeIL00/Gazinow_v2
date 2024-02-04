@@ -77,8 +77,8 @@ const SubscribeTermsModal = ({ setStep, closeModal }: SubscribeTermsModalProps) 
       visible
       onRequestClose={!!openUrl ? () => setOpenUrl('') : closeModal}
       transparent
-      // statusBarTranslucent
-      // presentationStyle="overFullScreen"
+      // statusBarTranslucent FIXME: 모달 풀화면 요구시 활성화
+      // presentationStyle="overFullScreen" FIXME: 모달 풀화면 요구시 활성화
     >
       {!!openUrl ? (
         <View style={{ flex: 1 }}>

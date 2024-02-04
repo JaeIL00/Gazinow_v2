@@ -42,8 +42,8 @@ const ConfirmEmailModal = ({
       visible
       onRequestClose={() => closeModal()}
       transparent
-      // statusBarTranslucent
-      // presentationStyle="overFullScreen"
+      // statusBarTranslucent FIXME: 모달 풀화면 요구시 활성화
+      // presentationStyle="overFullScreen" FIXME: 모달 풀화면 요구시 활성화
     >
       {/* 백그라운드 */}
       <View
