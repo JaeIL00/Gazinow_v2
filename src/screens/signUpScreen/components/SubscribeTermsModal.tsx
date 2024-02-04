@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Animated, Dimensions, Modal, Pressable, View } from 'react-native';
 import CheckIcon from 'react-native-vector-icons/Feather';
 import { WebView } from 'react-native-webview';
+import StepButton from '../ui/StepButton';
 
 type AgreeTermsType =
   | '약관 전체 동의'
@@ -229,19 +230,9 @@ const SubscribeTermsModal = ({ setStep, closeModal }: SubscribeTermsModalProps) 
                 ))}
               </View>
 
-              <TextButton
+              <StepButton
                 value="완료"
-                textSize="17px"
-                textWeight="SemiBold"
-                textColor={COLOR.WHITE}
-                style={{
-                  backgroundColor: isCheckAll ? COLOR.BASIC_BLACK : COLOR.GRAY_DDD,
-                  borderRadius: 5,
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  height: 48,
-                  marginBottom: 24,
-                }}
+                backgroundCondition={isCheckAll}
                 onPress={setStep}
                 disabled={!isCheckAll}
               />

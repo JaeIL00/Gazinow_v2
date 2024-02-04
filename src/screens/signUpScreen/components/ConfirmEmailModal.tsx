@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Animated, Dimensions, KeyboardAvoidingView, Modal, View } from 'react-native';
 import { TimerType } from './EmailStep';
 import CloseIcon from 'react-native-vector-icons/Ionicons';
+import StepButton from '../ui/StepButton';
 
 interface ConfirmEmailModalProps {
   authNumber: string;
@@ -172,19 +173,9 @@ const ConfirmEmailModal = ({
               </View>
             </View>
 
-            <TextButton
+            <StepButton
               value="입력완료"
-              textSize="17px"
-              textWeight="SemiBold"
-              textColor={COLOR.WHITE}
-              style={{
-                backgroundColor: authNumberValue.length === 4 ? COLOR.BASIC_BLACK : COLOR.GRAY_DDD,
-                borderRadius: 5,
-                alignItems: 'center',
-                justifyContent: 'center',
-                height: 48,
-                marginBottom: 24,
-              }}
+              backgroundCondition={authNumberValue.length === 4}
               onPress={checkAuthNumber}
               disabled={authNumberValue.length < 4}
             />

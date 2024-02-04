@@ -3,6 +3,7 @@ import { FontText, Space, TextButton } from '@/global/ui';
 import { useRootNavigation } from '@/navigation/RootNavigation';
 import { useAppSelect } from '@/store';
 import { Image, View } from 'react-native';
+import StepButton from '../ui/StepButton';
 
 const CompleteStep = () => {
   const navigation = useRootNavigation();
@@ -31,19 +32,9 @@ const CompleteStep = () => {
         />
       </View>
 
-      <TextButton
+      <StepButton
         value="확인"
-        textSize="17px"
-        textWeight="SemiBold"
-        textColor={COLOR.WHITE}
-        style={{
-          backgroundColor: COLOR.BASIC_BLACK,
-          borderRadius: 5,
-          alignItems: 'center',
-          justifyContent: 'center',
-          height: 48,
-          marginBottom: 24,
-        }}
+        backgroundCondition={true} // 검정을 의미함
         onPress={() => {
           // FIXME: 이동 조건 추가하기, 토큰받았는지? 닉네임 이메일이 잘있는지?
           // navigation.reset({ routes: [{ name: 'MainBottomTab' }] });

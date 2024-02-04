@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react';
 import { useEmailConfirm } from '../apis/hooks';
 import ConfirmEmailModal from './ConfirmEmailModal';
 import useBackgroundInterval from '../hooks/useBackgroundInterval';
+import StepButton from '../ui/StepButton';
 
 const emailValidation = new RegExp(
   /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i,
@@ -163,22 +164,13 @@ const EmailStep = ({ emailValue, setStep, changeEmailValue }: EmailStepProps) =>
           </View>
         </View>
 
-        <TextButton
+        <StepButton
           value={isValidEmail ? '이메일 인증' : '이메일을 입력해주세요'}
-          textSize="17px"
-          textWeight="SemiBold"
-          textColor={COLOR.WHITE}
-          style={{
-            backgroundColor: isValidEmail ? COLOR.BASIC_BLACK : COLOR.GRAY_DDD,
-            borderRadius: 5,
-            alignItems: 'center',
-            justifyContent: 'center',
-            height: 48,
-            marginBottom: 24,
-          }}
+          backgroundCondition={isValidEmail}
           onPress={emailConfirmMutateHandler}
           disabled={!isValidEmail}
         />
+
         {isSuccess && (
           <View style={{ flexDirection: 'row', justifyContent: 'center', marginBottom: 36 }}>
             <FontText

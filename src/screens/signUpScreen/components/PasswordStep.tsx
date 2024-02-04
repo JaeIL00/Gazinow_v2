@@ -5,6 +5,7 @@ import CheckIcon from 'react-native-vector-icons/Feather';
 import { useState } from 'react';
 
 import SubscribeTermsModal from './SubscribeTermsModal';
+import StepButton from '../ui/StepButton';
 
 const combinationValidation = new RegExp(
   /^(?=.*[a-zA-Z])(?=.*[!~.,?@#$%^&()_/|;:'"<>*+=-])(?=.*[0-9])/,
@@ -131,20 +132,9 @@ const PasswordStep = ({
           <Space height="40px" />
         </ScrollView>
 
-        <TextButton
+        <StepButton
           value="회원가입"
-          textSize="17px"
-          textWeight="SemiBold"
-          textColor={COLOR.WHITE}
-          style={{
-            backgroundColor:
-              isValidLength && isValueCombination ? COLOR.BASIC_BLACK : COLOR.GRAY_DDD,
-            borderRadius: 5,
-            alignItems: 'center',
-            justifyContent: 'center',
-            height: 48,
-            marginBottom: 24,
-          }}
+          backgroundCondition={isValidLength && isValueCombination}
           onPress={() => setIsTermsOpenModal(true)}
           disabled={!isValidLength || !isValueCombination}
         />

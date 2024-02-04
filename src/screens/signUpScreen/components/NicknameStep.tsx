@@ -9,6 +9,7 @@ import CheckIcon from 'react-native-vector-icons/Feather';
 import { SignUpParams } from '../type';
 import { useAppDispatch } from '@/store';
 import { saveUserInfo } from '@/store/modules';
+import StepButton from '../ui/StepButton';
 
 interface NicknameStepProps {
   nicknameValue: string;
@@ -126,25 +127,15 @@ const NicknameStep = ({
         </View>
       </View>
 
-      <TextButton
-        value="회원가입"
-        textSize="17px"
-        textWeight="SemiBold"
-        textColor={COLOR.WHITE}
-        style={{
-          backgroundColor: checkMessage.includes('가능') ? COLOR.BASIC_BLACK : COLOR.GRAY_DDD,
-          borderRadius: 5,
-          alignItems: 'center',
-          justifyContent: 'center',
-          height: 48,
-          marginBottom: 24,
-        }}
-        onPress={() =>
+      <StepButton
+        value="확인"
+        backgroundCondition={checkMessage.includes('가능')}
+        onPress={() => {
           signUpMutate({
             ...signUpData,
             nickName: signUpData.nickname,
-          })
-        }
+          });
+        }}
         disabled={!checkMessage.includes('가능')}
       />
     </View>
