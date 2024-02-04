@@ -1,16 +1,15 @@
 import { IconButton } from '@/global/ui';
 import { useState } from 'react';
 import { View } from 'react-native';
-import { EmailStep, PasswordStep } from './components';
-import { SignUpParams } from '@/global/apis/entity';
+import { EmailStep, NicknameStep, PasswordStep } from './components';
 import { COLOR } from '@/global/constants';
-import { SignUpStepType } from './type';
+import { SignUpParams, SignUpStepType } from './type';
 import { useRootNavigation } from '@/navigation/RootNavigation';
 
 const SignUpScreen = () => {
   const navigation = useRootNavigation();
 
-  const [step, setStep] = useState<SignUpStepType>('password');
+  const [step, setStep] = useState<SignUpStepType>('email');
   const [signUpData, setSignUpData] = useState<SignUpParams>({
     email: '',
     password: '',
@@ -27,7 +26,7 @@ const SignUpScreen = () => {
   const backStepHandler = () => {
     switch (step) {
       case 'email':
-        // navigation.reset({routes: [{name:  초기화면으로 이동}]})
+        // navigation.reset({routes: [{name:  초기화면으로 이동}]}) FIXME: 비로그인 홈으로 이동
         break;
       case 'password':
         setStep('email');
@@ -71,7 +70,14 @@ const SignUpScreen = () => {
           setStep={() => setStep('nickname')}
         />
       )}
-      {step === 'nickname'}
+      {step === 'nickname' && (
+        <NicknameStep
+          nicknameValue={signUpData.nickname}
+          signUpData={signUpData}
+          changeNicknameValue={(value: string) => changeSignUpValue('nickname', value)}
+          setStep={() => setStep('complete')}
+        />
+      )}
       {step === 'complete'}
     </View>
   );

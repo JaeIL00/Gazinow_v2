@@ -115,7 +115,6 @@ const ConfirmEmailModal = ({
                   placeholderTextColor={COLOR.GRAY_BE}
                   fontSize="14px"
                   onChangeText={(value) => changeValue(value)}
-                  autoFocus
                   keyboardType="number-pad"
                   style={{ flex: 1 }}
                   maxLength={4}

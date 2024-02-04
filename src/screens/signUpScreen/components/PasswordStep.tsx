@@ -32,7 +32,6 @@ const PasswordStep = ({
 
     if (!text) return;
     const isCombination = combinationValidation.test(text);
-    console.log({ isCombination });
     setIsValidCombination(isCombination);
     const isLength = text.length >= 8 && text.length <= 20;
     setIsValidLength(isLength);
