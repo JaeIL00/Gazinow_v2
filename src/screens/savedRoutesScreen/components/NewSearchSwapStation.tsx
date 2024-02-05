@@ -1,14 +1,14 @@
 import styled from '@emotion/native';
 import { useEffect, useState } from 'react';
-import { Shadow } from 'react-native-shadow-2';
 
 import { IconButton, TextButton } from '@/global/ui';
 import { COLOR, ARRIVAL_STATION, DEPARTURE_STATION } from '@/global/constants';
 import { useAppDispatch } from '@/store';
 import { getSeletedStation } from '@/store/modules';
 import type { StationDataTypes } from '@/store/modules';
-import SearchStationModal from './SearchStationModal';
-import { useHomeNavigation } from '@/navigation/HomeNavigation';
+import SelectNewRouteModal from '@/screens/savedRoutesScreen/components/SelectNewRouteModal';
+import { Modal } from 'react-native';
+import SearchStation from './NewSearchStation';
 
 export interface SelectedStationTypes {
   departure: StationDataTypes;
@@ -17,12 +17,16 @@ export interface SelectedStationTypes {
 
 type StationTypes = typeof DEPARTURE_STATION | typeof ARRIVAL_STATION;
 
-const SwapStation = () => {
-  const homeNavigation = useHomeNavigation();
+interface NewSearchSwapStationProps {
+  setSeletedStation: React.Dispatch<React.SetStateAction<SelectedStationTypes>>;
+}
+
+const NewSearchSwapStation = ({ setSeletedStation }: NewSearchSwapStationProps) => {
   const dispatch = useAppDispatch();
 
   const [searchType, setSearchType] = useState<StationTypes>('출발역');
-  const [isOpenSearchModal, setIsOpenSearchModal] = useState<boolean>(false);
+  const [isOpenSearchStation, setIsOpenSearchStation] = useState<boolean>(false);
+  const [isOpenSelectNewRouteModal, setIsOpenSelectNewRouteModal] = useState<boolean>(false);
   const [selectedStation, setSelectedStation] = useState<SelectedStationTypes>({
     departure: {
       stationName: '',
@@ -34,11 +38,11 @@ const SwapStation = () => {
     },
   });
 
-  const closeSearchModal = () => setIsOpenSearchModal(false);
+  const closeSearchModal = () => setIsOpenSearchStation(false);
 
   const openSearchModal = (type: StationTypes) => {
     setSearchType(type);
-    setIsOpenSearchModal(true);
+    setIsOpenSearchStation(true);
   };
 
   const swapStation = () => {
@@ -58,42 +62,35 @@ const SwapStation = () => {
     }));
   };
 
-  const initSelectedStation = () => {
-    setSelectedStation({
-      departure: {
-        stationName: '',
-        stationLine: null,
-      },
-      arrival: {
-        stationName: '',
-        stationLine: null,
-      },
-    });
-  };
-
   useEffect(() => {
     if (selectedStation.arrival.stationName && selectedStation.departure.stationName) {
-      initSelectedStation();
-      dispatch(
-        getSeletedStation({
-          arrival: selectedStation.arrival,
-          departure: selectedStation.departure,
-        }),
-      );
-      homeNavigation.navigate('SubwayPathResult');
+      setSeletedStation({
+        arrival: selectedStation.arrival,
+        departure: selectedStation.departure,
+      });
+      // FIXME: 경로 선택은 여기서 띄워주지 말아주세요
+      // setIsOpenSelectNewRouteModal(true);
     }
   }, [selectedStation]);
 
+  if (isOpenSearchStation) {
+    return (
+      <SearchStation
+        closeModal={closeSearchModal}
+        setSubwayStation={setSelectedStation}
+        searchType={searchType}
+      />
+    );
+  }
   return (
     <>
-      {isOpenSearchModal && (
-        <SearchStationModal
-          closeModal={closeSearchModal}
-          setSubwayStation={setSelectedStation}
-          searchType={searchType}
-        />
-      )}
-      <Container offset={[0, 4]} distance={34} startColor="rgba(0,0,0,0.05)">
+      {/* 
+      FIXME: SwapStation 컴포넌트에 의존하지 않고 독립적으로 부모에게 동일한 자식 컴포넌트로 사용해주세요. 
+      지금 구조는 부모 자식(SwapStation)의 자식(SelectNewRouteModal)입니다.
+      <Modal visible={isOpenSelectNewRouteModal}>
+        <SelectNewRouteModal />
+      </Modal> */}
+      <Container>
         <InnerBox>
           <StationButton
             value={
@@ -132,12 +129,11 @@ const SwapStation = () => {
   );
 };
 
-export default SwapStation;
+export default NewSearchSwapStation;
 
-const Container = styled(Shadow)`
-  padding: 19px 17px 21px 14px;
+const Container = styled.View`
+  padding: 0 16px;
   background-color: ${COLOR.WHITE};
-  border-radius: 14px;
   flex-direction: row;
   align-items: center;
 `;

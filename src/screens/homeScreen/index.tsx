@@ -6,7 +6,7 @@ const HomeScreen = () => {
   return (
     <Container>
       <Text>홈 페이지</Text>
-      <SwapStation isSavingNewRoute={false}/>
+      <SwapStation />
       {/* <SwapSubwayStation isWrap={true} showHeader={false} /> */}
       <SavedRouteIssues />
     </Container>

@@ -10,7 +10,7 @@ export type RootStackParamList = {
 
 export type HomeStackParamList = {
   Home: undefined;
-  SubwayPathResult: { isSavingNewRoute: boolean | undefined };
+  SubwayPathResult: undefined;
   SubwayPathDetail: { state?: Path | SubPath[]; pathId?: number | null };
   SavedRoutes: undefined;
 };
