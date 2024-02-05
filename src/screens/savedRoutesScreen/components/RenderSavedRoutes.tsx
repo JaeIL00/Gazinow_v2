@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { FontText, TextButton } from '@/global/ui';
 import { COLOR } from '@/global/constants';
-import SubwayRoute from '@/screens/selectNewRouteScreen/components/SubwayRoute';
 import { useDeleteSavedSubwayRoute, useGetSavedRoutesQuery } from '@/global/apis/hook';
 import MyTabModal from '@/global/components/MyTabModal';
 import { useQueryClient } from 'react-query';

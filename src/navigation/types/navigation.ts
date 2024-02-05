@@ -4,27 +4,14 @@ export type RootStackParamList = {
   Temp: undefined;
   Login: undefined;
   MainBottomTab: { screen: 'homeStack' };
-  EditRouteNavigation: {
-    screen: keyof EditRouteStackParamList;
-    params?: { pathId: number | null };
-  };
   MyNavigation: { screen: keyof MyStackParamList };
-};
-
-export type EditRouteStackParamList = {
-  SavedRoutes: undefined;
-  AddNewRoute: undefined;
-  SubwaySearch: { isBackBtn: boolean };
-  SubwayPathResult: undefined;
-  SubwayPathDetail: undefined;
-  NameNewRoute: { screen: string; params?: Path };
 };
 
 export type HomeStackParamList = {
   Home: undefined;
   SubwayPathResult: undefined;
   SubwayPathDetail: { state?: Path | SubPath[]; pathId?: number | null };
-};
+  };
 
 export type MyStackParamList = {
   Nickname: undefined;
