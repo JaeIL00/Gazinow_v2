@@ -46,10 +46,6 @@ const RenderSavedRoutes = () => {
           />
         </View>
 
-        <View style={styles.containerSubwayRoute}>
-          <SubwayRoute />
-        </View>
-
         <View style={styles.borderLine}></View>
       </View>
     ));

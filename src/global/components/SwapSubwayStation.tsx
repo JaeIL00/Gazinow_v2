@@ -7,7 +7,6 @@ import {
   COLOR,
   ARRIVAL_STATION,
   DEPARTURE_STATION,
-  EDIT_ROUTE_NAVIGATION,
 } from '@/global/constants';
 import { useRootNavigation } from '@/navigation/RootNavigation';
 import { useAppDispatch, useAppSelect } from '@/store';
@@ -32,10 +31,6 @@ const SwapSubwayStation = ({ isWrap, showHeader }: SwapProps) => {
 
   const navigateSubwaySearch = (type: StationTypes) => {
     dispatch(getStationType(type));
-
-    // showHeader
-    //   ? rootNavigation.navigate(EDIT_ROUTE_NAVIGATION, { screen: SUBWAY_SEARCH })
-    //   : rootNavigation.navigate(SEARCH_NAVIGATION, { screen: SUBWAY_SEARCH });
   };
 
   const swapStation = () => {

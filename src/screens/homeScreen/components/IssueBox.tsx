@@ -48,9 +48,7 @@ const IssueBox = () => {
             />
           </TextContainer>
         </TextContainer>
-        {/* <View style={styles.containerSubwayRoute}>
-          <SubwayRoute />
-        </View> */}
+
         <IssuesBanner />
         <RecommendedRoutes />
       </RouteContainer>

@@ -2,7 +2,6 @@ import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { IconButton, TextButton, FontText } from '@/global/ui';
 import { COLOR } from '@/global/constants';
-import SubwayRoute from '@/screens/selectNewRouteScreen/components/SubwayRoute';
 import { useGetSearchRoutesQuery } from '@/global/apis/hook';
 
 const RecentSearchBox = () => {
@@ -49,9 +48,7 @@ const RecentSearchBox = () => {
             />
           </View>
         </View>
-        <View style={styles.containerSubwayRoute}>
-          <SubwayRoute />
-        </View>
+
       </View>
     );
   } else {
