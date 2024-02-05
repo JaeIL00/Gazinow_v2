@@ -107,7 +107,7 @@ const InputBox = styled.Pressable`
   padding-horizontal: 16px;
   margin-vertical: 7px;
   border-radius: 5px;
-  background-color: ${COLOR.LIGHT_GRAY};
+  background-color: ${COLOR.GRAY_F9};
 `;
 const TextLengthBox = styled.View`
   align-items: flex-end;

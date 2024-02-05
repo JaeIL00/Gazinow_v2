@@ -8,7 +8,7 @@ import {
   SubwayLine,
   SubwayStrEnd,
 } from '../entity';
-import { LoginFetchResponse } from '@/screens/loginScreen/apis/entity';
+import { SignInFetchResponse } from '@/screens/signInScreen/apis/entity';
 import { API_BASE_URL } from '@env';
 
 /**
@@ -22,7 +22,7 @@ export const tokenReissueFetch = async ({
   refreshToken: string;
 }) => {
   try {
-    const res = await axios.post<{ data: LoginFetchResponse }>(
+    const res = await axios.post<{ data: SignInFetchResponse }>(
       '/api/v1/member/reissue',
       {
         accessToken,
@@ -102,7 +102,7 @@ export const searchPathsFetch = async (params: SubwayStrEnd) => {
     return res.data.data;
   } catch (err) {
     const er = err as AxiosError;
-        throw er;
+    throw er;
   }
 };
 

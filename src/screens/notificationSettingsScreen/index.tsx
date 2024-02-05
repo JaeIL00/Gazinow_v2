@@ -38,7 +38,7 @@ const NotificationSettingsScreen = () => {
       </MenuContainer>
       {pushNotification && (
         <>
-          <Space height="20px" backgroundColor={COLOR.LIGHT_GRAY} />
+          <Space height="20px" backgroundColor={COLOR.GRAY_F9} />
           <MenuContainer>
             <TextButton
               value="내가 저장한 경로 알림"

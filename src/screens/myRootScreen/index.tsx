@@ -128,7 +128,7 @@ const NickNameContainer = styled.Pressable`
 `;
 const ProfileContainer = styled.Pressable`
   padding: 45px 16px;
-  background-color: ${COLOR.LIGHT_GRAY};
+  background-color: ${COLOR.GRAY_F9};
 `;
 const MenuContainer = styled.Pressable`
   flex-direction: row;

@@ -4,18 +4,18 @@ import { View } from 'react-native';
 import { Input, TextButton } from '@/global/ui';
 import { setEncryptedStorage } from '@/global/utils';
 import { useRootNavigation } from '@/navigation/RootNavigation';
-import { LoginFormTypes } from './apis/entity';
-import { useLoginMutation } from './apis/hook';
+import { SignInFormTypes } from './apis/entity';
+import { useSignInMutation } from './apis/hook';
 
-const initialFormState: LoginFormTypes = {
+const initialFormState: SignInFormTypes = {
   email: '',
   password: '',
 };
 
-const LoginScreen = () => {
+const SignInScreen = () => {
   const navigation = useRootNavigation();
 
-  const { loginMutate } = useLoginMutation({
+  const { signInMutate } = useSignInMutation({
     onSuccess: async ({ accessToken, refreshToken }) => {
       await setEncryptedStorage('access_token', accessToken);
       await setEncryptedStorage('refresh_token', refreshToken);
@@ -23,14 +23,14 @@ const LoginScreen = () => {
     },
   });
 
-  const [formData, setFormData] = useState<LoginFormTypes>(initialFormState);
+  const [formData, setFormData] = useState<SignInFormTypes>(initialFormState);
 
   const changeFormText = (type: 'email' | 'password', text: string) => {
     setFormData((prev) => ({ ...prev, [type]: text }));
   };
 
   const submitFormData = () => {
-    loginMutate(formData);
+    signInMutate(formData);
   };
 
   return (
@@ -58,4 +58,4 @@ const LoginScreen = () => {
   );
 };
 
-export default LoginScreen;
+export default SignInScreen;

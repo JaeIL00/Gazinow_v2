@@ -1,17 +1,17 @@
 import { useMutation } from 'react-query';
-import { loginFetch, logoutFetch } from '../func';
-import { LoginFetchResponse } from '../entity';
+import { signInFetch, logoutFetch } from '../func';
+import { SignInFetchResponse } from '../entity';
 
 /**
  * 로그인 요청 훅
  */
-export const useLoginMutation = ({
+export const useSignInMutation = ({
   onSuccess,
 }: {
-  onSuccess: (data: LoginFetchResponse) => void;
+  onSuccess: (data: SignInFetchResponse) => void;
 }) => {
-  const { mutate: loginMutate } = useMutation(loginFetch, { onSuccess });
-  return { loginMutate };
+  const { mutate: signInMutate } = useMutation(signInFetch, { onSuccess });
+  return { signInMutate };
 };
 
 /**

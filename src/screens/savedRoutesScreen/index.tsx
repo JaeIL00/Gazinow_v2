@@ -41,7 +41,7 @@ const RouteContainer = styled.View`
 `;
 const Container = styled.ScrollView`
   padding: 0 16px 20px;
-  background-color: ${COLOR.LIGHT_GRAY};
+  background-color: ${COLOR.GRAY_F9};
 `;
 const AddContainer = styled.Pressable`
   padding: 0px 0px 20px;
