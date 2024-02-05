@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
-import { View, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
+import { View, TouchableOpacity, StyleSheet } from 'react-native';
 import { FontText, TextButton } from '@/global/ui';
-import { COLOR, EDIT_ROUTE_NAVIGATION, SAVED_ROUTES } from '@/global/constants';
-import { useRootNavigation } from '@/navigation/RootNavigation';
+import { COLOR } from '@/global/constants';
 import SavedRouteBox from './SavedRouteBox';
 import RecentSearchBox from './RecentSearchBox';
 import IssueBox from './IssueBox';
+import { useHomeNavigation } from '@/navigation/HomeNavigation';
 
 const categoryName: ['저장경로', '최근검색', '이슈'] = ['저장경로', '최근검색', '이슈'];
 
 const SavedRouteIssues = () => {
-  const rootNavigation = useRootNavigation();
+  const homeNavigation = useHomeNavigation();
   const [activeButton, setActiveButton] = useState<'저장경로' | '최근검색' | '이슈'>('저장경로');
 
   const handleButtonClick = (buttonText: typeof activeButton) => setActiveButton(buttonText);
@@ -47,7 +47,7 @@ const SavedRouteIssues = () => {
           textSize="12px"
           textColor={COLOR.GRAY_999}
           textWeight="Regular"
-          onPress={() => rootNavigation.navigate(EDIT_ROUTE_NAVIGATION, { screen: SAVED_ROUTES })}
+          onPress={() => homeNavigation.navigate('SavedRoutes')}
           lineHeight="15px"
         />
       </View>
