@@ -1,18 +1,28 @@
 import styled from '@emotion/native';
 import { FontText, Input } from '@/global/ui';
 import { COLOR } from '@/global/constants';
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useRootNavigation } from '@/navigation/RootNavigation';
-import { useRoute } from '@react-navigation/native';
 import { useSaveMyRoutesQuery } from '@/global/apis/hook';
 import { useQueryClient } from 'react-query';
+import { SubwaySimplePath } from '@/global/components';
+import { Path, SubPath } from '@/global/apis/entity';
 
-const NameNewRouteScreen = () => {
-  const { params } = useRoute();
-  const { pathId } = params as { pathId: number };
+interface ModalProps {
+  item: Path | null;
+}
+
+const NameNewRouteModal = (item: ModalProps) => {
   const navigation = useRootNavigation();
   const [roadName, setRoadName] = useState<string>();
   const queryClient = useQueryClient();
+
+
+  //item이 한 번 더 감싸져서 오는 버그 수정하기
+  const freshSubPathData: SubPath[] = useMemo(() => {
+    const subPaths = item?.item?.subPaths || [];
+    return subPaths.filter((subPath) => !!subPath.lanes.length && !!subPath.stations.length);
+  }, [item]);
 
   const { mutate } = useSaveMyRoutesQuery({
     onSuccess: async () => {
@@ -24,39 +34,15 @@ const NameNewRouteScreen = () => {
     },
   });
 
-  const newRoute = {
-    roadName: roadName,
-    totalTime: 0,
-    subwayTransitCount: 0,
-    firstStartStation: 'string',
-    lastEndStation: 'string',
-    subPaths: [
-      {
-        trafficType: 1,
-        distance: 0,
-        sectionTime: 0,
-        stationCount: 0,
-        lanes: [
-          {
-            name: 'string',
-            StationCode: 0,
-            startName: 'string',
-            endName: pathId,
-          },
-        ],
-        subways: [
-          {
-            index: pathId,
-            stationName: '압구정',
-          },
-        ],
-      },
-    ],
-  };
-
   return (
     <Container>
-      {/* 경로 그래프 */}
+      <SubPathContainer>
+        <SubwaySimplePath
+          pathData={freshSubPathData}
+          arriveStationName={(item.item as ModalProps)?.lastEndStation}
+          betweenPathMargin={24}
+        />
+      </SubPathContainer>
       <FontText
         value="새 경로 이름"
         textSize="14px"
@@ -87,7 +73,7 @@ const NameNewRouteScreen = () => {
 
       <BottomBtn
         onPress={() => {
-          mutate(newRoute);
+          mutate({ roadName: roadName, subPaths: freshSubPathData });
           navigation.popToTop();
         }}
         disabled={!roadName}
@@ -104,12 +90,17 @@ const NameNewRouteScreen = () => {
   );
 };
 
-export default NameNewRouteScreen;
+export default NameNewRouteModal;
 
 const Container = styled.View`
   background-color: ${COLOR.WHITE};
   padding-horizontal: 16px;
   flex: 1;
+`;
+const SubPathContainer = styled.View`
+  margin-top: 48px;
+  margin-bottom: 40px;
+  margin-horizontal: 33px;
 `;
 const InputBox = styled.Pressable`
   padding-vertical: 12px;

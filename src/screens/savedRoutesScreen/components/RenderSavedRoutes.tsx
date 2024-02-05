@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { FontText, TextButton } from '@/global/ui';
 import { COLOR } from '@/global/constants';
-import SubwayRoute from '@/screens/selectNewRouteScreen/components/SubwayRoute';
 import { useDeleteSavedSubwayRoute, useGetSavedRoutesQuery } from '@/global/apis/hook';
 import MyTabModal from '@/global/components/MyTabModal';
 import { useQueryClient } from 'react-query';
@@ -46,10 +45,6 @@ const RenderSavedRoutes = () => {
           />
         </View>
 
-        <View style={styles.containerSubwayRoute}>
-          <SubwayRoute />
-        </View>
-
         <View style={styles.borderLine}></View>
       </View>
     ));
@@ -61,7 +56,7 @@ const RenderSavedRoutes = () => {
 
   const hideModal = () => setPopupVisible(false);
 
-  const handleConfirm = async () => {
+  const handleConfirm = () => {
     deleteMutate({ id: routeToDelete });
     hideModal();
   };

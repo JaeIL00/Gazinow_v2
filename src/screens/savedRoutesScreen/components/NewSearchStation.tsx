@@ -8,23 +8,16 @@ import { useAppDispatch } from '@/store';
 import { getSearchText } from '@/store/modules/subwaySearchModule';
 import { useAddRecentSearch, useGetSearchHistory, useSearchStationName } from '@/global/apis/hook';
 import { useCallback, useState } from 'react';
-import { useHomeNavigation } from '@/navigation/HomeNavigation';
 import { debounce } from 'lodash';
-import { Modal } from 'react-native';
-import { SelectedStationTypes } from './SwapStation';
+import { SelectedStationTypes } from './NewSearchSwapStation';
 
-interface SearchStationModalProps {
+interface SearchStationProps {
   searchType: '출발역' | '도착역';
   closeModal: () => void;
   setSubwayStation: React.Dispatch<React.SetStateAction<SelectedStationTypes>>;
 }
 
-const SearchStationModal = ({
-  searchType,
-  closeModal,
-  setSubwayStation,
-}: SearchStationModalProps) => {
-  const homeNavigation = useHomeNavigation();
+const NewSearchStation = ({ searchType, closeModal, setSubwayStation }: SearchStationProps) => {
   const dispatch = useAppDispatch();
 
   const { data: history } = useGetSearchHistory();
@@ -69,16 +62,8 @@ const SearchStationModal = ({
   };
 
   return (
-    <Modal visible onRequestClose={() => closeModal()}>
+    <>
       <Container>
-        <IconButton
-          iconType="Ionicons"
-          isFontIcon
-          iconName="arrow-back-sharp"
-          iconWidth="19.5"
-          iconColor="#49454F"
-          onPress={() => homeNavigation.goBack()}
-        />
         <SearchInput
           value={searchTextValue}
           placeholder={`${searchType}을 검색해보세요`}
@@ -170,11 +155,11 @@ const SearchStationModal = ({
           </Ul>
         </ResultContainer>
       )}
-    </Modal>
+    </>
   );
 };
 
-export default SearchStationModal;
+export default NewSearchStation;
 
 const Container = styled.View`
   flex-direction: row;

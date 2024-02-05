@@ -3,7 +3,6 @@ import { View, StyleSheet } from 'react-native';
 import { IconButton, TextButton, FontText } from '@/global/ui';
 import { COLOR } from '@/global/constants';
 import styled from '@emotion/native';
-import SubwayRoute from '@/screens/selectNewRouteScreen/components/SubwayRoute';
 
 const RecommendedRoutes = () => {
   const routeDetail = () => {
@@ -42,9 +41,6 @@ const RecommendedRoutes = () => {
         </View>
       </View>
 
-      <View style={styles.containerSubwayRoute}>
-        <SubwayRoute />
-      </View>
     </Container>
   );
 };

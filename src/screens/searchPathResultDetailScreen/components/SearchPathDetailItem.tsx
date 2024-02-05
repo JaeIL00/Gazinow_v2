@@ -16,7 +16,6 @@ interface SearchPathDetailItemProps {
 const SearchPathDetailItem = ({ data, isLastLane }: SearchPathDetailItemProps) => {
   const [isOpenPathList, setIsOpenPathList] = useState<boolean>(false);
   const lastIdx = data.stations.length - 1;
-
   return (
     <View
       style={css`

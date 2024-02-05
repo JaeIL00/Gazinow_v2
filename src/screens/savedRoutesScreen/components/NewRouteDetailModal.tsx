@@ -1,40 +1,22 @@
 import { css } from '@emotion/native';
-import { useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import { FlatList, View } from 'react-native';
-
 import { FontText, IconButton } from '@/global/ui';
 import { useRootNavigation } from '@/navigation/RootNavigation';
-import { useRoute } from '@react-navigation/native';
-import { useDeleteSavedSubwayRoute } from '@/global/apis/hook';
 import { Path, SubPath } from '@/global/apis/entity';
-import NewRouteSaveModal from '../searchPathResultDetailScreen/components/NewRouteSaveModal';
-import SearchPathDetailItem from '../searchPathResultDetailScreen/components/SearchPathDetailItem';
-
-const NewRoutePathDetailScreen = () => {
-  const route = useRoute();
+import SearchPathDetailItem from '@/screens/searchPathResultDetailScreen/components/SearchPathDetailItem';
+interface ModalProps {
+  item: Path | null;
+}
+const NewRouteDetailModal = (item: ModalProps) => {
   const navigation = useRootNavigation();
-
-  // const { deleteMutate } = useDeleteSavedSubwayRoute({
-  //   onSuccess: () => {
-  //     setIsBookmarking(false);
-  //   },
-  // });
-
-  // const [isBookmarking, setIsBookmarking] = useState<boolean>(false);
-  // const [isSaveRouteModalOpen, setIsSaveRouteModalOpen] = useState<boolean>(false);
-
+ 
+  //item이 한 번 더 감싸져서 오는 버그 수정하기
   const freshSubPathData: SubPath[] = useMemo(() => {
-    const { subPaths } = route.params as Path;
-    return Object.values(subPaths).filter((item) => !!item.lanes.length && !!item.subways.length);
-  }, [route]);
+    const subPaths = item?.item?.subPaths || [];
+    return subPaths.filter((subPath) => !!subPath.lanes.length && !!subPath.stations.length);
+  }, [item]);
 
-  // const bookmarkHandler = () => {
-  //   if (isBookmarking) {
-  //     deleteMutate({ id: 8 }); // 백엔드: 저장 아이디
-  //   } else {
-  //     setIsSaveRouteModalOpen(true);
-  //   }
-  // };
   return (
     <View
       style={css`
@@ -60,21 +42,6 @@ const NewRoutePathDetailScreen = () => {
           iconWidth="24"
           onPress={() => navigation.goBack()}
         />
-        {/* <IconButton
-          iconType="FontAwesome"
-          isFontIcon={true}
-          iconName={isBookmarking ? 'bookmark' : 'bookmark-o'}
-          iconWidth="24"
-          iconColor={isBookmarking ? '#346BF7' : '#999'}
-          onPress={bookmarkHandler}
-        />
-        {isSaveRouteModalOpen && (
-          <NewRouteSaveModal
-            freshData={{ ...(route.params as Path), subPaths: freshSubPathData }}
-            closeModal={() => setIsSaveRouteModalOpen(false)}
-            onBookmark={() => setIsBookmarking(true)}
-          />
-        )} */}
       </View>
       <View
         style={css`
@@ -140,4 +107,4 @@ const NewRoutePathDetailScreen = () => {
   );
 };
 
-export default NewRoutePathDetailScreen;
+export default NewRouteDetailModal;

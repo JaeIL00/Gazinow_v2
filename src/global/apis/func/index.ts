@@ -1,8 +1,6 @@
-import { subwayFreshLineName } from '@/global/utils';
 import axios, { AxiosError } from 'axios';
 import { axiosInstance } from '../axiosInstance';
 import {
-  AddRouteTypes,
   SavedRoute,
   SearchHistoryStationNameTypes,
   SearchPathsTypes,

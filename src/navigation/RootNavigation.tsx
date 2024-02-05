@@ -2,8 +2,8 @@ import { useNavigation } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import type { StackNavigationProp } from '@react-navigation/stack';
 
-import { EDIT_ROUTE_NAVIGATION, SIGNIN, MAIN_BOTTOM_TAB, MY_NAVIGATION } from '@/global/constants';
-import { EditRouteNavigation, MainBottomTabNavigation } from '@/navigation';
+import { MainBottomTabNavigation } from '@/navigation';
+import { SIGNIN, MAIN_BOTTOM_TAB, MY_NAVIGATION } from '@/global/constants';
 import type { RootStackParamList } from '@/navigation/types/navigation';
 import { useMutation } from 'react-query';
 import { useEffect } from 'react';
@@ -23,7 +23,7 @@ const screenOption = {
 
 const RootNavigation = () => {
   return (
-    <Stack.Navigator screenOptions={screenOption} initialRouteName="SignUp">
+    <Stack.Navigator screenOptions={screenOption}>
       <Stack.Screen
         name={'Temp'}
         component={() => {
@@ -70,7 +70,6 @@ const RootNavigation = () => {
       <Stack.Screen name={SIGNIN} component={SignInScreen} />
       <Stack.Screen name="SignUp" component={SignUpScreen} />
       <Stack.Screen name={MAIN_BOTTOM_TAB} component={MainBottomTabNavigation} />
-      <Stack.Screen name={EDIT_ROUTE_NAVIGATION} component={EditRouteNavigation} />
       <Stack.Screen name={MY_NAVIGATION} component={MyNavigation} />
     </Stack.Navigator>
   );

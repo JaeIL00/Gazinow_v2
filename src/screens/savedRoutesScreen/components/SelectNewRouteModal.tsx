@@ -1,47 +1,57 @@
 import styled, { css } from '@emotion/native';
-import { Pressable, View } from 'react-native';
+import { Modal, Pressable, ScrollView, View } from 'react-native';
 import { FontText, Space } from '@/global/ui';
 import { COLOR } from '@/global/constants';
-import {
-  EDIT_ROUTE_NAVIGATION,
-  NAME_NEW_ROUTE,
-  SUBWAY_PATH_DETAIL,
-} from '@/global/constants/navigation';
-import React, { useState } from 'react';
+import 'dayjs/locale/ko';
+import { SubwaySimplePath, SwapSubwayStation } from '@/global/components';
+import { useGetSearchPaths } from '@/global/apis/hook';
+import { useAppSelect } from '@/store';
+import { useState } from 'react';
 import { useRootNavigation } from '@/navigation/RootNavigation';
-import { SwapSubwayStation } from '@/global/components';
-import SubwayRoute from './components/SubwayRoute';
+import { Path } from '@/global/apis/entity';
+import NewRouteDetailModal from './NewRouteDetailModal';
+import NameNewRouteModal from './NameNewRouteModal';
 
-const dummy = [
-  { time: '45분', departureName: '신용산역', departureLine: '4', arrivalLine: '2' },
-  { time: '45분', departureName: '신용산역', departureLine: '4', arrivalLine: '2' },
-];
-
-const SelectNewRouteScreen = () => {
+const SelectNewRouteModal = () => {
   const navigation = useRootNavigation();
-  const [selectedRouteIndex, setSelectedRouteIndex] = useState<number | null>(null);
-  console.log('selectedRouteIndex: ', selectedRouteIndex);
+  const { arrival, departure } = useAppSelect(({ subwaySearch }) => subwaySearch.selectedStation);
+  const [selectedRoutePath, setSelectedRoutePath] = useState<Path | null>(null);
+  const [isNewRouteDetailModalOpened, setIsNewRouteDetailModalOpened] = useState<boolean>(false);
+  const [isNameNewRouteModalOpened, setIsNameNewRouteModalOpened] = useState<boolean>(false);
+
+  const { data } = useGetSearchPaths({
+    strStationName: departure.stationName,
+    strStationLine: departure.stationLine,
+    endStationName: arrival.stationName,
+    endStationLine: arrival.stationLine,
+  });
 
   return (
     <Container>
+      <Modal visible={isNewRouteDetailModalOpened}>
+        <NewRouteDetailModal item={selectedRoutePath} />
+      </Modal>
+      <Modal visible={isNameNewRouteModalOpened}>
+        <NameNewRouteModal item={selectedRoutePath} />
+      </Modal>
+
       <SwapSubwayBox>
         <Container>
           <SwapSubwayStation isWrap={false} showHeader={true} />
         </Container>
       </SwapSubwayBox>
-      <Container>
-        <View>
-          {dummy.map((item, index) => (
-            <PathInner
-              key={index}
-              onPress={() => {
-                navigation.navigate(EDIT_ROUTE_NAVIGATION, {
-                  screen: SUBWAY_PATH_DETAIL,
-                  params: { pathId: selectedRouteIndex },
-                });
-              }}
-            >
-              <View>
+
+      <SubPathContainer>
+        <ScrollView>
+          {data?.paths.map((item) => {
+            return (
+              <PathInner
+                key={item.firstStartStation + item.totalTime}
+                onPress={() => {
+                  setSelectedRoutePath(item);
+                  setIsNewRouteDetailModalOpened(true);
+                }}
+              >
                 <PathTitleInfoBox>
                   <View>
                     <FontText
@@ -53,7 +63,7 @@ const SelectNewRouteScreen = () => {
                     />
                     <Space height="4px" />
                     <FontText
-                      value={item.time}
+                      value={`${item.totalTime}분`}
                       textSize="20px"
                       textWeight="SemiBold"
                       lineHeight="25px"
@@ -61,30 +71,28 @@ const SelectNewRouteScreen = () => {
                     />
                   </View>
                   <RadioButtonContainer
-                    selected={selectedRouteIndex === index}
-                    onPress={() => setSelectedRouteIndex(index)}
+                    selected={selectedRoutePath === item}
+                    onPress={() => setSelectedRoutePath(item)}
                   >
-                    {selectedRouteIndex === index && <InnerCircle />}
+                    {selectedRoutePath === item && <InnerCircle />}
                   </RadioButtonContainer>
                 </PathTitleInfoBox>
-                <SubwayRouteContainer>
-                  <SubwayRoute />
-                </SubwayRouteContainer>
-              </View>
-              {/* 경로 그래프 */}
-            </PathInner>
-          ))}
-        </View>
-      </Container>
+                <SubwaySimplePath
+                  pathData={item.subPaths}
+                  arriveStationName={item.lastEndStation}
+                  betweenPathMargin={24}
+                />
+              </PathInner>
+            );
+          })}
+        </ScrollView>
+      </SubPathContainer>
 
       <BottomBtn
         onPress={() => {
-          navigation.navigate(EDIT_ROUTE_NAVIGATION, {
-            screen: NAME_NEW_ROUTE,
-            params: { pathId: selectedRouteIndex },
-          });
+          setIsNameNewRouteModalOpened(true);
         }}
-        disabled={selectedRouteIndex === null}
+        disabled={selectedRoutePath === null}
       >
         <FontText
           value="다음"
@@ -98,15 +106,14 @@ const SelectNewRouteScreen = () => {
   );
 };
 
-export default SelectNewRouteScreen;
+export default SelectNewRouteModal;
 
-const SubwayRouteContainer = styled.View`
-  margin-top: 40px;
-  flex-direction: row;
-  justify-content: space-between;
-`;
 const Container = styled.View`
   background-color: ${COLOR.WHITE};
+  flex: 1;
+`;
+const SubPathContainer = styled.View`
+  padding-bottom: 30px;
   flex: 1;
 `;
 const SwapSubwayBox = styled.View`
