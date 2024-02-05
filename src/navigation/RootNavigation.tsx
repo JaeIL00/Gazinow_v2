@@ -23,7 +23,7 @@ const screenOption = {
 
 const RootNavigation = () => {
   return (
-    <Stack.Navigator screenOptions={screenOption} initialRouteName="SignUp">
+    <Stack.Navigator screenOptions={screenOption}>
       <Stack.Screen
         name={'Temp'}
         component={() => {
