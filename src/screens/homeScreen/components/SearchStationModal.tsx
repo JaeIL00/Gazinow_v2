@@ -2,7 +2,7 @@ import styled from '@emotion/native';
 import Icon from 'react-native-vector-icons/Feather';
 
 import { iconPath } from '@/assets/icons/iconPath';
-import { FontText, Input, IconButton } from '@/global/ui';
+import { FontText, Input, IconButton, Space } from '@/global/ui';
 import { COLOR, SUBWAY_PATH_RESULT } from '@/global/constants';
 import { useRootNavigation } from '@/navigation/RootNavigation';
 import { useAppDispatch, useAppSelect } from '@/store';
@@ -15,17 +15,20 @@ import { useHomeNavigation } from '@/navigation/HomeNavigation';
 import { debounce } from 'lodash';
 import { Modal } from 'react-native';
 import { SelectedStationTypes } from './SwapStation';
+import AddNewRouteHeader from '@/screens/savedRoutesScreen/components/AddNewRouteHeader';
 
 interface SearchResultListProps {
   searchType: '출발역' | '도착역';
   closeModal: () => void;
   setSubwayStation: React.Dispatch<React.SetStateAction<SelectedStationTypes>>;
+  isSavingNewRoute: boolean | undefined;
 }
 
 const SearchStationModal = ({
   searchType,
   closeModal,
   setSubwayStation,
+  isSavingNewRoute,
 }: SearchResultListProps) => {
   const rootNavigation = useRootNavigation();
   const homeNavigation = useHomeNavigation();
@@ -78,15 +81,18 @@ const SearchStationModal = ({
 
   return (
     <Modal visible onRequestClose={() => closeModal()}>
+      {isSavingNewRoute && <AddNewRouteHeader />}
       <Container>
-        <IconButton
-          iconType="Ionicons"
-          isFontIcon
-          iconName="arrow-back-sharp"
-          iconWidth="19.5"
-          iconColor="#49454F"
-          onPress={backToScreen}
-        />
+        {!isSavingNewRoute && (
+          <IconButton
+            iconType="Ionicons"
+            isFontIcon
+            iconName="arrow-back-sharp"
+            iconWidth="19.5"
+            iconColor="#49454F"
+            onPress={backToScreen}
+          />
+        )}
         <SearchInput
           value={searchTextValue}
           placeholder={`${searchType}을 검색해보세요`}
@@ -94,6 +100,7 @@ const SearchStationModal = ({
           inputMode="search"
           onChangeText={changeSearchText}
           autoFocus
+          isSavingNewRoute
         />
         <IconButton
           iconType="Ionicons"
@@ -191,10 +198,10 @@ const Container = styled.View`
   padding: 4px 16px 4px 18.25px;
   margin: 16px 16px 0;
 `;
-const SearchInput = styled(Input)`
+const SearchInput = styled(Input)<{ isSavingNewRoute?: boolean }>`
   height: 36px;
   flex: 1;
-  margin-left: 18.25px;
+  margin-left: ${({ isSavingNewRoute }) => (isSavingNewRoute ? '1.75px' : '18.25px')};
   margin-right: 31.2px;
 `;
 const ResultContainer = styled.View`

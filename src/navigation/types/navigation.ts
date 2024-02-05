@@ -9,9 +9,10 @@ export type RootStackParamList = {
 
 export type HomeStackParamList = {
   Home: undefined;
-  SubwayPathResult: undefined;
+  SubwayPathResult: { isSavingNewRoute: boolean | undefined };
   SubwayPathDetail: { state?: Path | SubPath[]; pathId?: number | null };
-  };
+  SavedRoutes: undefined;
+};
 
 export type MyStackParamList = {
   Nickname: undefined;

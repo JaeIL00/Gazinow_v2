@@ -9,6 +9,8 @@ import { getSeletedStation } from '@/store/modules';
 import type { StationDataTypes } from '@/store/modules';
 import SearchStationModal from './SearchStationModal';
 import { useHomeNavigation } from '@/navigation/HomeNavigation';
+import SelectNewRouteModal from '@/screens/savedRoutesScreen/components/SelectNewRouteModal';
+import { Modal } from 'react-native';
 
 export interface SelectedStationTypes {
   departure: StationDataTypes;
@@ -17,12 +19,18 @@ export interface SelectedStationTypes {
 
 type StationTypes = typeof DEPARTURE_STATION | typeof ARRIVAL_STATION;
 
-const SwapStation = () => {
+interface SwapProps {
+  isWrap?: boolean;
+  isSavingNewRoute?: boolean | undefined;
+}
+
+const SwapStation = ({ isWrap, isSavingNewRoute }: SwapProps) => {
   const homeNavigation = useHomeNavigation();
   const dispatch = useAppDispatch();
 
   const [searchType, setSearchType] = useState<StationTypes>('출발역');
   const [isOpenSearchModal, setIsOpenSearchModal] = useState<boolean>(false);
+  const [isOpenSelectNewRouteModal, setIsOpenSelectNewRouteModal] = useState<boolean>(false);
   const [selectedStation, setSelectedStation] = useState<SelectedStationTypes>({
     departure: {
       stationName: '',
@@ -80,7 +88,9 @@ const SwapStation = () => {
           departure: selectedStation.departure,
         }),
       );
-      homeNavigation.navigate('SubwayPathResult');
+      isSavingNewRoute
+        ? setIsOpenSelectNewRouteModal(true)
+        : homeNavigation.navigate('SubwayPathResult', { isSavingNewRoute: isSavingNewRoute });
     }
   }, [selectedStation]);
 
@@ -91,9 +101,19 @@ const SwapStation = () => {
           closeModal={closeSearchModal}
           setSubwayStation={setSelectedStation}
           searchType={searchType}
+          isSavingNewRoute={isSavingNewRoute}
         />
       )}
-      <Container offset={[0, 4]} distance={34} startColor="rgba(0,0,0,0.05)">
+      <Modal visible={isOpenSelectNewRouteModal}>
+        <SelectNewRouteModal />
+      </Modal>
+      <Container
+        isWrap={isWrap}
+        offset={[0, 4]}
+        distance={34}
+        startColor="rgba(0,0,0,0.05)"
+        disabled={!isWrap}
+      >
         <InnerBox>
           <StationButton
             value={
@@ -134,7 +154,7 @@ const SwapStation = () => {
 
 export default SwapStation;
 
-const Container = styled(Shadow)`
+const Container = styled(Shadow)<SwapProps>`
   padding: 19px 17px 21px 14px;
   background-color: ${COLOR.WHITE};
   border-radius: 14px;
