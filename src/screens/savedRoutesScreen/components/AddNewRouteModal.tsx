@@ -41,6 +41,7 @@ const AddNewRouteModal = ({ isVisible, onCancel }: ModalProps) => {
         isNameNewRouteModalOpened={isNameNewRouteModalOpened}
         setIsNameNewRouteModalOpened={setIsNameNewRouteModalOpened}
       />
+      {/* TODO: 경로 이름 입력 컴포넌트에서 뒤로가기하면 지하철역 입력값 초기화되는 현상 수정*/}
       {isNewSearchSwapStationOpened && (
         <NewSearchSwapStation
           setSeletedStation={setSeletedStation}
@@ -51,6 +52,7 @@ const AddNewRouteModal = ({ isVisible, onCancel }: ModalProps) => {
         <SelectNewRouteModal
           onCancel={onCancel}
           seletedStation={seletedStation}
+          //TODO: Path 타입에러 잡기
           setSeletedRoutePath={setSeletedRoutePath}
           setIsOpenSelectNewRouteModal={setIsOpenSelectNewRouteModal}
           setIsNewRouteDetailModalOpened={setIsNewRouteDetailModalOpened}
@@ -58,16 +60,16 @@ const AddNewRouteModal = ({ isVisible, onCancel }: ModalProps) => {
           setIsNewSearchSwapStationOpened={setIsNewSearchSwapStationOpened}
         />
       )}
-
       {isNewRouteDetailModalOpened && seletedRoutePath && (
         <NewRouteDetailModal
+          //TODO: Path 타입에러 잡기
           item={seletedRoutePath}
           setIsNewRouteDetailModalOpened={setIsNewRouteDetailModalOpened}
         />
       )}
-
       {isNameNewRouteModalOpened && seletedRoutePath && (
         <NameNewRouteModal
+          //TODO: Path 타입에러 잡기
           item={seletedRoutePath}
           isOpenSelectNewRouteModal={isOpenSelectNewRouteModal}
           setIsOpenSelectNewRouteModal={setIsOpenSelectNewRouteModal}
