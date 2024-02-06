@@ -1,46 +1,48 @@
 import styled, { css } from '@emotion/native';
-import { Modal, Pressable, ScrollView, View } from 'react-native';
+import { Pressable, ScrollView, View } from 'react-native';
 import { FontText, Space } from '@/global/ui';
 import { COLOR } from '@/global/constants';
-import 'dayjs/locale/ko';
-import { SubwaySimplePath, SwapSubwayStation } from '@/global/components';
+import { SubwaySimplePath } from '@/global/components';
 import { useGetSearchPaths } from '@/global/apis/hook';
-import { useAppSelect } from '@/store';
-import { useState } from 'react';
-import { useRootNavigation } from '@/navigation/RootNavigation';
+import { Dispatch, SetStateAction, useState } from 'react';
 import { Path } from '@/global/apis/entity';
-import NewRouteDetailModal from './NewRouteDetailModal';
-import NameNewRouteModal from './NameNewRouteModal';
+import { StationDataTypes } from '@/store/modules';
 
-const SelectNewRouteModal = () => {
-  const navigation = useRootNavigation();
-  const { arrival, departure } = useAppSelect(({ subwaySearch }) => subwaySearch.selectedStation);
+interface SelectedStationTypes {
+  departure: StationDataTypes;
+  arrival: StationDataTypes;
+}
+interface SelectNewRouteProps {
+  seletedStation: SelectedStationTypes;
+  onCancel: () => void;
+  setSeletedRoutePath: Dispatch<SetStateAction<Path | null>>;
+  setIsNewSearchSwapStationOpened: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsOpenSelectNewRouteModal: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsNewRouteDetailModalOpened: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsNameNewRouteModalOpened: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const SelectNewRouteModal = ({
+  seletedStation,
+  setSeletedRoutePath,
+  setIsNewSearchSwapStationOpened,
+  setIsOpenSelectNewRouteModal,
+  setIsNewRouteDetailModalOpened,
+  setIsNameNewRouteModalOpened,
+}: SelectNewRouteProps) => {
   const [selectedRoutePath, setSelectedRoutePath] = useState<Path | null>(null);
-  const [isNewRouteDetailModalOpened, setIsNewRouteDetailModalOpened] = useState<boolean>(false);
-  const [isNameNewRouteModalOpened, setIsNameNewRouteModalOpened] = useState<boolean>(false);
 
   const { data } = useGetSearchPaths({
-    strStationName: departure.stationName,
-    strStationLine: departure.stationLine,
-    endStationName: arrival.stationName,
-    endStationLine: arrival.stationLine,
+    strStationName: seletedStation.departure.stationName,
+    strStationLine: seletedStation.departure.stationLine,
+    endStationName: seletedStation.arrival.stationName,
+    endStationLine: seletedStation.arrival.stationLine,
   });
+
+  setSeletedRoutePath(selectedRoutePath);
 
   return (
     <Container>
-      <Modal visible={isNewRouteDetailModalOpened}>
-        <NewRouteDetailModal item={selectedRoutePath} />
-      </Modal>
-      <Modal visible={isNameNewRouteModalOpened}>
-        <NameNewRouteModal item={selectedRoutePath} />
-      </Modal>
-
-      <SwapSubwayBox>
-        <Container>
-          <SwapSubwayStation isWrap={false} showHeader={true} />
-        </Container>
-      </SwapSubwayBox>
-
       <SubPathContainer>
         <ScrollView>
           {data?.paths.map((item) => {
@@ -90,7 +92,9 @@ const SelectNewRouteModal = () => {
 
       <BottomBtn
         onPress={() => {
+          setIsOpenSelectNewRouteModal(false);
           setIsNameNewRouteModalOpened(true);
+          setIsNewSearchSwapStationOpened(false);
         }}
         disabled={selectedRoutePath === null}
       >
@@ -115,13 +119,6 @@ const Container = styled.View`
 const SubPathContainer = styled.View`
   padding-bottom: 30px;
   flex: 1;
-`;
-const SwapSubwayBox = styled.View`
-  background-color: ${COLOR.WHITE};
-  flex-direction: row;
-  padding: 30px 16px 45px 22px;
-  border-bottom-color: #ebebeb;
-  border-bottom-width: 1px;
 `;
 const PathTitleInfoBox = styled.View`
   flex-direction: row;
@@ -159,6 +156,6 @@ const BottomBtn = styled.Pressable`
   border-radius: 5px;
   align-items: center;
   bottom: 41px;
-  ${({ disabled }) =>
+    ${({ disabled }) =>
     disabled ? `background-color : #dddddd` : `background-color : ${COLOR.BASIC_BLACK};`}
 `;

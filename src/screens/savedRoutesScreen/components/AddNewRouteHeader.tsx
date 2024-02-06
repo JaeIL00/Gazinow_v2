@@ -1,12 +1,44 @@
 import React from 'react';
 import styled from '@emotion/native';
-import { IconButton, Space, TextButton } from '@/global/ui';
+import { FontText, IconButton, Space } from '@/global/ui';
 
-const AddNewRouteHeader = () => {
+interface HeaderProps {
+  onCancel: () => void;
+  isNewSearchSwapStationOpened: boolean;
+  setIsNewSearchSwapStationOpened: React.Dispatch<React.SetStateAction<boolean>>;
+  isOpenSelectNewRouteModal: boolean;
+  setIsOpenSelectNewRouteModal: React.Dispatch<React.SetStateAction<boolean>>;
+  isNameNewRouteModalOpened: boolean;
+  setIsNameNewRouteModalOpened: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const AddNewRouteHeader = ({
+  onCancel,
+  isNewSearchSwapStationOpened,
+  setIsNewSearchSwapStationOpened,
+  isOpenSelectNewRouteModal,
+  setIsOpenSelectNewRouteModal,
+  isNameNewRouteModalOpened,
+  setIsNameNewRouteModalOpened,
+}: HeaderProps) => {
   const onBackBtnPress = () => {
+    if (isNewSearchSwapStationOpened || isOpenSelectNewRouteModal) {
+      onCancel();
+      setIsOpenSelectNewRouteModal(false);
+    } else if (isNameNewRouteModalOpened) {
+      setIsNameNewRouteModalOpened(false);
+      setIsNewSearchSwapStationOpened(true);
+      setIsOpenSelectNewRouteModal(true);
+    }
   };
 
   const onCloseBtnPress = () => {
+    if (isNameNewRouteModalOpened) {
+      setIsNameNewRouteModalOpened(false);
+      setIsNewSearchSwapStationOpened(true);
+    }
+    setIsOpenSelectNewRouteModal(false);
+    onCancel();
   };
 
   return (
@@ -19,7 +51,7 @@ const AddNewRouteHeader = () => {
           iconWidth="24px"
           onPress={onBackBtnPress}
         />
-        <TextButton value="새 경로 저장" textSize="18px" textWeight="Medium" />
+        <FontText value="새 경로 저장" textSize="18px" textWeight="Medium" />
         <IconButton
           isFontIcon={false}
           imagePath="x"
@@ -28,7 +60,7 @@ const AddNewRouteHeader = () => {
           onPress={onCloseBtnPress}
         />
       </Header>
-      <Space height="9px" />
+      <Space height="8px" />
     </>
   );
 };
@@ -36,7 +68,6 @@ const AddNewRouteHeader = () => {
 const Header = styled.View`
   padding: 16px;
   flex-direction: row;
-  align-items: center;
   justify-content: space-between;
 `;
 
