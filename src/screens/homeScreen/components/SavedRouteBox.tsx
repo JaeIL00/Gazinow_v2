@@ -86,7 +86,7 @@ export default SavedRouteBox;
 
 const BorderLine = styled.View`
   borderwidth: 1px;
-  bordercolor: ${COLOR.LIGHT_GRAY};
+  bordercolor: ${COLOR.GRAY_F9};
   width: 999px;
   marginstart: -99px;
   margintop: 30px;

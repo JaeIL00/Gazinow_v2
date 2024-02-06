@@ -2,25 +2,30 @@ import styled from '@emotion/native';
 import { FontText, Input } from '@/global/ui';
 import { COLOR } from '@/global/constants';
 import React, { useMemo, useState } from 'react';
-import { useRootNavigation } from '@/navigation/RootNavigation';
 import { useSaveMyRoutesQuery } from '@/global/apis/hook';
 import { useQueryClient } from 'react-query';
 import { SubwaySimplePath } from '@/global/components';
 import { Path, SubPath } from '@/global/apis/entity';
 
 interface ModalProps {
-  item: Path | null;
+  item: Path;
+  onCancel: () => void;
+  setIsOpenSelectNewRouteModal: React.Dispatch<React.SetStateAction<boolean>>;
+  isOpenSelectNewRouteModal: boolean;
+  isNameNewRouteModalOpened: boolean;
+  setIsNameNewRouteModalOpened: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const NameNewRouteModal = (item: ModalProps) => {
-  const navigation = useRootNavigation();
+const NameNewRouteModal = ({
+  item,
+  setIsOpenSelectNewRouteModal,
+  setIsNameNewRouteModalOpened,
+}: ModalProps) => {
   const [roadName, setRoadName] = useState<string>();
   const queryClient = useQueryClient();
 
-
-  //item이 한 번 더 감싸져서 오는 버그 수정하기
   const freshSubPathData: SubPath[] = useMemo(() => {
-    const subPaths = item?.item?.subPaths || [];
+    const subPaths = item?.subPaths || [];
     return subPaths.filter((subPath) => !!subPath.lanes.length && !!subPath.stations.length);
   }, [item]);
 
@@ -39,7 +44,7 @@ const NameNewRouteModal = (item: ModalProps) => {
       <SubPathContainer>
         <SubwaySimplePath
           pathData={freshSubPathData}
-          arriveStationName={(item.item as ModalProps)?.lastEndStation}
+          arriveStationName={item.lastEndStation}
           betweenPathMargin={24}
         />
       </SubPathContainer>
@@ -74,7 +79,8 @@ const NameNewRouteModal = (item: ModalProps) => {
       <BottomBtn
         onPress={() => {
           mutate({ roadName: roadName, subPaths: freshSubPathData });
-          navigation.popToTop();
+          setIsNameNewRouteModalOpened(false);
+          setIsOpenSelectNewRouteModal(false);
         }}
         disabled={!roadName}
       >

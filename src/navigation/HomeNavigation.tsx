@@ -28,7 +28,7 @@ const renderHeaderLeft = (
   title: '저장한 경로',
   headerTitleAlign: 'left',
   headerTitleStyle: { color: '#171717', fontSize: 18, lineHeight: 23, fontWeight: '500' },
-  headerStyle: { backgroundColor: COLOR.LIGHT_GRAY },
+  headerStyle: { backgroundColor: COLOR.GRAY_F9 },
   headerLeft: () => (
     <HeaderLeft>
       <IconButton
