@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import type { StackNavigationOptions, StackNavigationProp } from '@react-navigation/stack';
+import type { StackNavigationProp } from '@react-navigation/stack';
 import styled from '@emotion/native';
 import { IconButton } from '@/global/ui';
 import { EditRouteStackParamList, MyStackParamList } from './types/navigation';
@@ -8,17 +8,13 @@ import MyRootScreen from '@/screens/myRootScreen';
 import {
   MY_ROOT,
   ACCOUNT_MANAGE,
-  CHANGE_NICKNAME,
-  CHANGE_PW,
   CONFIRM_QUIT,
   CONTRACT,
   NOTIFICATION_SETTINGS,
   NOTIFICATION,
 } from '@/global/constants';
-import ChangeNickNameScreen from '@/screens/changeNickNameScreen';
 import AccountManageScreen from '@/screens/accountManageScreen';
 import NotificationSettingsScreen from '@/screens/notificationSettingsScreen';
-import ChangePwScreen from '@/screens/changePwScreen';
 import ConfirmQuitScreen from '@/screens/confirmQuitScreen';
 import ContractScreen from '@/screens/contractScreen';
 import NotificationOnScreen from '@/screens/notificationOnScreen';
@@ -41,51 +37,10 @@ const renderHeaderLeft = (
   ),
 });
 
-const renderHeaderNickname = (
-  navigation: StackNavigationProp<EditRouteStackParamList, keyof EditRouteStackParamList>,
-): StackNavigationOptions => ({
-  title: '닉네임 수정',
-  headerTitleStyle: { color: '#171717', fontSize: 18, lineHeight: 23, fontWeight: '500' },
-  headerLeft: () => (
-    <HeaderLeft>
-      <IconButton
-        isFontIcon={false}
-        imagePath="x"
-        iconWidth="24px"
-        iconHeight="24px"
-        onPress={() => navigation.goBack()}
-      />
-    </HeaderLeft>
-  ),
-});
-
-const renderHeaderChangePw = (
-  navigation: StackNavigationProp<EditRouteStackParamList, keyof EditRouteStackParamList>,
-): StackNavigationOptions => ({
-  title: '비밀번호 변경',
-  headerTitleStyle: { color: '#171717', fontSize: 18, lineHeight: 23, fontWeight: '500' },
-  headerLeft: () => (
-    <HeaderLeft>
-      <IconButton
-        isFontIcon={false}
-        imagePath="backBtn"
-        iconWidth="24px"
-        iconHeight="24px"
-        onPress={() => navigation.goBack()}
-      />
-    </HeaderLeft>
-  ),
-});
-
 const MyNavigation = () => {
   return (
     <Stack.Navigator>
       <Stack.Screen name={MY_ROOT} component={MyRootScreen} />
-      <Stack.Screen
-        name={CHANGE_NICKNAME}
-        component={ChangeNickNameScreen}
-        options={({ navigation }) => renderHeaderNickname(navigation)}
-      />
       <Stack.Screen
         name={ACCOUNT_MANAGE}
         component={AccountManageScreen}
@@ -109,11 +64,6 @@ const MyNavigation = () => {
           title: '알림 설정',
           ...renderHeaderLeft(navigation),
         })}
-      />
-      <Stack.Screen
-        name={CHANGE_PW}
-        component={ChangePwScreen}
-        options={({ navigation }) => renderHeaderChangePw(navigation)}
       />
       <Stack.Screen
         name={CONFIRM_QUIT}
