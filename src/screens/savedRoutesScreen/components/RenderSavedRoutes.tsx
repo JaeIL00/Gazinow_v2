@@ -1,15 +1,13 @@
 import React, { useState } from 'react';
-import { View, StyleSheet } from 'react-native';
-import { FontText, TextButton } from '@/global/ui';
+import { View } from 'react-native';
+import { FontText, Space, TextButton } from '@/global/ui';
 import { COLOR } from '@/global/constants';
 import { useDeleteSavedSubwayRoute, useGetSavedRoutesQuery } from '@/global/apis/hook';
 import MyTabModal from '@/global/components/MyTabModal';
 import { useQueryClient } from 'react-query';
-
-interface RenderSavedRoutesProps {
-  id: number;
-  roadName: string;
-}
+import { SubwaySimplePath } from '@/global/components';
+import { SavedRoute } from '@/global/apis/entity';
+import styled from '@emotion/native';
 
 const RenderSavedRoutes = () => {
   const [popupVisible, setPopupVisible] = useState<boolean>(false);
@@ -22,32 +20,7 @@ const RenderSavedRoutes = () => {
     },
   });
 
-  const { data: savedRoutesData } = useGetSavedRoutesQuery();
-
-  const renderSavedRoutes = () =>
-    savedRoutesData?.map(({ id, roadName }: RenderSavedRoutesProps) => (
-      <View key={id} style={styles.containerRoutes}>
-        <View style={styles.containerRenderTitle}>
-          <FontText
-            value={roadName}
-            textSize="18px"
-            textWeight="SemiBold"
-            lineHeight="23px"
-            textColor={COLOR.BASIC_BLACK}
-          />
-          <TextButton
-            value="삭제"
-            textSize="13px"
-            textColor={COLOR.GRAY_999}
-            textWeight="Medium"
-            onPress={() => showDeletePopup(id)}
-            lineHeight="19px"
-          />
-        </View>
-
-        <View style={styles.borderLine}></View>
-      </View>
-    ));
+  const { data: savedRoutes } = useGetSavedRoutesQuery();
 
   const showDeletePopup = (id: number) => {
     setRouteToDelete(id);
@@ -60,6 +33,37 @@ const RenderSavedRoutes = () => {
     deleteMutate({ id: routeToDelete });
     hideModal();
   };
+
+  const renderSavedRoutes = () =>
+    savedRoutes?.map((item: SavedRoute) => (
+      <RouteContainer key={item.id}>
+        <TitleContainer>
+          <FontText
+            value={item.roadName}
+            textSize="18px"
+            textWeight="SemiBold"
+            lineHeight="23px"
+            textColor={COLOR.BASIC_BLACK}
+          />
+          <TextButton
+            value="삭제"
+            textSize="13px"
+            textColor={COLOR.GRAY_999}
+            textWeight="Medium"
+            onPress={() => showDeletePopup(item.id)}
+            lineHeight="19px"
+          />
+        </TitleContainer>
+        <SubwaySimplePath
+          pathData={item.subPaths}
+          arriveStationName={item.lastEndStation}
+          betweenPathMargin={24}
+        />
+        <BorderContainer>
+          <Space height="1px" width="999px" backgroundColor={COLOR.GRAY_EB} />
+        </BorderContainer>
+      </RouteContainer>
+    ));
 
   return (
     <View>
@@ -76,27 +80,17 @@ const RenderSavedRoutes = () => {
   );
 };
 
-const styles = StyleSheet.create({
-  containerRoutes: {
-    paddingBottom: 20,
-  },
-  containerRenderTitle: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
-  containerSubwayRoute: {
-    marginTop: 40,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  borderLine: {
-    borderWidth: 1,
-    borderColor: COLOR.GRAY_F9,
-    width: 999,
-    marginStart: -99,
-    marginTop: 30,
-  },
-});
-
 export default RenderSavedRoutes;
+
+const BorderContainer = styled.View`
+  margin-start: -99px;
+`;
+const RouteContainer = styled.View`
+  padding-bottom: 20px;
+`;
+const TitleContainer = styled.View`
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+`;
