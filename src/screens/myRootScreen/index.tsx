@@ -1,10 +1,8 @@
 import styled from '@emotion/native';
-import { useRootNavigation } from '@/navigation/RootNavigation';
 import { Image } from 'react-native';
 import { iconPath } from '@/assets/icons/iconPath';
 import { FontText, IconButton, Space, TextButton } from '@/global/ui';
 import { COLOR } from '@/global/constants';
-import { ACCOUNT_MANAGE, NOTIFICATION, NOTIFICATION_SETTINGS } from '@/global/constants/navigation';
 import { RESULTS, requestNotifications } from 'react-native-permissions';
 import { useState } from 'react';
 import ChangeNickNameModal from './components/ChangeNickNameModal';
@@ -106,7 +104,8 @@ const MyRootScreen = () => {
         text: '계정 관리',
         onPress: () => setIsManageAccountModalOpen(true),
       })}
-      {renderMenu({ text: '알림 설정', onPress: () => confirmUserNotificationOn() })}
+      {/* TODO: 페이지 들어가서 퍼미션 컨펌창 띄우는 로직으로 수정하기 */}
+      {/* {renderMenu({ text: '알림 설정', onPress: () => confirmUserNotificationOn() })} */}
       {renderMenu({
         text: '약관 및 정책',
         onPress: () => setIsContractModalOpen(true),

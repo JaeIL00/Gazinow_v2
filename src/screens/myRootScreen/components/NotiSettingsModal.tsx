@@ -8,6 +8,8 @@ interface ModalProps {
   onCancel: () => void;
 }
 
+//TODO: 토글 디자인, 기능 구현
+
 const NotiSettingsModal = ({ onCancel }: ModalProps) => {
   const [pushNotification, setPushNotification] = useState(false);
   const [savedPathNotification, setSavedPathNotification] = useState(true);
