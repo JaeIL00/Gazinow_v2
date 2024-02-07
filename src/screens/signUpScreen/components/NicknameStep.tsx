@@ -91,7 +91,6 @@ const NicknameStep = ({
             placeholderTextColor={COLOR.GRAY_BE}
             fontSize="14px"
             onChangeText={(text) => changeNicknameHandler(text)}
-            autoFocus
           />
         </View>
 

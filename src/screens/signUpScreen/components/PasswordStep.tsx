@@ -99,7 +99,6 @@ const PasswordStep = ({
               placeholderTextColor={COLOR.GRAY_BE}
               fontSize="16px"
               onChangeText={(text) => changeEmailHandler(text)}
-              autoFocus
               secureTextEntry
             />
           </View>

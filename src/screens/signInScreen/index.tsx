@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { View } from 'react-native';
+import { SafeAreaView, View } from 'react-native';
 
 import { Input, TextButton } from '@/global/ui';
 import { setEncryptedStorage } from '@/global/utils';
@@ -34,7 +34,7 @@ const SignInScreen = () => {
   };
 
   return (
-    <View>
+    <SafeAreaView>
       <Input
         placeholder="이메일을 입력해주세요"
         value={formData.email}
@@ -54,7 +54,7 @@ const SignInScreen = () => {
         onPress={submitFormData}
         lineHeight="21px"
       />
-    </View>
+    </SafeAreaView>
   );
 };
 

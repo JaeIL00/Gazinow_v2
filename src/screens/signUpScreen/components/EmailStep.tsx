@@ -136,7 +136,6 @@ const EmailStep = ({ emailValue, setStep, changeEmailValue }: EmailStepProps) =>
               placeholderTextColor={COLOR.GRAY_BE}
               fontSize="14px"
               onChangeText={(text) => changeEmailHandler(text)}
-              autoFocus
               keyboardType="email-address"
             />
           </View>

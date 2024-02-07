@@ -1,10 +1,19 @@
 import { COLOR } from '@/global/constants';
 import { FontText, IconButton, Input, Space, TextButton } from '@/global/ui';
 import { useEffect, useRef, useState } from 'react';
-import { Animated, Dimensions, KeyboardAvoidingView, Modal, View } from 'react-native';
+import {
+  Animated,
+  Dimensions,
+  KeyboardAvoidingView,
+  Modal,
+  Platform,
+  StatusBar,
+  View,
+} from 'react-native';
 import { TimerType } from './EmailStep';
 import CloseIcon from 'react-native-vector-icons/Ionicons';
 import StepButton from '../ui/StepButton';
+import { getStatusBarHeight } from 'react-native-status-bar-height';
 
 interface ConfirmEmailModalProps {
   authNumber: string;
@@ -21,7 +30,8 @@ const ConfirmEmailModal = ({
   setStep,
   emailConfirmMutateHandler,
 }: ConfirmEmailModalProps) => {
-  const height = Dimensions.get('window').height;
+  const StatusBarHeight =
+    Platform.OS === 'ios' ? getStatusBarHeight(true) : (StatusBar.currentHeight as number);
 
   const animRef = useRef(new Animated.Value(500)).current;
 
@@ -43,7 +53,7 @@ const ConfirmEmailModal = ({
 
   useEffect(() => {
     Animated.timing(animRef, {
-      toValue: 0,
+      toValue: StatusBarHeight,
       duration: 600,
       useNativeDriver: true,
     }).start();

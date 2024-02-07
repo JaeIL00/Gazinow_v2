@@ -1,8 +1,9 @@
-import { createStackNavigator } from '@react-navigation/stack';
+import { StackNavigationProp, createStackNavigator } from '@react-navigation/stack';
 import { AuthStackStackParamList } from './types/navigation';
 import LandingScreen from '@/screens/landingScreen';
 import SignInScreen from '@/screens/signInScreen';
 import SignUpScreen from '@/screens/signUpScreen';
+import { useNavigation } from '@react-navigation/native';
 
 const Stack = createStackNavigator<AuthStackStackParamList>();
 
@@ -21,3 +22,7 @@ const AuthNavigation = () => {
 };
 
 export default AuthNavigation;
+
+export const useAuthNavigation = <RouteName extends keyof AuthStackStackParamList>() => {
+  return useNavigation<StackNavigationProp<AuthStackStackParamList, RouteName>>();
+};
