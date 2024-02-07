@@ -15,13 +15,13 @@ import { useState } from 'react';
 import ChangeNickNameModal from './components/ChangeNickNameModal';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store/configureStore';
+import packageJson from '../../../package.json';
 
 interface RenderMenuProps {
   text: string;
   onPress?: () => void;
   versionInfo?: string;
 }
-
 const ALLOWED_PERMISSIONS = {
   [RESULTS.GRANTED]: true,
   [RESULTS.LIMITED]: true,
@@ -36,9 +36,9 @@ const requestNotificationPermission = async () => {
 };
 
 const MyRootScreen = () => {
-  const nickName = useSelector((state: RootState) => state.auth.nickname);
-  const userEmail = useSelector((state: RootState) => state.auth.email);
-  const versionInfo = '0.0.0';
+  const { nickname, email } = useSelector((state: RootState) => state.auth);
+  const versionInfo = packageJson.version;
+
   const navigation = useRootNavigation();
   const [isNicknameModalOpen, setIsNicknameModalOpen] = useState<boolean>(false);
 
@@ -84,7 +84,7 @@ const MyRootScreen = () => {
             setIsNicknameModalOpen(true);
           }}
         >
-          <FontText value={nickName} textSize="16px" textWeight="Medium" lineHeight="21px" />
+          <FontText value={nickname} textSize="16px" textWeight="Medium" lineHeight="21px" />
           <Space width="5px" />
           <IconButton
             iconType="Ionicons"
@@ -98,7 +98,7 @@ const MyRootScreen = () => {
           />
         </NickNameContainer>
         <FontText
-          value={userEmail}
+          value={email}
           textSize="12px"
           textWeight="Regular"
           lineHeight="15px"
