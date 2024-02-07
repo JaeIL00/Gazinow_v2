@@ -1,42 +1,52 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View } from 'react-native';
-import { IconButton, FontText, TextButton } from '@/global/ui';
+import { IconButton, FontText, TextButton, Space } from '@/global/ui';
 import { COLOR } from '@/global/constants';
 import { useGetSavedRoutesQuery } from '@/global/apis/hook';
 import styled from '@emotion/native';
 import { SubwaySimplePath } from '@/global/components';
-
-interface RenderSavedRoutesProps {
-  id: number;
-  roadName: string;
-  stations: [];
-}
+import { SavedRoute } from '@/global/apis/entity';
+import NewRouteDetailModal from '@/screens/savedRoutesScreen/components/NewRouteDetailModal';
 
 const SavedRouteBox = () => {
   const { data: savedRoutes } = useGetSavedRoutesQuery();
   const isRoutesExist = savedRoutes && savedRoutes.length > 0;
-  const renderSavedRoute = ({ id, roadName, stations }: RenderSavedRoutesProps) => {
-    console.log(stations);
-    return (
-      <RouteContainer key={id}>
-        <TextContainer>
+
+  // 각 아이템의 모달 열림 상태를 관리하는 배열
+  const [isOpenModalByIndex, setIsOpenModalByIndex] = useState<boolean[]>(
+    new Array(savedRoutes?.length).fill(false),
+  );
+
+  const showPathDetail = (index: number) => {
+    // 인덱스에 해당하는 아이템의 모달 열림 상태를 변경
+    const newModalStates = isOpenModalByIndex.map((state, i) => i === index);
+    setIsOpenModalByIndex(newModalStates);
+  };
+
+  const renderSavedRoutes = () =>
+    savedRoutes?.map((item: SavedRoute, index: number) => (
+      <RouteContainer key={item.id}>
+        {index !== 0 && (
+          <BorderContainer>
+            <Space height="1px" width="999px" backgroundColor={COLOR.GRAY_EB} />
+          </BorderContainer>
+        )}
+        <TitleContainer>
           <TextContainer>
             <FontText
-              value={`${roadName}  `}
+              value={`${item.roadName}  `}
               textSize="18px"
-              textWeight="SemiBold"
+              textWeight="Bold"
               lineHeight="23px"
               textColor={COLOR.BASIC_BLACK}
             />
-            <GrayEllipse>
-              <FontText
-                value={`${roadName}분 이상 예상`}
-                textSize="12px"
-                textWeight="Medium"
-                lineHeight="14px"
-                textColor={COLOR.GRAY_999}
-              />
-            </GrayEllipse>
+            <FontText
+              value={`${item.totalTime}분 소요`}
+              textSize="12px"
+              textWeight="Medium"
+              lineHeight="15px"
+              textColor={COLOR.GRAY_999}
+            />
           </TextContainer>
           <TextContainer>
             <TextButton
@@ -45,7 +55,7 @@ const SavedRouteBox = () => {
               textWeight="Regular"
               lineHeight="19px"
               textColor={COLOR.GRAY_999}
-              // onPress={() => showPathDetail(id)}
+              onPress={() => showPathDetail(index)}
             />
             <IconButton
               isFontIcon={false}
@@ -54,20 +64,28 @@ const SavedRouteBox = () => {
               iconHeight="8px"
             />
           </TextContainer>
-        </TextContainer>
-        {/* <SubwaySimplePath
-          pathData={stations}
-          arriveStationName={'a'}
-          // arriveStationName={roadName}
+        </TitleContainer>
+        <SubwaySimplePath
+          pathData={item.subPaths}
+          arriveStationName={item.lastEndStation}
           betweenPathMargin={24}
-        /> */}
-        <BorderLine />
+        />
+        {isOpenModalByIndex[index] && (
+          <NewRouteDetailModal
+            item={item}
+            setIsNewRouteDetailModalOpened={(isOpen: boolean) => {
+              const newModalStates = isOpenModalByIndex.map((state, i) =>
+                i === index ? isOpen : state,
+              );
+              setIsOpenModalByIndex(newModalStates);
+            }}
+          />
+        )}
       </RouteContainer>
-    );
-  };
+    ));
 
   if (isRoutesExist) {
-    return <View>{savedRoutes?.map(renderSavedRoute)}</View>;
+    return <View>{renderSavedRoutes()}</View>;
   } else {
     return (
       <FontText
@@ -84,23 +102,21 @@ const SavedRouteBox = () => {
 
 export default SavedRouteBox;
 
-const BorderLine = styled.View`
-  borderwidth: 1px;
-  bordercolor: ${COLOR.GRAY_F9};
-  width: 999px;
-  marginstart: -99px;
-  margintop: 30px;
-`;
 const RouteContainer = styled.View`
-  margin-top: 20px;
+  padding-bottom: 4px;
 `;
 const TextContainer = styled.View`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
 `;
-const GrayEllipse = styled.View`
-  padding: 4px 6px;
-  border-radius: 16px;
-  background: #f7f7f9;
+const BorderContainer = styled.View`
+  margin-start: -99px;
+`;
+const TitleContainer = styled.View`
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+  margin-top: 20px;
 `;
