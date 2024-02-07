@@ -84,7 +84,7 @@ const NewRouteDetailModal = ({ item, setIsNewRouteDetailModalOpened }: ModalProp
                   `}
                 />
                 <FontText
-                  value={`환승 ${freshSubPathData.length}회`}
+                  value={`환승 ${freshSubPathData.length-1}회`}
                   textSize="14px"
                   textWeight="Regular"
                   lineHeight="21px"
