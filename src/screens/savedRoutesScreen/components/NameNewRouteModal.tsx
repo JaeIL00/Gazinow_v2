@@ -78,7 +78,7 @@ const NameNewRouteModal = ({
 
       <BottomBtn
         onPress={() => {
-          mutate({ roadName: roadName, subPaths: freshSubPathData });
+          mutate({ roadName: roadName, lastEndStation: item.lastEndStation, subPaths: freshSubPathData});
           setIsNameNewRouteModalOpened(false);
           setIsOpenSelectNewRouteModal(false);
         }}
