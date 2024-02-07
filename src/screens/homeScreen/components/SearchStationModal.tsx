@@ -10,8 +10,9 @@ import { useAddRecentSearch, useGetSearchHistory, useSearchStationName } from '@
 import { useCallback, useState } from 'react';
 import { useHomeNavigation } from '@/navigation/HomeNavigation';
 import { debounce } from 'lodash';
-import { Modal } from 'react-native';
+import { Modal, Platform, StatusBar, View } from 'react-native';
 import { SelectedStationTypes } from './SwapStation';
+import { getStatusBarHeight } from 'react-native-status-bar-height';
 
 interface SearchStationModalProps {
   searchType: '출발역' | '도착역';
@@ -26,6 +27,9 @@ const SearchStationModal = ({
 }: SearchStationModalProps) => {
   const homeNavigation = useHomeNavigation();
   const dispatch = useAppDispatch();
+
+  const StatusBarHeight =
+    Platform.OS === 'ios' ? getStatusBarHeight(true) : (StatusBar.currentHeight as number);
 
   const { data: history } = useGetSearchHistory();
 
@@ -70,106 +74,108 @@ const SearchStationModal = ({
 
   return (
     <Modal visible onRequestClose={() => closeModal()}>
-      <Container>
-        <IconButton
-          iconType="Ionicons"
-          isFontIcon
-          iconName="arrow-back-sharp"
-          iconWidth="19.5"
-          iconColor="#49454F"
-          onPress={() => homeNavigation.goBack()}
-        />
-        <SearchInput
-          value={searchTextValue}
-          placeholder={`${searchType}을 검색해보세요`}
-          placeholderTextColor={COLOR.GRAY_BE}
-          inputMode="search"
-          onChangeText={changeSearchText}
-          autoFocus
-          isSavingNewRoute
-        />
-        <IconButton
-          iconType="Ionicons"
-          isFontIcon
-          iconName="close-circle"
-          iconWidth="19.5"
-          iconColor="rgba(0, 0, 0, 0.46)"
-          onPress={deleteInputText}
-        />
-      </Container>
-      {!searchTextValue ? (
-        <ResultContainer>
-          <Header>
-            <FontText
-              value="최근검색"
-              textSize="14px"
-              textWeight="Regular"
-              lineHeight="24px"
-              textColor="#757575"
-            />
-          </Header>
+      <View style={{ paddingVertical: Platform.OS === 'ios' ? StatusBarHeight : 0, flex: 1 }}>
+        <Container>
+          <IconButton
+            iconType="Ionicons"
+            isFontIcon
+            iconName="arrow-back-sharp"
+            iconWidth="19.5"
+            iconColor="#49454F"
+            onPress={() => closeModal()}
+          />
+          <SearchInput
+            value={searchTextValue}
+            placeholder={`${searchType}을 검색해보세요`}
+            placeholderTextColor={COLOR.GRAY_BE}
+            inputMode="search"
+            onChangeText={changeSearchText}
+            autoFocus
+            isSavingNewRoute
+          />
+          <IconButton
+            iconType="Ionicons"
+            isFontIcon
+            iconName="close-circle"
+            iconWidth="19.5"
+            iconColor="rgba(0, 0, 0, 0.46)"
+            onPress={deleteInputText}
+          />
+        </Container>
+        {!searchTextValue ? (
+          <ResultContainer>
+            <Header>
+              <FontText
+                value="최근검색"
+                textSize="14px"
+                textWeight="Regular"
+                lineHeight="24px"
+                textColor="#757575"
+              />
+            </Header>
 
-          <Ul marginTop="18px">
-            {history?.map(({ id, stationName, stationLine }) => (
-              <Li
-                key={id}
-                onPress={() =>
-                  stationBtnHandler({
-                    stationName,
-                    stationLine,
-                  })
-                }
-              >
-                <Icon name="clock" size={25} color={COLOR.GRAY_BE} />
-                <StationInfoBox>
-                  <FontText
-                    value={stationName}
-                    textSize="16px"
-                    textWeight="Medium"
-                    lineHeight="21px"
-                    textColor="#000"
-                  />
-                  <FontText
-                    value={stationLine!}
-                    textSize="14px"
-                    textWeight="Regular"
-                    lineHeight="21px"
-                    textColor={COLOR.GRAY_999}
-                  />
-                </StationInfoBox>
-              </Li>
-            ))}
-          </Ul>
-        </ResultContainer>
-      ) : (
-        <ResultContainer>
-          {/* 입력어가 있고 && 검색 결과가 있으면 결과 표시 */}
-          {/* 입력어가 있고 && 검색 결과가 없으면 없음 표시 */}
-          <Ul marginTop="28px">
-            {searchResultData.map(({ stationName, stationLine }, idx) => (
-              <Li key={idx} onPress={() => stationBtnHandler({ stationLine, stationName })}>
-                <LocateIcon source={iconPath['location_pin_gray']} width={25} height={25} />
-                <StationInfoBox>
-                  <FontText
-                    value={stationName}
-                    textSize="16px"
-                    textWeight="Medium"
-                    lineHeight="21px"
-                    textColor="#000"
-                  />
-                  <FontText
-                    value={stationLine!}
-                    textSize="14px"
-                    textWeight="Regular"
-                    lineHeight="21px"
-                    textColor={COLOR.GRAY_999}
-                  />
-                </StationInfoBox>
-              </Li>
-            ))}
-          </Ul>
-        </ResultContainer>
-      )}
+            <Ul marginTop="18px">
+              {history?.map(({ id, stationName, stationLine }) => (
+                <Li
+                  key={id}
+                  onPress={() =>
+                    stationBtnHandler({
+                      stationName,
+                      stationLine,
+                    })
+                  }
+                >
+                  <Icon name="clock" size={25} color={COLOR.GRAY_BE} />
+                  <StationInfoBox>
+                    <FontText
+                      value={stationName}
+                      textSize="16px"
+                      textWeight="Medium"
+                      lineHeight="21px"
+                      textColor="#000"
+                    />
+                    <FontText
+                      value={stationLine!}
+                      textSize="14px"
+                      textWeight="Regular"
+                      lineHeight="21px"
+                      textColor={COLOR.GRAY_999}
+                    />
+                  </StationInfoBox>
+                </Li>
+              ))}
+            </Ul>
+          </ResultContainer>
+        ) : (
+          <ResultContainer>
+            {/* 입력어가 있고 && 검색 결과가 있으면 결과 표시 */}
+            {/* 입력어가 있고 && 검색 결과가 없으면 없음 표시 */}
+            <Ul marginTop="28px">
+              {searchResultData.map(({ stationName, stationLine }, idx) => (
+                <Li key={idx} onPress={() => stationBtnHandler({ stationLine, stationName })}>
+                  <LocateIcon source={iconPath['location_pin_gray']} width={25} height={25} />
+                  <StationInfoBox>
+                    <FontText
+                      value={stationName}
+                      textSize="16px"
+                      textWeight="Medium"
+                      lineHeight="21px"
+                      textColor="#000"
+                    />
+                    <FontText
+                      value={stationLine!}
+                      textSize="14px"
+                      textWeight="Regular"
+                      lineHeight="21px"
+                      textColor={COLOR.GRAY_999}
+                    />
+                  </StationInfoBox>
+                </Li>
+              ))}
+            </Ul>
+          </ResultContainer>
+        )}
+      </View>
     </Modal>
   );
 };

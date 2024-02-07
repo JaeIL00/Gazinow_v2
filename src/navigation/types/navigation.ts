@@ -1,11 +1,16 @@
-import { Path, SubPath, SubwayLine } from '@/global/apis/entity';
+import { Path, SubPath } from '@/global/apis/entity';
 
 export type RootStackParamList = {
   Temp: undefined;
+  AuthStack: { screen: 'Landing' };
+  MainBottomTab: { screen: 'homeStack' };
+  MyStack: { screen: keyof MyStackParamList };
+};
+
+export type AuthStackStackParamList = {
+  Landing: undefined;
   SignIn: undefined;
   SignUp: undefined;
-  MainBottomTab: { screen: 'homeStack' };
-  MyNavigation: { screen: keyof MyStackParamList };
 };
 
 export type HomeStackParamList = {

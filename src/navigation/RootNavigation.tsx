@@ -3,7 +3,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import type { StackNavigationProp } from '@react-navigation/stack';
 
 import { MainBottomTabNavigation } from '@/navigation';
-import { SIGNIN, MAIN_BOTTOM_TAB, MY_NAVIGATION } from '@/global/constants';
+import { MAIN_BOTTOM_TAB } from '@/global/constants';
 import type { RootStackParamList } from '@/navigation/types/navigation';
 import { useMutation } from 'react-query';
 import { useEffect } from 'react';
@@ -12,8 +12,7 @@ import { View } from 'react-native';
 import { FontText } from '@/global/ui';
 import { tokenReissueFetch } from '@/global/apis/func';
 import MyNavigation from './MyNavigation';
-import SignInScreen from '@/screens/signInScreen';
-import SignUpScreen from '@/screens/signUpScreen';
+import AuthNavigation from './AuthNavigation';
 
 const Stack = createStackNavigator<RootStackParamList>();
 
@@ -23,7 +22,7 @@ const screenOption = {
 
 const RootNavigation = () => {
   return (
-    <Stack.Navigator screenOptions={screenOption}>
+    <Stack.Navigator screenOptions={screenOption} initialRouteName="Temp">
       <Stack.Screen
         name={'Temp'}
         component={() => {
@@ -33,12 +32,12 @@ const RootNavigation = () => {
             onSuccess: async ({ newAccessToken, newRefreshToken }) => {
               await setEncryptedStorage('access_token', newAccessToken);
               await setEncryptedStorage('refresh_token', newRefreshToken);
-              rootNavigation.replace(MAIN_BOTTOM_TAB, { screen: 'homeStack' });
+              rootNavigation.reset({ routes: [{ name: 'AuthStack' }] });
             },
             onError: () => {
               removeEncryptedStorage('access_token');
               removeEncryptedStorage('refresh_token');
-              rootNavigation.replace(SIGNIN);
+              rootNavigation.reset({ routes: [{ name: 'AuthStack' }] });
             },
           });
 
@@ -46,7 +45,7 @@ const RootNavigation = () => {
             const accessToken = await getEncryptedStorage('access_token');
             const refreshToken = await getEncryptedStorage('refresh_token');
             if (!accessToken) {
-              rootNavigation.navigate(SIGNIN);
+              rootNavigation.replace('AuthStack', { screen: 'Landing' });
               return;
             } else {
               mutate({
@@ -67,10 +66,9 @@ const RootNavigation = () => {
           );
         }}
       />
-      <Stack.Screen name={SIGNIN} component={SignInScreen} />
-      <Stack.Screen name="SignUp" component={SignUpScreen} />
+      <Stack.Screen name="AuthStack" component={AuthNavigation} />
       <Stack.Screen name={MAIN_BOTTOM_TAB} component={MainBottomTabNavigation} />
-      <Stack.Screen name={MY_NAVIGATION} component={MyNavigation} />
+      <Stack.Screen name="MyStack" component={MyNavigation} />
     </Stack.Navigator>
   );
 };

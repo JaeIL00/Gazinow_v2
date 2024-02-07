@@ -14,7 +14,7 @@ const ConfirmQuitScreen = () => {
   const [passwordInput, setPasswordInput] = useState('');
 
   const { deleteAccountMutate } = useDeleteAccountMutation({
-    onSuccess: () => navigation.reset({ routes: [{ name: SIGNIN }] }),
+    onSuccess: () => navigation.reset({ routes: [{ name: 'AuthStack' }] }),
   });
 
   const { checkPasswordMutate } = useCheckPasswordQuery({

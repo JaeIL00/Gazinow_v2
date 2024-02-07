@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 import styled from '@emotion/native';
 import { useRootNavigation } from '@/navigation/RootNavigation';
 import { useLogoutMutation } from '../signInScreen/apis/hook';
-import { SIGNIN, MY_NAVIGATION, COLOR } from '@/global/constants';
 import { getEncryptedStorage } from '@/global/utils';
 import { TextButton } from '@/global/ui';
 import { CHANGE_PW, CONFIRM_QUIT } from '@/global/constants/navigation';
 import MyTabModal from '../../global/components/MyTabModal';
 import ChangePwModal from '../myRootScreen/components/ChangePwModal';
+import { COLOR } from '@/global/constants';
 
 interface RenderMenuProps {
   text: string;
@@ -20,7 +20,7 @@ const AccountManageScreen = () => {
   const [isChangePwModalOpened, setIsChangePwModalOpened] = useState(false);
 
   const { logoutMutate } = useLogoutMutation({
-    onSuccess: () => navigation.reset({ routes: [{ name: SIGNIN }] }),
+    onSuccess: () => navigation.reset({ routes: [{ name: 'AuthStack' }] }),
   });
 
   const handleConfirm = async () => {
@@ -54,7 +54,7 @@ const AccountManageScreen = () => {
       {renderMenu({ text: '로그아웃', onPress: () => showLogoutPopup() })}
       {renderMenu({
         text: '회원 탈퇴',
-        onPress: () => navigation.push(MY_NAVIGATION, { screen: CONFIRM_QUIT }),
+        onPress: () => navigation.push('MyStack', { screen: CONFIRM_QUIT }),
       })}
       {isChangePwModalOpened && <ChangePwModal onCancel={() => setIsChangePwModalOpened(false)} />}
       <MyTabModal
