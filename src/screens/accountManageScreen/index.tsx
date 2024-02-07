@@ -7,6 +7,7 @@ import { getEncryptedStorage } from '@/global/utils';
 import { TextButton } from '@/global/ui';
 import { CHANGE_PW, CONFIRM_QUIT } from '@/global/constants/navigation';
 import MyTabModal from '../../global/components/MyTabModal';
+import ChangePwModal from '../myRootScreen/components/ChangePwModal';
 
 interface RenderMenuProps {
   text: string;
@@ -16,6 +17,7 @@ interface RenderMenuProps {
 const AccountManageScreen = () => {
   const navigation = useRootNavigation();
   const [popupVisible, setPopupVisible] = useState(false);
+  const [isChangePwModalOpened, setIsChangePwModalOpened] = useState(false);
 
   const { logoutMutate } = useLogoutMutation({
     onSuccess: () => navigation.reset({ routes: [{ name: SIGNIN }] }),
@@ -47,13 +49,14 @@ const AccountManageScreen = () => {
     <Container>
       {renderMenu({
         text: '비밀번호 변경',
-        onPress: () => navigation.push(MY_NAVIGATION, { screen: CHANGE_PW }),
+        onPress: () => setIsChangePwModalOpened(true),
       })}
       {renderMenu({ text: '로그아웃', onPress: () => showLogoutPopup() })}
       {renderMenu({
         text: '회원 탈퇴',
         onPress: () => navigation.push(MY_NAVIGATION, { screen: CONFIRM_QUIT }),
       })}
+      {isChangePwModalOpened && <ChangePwModal onCancel={() => setIsChangePwModalOpened(false)} />}
       <MyTabModal
         isVisible={popupVisible}
         onCancel={hideModal}
