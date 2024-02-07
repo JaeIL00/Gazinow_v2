@@ -3,9 +3,9 @@ import { Modal } from 'react-native';
 import AddNewRouteHeader from './AddNewRouteHeader';
 import NewSearchSwapStation, { SelectedStationTypes } from './NewSearchSwapStation';
 import SelectNewRouteModal from './SelectNewRouteModal';
-import { Path } from 'react-native-svg';
 import NameNewRouteModal from './NameNewRouteModal';
 import NewRouteDetailModal from './NewRouteDetailModal';
+import { Path } from '@/global/apis/entity';
 
 interface ModalProps {
   isVisible: boolean;
@@ -52,7 +52,6 @@ const AddNewRouteModal = ({ isVisible, onCancel }: ModalProps) => {
         <SelectNewRouteModal
           onCancel={onCancel}
           seletedStation={seletedStation}
-          //TODO: Path 타입에러 잡기
           setSeletedRoutePath={setSeletedRoutePath}
           setIsOpenSelectNewRouteModal={setIsOpenSelectNewRouteModal}
           setIsNewRouteDetailModalOpened={setIsNewRouteDetailModalOpened}
@@ -62,14 +61,13 @@ const AddNewRouteModal = ({ isVisible, onCancel }: ModalProps) => {
       )}
       {isNewRouteDetailModalOpened && seletedRoutePath && (
         <NewRouteDetailModal
-          //TODO: Path 타입에러 잡기
           item={seletedRoutePath}
           setIsNewRouteDetailModalOpened={setIsNewRouteDetailModalOpened}
         />
       )}
       {isNameNewRouteModalOpened && seletedRoutePath && (
         <NameNewRouteModal
-          //TODO: Path 타입에러 잡기
+          onCancel={onCancel}
           item={seletedRoutePath}
           isOpenSelectNewRouteModal={isOpenSelectNewRouteModal}
           setIsOpenSelectNewRouteModal={setIsOpenSelectNewRouteModal}
