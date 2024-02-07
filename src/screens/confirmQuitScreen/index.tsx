@@ -4,24 +4,45 @@ import { useState } from 'react';
 import { FontText, Space, TextButton } from '@/global/ui';
 import { COLOR, SIGNIN } from '@/global/constants';
 import MyTabModal from '../../global/components/MyTabModal';
-import { useDeleteAccountMutation } from '@/global/apis/hook';
+import { useCheckPasswordQuery, useDeleteAccountMutation } from '@/global/apis/hook';
 
 const ConfirmQuitScreen = () => {
   const nickName = '사용자17349245';
   const navigation = useRootNavigation();
   const [popupVisible, setPopupVisible] = useState(false);
+  const [confirmPwPopupVisible, setConfirmPwPopupVisible] = useState(false);
+  const [passwordInput, setPasswordInput] = useState('');
 
   const { deleteAccountMutate } = useDeleteAccountMutation({
     onSuccess: () => navigation.reset({ routes: [{ name: SIGNIN }] }),
   });
 
+  const { checkPasswordMutate } = useCheckPasswordQuery({
+    onSuccess: () => {
+      deleteAccountMutate();
+      hideModal();
+    },
+    onError: (error) => {
+      if (error.response.status === 400) {
+        setPasswordInput('');
+        //TODO: 기획 나오면 에러 처리 추가, css 수정
+      }
+    },
+  });
+
   const handleConfirm = () => {
-    deleteAccountMutate();
     hideModal();
+    setConfirmPwPopupVisible(true);
+  };
+  const handleConfirmPw = () => {
+    checkPasswordMutate(passwordInput);
   };
 
-  const showLogoutPopup = () => setPopupVisible(true);
-  const hideModal = () => setPopupVisible(false);
+  const showQuitPopup = () => setPopupVisible(true);
+  const hideModal = () => {
+    setPopupVisible(false);
+    setConfirmPwPopupVisible(false);
+  };
 
   return (
     <Container>
@@ -58,7 +79,7 @@ const ConfirmQuitScreen = () => {
             textWeight="Regular"
             lineHeight="18px"
             textColor={COLOR.GRAY_999}
-            onPress={() => showLogoutPopup()}
+            onPress={() => showQuitPopup()}
           />
         </UnderLine>
       </QuitBtn>
@@ -69,6 +90,17 @@ const ConfirmQuitScreen = () => {
         title="정말 탈퇴할까요?"
         confirmText="탈퇴할래요"
         cancelText="아니요"
+      />
+      {/* TODO: 키보드 올라오면 하단 버튼 올라오는 버그 수정 */}
+      <MyTabModal
+        isVisible={confirmPwPopupVisible}
+        onCancel={hideModal}
+        onConfirm={handleConfirmPw}
+        title="비밀번호 확인"
+        confirmText="탈퇴할래요"
+        cancelText="취소"
+        inputValue={passwordInput}
+        setInputValue={setPasswordInput}
       />
     </Container>
   );
