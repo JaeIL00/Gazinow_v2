@@ -12,7 +12,6 @@ export {
   DUMMY_VALUE,
 } from './constants';
 export {
-  MY_NAVIGATION,
   ADD_NEW_ROUTE,
   SAVED_ROUTES,
   SUBWAY_PATH_RESULT,

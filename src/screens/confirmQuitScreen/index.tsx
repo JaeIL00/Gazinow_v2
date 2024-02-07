@@ -12,7 +12,7 @@ const ConfirmQuitScreen = () => {
   const [popupVisible, setPopupVisible] = useState(false);
 
   const { deleteAccountMutate } = useDeleteAccountMutation({
-    onSuccess: () => navigation.reset({ routes: [{ name: SIGNIN }] }),
+    onSuccess: () => navigation.reset({ routes: [{ name: 'AuthStack' }] }),
   });
 
   const handleConfirm = () => {

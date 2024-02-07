@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import styled from '@emotion/native';
 import { useRootNavigation } from '@/navigation/RootNavigation';
 import { useLogoutMutation } from '../signInScreen/apis/hook';
-import { SIGNIN, MY_NAVIGATION } from '@/global/constants';
 import { getEncryptedStorage } from '@/global/utils';
 import { TextButton } from '@/global/ui';
 import { CHANGE_PW, CONFIRM_QUIT } from '@/global/constants/navigation';
@@ -18,7 +17,7 @@ const AccountManageScreen = () => {
   const [popupVisible, setPopupVisible] = useState(false);
 
   const { logoutMutate } = useLogoutMutation({
-    onSuccess: () => navigation.reset({ routes: [{ name: SIGNIN }] }),
+    onSuccess: () => navigation.reset({ routes: [{ name: 'AuthStack' }] }),
   });
 
   const handleConfirm = async () => {
@@ -47,12 +46,12 @@ const AccountManageScreen = () => {
     <Container>
       {renderMenu({
         text: '비밀번호 변경',
-        onPress: () => navigation.push(MY_NAVIGATION, { screen: CHANGE_PW }),
+        onPress: () => navigation.push('MyStack', { screen: CHANGE_PW }),
       })}
       {renderMenu({ text: '로그아웃', onPress: () => showLogoutPopup() })}
       {renderMenu({
         text: '회원 탈퇴',
-        onPress: () => navigation.push(MY_NAVIGATION, { screen: CONFIRM_QUIT }),
+        onPress: () => navigation.push('MyStack', { screen: CONFIRM_QUIT }),
       })}
       <MyTabModal
         isVisible={popupVisible}
