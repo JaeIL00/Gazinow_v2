@@ -2,14 +2,15 @@ import { css } from '@emotion/native';
 import { useMemo } from 'react';
 import { FlatList, Modal, View } from 'react-native';
 import { FontText, IconButton } from '@/global/ui';
-import { useRootNavigation } from '@/navigation/RootNavigation';
 import { Path, SubPath } from '@/global/apis/entity';
 import SearchPathDetailItem from '@/screens/searchPathResultDetailScreen/components/SearchPathDetailItem';
 import { COLOR } from '@/global/constants';
 
 interface ModalProps {
   item: Path;
-  setIsNewRouteDetailModalOpened: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsNewRouteDetailModalOpened: (
+    isOpen: boolean,
+  ) => void | React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const NewRouteDetailModal = ({ item, setIsNewRouteDetailModalOpened }: ModalProps) => {
@@ -17,7 +18,7 @@ const NewRouteDetailModal = ({ item, setIsNewRouteDetailModalOpened }: ModalProp
     const subPaths = item?.subPaths || [];
     return subPaths.filter((subPath) => !!subPath.lanes.length && !!subPath.stations.length);
   }, [item]);
-  
+
   return (
     <Modal>
       <View

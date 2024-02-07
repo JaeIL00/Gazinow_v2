@@ -12,15 +12,16 @@ const SavedRouteBox = () => {
   const { data: savedRoutes } = useGetSavedRoutesQuery();
   const isRoutesExist = savedRoutes && savedRoutes.length > 0;
 
-  // 각 아이템의 모달 열림 상태를 관리하는 배열
-  const [isOpenModalByIndex, setIsOpenModalByIndex] = useState<boolean[]>(
+  // 각 아이템의 세부정보 모달 열림 상태를 관리하는 배열
+  const [isNewRouteDetailModalOpened, setIsNewRouteDetailModalOpened] = useState<boolean[]>(
     new Array(savedRoutes?.length).fill(false),
   );
 
   const showPathDetail = (index: number) => {
-    // 인덱스에 해당하는 아이템의 모달 열림 상태를 변경
-    const newModalStates = isOpenModalByIndex.map((state, i) => i === index);
-    setIsOpenModalByIndex(newModalStates);
+    // 인덱스에 해당하는 아이템의 모달 열림 상태를 토글
+    const newModalStates = [...isNewRouteDetailModalOpened];
+    newModalStates[index] = !newModalStates[index];
+    setIsNewRouteDetailModalOpened(newModalStates);
   };
 
   const renderSavedRoutes = () =>
@@ -70,14 +71,13 @@ const SavedRouteBox = () => {
           arriveStationName={item.lastEndStation}
           betweenPathMargin={24}
         />
-        {isOpenModalByIndex[index] && (
+        {isNewRouteDetailModalOpened[index] && (
           <NewRouteDetailModal
             item={item}
             setIsNewRouteDetailModalOpened={(isOpen: boolean) => {
-              const newModalStates = isOpenModalByIndex.map((state, i) =>
-                i === index ? isOpen : state,
-              );
-              setIsOpenModalByIndex(newModalStates);
+              const newModalStates = [...isNewRouteDetailModalOpened];
+              newModalStates[index] = isOpen;
+              setIsNewRouteDetailModalOpened(newModalStates);
             }}
           />
         )}
