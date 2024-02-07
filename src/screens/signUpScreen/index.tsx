@@ -1,13 +1,17 @@
 import { IconButton } from '@/global/ui';
 import { useState } from 'react';
-import { View } from 'react-native';
+import { Platform, SafeAreaView, StatusBar, View } from 'react-native';
 import { CompleteStep, EmailStep, NicknameStep, PasswordStep } from './components';
 import { COLOR } from '@/global/constants';
 import { SignUpParams, SignUpStepType } from './type';
-import { useRootNavigation } from '@/navigation/RootNavigation';
+import { getStatusBarHeight } from 'react-native-status-bar-height';
+import { useAuthNavigation } from '@/navigation/AuthNavigation';
 
 const SignUpScreen = () => {
-  const navigation = useRootNavigation();
+  const navigation = useAuthNavigation();
+
+  const StatusBarHeight =
+    Platform.OS === 'ios' ? getStatusBarHeight(true) : (StatusBar.currentHeight as number);
 
   const [step, setStep] = useState<SignUpStepType>('email');
   const [signUpData, setSignUpData] = useState<SignUpParams>({
@@ -26,7 +30,7 @@ const SignUpScreen = () => {
   const backStepHandler = () => {
     switch (step) {
       case 'email':
-        // navigation.reset({routes: [{name:  초기화면으로 이동}]}) FIXME: 비로그인 홈으로 이동
+        navigation.goBack();
         break;
       case 'password':
         setStep('email');
@@ -41,7 +45,13 @@ const SignUpScreen = () => {
 
   return (
     <View
-      style={{ paddingTop: 30, paddingHorizontal: 16, flex: 1, backgroundColor: COLOR.GRAY_F9 }}
+      style={{
+        paddingTop: Platform.OS === 'ios' ? 30 + StatusBarHeight : 30,
+        paddingHorizontal: 16,
+        flex: 1,
+        backgroundColor: COLOR.GRAY_F9,
+        // paddingBottom: Platform.OS === 'ios' ? StatusBarHeight : 0,
+      }}
     >
       <View style={{ marginBottom: 43 }}>
         <IconButton

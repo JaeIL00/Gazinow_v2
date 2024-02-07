@@ -1,5 +1,12 @@
 import styled from '@emotion/native';
-import { ScrollView, TouchableOpacity, View } from 'react-native';
+import {
+  Platform,
+  SafeAreaView,
+  ScrollView,
+  StatusBar,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 
 import { FontText, IconButton, Space } from '@/global/ui';
 import { COLOR } from '@/global/constants';
@@ -12,12 +19,16 @@ import { useAppDispatch, useAppSelect } from '@/store';
 import { changeIsSearchedPath } from '@/store/modules';
 import { useEffect } from 'react';
 import { useHomeNavigation } from '@/navigation/HomeNavigation';
+import { getStatusBarHeight } from 'react-native-status-bar-height';
 
 dayjs.locale('ko');
 
 const SearchPathResultScreen = () => {
   const homeNavigation = useHomeNavigation();
   const dispatch = useAppDispatch();
+
+  const StatusBarHeight =
+    Platform.OS === 'ios' ? getStatusBarHeight(true) : (StatusBar.currentHeight as number);
 
   const { arrival, departure } = useAppSelect(({ subwaySearch }) => subwaySearch.selectedStation);
 
@@ -33,8 +44,18 @@ const SearchPathResultScreen = () => {
   }, []);
 
   return (
-    <Container>
-      <SwapSubwayBox>
+    <View style={{ flex: 1 }}>
+      <View
+        style={{
+          backgroundColor: COLOR.WHITE,
+          flexDirection: 'row',
+          paddingTop: Platform.OS === 'ios' ? StatusBarHeight + 30 : 30,
+          paddingRight: 16,
+          paddingBottom: 21,
+          paddingLeft: 22,
+          marginBottom: 17,
+        }}
+      >
         <LeftIconBox>
           <IconButton
             isFontIcon={false}
@@ -47,7 +68,7 @@ const SearchPathResultScreen = () => {
         <SwapSubwayWrap>
           <SwapSubwayStation isWrap={false} />
         </SwapSubwayWrap>
-      </SwapSubwayBox>
+      </View>
 
       <View
         style={{
@@ -132,21 +153,13 @@ const SearchPathResultScreen = () => {
           </View>
         ))}
       </ScrollView>
-    </Container>
+    </View>
   );
 };
 
 export default SearchPathResultScreen;
 
-const Container = styled.View`
-  flex: 1;
-`;
-const SwapSubwayBox = styled.View`
-  background-color: ${COLOR.WHITE};
-  flex-direction: row;
-  padding: 30px 16px 21px 22px;
-  margin-bottom: 17px;
-`;
+const SwapSubwayBox = styled.View``;
 const LeftIconBox = styled.View`
   margin-top: 13px;
   margin-right: 16px;

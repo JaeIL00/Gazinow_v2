@@ -1,6 +1,6 @@
 import { css } from '@emotion/native';
 import { useMemo, useState } from 'react';
-import { FlatList, View } from 'react-native';
+import { FlatList, Platform, SafeAreaView, StatusBar, View } from 'react-native';
 
 import { FontText, IconButton } from '@/global/ui';
 import { useRoute } from '@react-navigation/native';
@@ -9,10 +9,15 @@ import SearchPathDetailItem from './components/SearchPathDetailItem';
 import { useDeleteSavedSubwayRoute } from '@/global/apis/hook';
 import { Path, SubPath } from '@/global/apis/entity';
 import { useHomeNavigation } from '@/navigation/HomeNavigation';
+import { getStatusBarHeight } from 'react-native-status-bar-height';
+import { COLOR } from '@/global/constants';
 
 const SearchPathResultDetailScreen = () => {
   const route = useRoute();
   const navigation = useHomeNavigation();
+
+  const statusBarHeight =
+    Platform.OS === 'ios' ? getStatusBarHeight(true) : (StatusBar.currentHeight as number);
 
   const { deleteMutate } = useDeleteSavedSubwayRoute({
     onSuccess: () => {
@@ -43,11 +48,12 @@ const SearchPathResultDetailScreen = () => {
   };
   return (
     <View
-      style={css`
-        background-color: white;
-        flex: 1;
-        padding: 0 16px;
-      `}
+      style={{
+        backgroundColor: COLOR.WHITE,
+        paddingHorizontal: 16,
+        paddingVertical: Platform.OS === 'ios' ? statusBarHeight : 0,
+        height: '100%',
+      }}
     >
       {/* header */}
       <View

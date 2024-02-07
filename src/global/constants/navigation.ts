@@ -1,4 +1,3 @@
-export const MY_NAVIGATION = 'MyNavigation' as const;
 export const SAVED_ROUTES = 'SavedRoutes' as const;
 export const ADD_NEW_ROUTE = 'AddNewRoute' as const;
 export const NAME_NEW_ROUTE = 'NameNewRoute' as const;

@@ -3,7 +3,7 @@ import { useRootNavigation } from '@/navigation/RootNavigation';
 import { Image } from 'react-native';
 import { iconPath } from '@/assets/icons/iconPath';
 import { FontText, IconButton, Space, TextButton } from '@/global/ui';
-import { COLOR, MY_NAVIGATION } from '@/global/constants';
+import { COLOR } from '@/global/constants';
 import {
   ACCOUNT_MANAGE,
   CONTRACT,
@@ -45,9 +45,9 @@ const MyRootScreen = () => {
   const confirmUserNotificationOn = async () => {
     const result = await requestNotificationPermission();
     if (!result) {
-      navigation.push(MY_NAVIGATION, { screen: NOTIFICATION });
+      navigation.push('MyStack', { screen: NOTIFICATION });
     } else {
-      navigation.push(MY_NAVIGATION, { screen: NOTIFICATION_SETTINGS });
+      navigation.push('MyStack', { screen: NOTIFICATION_SETTINGS });
     }
   };
 
@@ -110,13 +110,13 @@ const MyRootScreen = () => {
       )}
       {renderMenu({
         text: '계정 관리',
-        onPress: () => navigation.push(MY_NAVIGATION, { screen: ACCOUNT_MANAGE }),
+        onPress: () => navigation.push('MyStack', { screen: ACCOUNT_MANAGE }),
       })}
       {renderMenu({ text: '알림 설정', onPress: () => confirmUserNotificationOn() })}
       {/* {renderMenu({ text: '알림 설정', onPress: () => navigation.push(MY_PAGE_NAVIGATION, { screen: NOTIFICATION_SETTINGS_PAGE }) })} */}
       {renderMenu({
         text: '약관 및 정책',
-        onPress: () => navigation.push(MY_NAVIGATION, { screen: CONTRACT }),
+        onPress: () => navigation.push('MyStack', { screen: CONTRACT }),
       })}
       {renderMenu({ text: '버전', versionInfo })}
     </Container>
