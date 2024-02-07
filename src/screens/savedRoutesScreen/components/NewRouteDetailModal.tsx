@@ -17,7 +17,7 @@ const NewRouteDetailModal = ({ item, setIsNewRouteDetailModalOpened }: ModalProp
     const subPaths = item?.subPaths || [];
     return subPaths.filter((subPath) => !!subPath.lanes.length && !!subPath.stations.length);
   }, [item]);
-
+  
   return (
     <Modal>
       <View
@@ -65,7 +65,12 @@ const NewRouteDetailModal = ({ item, setIsNewRouteDetailModalOpened }: ModalProp
                 margin-top: 4px;
               `}
             >
-              <FontText value="42분" textSize="24px" textWeight="Bold" lineHeight="32px" />
+              <FontText
+                value={`${item.totalTime}분 소요`}
+                textSize="24px"
+                textWeight="Bold"
+                lineHeight="32px"
+              />
               <View
                 style={css`
                   width: 8px;
@@ -78,7 +83,7 @@ const NewRouteDetailModal = ({ item, setIsNewRouteDetailModalOpened }: ModalProp
                   `}
                 />
                 <FontText
-                  value="환승 1회"
+                  value={`환승 ${freshSubPathData.length}회`}
                   textSize="14px"
                   textWeight="Regular"
                   lineHeight="21px"
