@@ -205,7 +205,7 @@ const Li = styled.Pressable`
   gap: 7px;
   padding: 12px 16px;
   border-bottom-width: 1px;
-  border-bottom-color: #ebebeb;
+  border-bottom-color: ${COLOR.GRAY_EB};
 `;
 const StationInfoBox = styled.View`
   gap: 2.95px;

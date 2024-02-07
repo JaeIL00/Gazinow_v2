@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from '@emotion/native';
 import { useRootNavigation } from '@/navigation/RootNavigation';
 import { useLogoutMutation } from '../signInScreen/apis/hook';
-import { SIGNIN, MY_NAVIGATION } from '@/global/constants';
+import { SIGNIN, MY_NAVIGATION, COLOR } from '@/global/constants';
 import { getEncryptedStorage } from '@/global/utils';
 import { TextButton } from '@/global/ui';
 import { CHANGE_PW, CONFIRM_QUIT } from '@/global/constants/navigation';
@@ -80,7 +80,7 @@ const MenuContainer = styled.Pressable`
   height: 53px;
   align-items: center;
   border-bottom-width: 1px;
-  border-bottom-color: #ebebeb;
+  border-bottom-color: ${COLOR.GRAY_EB};
 `;
 const HeaderLeft = styled.View`
   margin-left: 10px;

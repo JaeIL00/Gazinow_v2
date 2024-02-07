@@ -81,5 +81,5 @@ const MenuContainer = styled.Pressable`
   height: 53px;
   align-items: center;
   border-bottom-width: 1px;
-  border-bottom-color: #ebebeb;
+  border-bottom-color: ${COLOR.GRAY_EB};
 `;

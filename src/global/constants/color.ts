@@ -7,6 +7,7 @@ const COLOR = {
   GRAY_DDD: '#ddd' as const,
   GRAY_CA: '#cacaca' as const,
   GRAY_BE: '#BEBEBE' as const,
+  GRAY_EB: '#EBEBEB' as const,
   GRAY_999: '#999' as const,
   LIGHT_GREEN: '#0BC73F' as const,
   LIGHT_RED: '#EB5147' as const,

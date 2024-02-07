@@ -9,6 +9,7 @@ import SearchPathDetailItem from './components/SearchPathDetailItem';
 import { useDeleteSavedSubwayRoute } from '@/global/apis/hook';
 import { Path, SubPath } from '@/global/apis/entity';
 import { useHomeNavigation } from '@/navigation/HomeNavigation';
+import { COLOR } from '@/global/constants';
 
 const SearchPathResultDetailScreen = () => {
   const route = useRoute();
@@ -132,7 +133,7 @@ const SearchPathResultDetailScreen = () => {
           margin-bottom: 21px;
           margin-top: 16px;
           height: 1px;
-          background-color: #ebebeb;
+          background-color: ${COLOR.GRAY_EB};
         `}
       />
       <FlatList

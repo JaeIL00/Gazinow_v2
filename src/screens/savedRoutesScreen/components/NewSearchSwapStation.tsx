@@ -127,7 +127,7 @@ const Container = styled.View`
   padding: 20px 16px 45px;
   background-color: ${COLOR.WHITE};
   border-bottom-width: 1px;
-  border-bottom-color: #ebebeb;
+  border-bottom-color: ${COLOR.GRAY_EB};
   flex-direction: row;
   align-items: center;
 `;

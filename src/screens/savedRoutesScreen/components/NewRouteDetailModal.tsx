@@ -5,6 +5,7 @@ import { FontText, IconButton } from '@/global/ui';
 import { useRootNavigation } from '@/navigation/RootNavigation';
 import { Path, SubPath } from '@/global/apis/entity';
 import SearchPathDetailItem from '@/screens/searchPathResultDetailScreen/components/SearchPathDetailItem';
+import { COLOR } from '@/global/constants';
 
 interface ModalProps {
   item: Path;
@@ -92,7 +93,7 @@ const NewRouteDetailModal = ({ item, setIsNewRouteDetailModalOpened }: ModalProp
             margin-bottom: 20px;
             margin-top: 22px;
             height: 1px;
-            background-color: #ebebeb;
+            background-color: ${COLOR.GRAY_EB};
           `}
         />
         <FlatList
