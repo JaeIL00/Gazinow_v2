@@ -4,11 +4,7 @@ import { Image } from 'react-native';
 import { iconPath } from '@/assets/icons/iconPath';
 import { FontText, IconButton, Space, TextButton } from '@/global/ui';
 import { COLOR } from '@/global/constants';
-import {
-  ACCOUNT_MANAGE,
-  NOTIFICATION,
-  NOTIFICATION_SETTINGS,
-} from '@/global/constants/navigation';
+import { ACCOUNT_MANAGE, NOTIFICATION, NOTIFICATION_SETTINGS } from '@/global/constants/navigation';
 import { RESULTS, requestNotifications } from 'react-native-permissions';
 import { useState } from 'react';
 import ChangeNickNameModal from './components/ChangeNickNameModal';
@@ -16,6 +12,9 @@ import { useSelector } from 'react-redux';
 import { RootState } from '@/store/configureStore';
 import packageJson from '../../../package.json';
 import ContractModal from './components/ContractModal';
+import ManageAccountModal from './components/ManageAccountModal';
+import NotiOnModal from './components/NotiOnModal';
+import NotiSettingsModal from './components/NotiSettingsModal';
 
 interface RenderMenuProps {
   text: string;
@@ -39,16 +38,18 @@ const MyRootScreen = () => {
   const { nickname, email } = useSelector((state: RootState) => state.auth);
   const versionInfo = packageJson.version;
 
-  const navigation = useRootNavigation();
   const [isNicknameModalOpen, setIsNicknameModalOpen] = useState<boolean>(false);
   const [isContractModalOpen, setIsContractModalOpen] = useState<boolean>(false);
+  const [isManageAccountModalOpen, setIsManageAccountModalOpen] = useState<boolean>(false);
+  const [isNotiOnModalOpen, setIsNotiOnModalOpen] = useState<boolean>(false);
+  const [isNotiSettingsModalOpen, setIsNotiSettingsModalOpen] = useState<boolean>(false);
 
   const confirmUserNotificationOn = async () => {
     const result = await requestNotificationPermission();
     if (!result) {
-      navigation.push('MyStack', { screen: NOTIFICATION });
+      setIsNotiOnModalOpen(true);
     } else {
-      navigation.push('MyStack', { screen: NOTIFICATION_SETTINGS });
+      setIsNotiSettingsModalOpen(true);
     }
   };
 
@@ -80,11 +81,7 @@ const MyRootScreen = () => {
   return (
     <Container>
       <ProfileContainer>
-        <NickNameContainer
-          onPress={() => {
-            setIsNicknameModalOpen(true);
-          }}
-        >
+        <NickNameContainer onPress={() => setIsNicknameModalOpen(true)}>
           <FontText value={nickname} textSize="16px" textWeight="Medium" lineHeight="21px" />
           <Space width="5px" />
           <IconButton
@@ -93,9 +90,7 @@ const MyRootScreen = () => {
             iconName="pencil"
             iconWidth="15"
             iconColor={COLOR.GRAY_999}
-            onPress={() => {
-              setIsNicknameModalOpen(true);
-            }}
+            onPress={() => setIsNicknameModalOpen(true)}
           />
         </NickNameContainer>
         <FontText
@@ -106,21 +101,29 @@ const MyRootScreen = () => {
           textColor={COLOR.GRAY_999}
         />
       </ProfileContainer>
-      {isNicknameModalOpen && (
-        <ChangeNickNameModal onCancel={() => setIsNicknameModalOpen(false)} />
-      )}
-      {isContractModalOpen && <ContractModal onCancel={() => setIsContractModalOpen(false)} />}
+
       {renderMenu({
         text: '계정 관리',
-        onPress: () => navigation.push('MyStack', { screen: ACCOUNT_MANAGE }),
+        onPress: () => setIsManageAccountModalOpen(true),
       })}
       {renderMenu({ text: '알림 설정', onPress: () => confirmUserNotificationOn() })}
-      {/* {renderMenu({ text: '알림 설정', onPress: () => navigation.push(MY_PAGE_NAVIGATION, { screen: NOTIFICATION_SETTINGS_PAGE }) })} */}
       {renderMenu({
         text: '약관 및 정책',
         onPress: () => setIsContractModalOpen(true),
       })}
       {renderMenu({ text: '버전', versionInfo })}
+
+      {isNicknameModalOpen && (
+        <ChangeNickNameModal onCancel={() => setIsNicknameModalOpen(false)} />
+      )}
+      {isContractModalOpen && <ContractModal onCancel={() => setIsContractModalOpen(false)} />}
+      {isManageAccountModalOpen && (
+        <ManageAccountModal onCancel={() => setIsManageAccountModalOpen(false)} />
+      )}
+      {isNotiOnModalOpen && <NotiOnModal onCancel={() => setIsNotiOnModalOpen(false)} />}
+      {isNotiSettingsModalOpen && (
+        <NotiSettingsModal onCancel={() => setIsNotiSettingsModalOpen(false)} />
+      )}
     </Container>
   );
 };
