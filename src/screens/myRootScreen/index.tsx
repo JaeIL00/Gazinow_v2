@@ -13,6 +13,8 @@ import {
 import { RESULTS, requestNotifications } from 'react-native-permissions';
 import { useState } from 'react';
 import ChangeNickNameModal from './components/ChangeNickNameModal';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/store/configureStore';
 
 interface RenderMenuProps {
   text: string;
@@ -34,8 +36,8 @@ const requestNotificationPermission = async () => {
 };
 
 const MyRootScreen = () => {
-  const nickName = '사용자17349245';
-  const userEmail = 'abcdef@naver.com';
+  const nickName = useSelector((state: RootState) => state.auth.nickname);
+  const userEmail = useSelector((state: RootState) => state.auth.email);
   const versionInfo = '0.0.0';
   const navigation = useRootNavigation();
   const [isNicknameModalOpen, setIsNicknameModalOpen] = useState<boolean>(false);
