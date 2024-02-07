@@ -1,5 +1,7 @@
 import {
   changeNicknameFetch,
+  changePasswordFetch,
+  checkPasswordFetch,
   deleteAccountFetch,
   getSavedRoutesFetch,
   getSearchRoutesFetch,
@@ -142,4 +144,38 @@ export const useChangeNicknameQuery = ({
     onError,
   });
   return { data, mutate };
+};
+
+/**
+ * 비밀번호 확인 훅
+ */
+export const useCheckPasswordQuery = ({
+  onSuccess,
+  onError,
+}: {
+  onSuccess: () => void;
+  onError?: (error: any) => void;
+}) => {
+  const { mutate: checkPasswordMutate } = useMutation(checkPasswordFetch, {
+    onSuccess,
+    onError,
+  });
+  return { checkPasswordMutate };
+};
+
+/**
+ * 비밀번호 변경 훅
+ */
+export const useChangePasswordQuery = ({
+  onSuccess,
+  onError,
+}: {
+  onSuccess: () => void;
+  onError?: (error: any) => void;
+}) => {
+  const { mutate: changePasswordMutate } = useMutation(changePasswordFetch, {
+    onSuccess,
+    onError,
+  });
+  return { changePasswordMutate };
 };

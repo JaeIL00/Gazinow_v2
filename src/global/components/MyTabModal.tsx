@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, StyleSheet, Modal } from 'react-native';
 import styled from '@emotion/native';
-import { FontText } from '@/global/ui';
+import { FontText, Input } from '@/global/ui';
 import { COLOR } from '@/global/constants';
 
 interface ModalProps {
@@ -12,6 +12,8 @@ interface ModalProps {
   confirmText?: string;
   cancelText: string;
   btnColor?: string;
+  inputValue?: string;
+  setInputValue?: (value: string) => void;
 }
 
 const MyTabModal = ({
@@ -22,6 +24,8 @@ const MyTabModal = ({
   confirmText,
   cancelText,
   btnColor,
+  inputValue,
+  setInputValue,
 }: ModalProps) => {
   return (
     <Modal animationType="fade" transparent={true} visible={isVisible} onRequestClose={onCancel}>
@@ -34,6 +38,18 @@ const MyTabModal = ({
             lineHeight="30px"
             textColor={COLOR.BASIC_BLACK}
           />
+          {setInputValue && (
+            <InputBox>
+              <Input
+                value={inputValue}
+                onChangeText={setInputValue}
+                fontSize="20px"
+                placeholder="비밀번호를 입력하세요"
+                inputMode="email"
+                maxLength={20}
+              />
+            </InputBox>
+          )}
           <View style={styles.buttonContainer}>
             <CancelButton onPress={onCancel} btnColor={btnColor}>
               <FontText
@@ -95,7 +111,13 @@ const DeleteButton = styled.Pressable`
   padding: 10px;
   align-items: center;
 `;
-
+const InputBox = styled.Pressable`
+  padding-vertical: 12px;
+  padding-horizontal: 16px;
+  margin-vertical: 7px;
+  border-radius: 5px;
+  background-color: ${COLOR.GRAY_F9};
+`;
 const styles = StyleSheet.create({
   buttonContainer: {
     flexDirection: 'row',

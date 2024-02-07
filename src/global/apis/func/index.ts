@@ -196,3 +196,29 @@ export const changeNicknameFetch = async (newNickname: string) => {
     throw er;
   }
 };
+
+/**
+ * 비밀번호 확인 axios
+ */
+export const checkPasswordFetch = async (passwordInput: string) => {
+  try {
+    const res = await axiosInstance.post(`/api/v1/member/check_password`, {
+      checkPassword: passwordInput,
+    });
+  } catch (err) {
+    const er = err as AxiosError;
+    throw er;
+  }
+};
+
+/**
+ * 비밀번호 변경 axios
+ */
+export const changePasswordFetch = async (data: object) => {
+  try {
+    const res = await axiosInstance.post(`/api/v1/member/change_password`, data);
+  } catch (err) {
+    const er = err as AxiosError;
+    throw er;
+  }
+};

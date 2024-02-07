@@ -6,12 +6,15 @@ import { FontText, IconButton, Space, TextButton } from '@/global/ui';
 import { COLOR } from '@/global/constants';
 import {
   ACCOUNT_MANAGE,
-  CHANGE_NICKNAME,
   CONTRACT,
   NOTIFICATION,
   NOTIFICATION_SETTINGS,
 } from '@/global/constants/navigation';
 import { RESULTS, requestNotifications } from 'react-native-permissions';
+import { useState } from 'react';
+import ChangeNickNameModal from './components/ChangeNickNameModal';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/store/configureStore';
 
 interface RenderMenuProps {
   text: string;
@@ -33,10 +36,11 @@ const requestNotificationPermission = async () => {
 };
 
 const MyRootScreen = () => {
-  const nickName = '사용자17349245';
-  const userEmail = 'abcdef@naver.com';
+  const nickName = useSelector((state: RootState) => state.auth.nickname);
+  const userEmail = useSelector((state: RootState) => state.auth.email);
   const versionInfo = '0.0.0';
   const navigation = useRootNavigation();
+  const [isNicknameModalOpen, setIsNicknameModalOpen] = useState<boolean>(false);
 
   const confirmUserNotificationOn = async () => {
     const result = await requestNotificationPermission();
@@ -77,7 +81,7 @@ const MyRootScreen = () => {
       <ProfileContainer>
         <NickNameContainer
           onPress={() => {
-            navigation.push('MyStack', { screen: CHANGE_NICKNAME });
+            setIsNicknameModalOpen(true);
           }}
         >
           <FontText value={nickName} textSize="16px" textWeight="Medium" lineHeight="21px" />
@@ -89,7 +93,7 @@ const MyRootScreen = () => {
             iconWidth="15"
             iconColor={COLOR.GRAY_999}
             onPress={() => {
-              navigation.push('MyStack', { screen: CHANGE_NICKNAME });
+              setIsNicknameModalOpen(true);
             }}
           />
         </NickNameContainer>
@@ -101,6 +105,9 @@ const MyRootScreen = () => {
           textColor={COLOR.GRAY_999}
         />
       </ProfileContainer>
+      {isNicknameModalOpen && (
+        <ChangeNickNameModal onCancel={() => setIsNicknameModalOpen(false)} />
+      )}
       {renderMenu({
         text: '계정 관리',
         onPress: () => navigation.push('MyStack', { screen: ACCOUNT_MANAGE }),
