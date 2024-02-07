@@ -142,6 +142,7 @@ export interface SubwayStrEnd {
 }
 
 export interface SavedRoute extends Path {
+  issues: string; //FIXME: 백엔드에 물어볼 것
   roadName: string;
   id: number;
 }

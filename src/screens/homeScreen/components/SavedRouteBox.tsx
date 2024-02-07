@@ -66,6 +66,17 @@ const SavedRouteBox = () => {
             />
           </TextContainer>
         </TitleContainer>
+        {!item.issues && (
+          <IssueContainer>
+            <FontText
+              value="아무런 이슈가 없어요!"
+              textSize="13px"
+              textWeight="Regular"
+              lineHeight="19px"
+              textColor={COLOR.GRAY_999}
+            />
+          </IssueContainer>
+        )}
         <SubwaySimplePath
           pathData={item.subPaths}
           arriveStationName={item.lastEndStation}
@@ -117,6 +128,13 @@ const TitleContainer = styled.View`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 24px;
+  // margin-bottom: 24px;
   margin-top: 20px;
+`;
+const IssueContainer = styled.View`
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+  margin-top: 8px;
 `;
