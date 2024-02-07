@@ -9,14 +9,12 @@ import {
   MY_ROOT,
   ACCOUNT_MANAGE,
   CONFIRM_QUIT,
-  CONTRACT,
   NOTIFICATION_SETTINGS,
   NOTIFICATION,
 } from '@/global/constants';
 import AccountManageScreen from '@/screens/accountManageScreen';
 import NotificationSettingsScreen from '@/screens/notificationSettingsScreen';
 import ConfirmQuitScreen from '@/screens/confirmQuitScreen';
-import ContractScreen from '@/screens/contractScreen';
 import NotificationOnScreen from '@/screens/notificationOnScreen';
 
 const Stack = createStackNavigator<MyStackParamList>();
@@ -68,14 +66,6 @@ const MyNavigation = () => {
       <Stack.Screen
         name={CONFIRM_QUIT}
         component={ConfirmQuitScreen}
-        options={({ navigation }) => ({
-          title: '',
-          ...renderHeaderLeft(navigation),
-        })}
-      />
-      <Stack.Screen
-        name={CONTRACT}
-        component={ContractScreen}
         options={({ navigation }) => ({
           title: '',
           ...renderHeaderLeft(navigation),

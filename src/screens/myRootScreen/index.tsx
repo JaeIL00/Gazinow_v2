@@ -6,7 +6,6 @@ import { FontText, IconButton, Space, TextButton } from '@/global/ui';
 import { COLOR } from '@/global/constants';
 import {
   ACCOUNT_MANAGE,
-  CONTRACT,
   NOTIFICATION,
   NOTIFICATION_SETTINGS,
 } from '@/global/constants/navigation';
@@ -16,6 +15,7 @@ import ChangeNickNameModal from './components/ChangeNickNameModal';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store/configureStore';
 import packageJson from '../../../package.json';
+import ContractModal from './components/ContractModal';
 
 interface RenderMenuProps {
   text: string;
@@ -41,6 +41,7 @@ const MyRootScreen = () => {
 
   const navigation = useRootNavigation();
   const [isNicknameModalOpen, setIsNicknameModalOpen] = useState<boolean>(false);
+  const [isContractModalOpen, setIsContractModalOpen] = useState<boolean>(false);
 
   const confirmUserNotificationOn = async () => {
     const result = await requestNotificationPermission();
@@ -108,6 +109,7 @@ const MyRootScreen = () => {
       {isNicknameModalOpen && (
         <ChangeNickNameModal onCancel={() => setIsNicknameModalOpen(false)} />
       )}
+      {isContractModalOpen && <ContractModal onCancel={() => setIsContractModalOpen(false)} />}
       {renderMenu({
         text: '계정 관리',
         onPress: () => navigation.push('MyStack', { screen: ACCOUNT_MANAGE }),
@@ -116,7 +118,7 @@ const MyRootScreen = () => {
       {/* {renderMenu({ text: '알림 설정', onPress: () => navigation.push(MY_PAGE_NAVIGATION, { screen: NOTIFICATION_SETTINGS_PAGE }) })} */}
       {renderMenu({
         text: '약관 및 정책',
-        onPress: () => navigation.push('MyStack', { screen: CONTRACT }),
+        onPress: () => setIsContractModalOpen(true),
       })}
       {renderMenu({ text: '버전', versionInfo })}
     </Container>
