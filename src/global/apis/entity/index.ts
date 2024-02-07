@@ -1,37 +1,4 @@
 /**
- * 경로 저장
- */
-export interface AddRouteTypes {
-  roadName: string;
-  totalTime: number;
-  subwayTransitCount: number;
-  firstStartStation: string;
-  lastEndStation: string;
-  subPaths: [
-    {
-      trafficType: number;
-      distance: number;
-      sectionTime: number;
-      stationCount: number;
-      lanes: [
-        {
-          name: string;
-          StationCode: number;
-          startName: string;
-          endName: string;
-        },
-      ];
-      subways: [
-        {
-          index: number;
-          stationName: string;
-        },
-      ];
-    },
-  ];
-}
-
-/**
  * 지하철 호선 이름
  */
 export type SubwayLine =
@@ -176,4 +143,5 @@ export interface SubwayStrEnd {
 
 export interface SavedRoute extends Path {
   roadName: string;
+  id: number;
 }
