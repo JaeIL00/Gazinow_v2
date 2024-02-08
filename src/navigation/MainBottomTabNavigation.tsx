@@ -2,6 +2,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { HOME, MY_ROOT } from '@/global/constants';
 import MyRootScreen from '@/screens/myRootScreen';
 import HomeNavigation from './HomeNavigation';
+import NowScreen from '@screens/nowScreen';
 
 const Tab = createBottomTabNavigator();
 
@@ -13,6 +14,7 @@ const MainBottomTabNavigation = () => {
   return (
     <Tab.Navigator initialRouteName={HOME} screenOptions={screenOption}>
       <Tab.Screen name="homeStack" component={HomeNavigation} options={{ tabBarLabel: '홈' }} />
+      <Tab.Screen name="NowScreen" component={NowScreen} options={{ tabBarLabel: 'NOW' }} />
       <Tab.Screen name={MY_ROOT} component={MyRootScreen} options={{ tabBarLabel: '마이' }} />
     </Tab.Navigator>
   );
