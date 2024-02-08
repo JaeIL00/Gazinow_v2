@@ -1,6 +1,7 @@
 import axios, { AxiosError } from 'axios';
 import { axiosInstance } from '../axiosInstance';
 import {
+  AllIssues,
   SavedRoute,
   SearchHistoryStationNameTypes,
   SearchPathsTypes,
@@ -217,6 +218,34 @@ export const checkPasswordFetch = async (passwordInput: string) => {
 export const changePasswordFetch = async (data: object) => {
   try {
     const res = await axiosInstance.post(`/api/v1/member/change_password`, data);
+  } catch (err) {
+    const er = err as AxiosError;
+    throw er;
+  }
+};
+
+/**
+ * 이슈 전체 조회 axios
+ */
+export const getAllIssuesFetch = async () => {
+  try {
+    const res = await axiosInstance.get<{ data: AllIssues }>(`/api/v1/issue/get_all`);
+    return res.data.data;
+  } catch (err) {
+    const er = err as AxiosError;
+    throw er;
+  }
+};
+
+/**
+ * 이슈 노선별 조회 axios
+ */
+export const getIssuesByLaneFetch = async (params: { line: string }) => {
+  try {
+    const res = await axiosInstance.get<{ data: AllIssues }>('/api/v1/issue/get_line', {
+      params,
+    });
+    return res.data.data;
   } catch (err) {
     const er = err as AxiosError;
     throw er;

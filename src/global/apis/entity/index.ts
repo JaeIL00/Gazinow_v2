@@ -146,3 +146,42 @@ export interface SavedRoute extends Path {
   roadName: string;
   id: number;
 }
+
+export interface IssueContent {
+  id: number;
+  title: string;
+  content: string;
+  date: string;
+  line: string;
+  startDate: string;
+  expireDate: string;
+}
+
+export interface AllIssues {
+  content: IssueContent[];
+  pageable: {
+    pageNumber: number;
+    pageSize: number;
+    sort: {
+      empty: boolean;
+      unsorted: boolean;
+      sorted: boolean;
+    };
+    offset: number;
+    paged: boolean;
+    unpaged: boolean;
+  };
+  totalPages: number;
+  totalElements: number;
+  last: boolean;
+  size: number;
+  number: number;
+  sort: {
+    empty: boolean;
+    unsorted: boolean;
+    sorted: boolean;
+  };
+  numberOfElements: number;
+  first: boolean;
+  empty: boolean;
+}
