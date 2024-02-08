@@ -2,6 +2,7 @@ const COLOR = {
   WHITE: '#ffffff' as const,
   BASIC_BLACK: '#171717' as const,
   GRAY_F9: '#F9F9F9' as const,
+  GRAY_F8: '#F8F8F8' as const,
   GRAY_F2: '#f2f2f2' as const,
   GRAY_E3: '#e3e3e3' as const,
   GRAY_DDD: '#ddd' as const,
