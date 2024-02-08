@@ -100,6 +100,7 @@ const NameNewRouteModal = ({
           mutate({
             roadName: roadName,
             lastEndStation: item.lastEndStation,
+            totalTime: item.totalTime,
             subPaths: freshSubPathData,
           });
         }}
