@@ -6,7 +6,7 @@ import { useSaveMyRoutesQuery } from '@/global/apis/hook';
 import { useQueryClient } from 'react-query';
 import { SubwaySimplePath } from '@/global/components';
 import { Path, SubPath } from '@/global/apis/entity';
-import { Image } from 'react-native';
+import { Image, View } from 'react-native';
 import { iconPath } from '@/assets/icons/iconPath';
 
 interface ModalProps {
@@ -74,7 +74,7 @@ const NameNewRouteModal = ({
       </InputBox>
 
       <TextLengthBox>
-        {isDuplicatedName && (
+        {isDuplicatedName ? (
           <MessageContainer>
             <Image source={iconPath.x_circle} style={{ width: 14, height: 14 }} />
             <FontText
@@ -85,6 +85,8 @@ const NameNewRouteModal = ({
               textColor={COLOR.LIGHT_RED}
             />
           </MessageContainer>
+        ) : (
+          <View></View>
         )}
         <FontText
           value={`${roadName?.length ? roadName.length : 0}/10`}
@@ -145,7 +147,7 @@ const TextLengthBox = styled.View`
 `;
 const MessageContainer = styled.View`
   flex-direction: row;
-  margin: 8px 0 0 9px;
+  margin: 0 0 0 9px;
 `;
 const BottomBtn = styled.Pressable`
   padding-vertical: 11px;
