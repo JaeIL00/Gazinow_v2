@@ -6,6 +6,8 @@ import { useSaveMyRoutesQuery } from '@/global/apis/hook';
 import { useQueryClient } from 'react-query';
 import { SubwaySimplePath } from '@/global/components';
 import { Path, SubPath } from '@/global/apis/entity';
+import { Image } from 'react-native';
+import { iconPath } from '@/assets/icons/iconPath';
 
 interface ModalProps {
   item: Path;
@@ -22,6 +24,7 @@ const NameNewRouteModal = ({
   setIsNameNewRouteModalOpened,
 }: ModalProps) => {
   const [roadName, setRoadName] = useState<string>();
+  const [isDuplicatedName, setIsDuplicatedName] = useState<boolean>(false);
   const queryClient = useQueryClient();
 
   const freshSubPathData: SubPath[] = useMemo(() => {
@@ -32,10 +35,14 @@ const NameNewRouteModal = ({
   const { mutate } = useSaveMyRoutesQuery({
     onSuccess: async () => {
       await queryClient.invalidateQueries();
+      setIsNameNewRouteModalOpened(false);
+      setIsOpenSelectNewRouteModal(false);
     },
     onError: async (error: any) => {
       await queryClient.invalidateQueries();
-      console.error(error);
+      if (error.response.status === 409) {
+        setIsDuplicatedName(true);
+      }
     },
   });
 
@@ -67,6 +74,18 @@ const NameNewRouteModal = ({
       </InputBox>
 
       <TextLengthBox>
+        {isDuplicatedName && (
+          <MessageContainer>
+            <Image source={iconPath.x_circle} style={{ width: 14, height: 14 }} />
+            <FontText
+              value={` 이미 존재하는 이름입니다`}
+              textSize="12px"
+              textWeight="Medium"
+              lineHeight="14px"
+              textColor={COLOR.LIGHT_RED}
+            />
+          </MessageContainer>
+        )}
         <FontText
           value={`${roadName?.length ? roadName.length : 0}/10`}
           textSize="12px"
@@ -78,9 +97,12 @@ const NameNewRouteModal = ({
 
       <BottomBtn
         onPress={() => {
-          mutate({ roadName: roadName, subPaths: freshSubPathData });
-          setIsNameNewRouteModalOpened(false);
-          setIsOpenSelectNewRouteModal(false);
+          mutate({
+            roadName: roadName,
+            lastEndStation: item.lastEndStation,
+            totalTime: item.totalTime,
+            subPaths: freshSubPathData,
+          });
         }}
         disabled={!roadName}
       >
@@ -116,8 +138,14 @@ const InputBox = styled.Pressable`
   background-color: ${COLOR.GRAY_F9};
 `;
 const TextLengthBox = styled.View`
-  align-items: flex-end;
+  align-items: flex-start;
+  flex-direction: row;
+  justify-content: space-between;
   flex: 1;
+`;
+const MessageContainer = styled.View`
+  flex-direction: row;
+  margin: 8px 0 0 9px;
 `;
 const BottomBtn = styled.Pressable`
   padding-vertical: 11px;

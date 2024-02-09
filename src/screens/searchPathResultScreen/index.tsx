@@ -75,7 +75,7 @@ const SearchPathResultScreen = () => {
           backgroundColor: COLOR.WHITE,
           paddingHorizontal: 16,
           paddingVertical: 14,
-          borderBottomColor: '#EBEBEB',
+          borderBottomColor: COLOR.GRAY_EB,
           borderBottomWidth: 1,
         }}
       >
@@ -95,7 +95,7 @@ const SearchPathResultScreen = () => {
               paddingHorizontal: 18,
               paddingBottom: 24,
               paddingTop: 20,
-              borderBottomColor: data.paths.length - 1 !== idx ? '#EBEBEB' : 'none',
+              borderBottomColor: data.paths.length - 1 !== idx ? COLOR.GRAY_EB : 'none',
               borderBottomWidth: data.paths.length - 1 !== idx ? 1 : 0,
             }}
           >

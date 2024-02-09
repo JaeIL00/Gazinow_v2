@@ -1,27 +1,24 @@
 import styled from '@emotion/native';
-import { useRootNavigation } from '@/navigation/RootNavigation';
 import { Image } from 'react-native';
 import { iconPath } from '@/assets/icons/iconPath';
 import { FontText, IconButton, Space, TextButton } from '@/global/ui';
 import { COLOR } from '@/global/constants';
-import {
-  ACCOUNT_MANAGE,
-  CONTRACT,
-  NOTIFICATION,
-  NOTIFICATION_SETTINGS,
-} from '@/global/constants/navigation';
 import { RESULTS, requestNotifications } from 'react-native-permissions';
 import { useState } from 'react';
 import ChangeNickNameModal from './components/ChangeNickNameModal';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store/configureStore';
+import packageJson from '../../../package.json';
+import ContractModal from './components/ContractModal';
+import ManageAccountModal from './components/ManageAccountModal';
+import NotiOnModal from './components/NotiOnModal';
+import NotiSettingsModal from './components/NotiSettingsModal';
 
 interface RenderMenuProps {
   text: string;
   onPress?: () => void;
   versionInfo?: string;
 }
-
 const ALLOWED_PERMISSIONS = {
   [RESULTS.GRANTED]: true,
   [RESULTS.LIMITED]: true,
@@ -36,18 +33,21 @@ const requestNotificationPermission = async () => {
 };
 
 const MyRootScreen = () => {
-  const nickName = useSelector((state: RootState) => state.auth.nickname);
-  const userEmail = useSelector((state: RootState) => state.auth.email);
-  const versionInfo = '0.0.0';
-  const navigation = useRootNavigation();
+  const { nickname, email } = useSelector((state: RootState) => state.auth);
+  const versionInfo = packageJson.version;
+
   const [isNicknameModalOpen, setIsNicknameModalOpen] = useState<boolean>(false);
+  const [isContractModalOpen, setIsContractModalOpen] = useState<boolean>(false);
+  const [isManageAccountModalOpen, setIsManageAccountModalOpen] = useState<boolean>(false);
+  const [isNotiOnModalOpen, setIsNotiOnModalOpen] = useState<boolean>(false);
+  const [isNotiSettingsModalOpen, setIsNotiSettingsModalOpen] = useState<boolean>(false);
 
   const confirmUserNotificationOn = async () => {
     const result = await requestNotificationPermission();
     if (!result) {
-      navigation.push('MyStack', { screen: NOTIFICATION });
+      setIsNotiOnModalOpen(true);
     } else {
-      navigation.push('MyStack', { screen: NOTIFICATION_SETTINGS });
+      setIsNotiSettingsModalOpen(true);
     }
   };
 
@@ -79,12 +79,8 @@ const MyRootScreen = () => {
   return (
     <Container>
       <ProfileContainer>
-        <NickNameContainer
-          onPress={() => {
-            setIsNicknameModalOpen(true);
-          }}
-        >
-          <FontText value={nickName} textSize="16px" textWeight="Medium" lineHeight="21px" />
+        <NickNameContainer onPress={() => setIsNicknameModalOpen(true)}>
+          <FontText value={nickname} textSize="16px" textWeight="Medium" lineHeight="21px" />
           <Space width="5px" />
           <IconButton
             iconType="Ionicons"
@@ -92,33 +88,41 @@ const MyRootScreen = () => {
             iconName="pencil"
             iconWidth="15"
             iconColor={COLOR.GRAY_999}
-            onPress={() => {
-              setIsNicknameModalOpen(true);
-            }}
+            onPress={() => setIsNicknameModalOpen(true)}
           />
         </NickNameContainer>
         <FontText
-          value={userEmail}
+          value={email}
           textSize="12px"
           textWeight="Regular"
           lineHeight="15px"
           textColor={COLOR.GRAY_999}
         />
       </ProfileContainer>
+
+      {renderMenu({
+        text: '계정 관리',
+        onPress: () => setIsManageAccountModalOpen(true),
+      })}
+      {/* TODO: 페이지 들어가서 퍼미션 컨펌창 띄우는 로직으로 수정하기 */}
+      {/* {renderMenu({ text: '알림 설정', onPress: () => confirmUserNotificationOn() })} */}
+      {renderMenu({
+        text: '약관 및 정책',
+        onPress: () => setIsContractModalOpen(true),
+      })}
+      {renderMenu({ text: '버전', versionInfo })}
+
       {isNicknameModalOpen && (
         <ChangeNickNameModal onCancel={() => setIsNicknameModalOpen(false)} />
       )}
-      {renderMenu({
-        text: '계정 관리',
-        onPress: () => navigation.push('MyStack', { screen: ACCOUNT_MANAGE }),
-      })}
-      {renderMenu({ text: '알림 설정', onPress: () => confirmUserNotificationOn() })}
-      {/* {renderMenu({ text: '알림 설정', onPress: () => navigation.push(MY_PAGE_NAVIGATION, { screen: NOTIFICATION_SETTINGS_PAGE }) })} */}
-      {renderMenu({
-        text: '약관 및 정책',
-        onPress: () => navigation.push('MyStack', { screen: CONTRACT }),
-      })}
-      {renderMenu({ text: '버전', versionInfo })}
+      {isContractModalOpen && <ContractModal onCancel={() => setIsContractModalOpen(false)} />}
+      {isManageAccountModalOpen && (
+        <ManageAccountModal onCancel={() => setIsManageAccountModalOpen(false)} />
+      )}
+      {isNotiOnModalOpen && <NotiOnModal onCancel={() => setIsNotiOnModalOpen(false)} />}
+      {isNotiSettingsModalOpen && (
+        <NotiSettingsModal onCancel={() => setIsNotiSettingsModalOpen(false)} />
+      )}
     </Container>
   );
 };
@@ -144,5 +148,5 @@ const MenuContainer = styled.Pressable`
   height: 53px;
   align-items: center;
   border-bottom-width: 1px;
-  border-bottom-color: #ebebeb;
+  border-bottom-color: ${COLOR.GRAY_EB};
 `;

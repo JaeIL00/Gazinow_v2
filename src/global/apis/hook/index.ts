@@ -15,6 +15,8 @@ import {
   searchPathDeleteFetch,
   searchPathSaveFetch,
   searchPathsFetch,
+  getAllIssuesFetch,
+  getIssuesByLaneFetch,
 } from '@/global/apis/func';
 import { subwayFreshLineName } from '@/global/utils';
 import { SubwayLine, SubwayStrEnd } from '../entity';
@@ -178,4 +180,20 @@ export const useChangePasswordQuery = ({
     onError,
   });
   return { changePasswordMutate };
+};
+
+/**
+ * 이슈 전체 조회 훅
+ */
+export const useGetAllIssuesQuery = () => {
+  const { data } = useQuery(['getAllIssues'], getAllIssuesFetch);
+  return { data };
+};
+
+/**
+ * 이슈 노선별 조회 훅
+ */
+export const useGetIssuesByLaneQuery = (line: string) => {
+  const { data } = useQuery(['getIssuesByLane'], () => getIssuesByLaneFetch({ line }));
+  return { data };
 };

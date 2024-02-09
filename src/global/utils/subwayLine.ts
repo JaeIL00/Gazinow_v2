@@ -152,7 +152,7 @@ export const subwayNameCutting = (name: string) => {
     case '정부과천청사':
       return '정부과천\n청사';
     case '디지털미디어시티':
-      return '디지털미디어\n시티';
+      return '디지털\n미디어시티';
     case '월드컵경기장':
       return '월드컵\n경기장';
     case '부천종합운동장':
@@ -185,6 +185,8 @@ export const subwayNameCutting = (name: string) => {
       return '운동장.\n송담대';
     case '전대.에버랜드':
       return '전대.\n에버랜드';
+    case '총신대입구(이수)':
+      return '총신대입구\n(이수)';
     case '419민주묘지':
       return '419\n민주묘지';
     case '북한산보국문':
@@ -209,6 +211,8 @@ export const subwayNameCutting = (name: string) => {
       return '국제\n업무지구';
     case '서울대벤처타운':
       return '서울대\n벤처타운';
+    case '서울지방병무청':
+      return '서울지방\n병무청';
     case '송도달빛축제공원':
       return '송도달빛\n축제공원';
     default:

@@ -156,6 +156,7 @@ const ChangePwModal = ({ onCancel }: ModalProps) => {
             inputMode="text"
             onChangeText={handleCurPasswordChange}
             autoFocus
+            secureTextEntry
           />
           <IconButton
             iconType="Ionicons"
@@ -166,7 +167,6 @@ const ChangePwModal = ({ onCancel }: ModalProps) => {
             onPress={() => setCurPassword('')}
           />
         </InputContainer>
-        {/* {isPwRight && ( */}
         {curPassword !== '' && (
           <MessageContainer>
             {isPwRight ? (
@@ -199,6 +199,7 @@ const ChangePwModal = ({ onCancel }: ModalProps) => {
             placeholderTextColor={COLOR.GRAY_BE}
             inputMode="text"
             onChangeText={(text) => checkInputValid(text)}
+            secureTextEntry
           />
           <IconButton
             iconType="Ionicons"
@@ -210,7 +211,6 @@ const ChangePwModal = ({ onCancel }: ModalProps) => {
           />
         </InputContainer>
 
-        {/* {changePassword !== '' && ( */}
         <MessageContainer>
           <CheckIcon name="check" size={12} color={lengValidColor} />
           <Space width="4px" />
@@ -230,7 +230,6 @@ const ChangePwModal = ({ onCancel }: ModalProps) => {
             textColor={comValidColor}
           />
         </MessageContainer>
-        {/* )} */}
         <InputContainer>
           <PwInput
             value={confirmPassword}
@@ -238,6 +237,7 @@ const ChangePwModal = ({ onCancel }: ModalProps) => {
             placeholderTextColor={COLOR.GRAY_BE}
             inputMode="text"
             onChangeText={setConfirmPassword}
+            secureTextEntry
           />
           <IconButton
             iconType="Ionicons"

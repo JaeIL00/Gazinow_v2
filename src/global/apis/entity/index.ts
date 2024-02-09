@@ -1,37 +1,4 @@
 /**
- * 경로 저장
- */
-export interface AddRouteTypes {
-  roadName: string;
-  totalTime: number;
-  subwayTransitCount: number;
-  firstStartStation: string;
-  lastEndStation: string;
-  subPaths: [
-    {
-      trafficType: number;
-      distance: number;
-      sectionTime: number;
-      stationCount: number;
-      lanes: [
-        {
-          name: string;
-          StationCode: number;
-          startName: string;
-          endName: string;
-        },
-      ];
-      subways: [
-        {
-          index: number;
-          stationName: string;
-        },
-      ];
-    },
-  ];
-}
-
-/**
  * 지하철 호선 이름
  */
 export type SubwayLine =
@@ -175,5 +142,58 @@ export interface SubwayStrEnd {
 }
 
 export interface SavedRoute extends Path {
+  issues: string; //FIXME: 백엔드에 물어볼 것
   roadName: string;
+  id: number;
+}
+
+export interface IssueContent {
+  id: number;
+  title: string;
+  content: string;
+  date: string;
+  line: string;
+  startDate: string;
+  expireDate: string;
+  type: string;
+}
+
+export interface CombinedData {
+  id?: number;
+  title?: string;
+  content?: string;
+  date?: string;
+  line?: string;
+  startDate?: string;
+  expireDate?: string;
+  type: string;
+}
+
+export interface AllIssues {
+  content: IssueContent[];
+  pageable: {
+    pageNumber: number;
+    pageSize: number;
+    sort: {
+      empty: boolean;
+      unsorted: boolean;
+      sorted: boolean;
+    };
+    offset: number;
+    paged: boolean;
+    unpaged: boolean;
+  };
+  totalPages: number;
+  totalElements: number;
+  last: boolean;
+  size: number;
+  number: number;
+  sort: {
+    empty: boolean;
+    unsorted: boolean;
+    sorted: boolean;
+  };
+  numberOfElements: number;
+  first: boolean;
+  empty: boolean;
 }

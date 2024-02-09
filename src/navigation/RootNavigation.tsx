@@ -1,7 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import type { StackNavigationProp } from '@react-navigation/stack';
-
 import { MainBottomTabNavigation } from '@/navigation';
 import { MAIN_BOTTOM_TAB } from '@/global/constants';
 import type { RootStackParamList } from '@/navigation/types/navigation';
@@ -11,7 +10,6 @@ import { getEncryptedStorage, removeEncryptedStorage, setEncryptedStorage } from
 import { View } from 'react-native';
 import { FontText } from '@/global/ui';
 import { tokenReissueFetch } from '@/global/apis/func';
-import MyNavigation from './MyNavigation';
 import AuthNavigation from './AuthNavigation';
 
 const Stack = createStackNavigator<RootStackParamList>();
@@ -68,7 +66,6 @@ const RootNavigation = () => {
       />
       <Stack.Screen name="AuthStack" component={AuthNavigation} />
       <Stack.Screen name={MAIN_BOTTOM_TAB} component={MainBottomTabNavigation} />
-      <Stack.Screen name="MyStack" component={MyNavigation} />
     </Stack.Navigator>
   );
 };

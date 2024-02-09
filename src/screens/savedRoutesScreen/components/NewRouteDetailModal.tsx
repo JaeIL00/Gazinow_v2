@@ -2,13 +2,15 @@ import { css } from '@emotion/native';
 import { useMemo } from 'react';
 import { FlatList, Modal, View } from 'react-native';
 import { FontText, IconButton } from '@/global/ui';
-import { useRootNavigation } from '@/navigation/RootNavigation';
 import { Path, SubPath } from '@/global/apis/entity';
 import SearchPathDetailItem from '@/screens/searchPathResultDetailScreen/components/SearchPathDetailItem';
+import { COLOR } from '@/global/constants';
 
 interface ModalProps {
   item: Path;
-  setIsNewRouteDetailModalOpened: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsNewRouteDetailModalOpened: (
+    isOpen: boolean,
+  ) => void | React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const NewRouteDetailModal = ({ item, setIsNewRouteDetailModalOpened }: ModalProps) => {
@@ -64,7 +66,12 @@ const NewRouteDetailModal = ({ item, setIsNewRouteDetailModalOpened }: ModalProp
                 margin-top: 4px;
               `}
             >
-              <FontText value="42분" textSize="24px" textWeight="Bold" lineHeight="32px" />
+              <FontText
+                value={`${item.totalTime}분 소요`}
+                textSize="24px"
+                textWeight="Bold"
+                lineHeight="32px"
+              />
               <View
                 style={css`
                   width: 8px;
@@ -77,7 +84,7 @@ const NewRouteDetailModal = ({ item, setIsNewRouteDetailModalOpened }: ModalProp
                   `}
                 />
                 <FontText
-                  value="환승 1회"
+                  value={`환승 ${freshSubPathData.length-1}회`}
                   textSize="14px"
                   textWeight="Regular"
                   lineHeight="21px"
@@ -92,7 +99,7 @@ const NewRouteDetailModal = ({ item, setIsNewRouteDetailModalOpened }: ModalProp
             margin-bottom: 20px;
             margin-top: 22px;
             height: 1px;
-            background-color: #ebebeb;
+            background-color: ${COLOR.GRAY_EB};
           `}
         />
         <FlatList

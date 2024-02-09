@@ -127,7 +127,7 @@ const PathTitleInfoBox = styled.View`
 `;
 const PathInner = styled.Pressable`
   padding: 20px 16px 24px;
-  border-bottom-color: #ebebeb;
+  border-bottom-color: ${COLOR.GRAY_EB};
   border-bottom-width: 1px;
 `;
 const RadioButtonContainer = styled(Pressable)<{ selected?: boolean }>`
@@ -156,6 +156,6 @@ const BottomBtn = styled.Pressable`
   border-radius: 5px;
   align-items: center;
   bottom: 41px;
-    ${({ disabled }) =>
+  ${({ disabled }) =>
     disabled ? `background-color : #dddddd` : `background-color : ${COLOR.BASIC_BLACK};`}
 `;

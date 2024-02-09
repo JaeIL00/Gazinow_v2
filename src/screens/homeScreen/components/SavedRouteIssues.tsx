@@ -23,7 +23,7 @@ const SavedRouteIssues = () => {
         styles.navButton,
         {
           backgroundColor: activeButton === text ? '#474747' : 'white',
-          borderColor: activeButton === text ? 'transparent' : '#EBEBEB',
+          borderColor: activeButton === text ? 'transparent' : COLOR.GRAY_EB,
         },
       ]}
     >
@@ -84,7 +84,7 @@ const styles = StyleSheet.create({
   navButton: {
     backgroundColor: 'white',
     borderWidth: 1,
-    borderColor: '#EBEBEB',
+    borderColor: COLOR.GRAY_EB,
     borderRadius: 17,
     paddingVertical: 4,
     paddingHorizontal: 10,

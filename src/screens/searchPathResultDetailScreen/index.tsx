@@ -138,7 +138,7 @@ const SearchPathResultDetailScreen = () => {
           margin-bottom: 21px;
           margin-top: 16px;
           height: 1px;
-          background-color: #ebebeb;
+          background-color: ${COLOR.GRAY_EB};
         `}
       />
       <FlatList
