@@ -7,11 +7,11 @@ import RecentSearchBox from './RecentSearchBox';
 import IssueBox from './IssueBox';
 import { useHomeNavigation } from '@/navigation/HomeNavigation';
 
-const categoryName: ['저장경로', '최근검색', '이슈'] = ['저장경로', '최근검색', '이슈'];
+const categoryName: ['저장경로', '이슈'] = ['저장경로', '이슈'];
 
 const SavedRouteIssues = () => {
   const homeNavigation = useHomeNavigation();
-  const [activeButton, setActiveButton] = useState<'저장경로' | '최근검색' | '이슈'>('저장경로');
+  const [activeButton, setActiveButton] = useState<'저장경로' | '이슈'>('저장경로');
 
   const handleButtonClick = (buttonText: typeof activeButton) => setActiveButton(buttonText);
 
@@ -56,10 +56,10 @@ const SavedRouteIssues = () => {
       <View style={styles.borderLine}></View>
 
       {/* 버튼에 따라 다른 컴포넌트를 렌더링 */}
+      {/* 최근검색: <RecentSearchBox />, TODO: MVP에서 제외*/} 
       {
         {
           저장경로: <SavedRouteBox />,
-          최근검색: <RecentSearchBox />,
           이슈: <IssueBox />,
         }[activeButton]
       }
