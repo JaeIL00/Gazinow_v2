@@ -155,6 +155,18 @@ export interface IssueContent {
   line: string;
   startDate: string;
   expireDate: string;
+  type: string;
+}
+
+export interface CombinedData {
+  id?: number;
+  title?: string;
+  content?: string;
+  date?: string;
+  line?: string;
+  startDate?: string;
+  expireDate?: string;
+  type: string;
 }
 
 export interface AllIssues {
