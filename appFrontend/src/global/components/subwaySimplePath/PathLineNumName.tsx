@@ -10,9 +10,14 @@ interface PathLineNumNameProps {
 }
 
 const PathLineNumName = ({ lane, stationName }: PathLineNumNameProps) => {
-  
   return (
-    <View style={{ alignItems: 'center' }}>
+    <View
+      style={{
+        position: 'relative',
+        alignItems: 'center',
+        marginBottom: Dimensions.get('window').fontScale * 22,
+      }}
+    >
       <View style={{ width: 42 }} />
       <View
         style={{
@@ -20,24 +25,28 @@ const PathLineNumName = ({ lane, stationName }: PathLineNumNameProps) => {
           height: Dimensions.get('window').fontScale * 18,
           borderRadius: 9999,
           backgroundColor: subwayLineColor(lane.stationCode),
-          marginBottom: 6,
           justifyContent: 'center',
           alignItems: 'center',
         }}
       >
-        {lane.stationCode > 9 && <Space height='1px' />}
+        {lane.stationCode > 9 && <Space height="1px" />}
         <FontText
           value={subwayLineName(lane.stationCode)}
           textSize={lane.stationCode <= 9 ? '13px' : '6px'}
           textWeight={lane.stationCode <= 9 ? 'SemiBold' : 'Bold'}
           textColor={COLOR.WHITE}
           lineHeight={lane.stationCode > 9 ? '6px' : undefined}
-          style={{letterSpacing: lane.stationCode > 9 ? -0.3 : undefined}}
+          style={{ letterSpacing: lane.stationCode > 9 ? -0.3 : undefined }}
         />
-        {lane.stationCode <= 9 && <Space height='1px' />}
-
+        {lane.stationCode <= 9 && <Space height="1px" />}
       </View>
-      <View>
+      <View
+        style={{
+          position: 'absolute',
+          width: 100,
+          bottom: -(Dimensions.get('window').fontScale * 22),
+        }}
+      >
         <FontText
           value={subwayNameCutting(stationName)}
           textSize="12px"
