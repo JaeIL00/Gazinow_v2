@@ -16,7 +16,7 @@ const RenderSavedRoutes = () => {
 
   const { deleteMutate } = useDeleteSavedSubwayRoute({
     onSuccess: async () => {
-      await queryClient.invalidateQueries();
+      await queryClient.invalidateQueries('getRoads');
     },
   });
 

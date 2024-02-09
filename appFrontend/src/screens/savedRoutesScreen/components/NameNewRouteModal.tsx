@@ -34,12 +34,12 @@ const NameNewRouteModal = ({
 
   const { mutate } = useSaveMyRoutesQuery({
     onSuccess: async () => {
-      await queryClient.invalidateQueries();
+      await queryClient.invalidateQueries('getRoads');
       setIsNameNewRouteModalOpened(false);
       setIsOpenSelectNewRouteModal(false);
     },
     onError: async (error: any) => {
-      await queryClient.invalidateQueries();
+      await queryClient.invalidateQueries('getRoads');
       if (error.response.status === 409) {
         setIsDuplicatedName(true);
       }
