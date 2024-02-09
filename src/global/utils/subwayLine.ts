@@ -185,6 +185,8 @@ export const subwayNameCutting = (name: string) => {
       return '운동장.\n송담대';
     case '전대.에버랜드':
       return '전대.\n에버랜드';
+    case '총신대입구(이수)':
+      return '총신대입구\n(이수)';
     case '419민주묘지':
       return '419\n민주묘지';
     case '북한산보국문':
