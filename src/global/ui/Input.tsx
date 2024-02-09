@@ -1,15 +1,24 @@
 import styled from '@emotion/native';
-import type { TextInputProps } from 'react-native/types';
+import type { TextInput, TextInputProps } from 'react-native/types';
 
 import { COLOR } from '@/global/constants';
+import { useEffect, useRef } from 'react';
 
 interface InputProps extends TextInputProps {
   fontSize?: string;
+  isBlur?: boolean;
 }
 
 const Input = (props: InputProps) => {
-  const { fontSize } = props;
-  return <StyleInput size={fontSize} {...props} />;
+  const { fontSize, isBlur } = props;
+
+  const ref = useRef<TextInput>(null);
+
+  useEffect(() => {
+    if (isBlur) ref.current?.blur();
+  }, [isBlur]);
+
+  return <StyleInput ref={ref} size={fontSize} {...props} />;
 };
 
 export default Input;

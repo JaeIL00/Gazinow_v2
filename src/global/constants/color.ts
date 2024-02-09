@@ -1,5 +1,6 @@
 const COLOR = {
   WHITE: '#ffffff' as const,
+  REAL_BLACK: '#000' as const,
   BASIC_BLACK: '#171717' as const,
   GRAY_F9: '#F9F9F9' as const,
   GRAY_F2: '#f2f2f2' as const,
