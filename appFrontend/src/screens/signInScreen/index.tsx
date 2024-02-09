@@ -151,7 +151,7 @@ const SignInScreen = () => {
         textWeight="Regular"
         textColor={COLOR.WHITE}
         onPress={submitFormData}
-        disabled={!isValidEmail && !formData.password}
+        disabled={!isValidEmail || !formData.password}
         style={{
           backgroundColor: isValidEmail && !!formData.password ? COLOR.BASIC_BLACK : COLOR.GRAY_DDD,
           borderRadius: 5,
