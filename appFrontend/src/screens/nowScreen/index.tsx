@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import styled from '@emotion/native';
-import { FontText } from '@/global/ui';
+import { FontText, Space } from '@/global/ui';
 import { COLOR } from '@/global/constants';
-import { FlatList, StyleSheet, View } from 'react-native';
+import { FlatList, ScrollView, StyleSheet, View } from 'react-native';
 import {
   useGetAllIssuesQuery,
   useGetIssuesByLaneQuery,
@@ -79,7 +79,10 @@ const NowScreen = () => {
         <FontText value="NOW" textSize="24px" textWeight="SemiBold" lineHeight="34px" />
       </Header>
       <Category>
-        <View style={styles.textContainer}>{renderButtons()}</View>
+        <ScrollView horizontal={true} style={styles.textContainer}>
+          <Space width="16px" />
+          {renderButtons()}
+        </ScrollView>
       </Category>
       <FlatList
         data={combinedData}
@@ -150,7 +153,7 @@ const ButtonStyle = styled.TouchableOpacity<{ activeButton: boolean }>`
   background-color: ${({ activeButton }) => (activeButton ? '#171717' : 'white')};
 `;
 const Category = styled.View`
-  padding: 12px 16px;
+  padding: 12px 0;
   flex-direction: row;
   align-items: center;
 `;
