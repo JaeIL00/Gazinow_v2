@@ -41,8 +41,7 @@ const IssueContainer = ({
 
   return (
     <>
-      {/* TODO: 스크린 이동 */}
-      {/* {isIssueDetailOpened && <IssueModalTest id={id} />} */}
+      {isIssueDetailOpened && <IssueModalTest id={id} />}
       <IssueList onPress={() => setIsIssueDetailOpened(true)}>
         <TextContainer>
           <FontText
