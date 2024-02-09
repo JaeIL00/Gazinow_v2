@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { Image, View } from 'react-native';
 
 import { iconPath } from '@/assets/icons/iconPath';
-import { FontText, IconButton } from '@/global/ui';
+import { FontText, IconButton, Space } from '@/global/ui';
 import { subwayLineColor } from '@/global/utils';
 import { SubPath } from '@/global/apis/entity';
 import { COLOR } from '@/global/constants';
@@ -68,14 +68,14 @@ const SearchPathDetailItem = ({ data, isLastLane }: SearchPathDetailItemProps) =
             `}
           >
             <FontText
-              value={data.way + ' 방향'} // 백엔드: 지하철 방향
+              value={data.way + ' 방향'}
               textSize="11px"
               textWeight="Medium"
               lineHeight="13px"
               textColor={COLOR.GRAY_999}
             />
             <FontText
-              value={data.door !== 'null' ? ' | 빠른환승 ' + data.door : ''} // 백엔드: 빠른환승 문 번호
+              value={data.door !== 'null' ? ' | 빠른환승 ' + data.door : ''}
               textSize="11px"
               textWeight="Medium"
               lineHeight="13px"
@@ -107,24 +107,24 @@ const SearchPathDetailItem = ({ data, isLastLane }: SearchPathDetailItemProps) =
               lineHeight="13px"
               textColor="#49454f"
             />
-            <View
-              style={css`
-                width: 4px;
-              `}
-            />
-            <IconButton
-              isFontIcon={true}
-              iconType="Feather"
-              iconName={isOpenPathList ? 'chevron-up' : 'chevron-down'}
-              iconColor="#49454f"
-              iconWidth="10"
-              onPress={() => setIsOpenPathList((prev) => !prev)}
-            />
+            {data.stations.length > 2 && (
+              <>
+                <Space width="4px" />
+                <IconButton
+                  isFontIcon={true}
+                  iconType="Feather"
+                  iconName={isOpenPathList ? 'chevron-up' : 'chevron-down'}
+                  iconColor="#49454f"
+                  iconWidth="10"
+                  onPress={() => setIsOpenPathList((prev) => !prev)}
+                />
+              </>
+            )}
           </View>
           {isOpenPathList && (
             <View style={{ marginTop: 12 }}>
               {data.stations.map((item, idx) => {
-                if (data.stations.length - 1 > idx) {
+                if (data.stations.length - 1 > idx && idx !== 0) {
                   return (
                     <View
                       key={item.stationName.length + item.stationName}
