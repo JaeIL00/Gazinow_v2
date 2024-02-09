@@ -88,70 +88,70 @@ const SearchPathResultScreen = () => {
       </View>
 
       <ScrollView style={{ backgroundColor: COLOR.WHITE }}>
-        {data?.paths.map((item, idx) => (
-          <View
-            key={item.firstStartStation + item.totalTime}
-            style={{
-              paddingHorizontal: 18,
-              paddingBottom: 24,
-              paddingTop: 20,
-              borderBottomColor: data.paths.length - 1 !== idx ? COLOR.GRAY_EB : 'none',
-              borderBottomWidth: data.paths.length - 1 !== idx ? 1 : 0,
-            }}
-          >
-            <View>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                }}
-              >
-                <FontText
-                  value="평균 소요시간"
-                  textSize="11px"
-                  textWeight="SemiBold"
-                  textColor="#999"
-                />
-                <TouchableOpacity
-                  style={{ flexDirection: 'row', alignItems: 'center' }}
-                  onPress={() =>
-                    homeNavigation.push('SubwayPathDetail', {
-                      state: item,
-                    })
-                  }
+        {data && data.paths.map((item, idx) => (
+            <View
+              key={item.firstStartStation + item.totalTime + item.subPaths.length + item.subwayTransitCount + idx}
+              style={{
+                paddingHorizontal: 18,
+                paddingBottom: 24,
+                paddingTop: 20,
+                borderBottomColor: data.paths.length - 1 !== idx ? COLOR.GRAY_EB : 'none',
+                borderBottomWidth: data.paths.length - 1 !== idx ? 1 : 0,
+              }}
+            >
+              <View>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                  }}
                 >
                   <FontText
-                    value="세부정보"
-                    textSize="13px"
-                    textWeight="Regular"
+                    value="평균 소요시간"
+                    textSize="11px"
+                    textWeight="SemiBold"
                     textColor="#999"
                   />
-                  <Space width="4px" />
-                  <MoreIcon source={iconPath['right_arrow_nonbar']} />
-                </TouchableOpacity>
+                  <TouchableOpacity
+                    style={{ flexDirection: 'row', alignItems: 'center' }}
+                    onPress={() =>
+                      homeNavigation.push('SubwayPathDetail', {
+                        state: item,
+                      })
+                    }
+                  >
+                    <FontText
+                      value="세부정보"
+                      textSize="13px"
+                      textWeight="Regular"
+                      textColor="#999"
+                    />
+                    <Space width="4px" />
+                    <MoreIcon source={iconPath['right_arrow_nonbar']} />
+                  </TouchableOpacity>
+                </View>
+                <View style={{ height: 4 }} />
+                <FontText
+                  value={
+                    item.totalTime > 60
+                      ? Math.floor(item.totalTime / 60) + '시간 ' + (item.totalTime % 60) + '분 이상'
+                      : item.totalTime + '분 이상'
+                  }
+                  textSize="20px"
+                  textWeight="SemiBold"
+                  textColor={COLOR.BASIC_BLACK}
+                />
               </View>
-              <View style={{ height: 4 }} />
-              <FontText
-                value={
-                  item.totalTime > 60
-                    ? Math.floor(item.totalTime / 60) + '시간 ' + (item.totalTime % 60) + '분 이상'
-                    : item.totalTime + '분 이상'
-                }
-                textSize="20px"
-                textWeight="SemiBold"
-                textColor={COLOR.BASIC_BLACK}
+  
+              {/* 지하철 경로 UI */}
+              <SubwaySimplePath
+                pathData={item.subPaths}
+                arriveStationName={item.lastEndStation}
+                betweenPathMargin={24}
               />
             </View>
-
-            {/* 지하철 경로 UI */}
-            <SubwaySimplePath
-              pathData={item.subPaths}
-              arriveStationName={item.lastEndStation}
-              betweenPathMargin={24}
-            />
-          </View>
-        ))}
+          ))}
       </ScrollView>
     </View>
   );
