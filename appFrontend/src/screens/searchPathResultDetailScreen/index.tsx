@@ -13,7 +13,7 @@ import { getStatusBarHeight } from 'react-native-status-bar-height';
 import { COLOR } from '@/global/constants';
 
 const SearchPathResultDetailScreen = () => {
-  const route = useRoute();
+  const { state: resultData } = useRoute().params as { state: Path };
   const navigation = useHomeNavigation();
 
   const statusBarHeight =
@@ -29,11 +29,10 @@ const SearchPathResultDetailScreen = () => {
   const [isSaveRouteModalOpen, setIsSaveRouteModalOpen] = useState<boolean>(false);
 
   const freshSubPathData: SubPath[] = useMemo(() => {
-    const { state } = route.params as { state: Path };
-    const subPaths = state.subPaths;
-    if (!subPaths) return [];
+    if (!resultData.subPaths) return [];
+    const subPaths = resultData.subPaths;
     return Object.values(subPaths).filter((item) => !!item.lanes.length && !!item.stations.length);
-  }, [route]);
+  }, [resultData]);
 
   const transferCount = useMemo(() => {
     return freshSubPathData.length <= 1 ? freshSubPathData.length : freshSubPathData.length - 1;
@@ -82,7 +81,7 @@ const SearchPathResultDetailScreen = () => {
         />
         {isSaveRouteModalOpen && (
           <NewRouteSaveModal
-            freshData={{ ...(route.params as Path), subPaths: freshSubPathData }}
+            freshData={{ ...resultData, subPaths: freshSubPathData }}
             closeModal={() => setIsSaveRouteModalOpen(false)}
             onBookmark={() => setIsBookmarking(true)}
           />
@@ -110,7 +109,19 @@ const SearchPathResultDetailScreen = () => {
               margin-top: 4px;
             `}
           >
-            <FontText value="42분" textSize="24px" textWeight="Bold" lineHeight="32px" />
+            <FontText
+              value={
+                resultData.totalTime > 60
+                  ? Math.floor(resultData.totalTime / 60) +
+                    '시간 ' +
+                    (resultData.totalTime % 60) +
+                    '분'
+                  : resultData.totalTime + '분 이상'
+              }
+              textSize="24px"
+              textWeight="Bold"
+              lineHeight="32px"
+            />
             <View
               style={css`
                 width: 8px;
