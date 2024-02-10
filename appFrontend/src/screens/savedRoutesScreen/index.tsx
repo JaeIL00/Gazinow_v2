@@ -25,7 +25,7 @@ const SavedRoutesScreen = () => {
           onPress={() => navigation.goBack()}
         />
         <Space width="12px" />
-        <FontText value="저장한 경로" textSize="18px" textWeight="Medium" lineHeight="23px" />
+        <FontText value="저장경로 편집" textSize="18px" textWeight="Medium" lineHeight="23px" />
       </Header>
       <Space height="4px" />
       <RouteContainer>
