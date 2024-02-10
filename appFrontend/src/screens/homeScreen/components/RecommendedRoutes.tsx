@@ -1,72 +1,76 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
-import { IconButton, TextButton, FontText } from '@/global/ui';
+import { IconButton, TextButton, FontText, Space } from '@/global/ui';
 import { COLOR } from '@/global/constants';
 import styled from '@emotion/native';
+import { SubwaySimplePath } from '@/global/components';
+import { RenderSavedRoutesType } from '@/global/apis/entity';
+interface RecommendedRouteProps {
+  pathData: RenderSavedRoutesType;
+}
 
-const RecommendedRoutes = () => {
+const RecommendedRoutes = ({ pathData }: RecommendedRouteProps) => {
   const routeDetail = () => {
+    //TODO: 경로 상세 페이지로 이동
     console.log('dddd');
   };
 
   return (
     <Container>
-      <View style={styles.titleContainer}>
-        <View style={styles.textContainer}>
+      <TextContainer>
+        <TextContainer>
           <FontText
-            value="대체 경로  "
+            value="대체경로"
             textSize="16px"
             textWeight="SemiBold"
             lineHeight="21px"
             textColor={COLOR.BASIC_BLACK}
           />
+          <Space width="8px" />
           <FontText
-            value="평균 42분"
+            value={`평균 ${pathData.totalTime}분`}
             textSize="12px"
             textWeight="Regular"
             lineHeight="15px"
-            textColor={COLOR.BASIC_BLACK}
+            textColor={COLOR.GRAY_999}
           />
-        </View>
-        <View style={styles.textContainer}>
-          <TextButton
+        </TextContainer>
+        <TextContainer onPress={routeDetail}>
+          <FontText
             value="세부정보  "
             textSize="13px"
-            textColor={COLOR.GRAY_999}
             textWeight="Regular"
             lineHeight="19px"
+            textColor={COLOR.GRAY_999}
+          />
+          <IconButton
+            isFontIcon={false}
+            imagePath="more_gray"
+            iconWidth="4.5px"
+            iconHeight="8px"
             onPress={routeDetail}
           />
-          <IconButton isFontIcon={false} imagePath="more_gray" iconWidth="4.5px" iconHeight="8px" />
-        </View>
-      </View>
-
+        </TextContainer>
+      </TextContainer>
+      <Space height="4px" />
+      <SubwaySimplePath
+        pathData={pathData.subPaths}
+        arriveStationName={pathData.lastEndStation}
+        betweenPathMargin={24}
+      />
     </Container>
   );
 };
+export default RecommendedRoutes;
 
 const Container = styled.View`
   background: #f7f7f9;
-  padding: 16px;
+  padding: 16px 16px 0;
   border-radius: 8px;
-  margin: 2px;
+  margin: 8px 2px 0;
 `;
-
-const styles = StyleSheet.create({
-  textContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  containerSubwayRoute: {
-    marginTop: 40,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  titleContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-});
-
-export default RecommendedRoutes;
+const TextContainer = styled.Pressable`
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+`;

@@ -35,12 +35,13 @@ const SavedRouteBox = () => {
         <TitleContainer>
           <TextContainer>
             <FontText
-              value={`${item.roadName}  `}
+              value={item.roadName}
               textSize="18px"
               textWeight="Bold"
               lineHeight="23px"
               textColor={COLOR.BASIC_BLACK}
             />
+            <Space width="8px" />
             <FontText
               value={`${item.totalTime}분 소요`}
               textSize="12px"
@@ -101,8 +102,8 @@ const SavedRouteBox = () => {
     return (
       <FontText
         value="저장한 경로가 없어요"
-        textSize="16px"
-        textWeight="Medium"
+        textSize="13px"
+        textWeight="Regular"
         lineHeight="500px"
         textColor={COLOR.GRAY_999}
         textAlign="center"
@@ -128,7 +129,6 @@ const TitleContainer = styled.View`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  // margin-bottom: 24px;
   margin-top: 20px;
 `;
 const IssueContainer = styled.View`
