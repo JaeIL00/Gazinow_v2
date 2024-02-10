@@ -1,15 +1,13 @@
-import { SafeAreaView, ScrollView, Text } from 'react-native';
+import { SafeAreaView, ScrollView, Text, View } from 'react-native';
 import { SavedRouteIssues, SwapStation } from './components';
 import { COLOR } from '@/global/constants';
 
 const HomeScreen = () => {
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: COLOR.GRAY_F9 }}>
+    <SafeAreaView style={{ flex: 1 }}>
       <ScrollView
-        style={{
-          flex: 1,
-          paddingHorizontal: 16,
-        }}
+        contentContainerStyle={{ paddingHorizontal: 16, backgroundColor: COLOR.GRAY_F9 }}
+        showsVerticalScrollIndicator={false}
       >
         <Text>홈 페이지</Text>
         <SwapStation />
