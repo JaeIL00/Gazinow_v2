@@ -5,7 +5,7 @@ import { COLOR } from '@/global/constants';
 import { useGetSavedRoutesQuery } from '@/global/apis/hook';
 import styled from '@emotion/native';
 import { SubwaySimplePath } from '@/global/components';
-import { SavedRoute } from '@/global/apis/entity';
+import { RenderSavedRoutesType } from '@/global/apis/entity';
 import NewRouteDetailModal from '@/screens/savedRoutesScreen/components/NewRouteDetailModal';
 
 const SavedRouteBox = () => {
@@ -25,7 +25,7 @@ const SavedRouteBox = () => {
   };
 
   const renderSavedRoutes = () =>
-    savedRoutes?.map((item: SavedRoute, index: number) => (
+    savedRoutes?.map((item: RenderSavedRoutesType, index: number) => (
       <RouteContainer key={item.id}>
         {index !== 0 && (
           <BorderContainer>
