@@ -13,6 +13,7 @@ import { debounce } from 'lodash';
 import { Modal, Platform, StatusBar, View } from 'react-native';
 import { SelectedStationTypes } from './SwapStation';
 import { getStatusBarHeight } from 'react-native-status-bar-height';
+import { subwayReturnLineName } from '@/global/utils/subwayLine';
 
 interface SearchStationModalProps {
   searchType: '출발역' | '도착역';
@@ -69,7 +70,7 @@ const SearchStationModal = ({
 
   const stationBtnHandler = ({ stationName, stationLine }: (typeof searchResultData)[0]) => {
     if (!stationLine) return;
-    addRecentMutate({ stationName, stationLine });
+    addRecentMutate({ stationName, stationLine: subwayReturnLineName(stationLine) });
   };
 
   return (
