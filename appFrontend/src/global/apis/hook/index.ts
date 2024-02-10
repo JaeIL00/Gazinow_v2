@@ -20,6 +20,7 @@ import {
 } from '@/global/apis/func';
 import { subwayFreshLineName } from '@/global/utils';
 import { SubwayLine, SubwayStrEnd } from '../entity';
+import { AxiosError } from 'axios';
 
 /**
  * 지하철역 검색 훅
@@ -58,9 +59,16 @@ export const useGetSearchPaths = (params: SubwayStrEnd) => {
 /**
  * 지하철 경로 저장 훅
  */
-export const useSavedSubwayRoute = ({ onSuccess }: { onSuccess: () => void }) => {
+export const useSavedSubwayRoute = ({
+  onSuccess,
+  onError,
+}: {
+  onSuccess: () => void;
+  onError: (error: AxiosError) => void;
+}) => {
   const { data, mutate } = useMutation(searchPathSaveFetch, {
     onSuccess,
+    onError,
   });
 
   return { data, mutate };

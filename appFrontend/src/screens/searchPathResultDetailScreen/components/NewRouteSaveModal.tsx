@@ -15,6 +15,7 @@ interface NewRouteSaveModalProps {
 const NewRouteSaveModal = ({ freshData, closeModal, onBookmark }: NewRouteSaveModalProps) => {
   const queryClient = useQueryClient();
 
+  const [isDuplicatedError, setIsDuplicatedError] = useState<boolean>(false);
   const [routeName, setRouteName] = useState<string>('');
 
   const { mutate } = useSavedSubwayRoute({
@@ -22,6 +23,11 @@ const NewRouteSaveModal = ({ freshData, closeModal, onBookmark }: NewRouteSaveMo
       await queryClient.invalidateQueries(['getRoads']);
       onBookmark();
       closeModal();
+    },
+    onError: ({ response }) => {
+      if (response?.status === 409) {
+        setIsDuplicatedError(true);
+      }
     },
   });
 
@@ -93,7 +99,10 @@ const NewRouteSaveModal = ({ freshData, closeModal, onBookmark }: NewRouteSaveMo
               <Input
                 value={routeName}
                 onChangeText={(text) => {
-                  if (text.length <= 10) setRouteName(text);
+                  if (text.length <= 10) {
+                    setIsDuplicatedError(false);
+                    setRouteName(text);
+                  }
                 }}
                 style={{
                   fontSize: 14,
@@ -102,13 +111,27 @@ const NewRouteSaveModal = ({ freshData, closeModal, onBookmark }: NewRouteSaveMo
                 }}
               />
             </View>
-            <FontText
-              value={routeName.length + '/10'}
-              textSize="12px"
-              textWeight="Medium"
-              textColor={COLOR.GRAY_BE}
-              style={{ textAlign: 'right' }}
-            />
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+              }}
+            >
+              <FontText
+                value="이미 존재하는 이름입니다"
+                textSize="12px"
+                textWeight="Medium"
+                textColor={isDuplicatedError ? COLOR.LIGHT_RED : 'transparent'}
+              />
+              <FontText
+                value={routeName.length + '/10'}
+                textSize="12px"
+                textWeight="Medium"
+                textColor={COLOR.GRAY_BE}
+                // style={{ textAlign: 'right' }}
+              />
+            </View>
           </View>
 
           <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 20 }}>
