@@ -2,17 +2,15 @@ import styled from '@emotion/native';
 import Icon from 'react-native-vector-icons/Feather';
 
 import { iconPath } from '@/assets/icons/iconPath';
-import { FontText, Input, IconButton } from '@/global/ui';
+import { FontText, Input, IconButton, Space } from '@/global/ui';
 import { COLOR } from '@/global/constants';
 import { useAppDispatch } from '@/store';
 import { getSearchText } from '@/store/modules/subwaySearchModule';
 import { useAddRecentSearch, useGetSearchHistory, useSearchStationName } from '@/global/apis/hook';
 import { useCallback, useState } from 'react';
-import { useHomeNavigation } from '@/navigation/HomeNavigation';
 import { debounce } from 'lodash';
-import { Modal, Platform, StatusBar, View } from 'react-native';
+import { Modal, SafeAreaView } from 'react-native';
 import { SelectedStationTypes } from './SwapStation';
-import { getStatusBarHeight } from 'react-native-status-bar-height';
 import { subwayReturnLineName } from '@/global/utils/subwayLine';
 
 interface SearchStationModalProps {
@@ -26,11 +24,7 @@ const SearchStationModal = ({
   closeModal,
   setSubwayStation,
 }: SearchStationModalProps) => {
-  const homeNavigation = useHomeNavigation();
   const dispatch = useAppDispatch();
-
-  const StatusBarHeight =
-    Platform.OS === 'ios' ? getStatusBarHeight(true) : (StatusBar.currentHeight as number);
 
   const { data: history } = useGetSearchHistory();
 
@@ -75,7 +69,12 @@ const SearchStationModal = ({
 
   return (
     <Modal visible onRequestClose={() => closeModal()}>
-      <View style={{ paddingVertical: Platform.OS === 'ios' ? StatusBarHeight : 0, flex: 1 }}>
+      <SafeAreaView
+        style={{
+          flex: 1,
+          backgroundColor: COLOR.WHITE,
+        }}
+      >
         <Container>
           <IconButton
             iconType="Ionicons"
@@ -85,6 +84,7 @@ const SearchStationModal = ({
             iconColor="#49454F"
             onPress={() => closeModal()}
           />
+          <Space width="16px" />
           <SearchInput
             value={searchTextValue}
             placeholder={`${searchType}을 검색해보세요`}
@@ -176,7 +176,7 @@ const SearchStationModal = ({
             </Ul>
           </ResultContainer>
         )}
-      </View>
+      </SafeAreaView>
     </Modal>
   );
 };

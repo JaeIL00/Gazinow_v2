@@ -5,6 +5,7 @@ import { Provider } from 'react-redux';
 import { RootNavigation } from '@/navigation';
 import { store } from '@/store';
 import { NavigationContainer } from '@react-navigation/native';
+import { StatusBar } from 'react-native';
 
 const queryClient = new QueryClient();
 
