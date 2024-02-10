@@ -18,7 +18,7 @@ const AddNewRouteHeader = ({ onBackBtnPress, onCloseBtnPress }: HeaderProps) => 
           iconWidth="24px"
           onPress={onBackBtnPress}
         />
-        <FontText value="새 경로 저장" textSize="18px" textWeight="Medium" />
+        <FontText value="새 경로 저장" textSize="18px" textWeight="Medium" lineHeight="23px" />
         <IconButton
           isFontIcon={false}
           imagePath="x"

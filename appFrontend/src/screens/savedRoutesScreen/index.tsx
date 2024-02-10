@@ -35,7 +35,7 @@ const SavedRoutesScreen = () => {
 };
 
 const RouteContainer = styled.View`
-  padding: 20px 20px 0px;
+  // padding: 20px 20px 0px;
   background-color: ${COLOR.WHITE};
   border-radius: 15px;
 `;
@@ -44,7 +44,7 @@ const Container = styled.ScrollView`
   background-color: ${COLOR.GRAY_F9};
 `;
 const AddContainer = styled.Pressable`
-  padding: 0px 0px 20px;
+  padding: 20px 0px 24px;
   align-items: center;
   justify-content: center;
   flex-direction: row;

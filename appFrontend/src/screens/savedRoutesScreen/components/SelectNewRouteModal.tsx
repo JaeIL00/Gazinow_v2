@@ -80,6 +80,7 @@ const SelectNewRouteModal = ({
               </PathInner>
             );
           })}
+          <Space height="1px" backgroundColor={COLOR.GRAY_EB} />
         </ScrollView>
       </SubPathContainer>
 
@@ -110,11 +111,12 @@ const PathTitleInfoBox = styled.View`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
+  margin: 0 0 8px;
 `;
 const PathInner = styled.Pressable`
-  padding: 20px 16px 24px;
-  border-bottom-color: ${COLOR.GRAY_EB};
-  border-bottom-width: 1px;
+  padding: 20px 16px 8px;
+  border-top-color: ${COLOR.GRAY_EB};
+  border-top-width: 1px;
 `;
 const RadioButtonContainer = styled(Pressable)<{ selected?: boolean }>`
   width: 24px;

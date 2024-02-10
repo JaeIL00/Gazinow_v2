@@ -167,7 +167,7 @@ const Container = styled.View`
   border-radius: 28px;
   border: 1px solid #d4d4d4;
   padding: 4px 16px 4px 18.25px;
-  margin: 16px 16px 0;
+  margin: 20px 16px 0;
 `;
 const SearchInput = styled(Input)<{ isSavingNewRoute?: boolean }>`
   height: 36px;
