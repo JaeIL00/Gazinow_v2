@@ -1,5 +1,5 @@
 import styled from '@emotion/native';
-import { useEffect, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 
 import { IconButton, TextButton } from '@/global/ui';
 import { COLOR, ARRIVAL_STATION, DEPARTURE_STATION } from '@/global/constants';
@@ -17,13 +17,10 @@ type StationTypes = typeof DEPARTURE_STATION | typeof ARRIVAL_STATION;
 
 interface NewSearchSwapStationProps {
   setSeletedStation: React.Dispatch<React.SetStateAction<SelectedStationTypes>>;
-  setIsOpenSelectNewRouteModal: React.Dispatch<React.SetStateAction<boolean>>;
+  setDepth: Dispatch<SetStateAction<'search' | 'pathList' | 'detail' | 'name'>>;
 }
 
-const NewSearchSwapStation = ({
-  setSeletedStation,
-  setIsOpenSelectNewRouteModal,
-}: NewSearchSwapStationProps) => {
+const NewSearchSwapStation = ({ setSeletedStation, setDepth }: NewSearchSwapStationProps) => {
   const dispatch = useAppDispatch();
 
   const [searchType, setSearchType] = useState<StationTypes>('출발역');
@@ -42,6 +39,7 @@ const NewSearchSwapStation = ({
   const closeSearchModal = () => setIsOpenSearchStation(false);
 
   const openSearchModal = (type: StationTypes) => {
+    setDepth('search');
     setSearchType(type);
     setIsOpenSearchStation(true);
   };
@@ -69,7 +67,7 @@ const NewSearchSwapStation = ({
         arrival: selectedStation.arrival,
         departure: selectedStation.departure,
       });
-      setIsOpenSelectNewRouteModal(true);
+      setDepth('pathList');
     }
   }, [selectedStation]);
 

@@ -3,44 +3,11 @@ import styled from '@emotion/native';
 import { FontText, IconButton, Space } from '@/global/ui';
 
 interface HeaderProps {
-  onCancel: () => void;
-  isNewSearchSwapStationOpened: boolean;
-  setIsNewSearchSwapStationOpened: React.Dispatch<React.SetStateAction<boolean>>;
-  isOpenSelectNewRouteModal: boolean;
-  setIsOpenSelectNewRouteModal: React.Dispatch<React.SetStateAction<boolean>>;
-  isNameNewRouteModalOpened: boolean;
-  setIsNameNewRouteModalOpened: React.Dispatch<React.SetStateAction<boolean>>;
+  onBackBtnPress: () => void;
+  onCloseBtnPress: () => void;
 }
 
-const AddNewRouteHeader = ({
-  onCancel,
-  isNewSearchSwapStationOpened,
-  setIsNewSearchSwapStationOpened,
-  isOpenSelectNewRouteModal,
-  setIsOpenSelectNewRouteModal,
-  isNameNewRouteModalOpened,
-  setIsNameNewRouteModalOpened,
-}: HeaderProps) => {
-  const onBackBtnPress = () => {
-    if (isNewSearchSwapStationOpened || isOpenSelectNewRouteModal) {
-      onCancel();
-      setIsOpenSelectNewRouteModal(false);
-    } else if (isNameNewRouteModalOpened) {
-      setIsNameNewRouteModalOpened(false);
-      setIsNewSearchSwapStationOpened(true);
-      setIsOpenSelectNewRouteModal(true);
-    }
-  };
-
-  const onCloseBtnPress = () => {
-    if (isNameNewRouteModalOpened) {
-      setIsNameNewRouteModalOpened(false);
-      setIsNewSearchSwapStationOpened(true);
-    }
-    setIsOpenSelectNewRouteModal(false);
-    onCancel();
-  };
-
+const AddNewRouteHeader = ({ onBackBtnPress, onCloseBtnPress }: HeaderProps) => {
   return (
     <>
       <Header>

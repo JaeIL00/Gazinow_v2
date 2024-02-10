@@ -1,7 +1,7 @@
 import styled from '@emotion/native';
 import { FontText, Input } from '@/global/ui';
 import { COLOR } from '@/global/constants';
-import React, { useMemo, useState } from 'react';
+import React, { Dispatch, SetStateAction, useMemo, useState } from 'react';
 import { useSaveMyRoutesQuery } from '@/global/apis/hook';
 import { useQueryClient } from 'react-query';
 import { SubwaySimplePath } from '@/global/components';
@@ -12,17 +12,10 @@ import { iconPath } from '@/assets/icons/iconPath';
 interface ModalProps {
   item: Path;
   onCancel: () => void;
-  setIsOpenSelectNewRouteModal: React.Dispatch<React.SetStateAction<boolean>>;
-  isOpenSelectNewRouteModal: boolean;
-  isNameNewRouteModalOpened: boolean;
-  setIsNameNewRouteModalOpened: React.Dispatch<React.SetStateAction<boolean>>;
+  setDepth: Dispatch<SetStateAction<'search' | 'pathList' | 'detail' | 'name'>>;
 }
 
-const NameNewRouteModal = ({
-  item,
-  setIsOpenSelectNewRouteModal,
-  setIsNameNewRouteModalOpened,
-}: ModalProps) => {
+const NameNewRouteModal = ({ item, onCancel, setDepth }: ModalProps) => {
   const [roadName, setRoadName] = useState<string>();
   const [isDuplicatedName, setIsDuplicatedName] = useState<boolean>(false);
   const queryClient = useQueryClient();
@@ -35,8 +28,10 @@ const NameNewRouteModal = ({
   const { mutate } = useSaveMyRoutesQuery({
     onSuccess: async () => {
       await queryClient.invalidateQueries('getRoads');
-      setIsNameNewRouteModalOpened(false);
-      setIsOpenSelectNewRouteModal(false);
+      setDepth('search');
+      onCancel();
+      // setIsNameNewRouteModalOpened(false);
+      // setIsOpenSelectNewRouteModal(false);
     },
     onError: async (error: any) => {
       await queryClient.invalidateQueries('getRoads');

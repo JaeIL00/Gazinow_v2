@@ -1,5 +1,5 @@
 import { css } from '@emotion/native';
-import { useMemo } from 'react';
+import { Dispatch, SetStateAction, useMemo } from 'react';
 import { FlatList, Modal, View } from 'react-native';
 import { FontText, IconButton } from '@/global/ui';
 import { Path, SubPath } from '@/global/apis/entity';
@@ -8,19 +8,17 @@ import { COLOR } from '@/global/constants';
 
 interface ModalProps {
   item: Path;
-  setIsNewRouteDetailModalOpened: (
-    isOpen: boolean,
-  ) => void | React.Dispatch<React.SetStateAction<boolean>>;
+  setDepth: Dispatch<SetStateAction<'search' | 'pathList' | 'detail' | 'name'>>;
 }
 
-const NewRouteDetailModal = ({ item, setIsNewRouteDetailModalOpened }: ModalProps) => {
+const NewRouteDetailModal = ({ item, setDepth }: ModalProps) => {
   const freshSubPathData: SubPath[] = useMemo(() => {
     const subPaths = item?.subPaths || [];
     return subPaths.filter((subPath) => !!subPath.lanes.length && !!subPath.stations.length);
   }, [item]);
 
   return (
-    <Modal onRequestClose={() => setIsNewRouteDetailModalOpened(false)}>
+    <Modal onRequestClose={() => setDepth('pathList')}>
       <View
         style={css`
           background-color: white;
@@ -42,7 +40,7 @@ const NewRouteDetailModal = ({ item, setIsNewRouteDetailModalOpened }: ModalProp
             imagePath="backBtn"
             iconHeight="24px"
             iconWidth="24px"
-            onPress={() => setIsNewRouteDetailModalOpened(false)}
+            onPress={() => setDepth('pathList')}
           />
         </View>
         <View
