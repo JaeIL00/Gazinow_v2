@@ -79,7 +79,11 @@ const NowScreen = () => {
         <FontText value="NOW" textSize="24px" textWeight="SemiBold" lineHeight="34px" />
       </Header>
       <Category>
-        <ScrollView horizontal={true} style={styles.textContainer}>
+        <ScrollView
+          horizontal={true}
+          showsHorizontalScrollIndicator={false}
+          style={styles.textContainer}
+        >
           <Space width="16px" />
           {renderButtons()}
         </ScrollView>
