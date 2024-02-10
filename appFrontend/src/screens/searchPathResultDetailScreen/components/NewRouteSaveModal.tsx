@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { SubwaySimplePath } from '@/global/components';
 import { useSavedSubwayRoute } from '@/global/apis/hook';
 import { Path } from '@/global/apis/entity';
+import { useQueryClient } from 'react-query';
 
 interface NewRouteSaveModalProps {
   freshData: Path;
@@ -12,15 +13,15 @@ interface NewRouteSaveModalProps {
   onBookmark: () => void;
 }
 const NewRouteSaveModal = ({ freshData, closeModal, onBookmark }: NewRouteSaveModalProps) => {
+  const queryClient = useQueryClient();
+
   const [routeName, setRouteName] = useState<string>('');
 
   const { mutate } = useSavedSubwayRoute({
-    onSuccess: () => {
+    onSuccess: async () => {
+      await queryClient.invalidateQueries(['getRoads']);
       onBookmark();
       closeModal();
-      // 인벨리드쿼리 하고
-      // 일시적으로 수동적으로 북마크 켜주기
-      // 백엔드: 인벨리드 됐기때문에 나갔다오면 켜져있음
     },
   });
 

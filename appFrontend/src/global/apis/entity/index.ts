@@ -61,6 +61,8 @@ export interface Path {
   firstStartStation: string;
   lastEndStation: string;
   subPaths: SubPath[];
+  myPath: boolean;
+  myPathId: [number] | null;
 }
 
 /**

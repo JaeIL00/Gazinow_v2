@@ -11,21 +11,24 @@ import { Path, SubPath } from '@/global/apis/entity';
 import { useHomeNavigation } from '@/navigation/HomeNavigation';
 import { getStatusBarHeight } from 'react-native-status-bar-height';
 import { COLOR } from '@/global/constants';
+import { useQueryClient } from 'react-query';
 
 const SearchPathResultDetailScreen = () => {
-  const { state: resultData } = useRoute().params as { state: Path };
+  const queryClient = useQueryClient();
   const navigation = useHomeNavigation();
+  const { state: resultData } = useRoute().params as { state: Path };
 
   const statusBarHeight =
     Platform.OS === 'ios' ? getStatusBarHeight(true) : (StatusBar.currentHeight as number);
 
   const { deleteMutate } = useDeleteSavedSubwayRoute({
-    onSuccess: () => {
+    onSuccess: async () => {
+      await queryClient.invalidateQueries(['getRoads']);
       setIsBookmarking(false);
     },
   });
 
-  const [isBookmarking, setIsBookmarking] = useState<boolean>(false);
+  const [isBookmarking, setIsBookmarking] = useState<boolean>(resultData.myPath);
   const [isSaveRouteModalOpen, setIsSaveRouteModalOpen] = useState<boolean>(false);
 
   const freshSubPathData: SubPath[] = useMemo(() => {
@@ -39,8 +42,8 @@ const SearchPathResultDetailScreen = () => {
   }, [freshSubPathData]);
 
   const bookmarkHandler = () => {
-    if (isBookmarking) {
-      deleteMutate({ id: 8 }); // 백엔드: 저장 아이디
+    if (isBookmarking && !!resultData.myPathId) {
+      deleteMutate({ id: resultData.myPathId[0] });
     } else {
       setIsSaveRouteModalOpen(true);
     }
