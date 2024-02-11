@@ -6,26 +6,35 @@ import { COLOR } from '@/global/constants';
 import { iconPath } from '@/assets/icons/iconPath';
 import dayjs from 'dayjs';
 import 'dayjs/locale/ko';
-import { SubwaySimplePath, SwapSubwayStation } from '@/global/components';
+import { SubwaySimplePath } from '@/global/components';
 import { useGetSearchPaths } from '@/global/apis/hook';
 import { useAppDispatch, useAppSelect } from '@/store';
-import { changeIsSearchedPath } from '@/store/modules';
-import { useEffect } from 'react';
+import { StationDataTypes, changeIsSearchedPath } from '@/store/modules';
+import { useEffect, useState } from 'react';
 import { useHomeNavigation } from '@/navigation/HomeNavigation';
+import SwapStation from './components/SwapStation';
 
 dayjs.locale('ko');
+
+export interface SelectedStationTypes {
+  departure: StationDataTypes;
+  arrival: StationDataTypes;
+}
 
 const SearchPathResultScreen = () => {
   const homeNavigation = useHomeNavigation();
   const dispatch = useAppDispatch();
 
-  const { arrival, departure } = useAppSelect(({ subwaySearch }) => subwaySearch.selectedStation);
+  const selectedStationRedux = useAppSelect(({ subwaySearch }) => subwaySearch.selectedStation);
+
+  const [selectedStation, setSelectedStation] =
+    useState<SelectedStationTypes>(selectedStationRedux);
 
   const { data } = useGetSearchPaths({
-    strStationName: departure.stationName,
-    strStationLine: departure.stationLine,
-    endStationName: arrival.stationName,
-    endStationLine: arrival.stationLine,
+    strStationName: selectedStation.departure.stationName,
+    strStationLine: selectedStation.departure.stationLine,
+    endStationName: selectedStation.arrival.stationName,
+    endStationLine: selectedStation.arrival.stationLine,
   });
 
   useEffect(() => {
@@ -47,7 +56,7 @@ const SearchPathResultScreen = () => {
             marginBottom: 16,
           }}
         >
-          <LeftIconBox>
+          <View style={{ marginTop: 4, marginRight: 16 }}>
             <IconButton
               isFontIcon={false}
               imagePath="left_arrow_nonbar"
@@ -55,10 +64,8 @@ const SearchPathResultScreen = () => {
               iconHeight="16px"
               onPress={() => homeNavigation.goBack()}
             />
-          </LeftIconBox>
-          <SwapSubwayWrap>
-            <SwapSubwayStation isWrap={false} />
-          </SwapSubwayWrap>
+          </View>
+          <SwapStation selectedStation={selectedStation} setSelectedStation={setSelectedStation} />
         </View>
 
         <View
@@ -164,9 +171,6 @@ export default SearchPathResultScreen;
 const LeftIconBox = styled.View`
   margin-top: 13px;
   margin-right: 16px;
-`;
-const SwapSubwayWrap = styled.View`
-  flex: 1;
 `;
 const MoreIcon = styled.Image`
   width: 4.5px;

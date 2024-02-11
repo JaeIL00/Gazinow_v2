@@ -10,7 +10,7 @@ import { useAddRecentSearch, useGetSearchHistory, useSearchStationName } from '@
 import { useCallback, useState } from 'react';
 import { debounce } from 'lodash';
 import { Modal, SafeAreaView } from 'react-native';
-import { SelectedStationTypes } from './SwapStation';
+import { SelectedStationTypes } from '../../screens/homeScreen/components/SwapStation';
 import { subwayReturnLineName } from '@/global/utils/subwayLine';
 
 interface SearchStationModalProps {

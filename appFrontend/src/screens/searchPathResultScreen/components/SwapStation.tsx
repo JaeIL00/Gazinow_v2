@@ -1,38 +1,26 @@
 import styled from '@emotion/native';
-import { useEffect, useState } from 'react';
-import { Shadow } from 'react-native-shadow-2';
+import { useState } from 'react';
 
 import { IconButton, TextButton } from '@/global/ui';
 import { COLOR, ARRIVAL_STATION, DEPARTURE_STATION } from '@/global/constants';
 import { useAppDispatch } from '@/store';
 import { getSeletedStation } from '@/store/modules';
-import type { StationDataTypes } from '@/store/modules';
-import SearchStationModal from '../../../global/components/SearchStationModal';
-import { useHomeNavigation } from '@/navigation/HomeNavigation';
-
-export interface SelectedStationTypes {
-  departure: StationDataTypes;
-  arrival: StationDataTypes;
-}
+import { SearchStationModal } from '@/screens/homeScreen/components';
+import { View } from 'react-native';
+import { SelectedStationTypes } from '..';
 
 type StationTypes = typeof DEPARTURE_STATION | typeof ARRIVAL_STATION;
 
-const SwapStation = () => {
-  const homeNavigation = useHomeNavigation();
+interface SwapStationProps {
+  selectedStation: SelectedStationTypes;
+  setSelectedStation: React.Dispatch<React.SetStateAction<SelectedStationTypes>>;
+}
+
+const SwapStation = ({ selectedStation, setSelectedStation }: SwapStationProps) => {
   const dispatch = useAppDispatch();
 
   const [searchType, setSearchType] = useState<StationTypes>('출발역');
   const [isOpenSearchModal, setIsOpenSearchModal] = useState<boolean>(false);
-  const [selectedStation, setSelectedStation] = useState<SelectedStationTypes>({
-    departure: {
-      stationName: '',
-      stationLine: null,
-    },
-    arrival: {
-      stationName: '',
-      stationLine: null,
-    },
-  });
 
   const closeSearchModal = () => setIsOpenSearchModal(false);
 
@@ -71,18 +59,9 @@ const SwapStation = () => {
     });
   };
 
-  useEffect(() => {
-    if (selectedStation.arrival.stationName && selectedStation.departure.stationName) {
-      initSelectedStation();
-      dispatch(
-        getSeletedStation({
-          arrival: selectedStation.arrival,
-          departure: selectedStation.departure,
-        }),
-      );
-      homeNavigation.navigate('SubwayPathResult');
-    }
-  }, [selectedStation]);
+  // useEffect(() => {
+  //   queryClient.invalidateQueries(['search_paths']);
+  // }, [selectedStation]);
 
   return (
     <>
@@ -93,8 +72,8 @@ const SwapStation = () => {
           searchType={searchType}
         />
       )}
-      <Container offset={[0, 4]} distance={34} startColor="rgba(0,0,0,0.05)">
-        <InnerBox>
+      <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
+        <View style={{ flex: 1, marginRight: 15, rowGap: 8 }}>
           <StationButton
             value={
               selectedStation.departure.stationName
@@ -119,7 +98,7 @@ const SwapStation = () => {
             textColor={selectedStation.arrival.stationName ? COLOR.BASIC_BLACK : COLOR.GRAY_999}
             onPress={() => openSearchModal(ARRIVAL_STATION)}
           />
-        </InnerBox>
+        </View>
         <IconButton
           isFontIcon={false}
           imagePath="exchange_gray"
@@ -127,25 +106,13 @@ const SwapStation = () => {
           iconHeight="20px"
           onPress={swapStation}
         />
-      </Container>
+      </View>
     </>
   );
 };
 
 export default SwapStation;
 
-const Container = styled(Shadow)`
-  padding: 19px 17px 21px 14px;
-  background-color: ${COLOR.WHITE};
-  border-radius: 14px;
-  flex-direction: row;
-  align-items: center;
-`;
-const InnerBox = styled.View`
-  flex: 1;
-  margin-right: 15px;
-  gap: 8px;
-`;
 const StationButton = styled(TextButton)`
   background-color: ${COLOR.GRAY_F9};
   width: 100%;
