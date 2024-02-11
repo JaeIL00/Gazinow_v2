@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { SafeAreaView, View } from 'react-native';
+import { KeyboardAvoidingView, Platform, SafeAreaView, View } from 'react-native';
 
 import { FontText, IconButton, Input, Space, TextButton } from '@/global/ui';
 import { setEncryptedStorage } from '@/global/utils';
@@ -53,7 +53,10 @@ const SignInScreen = () => {
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: COLOR.GRAY_F9 }}>
-      <View style={{ paddingHorizontal: 16, flex: 1 }}>
+      <KeyboardAvoidingView
+        style={{ paddingHorizontal: 16, flex: 1 }}
+        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+      >
         <View style={{ marginBottom: 43, marginTop: 30 }}>
           <IconButton
             iconType="Ionicons"
@@ -154,7 +157,7 @@ const SignInScreen = () => {
             marginBottom: 41,
           }}
         />
-      </View>
+      </KeyboardAvoidingView>
     </SafeAreaView>
   );
 };

@@ -1,6 +1,6 @@
 import { IconButton } from '@/global/ui';
 import { useState } from 'react';
-import { SafeAreaView, View } from 'react-native';
+import { KeyboardAvoidingView, Platform, SafeAreaView, View } from 'react-native';
 import { CompleteStep, EmailStep, NicknameStep, PasswordStep } from './components';
 import { COLOR } from '@/global/constants';
 import { SignUpParams, SignUpStepType } from './type';
@@ -65,30 +65,36 @@ const SignUpScreen = () => {
           />
         </View>
 
-        {step === 'email' && (
-          <EmailStep
-            setStep={() => setStep('password')}
-            emailValue={signUpData.email}
-            changeEmailValue={(value: string) => changeSignUpValue('email', value)}
-          />
-        )}
-        {step === 'password' && (
-          <PasswordStep
-            emailValue={signUpData.email}
-            passwordValue={signUpData.password}
-            changePasswordValue={(value: string) => changeSignUpValue('password', value)}
-            setStep={() => setStep('nickname')}
-          />
-        )}
-        {step === 'nickname' && (
-          <NicknameStep
-            nicknameValue={signUpData.nickname}
-            signUpData={signUpData}
-            changeNicknameValue={(value: string) => changeSignUpValue('nickname', value)}
-            setStep={() => setStep('complete')}
-          />
-        )}
-        {step === 'complete' && <CompleteStep />}
+        <KeyboardAvoidingView
+          style={{ flex: 1 }}
+          behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+          keyboardVerticalOffset={30}
+        >
+          {step === 'email' && (
+            <EmailStep
+              setStep={() => setStep('password')}
+              emailValue={signUpData.email}
+              changeEmailValue={(value: string) => changeSignUpValue('email', value)}
+            />
+          )}
+          {step === 'password' && (
+            <PasswordStep
+              emailValue={signUpData.email}
+              passwordValue={signUpData.password}
+              changePasswordValue={(value: string) => changeSignUpValue('password', value)}
+              setStep={() => setStep('nickname')}
+            />
+          )}
+          {step === 'nickname' && (
+            <NicknameStep
+              nicknameValue={signUpData.nickname}
+              signUpData={signUpData}
+              changeNicknameValue={(value: string) => changeSignUpValue('nickname', value)}
+              setStep={() => setStep('complete')}
+            />
+          )}
+          {step === 'complete' && <CompleteStep />}
+        </KeyboardAvoidingView>
       </View>
     </SafeAreaView>
   );
