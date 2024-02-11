@@ -180,31 +180,11 @@ const EmailStep = ({ emailValue, setStep, changeEmailValue }: EmailStepProps) =>
         </View>
 
         <StepButton
-          value={isValidEmail ? '이메일 인증' : '이메일을 입력해주세요'}
+          value="인증메일 전송"
           backgroundCondition={isValidEmail}
           onPress={emailConfirmMutateHandler}
           disabled={!isValidEmail}
         />
-
-        {isSuccess && (
-          <View style={{ flexDirection: 'row', justifyContent: 'center', marginBottom: 36 }}>
-            <FontText
-              value="메일을 받지 못하셨나요?"
-              textSize="13px"
-              textWeight="Regular"
-              textColor={COLOR.GRAY_999}
-            />
-            <Space width="8px" />
-            <TextButton
-              value="재전송"
-              textSize="13px"
-              textWeight="Bold"
-              textColor={COLOR.GRAY_999}
-              isTextUnderline
-              onPress={emailConfirmMutateHandler}
-            />
-          </View>
-        )}
       </View>
     </>
   );

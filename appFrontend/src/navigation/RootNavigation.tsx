@@ -22,7 +22,7 @@ const RootNavigation = () => {
   return (
     <Stack.Navigator screenOptions={screenOption} initialRouteName="Temp">
       <Stack.Screen
-        name={'Temp'}
+        name='Temp'
         component={() => {
           const rootNavigation = useRootNavigation();
 
@@ -30,7 +30,7 @@ const RootNavigation = () => {
             onSuccess: async ({ newAccessToken, newRefreshToken }) => {
               await setEncryptedStorage('access_token', newAccessToken);
               await setEncryptedStorage('refresh_token', newRefreshToken);
-              rootNavigation.reset({ routes: [{ name: 'AuthStack' }] });
+              rootNavigation.reset({ routes: [{ name: 'MainBottomTab' }] });
             },
             onError: () => {
               removeEncryptedStorage('access_token');
@@ -43,7 +43,7 @@ const RootNavigation = () => {
             const accessToken = await getEncryptedStorage('access_token');
             const refreshToken = await getEncryptedStorage('refresh_token');
             if (!accessToken) {
-              rootNavigation.replace('AuthStack', { screen: 'Landing' });
+              rootNavigation.reset({ routes: [{ name: 'AuthStack' }] });
               return;
             } else {
               mutate({

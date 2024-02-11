@@ -1,31 +1,20 @@
-import styled from '@emotion/native';
-import { Platform, ScrollView, StatusBar, Text, View } from 'react-native';
+import { SafeAreaView, ScrollView, Text, View } from 'react-native';
 import { SavedRouteIssues, SwapStation } from './components';
-import { getStatusBarHeight } from 'react-native-status-bar-height';
+import { COLOR } from '@/global/constants';
 
 const HomeScreen = () => {
-  const StatusBarHeight =
-    Platform.OS === 'ios' ? getStatusBarHeight(true) : (StatusBar.currentHeight as number);
-
   return (
-    <ScrollView
-      style={{
-        paddingVertical: Platform.OS === 'ios' ? StatusBarHeight : 0,
-        flex: 1,
-        paddingHorizontal: 16,
-      }}
-    >
-      <Text>홈 페이지</Text>
-      <SwapStation />
-      {/* <SwapSubwayStation isWrap={true} showHeader={false} /> */}
-      <SavedRouteIssues />
-    </ScrollView>
+    <SafeAreaView style={{ flex: 1 }}>
+      <ScrollView
+        contentContainerStyle={{ paddingHorizontal: 16, backgroundColor: COLOR.GRAY_F9 }}
+        showsVerticalScrollIndicator={false}
+      >
+        <Text>홈 페이지</Text>
+        <SwapStation />
+        <SavedRouteIssues />
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 
 export default HomeScreen;
-
-const Container = styled.SafeAreaView`
-  padding: 0 16px;
-  flex: 1;
-`;

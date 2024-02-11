@@ -30,8 +30,7 @@ const ConfirmEmailModal = ({
   setStep,
   emailConfirmMutateHandler,
 }: ConfirmEmailModalProps) => {
-  const StatusBarHeight =
-    Platform.OS === 'ios' ? getStatusBarHeight(true) : (StatusBar.currentHeight as number);
+  const StatusBarHeight = Platform.OS === 'ios' ? getStatusBarHeight(true) + 30 : 30;
 
   const animRef = useRef(new Animated.Value(500)).current;
 
@@ -78,12 +77,12 @@ const ConfirmEmailModal = ({
         <KeyboardAvoidingView behavior="height" style={{ flex: 1, justifyContent: 'flex-end' }}>
           <Animated.View
             style={{
-              marginTop: '10%',
               flex: 1,
               borderTopStartRadius: 14,
               borderTopEndRadius: 14,
               backgroundColor: COLOR.WHITE,
               paddingTop: 32,
+              paddingBottom: StatusBarHeight,
               paddingHorizontal: 16,
               transform: [{ translateY: animRef }],
             }}

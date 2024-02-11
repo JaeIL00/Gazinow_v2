@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { SubwaySimplePath } from '@/global/components';
 import { useSavedSubwayRoute } from '@/global/apis/hook';
 import { Path } from '@/global/apis/entity';
+import { useQueryClient } from 'react-query';
 
 interface NewRouteSaveModalProps {
   freshData: Path;
@@ -12,15 +13,21 @@ interface NewRouteSaveModalProps {
   onBookmark: () => void;
 }
 const NewRouteSaveModal = ({ freshData, closeModal, onBookmark }: NewRouteSaveModalProps) => {
+  const queryClient = useQueryClient();
+
+  const [isDuplicatedError, setIsDuplicatedError] = useState<boolean>(false);
   const [routeName, setRouteName] = useState<string>('');
 
   const { mutate } = useSavedSubwayRoute({
-    onSuccess: () => {
+    onSuccess: async () => {
+      await queryClient.invalidateQueries(['getRoads']);
       onBookmark();
       closeModal();
-      // 인벨리드쿼리 하고
-      // 일시적으로 수동적으로 북마크 켜주기
-      // 백엔드: 인벨리드 됐기때문에 나갔다오면 켜져있음
+    },
+    onError: ({ response }) => {
+      if (response?.status === 409) {
+        setIsDuplicatedError(true);
+      }
     },
   });
 
@@ -92,7 +99,10 @@ const NewRouteSaveModal = ({ freshData, closeModal, onBookmark }: NewRouteSaveMo
               <Input
                 value={routeName}
                 onChangeText={(text) => {
-                  if (text.length <= 10) setRouteName(text);
+                  if (text.length <= 10) {
+                    setIsDuplicatedError(false);
+                    setRouteName(text);
+                  }
                 }}
                 style={{
                   fontSize: 14,
@@ -101,13 +111,27 @@ const NewRouteSaveModal = ({ freshData, closeModal, onBookmark }: NewRouteSaveMo
                 }}
               />
             </View>
-            <FontText
-              value={routeName.length + '/10'}
-              textSize="12px"
-              textWeight="Medium"
-              textColor={COLOR.GRAY_BE}
-              style={{ textAlign: 'right' }}
-            />
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+              }}
+            >
+              <FontText
+                value="이미 존재하는 이름입니다"
+                textSize="12px"
+                textWeight="Medium"
+                textColor={isDuplicatedError ? COLOR.LIGHT_RED : 'transparent'}
+              />
+              <FontText
+                value={routeName.length + '/10'}
+                textSize="12px"
+                textWeight="Medium"
+                textColor={COLOR.GRAY_BE}
+                // style={{ textAlign: 'right' }}
+              />
+            </View>
           </View>
 
           <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 20 }}>
