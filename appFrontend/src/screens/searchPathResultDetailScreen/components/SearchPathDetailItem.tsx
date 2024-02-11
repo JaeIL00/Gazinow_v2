@@ -189,13 +189,14 @@ const SearchPathDetailItem = ({ data, isLastLane }: SearchPathDetailItemProps) =
             lineHeight="21px"
             textColor={subwayLineColor(data.lanes[0].stationCode)}
           />
-          <FontText
+          {/* 외부에서 내리는문 데이터를 얻을 수 없음 */}
+          {/* <FontText
             value={'내리는 문: '} // 백엔드: 내리는문 좌우
             textSize="11px"
             textWeight="Medium"
             lineHeight="13px"
             textColor={COLOR.GRAY_999}
-          />
+          /> */}
         </View>
       </View>
       {!isLastLane && (
