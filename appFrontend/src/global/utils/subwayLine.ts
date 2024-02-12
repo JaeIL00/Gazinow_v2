@@ -1,9 +1,5 @@
 import { COLOR } from '@/global/constants';
-import {
-  SearchStationNameTypes,
-  StationCode,
-  SubwayLine,
-} from '../apis/entity';
+import { SearchStationNameTypes, StationCode, SubwayLine } from '../apis/entity';
 
 // 인천선 === 인천1
 // 인천2호선 === 인천2
@@ -31,6 +27,27 @@ export const subwayFreshLineName = (list: SearchStationNameTypes['data']) => {
         return { stationName: item.name, stationLine: item.line as SubwayLine };
     }
   });
+};
+
+/**
+ * 지하철 호선명 원상복귀
+ * @param lineName 응답받은 지하철 검색 결과
+ */
+export const subwayReturnLineName = (lineName: SubwayLine) => {
+  switch (lineName) {
+    case '인천1':
+      return '인천선';
+    case '인천2':
+      return '인천2호선';
+    case '애버라인':
+      return '용인경전철';
+    case '우이신설':
+      return '우이신설경전철';
+    case '김포골드':
+      return '김포도시철도';
+    default:
+      return lineName;
+  }
 };
 
 export const subwayLineColor = (StationCode: StationCode) => {

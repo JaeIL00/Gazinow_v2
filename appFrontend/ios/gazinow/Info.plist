@@ -8,8 +8,10 @@
 	<string>gazinow</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
+	<key>CFBundleIconName</key>
+	<string>AppIcon</string>
 	<key>CFBundleIdentifier</key>
-	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+	<string>com.gazinow.project</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
@@ -39,15 +41,14 @@
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string></string>
+	<key>NSRemindersUsageDescription</key>
+	<string>My description about why I need this capability</string>
 	<key>UIAppFonts</key>
 	<array>
-		<string>Feather.ttf</string>
-		<string>FontAwesome.ttf</string>
-		<string>Ionicons.ttf</string>
-		<string>Pretendard-Regular.otf</string>
-		<string>Pretendard-Mediun.otf</string>
-		<string>Pretendard-SemiBold.otf</string>
-		<string>Pretendard-Bold.otf</string>
+		<string>Fonts/Pretendard-Regular.otf</string>
+		<string>Fonts/Pretendard-Medium.otf</string>
+		<string>Fonts/Pretendard-SemiBold.otf</string>
+		<string>Fonts/Pretendard-Bold.otf</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
@@ -63,9 +64,5 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
-
-	<!-- gazi -->
-	<key>NSRemindersUsageDescription</key>
-	<string>My description about why I need this capability</string>
 </dict>
 </plist>

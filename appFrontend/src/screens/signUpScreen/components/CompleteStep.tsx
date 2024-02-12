@@ -1,18 +1,18 @@
 import { COLOR } from '@/global/constants';
-import { FontText, Space, TextButton } from '@/global/ui';
-import { useRootNavigation } from '@/navigation/RootNavigation';
+import { FontText, Space } from '@/global/ui';
 import { useAppSelect } from '@/store';
 import { Image, View } from 'react-native';
 import StepButton from '../ui/StepButton';
+import { useAuthNavigation } from '@/navigation/AuthNavigation';
 
 const CompleteStep = () => {
-  const navigation = useRootNavigation();
-  const userNickname = useAppSelect((state) => state.auth.nickname);
+  const navigation = useAuthNavigation();
+  const authInfo = useAppSelect((state) => state.auth);
 
   return (
     <View style={{ flex: 1 }}>
       <FontText
-        value={`${userNickname}님의 \n회원가입을 축하드립니다!`}
+        value={`${authInfo.nickname}님의 \n회원가입을 축하드립니다!`}
         textSize="24px"
         textWeight="Bold"
         textColor={COLOR.BASIC_BLACK}
@@ -35,10 +35,7 @@ const CompleteStep = () => {
       <StepButton
         value="확인"
         backgroundCondition={true} // 검정을 의미함
-        onPress={() => {
-          // FIXME: 이동 조건 추가하기, 토큰받았는지? 닉네임 이메일이 잘있는지?
-          // navigation.reset({ routes: [{ name: 'MainBottomTab' }] });
-        }}
+        onPress={() => navigation.reset({ routes: [{ name: 'SignIn' }] })}
       />
     </View>
   );

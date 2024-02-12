@@ -40,7 +40,7 @@ const SubwaySimplePath = ({
           }}
         >
           {/* 지하철 경로 라인, 환승역 3개 이하 */}
-          {freshLanesPathData.map(({ lanes, stations }, idx) => {
+          {freshLanesPathData.map(({ lanes }, idx) => {
             if (maxLength > 3 && idx <= 1) {
               return (
                 <React.Fragment key={lanes[0].stationCode + idx}>
@@ -106,8 +106,8 @@ const SubwaySimplePath = ({
               flexDirection: 'row',
             }}
           >
-            {freshLanesPathData.map(({ lanes }, idx) => (
-              <React.Fragment key={lanes[0].stationCode + idx}>
+            {freshLanesPathData.map(({ lanes, sectionTime }, idx) => (
+              <React.Fragment key={lanes[0].stationCode + idx + sectionTime}>
                 {idx >= 2 && (
                   <PathBar
                     StationCode={lanes[0].stationCode}
@@ -129,7 +129,7 @@ const SubwaySimplePath = ({
             {freshLanesPathData.map(({ stations, lanes }, idx) => {
               if (idx >= 2) {
                 return (
-                  <React.Fragment key={stations[0].stationName + idx}>
+                  <React.Fragment key={stations[0].stationName + idx + arriveStationName}>
                     <PathLineNumName lane={lanes[0]} stationName={stations[0].stationName} />
                     {maxLength - 1 === idx && (
                       <PathLineNumName lane={lanes[0]} stationName={arriveStationName} />
