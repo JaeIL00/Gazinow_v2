@@ -5,14 +5,18 @@ import { FontText, IconButton, Space, TextButton } from '@/global/ui';
 import { COLOR } from '@/global/constants';
 import MyTabModal from '../../../global/components/MyTabModal';
 import { useCheckPasswordQuery, useDeleteAccountMutation } from '@/global/apis/hook';
-import { Modal } from 'react-native';
+import { Modal, Platform, StatusBar } from 'react-native';
 import { removeEncryptedStorage } from '@/global/utils';
+import { getStatusBarHeight } from 'react-native-status-bar-height';
 
 interface ConfirmQuitModalProps {
   onCancel: () => void;
 }
 
 const ConfirmQuitModal = ({ onCancel }: ConfirmQuitModalProps) => {
+  const StatusBarHeight =
+    Platform.OS === 'ios' ? getStatusBarHeight(true) + 4 : (StatusBar.currentHeight as number) - 4;
+
   const nickName = '사용자17349245';
   const navigation = useRootNavigation();
   const [popupVisible, setPopupVisible] = useState(false);
@@ -57,7 +61,11 @@ const ConfirmQuitModal = ({ onCancel }: ConfirmQuitModalProps) => {
   return (
     <Modal visible onRequestClose={onCancel}>
       {/* TODO: 헤더 버튼 svg로 수정, 크기 조정 */}
-      <Header>
+      <Header
+        style={{
+          paddingTop: StatusBarHeight,
+        }}
+      >
         <IconButton
           isFontIcon={false}
           imagePath="backBtn"

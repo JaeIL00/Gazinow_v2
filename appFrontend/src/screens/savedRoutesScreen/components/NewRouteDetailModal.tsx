@@ -1,10 +1,11 @@
 import { css } from '@emotion/native';
 import { Dispatch, SetStateAction, useMemo } from 'react';
-import { FlatList, Modal, View } from 'react-native';
+import { FlatList, Modal, Platform, StatusBar, View } from 'react-native';
 import { FontText, IconButton } from '@/global/ui';
 import { Path, SubPath } from '@/global/apis/entity';
 import SearchPathDetailItem from '@/screens/searchPathResultDetailScreen/components/SearchPathDetailItem';
 import { COLOR } from '@/global/constants';
+import { getStatusBarHeight } from 'react-native-status-bar-height';
 
 interface ModalProps {
   item: Path;
@@ -13,6 +14,11 @@ interface ModalProps {
 }
 
 const NewRouteDetailModal = ({ item, setDepth, onRequestClose }: ModalProps) => {
+  const StatusBarHeight =
+    Platform.OS === 'ios'
+      ? getStatusBarHeight(true) - 10
+      : (StatusBar.currentHeight as number) - 24;
+
   const freshSubPathData: SubPath[] = useMemo(() => {
     const subPaths = item?.subPaths || [];
     return subPaths.filter((subPath) => !!subPath.lanes.length && !!subPath.stations.length);
@@ -29,11 +35,16 @@ const NewRouteDetailModal = ({ item, setDepth, onRequestClose }: ModalProps) => 
   return (
     <Modal onRequestClose={onRequestCloseByProp}>
       <View
-        style={css`
-          background-color: white;
-          flex: 1;
-          padding: 0 16px;
-        `}
+        style={[
+          css`
+            background-color: white;
+            flex: 1;
+            padding: 0 16px;
+          `,
+          {
+            paddingTop: StatusBarHeight,
+          },
+        ]}
       >
         {/* header */}
         <View

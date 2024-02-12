@@ -27,7 +27,7 @@ const ContractModal = ({ onCancel }: ModalProps) => (
 export default ContractModal;
 
 const Header = styled.View`
-  padding: 16px;
+  padding: 40px;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;

@@ -2,17 +2,20 @@ import React, { useEffect, useState } from 'react';
 import styled from '@emotion/native';
 import { FontText, Space } from '@/global/ui';
 import { COLOR } from '@/global/constants';
-import { FlatList, ScrollView, StyleSheet } from 'react-native';
+import { FlatList, Platform, ScrollView, StatusBar, StyleSheet } from 'react-native';
 import { useGetAllIssuesQuery, useGetSavedRoutesQuery } from '@/global/apis/hook';
 import { Path } from '@/global/apis/entity';
 import IssueContainer from './components/IssueContainer';
 import FilterByLane from './components/FilterByLane';
 import { useQueryClient } from 'react-query';
+import { getStatusBarHeight } from 'react-native-status-bar-height';
 
 //FIXME: 1~9호선이 아닌 것들의 이름 고치기
 //FIXME: 마지막 리스트 구분선 스타일
 //TODO: + 버튼 구현
 const NowScreen = () => {
+  const StatusBarHeight =
+    Platform.OS === 'ios' ? getStatusBarHeight(true) : (StatusBar.currentHeight as number);
   const queryClient = useQueryClient();
   const [activeButton, setActiveButton] = useState<string>('전체');
   const renderButtons = () => {
@@ -57,7 +60,11 @@ const NowScreen = () => {
   }, [activeButton]);
 
   return (
-    <Container>
+    <Container
+      style={{
+        paddingTop: StatusBarHeight,
+      }}
+    >
       <Header>
         <FontText value="NOW" textSize="24px" textWeight="SemiBold" lineHeight="34px" />
       </Header>
@@ -134,7 +141,6 @@ const NowScreen = () => {
 };
 
 const Container = styled.View`
-  padding-top: 21px;
   background-color: ${COLOR.WHITE};
   flex: 1;
 `;

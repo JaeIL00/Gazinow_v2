@@ -1,6 +1,6 @@
 import styled from '@emotion/native';
 import { useCallback, useState } from 'react';
-import { Image, Modal } from 'react-native';
+import { Image, Modal, Platform, StatusBar } from 'react-native';
 import { iconPath } from '@/assets/icons/iconPath';
 import { FontText, IconButton, Input, Space, TextButton } from '@/global/ui';
 import { COLOR } from '@/global/constants';
@@ -8,12 +8,16 @@ import { useChangePasswordQuery, useCheckPasswordQuery } from '@/global/apis/hoo
 import MyTabModal from '@/global/components/MyTabModal';
 import { debounce } from 'lodash';
 import CheckIcon from 'react-native-vector-icons/Feather';
+import { getStatusBarHeight } from 'react-native-status-bar-height';
 
 interface ModalProps {
   onCancel: () => void;
 }
 
 const ChangePwModal = ({ onCancel }: ModalProps) => {
+  const StatusBarHeight =
+    Platform.OS === 'ios' ? getStatusBarHeight(true) + 4 : (StatusBar.currentHeight as number) - 4;
+
   const [popupVisible, setPopupVisible] = useState<boolean>(false);
 
   const [curPassword, setCurPassword] = useState<string>('');
@@ -110,7 +114,11 @@ const ChangePwModal = ({ onCancel }: ModalProps) => {
   // TODO: 에러 아이콘 svg로 수정
   return (
     <Modal visible onRequestClose={onCancel}>
-      <Header>
+      <Header
+        style={{
+          paddingTop: StatusBarHeight,
+        }}
+      >
         <TitleContainer>
           <IconButton
             isFontIcon={false}

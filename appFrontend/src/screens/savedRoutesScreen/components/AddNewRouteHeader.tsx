@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from '@emotion/native';
 import { FontText, IconButton, Space } from '@/global/ui';
+import { Platform, StatusBar } from 'react-native';
+import { getStatusBarHeight } from 'react-native-status-bar-height';
 
 interface HeaderProps {
   onBackBtnPress: () => void;
@@ -8,9 +10,16 @@ interface HeaderProps {
 }
 
 const AddNewRouteHeader = ({ onBackBtnPress, onCloseBtnPress }: HeaderProps) => {
+  const StatusBarHeight =
+    Platform.OS === 'ios' ? getStatusBarHeight(true) + 6 : (StatusBar.currentHeight as number) - 8;
+
   return (
     <>
-      <Header>
+      <Header
+        style={{
+          paddingTop: StatusBarHeight,
+        }}
+      >
         <IconButton
           isFontIcon={false}
           imagePath="backBtn"
@@ -36,6 +45,7 @@ const Header = styled.View`
   padding: 16px;
   flex-direction: row;
   justify-content: space-between;
+  align-items: center;
 `;
 
 export default AddNewRouteHeader;

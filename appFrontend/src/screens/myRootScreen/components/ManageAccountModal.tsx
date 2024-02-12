@@ -8,8 +8,9 @@ import { COLOR } from '@/global/constants';
 import { useLogoutMutation } from '@/screens/signInScreen/apis/hook';
 import ChangePwModal from './ChangePwModal';
 import MyTabModal from '@/global/components/MyTabModal';
-import { Modal } from 'react-native';
+import { Modal, Platform, StatusBar } from 'react-native';
 import ConfirmQuitModal from './ConfirmQuitModal';
+import { getStatusBarHeight } from 'react-native-status-bar-height';
 
 interface RenderMenuProps {
   text: string;
@@ -20,6 +21,9 @@ interface ManageAccountModalProps {
 }
 
 const ManageAccountModal = ({ onCancel }: ManageAccountModalProps) => {
+  const StatusBarHeight =
+    Platform.OS === 'ios' ? getStatusBarHeight(true) + 4 : (StatusBar.currentHeight as number) - 4;
+
   const navigation = useRootNavigation();
   const [popupVisible, setPopupVisible] = useState(false);
   const [isChangePwModalOpened, setIsChangePwModalOpened] = useState(false);
@@ -58,7 +62,11 @@ const ManageAccountModal = ({ onCancel }: ManageAccountModalProps) => {
   return (
     <Modal visible onRequestClose={onCancel}>
       {/* TODO: 헤더 버튼 svg로 수정, 크기 조정 */}
-      <Header>
+      <Header
+        style={{
+          paddingTop: StatusBarHeight,
+        }}
+      >
         <IconButton
           isFontIcon={false}
           imagePath="backBtn"

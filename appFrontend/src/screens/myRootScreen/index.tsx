@@ -1,5 +1,5 @@
 import styled from '@emotion/native';
-import { Image } from 'react-native';
+import { Image, Platform, StatusBar } from 'react-native';
 import { iconPath } from '@/assets/icons/iconPath';
 import { FontText, IconButton, Space, TextButton } from '@/global/ui';
 import { COLOR } from '@/global/constants';
@@ -13,6 +13,7 @@ import ContractModal from './components/ContractModal';
 import ManageAccountModal from './components/ManageAccountModal';
 import NotiOnModal from './components/NotiOnModal';
 import NotiSettingsModal from './components/NotiSettingsModal';
+import { getStatusBarHeight } from 'react-native-status-bar-height';
 
 interface RenderMenuProps {
   text: string;
@@ -33,6 +34,11 @@ const requestNotificationPermission = async () => {
 };
 
 const MyRootScreen = () => {
+  const StatusBarHeight =
+    Platform.OS === 'ios'
+      ? getStatusBarHeight(true) - 15
+      : (StatusBar.currentHeight as number) - 24;
+
   const { nickname, email } = useSelector((state: RootState) => state.auth);
   const versionInfo = packageJson.version;
 
@@ -77,7 +83,12 @@ const MyRootScreen = () => {
   );
 
   return (
-    <Container>
+    <Container
+      style={{
+        paddingTop: StatusBarHeight,
+        backgroundColor: COLOR.GRAY_F9,
+      }}
+    >
       <ProfileContainer>
         <NickNameContainer onPress={() => setIsNicknameModalOpen(true)}>
           <FontText value={nickname} textSize="16px" textWeight="Medium" lineHeight="21px" />
@@ -99,30 +110,31 @@ const MyRootScreen = () => {
           textColor={COLOR.GRAY_999}
         />
       </ProfileContainer>
+      <BtnContainer>
+        {renderMenu({
+          text: '계정 관리',
+          onPress: () => setIsManageAccountModalOpen(true),
+        })}
+        {/* TODO: 페이지 들어가서 퍼미션 컨펌창 띄우는 로직으로 수정하기 */}
+        {/* {renderMenu({ text: '알림 설정', onPress: () => confirmUserNotificationOn() })} */}
+        {renderMenu({
+          text: '약관 및 정책',
+          onPress: () => setIsContractModalOpen(true),
+        })}
+        {renderMenu({ text: '버전', versionInfo })}
 
-      {renderMenu({
-        text: '계정 관리',
-        onPress: () => setIsManageAccountModalOpen(true),
-      })}
-      {/* TODO: 페이지 들어가서 퍼미션 컨펌창 띄우는 로직으로 수정하기 */}
-      {/* {renderMenu({ text: '알림 설정', onPress: () => confirmUserNotificationOn() })} */}
-      {renderMenu({
-        text: '약관 및 정책',
-        onPress: () => setIsContractModalOpen(true),
-      })}
-      {renderMenu({ text: '버전', versionInfo })}
-
-      {isNicknameModalOpen && (
-        <ChangeNickNameModal onCancel={() => setIsNicknameModalOpen(false)} />
-      )}
-      {isContractModalOpen && <ContractModal onCancel={() => setIsContractModalOpen(false)} />}
-      {isManageAccountModalOpen && (
-        <ManageAccountModal onCancel={() => setIsManageAccountModalOpen(false)} />
-      )}
-      {isNotiOnModalOpen && <NotiOnModal onCancel={() => setIsNotiOnModalOpen(false)} />}
-      {isNotiSettingsModalOpen && (
-        <NotiSettingsModal onCancel={() => setIsNotiSettingsModalOpen(false)} />
-      )}
+        {isNicknameModalOpen && (
+          <ChangeNickNameModal onCancel={() => setIsNicknameModalOpen(false)} />
+        )}
+        {isContractModalOpen && <ContractModal onCancel={() => setIsContractModalOpen(false)} />}
+        {isManageAccountModalOpen && (
+          <ManageAccountModal onCancel={() => setIsManageAccountModalOpen(false)} />
+        )}
+        {isNotiOnModalOpen && <NotiOnModal onCancel={() => setIsNotiOnModalOpen(false)} />}
+        {isNotiSettingsModalOpen && (
+          <NotiSettingsModal onCancel={() => setIsNotiSettingsModalOpen(false)} />
+        )}
+      </BtnContainer>
     </Container>
   );
 };
@@ -130,7 +142,6 @@ const MyRootScreen = () => {
 export default MyRootScreen;
 
 const Container = styled.View`
-  background-color: white;
   flex: 1;
 `;
 const NickNameContainer = styled.Pressable`
@@ -149,4 +160,8 @@ const MenuContainer = styled.Pressable`
   align-items: center;
   border-bottom-width: 1px;
   border-bottom-color: ${COLOR.GRAY_EB};
+`;
+const BtnContainer = styled.View`
+  background-color: white;
+  flex: 1;
 `;

@@ -5,17 +5,22 @@ import { FontText, IconButton, Space } from '@/global/ui';
 import { COLOR } from '@/global/constants';
 import AddNewRouteModal from './components/AddNewRouteModal';
 import { useRootNavigation } from '@/navigation/RootNavigation';
+import { Platform, StatusBar } from 'react-native';
+import { getStatusBarHeight } from 'react-native-status-bar-height';
 const SavedRoutesScreen = () => {
+  const StatusBarHeight =
+    Platform.OS === 'ios'
+      ? getStatusBarHeight(true) - 10
+      : (StatusBar.currentHeight as number) - 24;
   const [isAddRouteModalOpen, setIsAddRouteModalOpen] = useState<boolean>(false);
-
-  const handleAddRoutePress = () => {
-    setIsAddRouteModalOpen(true);
-  };
-
   const navigation = useRootNavigation();
 
   return (
-    <Container>
+    <Container
+      style={{
+        paddingTop: StatusBarHeight,
+      }}
+    >
       <Header>
         <IconButton
           isFontIcon={false}
@@ -30,7 +35,7 @@ const SavedRoutesScreen = () => {
       <Space height="4px" />
       <RouteContainer>
         <RenderSavedRoutes />
-        <AddContainer onPress={handleAddRoutePress}>
+        <AddContainer onPress={() => setIsAddRouteModalOpen(true)}>
           <IconButton isFontIcon={false} imagePath="addRoute" iconWidth="21px" iconHeight="21px" />
           <FontText
             value="  경로 추가하기"
