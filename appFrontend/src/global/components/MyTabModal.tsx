@@ -47,6 +47,7 @@ const MyTabModal = ({
                 placeholder="비밀번호를 입력하세요"
                 inputMode="email"
                 maxLength={20}
+                secureTextEntry
               />
             </InputBox>
           )}
