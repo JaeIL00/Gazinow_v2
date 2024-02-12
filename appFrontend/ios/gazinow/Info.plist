@@ -43,9 +43,6 @@
 	<string>My description about why I need this capability</string>
 	<key>UIAppFonts</key>
 	<array>
-		<string>Feather.ttf</string>
-		<string>FontAwesome.ttf</string>
-		<string>Ionicons.ttf</string>
 		<string>fonts/Pretendard-Regular.otf</string>
 		<string>fonts/Pretendard-Mediun.otf</string>
 		<string>fonts/Pretendard-SemiBold.otf</string>
