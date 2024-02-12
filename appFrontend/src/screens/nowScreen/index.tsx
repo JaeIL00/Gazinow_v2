@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from '@emotion/native';
 import { FontText, Space } from '@/global/ui';
 import { COLOR } from '@/global/constants';
@@ -7,11 +7,13 @@ import { useGetAllIssuesQuery, useGetSavedRoutesQuery } from '@/global/apis/hook
 import { Path } from '@/global/apis/entity';
 import IssueContainer from './components/IssueContainer';
 import FilterByLane from './components/FilterByLane';
+import { useQueryClient } from 'react-query';
 
 //FIXME: 1~9호선이 아닌 것들의 이름 고치기
 //FIXME: 마지막 리스트 구분선 스타일
 //TODO: + 버튼 구현
 const NowScreen = () => {
+  const queryClient = useQueryClient();
   const [activeButton, setActiveButton] = useState<string>('전체');
   const renderButtons = () => {
     return [' + ', '전체', ...savedStations].map((text) => (
@@ -40,7 +42,6 @@ const NowScreen = () => {
   };
 
   const { data: savedRoutes } = useGetSavedRoutesQuery();
-
   // 내가 저장한 경로의 노선만 가져옴
   const savedStations: string[] = Array.from(
     new Set(
@@ -51,6 +52,9 @@ const NowScreen = () => {
   ).sort();
 
   const { data: AllIssues } = useGetAllIssuesQuery();
+  useEffect(() => {
+    queryClient.invalidateQueries('getAllIssues');
+  }, [activeButton]);
 
   return (
     <Container>
