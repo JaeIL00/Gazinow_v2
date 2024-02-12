@@ -1,4 +1,4 @@
-package com.gazinow;
+package com.gazinow.project;
 
 import android.app.Application;
 import com.facebook.react.PackageList;

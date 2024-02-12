@@ -74,14 +74,14 @@ android {
 
     compileSdkVersion rootProject.ext.compileSdkVersion
 
-    namespace "com.gazinow"
+    namespace "com.gazinow.project"
     defaultConfig {
-        applicationId "com.gazinow"
+        applicationId "com.gazinow.project"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
-		resValue "string", "build_config_package", "com.gazinow"
+		resValue "string", "build_config_package", "com.gazinow.project"
     }
     signingConfigs {
         debug {
