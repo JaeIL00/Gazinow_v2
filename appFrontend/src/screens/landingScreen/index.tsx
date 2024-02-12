@@ -52,7 +52,7 @@ const LandingScreen = () => {
           <FontText
             value={`무슨 일이\n일어나고 있을까요?`}
             textSize="27.34px"
-            textWeight="Regular"
+            textWeight="Medium"
             lineHeight="36.454px"
             textColor={COLOR.WHITE}
           />

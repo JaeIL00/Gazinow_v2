@@ -1,17 +1,20 @@
 import styled from '@emotion/native';
-import type { StyleProp, TextProps } from 'react-native/types';
+import type { TextProps } from 'react-native/types';
 
 import { COLOR } from '@/global/constants';
-import { TextStyle } from 'react-native';
 
 interface NormalTextProps extends TextProps, TextStyleProps {
   value: string;
 }
 
 const FontText = (props: NormalTextProps) => {
-  const { value } = props;
+  const { value, textWeight } = props;
 
-  return <Normal {...props} allowFontScaling>{value}</Normal>;
+  if (textWeight === 'Bold') return <Bold {...props}>{value}</Bold>;
+  if (textWeight === 'SemiBold') return <SemiBold {...props}>{value}</SemiBold>;
+  if (textWeight === 'Medium') return <Medium {...props}>{value}</Medium>;
+  if (textWeight === 'Regular') return <Regular {...props}>{value}</Regular>;
+  return <Regular {...props}>{value}</Regular>;
 };
 
 export default FontText;
@@ -23,24 +26,31 @@ interface TextStyleProps {
   lineHeight?: string;
   textAlign?: 'center';
 }
-const weight = (weightText: TextStyleProps['textWeight']) => {
-  switch (weightText) {
-    case 'Bold':
-      return '700';
-    case 'SemiBold':
-      return '600';
-    case 'Medium':
-      return '500';
-    case 'Regular':
-      return '400';
-    default:
-      return '400';
-  }
-};
-const Normal = styled.Text<TextStyleProps>`
+
+const Bold = styled.Text<TextStyleProps>`
   font-size: ${({ textSize }) => textSize};
-  font-family: Pretendard-${({ textWeight }) => textWeight};
-  font-weight: ${({ textWeight }) => weight(textWeight)};
+  font-family: Pretendard-Bold;
+  color: ${({ textColor = COLOR.BASIC_BLACK }) => textColor};
+  line-height: ${({ lineHeight }) => lineHeight};
+  text-align: ${({ textAlign }) => textAlign};
+`;
+const SemiBold = styled.Text<TextStyleProps>`
+  font-size: ${({ textSize }) => textSize};
+  font-family: Pretendard-SemiBold;
+  color: ${({ textColor = COLOR.BASIC_BLACK }) => textColor};
+  line-height: ${({ lineHeight }) => lineHeight};
+  text-align: ${({ textAlign }) => textAlign};
+`;
+const Medium = styled.Text<TextStyleProps>`
+  font-size: ${({ textSize }) => textSize};
+  font-family: Pretendard-Medium;
+  color: ${({ textColor = COLOR.BASIC_BLACK }) => textColor};
+  line-height: ${({ lineHeight }) => lineHeight};
+  text-align: ${({ textAlign }) => textAlign};
+`;
+const Regular = styled.Text<TextStyleProps>`
+  font-size: ${({ textSize }) => textSize};
+  font-family: Pretendard-Regular;
   color: ${({ textColor = COLOR.BASIC_BLACK }) => textColor};
   line-height: ${({ lineHeight }) => lineHeight};
   text-align: ${({ textAlign }) => textAlign};
