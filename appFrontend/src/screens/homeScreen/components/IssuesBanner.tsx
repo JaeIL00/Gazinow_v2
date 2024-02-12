@@ -47,7 +47,7 @@ const IssuesBanner = ({ pathData }: IssuesBannerProps) => {
 export default IssuesBanner;
 
 const Container = styled.Pressable`
-  padding: 9px 12.5px 9px 16px;
+  padding: 8px 12.5px 7px 16px;
   align-items: center;
   justify-content: space-between;
   flex-direction: row;
