@@ -3,6 +3,7 @@ import { axiosInstance } from '../axiosInstance';
 import {
   AllIssues,
   Path,
+  RenderSavedRoutesType,
   SavedRoute,
   SearchHistoryStationNameTypes,
   SearchPathsTypes,
@@ -164,7 +165,7 @@ export const getSearchRoutesFetch = async () => {
  */
 export const getSavedRoutesFetch = async () => {
   try {
-    const res = await axiosInstance.get<{ data: Path[] }>(`/api/v1/my_find_road/get_roads`);
+    const res = await axiosInstance.get<{ data: RenderSavedRoutesType[] }>(`/api/v1/my_find_road/get_roads`);
     return res.data.data;
   } catch (err) {
     const er = err as AxiosError;
