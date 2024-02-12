@@ -1,22 +1,22 @@
-import React from 'react';
-import { View, StyleSheet } from 'react-native';
-import { IconButton, TextButton, FontText, Space } from '@/global/ui';
+import React, { useState } from 'react';
+import { IconButton, FontText, Space } from '@/global/ui';
 import { COLOR } from '@/global/constants';
 import styled from '@emotion/native';
 import { SubwaySimplePath } from '@/global/components';
 import { RenderSavedRoutesType } from '@/global/apis/entity';
+import NewRouteDetailModal from '@/screens/savedRoutesScreen/components/NewRouteDetailModal';
 interface RecommendedRouteProps {
   pathData: RenderSavedRoutesType;
 }
 
 const RecommendedRoutes = ({ pathData }: RecommendedRouteProps) => {
-  const routeDetail = () => {
-    //TODO: 경로 상세 페이지로 이동
-    console.log('dddd');
-  };
+  const [isRouteDetailOpened, setIsRouteDetailOpened] = useState<boolean>(false);
 
   return (
     <Container>
+      {isRouteDetailOpened && (
+        <NewRouteDetailModal item={pathData} onRequestClose={() => setIsRouteDetailOpened(false)} />
+      )}
       <TextContainer>
         <TextContainer>
           <FontText
@@ -35,7 +35,7 @@ const RecommendedRoutes = ({ pathData }: RecommendedRouteProps) => {
             textColor={COLOR.GRAY_999}
           />
         </TextContainer>
-        <TextContainer onPress={routeDetail}>
+        <TextContainer onPress={() => setIsRouteDetailOpened(true)}>
           <FontText
             value="세부정보  "
             textSize="13px"
@@ -48,7 +48,7 @@ const RecommendedRoutes = ({ pathData }: RecommendedRouteProps) => {
             imagePath="more_gray"
             iconWidth="4.5px"
             iconHeight="8px"
-            onPress={routeDetail}
+            onPress={() => setIsRouteDetailOpened(true)}
           />
         </TextContainer>
       </TextContainer>

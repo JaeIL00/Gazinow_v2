@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { IconButton, FontText, Space } from '@/global/ui';
 import { COLOR } from '@/global/constants';
 import IssuesBanner from './IssuesBanner';
@@ -7,75 +7,81 @@ import styled from '@emotion/native';
 import { useGetSavedRoutesQuery } from '@/global/apis/hook';
 import { RenderSavedRoutesType } from '@/global/apis/entity';
 import { SubwaySimplePath } from '@/global/components';
+import NewRouteDetailModal from '@/screens/savedRoutesScreen/components/NewRouteDetailModal';
 
 const IssueBox = () => {
   const { data: savedRoutes } = useGetSavedRoutesQuery();
-
   const [hasIssueRoute, setHasIssueRoute] = useState<RenderSavedRoutesType>();
+  const [isRouteDetailOpened, setIsRouteDetailOpened] = useState<boolean>(false);
 
-  savedRoutes.map((item: RenderSavedRoutesType) => {
-    if (item.issues !== null) {
-      setHasIssueRoute(item);
+  //TODO: 이슈 있는 경로가 2개 이상이면?
+  useEffect(() => {
+    const issueRoute = savedRoutes?.find((item) => item.issues !== null);
+    if (issueRoute) {
+      setHasIssueRoute(issueRoute);
     }
-  });
-
-  const routeDetail = () => {
-    console.log('dddd');
-    //TODO: 경로 상세 페이지로 이동
-  };
+  }, [savedRoutes]);
 
   if (hasIssueRoute) {
     return (
-      <RouteContainer>
-        <TextContainer>
+      <>
+        {isRouteDetailOpened && hasIssueRoute && (
+          <NewRouteDetailModal
+            item={hasIssueRoute}
+            onRequestClose={() => setIsRouteDetailOpened(false)}
+          />
+        )}
+        <RouteContainer>
           <TextContainer>
-            <FontText
-              value={hasIssueRoute.roadName}
-              textSize="18px"
-              textWeight="Bold"
-              lineHeight="23px"
-              textColor={COLOR.BASIC_BLACK}
-            />
-            <Space width="8px" />
-            <GrayEllipse>
+            <TextContainer>
               <FontText
-                value={`${hasIssueRoute.totalTime}분 이상 예상`}
-                textSize="12px"
-                textWeight="Medium"
-                lineHeight="14px"
+                value={hasIssueRoute.roadName}
+                textSize="18px"
+                textWeight="Bold"
+                lineHeight="23px"
+                textColor={COLOR.BASIC_BLACK}
+              />
+              <Space width="8px" />
+              <GrayEllipse>
+                <FontText
+                  value={`${hasIssueRoute.totalTime}분 이상 예상`}
+                  textSize="12px"
+                  textWeight="Medium"
+                  lineHeight="14px"
+                  textColor={COLOR.GRAY_999}
+                />
+              </GrayEllipse>
+            </TextContainer>
+            <TextContainer onPress={() => setIsRouteDetailOpened(true)}>
+              <FontText
+                value="세부정보  "
+                textSize="13px"
+                textWeight="Regular"
+                lineHeight="19px"
                 textColor={COLOR.GRAY_999}
               />
-            </GrayEllipse>
+              <IconButton
+                isFontIcon={false}
+                imagePath="more_gray"
+                iconWidth="4.5px"
+                iconHeight="8px"
+                onPress={() => setIsRouteDetailOpened(true)}
+              />
+            </TextContainer>
           </TextContainer>
-          <TextContainer onPress={routeDetail}>
-            <FontText
-              value="세부정보  "
-              textSize="13px"
-              textWeight="Regular"
-              lineHeight="19px"
-              textColor={COLOR.GRAY_999}
-            />
-            <IconButton
-              isFontIcon={false}
-              imagePath="more_gray"
-              iconWidth="4.5px"
-              iconHeight="8px"
-              onPress={routeDetail}
-            />
-          </TextContainer>
-        </TextContainer>
 
-        {/* TODO: 이슈 아이콘 넣기 */}
-        <SubwaySimplePath
-          pathData={hasIssueRoute.subPaths}
-          arriveStationName={hasIssueRoute.lastEndStation}
-          betweenPathMargin={24}
-        />
-        <IssuesBanner pathData={hasIssueRoute} />
-        <Space height="16px" />
-        {/* TODO: 대체경로 매핑 */}
-        <RecommendedRoutes pathData={hasIssueRoute} />
-      </RouteContainer>
+          {/* TODO: 이슈 아이콘 넣기 */}
+          <SubwaySimplePath
+            pathData={hasIssueRoute.subPaths}
+            arriveStationName={hasIssueRoute.lastEndStation}
+            betweenPathMargin={24}
+          />
+          <IssuesBanner pathData={hasIssueRoute} />
+          <Space height="16px" />
+          {/* TODO: 대체경로 매핑 */}
+          <RecommendedRoutes pathData={hasIssueRoute} />
+        </RouteContainer>
+      </>
     );
   } else {
     return (
