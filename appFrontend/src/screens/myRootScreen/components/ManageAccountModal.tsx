@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from '@emotion/native';
 import { useRootNavigation } from '@/navigation/RootNavigation';
-import { getEncryptedStorage } from '@/global/utils';
+import { getEncryptedStorage, removeEncryptedStorage } from '@/global/utils';
 import { FontText, IconButton, Space, TextButton } from '@/global/ui';
 import { CONFIRM_QUIT } from '@/global/constants/navigation';
 import { COLOR } from '@/global/constants';
@@ -26,7 +26,11 @@ const ManageAccountModal = ({ onCancel }: ManageAccountModalProps) => {
   const [isConfirmQuitModalOpen, setIsConfirmQuitModalOpen] = useState<boolean>(false);
 
   const { logoutMutate } = useLogoutMutation({
-    onSuccess: () => navigation.reset({ routes: [{ name: 'AuthStack' }] }),
+    onSuccess: () => {
+      removeEncryptedStorage('access_token');
+      removeEncryptedStorage('refresh_token');
+      navigation.reset({ routes: [{ name: 'AuthStack' }] });
+    },
   });
 
   const handleConfirm = async () => {

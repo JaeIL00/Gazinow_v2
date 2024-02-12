@@ -6,6 +6,7 @@ import { COLOR } from '@/global/constants';
 import MyTabModal from '../../../global/components/MyTabModal';
 import { useCheckPasswordQuery, useDeleteAccountMutation } from '@/global/apis/hook';
 import { Modal } from 'react-native';
+import { removeEncryptedStorage } from '@/global/utils';
 
 interface ConfirmQuitModalProps {
   onCancel: () => void;
@@ -19,7 +20,11 @@ const ConfirmQuitModal = ({ onCancel }: ConfirmQuitModalProps) => {
   const [passwordInput, setPasswordInput] = useState('');
 
   const { deleteAccountMutate } = useDeleteAccountMutation({
-    onSuccess: () => navigation.reset({ routes: [{ name: 'AuthStack' }] }),
+    onSuccess: () => {
+      removeEncryptedStorage('access_token');
+      removeEncryptedStorage('refresh_token');
+      navigation.reset({ routes: [{ name: 'AuthStack' }] });
+    },
   });
 
   const { checkPasswordMutate } = useCheckPasswordQuery({
