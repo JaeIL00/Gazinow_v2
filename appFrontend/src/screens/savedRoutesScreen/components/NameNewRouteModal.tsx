@@ -6,9 +6,9 @@ import { useSaveMyRoutesQuery } from '@/global/apis/hook';
 import { useQueryClient } from 'react-query';
 import { SubwaySimplePath } from '@/global/components';
 import { Path, SubPath } from '@/global/apis/entity';
-import { Image, View, Keyboard, Platform } from 'react-native';
+import { Image, View, Keyboard } from 'react-native';
 import { iconPath } from '@/assets/icons/iconPath';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { KeyboardAvoidingView, Platform } from 'react-native';
 
 interface ModalProps {
   item: Path;
@@ -48,11 +48,10 @@ const NameNewRouteModal = ({ item, onCancel, setDepth }: ModalProps) => {
   });
 
   return (
-    <KeyboardAwareScrollView
-      contentContainerStyle={{ flexGrow: 1 }}
-    extraScrollHeight={Platform.OS === 'ios' ? 100 : 0}
-    enableOnAndroid={true}
-    keyboardShouldPersistTaps="handled"
+    //FIXME: 풀블리드버튼 올라올 떄 애니메이션이 부자연스러움
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      style={{ flex: 1 }}
     >
       <Container>
         <SubPathContainer>
@@ -103,9 +102,8 @@ const NameNewRouteModal = ({ item, onCancel, setDepth }: ModalProps) => {
           />
         </TextLengthBox>
       </Container>
-            <BottomBtn
+      <BottomBtn
         style={{
-          //FIXME: 안드로이드 애뮬레이터에서 키보드 올라올 때 marginBottom이 제대로 동작하지 않고 Input 아래에 붙음
           marginBottom: isKeyboardVisible ? 0 : 41,
           marginHorizontal: isKeyboardVisible ? -30 : 16,
         }}
@@ -127,7 +125,7 @@ const NameNewRouteModal = ({ item, onCancel, setDepth }: ModalProps) => {
           lineHeight="26px"
         />
       </BottomBtn>
-    </KeyboardAwareScrollView>
+    </KeyboardAvoidingView>
   );
 };
 
@@ -161,7 +159,6 @@ const BottomBtn = styled.Pressable`
   padding-vertical: 11px;
   border-radius: 5px;
   align-items: center;
-  bottom: 41px;
   ${({ disabled }) =>
     disabled ? `background-color : #dddddd` : `background-color : ${COLOR.BASIC_BLACK};`}
 `;
