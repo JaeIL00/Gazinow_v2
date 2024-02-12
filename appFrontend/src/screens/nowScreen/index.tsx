@@ -42,10 +42,9 @@ const NowScreen = () => {
   const { data: savedRoutes } = useGetSavedRoutesQuery();
 
   // 내가 저장한 경로의 노선만 가져옴
-  //FIXME: 타입에러
   const savedStations: string[] = Array.from(
     new Set(
-      savedRoutes.flatMap((item: Path) =>
+      savedRoutes?.flatMap((item: Path) =>
         item.subPaths.flatMap((subPath) => subPath.lanes.map((lane) => `${lane.stationCode}호선`)),
       ),
     ),
