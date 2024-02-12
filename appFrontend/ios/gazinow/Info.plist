@@ -39,15 +39,17 @@
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string></string>
+	<key>NSRemindersUsageDescription</key>
+	<string>My description about why I need this capability</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Feather.ttf</string>
 		<string>FontAwesome.ttf</string>
 		<string>Ionicons.ttf</string>
-		<string>Pretendard-Regular.otf</string>
-		<string>Pretendard-Mediun.otf</string>
-		<string>Pretendard-SemiBold.otf</string>
-		<string>Pretendard-Bold.otf</string>
+		<string>fonts/Pretendard-Regular.otf</string>
+		<string>fonts/Pretendard-Mediun.otf</string>
+		<string>fonts/Pretendard-SemiBold.otf</string>
+		<string>fonts/Pretendard-Bold.otf</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
@@ -63,9 +65,5 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
-
-	<!-- gazi -->
-	<key>NSRemindersUsageDescription</key>
-	<string>My description about why I need this capability</string>
 </dict>
 </plist>
