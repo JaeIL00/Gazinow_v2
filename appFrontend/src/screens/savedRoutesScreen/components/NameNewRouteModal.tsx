@@ -50,9 +50,9 @@ const NameNewRouteModal = ({ item, onCancel, setDepth }: ModalProps) => {
   return (
     <KeyboardAwareScrollView
       contentContainerStyle={{ flexGrow: 1 }}
-      extraScrollHeight={Platform.OS === 'ios' ? 100 : 0}
-      enableOnAndroid={true}
-      keyboardShouldPersistTaps="handled"
+    extraScrollHeight={Platform.OS === 'ios' ? 100 : 0}
+    enableOnAndroid={true}
+    keyboardShouldPersistTaps="handled"
     >
       <Container>
         <SubPathContainer>
@@ -76,6 +76,7 @@ const NameNewRouteModal = ({ item, onCancel, setDepth }: ModalProps) => {
             onChangeText={(text) => setRoadName(text)}
             inputMode="email"
             maxLength={10}
+            placeholderTextColor={COLOR.GRAY_999}
           ></Input>
         </InputBox>
         <TextLengthBox>
@@ -102,7 +103,7 @@ const NameNewRouteModal = ({ item, onCancel, setDepth }: ModalProps) => {
           />
         </TextLengthBox>
       </Container>
-      <BottomBtn
+            <BottomBtn
         style={{
           //FIXME: 안드로이드 애뮬레이터에서 키보드 올라올 때 marginBottom이 제대로 동작하지 않고 Input 아래에 붙음
           marginBottom: isKeyboardVisible ? 0 : 41,
@@ -160,6 +161,7 @@ const BottomBtn = styled.Pressable`
   padding-vertical: 11px;
   border-radius: 5px;
   align-items: center;
+  bottom: 41px;
   ${({ disabled }) =>
     disabled ? `background-color : #dddddd` : `background-color : ${COLOR.BASIC_BLACK};`}
 `;
