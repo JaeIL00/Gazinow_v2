@@ -8,17 +8,26 @@ import { COLOR } from '@/global/constants';
 
 interface ModalProps {
   item: Path;
-  setDepth: Dispatch<SetStateAction<'search' | 'pathList' | 'detail' | 'name'>>;
+  setDepth?: Dispatch<SetStateAction<'search' | 'pathList' | 'detail' | 'name'>>;
+  onRequestClose?: () => void;
 }
 
-const NewRouteDetailModal = ({ item, setDepth }: ModalProps) => {
+const NewRouteDetailModal = ({ item, setDepth, onRequestClose }: ModalProps) => {
   const freshSubPathData: SubPath[] = useMemo(() => {
     const subPaths = item?.subPaths || [];
     return subPaths.filter((subPath) => !!subPath.lanes.length && !!subPath.stations.length);
   }, [item]);
 
+  const onRequestCloseByProp = () => {
+    if (setDepth) {
+      setDepth('pathList');
+    } else if (onRequestClose) {
+      onRequestClose();
+    }
+  };
+
   return (
-    <Modal onRequestClose={() => setDepth('pathList')}>
+    <Modal onRequestClose={onRequestCloseByProp}>
       <View
         style={css`
           background-color: white;
@@ -40,7 +49,7 @@ const NewRouteDetailModal = ({ item, setDepth }: ModalProps) => {
             imagePath="backBtn"
             iconHeight="24px"
             iconWidth="24px"
-            onPress={() => setDepth('pathList')}
+            onPress={onRequestCloseByProp}
           />
         </View>
         <View
