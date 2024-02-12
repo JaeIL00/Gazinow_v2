@@ -2,19 +2,15 @@ import React, { useState } from 'react';
 import styled from '@emotion/native';
 import { FontText, Space } from '@/global/ui';
 import { COLOR } from '@/global/constants';
-import { FlatList, ScrollView, StyleSheet, View } from 'react-native';
-import {
-  useGetAllIssuesQuery,
-  useGetIssuesByLaneQuery,
-  useGetSavedRoutesQuery,
-} from '@/global/apis/hook';
-import { CombinedData, Path } from '@/global/apis/entity';
+import { FlatList, ScrollView, StyleSheet } from 'react-native';
+import { useGetAllIssuesQuery, useGetSavedRoutesQuery } from '@/global/apis/hook';
+import { Path } from '@/global/apis/entity';
 import IssueContainer from './components/IssueContainer';
+import FilterByLane from './components/FilterByLane';
 
-//FIXME: 모든 노선의 이슈에 1호선의 이슈 목록만 가져와짐, 저장된 경로 중 1호선이 없으면 노선별 이슈 렌더링이 안 됨....
-//TODO: N호선 버튼 누르면 해당 노선 이슈로 자동 스크롤 기능
-//TODO: + 버튼 기획?
-//TODO: 지금 인기와 저장한 경로(의 이슈)가 모두 없을 때의 기획?
+//FIXME: 1~9호선이 아닌 것들의 이름 고치기
+//FIXME: 마지막 리스트 구분선 스타일
+//TODO: + 버튼 구현
 const NowScreen = () => {
   const [activeButton, setActiveButton] = useState<string>('전체');
   const renderButtons = () => {
@@ -55,23 +51,7 @@ const NowScreen = () => {
     ),
   ).sort();
 
-  // '지금 인기' 전체 이슈 목록 GET
   const { data: AllIssues } = useGetAllIssuesQuery();
-
-  // '지금 인기' & 'N호선 NOW' 이슈 목록을 한 곳에 저장
-  const combinedData: CombinedData[] = [];
-
-  if (AllIssues?.content && AllIssues.content.length > 0) {
-    combinedData.push({ type: 'allIssues' });
-    combinedData.push(...AllIssues.content);
-  }
-  savedStations.forEach((station) => {
-    const { data } = useGetIssuesByLaneQuery(station);
-    if (data?.content && data.content.length > 0) {
-      combinedData.push({ type: station });
-      combinedData.push(...data.content);
-    }
-  });
 
   return (
     <Container>
@@ -86,37 +66,20 @@ const NowScreen = () => {
         >
           <Space width="16px" />
           {renderButtons()}
+          <Space width="16px" />
         </ScrollView>
       </Category>
-      <FlatList
-        data={combinedData}
-        renderItem={({ item, index }) => {
-          const isLastItemOfType =
-            index === combinedData.length - 1 || combinedData[index + 1].type !== item.type;
-          const isLastItem = index === combinedData.length - 1;
-          if (item.type === 'allIssues') {
-            return (
-              <IssueLineType>
-                <FontText
-                  value="지금 인기"
-                  textSize="20px"
-                  textWeight="SemiBold"
-                  lineHeight="25px"
-                />
-              </IssueLineType>
-            );
-          } else if (savedStations.includes(item.type)) {
-            return (
-              <IssueLineType>
-                <FontText
-                  value={`${item.type} NOW`}
-                  textSize="20px"
-                  textWeight="SemiBold"
-                  lineHeight="25px"
-                />
-              </IssueLineType>
-            );
-          } else if (item.id && item.title && item.content && item.startDate) {
+      {activeButton === '전체' && (
+        <FlatList
+          data={AllIssues?.content}
+          ListHeaderComponent={
+            <IssueLineType>
+              <FontText value="지금 인기" textSize="20px" textWeight="SemiBold" lineHeight="25px" />
+            </IssueLineType>
+          }
+          renderItem={({ item, index }) => {
+            const isLastItemOfType = AllIssues && index === AllIssues.content.length - 1;
+            // const isLastItem = AllIssues.length === 0 && isLastItemOfType;
             const { hoursDifference, minutesDifference } = getTimeDifference(item.startDate);
             return (
               <IssueContainer
@@ -127,14 +90,42 @@ const NowScreen = () => {
                 time={`${hoursDifference}시간 ${minutesDifference}분전`}
                 body={item.content}
                 isLastItemOfType={isLastItemOfType}
-                isLastItem={isLastItem}
+                // isLastItem={isLastItem}
               />
             );
+          }}
+          keyExtractor={(item, index) => `${item.id}_${index}`}
+          ListFooterComponent={
+            <FlatList
+              data={savedStations}
+              renderItem={({ item }) => (
+                <FilterByLane
+                  lane={item}
+                  getTimeDifference={getTimeDifference}
+                  isEntireList={true}
+                />
+              )}
+            />
           }
-          return null;
-        }}
-        keyExtractor={(item, index) => `${item.id}_${index}`}
-      />
+          ListEmptyComponent={
+            <FontText
+              value="올라온 이슈가 없어요"
+              textSize="18px"
+              textWeight="Regular"
+              lineHeight="500px"
+              textColor={COLOR.GRAY_999}
+              textAlign="center"
+            />
+          }
+        />
+      )}
+      {activeButton !== '전체' && (
+        <FilterByLane
+          lane={activeButton}
+          getTimeDifference={getTimeDifference}
+          isEntireList={false}
+        />
+      )}
     </Container>
   );
 };
