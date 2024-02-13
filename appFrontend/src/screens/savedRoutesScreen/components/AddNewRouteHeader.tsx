@@ -1,8 +1,10 @@
 import React from 'react';
 import styled from '@emotion/native';
-import { FontText, IconButton, Space } from '@/global/ui';
+import { FontText, Space } from '@/global/ui';
 import { Platform, StatusBar } from 'react-native';
 import { getStatusBarHeight } from 'react-native-status-bar-height';
+import BackBtn from '@assets/icons/backBtn.svg';
+import CloseBtn from '@assets/icons/closeBtn.svg';
 
 interface HeaderProps {
   onBackBtnPress: () => void;
@@ -20,21 +22,9 @@ const AddNewRouteHeader = ({ onBackBtnPress, onCloseBtnPress }: HeaderProps) => 
           paddingTop: StatusBarHeight,
         }}
       >
-        <IconButton
-          isFontIcon={false}
-          imagePath="backBtn"
-          iconHeight="24px"
-          iconWidth="24px"
-          onPress={onBackBtnPress}
-        />
+        <BackBtn width="24px" onPress={onBackBtnPress} />
         <FontText value="새 경로 저장" textSize="18px" textWeight="Medium" lineHeight="23px" />
-        <IconButton
-          isFontIcon={false}
-          imagePath="x"
-          iconHeight="24px"
-          iconWidth="24px"
-          onPress={onCloseBtnPress}
-        />
+        <CloseBtn width="24px" onPress={onCloseBtnPress} />
       </Header>
       <Space height="8px" />
     </>

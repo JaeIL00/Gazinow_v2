@@ -1,12 +1,13 @@
 import styled from '@emotion/native';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 
-import { IconButton, TextButton } from '@/global/ui';
+import { TextButton } from '@/global/ui';
 import { COLOR, ARRIVAL_STATION, DEPARTURE_STATION } from '@/global/constants';
 import { useAppDispatch } from '@/store';
 import { getSeletedStation } from '@/store/modules';
 import type { StationDataTypes } from '@/store/modules';
 import SearchStation from './NewSearchStation';
+import SwapIcon from '@assets/icons/icon_change.svg';
 
 export interface SelectedStationTypes {
   departure: StationDataTypes;
@@ -108,13 +109,7 @@ const NewSearchSwapStation = ({ setSeletedStation, setDepth }: NewSearchSwapStat
           onPress={() => openSearchModal(ARRIVAL_STATION)}
         />
       </InnerBox>
-      <IconButton
-        isFontIcon={false}
-        imagePath="exchange_gray"
-        iconWidth="20px"
-        iconHeight="20px"
-        onPress={swapStation}
-      />
+      <SwapIcon width={20} onPress={swapStation} />
     </Container>
   );
 };

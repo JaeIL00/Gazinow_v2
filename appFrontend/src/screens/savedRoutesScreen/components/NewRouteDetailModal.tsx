@@ -1,11 +1,12 @@
 import { css } from '@emotion/native';
 import { Dispatch, SetStateAction, useMemo } from 'react';
 import { FlatList, Modal, Platform, StatusBar, View } from 'react-native';
-import { FontText, IconButton } from '@/global/ui';
+import { FontText } from '@/global/ui';
 import { Path, SubPath } from '@/global/apis/entity';
 import SearchPathDetailItem from '@/screens/searchPathResultDetailScreen/components/SearchPathDetailItem';
 import { COLOR } from '@/global/constants';
 import { getStatusBarHeight } from 'react-native-status-bar-height';
+import BackBtn from '@assets/icons/backBtn.svg';
 
 interface ModalProps {
   item: Path;
@@ -55,13 +56,7 @@ const NewRouteDetailModal = ({ item, setDepth, onRequestClose }: ModalProps) => 
             alignItems: 'center',
           }}
         >
-          <IconButton
-            isFontIcon={true}
-            imagePath="backBtn"
-            iconHeight="24px"
-            iconWidth="24px"
-            onPress={onRequestCloseByProp}
-          />
+          <BackBtn width="24px" onPress={onRequestCloseByProp} />
         </View>
         <View
           style={css`

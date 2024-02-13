@@ -3,6 +3,7 @@ import { IconButton, FontText, Space } from '@/global/ui';
 import { COLOR } from '@/global/constants';
 import styled from '@emotion/native';
 import { RenderSavedRoutesType } from '@/global/apis/entity';
+import MoreBtn from '@/assets/icons/moreBtn.svg';
 
 interface IssuesBannerProps {
   pathData: RenderSavedRoutesType;
@@ -20,7 +21,7 @@ const IssuesBanner = ({ pathData }: IssuesBannerProps) => {
         {/* TODO: 이슈에 따라 아이콘, 타이틀 바꾸기 */}
         <IconButton
           isFontIcon={false}
-          imagePath="x"
+          imagePath='walk_human_gray'
           iconWidth="15px"
           iconHeight="15px"
           onPress={IssueDetail}
@@ -34,13 +35,7 @@ const IssuesBanner = ({ pathData }: IssuesBannerProps) => {
           textColor={COLOR.BASIC_BLACK}
         />
       </Issue>
-      <IconButton
-        isFontIcon={false}
-        imagePath="more_gray"
-        iconWidth="4.5px"
-        iconHeight="8px"
-        onPress={IssueDetail}
-      />
+      <MoreBtn onPress={IssueDetail} />
     </Container>
   );
 };

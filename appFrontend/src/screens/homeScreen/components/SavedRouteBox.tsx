@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { View } from 'react-native';
-import { IconButton, FontText, TextButton, Space } from '@/global/ui';
+import { FontText, TextButton, Space } from '@/global/ui';
 import { COLOR } from '@/global/constants';
 import { useGetSavedRoutesQuery } from '@/global/apis/hook';
 import styled from '@emotion/native';
 import { SubwaySimplePath } from '@/global/components';
 import { Path, RenderSavedRoutesType } from '@/global/apis/entity';
 import NewRouteDetailModal from '@/screens/savedRoutesScreen/components/NewRouteDetailModal';
+import MoreBtn from '@/assets/icons/moreBtn.svg';
 
 const SavedRouteBox = () => {
   const { data: savedRoutes } = useGetSavedRoutesQuery();
@@ -50,7 +51,7 @@ const SavedRouteBox = () => {
               </TextContainer>
               <TextContainer>
                 <TextButton
-                  value="세부정보  "
+                  value="세부정보"
                   textSize="13px"
                   textWeight="Regular"
                   lineHeight="19px"
@@ -60,11 +61,12 @@ const SavedRouteBox = () => {
                     setSelectedRoute(item);
                   }}
                 />
-                <IconButton
-                  isFontIcon={false}
-                  imagePath="more_gray"
-                  iconWidth="4.5px"
-                  iconHeight="8px"
+                <Space width="4px" />
+                <MoreBtn
+                  onPress={() => {
+                    setIsRouteDetailOpened(true);
+                    setSelectedRoute(item);
+                  }}
                 />
               </TextContainer>
             </TitleContainer>

@@ -6,9 +6,9 @@ import { useSaveMyRoutesQuery } from '@/global/apis/hook';
 import { useQueryClient } from 'react-query';
 import { SubwaySimplePath } from '@/global/components';
 import { Path, SubPath } from '@/global/apis/entity';
-import { Image, View, Keyboard } from 'react-native';
-import { iconPath } from '@/assets/icons/iconPath';
+import { View, Keyboard } from 'react-native';
 import { KeyboardAvoidingView, Platform } from 'react-native';
+import XCircle from '@assets/icons/x-circle.svg';
 
 interface ModalProps {
   item: Path;
@@ -81,7 +81,7 @@ const NameNewRouteModal = ({ item, onCancel, setDepth }: ModalProps) => {
         <TextLengthBox>
           {isDuplicatedName ? (
             <MessageContainer>
-              <Image source={iconPath.x_circle} style={{ width: 14, height: 14 }} />
+              <XCircle width={14} />
               <FontText
                 value={` 이미 존재하는 이름입니다`}
                 textSize="12px"
@@ -154,6 +154,8 @@ const TextLengthBox = styled.View`
 const MessageContainer = styled.View`
   flex-direction: row;
   margin: 0 0 0 9px;
+  align-items: center;
+  height: 14px;
 `;
 const BottomBtn = styled.Pressable`
   padding-vertical: 11px;

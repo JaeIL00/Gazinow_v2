@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
-import { IconButton, FontText, Space } from '@/global/ui';
+import { FontText, Space } from '@/global/ui';
 import { COLOR } from '@/global/constants';
 import styled from '@emotion/native';
 import { SubwaySimplePath } from '@/global/components';
 import { RenderSavedRoutesType } from '@/global/apis/entity';
 import NewRouteDetailModal from '@/screens/savedRoutesScreen/components/NewRouteDetailModal';
+import MoreBtn from '@/assets/icons/moreBtn.svg';
+
 interface RecommendedRouteProps {
   pathData: RenderSavedRoutesType;
 }
@@ -37,19 +39,14 @@ const RecommendedRoutes = ({ pathData }: RecommendedRouteProps) => {
         </TextContainer>
         <TextContainer onPress={() => setIsRouteDetailOpened(true)}>
           <FontText
-            value="세부정보  "
+            value="세부정보"
             textSize="13px"
             textWeight="Regular"
             lineHeight="19px"
             textColor={COLOR.GRAY_999}
           />
-          <IconButton
-            isFontIcon={false}
-            imagePath="more_gray"
-            iconWidth="4.5px"
-            iconHeight="8px"
-            onPress={() => setIsRouteDetailOpened(true)}
-          />
+          <Space width="4px" />
+          <MoreBtn onPress={() => setIsRouteDetailOpened(true)} />
         </TextContainer>
       </TextContainer>
       <Space height="4px" />

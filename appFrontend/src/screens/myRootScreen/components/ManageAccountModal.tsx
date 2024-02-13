@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import styled from '@emotion/native';
 import { useRootNavigation } from '@/navigation/RootNavigation';
 import { getEncryptedStorage, removeEncryptedStorage } from '@/global/utils';
-import { FontText, IconButton, Space, TextButton } from '@/global/ui';
-import { CONFIRM_QUIT } from '@/global/constants/navigation';
+import { FontText, Space, TextButton } from '@/global/ui';
 import { COLOR } from '@/global/constants';
 import { useLogoutMutation } from '@/screens/signInScreen/apis/hook';
 import ChangePwModal from './ChangePwModal';
@@ -11,6 +10,7 @@ import MyTabModal from '@/global/components/MyTabModal';
 import { Modal, Platform, StatusBar } from 'react-native';
 import ConfirmQuitModal from './ConfirmQuitModal';
 import { getStatusBarHeight } from 'react-native-status-bar-height';
+import BackBtn from '@assets/icons/backBtn.svg';
 
 interface RenderMenuProps {
   text: string;
@@ -67,13 +67,7 @@ const ManageAccountModal = ({ onCancel }: ManageAccountModalProps) => {
           paddingTop: StatusBarHeight,
         }}
       >
-        <IconButton
-          isFontIcon={false}
-          imagePath="backBtn"
-          iconHeight="16px"
-          iconWidth="9px"
-          onPress={onCancel}
-        />
+        <BackBtn width="24px" onPress={onCancel} />
         <Space width="20px" />
         <FontText value="계정 관리" textSize="18px" lineHeight="23px" textWeight="Medium" />
       </Header>

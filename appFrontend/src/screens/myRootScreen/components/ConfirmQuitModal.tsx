@@ -1,13 +1,14 @@
 import styled from '@emotion/native';
 import { useRootNavigation } from '@/navigation/RootNavigation';
 import { useState } from 'react';
-import { FontText, IconButton, Space, TextButton } from '@/global/ui';
+import { FontText, Space, TextButton } from '@/global/ui';
 import { COLOR } from '@/global/constants';
 import MyTabModal from '../../../global/components/MyTabModal';
 import { useCheckPasswordQuery, useDeleteAccountMutation } from '@/global/apis/hook';
 import { Modal, Platform, StatusBar } from 'react-native';
 import { removeEncryptedStorage } from '@/global/utils';
 import { getStatusBarHeight } from 'react-native-status-bar-height';
+import BackBtn from '@assets/icons/backBtn.svg';
 
 interface ConfirmQuitModalProps {
   onCancel: () => void;
@@ -66,13 +67,7 @@ const ConfirmQuitModal = ({ onCancel }: ConfirmQuitModalProps) => {
           paddingTop: StatusBarHeight,
         }}
       >
-        <IconButton
-          isFontIcon={false}
-          imagePath="backBtn"
-          iconHeight="16px"
-          iconWidth="9px"
-          onPress={onCancel}
-        />
+        <BackBtn width="24px" onPress={onCancel} />
       </Header>
       <Container>
         <AlertContainer>

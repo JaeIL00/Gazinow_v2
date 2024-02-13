@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
 import styled from '@emotion/native';
 import RenderSavedRoutes from './components/RenderSavedRoutes';
-import { FontText, IconButton, Space } from '@/global/ui';
+import { FontText, Space } from '@/global/ui';
 import { COLOR } from '@/global/constants';
 import AddNewRouteModal from './components/AddNewRouteModal';
 import { useRootNavigation } from '@/navigation/RootNavigation';
 import { Platform, StatusBar } from 'react-native';
 import { getStatusBarHeight } from 'react-native-status-bar-height';
+import PlusBtn from '@assets/icons/plus-circle.svg';
+import BackBtn from '@assets/icons/backBtn.svg';
+
 const SavedRoutesScreen = () => {
   const StatusBarHeight =
     Platform.OS === 'ios'
@@ -22,13 +25,7 @@ const SavedRoutesScreen = () => {
       }}
     >
       <Header>
-        <IconButton
-          isFontIcon={false}
-          imagePath="backBtn"
-          iconHeight="24px"
-          iconWidth="24px"
-          onPress={() => navigation.goBack()}
-        />
+        <BackBtn width='24px' onPress={() => navigation.goBack()}  />
         <Space width="12px" />
         <FontText value="저장경로 편집" textSize="18px" textWeight="Medium" lineHeight="23px" />
       </Header>
@@ -36,7 +33,7 @@ const SavedRoutesScreen = () => {
       <RouteContainer>
         <RenderSavedRoutes />
         <AddContainer onPress={() => setIsAddRouteModalOpen(true)}>
-          <IconButton isFontIcon={false} imagePath="addRoute" iconWidth="21px" iconHeight="21px" />
+          <PlusBtn />
           <FontText
             value="  경로 추가하기"
             textSize="14px"

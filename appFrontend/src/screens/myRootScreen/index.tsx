@@ -1,7 +1,7 @@
 import styled from '@emotion/native';
 import { Image, Platform, StatusBar } from 'react-native';
 import { iconPath } from '@/assets/icons/iconPath';
-import { FontText, IconButton, Space, TextButton } from '@/global/ui';
+import { FontText, Space, TextButton } from '@/global/ui';
 import { COLOR } from '@/global/constants';
 import { RESULTS, requestNotifications } from 'react-native-permissions';
 import { useState } from 'react';
@@ -14,6 +14,8 @@ import ManageAccountModal from './components/ManageAccountModal';
 import NotiOnModal from './components/NotiOnModal';
 import NotiSettingsModal from './components/NotiSettingsModal';
 import { getStatusBarHeight } from 'react-native-status-bar-height';
+import Pencil from '@assets/icons/pencil.svg';
+import MoreBtn from '@/assets/icons/moreBtnMy.svg';
 
 interface RenderMenuProps {
   text: string;
@@ -74,10 +76,7 @@ const MyRootScreen = () => {
           lineHeight="17px"
         />
       ) : (
-        <Image
-          source={iconPath.backBtn}
-          style={{ width: 14, height: 17, transform: [{ scaleX: -1 }] }}
-        />
+        <MoreBtn width={14} />
       )}
     </MenuContainer>
   );
@@ -93,14 +92,7 @@ const MyRootScreen = () => {
         <NickNameContainer onPress={() => setIsNicknameModalOpen(true)}>
           <FontText value={nickname} textSize="16px" textWeight="Medium" lineHeight="21px" />
           <Space width="5px" />
-          <IconButton
-            iconType="Ionicons"
-            isFontIcon
-            iconName="pencil"
-            iconWidth="15"
-            iconColor={COLOR.GRAY_999}
-            onPress={() => setIsNicknameModalOpen(true)}
-          />
+          <Pencil width={15} onPress={() => setIsNicknameModalOpen(true)} />
         </NickNameContainer>
         <FontText
           value={email}
