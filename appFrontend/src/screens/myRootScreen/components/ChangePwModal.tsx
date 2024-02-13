@@ -1,6 +1,6 @@
 import styled from '@emotion/native';
 import { useCallback, useState } from 'react';
-import { Modal, Platform, StatusBar } from 'react-native';
+import { Alert, Modal, Platform, StatusBar } from 'react-native';
 import { FontText, Input, Space, TextButton } from '@/global/ui';
 import { COLOR } from '@/global/constants';
 import { useChangePasswordQuery, useCheckPasswordQuery } from '@/global/apis/hook';
@@ -29,9 +29,6 @@ const ChangePwModal = ({ onCancel }: ModalProps) => {
   const [isPwRight, setIsPwRight] = useState<boolean>(false);
   const [isNewPwValid, setIsNewPwValid] = useState<boolean>(false);
 
-  // TODO: 기획 나오면 수정
-  // const [errorMessage, setErrorMessage] = useState<string>('');
-
   const [isValueCombination, setIsValidCombination] = useState<boolean>(false);
   const [isValidLength, setIsValidLength] = useState<boolean>(false);
 
@@ -55,6 +52,8 @@ const ChangePwModal = ({ onCancel }: ModalProps) => {
   const lengValidColor = isValidLength ? COLOR.LIGHT_GREEN : COLOR.GRAY_999;
   const comValidColor = isValueCombination ? COLOR.LIGHT_GREEN : COLOR.GRAY_999;
 
+  const isNewEqualsToOld = curPassword === changePassword;
+
   const checkPasswordDebounce = useCallback(
     debounce((curPassword: string) => {
       checkPasswordMutate(curPassword);
@@ -74,7 +73,6 @@ const ChangePwModal = ({ onCancel }: ModalProps) => {
     onError: (error: any) => {
       console.log(error);
       setIsPwRight(false);
-      // setErrorMessage(getErrorMessage(error.response?.status));
     },
   });
 
@@ -85,22 +83,9 @@ const ChangePwModal = ({ onCancel }: ModalProps) => {
     },
     onError: (error: any) => {
       setIsNewPwValid(false);
-      // setErrorMessage(getErrorMessage(error.response?.status));
+      Alert.alert('비밀번호 변경 오류', '비밀번호 변경에 실패했습니다\n다시 시도해주세요');
     },
   });
-
-  // TODO: 현재 비번과 새 비번이 일치할 때의 기획 없음
-  // TODO: 기획 나오면 수정
-  // const getErrorMessage = (status: number | undefined) => {
-  //   switch (status) {
-  //     case 404:
-  //       return '비밀번호가 틀립니다.';
-  //     // case 400:
-  //     //   return '7글자 이하의 한글, 알파벳, 숫자를 입력해주세요.\n한글 자모음 단독으로 입력 불가';
-  //     default:
-  //       return '비밀번호가 틀립니다. 다시 시도해주세요.';
-  //   }
-  // };
 
   const onPressDone = () => {
     const data = { curPassword, changePassword, confirmPassword };
@@ -112,7 +97,6 @@ const ChangePwModal = ({ onCancel }: ModalProps) => {
     onCancel();
   };
 
-  // TODO: 기획 나오면 css 수정. 일단 임시로 함.
   return (
     <Modal visible onRequestClose={onCancel}>
       <Header
@@ -129,14 +113,26 @@ const ChangePwModal = ({ onCancel }: ModalProps) => {
           value="완료"
           textSize="16px"
           textColor={
-            !isPwRight || !isNewPwValid || confirmPassword !== changePassword
+            !isPwRight ||
+            !isNewPwValid ||
+            !isValidLength ||
+            !isValueCombination ||
+            isNewEqualsToOld ||
+            confirmPassword !== changePassword
               ? COLOR.GRAY_999
               : COLOR.BASIC_BLACK
           }
           textWeight="Medium"
           lineHeight="21px"
           onPress={onPressDone}
-          disabled={!isPwRight || !isNewPwValid || confirmPassword !== changePassword}
+          disabled={
+            !isPwRight ||
+            !isNewPwValid ||
+            !isValidLength ||
+            !isValueCombination ||
+            isNewEqualsToOld ||
+            confirmPassword !== changePassword
+          }
         />
       </Header>
 
@@ -195,26 +191,39 @@ const ChangePwModal = ({ onCancel }: ModalProps) => {
           />
           <DeleteInputIcon width={19.5} onPress={() => setChangePassword('')} />
         </InputContainer>
+        {isNewEqualsToOld ? (
+          <MessageContainer>
+            <XCircle width={14} />
+            <FontText
+              value=" 이전과 동일한 비밀번호로 변경할 수 없습니다"
+              textSize="12px"
+              textWeight="Medium"
+              lineHeight="14px"
+              textColor={COLOR.LIGHT_RED}
+            />
+          </MessageContainer>
+        ) : (
+          <MessageContainer>
+            <Check width={12} color={lengValidColor} />
+            <Space width="4px" />
+            <FontText
+              value="8자-20자 이내"
+              textSize="12px"
+              textWeight="Medium"
+              textColor={lengValidColor}
+            />
+            <Space width="12px" />
+            <Check width={12} color={comValidColor} />
+            <Space width="4px" />
+            <FontText
+              value="영어, 숫자, 특수문자 포함"
+              textSize="12px"
+              textWeight="Medium"
+              textColor={comValidColor}
+            />
+          </MessageContainer>
+        )}
 
-        <MessageContainer>
-          <Check width={12} color={lengValidColor} />
-          <Space width="4px" />
-          <FontText
-            value="8자-20자 이내"
-            textSize="12px"
-            textWeight="Medium"
-            textColor={lengValidColor}
-          />
-          <Space width="12px" />
-          <Check width={12} color={comValidColor} />
-          <Space width="4px" />
-          <FontText
-            value="영어, 숫자, 특수문자 포함"
-            textSize="12px"
-            textWeight="Medium"
-            textColor={comValidColor}
-          />
-        </MessageContainer>
         <InputContainer>
           <PwInput
             value={confirmPassword}
