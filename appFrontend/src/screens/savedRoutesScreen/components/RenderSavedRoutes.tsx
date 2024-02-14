@@ -36,7 +36,6 @@ const RenderSavedRoutes = () => {
 
   const renderSavedRoutes = () =>
     savedRoutes?.map((item: RenderSavedRoutesType) => (
-      <>
         <RouteContainer key={item.id}>
           <TitleContainer>
             <FontText
@@ -60,10 +59,9 @@ const RenderSavedRoutes = () => {
             arriveStationName={item.lastEndStation}
             betweenPathMargin={24}
           />
-        </RouteContainer>
         <Space height="8px" />
         <Space height="1px" backgroundColor={COLOR.GRAY_EB} />
-      </>
+        </RouteContainer>
     ));
 
   return (
