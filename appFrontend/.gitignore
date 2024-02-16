@@ -4,6 +4,7 @@
 
 # Xcode
 #
+ios/tmp.xcconfig
 build/
 *.pbxuser
 !default.pbxuser
@@ -39,9 +40,6 @@ local.properties
 node_modules/
 npm-debug.log
 yarn-error.log
-
-.eslintcache
-/mocks
 
 # fastlane
 #

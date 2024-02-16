@@ -1,13 +1,14 @@
-import { View } from 'react-native';
-import { FontText, Input, Space, TextButton } from '@/global/ui';
-import { COLOR } from '@/global/constants';
+import {Alert, View} from 'react-native';
+import {FontText, Input, Space, TextButton} from '@/global/ui';
+import {COLOR} from '@/global/constants';
 import CheckIcon from 'react-native-vector-icons/Feather';
 import CloseIcon from 'react-native-vector-icons/Ionicons';
-import { useEffect, useState } from 'react';
-import { useEmailConfirm } from '../apis/hooks';
+import {useEffect, useState} from 'react';
+import {useEmailConfirm} from '../apis/hooks';
 import ConfirmEmailModal from './ConfirmEmailModal';
 import useBackgroundInterval from '../hooks/useBackgroundInterval';
 import StepButton from '../ui/StepButton';
+import {API_BASE_URL} from '@env';
 
 const emailValidation = new RegExp(
   /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i,
@@ -24,19 +25,21 @@ interface EmailStepProps {
   changeEmailValue: (value: string) => void;
 }
 
-const EmailStep = ({ emailValue, setStep, changeEmailValue }: EmailStepProps) => {
-  const { authNumber, isError, resetAuthNumber, emailConfirmMutate } = useEmailConfirm({
-    onSuccess: () => {
-      setIsSuccess(true);
-      setIsOpenConfirmModal(true);
-    },
-    onError: (error) => {
-      if (error.message.includes('409')) {
-        setIsValidEmail(false);
-        setErrorMessage('이미 가입된 이메일입니다');
-      }
-    },
-  });
+const EmailStep = ({emailValue, setStep, changeEmailValue}: EmailStepProps) => {
+  const {authNumber, isError, resetAuthNumber, emailConfirmMutate} =
+    useEmailConfirm({
+      onSuccess: () => {
+        setIsSuccess(true);
+        setIsOpenConfirmModal(true);
+      },
+      onError: error => {
+        Alert.alert(error.message);
+        if (error.message.includes('409')) {
+          setIsValidEmail(false);
+          setErrorMessage('이미 가입된 이메일입니다');
+        }
+      },
+    });
 
   const [errorMessage, setErrorMessage] = useState<string>('');
   const [isSuccess, setIsSuccess] = useState<boolean>(false);
@@ -72,11 +75,12 @@ const EmailStep = ({ emailValue, setStep, changeEmailValue }: EmailStepProps) =>
   };
 
   const timerHandler = () => {
-    if ((timer.minutes === 0 && timer.seconds === 0) || !isOpenConfirmModal) return;
+    if ((timer.minutes === 0 && timer.seconds === 0) || !isOpenConfirmModal)
+      return;
     if (timer.seconds > 0) {
-      setTimer((prev) => ({ ...prev, seconds: prev.seconds - 1 }));
+      setTimer(prev => ({...prev, seconds: prev.seconds - 1}));
     } else if (timer.seconds === 0) {
-      setTimer((prev) => ({ minutes: prev.minutes - 1, seconds: 59 }));
+      setTimer(prev => ({minutes: prev.minutes - 1, seconds: 59}));
     }
   };
 
@@ -100,8 +104,8 @@ const EmailStep = ({ emailValue, setStep, changeEmailValue }: EmailStepProps) =>
         />
       )}
 
-      <View style={{ flex: 1 }}>
-        <View style={{ marginBottom: 51 }}>
+      <View style={{flex: 1}}>
+        <View style={{marginBottom: 51}}>
           <FontText
             value="회원가입"
             textSize="24px"
@@ -117,8 +121,13 @@ const EmailStep = ({ emailValue, setStep, changeEmailValue }: EmailStepProps) =>
           />
         </View>
 
-        <View style={{ flex: 1 }}>
-          <FontText value="Email" textSize="14px" textWeight="Medium" textColor="#7c8183" />
+        <View style={{flex: 1}}>
+          <FontText
+            value="Email"
+            textSize="14px"
+            textWeight="Medium"
+            textColor="#7c8183"
+          />
           <View
             style={{
               backgroundColor: COLOR.GRAY_F2,
@@ -128,18 +137,18 @@ const EmailStep = ({ emailValue, setStep, changeEmailValue }: EmailStepProps) =>
               justifyContent: 'center',
               paddingLeft: 16,
               borderRadius: 5,
-            }}
-          >
+            }}>
             <Input
               value={emailValue}
               placeholder="이메일(아이디)입력"
               placeholderTextColor={COLOR.GRAY_BE}
               fontSize="14px"
-              onChangeText={(text) => changeEmailHandler(text)}
+              onChangeText={text => changeEmailHandler(text)}
               keyboardType="email-address"
             />
           </View>
-          <View style={{ flexDirection: 'row', alignItems: 'center', marginLeft: 9 }}>
+          <View
+            style={{flexDirection: 'row', alignItems: 'center', marginLeft: 9}}>
             {!errorMessage && isValidEmail && (
               <>
                 <CheckIcon name="check" size={14} color={COLOR.LIGHT_GREEN} />
@@ -154,7 +163,11 @@ const EmailStep = ({ emailValue, setStep, changeEmailValue }: EmailStepProps) =>
             )}
             {!errorMessage && !isValidEmail && emailValue && (
               <>
-                <CloseIcon name="close-circle-outline" size={14} color={COLOR.LIGHT_RED} />
+                <CloseIcon
+                  name="close-circle-outline"
+                  size={14}
+                  color={COLOR.LIGHT_RED}
+                />
                 <Space width="3px" />
                 <FontText
                   value="이메일 형식이 올바르지 않습니다"
@@ -166,7 +179,11 @@ const EmailStep = ({ emailValue, setStep, changeEmailValue }: EmailStepProps) =>
             )}
             {errorMessage && (
               <>
-                <CloseIcon name="close-circle-outline" size={14} color={COLOR.LIGHT_RED} />
+                <CloseIcon
+                  name="close-circle-outline"
+                  size={14}
+                  color={COLOR.LIGHT_RED}
+                />
                 <Space width="3px" />
                 <FontText
                   value={errorMessage}
@@ -182,7 +199,10 @@ const EmailStep = ({ emailValue, setStep, changeEmailValue }: EmailStepProps) =>
         <StepButton
           value="인증메일 전송"
           backgroundCondition={isValidEmail}
-          onPress={emailConfirmMutateHandler}
+          onPress={() => {
+            Alert.alert(API_BASE_URL);
+            emailConfirmMutateHandler;
+          }}
           disabled={!isValidEmail}
         />
       </View>
