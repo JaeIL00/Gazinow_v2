@@ -18,7 +18,7 @@ const IssueBox = () => {
 
   //TODO: 이슈 있는 경로가 2개 이상이면?
   useEffect(() => {
-    const issueRoute = savedRoutes?.find((item) => item.issues !== null);
+    const issueRoute = savedRoutes?.find((item) => item.issues === null);
     if (issueRoute) {
       setHasIssueRoute(issueRoute);
     }
