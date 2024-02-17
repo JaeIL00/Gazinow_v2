@@ -2,7 +2,7 @@ import styled from '@emotion/native';
 import { Platform, Pressable, StatusBar } from 'react-native';
 import { FontText, Space, TextButton } from '@/global/ui';
 import { COLOR } from '@/global/constants';
-import { RESULTS, requestNotifications } from 'react-native-permissions';
+// import { RESULTS, requestNotifications } from 'react-native-permissions';
 import { useState } from 'react';
 import ChangeNickNameModal from './components/ChangeNickNameModal';
 import { useSelector } from 'react-redux';
@@ -21,17 +21,17 @@ interface RenderMenuProps {
   onPress?: () => void;
   versionInfo?: string;
 }
-const ALLOWED_PERMISSIONS = {
-  [RESULTS.GRANTED]: true,
-  [RESULTS.LIMITED]: true,
-  [RESULTS.UNAVAILABLE]: true,
-  [RESULTS.BLOCKED]: false,
-  [RESULTS.DENIED]: false,
-};
+// const ALLOWED_PERMISSIONS = {
+//   [RESULTS.GRANTED]: true,
+//   [RESULTS.LIMITED]: true,
+//   [RESULTS.UNAVAILABLE]: true,
+//   [RESULTS.BLOCKED]: false,
+//   [RESULTS.DENIED]: false,
+// };
 
 const requestNotificationPermission = async () => {
-  const { status } = await requestNotifications(['alert']);
-  return ALLOWED_PERMISSIONS[status];
+  // const { status } = await requestNotifications(['alert']);
+  // return ALLOWED_PERMISSIONS[status];
 };
 
 const MyRootScreen = () => {
@@ -50,12 +50,12 @@ const MyRootScreen = () => {
   const [isNotiSettingsModalOpen, setIsNotiSettingsModalOpen] = useState<boolean>(false);
 
   const confirmUserNotificationOn = async () => {
-    const result = await requestNotificationPermission();
-    if (!result) {
-      setIsNotiOnModalOpen(true);
-    } else {
-      setIsNotiSettingsModalOpen(true);
-    }
+    // const result = await requestNotificationPermission();
+    // if (!result) {
+    //   setIsNotiOnModalOpen(true);
+    // } else {
+    //   setIsNotiSettingsModalOpen(true);
+    // }
   };
 
   const renderMenu = ({ text, onPress, versionInfo }: RenderMenuProps) => (

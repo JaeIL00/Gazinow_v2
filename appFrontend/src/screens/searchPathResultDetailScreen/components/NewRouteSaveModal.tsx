@@ -1,6 +1,6 @@
 import { FontText, Input, Space, TextButton } from '@/global/ui';
 import { COLOR } from '@/global/constants';
-import { Modal, View } from 'react-native';
+import { KeyboardAvoidingView, Modal, Platform, View } from 'react-native';
 import { useState } from 'react';
 import { SubwaySimplePath } from '@/global/components';
 import { useSavedSubwayRoute } from '@/global/apis/hook';
@@ -41,7 +41,8 @@ const NewRouteSaveModal = ({ freshData, closeModal, onBookmark }: NewRouteSaveMo
 
   return (
     <Modal visible onRequestClose={closeModal} transparent>
-      <View
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
         style={{
           backgroundColor: 'rgba(0, 0, 0, 0.60)',
           flex: 1,
@@ -166,7 +167,7 @@ const NewRouteSaveModal = ({ freshData, closeModal, onBookmark }: NewRouteSaveMo
             />
           </View>
         </View>
-      </View>
+      </KeyboardAvoidingView>
     </Modal>
   );
 };
