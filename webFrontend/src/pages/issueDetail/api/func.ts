@@ -17,3 +17,16 @@ export const getIssueDetail = async (params: { id: string }) => {
     throw error;
   }
 };
+
+/**
+ * 도움돼요 추가
+ */
+export const postLike = async (issueId: number) => {
+  try {
+    const res = await GaziAPI.post(`${apiUrls.like}?issueId=${issueId}`);
+    return res.data.data;
+  } catch (err) {
+    const error = err as AxiosError;
+    throw error;
+  }
+};
