@@ -40,5 +40,5 @@
 }
 
 body {
-  @apply font-[Pretendard];
+  @apply font-[Pretendard] text-[#171717];
 }
