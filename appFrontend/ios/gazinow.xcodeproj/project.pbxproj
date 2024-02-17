@@ -471,11 +471,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CURRENT_PROJECT_VERSION = 25;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = MRR77SQD8Z;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = gazinow/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "가는길지금";
+				INFOPLIST_KEY_CFBundleDisplayName = "가지테스트용";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -487,7 +487,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.gazinow.subway;
+				PRODUCT_BUNDLE_IDENTIFIER = com.gazinow.qa;
 				PRODUCT_NAME = gazinow;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -501,10 +501,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CURRENT_PROJECT_VERSION = 25;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = MRR77SQD8Z;
 				INFOPLIST_FILE = gazinow/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "가는길지금";
+				INFOPLIST_KEY_CFBundleDisplayName = "가지테스트용";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -516,7 +516,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.gazinow.subway;
+				PRODUCT_BUNDLE_IDENTIFIER = com.gazinow.qa;
 				PRODUCT_NAME = gazinow;
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
