@@ -7,6 +7,7 @@ export interface IconPathTypes {
   right_arrow_nonbar: ImageSourcePropType;
   walk_human_gray: ImageSourcePropType;
   issueMap: ImageSourcePropType;
+  check: ImageSourcePropType;
 }
 
 export const iconPath: IconPathTypes = {
@@ -16,4 +17,5 @@ export const iconPath: IconPathTypes = {
   right_arrow_nonbar: require('@/assets/icons/right_arrow_nonbar.png'),
   walk_human_gray: require('@/assets/icons/walk_human_gray.png'),
   issueMap: require('@/assets/icons/issueMap.png'),
+  check: require('@/assets/icons/check.png'),
 };
