@@ -182,26 +182,24 @@ export interface RenderSavedRoutesType extends Path {
   id: number;
 }
 
+export type IssueKeywords = '자연재해' | '연착' | '혼잡' | '행사' | '사고' | '공사' | '시위';
+
 export interface IssueContent {
   id: number;
   title: string;
   content: string;
-  date: string;
+  agoTime: string;
   line: string;
+  likeCount: number;
   startDate: string;
   expireDate: string;
-  type: string;
-}
-
-export interface CombinedData {
-  id?: number;
-  title?: string;
-  content?: string;
-  date?: string;
-  line?: string;
-  startDate?: string;
-  expireDate?: string;
-  type: string;
+  keyword: IssueKeywords;
+  stationDtos: [
+    {
+      line: RawSubwayLineName;
+      stationName: string;
+    },
+  ];
 }
 
 export interface AllIssues {
