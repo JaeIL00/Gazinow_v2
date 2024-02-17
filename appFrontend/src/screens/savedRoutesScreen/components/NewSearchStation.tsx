@@ -10,6 +10,7 @@ import { useCallback, useState } from 'react';
 import { debounce } from 'lodash';
 import { SelectedStationTypes } from './NewSearchSwapStation';
 import DeleteInputIcon from '@assets/icons/deleteInput.svg';
+import { Pressable } from 'react-native';
 
 interface SearchStationProps {
   searchType: '출발역' | '도착역';
@@ -69,7 +70,9 @@ const NewSearchStation = ({ searchType, closeModal, setSubwayStation }: SearchSt
           autoFocus
           isSavingNewRoute
         />
-        <DeleteInputIcon width={19.5} onPress={() => setSearchTextValue('')} />
+        <Pressable hitSlop={20} onPress={() => setSearchTextValue('')}>
+          <DeleteInputIcon width={19.5} />
+        </Pressable>
       </Container>
       {!searchTextValue ? (
         <ResultContainer>

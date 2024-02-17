@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { FontText, Space, TextButton } from '@/global/ui';
 import { COLOR } from '@/global/constants';
 import MyTabModal from '@/global/components/MyTabModal';
-import { Modal } from 'react-native';
+import { Modal, Pressable } from 'react-native';
 import BackBtn from '@assets/icons/backBtn.svg';
 import ConfirmPwModal from './ConfirmPwModal';
 
@@ -30,7 +30,9 @@ const ConfirmQuitModal = ({ onCancel }: ConfirmQuitModalProps) => {
   return (
     <Modal visible onRequestClose={onCancel}>
       <Header>
-        <BackBtn onPress={onCancel} />
+        <Pressable hitSlop={20} onPress={onCancel}>
+          <BackBtn />
+        </Pressable>
       </Header>
       <Container>
         <AlertContainer>
@@ -58,18 +60,20 @@ const ConfirmQuitModal = ({ onCancel }: ConfirmQuitModalProps) => {
             onPress={onCancel}
           />
         </BottomBtn>
-        <QuitBtn>
-          <UnderLine>
-            <TextButton
-              value="탈퇴하기"
-              textSize="13px"
-              textWeight="Regular"
-              lineHeight="18px"
-              textColor={COLOR.GRAY_999}
-              onPress={() => setPopupVisible(true)}
-            />
-          </UnderLine>
-        </QuitBtn>
+        <Pressable hitSlop={20} onPress={() => setPopupVisible(true)}>
+          <QuitBtn>
+            <UnderLine>
+              <TextButton
+                value="탈퇴하기"
+                textSize="13px"
+                textWeight="Regular"
+                lineHeight="18px"
+                textColor={COLOR.GRAY_999}
+                onPress={() => setPopupVisible(true)}
+              />
+            </UnderLine>
+          </QuitBtn>
+        </Pressable>
         <MyTabModal
           isVisible={popupVisible}
           onCancel={hideModal}

@@ -1,6 +1,6 @@
 import styled from '@emotion/native';
 import { useCallback, useState } from 'react';
-import { Alert, Keyboard, Modal } from 'react-native';
+import { Alert, Keyboard, Modal, Pressable } from 'react-native';
 import { FontText, Input, Space, TextButton } from '@/global/ui';
 import { COLOR } from '@/global/constants';
 import { useCheckPasswordQuery, useDeleteAccountMutation } from '@/global/apis/hook';
@@ -62,7 +62,9 @@ const ConfirmPwModal = ({ onCancel, isVisible }: ModalProps) => {
   return (
     <Modal visible={isVisible} onRequestClose={onCancel}>
       <Header>
-        <BackBtn onPress={onCancel} />
+        <Pressable hitSlop={20} onPress={onCancel}>
+          <BackBtn />
+        </Pressable>
       </Header>
       <Container>
         <AlertContainer>

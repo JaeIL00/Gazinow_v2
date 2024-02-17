@@ -1,15 +1,13 @@
 import styled from '@emotion/native';
 import React, { useCallback, useState } from 'react';
-import { Alert, Image, Modal, Platform, StatusBar, View } from 'react-native';
-import { FontText, IconButton, Input, Space, TextButton } from '@/global/ui';
+import { Alert, Image, Modal, Platform, Pressable, StatusBar, View } from 'react-native';
+import { FontText, Input, Space, TextButton } from '@/global/ui';
 import { COLOR } from '@/global/constants';
 import { useChangePasswordQuery, useCheckPasswordQuery } from '@/global/apis/hook';
 import MyTabModal from '@/global/components/MyTabModal';
 import { debounce } from 'lodash';
 import { getStatusBarHeight } from 'react-native-status-bar-height';
 import XCircle from '@assets/icons/x-circle.svg';
-import Check from '@assets/icons/check.svg';
-import DeleteInputIcon from '@assets/icons/deleteInput.svg';
 import BackBtn from '@assets/icons/backBtn.svg';
 import { iconPath } from '@/assets/icons/iconPath';
 
@@ -103,35 +101,39 @@ const ChangePwModal = ({ onCancel }: ModalProps) => {
   return (
     <Modal visible onRequestClose={onCancel}>
       <Header>
-        <BackBtn onPress={onCancel} />
+        <Pressable hitSlop={20} onPress={onCancel}>
+          <BackBtn />
+        </Pressable>
         <Space width="21px" />
         <FontText value="비밀번호 변경" textSize="18px" lineHeight="23px" textWeight="Medium" />
         <View style={{ flex: 1 }} />
-        <TextButton
-          value="완료"
-          textSize="16px"
-          textColor={
-            !isPwRight ||
-            !isNewPwValid ||
-            !isValidLength ||
-            !isValueCombination ||
-            isNewEqualsToOld ||
-            confirmPassword !== changePassword
-              ? COLOR.GRAY_999
-              : COLOR.BASIC_BLACK
-          }
-          textWeight="SemiBold"
-          lineHeight="21px"
-          onPress={onPressDone}
-          disabled={
-            !isPwRight ||
-            !isNewPwValid ||
-            !isValidLength ||
-            !isValueCombination ||
-            isNewEqualsToOld ||
-            confirmPassword !== changePassword
-          }
-        />
+        <Pressable hitSlop={20} onPress={onPressDone}>
+          <TextButton
+            value="완료"
+            textSize="16px"
+            textColor={
+              !isPwRight ||
+              !isNewPwValid ||
+              !isValidLength ||
+              !isValueCombination ||
+              isNewEqualsToOld ||
+              confirmPassword !== changePassword
+                ? COLOR.GRAY_999
+                : COLOR.BASIC_BLACK
+            }
+            textWeight="SemiBold"
+            lineHeight="21px"
+            onPress={onPressDone}
+            disabled={
+              !isPwRight ||
+              !isNewPwValid ||
+              !isValidLength ||
+              !isValueCombination ||
+              isNewEqualsToOld ||
+              confirmPassword !== changePassword
+            }
+          />
+        </Pressable>
       </Header>
 
       <Container>

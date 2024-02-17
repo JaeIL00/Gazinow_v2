@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Pressable } from 'react-native';
 import { TextButton, FontText, Space } from '@/global/ui';
 import { COLOR } from '@/global/constants';
 import { useGetSearchRoutesQuery } from '@/global/apis/hook';
@@ -32,18 +32,20 @@ const RecentSearchBox = () => {
               textColor={COLOR.GRAY_999}
             />
           </View>
-          <View style={styles.textContainer}>
-            <TextButton
-              value="세부정보"
-              textSize="13px"
-              textWeight="Regular"
-              lineHeight="19px"
-              textColor={COLOR.GRAY_999}
-              onPress={routeDetail}
-            />
-            <Space width="4px" />
-            <MoreBtn onPress={routeDetail} />
-          </View>
+          <Pressable hitSlop={20} onPress={routeDetail}>
+            <View style={styles.textContainer}>
+              <TextButton
+                value="세부정보"
+                textSize="13px"
+                textWeight="Regular"
+                lineHeight="19px"
+                textColor={COLOR.GRAY_999}
+                onPress={routeDetail}
+              />
+              <Space width="4px" />
+              <MoreBtn />
+            </View>
+          </Pressable>
         </View>
       </View>
     );

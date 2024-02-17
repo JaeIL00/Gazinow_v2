@@ -5,27 +5,20 @@ import { FontText, Space } from '@/global/ui';
 import { COLOR } from '@/global/constants';
 import AddNewRouteModal from './components/AddNewRouteModal';
 import { useRootNavigation } from '@/navigation/RootNavigation';
-import { Platform, StatusBar } from 'react-native';
-import { getStatusBarHeight } from 'react-native-status-bar-height';
+import { Pressable } from 'react-native';
 import PlusBtn from '@assets/icons/plus-circle.svg';
 import BackBtn from '@assets/icons/backBtn.svg';
 
 const SavedRoutesScreen = () => {
-  const StatusBarHeight =
-    Platform.OS === 'ios'
-      ? getStatusBarHeight(true) - 10
-      : (StatusBar.currentHeight as number) - 24;
   const [isAddRouteModalOpen, setIsAddRouteModalOpen] = useState<boolean>(false);
   const navigation = useRootNavigation();
 
   return (
-    <Container
-      style={{
-        paddingTop: StatusBarHeight,
-      }}
-    >
+    <Container>
       <Header>
-        <BackBtn width='24px' onPress={() => navigation.goBack()}  />
+        <Pressable hitSlop={20} onPress={() => navigation.goBack()}>
+          <BackBtn />
+        </Pressable>
         <Space width="12px" />
         <FontText value="저장경로 편집" textSize="18px" textWeight="Medium" lineHeight="23px" />
       </Header>
@@ -55,7 +48,8 @@ const Container = styled.ScrollView`
   background-color: ${COLOR.GRAY_F9};
 `;
 const Header = styled.View`
-  padding: 16px 0;
+  padding: 0 0 0 8px;
+  height: 56px;
   flex-direction: row;
   align-items: center;
 `;

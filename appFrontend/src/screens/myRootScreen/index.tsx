@@ -1,6 +1,5 @@
 import styled from '@emotion/native';
-import { Image, Platform, StatusBar } from 'react-native';
-import { iconPath } from '@/assets/icons/iconPath';
+import { Platform, Pressable, StatusBar } from 'react-native';
 import { FontText, Space, TextButton } from '@/global/ui';
 import { COLOR } from '@/global/constants';
 import { RESULTS, requestNotifications } from 'react-native-permissions';
@@ -89,10 +88,12 @@ const MyRootScreen = () => {
       }}
     >
       <ProfileContainer>
-        <NickNameContainer onPress={() => setIsNicknameModalOpen(true)}>
+        <NickNameContainer>
           <FontText value={nickname} textSize="16px" textWeight="Medium" lineHeight="21px" />
           <Space width="5px" />
-          <Pencil width={15} onPress={() => setIsNicknameModalOpen(true)} />
+          <Pressable hitSlop={20} onPress={() => setIsNicknameModalOpen(true)}>
+            <Pencil width={15} />
+          </Pressable>
         </NickNameContainer>
         <FontText
           value={email}
