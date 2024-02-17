@@ -27,7 +27,9 @@ export type RawSubwayLineName =
   | '인천 2호선'
   | null;
 
-// API 요청 시 호선 이름 원상복귀 위한 type
+/**
+ * 가는길지금 기준 지하철 호선명
+ */
 export type FreshSubwayLineName =
   | '1호선'
   | '2호선'
