@@ -18,9 +18,9 @@ import {
   getAllIssuesFetch,
   getIssuesByLaneFetch,
 } from '@/global/apis/func';
-import { subwayFreshLineName } from '@/global/utils';
-import { SubwayLine, SubwayStrEnd } from '../entity';
+import { RawSubwayLineName, SubwayStrEnd } from '../entity';
 import { AxiosError } from 'axios';
+import { subwayFreshLineName } from '@/global/utils';
 
 /**
  * 지하철역 검색 훅
@@ -44,7 +44,8 @@ export const useSearchStationName = (stationName: string) => {
  */
 export const useGetSearchHistory = () => {
   const { data } = useQuery(['searchHistory'], searchHistoryFetch);
-  return { data };
+  const freshData = data?.map((item) => ({ name: item.stationName, line: item.stationLine }));
+  return { historyData: freshData ? subwayFreshLineName(freshData) : [] };
 };
 
 /**
@@ -87,7 +88,7 @@ export const useDeleteSavedSubwayRoute = ({ onSuccess }: { onSuccess: () => void
 export const useAddRecentSearch = ({
   onSuccess,
 }: {
-  onSuccess: (data: { id: number; stationName: string; stationLine: SubwayLine }) => void;
+  onSuccess: (data: { id: number; stationName: string; stationLine: RawSubwayLineName }) => void;
 }) => {
   const { data, mutate } = useMutation(searchAddHistoryFetch, {
     onSuccess,

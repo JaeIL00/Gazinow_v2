@@ -1,52 +1,71 @@
 import { COLOR } from '@/global/constants';
-import { SearchStationNameTypes, StationCode, SubwayLine } from '../apis/entity';
+import {
+  SearchStationNameTypes,
+  StationCode,
+  RawSubwayLineName,
+  FreshSubwayLineName,
+} from '../apis/entity';
 
-// 인천선 === 인천1
-// 인천2호선 === 인천2
-// 용인경전철 === 애버라인
-// 우이신설경전철 === 우이신설
-// 김포도시철도 === 김포골드
 /**
- * 지하철 호선명 변경
+ * 지하철 호선명 가는길지금 표기로 변경
  * @param list 응답받은 지하철 검색 결과
  */
-export const subwayFreshLineName = (list: SearchStationNameTypes['data']) => {
+export const subwayFreshLineName = (
+  list: SearchStationNameTypes['data'],
+): { stationName: string; stationLine: FreshSubwayLineName | null }[] => {
   return list.map((item) => {
-    switch (item.line) {
-      case '인천선':
-        return { stationName: item.name, stationLine: '인천1' as SubwayLine };
-      case '인천2호선':
-        return { stationName: item.name, stationLine: '인천2' as SubwayLine };
-      case '용인경전철':
-        return { stationName: item.name, stationLine: '애버라인' as SubwayLine };
-      case '우이신설경전철':
-        return { stationName: item.name, stationLine: '우이신설' as SubwayLine };
-      case '김포도시철도':
-        return { stationName: item.name, stationLine: '김포골드' as SubwayLine };
+    switch (item?.line) {
+      case '수도권 김포골드라인':
+        return { stationName: item.name, stationLine: '김포골드' };
+      case '수도권 서해선(대곡-원시)':
+        return { stationName: item.name, stationLine: '서해선' };
+      case '수도권 수인.분당선':
+        return { stationName: item.name, stationLine: '수인분당' };
+      case '수도권 신분당선':
+        return { stationName: item.name, stationLine: '신분당' };
+      case '수도권 우이신설경전철':
+        return { stationName: item.name, stationLine: '우이신설' };
+      case '수도권 의정부경전철':
+        return { stationName: item.name, stationLine: '의정부' };
+      case '경의중앙선':
+        return { stationName: item.name, stationLine: '경의중앙' };
       default:
-        return { stationName: item.name, stationLine: item.line as SubwayLine };
+        return {
+          stationName: item.name,
+          stationLine: !!item.line
+            ? (item.line.replace('수도권 ', '').replace('인천 ', '인천') as FreshSubwayLineName)
+            : null,
+        };
     }
   });
 };
 
 /**
- * 지하철 호선명 원상복귀
+ * 지하철 호선명 오디세이 표기로 원상복귀
  * @param lineName 응답받은 지하철 검색 결과
  */
-export const subwayReturnLineName = (lineName: SubwayLine) => {
+export const subwayReturnLineName = (lineName: FreshSubwayLineName): RawSubwayLineName => {
   switch (lineName) {
-    case '인천1':
-      return '인천선';
-    case '인천2':
-      return '인천2호선';
-    case '애버라인':
-      return '용인경전철';
-    case '우이신설':
-      return '우이신설경전철';
     case '김포골드':
-      return '김포도시철도';
+      return '수도권 김포골드라인';
+    case '서해선':
+      return '수도권 서해선(대곡-원시)';
+    case '수인분당':
+      return '수도권 수인.분당선';
+    case '신분당':
+      return '수도권 신분당선';
+    case '우이신설':
+      return '수도권 우이신설경전철';
+    case '의정부':
+      return '수도권 의정부경전철';
+    case '인천1호선':
+      return '인천 1호선';
+    case '인천2호선':
+      return '인천 2호선';
+    case '경의중앙':
+      return '경의중앙선';
     default:
-      return lineName;
+      return `수도권 ${lineName}`;
   }
 };
 
@@ -103,7 +122,7 @@ export const subwayLineColor = (StationCode: StationCode) => {
   }
 };
 
-export const subwayLineName = (StationCode: StationCode) => {
+export const pathSubwayLineName = (StationCode: StationCode) => {
   switch (StationCode) {
     case 1:
       return '1';
