@@ -6,13 +6,8 @@ import {
   FreshSubwayLineName,
 } from '../apis/entity';
 
-// 인천선 === 인천1
-// 인천2호선 === 인천2
-// 용인경전철 === 애버라인
-// 우이신설경전철 === 우이신설
-// 김포도시철도 === 김포골드
 /**
- * 지하철 호선명 변경
+ * 지하철 호선명 가는길지금 표기로 변경
  * @param list 응답받은 지하철 검색 결과
  */
 export const subwayFreshLineName = (
@@ -46,7 +41,7 @@ export const subwayFreshLineName = (
 };
 
 /**
- * 지하철 호선명 원상복귀
+ * 지하철 호선명 오디세이 표기로 원상복귀
  * @param lineName 응답받은 지하철 검색 결과
  */
 export const subwayReturnLineName = (lineName: FreshSubwayLineName): RawSubwayLineName => {
