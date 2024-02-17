@@ -1,18 +1,15 @@
 import { axiosInstance } from '@/global/apis/axiosInstance';
 import { AxiosError } from 'axios';
 import { SightUpResponse } from '../../type';
-import { Alert } from 'react-native';
 
 /**
  * 이메일 인증 요청 axios
  */
 export const emailConfirmFetch = async (email: string) => {
   try {
-    Alert.alert(email);
     const res = await axiosInstance.post<{ data: string }>('/api/v1/member/email-confirm', {
       email,
     });
-    Alert.alert(res.data.data);
     return res.data.data;
   } catch (err) {
     const er = err as AxiosError;
