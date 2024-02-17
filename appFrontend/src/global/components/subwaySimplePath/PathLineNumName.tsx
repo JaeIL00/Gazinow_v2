@@ -1,6 +1,6 @@
 import { FontText, Space } from '@/global/ui';
 import { COLOR } from '@/global/constants';
-import { subwayLineColor, subwayLineName, subwayNameCutting } from '@/global/utils';
+import { subwayLineColor, pathSubwayLineName, subwayNameCutting } from '@/global/utils';
 import { Dimensions, View } from 'react-native';
 import { Lane } from '@/global/apis/entity';
 
@@ -31,7 +31,7 @@ const PathLineNumName = ({ lane, stationName }: PathLineNumNameProps) => {
       >
         {lane.stationCode > 9 && <Space height="1px" />}
         <FontText
-          value={subwayLineName(lane.stationCode)}
+          value={pathSubwayLineName(lane.stationCode)}
           textSize={lane.stationCode <= 9 ? '13px' : '6px'}
           textWeight={lane.stationCode <= 9 ? 'SemiBold' : 'Bold'}
           textColor={COLOR.WHITE}
