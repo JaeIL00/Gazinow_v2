@@ -1,6 +1,6 @@
 import styled from '@emotion/native';
 import { useState } from 'react';
-import { Modal, Platform, StatusBar } from 'react-native';
+import { Modal, Platform, StatusBar, View } from 'react-native';
 import { FontText, Input, Space, TextButton } from '@/global/ui';
 import { COLOR } from '@/global/constants';
 import { useChangeNicknameQuery } from '@/global/apis/hook';
@@ -48,16 +48,11 @@ const ChangeNickNameModal = ({ onCancel }: ModalProps) => {
 
   return (
     <Modal visible onRequestClose={onCancel}>
-      <Header
-        style={{
-          paddingTop: StatusBarHeight,
-        }}
-      >
-        <TitleContainer>
-          <CloseBtn width="24px" onPress={onCancel} />
-          <Space width="12px" />
-          <FontText value="닉네임 수정" textSize="18px" lineHeight="23px" textWeight="Medium" />
-        </TitleContainer>
+      <Header>
+        <CloseBtn width="24px" onPress={onCancel} />
+        <Space width="12px" />
+        <FontText value="닉네임 수정" textSize="18px" lineHeight="23px" textWeight="Medium" />
+        <View style={{ flex: 1 }} />
         <TextButton
           value="완료"
           textSize="16px"
@@ -100,13 +95,10 @@ const ChangeNickNameModal = ({ onCancel }: ModalProps) => {
 export default ChangeNickNameModal;
 
 const Header = styled.View`
-  padding: 16px;
+  padding: 0 22px;
+  height: 56px;
   flex-direction: row;
   justify-content: space-between;
-  align-items: center;
-`;
-const TitleContainer = styled.View`
-  flex-direction: row;
   align-items: center;
 `;
 const Container = styled.View`

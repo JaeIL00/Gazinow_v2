@@ -62,13 +62,9 @@ const ManageAccountModal = ({ onCancel }: ManageAccountModalProps) => {
   return (
     <Modal visible onRequestClose={onCancel}>
       {/* TODO: 헤더 버튼 svg로 수정, 크기 조정 */}
-      <Header
-        style={{
-          paddingTop: StatusBarHeight,
-        }}
-      >
-        <BackBtn width="24px" onPress={onCancel} />
-        <Space width="20px" />
+      <Header>
+        <BackBtn onPress={onCancel} />
+        <Space width="21px" />
         <FontText value="계정 관리" textSize="18px" lineHeight="23px" textWeight="Medium" />
       </Header>
       <Container>
@@ -102,9 +98,12 @@ const ManageAccountModal = ({ onCancel }: ManageAccountModalProps) => {
 export default ManageAccountModal;
 
 const Header = styled.View`
-  padding: 20px;
+  padding: 0 0 0 22px;
+  height: 56px;
   flex-direction: row;
   align-items: center;
+  border-bottom-width: 1px;
+  border-bottom-color: ${COLOR.GRAY_EB};
 `;
 const Container = styled.View`
   background-color: white;

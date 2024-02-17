@@ -1,7 +1,7 @@
 import styled from '@emotion/native';
-import { useCallback, useState } from 'react';
-import { Alert, Modal, Platform, StatusBar } from 'react-native';
-import { FontText, Input, Space, TextButton } from '@/global/ui';
+import React, { useCallback, useState } from 'react';
+import { Alert, Image, Modal, Platform, StatusBar, View } from 'react-native';
+import { FontText, IconButton, Input, Space, TextButton } from '@/global/ui';
 import { COLOR } from '@/global/constants';
 import { useChangePasswordQuery, useCheckPasswordQuery } from '@/global/apis/hook';
 import MyTabModal from '@/global/components/MyTabModal';
@@ -10,7 +10,8 @@ import { getStatusBarHeight } from 'react-native-status-bar-height';
 import XCircle from '@assets/icons/x-circle.svg';
 import Check from '@assets/icons/check.svg';
 import DeleteInputIcon from '@assets/icons/deleteInput.svg';
-import CloseBtn from '@assets/icons/closeBtn.svg';
+import BackBtn from '@assets/icons/backBtn.svg';
+import { iconPath } from '@/assets/icons/iconPath';
 
 interface ModalProps {
   onCancel: () => void;
@@ -46,6 +47,8 @@ const ChangePwModal = ({ onCancel }: ModalProps) => {
 
     if (isValueCombination && isValidLength) {
       setIsNewPwValid(true);
+    } else {
+      setIsNewPwValid(false);
     }
   };
 
@@ -99,16 +102,11 @@ const ChangePwModal = ({ onCancel }: ModalProps) => {
 
   return (
     <Modal visible onRequestClose={onCancel}>
-      <Header
-        style={{
-          paddingTop: StatusBarHeight,
-        }}
-      >
-        <TitleContainer>
-          <CloseBtn width="24px" onPress={onCancel} />
-          <Space width="12px" />
-          <FontText value="비밀번호 변경" textSize="18px" lineHeight="23px" textWeight="Medium" />
-        </TitleContainer>
+      <Header>
+        <BackBtn onPress={onCancel} />
+        <Space width="21px" />
+        <FontText value="비밀번호 변경" textSize="18px" lineHeight="23px" textWeight="Medium" />
+        <View style={{ flex: 1 }} />
         <TextButton
           value="완료"
           textSize="16px"
@@ -122,7 +120,7 @@ const ChangePwModal = ({ onCancel }: ModalProps) => {
               ? COLOR.GRAY_999
               : COLOR.BASIC_BLACK
           }
-          textWeight="Medium"
+          textWeight="SemiBold"
           lineHeight="21px"
           onPress={onPressDone}
           disabled={
@@ -137,12 +135,12 @@ const ChangePwModal = ({ onCancel }: ModalProps) => {
       </Header>
 
       <Container>
-        <Space height="24px" />
+        <Space height="39px" />
 
         <FontText
           value="현재 비밀번호"
           textSize="14px"
-          textWeight="SemiBold"
+          textWeight="Medium"
           lineHeight="21px"
           textColor={COLOR.BASIC_BLACK}
         />
@@ -157,11 +155,10 @@ const ChangePwModal = ({ onCancel }: ModalProps) => {
             autoFocus
             secureTextEntry
           />
-          <DeleteInputIcon width={19.5} onPress={() => setCurPassword('')} />
         </InputContainer>
         {curPassword !== '' && (
           <MessageContainer>
-            {isPwRight ? <Check width={12} color={lengValidColor} /> : <XCircle width={14} />}
+            {isPwRight ? <Image source={iconPath['check']} /> : <XCircle width={14} />}
             <FontText
               value={isPwRight ? ' 비밀번호가 확인되었습니다' : ' 비밀번호가 틀립니다'}
               textSize="12px"
@@ -176,7 +173,7 @@ const ChangePwModal = ({ onCancel }: ModalProps) => {
         <FontText
           value="새로운 비밀번호"
           textSize="14px"
-          textWeight="SemiBold"
+          textWeight="Medium"
           lineHeight="21px"
           textColor={COLOR.BASIC_BLACK}
         />
@@ -189,41 +186,46 @@ const ChangePwModal = ({ onCancel }: ModalProps) => {
             onChangeText={(text) => checkInputValid(text)}
             secureTextEntry
           />
-          <DeleteInputIcon width={19.5} onPress={() => setChangePassword('')} />
         </InputContainer>
-        {isNewEqualsToOld ? (
-          <MessageContainer>
-            <XCircle width={14} />
-            <FontText
-              value=" 이전과 동일한 비밀번호로 변경할 수 없습니다"
-              textSize="12px"
-              textWeight="Medium"
-              lineHeight="14px"
-              textColor={COLOR.LIGHT_RED}
-            />
-          </MessageContainer>
-        ) : (
-          <MessageContainer>
-            <Check width={12} color={lengValidColor} />
-            <Space width="4px" />
-            <FontText
-              value="8자-20자 이내"
-              textSize="12px"
-              textWeight="Medium"
-              textColor={lengValidColor}
-            />
-            <Space width="12px" />
-            <Check width={12} color={comValidColor} />
-            <Space width="4px" />
-            <FontText
-              value="영어, 숫자, 특수문자 포함"
-              textSize="12px"
-              textWeight="Medium"
-              textColor={comValidColor}
-            />
-          </MessageContainer>
+        {isNewEqualsToOld && changePassword !== '' && (
+          <>
+            <MessageContainer>
+              <XCircle height={14} />
+              <FontText
+                value=" 기존 비밀번호는 사용할 수 없어요"
+                textSize="12px"
+                textWeight="Medium"
+                lineHeight="14px"
+                textColor={COLOR.LIGHT_RED}
+              />
+            </MessageContainer>
+            <Space height="10px" />
+          </>
         )}
-
+        {!isNewEqualsToOld && changePassword !== '' && (
+          <>
+            <MessageContainer>
+              <Image source={iconPath['check']} style={{ tintColor: lengValidColor }} />
+              <Space width="4px" />
+              <FontText
+                value="8자-20자 이내"
+                textSize="12px"
+                textWeight="Medium"
+                textColor={lengValidColor}
+              />
+              <Space width="12px" />
+              <Image source={iconPath['check']} style={{ tintColor: comValidColor }} />
+              <Space width="4px" />
+              <FontText
+                value="영어, 숫자, 특수문자 포함"
+                textSize="12px"
+                textWeight="Medium"
+                textColor={comValidColor}
+              />
+            </MessageContainer>
+            <Space height="10px" />
+          </>
+        )}
         <InputContainer>
           <PwInput
             value={confirmPassword}
@@ -233,17 +235,24 @@ const ChangePwModal = ({ onCancel }: ModalProps) => {
             onChangeText={setConfirmPassword}
             secureTextEntry
           />
-          <DeleteInputIcon width={19.5} onPress={() => setConfirmPassword('')} />
         </InputContainer>
-        {confirmPassword !== '' && confirmPassword !== changePassword && (
+        {confirmPassword !== '' && changePassword !== '' && (
           <MessageContainer>
-            <XCircle width={14} />
+            {confirmPassword !== changePassword ? (
+              <XCircle width={14} />
+            ) : (
+              <Image source={iconPath['check']} />
+            )}
             <FontText
-              value={` 비밀번호가 일치하지 않습니다`}
+              value={
+                confirmPassword !== changePassword
+                  ? ' 비밀번호가 일치하지 않습니다'
+                  : ' 비밀번호가 일치합니다'
+              }
               textSize="12px"
               textWeight="Medium"
               lineHeight="14px"
-              textColor={COLOR.LIGHT_RED}
+              textColor={confirmPassword !== changePassword ? COLOR.LIGHT_RED : COLOR.LIGHT_GREEN}
             />
           </MessageContainer>
         )}
@@ -264,34 +273,28 @@ const ChangePwModal = ({ onCancel }: ModalProps) => {
 export default ChangePwModal;
 
 const Header = styled.View`
-  padding: 16px;
+  padding: 0 22px;
+  height: 56px;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
 `;
-const TitleContainer = styled.View`
-  flex-direction: row;
-  align-items: center;
-`;
-
 const Container = styled.View`
   flex: 1;
   padding: 0 16px;
-  background-color: ${COLOR.GRAY_F9};
 `;
 const InputContainer = styled.View`
   flex-direction: row;
   align-items: center;
-  border-radius: 5px;
-  border: 1px solid #d4d4d4;
   padding: 8px 16px 8px 18.25px;
-  margin: 10px 0 0;
-  background-color: ${COLOR.WHITE};
+  margin: 6px 0 2px;
+  background-color: ${COLOR.GRAY_F2};
+  border-radius: 5px;
 `;
 const MessageContainer = styled.View`
   flex-direction: row;
   align-items: center;
-  margin: 8px 0 0 9px;
+  margin: 6px 0 0 9px;
 `;
 const PwInput = styled(Input)`
   height: 36px;

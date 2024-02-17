@@ -1,73 +1,36 @@
 import styled from '@emotion/native';
-import { useRootNavigation } from '@/navigation/RootNavigation';
 import { useState } from 'react';
 import { FontText, Space, TextButton } from '@/global/ui';
 import { COLOR } from '@/global/constants';
-import MyTabModal from '../../../global/components/MyTabModal';
-import { useCheckPasswordQuery, useDeleteAccountMutation } from '@/global/apis/hook';
-import { Modal, Platform, StatusBar } from 'react-native';
-import { removeEncryptedStorage } from '@/global/utils';
-import { getStatusBarHeight } from 'react-native-status-bar-height';
+import MyTabModal from '@/global/components/MyTabModal';
+import { Modal } from 'react-native';
 import BackBtn from '@assets/icons/backBtn.svg';
+import ConfirmPwModal from './ConfirmPwModal';
 
 interface ConfirmQuitModalProps {
   onCancel: () => void;
 }
 
 const ConfirmQuitModal = ({ onCancel }: ConfirmQuitModalProps) => {
-  const StatusBarHeight =
-    Platform.OS === 'ios' ? getStatusBarHeight(true) + 4 : (StatusBar.currentHeight as number) - 4;
-
+  //TODO: 닉네임 띄우기
   const nickName = '사용자17349245';
-  const navigation = useRootNavigation();
   const [popupVisible, setPopupVisible] = useState(false);
-  const [confirmPwPopupVisible, setConfirmPwPopupVisible] = useState(false);
-  const [passwordInput, setPasswordInput] = useState('');
-
-  const { deleteAccountMutate } = useDeleteAccountMutation({
-    onSuccess: () => {
-      removeEncryptedStorage('access_token');
-      removeEncryptedStorage('refresh_token');
-      navigation.reset({ routes: [{ name: 'AuthStack' }] });
-    },
-  });
-
-  const { checkPasswordMutate } = useCheckPasswordQuery({
-    onSuccess: () => {
-      deleteAccountMutate();
-      hideModal();
-    },
-    onError: (error) => {
-      if (error.response.status === 400) {
-        setPasswordInput('');
-        //TODO: 기획 나오면 에러 처리 추가, css 수정
-      }
-    },
-  });
+  const [confirmPwModalVisible, setConfirmPwModalVisible] = useState(false);
 
   const handleConfirm = () => {
     hideModal();
-    setConfirmPwPopupVisible(true);
-  };
-  const handleConfirmPw = () => {
-    checkPasswordMutate(passwordInput);
+    setConfirmPwModalVisible(true);
   };
 
-  const showQuitPopup = () => setPopupVisible(true);
   const hideModal = () => {
     setPopupVisible(false);
-    setConfirmPwPopupVisible(false);
+    setConfirmPwModalVisible(false);
   };
 
   return (
     <Modal visible onRequestClose={onCancel}>
-      {/* TODO: 헤더 버튼 svg로 수정, 크기 조정 */}
-      <Header
-        style={{
-          paddingTop: StatusBarHeight,
-        }}
-      >
-        <BackBtn width="24px" onPress={onCancel} />
+      <Header>
+        <BackBtn onPress={onCancel} />
       </Header>
       <Container>
         <AlertContainer>
@@ -103,7 +66,7 @@ const ConfirmQuitModal = ({ onCancel }: ConfirmQuitModalProps) => {
               textWeight="Regular"
               lineHeight="18px"
               textColor={COLOR.GRAY_999}
-              onPress={() => showQuitPopup()}
+              onPress={() => setPopupVisible(true)}
             />
           </UnderLine>
         </QuitBtn>
@@ -115,17 +78,7 @@ const ConfirmQuitModal = ({ onCancel }: ConfirmQuitModalProps) => {
           confirmText="탈퇴할래요"
           cancelText="아니요"
         />
-        {/* TODO: 키보드 올라오면 하단 버튼 올라오는 버그 수정 */}
-        <MyTabModal
-          isVisible={confirmPwPopupVisible}
-          onCancel={hideModal}
-          onConfirm={handleConfirmPw}
-          title="비밀번호 확인"
-          confirmText="탈퇴할래요"
-          cancelText="취소"
-          inputValue={passwordInput}
-          setInputValue={setPasswordInput}
-        />
+        <ConfirmPwModal isVisible={confirmPwModalVisible} onCancel={hideModal} />
       </Container>
     </Modal>
   );
@@ -133,7 +86,8 @@ const ConfirmQuitModal = ({ onCancel }: ConfirmQuitModalProps) => {
 export default ConfirmQuitModal;
 
 const Header = styled.View`
-  padding: 20px;
+  padding: 0 0 0 22px;
+  height: 56px;
   flex-direction: row;
   align-items: center;
 `;
