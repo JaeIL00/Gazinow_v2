@@ -1,5 +1,14 @@
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { Outlet } from "react-router-dom";
+
+const queryClient = new QueryClient();
+
 function App() {
-  return <div className="w-10 h-10 bg-[tomato]"></div>;
+  return (
+    <QueryClientProvider client={queryClient}>
+      <Outlet />
+    </QueryClientProvider>
+  );
 }
 
 export default App;

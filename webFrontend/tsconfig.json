@@ -22,8 +22,8 @@
     "baseUrl": ".",
     "paths": {
       "@global/*": ["src/global/*"],
-      "@assets": ["src/assets/*"],
-      "@pages": ["src/pages/*"]
+      "@assets/*": ["src/assets/*"],
+      "@pages/*": ["src/pages/*"]
     }
   },
   "include": ["src"],
