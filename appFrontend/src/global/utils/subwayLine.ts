@@ -18,7 +18,6 @@ import {
 export const subwayFreshLineName = (
   list: SearchStationNameTypes['data'],
 ): { stationName: string; stationLine: FreshSubwayLineName | null }[] => {
-  console.log(list);
   return list.map((item) => {
     switch (item?.line) {
       case '수도권 김포골드라인':
