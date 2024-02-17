@@ -8,6 +8,7 @@ import { getSeletedStation } from '@/store/modules';
 import type { StationDataTypes } from '@/store/modules';
 import SearchStation from './NewSearchStation';
 import SwapIcon from '@assets/icons/icon_change.svg';
+import { Pressable } from 'react-native';
 
 export interface SelectedStationTypes {
   departure: StationDataTypes;
@@ -109,7 +110,9 @@ const NewSearchSwapStation = ({ setSeletedStation, setDepth }: NewSearchSwapStat
           onPress={() => openSearchModal(ARRIVAL_STATION)}
         />
       </InnerBox>
-      <SwapIcon width={20} onPress={swapStation} />
+      <Pressable hitSlop={20} onPress={swapStation}>
+        <SwapIcon width={20} />
+      </Pressable>
     </Container>
   );
 };

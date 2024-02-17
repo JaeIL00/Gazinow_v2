@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View } from 'react-native';
+import { Pressable, View } from 'react-native';
 import { FontText, TextButton, Space } from '@/global/ui';
 import { COLOR } from '@/global/constants';
 import { useGetSavedRoutesQuery } from '@/global/apis/hook';
@@ -49,26 +49,29 @@ const SavedRouteBox = () => {
                   textColor={COLOR.GRAY_999}
                 />
               </TextContainer>
-              <TextContainer>
-                <TextButton
-                  value="세부정보"
-                  textSize="13px"
-                  textWeight="Regular"
-                  lineHeight="19px"
-                  textColor={COLOR.GRAY_999}
-                  onPress={() => {
-                    setIsRouteDetailOpened(true);
-                    setSelectedRoute(item);
-                  }}
-                />
-                <Space width="4px" />
-                <MoreBtn
-                  onPress={() => {
-                    setIsRouteDetailOpened(true);
-                    setSelectedRoute(item);
-                  }}
-                />
-              </TextContainer>
+              <Pressable
+                hitSlop={20}
+                onPress={() => {
+                  setIsRouteDetailOpened(true);
+                  setSelectedRoute(item);
+                }}
+              >
+                <TextContainer>
+                  <TextButton
+                    value="세부정보"
+                    textSize="13px"
+                    textWeight="Regular"
+                    lineHeight="19px"
+                    textColor={COLOR.GRAY_999}
+                    onPress={() => {
+                      setIsRouteDetailOpened(true);
+                      setSelectedRoute(item);
+                    }}
+                  />
+                  <Space width="4px" />
+                  <MoreBtn />
+                </TextContainer>
+              </Pressable>
             </TitleContainer>
             {!item.issues && (
               <IssueContainer>

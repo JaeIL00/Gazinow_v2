@@ -63,14 +63,21 @@ const SelectNewRouteModal = ({
                       textColor={COLOR.BASIC_BLACK}
                     />
                   </View>
-                  <RadioButtonContainer
-                    selected={selectedRoutePath === item}
+                  <Pressable
+                    hitSlop={20}
                     onPress={() => {
                       setSelectedRoutePath(item);
                     }}
                   >
-                    {selectedRoutePath === item && <InnerCircle />}
-                  </RadioButtonContainer>
+                    <RadioButtonContainer
+                      selected={selectedRoutePath === item}
+                      onPress={() => {
+                        setSelectedRoutePath(item);
+                      }}
+                    >
+                      {selectedRoutePath === item && <InnerCircle />}
+                    </RadioButtonContainer>
+                  </Pressable>
                 </PathTitleInfoBox>
                 <SubwaySimplePath
                   pathData={item.subPaths}

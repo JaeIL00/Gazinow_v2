@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { TouchableOpacity, StyleSheet } from 'react-native';
+import { TouchableOpacity, StyleSheet, Pressable } from 'react-native';
 import { FontText, Space, TextButton } from '@/global/ui';
 import { COLOR } from '@/global/constants';
 import SavedRouteBox from './SavedRouteBox';
@@ -41,14 +41,16 @@ const SavedRouteIssues = () => {
     <Container>
       <CategoryContainer>
         <Category>{categoryName.map(renderButton)}</Category>
-        <TextButton
-          value="저장경로 편집"
-          textSize="12px"
-          textColor={COLOR.GRAY_999}
-          textWeight="Regular"
-          onPress={() => homeNavigation.navigate('SavedRoutes')}
-          lineHeight="15px"
-        />
+        <Pressable hitSlop={20} onPress={() => homeNavigation.navigate('SavedRoutes')}>
+          <TextButton
+            value="저장경로 편집"
+            textSize="12px"
+            textColor={COLOR.GRAY_999}
+            textWeight="Regular"
+            onPress={() => homeNavigation.navigate('SavedRoutes')}
+            lineHeight="15px"
+          />
+        </Pressable>
       </CategoryContainer>
 
       <Space height="1px" backgroundColor={COLOR.GRAY_EB} />

@@ -6,6 +6,7 @@ import { SubwaySimplePath } from '@/global/components';
 import { RenderSavedRoutesType } from '@/global/apis/entity';
 import NewRouteDetailModal from '@/screens/savedRoutesScreen/components/NewRouteDetailModal';
 import MoreBtn from '@/assets/icons/moreBtn.svg';
+import { Pressable } from 'react-native';
 
 interface RecommendedRouteProps {
   pathData: RenderSavedRoutesType;
@@ -37,17 +38,19 @@ const RecommendedRoutes = ({ pathData }: RecommendedRouteProps) => {
             textColor={COLOR.GRAY_999}
           />
         </TextContainer>
-        <TextContainer onPress={() => setIsRouteDetailOpened(true)}>
-          <FontText
-            value="세부정보"
-            textSize="13px"
-            textWeight="Regular"
-            lineHeight="19px"
-            textColor={COLOR.GRAY_999}
-          />
-          <Space width="4px" />
-          <MoreBtn onPress={() => setIsRouteDetailOpened(true)} />
-        </TextContainer>
+        <Pressable hitSlop={20} onPress={() => setIsRouteDetailOpened(true)}>
+          <TextContainer>
+            <FontText
+              value="세부정보"
+              textSize="13px"
+              textWeight="Regular"
+              lineHeight="19px"
+              textColor={COLOR.GRAY_999}
+            />
+            <Space width="4px" />
+            <MoreBtn />
+          </TextContainer>
+        </Pressable>
       </TextContainer>
       <Space height="4px" />
       <SubwaySimplePath

@@ -7,7 +7,7 @@ import { COLOR } from '@/global/constants';
 import { useLogoutMutation } from '@/screens/signInScreen/apis/hook';
 import ChangePwModal from './ChangePwModal';
 import MyTabModal from '@/global/components/MyTabModal';
-import { Modal, Platform, StatusBar } from 'react-native';
+import { Modal, Platform, Pressable, StatusBar } from 'react-native';
 import ConfirmQuitModal from './ConfirmQuitModal';
 import { getStatusBarHeight } from 'react-native-status-bar-height';
 import BackBtn from '@assets/icons/backBtn.svg';
@@ -61,9 +61,10 @@ const ManageAccountModal = ({ onCancel }: ManageAccountModalProps) => {
 
   return (
     <Modal visible onRequestClose={onCancel}>
-      {/* TODO: 헤더 버튼 svg로 수정, 크기 조정 */}
       <Header>
-        <BackBtn onPress={onCancel} />
+        <Pressable hitSlop={20} onPress={onCancel}>
+          <BackBtn />
+        </Pressable>
         <Space width="21px" />
         <FontText value="계정 관리" textSize="18px" lineHeight="23px" textWeight="Medium" />
       </Header>

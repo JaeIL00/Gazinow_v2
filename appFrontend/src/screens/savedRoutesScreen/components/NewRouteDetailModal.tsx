@@ -1,6 +1,6 @@
 import { css } from '@emotion/native';
 import { Dispatch, SetStateAction, useMemo } from 'react';
-import { FlatList, Modal, Platform, StatusBar, View } from 'react-native';
+import { FlatList, Modal, Platform, Pressable, StatusBar, View } from 'react-native';
 import { FontText } from '@/global/ui';
 import { Path, SubPath } from '@/global/apis/entity';
 import SearchPathDetailItem from '@/screens/searchPathResultDetailScreen/components/SearchPathDetailItem';
@@ -56,7 +56,9 @@ const NewRouteDetailModal = ({ item, setDepth, onRequestClose }: ModalProps) => 
             alignItems: 'center',
           }}
         >
-          <BackBtn width="24px" onPress={onRequestCloseByProp} />
+          <Pressable hitSlop={20} onPress={onRequestCloseByProp}>
+            <BackBtn style={{ paddingLeft: 8 }} />
+          </Pressable>
         </View>
         <View
           style={css`

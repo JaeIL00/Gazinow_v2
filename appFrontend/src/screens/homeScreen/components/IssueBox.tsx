@@ -9,6 +9,7 @@ import { RenderSavedRoutesType } from '@/global/apis/entity';
 import { SubwaySimplePath } from '@/global/components';
 import NewRouteDetailModal from '@/screens/savedRoutesScreen/components/NewRouteDetailModal';
 import MoreBtn from '@/assets/icons/moreBtn.svg';
+import { Pressable } from 'react-native';
 
 const IssueBox = () => {
   const { data: savedRoutes } = useGetSavedRoutesQuery();
@@ -17,7 +18,7 @@ const IssueBox = () => {
 
   //TODO: 이슈 있는 경로가 2개 이상이면?
   useEffect(() => {
-    const issueRoute = savedRoutes?.find((item) => item.issues !== null);
+    const issueRoute = savedRoutes?.find((item) => item.issues === null);
     if (issueRoute) {
       setHasIssueRoute(issueRoute);
     }
@@ -53,17 +54,19 @@ const IssueBox = () => {
                 />
               </GrayEllipse>
             </TextContainer>
-            <TextContainer onPress={() => setIsRouteDetailOpened(true)}>
-              <FontText
-                value="세부정보"
-                textSize="13px"
-                textWeight="Regular"
-                lineHeight="19px"
-                textColor={COLOR.GRAY_999}
-              />
-              <Space width="4px" />
-              <MoreBtn onPress={() => setIsRouteDetailOpened(true)} />
-            </TextContainer>
+            <Pressable hitSlop={20} onPress={() => setIsRouteDetailOpened(true)}>
+              <TextContainer>
+                <FontText
+                  value="세부정보"
+                  textSize="13px"
+                  textWeight="Regular"
+                  lineHeight="19px"
+                  textColor={COLOR.GRAY_999}
+                />
+                <Space width="4px" />
+                <MoreBtn />
+              </TextContainer>
+            </Pressable>
           </TextContainer>
 
           {/* TODO: 이슈 아이콘 넣기 */}

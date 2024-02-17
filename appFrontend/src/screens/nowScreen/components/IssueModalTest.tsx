@@ -1,5 +1,4 @@
-import React, { useEffect, useRef } from 'react';
-import { FontText } from '@/global/ui';
+import React, { useRef } from 'react';
 import { Modal } from 'react-native';
 import WebView from 'react-native-webview';
 import { getEncryptedStorage } from '@/global/utils';
