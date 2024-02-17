@@ -32,7 +32,7 @@ export type StationLine =
   | "인천 2호선";
 
 /**
- * 앱 버전이력 조회 api
+ * 리프레시 토큰 재발급 응답
  */
 export interface MemberReissue {
   accessToken: string;

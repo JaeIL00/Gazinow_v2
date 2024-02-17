@@ -8,7 +8,7 @@ const router = createBrowserRouter([
     element: <App />,
     children: [
       {
-        index: true,
+        path: "issue/:id",
         element: <IssueDetailPage />,
       },
     ],
