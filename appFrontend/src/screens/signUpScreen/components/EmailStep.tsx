@@ -27,7 +27,6 @@ interface EmailStepProps {
 const EmailStep = ({ emailValue, setStep, changeEmailValue }: EmailStepProps) => {
   const { authNumber, resetAuthNumber, emailConfirmMutate } = useEmailConfirm({
     onSuccess: () => {
-      setIsSuccess(true);
       setIsOpenConfirmModal(true);
     },
     onError: (error) => {
@@ -37,9 +36,8 @@ const EmailStep = ({ emailValue, setStep, changeEmailValue }: EmailStepProps) =>
       }
     },
   });
-
+  console.log(authNumber);
   const [errorMessage, setErrorMessage] = useState<string>('');
-  const [isSuccess, setIsSuccess] = useState<boolean>(false);
   const [isValidEmail, setIsValidEmail] = useState<boolean>(false);
   const [isOpenConfirmModal, setIsOpenConfirmModal] = useState<boolean>(false);
   const [timer, setTimer] = useState<TimerType>({
@@ -53,7 +51,6 @@ const EmailStep = ({ emailValue, setStep, changeEmailValue }: EmailStepProps) =>
     if (!text) return;
     const isValid = emailValidation.test(text);
     setIsValidEmail(isValid);
-    setIsSuccess(false);
   };
 
   const closeModal = () => {
