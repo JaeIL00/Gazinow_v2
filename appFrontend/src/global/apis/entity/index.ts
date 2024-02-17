@@ -1,7 +1,34 @@
 /**
- * 지하철 호선 이름
+ * 오디세이 기준 지하철 호선 이름
  */
-export type SubwayLine =
+export type RawSubwayLineName =
+  | '경의중앙선'
+  | '수도권 1호선'
+  | '수도권 2호선'
+  | '수도권 3호선'
+  | '수도권 4호선'
+  | '수도권 5호선'
+  | '수도권 6호선'
+  | '수도권 7호선'
+  | '수도권 8호선'
+  | '수도권 9호선'
+  | '수도권 경강선'
+  | '수도권 경춘선'
+  | '수도권 공항철도'
+  | '수도권 김포골드라인'
+  | '수도권 서해선(대곡-원시)'
+  | '수도권 수인.분당선'
+  | '수도권 신림선'
+  | '수도권 신분당선'
+  | '수도권 에버라인'
+  | '수도권 우이신설경전철'
+  | '수도권 의정부경전철'
+  | '인천 1호선'
+  | '인천 2호선'
+  | null;
+
+// API 요청 시 호선 이름 원상복귀 위한 type
+export type FreshSubwayLineName =
   | '1호선'
   | '2호선'
   | '3호선'
@@ -11,26 +38,20 @@ export type SubwayLine =
   | '7호선'
   | '8호선'
   | '9호선'
+  | '경의중앙'
+  | '신분당'
+  | '수인분당'
   | '공항철도'
-  | '경의중앙선'
-  | '경춘선'
-  | '수인분당선'
-  | '신분당선'
+  | '인천1호선'
+  | '인천2호선'
+  | '신림선'
   | '경강선'
   | '서해선'
-  | '인천선'
-  | '인천2호선'
-  | '용인경전철'
-  | '의정부경전철'
-  | '우이신설경전철'
-  | '김포도시철도'
-  // API 요청 시 호선 이름 원상복귀 위한 type
-  | '인천1' // 인천선의 프레쉬한 이름
-  | '인천2' // 인천2호선의 프레쉬한 이름
-  | '애버라인' // 애버라인의 프레쉬한 이름
-  | '우이신설' // 우이신설의 프레쉬한 이름
-  | '김포골드' // 김포골드의 프레쉬한 이름
-  | null;
+  | '경춘선'
+  | '의정부'
+  | '에버라인'
+  | '김포골드'
+  | '우이신설';
 
 /**
  * 지하철 검색 이력 타입
@@ -38,7 +59,7 @@ export type SubwayLine =
 export interface SearchHistoryStationNameTypes {
   id: number;
   stationName: string;
-  stationLine: SubwayLine;
+  stationLine: RawSubwayLineName;
 }
 
 /**
@@ -47,7 +68,7 @@ export interface SearchHistoryStationNameTypes {
 export interface SearchStationNameTypes {
   data: {
     name: string;
-    line: SubwayLine;
+    line: RawSubwayLineName;
   }[];
 }
 
@@ -144,9 +165,9 @@ export interface SubPath {
 
 export interface SubwayStrEnd {
   strStationName: string;
-  strStationLine: SubwayLine;
+  strStationLine: RawSubwayLineName;
   endStationName: string;
-  endStationLine: SubwayLine;
+  endStationLine: RawSubwayLineName;
 }
 
 export interface SavedRoute extends Path {

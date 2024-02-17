@@ -26,7 +26,7 @@ const SearchStationModal = ({
 }: SearchStationModalProps) => {
   const dispatch = useAppDispatch();
 
-  const { data: history } = useGetSearchHistory();
+  const { historyData } = useGetSearchHistory();
 
   const [searchTextValue, setSearchTextValue] = useState<string>('');
 
@@ -116,9 +116,9 @@ const SearchStationModal = ({
             </Header>
 
             <Ul marginTop="18px">
-              {history?.map(({ id, stationName, stationLine }) => (
+              {historyData?.map(({ stationName, stationLine }) => (
                 <Li
-                  key={id}
+                  key={stationName}
                   onPress={() =>
                     stationBtnHandler({
                       stationName,

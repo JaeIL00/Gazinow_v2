@@ -2,6 +2,6 @@ export { getEncryptedStorage, setEncryptedStorage, removeEncryptedStorage } from
 export {
   subwayFreshLineName,
   subwayLineColor,
-  subwayLineName,
+  pathSubwayLineName,
   subwayNameCutting,
 } from './subwayLine';

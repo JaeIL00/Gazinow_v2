@@ -8,7 +8,7 @@ import {
   SearchHistoryStationNameTypes,
   SearchPathsTypes,
   SearchStationNameTypes,
-  SubwayLine,
+  RawSubwayLineName,
   SubwayStrEnd,
 } from '../entity';
 import { SignInFetchResponse } from '@/screens/signInScreen/apis/entity';
@@ -80,7 +80,7 @@ export const searchHistoryFetch = async () => {
  */
 export const searchAddHistoryFetch = async (data: {
   stationName: string;
-  stationLine: SubwayLine;
+  stationLine: RawSubwayLineName;
 }) => {
   try {
     const res = await axiosInstance.post<{ data: SearchHistoryStationNameTypes }>(
@@ -165,7 +165,9 @@ export const getSearchRoutesFetch = async () => {
  */
 export const getSavedRoutesFetch = async () => {
   try {
-    const res = await axiosInstance.get<{ data: RenderSavedRoutesType[] }>(`/api/v1/my_find_road/get_roads`);
+    const res = await axiosInstance.get<{ data: RenderSavedRoutesType[] }>(
+      `/api/v1/my_find_road/get_roads`,
+    );
     return res.data.data;
   } catch (err) {
     const er = err as AxiosError;
