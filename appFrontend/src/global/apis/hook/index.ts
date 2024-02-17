@@ -101,8 +101,14 @@ export const useAddRecentSearch = ({
 /**
  * 회원 탈퇴 훅
  */
-export const useDeleteAccountMutation = ({ onSuccess }: { onSuccess: () => void }) => {
-  const { mutate: deleteAccountMutate } = useMutation(deleteAccountFetch, { onSuccess });
+export const useDeleteAccountMutation = ({
+  onSuccess,
+  onError,
+}: {
+  onSuccess: () => void;
+  onError: (error: any) => void;
+}) => {
+  const { mutate: deleteAccountMutate } = useMutation(deleteAccountFetch, { onSuccess, onError });
   return { deleteAccountMutate };
 };
 
