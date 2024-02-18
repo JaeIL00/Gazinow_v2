@@ -3,6 +3,7 @@ import {
   changePasswordFetch,
   checkPasswordFetch,
   deleteAccountFetch,
+  getPopularIssuesFetch,
   getSavedRoutesFetch,
   getSearchRoutesFetch,
   saveMyRoutesFetch,
@@ -210,5 +211,13 @@ export const useGetAllIssuesQuery = () => {
  */
 export const useGetIssuesByLaneQuery = (line: string) => {
   const { data } = useQuery(['getIssuesByLane'], () => getIssuesByLaneFetch({ line }));
+  return { data };
+};
+
+/**
+ * 이슈 추천순 조회 훅
+ */
+export const useGetPopularIssuesQuery = () => {
+  const { data } = useQuery(['getPopularIssues'], getPopularIssuesFetch);
   return { data };
 };

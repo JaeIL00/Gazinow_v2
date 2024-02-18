@@ -175,6 +175,59 @@ export const pathSubwayLineName = (StationCode: StationCode) => {
   }
 };
 
+export const pathSubwayLineNameInLine = (StationCode: StationCode) => {
+  switch (StationCode) {
+    case 1:
+      return '1호선';
+    case 2:
+      return '2호선';
+    case 3:
+      return '3호선';
+    case 4:
+      return '4호선';
+    case 5:
+      return '5호선';
+    case 6:
+      return '6호선';
+    case 7:
+      return '7호선';
+    case 8:
+      return '8호선';
+    case 9:
+      return '9호선';
+    case 21:
+      return '인천1호선';
+    case 22:
+      return '인천2호선';
+    case 101:
+      return '공항철도';
+    case 104:
+      return '경의중앙선';
+    case 107:
+      return '에버라인';
+    case 108:
+      return '경춘선';
+    case 109:
+      return '신분당선';
+    case 110:
+      return '의정부선';
+    case 112:
+      return '경강선';
+    case 113:
+      return '우이신설';
+    case 114:
+      return '서해';
+    case 115:
+      return '김포골드';
+    case 116:
+      return '수인분당선';
+    case 117:
+      return '신림선';
+    default:
+      return '';
+  }
+};
+
 export const subwayNameCutting = (name: string) => {
   switch (name) {
     case '가산디지털단지':

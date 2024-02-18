@@ -255,3 +255,16 @@ export const getIssuesByLaneFetch = async (params: { line: string }) => {
     throw er;
   }
 };
+
+/**
+ * 이슈 추천순 조회 axios
+ */
+export const getPopularIssuesFetch = async () => {
+  try {
+    const res = await axiosInstance.get<{ data: AllIssues }>(`/api/v1/issue/get_popular`);
+    return res.data.data;
+  } catch (err) {
+    const er = err as AxiosError;
+    throw er;
+  }
+};

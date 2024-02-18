@@ -2,43 +2,20 @@ import React, { useState } from 'react';
 import styled from '@emotion/native';
 import { FontText, IconButton, Space } from '@/global/ui';
 import { COLOR } from '@/global/constants';
-import IssueModalTest from './IssueModalTest';
+import { IssueModalTest } from '.';
 
 interface IssueDetailProps {
   id: number;
   title: string;
-  location: string;
+  // {/* TODO: mvp 이후 장소 넣기 */}
+  location?: string;
   time: string;
   body: string;
-  isLastItemOfType?: boolean;
   isLastItem?: boolean;
 }
 
-const IssueContainer = ({
-  id,
-  title,
-  location,
-  time,
-  body,
-  isLastItemOfType,
-  isLastItem,
-}: IssueDetailProps) => {
+const IssueContainer = ({ id, title, location, time, body, isLastItem }: IssueDetailProps) => {
   const [isIssueDetailOpened, setIsIssueDetailOpened] = useState<boolean>(false);
-
-  const lastItemDetail = () => {
-    if (isLastItemOfType && !isLastItem) {
-      return (
-        <>
-          <Space height="12px" width="999px" backgroundColor={COLOR.WHITE} />
-          <Space height="8px" width="999px" backgroundColor={COLOR.GRAY_F8} />
-          <Space height="12px" width="999px" backgroundColor={COLOR.WHITE} />
-        </>
-      );
-    } else if (isLastItem) {
-      return <Space height="64px" width="999px" backgroundColor={COLOR.WHITE} />;
-    } else return <Space height="1px" width="999px" backgroundColor={COLOR.GRAY_F8} />;
-  };
-
   return (
     <>
       {isIssueDetailOpened && (
@@ -54,12 +31,14 @@ const IssueContainer = ({
             numberOfLines={2}
           />
           <Space height="2px" />
-          <FontText
+          {/* TODO: mvp 이후 장소 넣기 */}
+          {/* <FontText
             value={`${location} | ${time}`}
             textSize="11px"
             textWeight="Medium"
             lineHeight="13px"
-          />
+          /> */}
+          <FontText value={time} textSize="11px" textWeight="Medium" lineHeight="13px" />
           <Space height="6px" />
           <FontText
             value={body}
@@ -70,12 +49,12 @@ const IssueContainer = ({
           />
         </TextContainer>
         <Space width="12px" />
-        <MapContainer>
-          {/* TODO: 실제 지도로 바꾸기 */}
+        {/* TODO: mvp 이후 이미지 생기면 넣기 */}
+        {/* <MapContainer>
           <IconButton isFontIcon={false} imagePath="issueMap" iconWidth="72px" iconHeight="72px" />
-        </MapContainer>
+        </MapContainer> */}
       </IssueList>
-      {lastItemDetail()}
+      {!isLastItem && <Space height="1px" width="999px" backgroundColor={COLOR.GRAY_F8} />}
     </>
   );
 };
