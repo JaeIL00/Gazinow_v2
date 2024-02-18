@@ -175,6 +175,10 @@ export const pathSubwayLineName = (StationCode: StationCode) => {
   }
 };
 
+/**
+ * 나우탭 지하철 호선명 캡슐
+ * @param StationCode 유저가 저장한 경로의 노선 코드
+ */
 export const pathSubwayLineNameInLine = (StationCode: StationCode) => {
   switch (StationCode) {
     case 1:
