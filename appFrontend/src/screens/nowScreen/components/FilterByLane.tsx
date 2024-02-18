@@ -2,12 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { Alert, FlatList } from 'react-native';
 import { FontText, Space } from '@/global/ui';
 import { IssueContainer } from '.';
-import { AllIssues } from '@/global/apis/entity';
+import { AllIssues, FreshSubwayLineName } from '@/global/apis/entity';
 import { axiosInstance } from '@/global/apis/axiosInstance';
 import { COLOR } from '@/global/constants';
+import { subwayReturnLineName } from '@global/utils/subwayLine';
 
 interface FilterByLaneProps {
-  lane: string;
+  lane: FreshSubwayLineName;
 }
 
 const FilterByLane = ({ lane }: FilterByLaneProps) => {
@@ -16,9 +17,10 @@ const FilterByLane = ({ lane }: FilterByLaneProps) => {
   const [issues, setIssues] = useState<AllIssues | null>();
 
   useEffect(() => {
+    const filteredLane = subwayReturnLineName(lane);
     axiosInstance
       .get<{ data: AllIssues }>('/api/v1/issue/get_line', {
-        params: { line: lane },
+        params: { line: filteredLane },
       })
       .then((res) => {
         setIssues(res.data.data);
