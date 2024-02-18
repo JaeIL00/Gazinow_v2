@@ -11,6 +11,8 @@ import { View } from 'react-native';
 import { FontText } from '@/global/ui';
 import { tokenReissueFetch } from '@/global/apis/func';
 import AuthNavigation from './AuthNavigation';
+import { useAppDispatch } from '@/store';
+import { saveUserInfo } from '@/store/modules';
 
 const Stack = createStackNavigator<RootStackParamList>();
 
@@ -22,14 +24,15 @@ const RootNavigation = () => {
   return (
     <Stack.Navigator screenOptions={screenOption} initialRouteName="Temp">
       <Stack.Screen
-        name='Temp'
+        name="Temp"
         component={() => {
           const rootNavigation = useRootNavigation();
-
+          const dispatch = useAppDispatch();
           const { mutate } = useMutation(tokenReissueFetch, {
-            onSuccess: async ({ newAccessToken, newRefreshToken }) => {
-              await setEncryptedStorage('access_token', newAccessToken);
-              await setEncryptedStorage('refresh_token', newRefreshToken);
+            onSuccess: async (data) => {
+              dispatch(saveUserInfo({ nickname: data.nickName, email: data.email }));
+              await setEncryptedStorage('access_token', data.accessToken);
+              await setEncryptedStorage('refresh_token', data.refreshToken);
               rootNavigation.reset({ routes: [{ name: 'MainBottomTab' }] });
             },
             onError: () => {
