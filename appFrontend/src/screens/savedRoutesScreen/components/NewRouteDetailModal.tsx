@@ -74,7 +74,11 @@ const NewRouteDetailModal = ({ item, setDepth, onRequestClose }: ModalProps) => 
                 `}
               >
                 <FontText
-                  value={`${item.totalTime}분 소요`}
+                  value={
+                    item.totalTime > 60
+                      ? Math.floor(item.totalTime / 60) + '시간 ' + (item.totalTime % 60) + '분'
+                      : item.totalTime + '분'
+                  }
                   textSize="24px"
                   textWeight="Bold"
                   lineHeight="32px"
@@ -103,8 +107,8 @@ const NewRouteDetailModal = ({ item, setDepth, onRequestClose }: ModalProps) => 
           </View>
           <View
             style={css`
-              margin-bottom: 20px;
-              margin-top: 22px;
+              margin-bottom: 21px;
+              margin-top: 16px;
               height: 1px;
               background-color: ${COLOR.GRAY_EB};
             `}
