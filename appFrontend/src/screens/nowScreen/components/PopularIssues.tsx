@@ -4,10 +4,11 @@ import { FlatList } from 'react-native';
 import { COLOR } from '@/global/constants';
 import styled from '@emotion/native';
 import { AllIssuesFL, FilterByLane, IssueContainer, LaneButtons } from '.';
+import { NowScreenCapsules } from '@/global/apis/entity';
 
 interface PopularIssuesProps {
-  activeButton: string;
-  setActiveButton: (activeButton: string) => void;
+  activeButton: NowScreenCapsules;
+  setActiveButton: (activeButton: NowScreenCapsules) => void;
 }
 
 const PopularIssues = ({ activeButton, setActiveButton }: PopularIssuesProps) => {

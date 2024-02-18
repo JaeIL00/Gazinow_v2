@@ -56,6 +56,11 @@ export type FreshSubwayLineName =
   | '우이신설';
 
 /**
+ * 나우탭 캡슐 타입
+ */
+export type NowScreenCapsules = FreshSubwayLineName | '전체';
+
+/**
  * 지하철 검색 이력 타입
  */
 export interface SearchHistoryStationNameTypes {

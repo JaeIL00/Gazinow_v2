@@ -3,10 +3,11 @@ import styled from '@emotion/native';
 import { COLOR } from '@/global/constants';
 import { useQueryClient } from 'react-query';
 import { PopularIssues } from './components';
+import { NowScreenCapsules } from '@/global/apis/entity';
 
 const NowScreen = () => {
   const queryClient = useQueryClient();
-  const [activeButton, setActiveButton] = useState<string>('전체');
+  const [activeButton, setActiveButton] = useState<NowScreenCapsules>('전체');
 
   useEffect(() => {
     queryClient.invalidateQueries('getAllIssues');

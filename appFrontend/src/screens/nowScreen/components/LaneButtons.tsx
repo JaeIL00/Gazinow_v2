@@ -3,13 +3,13 @@ import styled from '@emotion/native';
 import { FontText, Space } from '@/global/ui';
 import { COLOR } from '@/global/constants';
 import { useGetSavedRoutesQuery } from '@/global/apis/hook';
-import { FreshSubwayLineName, SubPath } from '@/global/apis/entity';
+import { FreshSubwayLineName, NowScreenCapsules, SubPath } from '@/global/apis/entity';
 import { ScrollView } from 'react-native';
 import { allLines, pathSubwayLineNameInLine } from '@/global/utils/subwayLine';
 
 interface LaneButtonsProps {
-  activeButton: string;
-  setActiveButton: (activeButton: string) => void;
+  activeButton: NowScreenCapsules;
+  setActiveButton: (activeButton: NowScreenCapsules) => void;
 }
 
 //TODO: + 버튼 구현
@@ -48,7 +48,7 @@ const LaneButtons = ({ activeButton, setActiveButton }: LaneButtonsProps) => {
         {['전체', ...savedStations, ...otherStations].map((text) => (
           <ButtonStyle
             key={text}
-            onPress={() => setActiveButton(text)}
+            onPress={() => setActiveButton(text as NowScreenCapsules)}
             activeButton={activeButton === text}
           >
             <FontText
