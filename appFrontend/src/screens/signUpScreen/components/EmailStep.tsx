@@ -30,9 +30,11 @@ const EmailStep = ({ emailValue, setStep, changeEmailValue }: EmailStepProps) =>
       setIsOpenConfirmModal(true);
     },
     onError: (error) => {
-      if (error.message.includes('409')) {
-        setIsValidEmail(false);
+      setIsValidEmail(false);
+      if (error.response?.status === 409) {
         setErrorMessage('이미 가입된 이메일입니다');
+      } else if (error.response?.status === 400) {
+        setErrorMessage('올바른 이메일 형식이 아닙니다');
       }
     },
   });
@@ -154,7 +156,7 @@ const EmailStep = ({ emailValue, setStep, changeEmailValue }: EmailStepProps) =>
                 <CloseIcon name="close-circle-outline" size={14} color={COLOR.LIGHT_RED} />
                 <Space width="3px" />
                 <FontText
-                  value="이메일 형식이 올바르지 않습니다"
+                  value="올바른 이메일 형식이 아닙니다"
                   textSize="12px"
                   textWeight="Medium"
                   textColor={COLOR.LIGHT_RED}
