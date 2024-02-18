@@ -101,7 +101,7 @@ const SearchPathDetailItem = ({ data, isLastLane }: SearchPathDetailItemProps) =
             `}
           >
             <FontText
-              value={data.stationCount + 1 + '개역 (' + data.sectionTime + '분)'}
+              value={data.stationCount + '개역 (' + data.sectionTime + '분)'}
               textSize="11px"
               textWeight="Medium"
               lineHeight="13px"
