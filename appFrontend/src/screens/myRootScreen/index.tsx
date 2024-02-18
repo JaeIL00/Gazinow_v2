@@ -1,5 +1,5 @@
 import styled from '@emotion/native';
-import { Platform, Pressable, StatusBar } from 'react-native';
+import { Pressable } from 'react-native';
 import { FontText, Space, TextButton } from '@/global/ui';
 import { COLOR } from '@/global/constants';
 import { RESULTS, requestNotifications } from 'react-native-permissions';
@@ -12,7 +12,6 @@ import ContractModal from './components/ContractModal';
 import ManageAccountModal from './components/ManageAccountModal';
 import NotiOnModal from './components/NotiOnModal';
 import NotiSettingsModal from './components/NotiSettingsModal';
-import { getStatusBarHeight } from 'react-native-status-bar-height';
 import Pencil from '@assets/icons/pencil.svg';
 import MoreBtn from '@/assets/icons/moreBtnMy.svg';
 
@@ -35,11 +34,6 @@ const requestNotificationPermission = async () => {
 };
 
 const MyRootScreen = () => {
-  const StatusBarHeight =
-    Platform.OS === 'ios'
-      ? getStatusBarHeight(true) - 15
-      : (StatusBar.currentHeight as number) - 24;
-
   const { nickname, email } = useSelector((state: RootState) => state.auth);
   const versionInfo = packageJson.version;
 
@@ -81,12 +75,7 @@ const MyRootScreen = () => {
   );
 
   return (
-    <Container
-      style={{
-        paddingTop: StatusBarHeight,
-        backgroundColor: COLOR.GRAY_F9,
-      }}
-    >
+    <Container>
       <ProfileContainer>
         <NickNameContainer>
           <FontText value={nickname} textSize="16px" textWeight="Medium" lineHeight="21px" />
@@ -134,7 +123,7 @@ const MyRootScreen = () => {
 
 export default MyRootScreen;
 
-const Container = styled.View`
+const Container = styled.SafeAreaView`
   flex: 1;
 `;
 const NickNameContainer = styled.Pressable`

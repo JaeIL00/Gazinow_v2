@@ -10,6 +10,7 @@ const NowScreen = () => {
 
   useEffect(() => {
     queryClient.invalidateQueries('getAllIssues');
+    queryClient.invalidateQueries('getPopularIssues');
   }, [activeButton]);
 
   return (
@@ -19,7 +20,7 @@ const NowScreen = () => {
   );
 };
 
-const Container = styled.View`
+const Container = styled.SafeAreaView`
   background-color: ${COLOR.WHITE};
   flex: 1;
 `;
