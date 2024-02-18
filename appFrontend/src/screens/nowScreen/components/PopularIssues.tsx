@@ -12,11 +12,13 @@ interface PopularIssuesProps {
 }
 
 const PopularIssues = ({ activeButton, setActiveButton }: PopularIssuesProps) => {
-  const { data: PopularIssues } = useGetPopularIssuesQuery();
-
+  const { data: popularIssues } = useGetPopularIssuesQuery();
+  if (!popularIssues) {
+    return null;
+  }
   return (
     <FlatList
-      data={PopularIssues?.content}
+      data={popularIssues}
       ListHeaderComponent={
         <>
           <Header>
@@ -27,7 +29,8 @@ const PopularIssues = ({ activeButton, setActiveButton }: PopularIssuesProps) =>
           </IssueLineType>
         </>
       }
-      renderItem={({ item }) => {
+      renderItem={({ item, index }) => {
+        const isLastItem = popularIssues && index === popularIssues.length - 1;
         return (
           <IssueContainer
             key={item.id}
@@ -37,6 +40,7 @@ const PopularIssues = ({ activeButton, setActiveButton }: PopularIssuesProps) =>
             // location="중구 만리동"
             time={item.agoTime}
             body={item.content}
+            isLastItem={isLastItem}
           />
         );
       }}
