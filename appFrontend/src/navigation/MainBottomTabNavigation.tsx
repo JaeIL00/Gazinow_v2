@@ -6,10 +6,10 @@ import { COLOR, HOME, MY_ROOT } from '@/global/constants';
 import MyRootScreen from '@/screens/myRootScreen';
 import HomeNavigation from './HomeNavigation';
 import NowScreen from '@screens/nowScreen';
-import FocusedMap from '@assets/icons/tab_map.svg';
-import UnFocusedMap from '@assets/icons/tab_map_border.svg';
-import Now from '@assets/icons/tab_now.svg';
-import My from '@assets/icons/tab_my.svg';
+import IconFocusedMap from '@assets/icons/tab_map.svg';
+import IconUnFocusedMap from '@assets/icons/tab_map_border.svg';
+import IconNow from '@assets/icons/tab_now.svg';
+import IconMy from '@assets/icons/tab_my.svg';
 import { FontText } from '@/global/ui';
 import { Platform, View } from 'react-native';
 
@@ -41,7 +41,7 @@ const MainBottomTabNavigation = () => {
             />
           ),
           tabBarIcon: ({ focused }) => {
-            return <>{focused ? <FocusedMap /> : <UnFocusedMap />}</>;
+            return <>{focused ? <IconFocusedMap /> : <IconUnFocusedMap />}</>;
           },
         }}
       />
@@ -59,7 +59,7 @@ const MainBottomTabNavigation = () => {
             />
           ),
           tabBarIcon: ({ focused }) => (
-            <Now
+            <IconNow
               color={focused ? COLOR.LIGHT_BLUE : 'transparent'}
               strokeWidth={focused ? 0 : 1}
               stroke={COLOR.GRAY_7D}
@@ -81,7 +81,7 @@ const MainBottomTabNavigation = () => {
             />
           ),
           tabBarIcon: ({ focused }) => (
-            <My
+            <IconMy
               color={focused ? COLOR.LIGHT_BLUE : 'transparent'}
               strokeWidth={focused ? 0 : 1}
               stroke={COLOR.GRAY_7D}

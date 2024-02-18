@@ -1,6 +1,5 @@
 import styled from '@emotion/native';
 import Icon from 'react-native-vector-icons/Feather';
-import { iconPath } from '@/assets/icons/iconPath';
 import { FontText, Input } from '@/global/ui';
 import { COLOR } from '@/global/constants';
 import { useAppDispatch } from '@/store';
@@ -9,8 +8,9 @@ import { useAddRecentSearch, useGetSearchHistory, useSearchStationName } from '@
 import { useCallback, useState } from 'react';
 import { debounce } from 'lodash';
 import { SelectedStationTypes } from './NewSearchSwapStation';
-import DeleteInputIcon from '@assets/icons/deleteInput.svg';
+import IconXCircleFill from '@assets/icons/x_circle_fill.svg';
 import { Pressable } from 'react-native';
+import IconLocationPin from '@assets/icons/location_pin.svg';
 
 interface SearchStationProps {
   searchType: '출발역' | '도착역';
@@ -71,7 +71,7 @@ const NewSearchStation = ({ searchType, closeModal, setSubwayStation }: SearchSt
           isSavingNewRoute
         />
         <Pressable hitSlop={20} onPress={() => setSearchTextValue('')}>
-          <DeleteInputIcon width={19.5} />
+          <IconXCircleFill width={19.5} />
         </Pressable>
       </Container>
       {!searchTextValue ? (
@@ -125,7 +125,7 @@ const NewSearchStation = ({ searchType, closeModal, setSubwayStation }: SearchSt
           <Ul marginTop="28px">
             {searchResultData.map(({ stationName, stationLine }, idx) => (
               <Li key={idx} onPress={() => stationBtnHandler({ stationLine, stationName })}>
-                <LocateIcon source={iconPath['location_pin_gray']} width={25} height={25} />
+                <IconLocationPin />
                 <StationInfoBox>
                   <FontText
                     value={stationName}

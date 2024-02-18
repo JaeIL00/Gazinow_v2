@@ -9,6 +9,8 @@ import { getSeletedStation } from '@/store/modules';
 import type { StationDataTypes } from '@/store/modules';
 import SearchStationModal from '../../../global/components/SearchStationModal';
 import { useHomeNavigation } from '@/navigation/HomeNavigation';
+import { TouchableOpacity } from 'react-native';
+import IconSwapChange from '@assets/icons/swap_change.svg';
 
 export interface SelectedStationTypes {
   departure: StationDataTypes;
@@ -120,13 +122,16 @@ const SwapStation = () => {
             onPress={() => openSearchModal(ARRIVAL_STATION)}
           />
         </InnerBox>
-        <IconButton
+        {/* <IconButton
           isFontIcon={false}
           imagePath="exchange_gray"
           iconWidth="20px"
           iconHeight="20px"
           onPress={swapStation}
-        />
+        /> */}
+        <TouchableOpacity onPress={swapStation}>
+          <IconSwapChange />
+        </TouchableOpacity>
       </Container>
     </>
   );

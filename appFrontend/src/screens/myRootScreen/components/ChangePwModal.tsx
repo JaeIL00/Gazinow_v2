@@ -8,8 +8,8 @@ import MyTabModal from '@/global/components/MyTabModal';
 import { debounce } from 'lodash';
 import { getStatusBarHeight } from 'react-native-status-bar-height';
 import XCircle from '@assets/icons/x-circle.svg';
-import BackBtn from '@assets/icons/backBtn.svg';
-import { iconPath } from '@/assets/icons/iconPath';
+import IconLeftArrowHead from '@assets/icons/left_arrow_head.svg';
+import IconCheck from '@assets/icons/check.svg';
 
 interface ModalProps {
   onCancel: () => void;
@@ -102,7 +102,7 @@ const ChangePwModal = ({ onCancel }: ModalProps) => {
     <Modal visible onRequestClose={onCancel}>
       <Header>
         <Pressable hitSlop={20} onPress={onCancel}>
-          <BackBtn />
+          <IconLeftArrowHead />
         </Pressable>
         <Space width="21px" />
         <FontText value="비밀번호 변경" textSize="18px" lineHeight="23px" textWeight="Medium" />
@@ -160,7 +160,7 @@ const ChangePwModal = ({ onCancel }: ModalProps) => {
         </InputContainer>
         {curPassword !== '' && (
           <MessageContainer>
-            {isPwRight ? <Image source={iconPath['check']} /> : <XCircle width={14} />}
+            {isPwRight ? <IconCheck color={COLOR.LIGHT_GREEN} /> : <XCircle width={14} />}
             <FontText
               value={isPwRight ? ' 비밀번호가 확인되었습니다' : ' 비밀번호가 틀립니다'}
               textSize="12px"
@@ -207,7 +207,7 @@ const ChangePwModal = ({ onCancel }: ModalProps) => {
         {!isNewEqualsToOld && changePassword !== '' && (
           <>
             <MessageContainer>
-              <Image source={iconPath['check']} style={{ tintColor: lengValidColor }} />
+              <IconCheck color={lengValidColor} />
               <Space width="4px" />
               <FontText
                 value="8자-20자 이내"
@@ -216,7 +216,7 @@ const ChangePwModal = ({ onCancel }: ModalProps) => {
                 textColor={lengValidColor}
               />
               <Space width="12px" />
-              <Image source={iconPath['check']} style={{ tintColor: comValidColor }} />
+              <IconCheck color={comValidColor} />
               <Space width="4px" />
               <FontText
                 value="영어, 숫자, 특수문자 포함"
@@ -243,7 +243,7 @@ const ChangePwModal = ({ onCancel }: ModalProps) => {
             {confirmPassword !== changePassword ? (
               <XCircle width={14} />
             ) : (
-              <Image source={iconPath['check']} />
+              <IconCheck color={COLOR.LIGHT_GREEN} />
             )}
             <FontText
               value={

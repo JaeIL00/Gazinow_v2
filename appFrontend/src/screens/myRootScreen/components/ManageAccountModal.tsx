@@ -10,7 +10,7 @@ import MyTabModal from '@/global/components/MyTabModal';
 import { Modal, Platform, Pressable, StatusBar } from 'react-native';
 import ConfirmQuitModal from './ConfirmQuitModal';
 import { getStatusBarHeight } from 'react-native-status-bar-height';
-import BackBtn from '@assets/icons/backBtn.svg';
+import IconLeftArrowHead from '@assets/icons/left_arrow_head.svg';
 
 interface RenderMenuProps {
   text: string;
@@ -63,7 +63,7 @@ const ManageAccountModal = ({ onCancel }: ManageAccountModalProps) => {
     <Modal visible onRequestClose={onCancel}>
       <Header>
         <Pressable hitSlop={20} onPress={onCancel}>
-          <BackBtn />
+          <IconLeftArrowHead />
         </Pressable>
         <Space width="21px" />
         <FontText value="계정 관리" textSize="18px" lineHeight="23px" textWeight="Medium" />

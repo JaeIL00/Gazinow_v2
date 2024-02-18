@@ -8,7 +8,7 @@ import { useGetSavedRoutesQuery } from '@/global/apis/hook';
 import { RenderSavedRoutesType } from '@/global/apis/entity';
 import { SubwaySimplePath } from '@/global/components';
 import NewRouteDetailModal from '@/screens/savedRoutesScreen/components/NewRouteDetailModal';
-import MoreBtn from '@/assets/icons/moreBtn.svg';
+import IconRightArrowHead from '@/assets/icons/right_arrow_head.svg';
 import { Pressable } from 'react-native';
 
 const IssueBox = () => {
@@ -64,7 +64,7 @@ const IssueBox = () => {
                   textColor={COLOR.GRAY_999}
                 />
                 <Space width="4px" />
-                <MoreBtn />
+                <IconRightArrowHead />
               </TextContainer>
             </Pressable>
           </TextContainer>
