@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Pressable, View } from 'react-native';
 import { FontText, TextButton, Space } from '@/global/ui';
 import { COLOR } from '@/global/constants';
@@ -14,6 +14,20 @@ const SavedRouteBox = () => {
   const isRoutesExist = savedRoutes && savedRoutes.length > 0;
   const [isRouteDetailOpened, setIsRouteDetailOpened] = useState<boolean>(false);
   const [selectedRoute, setSelectedRoute] = useState<Path | null>(null);
+
+  const [hasIssueRoutes, setHasIssueRoutes] = useState<RenderSavedRoutesType[]>([]);
+  const [routeDetail, setRouteDetail] = useState<Path>();
+
+  useEffect(() => {
+    if (savedRoutes) {
+      const issueRoutes = savedRoutes.filter((savedRoute) => {
+        return savedRoute.subPaths.some((subPath) =>
+          subPath.stations.some((station) => station.issueSummary !== null),
+        );
+      });
+      setHasIssueRoutes(issueRoutes);
+    }
+  }, [savedRoutes]);
 
   if (isRoutesExist) {
     return (
@@ -73,7 +87,8 @@ const SavedRouteBox = () => {
                 </TextContainer>
               </Pressable>
             </TitleContainer>
-            {!item.issues && (
+            {/* 각 경로별로 수정하기 */}
+            {!hasIssueRoutes && (
               <IssueContainer>
                 <FontText
                   value="아무런 이슈가 없어요!"
