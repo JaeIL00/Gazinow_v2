@@ -9,7 +9,6 @@ const HomeScreen = () => {
         contentContainerStyle={{ paddingHorizontal: 16, backgroundColor: COLOR.GRAY_F9 }}
         showsVerticalScrollIndicator={false}
       >
-        <Text>홈 페이지</Text>
         <SwapStation />
         <SavedRouteIssues />
       </ScrollView>
