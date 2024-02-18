@@ -89,7 +89,7 @@ const MyRootScreen = () => {
     >
       <ProfileContainer>
         <NickNameContainer>
-          <FontText value={nickname} textSize="16px" textWeight="Medium" lineHeight="21px" />
+          <FontText value={nickname} textSize="16px" textWeight="SemiBold" />
           <Space width="5px" />
           <Pressable hitSlop={20} onPress={() => setIsNicknameModalOpen(true)}>
             <IconPencil width={15} />
