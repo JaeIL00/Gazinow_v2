@@ -1,6 +1,6 @@
 import { css } from '@emotion/native';
 import { useMemo, useState } from 'react';
-import { FlatList, SafeAreaView, StatusBar, View } from 'react-native';
+import { FlatList, SafeAreaView, StatusBar, TouchableOpacity, View } from 'react-native';
 
 import { FontText, IconButton } from '@/global/ui';
 import { useRoute } from '@react-navigation/native';
@@ -11,6 +11,7 @@ import { Path, SubPath } from '@/global/apis/entity';
 import { useHomeNavigation } from '@/navigation/HomeNavigation';
 import { COLOR } from '@/global/constants';
 import { useQueryClient } from 'react-query';
+import IconBookmark from '@assets/icons/bookmark.svg';
 
 const SearchPathResultDetailScreen = () => {
   const queryClient = useQueryClient();
@@ -38,6 +39,7 @@ const SearchPathResultDetailScreen = () => {
   }, [freshSubPathData]);
 
   const bookmarkHandler = () => {
+    // FIXME: 저장 후 경로 목록을 refetch하지 않는 이상 저장한 경로 아이디를 알 수 없음
     if (isBookmarking && !!resultData.myPathId) {
       deleteMutate({ id: resultData.myPathId[0] });
     } else {
@@ -75,14 +77,15 @@ const SearchPathResultDetailScreen = () => {
             iconWidth="24"
             onPress={() => navigation.goBack()}
           />
-          <IconButton
-            iconType="FontAwesome"
-            isFontIcon={true}
-            iconName={isBookmarking ? 'bookmark' : 'bookmark-o'}
-            iconWidth="24"
-            iconColor={isBookmarking ? '#346BF7' : '#999'}
-            onPress={bookmarkHandler}
-          />
+          <TouchableOpacity onPress={bookmarkHandler}>
+            <IconBookmark
+              width={24}
+              height={24}
+              stroke={isBookmarking ? 'none' : COLOR.GRAY_999}
+              strokeWidth={2}
+              fill={isBookmarking ? COLOR.LIGHT_BLUE : 'transparent'}
+            />
+          </TouchableOpacity>
           {isSaveRouteModalOpen && (
             <NewRouteSaveModal
               freshData={{ ...resultData, subPaths: freshSubPathData }}

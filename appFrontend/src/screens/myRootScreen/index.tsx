@@ -13,8 +13,8 @@ import ManageAccountModal from './components/ManageAccountModal';
 import NotiOnModal from './components/NotiOnModal';
 import NotiSettingsModal from './components/NotiSettingsModal';
 import { getStatusBarHeight } from 'react-native-status-bar-height';
-import Pencil from '@assets/icons/pencil.svg';
-import MoreBtn from '@/assets/icons/moreBtnMy.svg';
+import IconPencil from '@assets/icons/pencil.svg';
+import IconRightArrowHead from '@/assets/icons/right_arrow_head.svg';
 
 interface RenderMenuProps {
   text: string;
@@ -75,7 +75,7 @@ const MyRootScreen = () => {
           lineHeight="17px"
         />
       ) : (
-        <MoreBtn width={14} />
+        <IconRightArrowHead width={14} />
       )}
     </MenuContainer>
   );
@@ -89,10 +89,10 @@ const MyRootScreen = () => {
     >
       <ProfileContainer>
         <NickNameContainer>
-          <FontText value={nickname} textSize="16px" textWeight="Medium" lineHeight="21px" />
+          <FontText value={nickname} textSize="16px" textWeight="SemiBold" />
           <Space width="5px" />
           <Pressable hitSlop={20} onPress={() => setIsNicknameModalOpen(true)}>
-            <Pencil width={15} />
+            <IconPencil width={15} />
           </Pressable>
         </NickNameContainer>
         <FontText

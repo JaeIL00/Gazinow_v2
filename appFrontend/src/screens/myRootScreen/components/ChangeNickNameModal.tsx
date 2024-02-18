@@ -6,8 +6,8 @@ import { COLOR } from '@/global/constants';
 import { useChangeNicknameQuery } from '@/global/apis/hook';
 import { getStatusBarHeight } from 'react-native-status-bar-height';
 import XCircle from '@assets/icons/x-circle.svg';
-import DeleteInputIcon from '@assets/icons/deleteInput.svg';
-import CloseBtn from '@assets/icons/closeBtn.svg';
+import IconXCircleFill from '@assets/icons/x_circle_fill.svg';
+import IconCrossX from '@assets/icons/cross_x.svg';
 
 interface ModalProps {
   onCancel: () => void;
@@ -50,7 +50,7 @@ const ChangeNickNameModal = ({ onCancel }: ModalProps) => {
     <Modal visible onRequestClose={onCancel}>
       <Header>
         <Pressable hitSlop={20} onPress={onCancel}>
-          <CloseBtn width="24px" />
+          <IconCrossX />
         </Pressable>
         <Space width="12px" />
         <FontText value="닉네임 수정" textSize="18px" lineHeight="23px" textWeight="Medium" />
@@ -76,7 +76,9 @@ const ChangeNickNameModal = ({ onCancel }: ModalProps) => {
             onChangeText={setNewNickname}
             autoFocus
           />
-          <DeleteInputIcon width={19.5} onPress={() => setNewNickname('')} />
+          <Pressable onPress={() => setNewNickname('')}>
+            <IconXCircleFill width={19.5} />
+          </Pressable>
         </InputContainer>
 
         {!isNicknameValid && (

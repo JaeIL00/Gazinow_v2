@@ -16,6 +16,10 @@
 		3FBC03CC2B7E667E001E9FAC /* Config.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 3FBC03CA2B7E667E001E9FAC /* Config.xcconfig */; };
 		7699B88040F8A987B510C191 /* libPods-gazinow-gazinowTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-gazinow-gazinowTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		B1C14EDF7B4C4C54901E93A0 /* Pretendard-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = C5ADB2D0566F49C5994FA0F7 /* Pretendard-Bold.otf */; };
+		B6D06423675A4F9AB37DB0E3 /* Pretendard-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 12A7349877754C17B27ACE14 /* Pretendard-Medium.otf */; };
+		8A9A42384254430591683B93 /* Pretendard-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 146AD95D5B9149CAA4392E16 /* Pretendard-Regular.otf */; };
+		0BEF0B2E152B4957BE5CEFCC /* Pretendard-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 90E23A459A714BB39083B76B /* Pretendard-SemiBold.otf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +51,10 @@
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = gazinow/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		89C6BE57DB24E9ADA2F236DE /* Pods-gazinow-gazinowTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-gazinow-gazinowTests.release.xcconfig"; path = "Target Support Files/Pods-gazinow-gazinowTests/Pods-gazinow-gazinowTests.release.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
+		C5ADB2D0566F49C5994FA0F7 /* Pretendard-Bold.otf */ = {isa = PBXFileReference; name = "Pretendard-Bold.otf"; path = "../src/assets/fonts/Pretendard-Bold.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		12A7349877754C17B27ACE14 /* Pretendard-Medium.otf */ = {isa = PBXFileReference; name = "Pretendard-Medium.otf"; path = "../src/assets/fonts/Pretendard-Medium.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		146AD95D5B9149CAA4392E16 /* Pretendard-Regular.otf */ = {isa = PBXFileReference; name = "Pretendard-Regular.otf"; path = "../src/assets/fonts/Pretendard-Regular.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		90E23A459A714BB39083B76B /* Pretendard-SemiBold.otf */ = {isa = PBXFileReference; name = "Pretendard-SemiBold.otf"; path = "../src/assets/fonts/Pretendard-SemiBold.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -126,6 +134,7 @@
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				BBD78D7AC51CEA395F1C20DB /* Pods */,
+				590E17BF010743618DD4BE9F /* Resources */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -151,6 +160,18 @@
 			);
 			path = Pods;
 			sourceTree = "<group>";
+		};
+		590E17BF010743618DD4BE9F /* Resources */ = {
+			isa = "PBXGroup";
+			children = (
+				C5ADB2D0566F49C5994FA0F7 /* Pretendard-Bold.otf */,
+				12A7349877754C17B27ACE14 /* Pretendard-Medium.otf */,
+				146AD95D5B9149CAA4392E16 /* Pretendard-Regular.otf */,
+				90E23A459A714BB39083B76B /* Pretendard-SemiBold.otf */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+			path = "";
 		};
 /* End PBXGroup section */
 
@@ -249,6 +270,10 @@
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				3FBC03CB2B7E667E001E9FAC /* Config.xcconfig in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				B1C14EDF7B4C4C54901E93A0 /* Pretendard-Bold.otf in Resources */,
+				B6D06423675A4F9AB37DB0E3 /* Pretendard-Medium.otf in Resources */,
+				8A9A42384254430591683B93 /* Pretendard-Regular.otf in Resources */,
+				0BEF0B2E152B4957BE5CEFCC /* Pretendard-SemiBold.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

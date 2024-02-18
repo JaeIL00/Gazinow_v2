@@ -2,8 +2,8 @@ import React from 'react';
 import styled from '@emotion/native';
 import { FontText, Space } from '@/global/ui';
 import { Pressable } from 'react-native';
-import BackBtn from '@assets/icons/backBtn.svg';
-import CloseBtn from '@assets/icons/closeBtn.svg';
+import IconLeftArrowHead from '@assets/icons/left_arrow_head.svg';
+import IconCrossX from '@assets/icons/cross_x.svg';
 
 interface HeaderProps {
   onBackBtnPress: () => void;
@@ -15,11 +15,11 @@ const AddNewRouteHeader = ({ onBackBtnPress, onCloseBtnPress }: HeaderProps) => 
     <>
       <Header>
         <Pressable hitSlop={20} onPress={onBackBtnPress}>
-          <BackBtn />
+          <IconLeftArrowHead />
         </Pressable>
         <FontText value="새 경로 저장" textSize="18px" textWeight="Medium" lineHeight="23px" />
         <Pressable hitSlop={20} onPress={onCloseBtnPress}>
-          <CloseBtn />
+          <IconCrossX />
         </Pressable>
       </Header>
       <Space height="8px" />

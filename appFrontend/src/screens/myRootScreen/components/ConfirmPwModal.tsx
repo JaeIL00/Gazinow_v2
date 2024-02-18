@@ -5,7 +5,7 @@ import { FontText, Input, Space, TextButton } from '@/global/ui';
 import { COLOR } from '@/global/constants';
 import { useCheckPasswordQuery, useDeleteAccountMutation } from '@/global/apis/hook';
 import { useRootNavigation } from '@/navigation/RootNavigation';
-import BackBtn from '@assets/icons/backBtn.svg';
+import IconLeftArrowHead from '@assets/icons/left_arrow_head.svg';
 import { removeEncryptedStorage } from '@/global/utils';
 import { debounce } from 'lodash';
 
@@ -63,7 +63,7 @@ const ConfirmPwModal = ({ onCancel, isVisible }: ModalProps) => {
     <Modal visible={isVisible} onRequestClose={onCancel}>
       <Header>
         <Pressable hitSlop={20} onPress={onCancel}>
-          <BackBtn />
+          <IconLeftArrowHead />
         </Pressable>
       </Header>
       <Container>

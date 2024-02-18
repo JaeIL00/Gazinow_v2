@@ -6,7 +6,7 @@ import { Path, SubPath } from '@/global/apis/entity';
 import SearchPathDetailItem from '@/screens/searchPathResultDetailScreen/components/SearchPathDetailItem';
 import { COLOR } from '@/global/constants';
 import { getStatusBarHeight } from 'react-native-status-bar-height';
-import BackBtn from '@assets/icons/backBtn.svg';
+import IconLeftArrowHead from '@assets/icons/left_arrow_head.svg';
 
 interface ModalProps {
   item: Path;
@@ -57,7 +57,7 @@ const NewRouteDetailModal = ({ item, setDepth, onRequestClose }: ModalProps) => 
           }}
         >
           <Pressable hitSlop={20} onPress={onRequestCloseByProp}>
-            <BackBtn style={{ paddingLeft: 8 }} />
+            <IconLeftArrowHead style={{ paddingLeft: 8 }} />
           </Pressable>
         </View>
         <View

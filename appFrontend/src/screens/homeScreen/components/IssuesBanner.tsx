@@ -3,8 +3,9 @@ import { IconButton, FontText, Space } from '@/global/ui';
 import { COLOR } from '@/global/constants';
 import styled from '@emotion/native';
 import { RenderSavedRoutesType } from '@/global/apis/entity';
-import MoreBtn from '@/assets/icons/moreBtn.svg';
-
+import IconRightArrowHead from '@/assets/icons/right_arrow_head.svg';
+import IconWalkHuman from '@assets/icons/walk_human.svg';
+import { TouchableOpacity } from 'react-native';
 interface IssuesBannerProps {
   pathData: RenderSavedRoutesType;
 }
@@ -19,13 +20,9 @@ const IssuesBanner = ({ pathData }: IssuesBannerProps) => {
     <Container onPress={IssueDetail}>
       <Issue>
         {/* TODO: 이슈에 따라 아이콘, 타이틀 바꾸기 */}
-        <IconButton
-          isFontIcon={false}
-          imagePath='walk_human_gray'
-          iconWidth="15px"
-          iconHeight="15px"
-          onPress={IssueDetail}
-        />
+        <TouchableOpacity onPress={IssueDetail}>
+          <IconWalkHuman width={15} height={15} />
+        </TouchableOpacity>
         <Space width="10px" />
         <FontText
           value={pathData.lastEndStation}
@@ -35,7 +32,7 @@ const IssuesBanner = ({ pathData }: IssuesBannerProps) => {
           textColor={COLOR.BASIC_BLACK}
         />
       </Issue>
-      <MoreBtn onPress={IssueDetail} />
+      <IconRightArrowHead onPress={IssueDetail} />
     </Container>
   );
 };

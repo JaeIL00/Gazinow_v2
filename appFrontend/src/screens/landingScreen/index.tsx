@@ -43,7 +43,7 @@ const LandingScreen = () => {
       >
         <View>
           <FontText
-            value="가는길 지금,"
+            value="가는길 지금"
             textSize="27.34px"
             textWeight="Bold"
             lineHeight="36.454px"

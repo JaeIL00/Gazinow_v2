@@ -3,7 +3,7 @@ import { View, StyleSheet, Pressable } from 'react-native';
 import { TextButton, FontText, Space } from '@/global/ui';
 import { COLOR } from '@/global/constants';
 import { useGetSearchRoutesQuery } from '@/global/apis/hook';
-import MoreBtn from '@/assets/icons/moreBtn.svg';
+import IconRightArrowHead from '@/assets/icons/right_arrow_head.svg';
 
 const RecentSearchBox = () => {
   const routeDetail = () => {
@@ -43,7 +43,7 @@ const RecentSearchBox = () => {
                 onPress={routeDetail}
               />
               <Space width="4px" />
-              <MoreBtn />
+              <IconRightArrowHead />
             </View>
           </Pressable>
         </View>
