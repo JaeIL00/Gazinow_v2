@@ -1,9 +1,10 @@
 import { View } from 'react-native';
+import type { TextInput } from 'react-native/types';
 import { FontText, Input, Space } from '@/global/ui';
 import { COLOR } from '@/global/constants';
 import CheckIcon from 'react-native-vector-icons/Feather';
 import CloseIcon from 'react-native-vector-icons/Ionicons';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useEmailConfirm } from '../apis/hooks';
 import ConfirmEmailModal from './ConfirmEmailModal';
 import useBackgroundInterval from '../hooks/useBackgroundInterval';
@@ -25,6 +26,8 @@ interface EmailStepProps {
 }
 
 const EmailStep = ({ emailValue, setStep, changeEmailValue }: EmailStepProps) => {
+  const inputRef = useRef<TextInput>(null);
+
   const { authNumber, resetAuthNumber, emailConfirmMutate } = useEmailConfirm({
     onSuccess: () => {
       setIsOpenConfirmModal(true);
@@ -130,6 +133,7 @@ const EmailStep = ({ emailValue, setStep, changeEmailValue }: EmailStepProps) =>
             }}
           >
             <Input
+              isBlur={isOpenConfirmModal}
               value={emailValue}
               placeholder="이메일(아이디)입력"
               placeholderTextColor={COLOR.GRAY_BE}
