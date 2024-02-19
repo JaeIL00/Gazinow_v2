@@ -3,7 +3,7 @@ import type { PayloadAction } from '@reduxjs/toolkit';
 
 interface InitialStateTypes {
   nickname: string;
-  email?: string;
+  email: string;
 }
 
 const initialState: InitialStateTypes = {
