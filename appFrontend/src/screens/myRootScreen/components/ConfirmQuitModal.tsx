@@ -6,14 +6,15 @@ import MyTabModal from '@/global/components/MyTabModal';
 import { Modal, Pressable, SafeAreaView } from 'react-native';
 import IconLeftArrowHead from '@assets/icons/left_arrow_head.svg';
 import ConfirmPwModal from './ConfirmPwModal';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/store/configureStore';
 
 interface ConfirmQuitModalProps {
   onCancel: () => void;
 }
 
 const ConfirmQuitModal = ({ onCancel }: ConfirmQuitModalProps) => {
-  //TODO: 닉네임 띄우기
-  const nickName = '사용자17349245';
+  const { nickname } = useSelector((state: RootState) => state.auth);
   const [popupVisible, setPopupVisible] = useState(false);
   const [confirmPwModalVisible, setConfirmPwModalVisible] = useState(false);
 
@@ -38,7 +39,7 @@ const ConfirmQuitModal = ({ onCancel }: ConfirmQuitModalProps) => {
         <Container>
           <AlertContainer>
             <FontText
-              value={`${nickName}님,\n정말 탈퇴하시겠어요?`}
+              value={`${nickname}님,\n정말 탈퇴하시겠어요?`}
               textSize="24px"
               textWeight="Bold"
               lineHeight="32px"
@@ -83,9 +84,9 @@ const ConfirmQuitModal = ({ onCancel }: ConfirmQuitModalProps) => {
             confirmText="탈퇴할래요"
             cancelText="아니요"
           />
-          <ConfirmPwModal isVisible={confirmPwModalVisible} onCancel={hideModal} />
         </Container>
       </Modal>
+      <ConfirmPwModal isVisible={confirmPwModalVisible} onCancel={hideModal} />
     </SafeAreaView>
   );
 };
