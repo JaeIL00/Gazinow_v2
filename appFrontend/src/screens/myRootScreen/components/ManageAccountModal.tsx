@@ -7,9 +7,8 @@ import { COLOR } from '@/global/constants';
 import { useLogoutMutation } from '@/screens/signInScreen/apis/hook';
 import ChangePwModal from './ChangePwModal';
 import MyTabModal from '@/global/components/MyTabModal';
-import { Modal, Platform, Pressable, StatusBar } from 'react-native';
+import { Modal, Pressable, SafeAreaView } from 'react-native';
 import ConfirmQuitModal from './ConfirmQuitModal';
-import { getStatusBarHeight } from 'react-native-status-bar-height';
 import IconLeftArrowHead from '@assets/icons/left_arrow_head.svg';
 
 interface RenderMenuProps {
@@ -21,9 +20,6 @@ interface ManageAccountModalProps {
 }
 
 const ManageAccountModal = ({ onCancel }: ManageAccountModalProps) => {
-  const StatusBarHeight =
-    Platform.OS === 'ios' ? getStatusBarHeight(true) + 4 : (StatusBar.currentHeight as number) - 4;
-
   const navigation = useRootNavigation();
   const [popupVisible, setPopupVisible] = useState(false);
   const [isChangePwModalOpened, setIsChangePwModalOpened] = useState(false);
@@ -41,11 +37,8 @@ const ManageAccountModal = ({ onCancel }: ManageAccountModalProps) => {
     const accessToken = await getEncryptedStorage('access_token');
     const refreshToken = await getEncryptedStorage('refresh_token');
     logoutMutate({ accessToken, refreshToken });
-    hideModal();
+    setPopupVisible(false);
   };
-
-  const showLogoutPopup = () => setPopupVisible(true);
-  const hideModal = () => setPopupVisible(false);
 
   const renderMenu = ({ text, onPress }: RenderMenuProps) => (
     <MenuContainer onPress={onPress}>
@@ -60,40 +53,42 @@ const ManageAccountModal = ({ onCancel }: ManageAccountModalProps) => {
   );
 
   return (
-    <Modal visible onRequestClose={onCancel}>
-      <Header>
-        <Pressable hitSlop={20} onPress={onCancel}>
-          <IconLeftArrowHead />
-        </Pressable>
-        <Space width="21px" />
-        <FontText value="계정 관리" textSize="18px" lineHeight="23px" textWeight="Medium" />
-      </Header>
-      <Container>
-        {renderMenu({
-          text: '비밀번호 변경',
-          onPress: () => setIsChangePwModalOpened(true),
-        })}
-        {renderMenu({ text: '로그아웃', onPress: () => showLogoutPopup() })}
-        {renderMenu({
-          text: '회원 탈퇴',
-          onPress: () => setIsConfirmQuitModalOpen(true),
-        })}
-        {isChangePwModalOpened && (
-          <ChangePwModal onCancel={() => setIsChangePwModalOpened(false)} />
+    <SafeAreaView style={{ flex: 1 }}>
+      <Modal visible onRequestClose={onCancel}>
+        <Header>
+          <Pressable hitSlop={20} onPress={onCancel}>
+            <IconLeftArrowHead />
+          </Pressable>
+          <Space width="21px" />
+          <FontText value="계정 관리" textSize="18px" lineHeight="23px" textWeight="Medium" />
+        </Header>
+        <Container>
+          {renderMenu({
+            text: '비밀번호 변경',
+            onPress: () => setIsChangePwModalOpened(true),
+          })}
+          {renderMenu({ text: '로그아웃', onPress: () => setPopupVisible(true) })}
+          {renderMenu({
+            text: '회원 탈퇴',
+            onPress: () => setIsConfirmQuitModalOpen(true),
+          })}
+          {isChangePwModalOpened && (
+            <ChangePwModal onCancel={() => setIsChangePwModalOpened(false)} />
+          )}
+          <MyTabModal
+            isVisible={popupVisible}
+            onCancel={() => setPopupVisible(false)}
+            onConfirm={handleConfirm}
+            title="로그아웃 할까요?"
+            confirmText="로그아웃"
+            cancelText="취소"
+          />
+        </Container>
+        {isConfirmQuitModalOpen && (
+          <ConfirmQuitModal onCancel={() => setIsConfirmQuitModalOpen(false)} />
         )}
-        <MyTabModal
-          isVisible={popupVisible}
-          onCancel={hideModal}
-          onConfirm={handleConfirm}
-          title="로그아웃 할까요?"
-          confirmText="로그아웃"
-          cancelText="취소"
-        />
-      </Container>
-      {isConfirmQuitModalOpen && (
-        <ConfirmQuitModal onCancel={() => setIsConfirmQuitModalOpen(false)} />
-      )}
-    </Modal>
+      </Modal>
+    </SafeAreaView>
   );
 };
 export default ManageAccountModal;

@@ -106,7 +106,7 @@ const SelectNewRouteModal = ({
 
 export default SelectNewRouteModal;
 
-const Container = styled.View`
+const Container = styled.SafeAreaView`
   background-color: ${COLOR.WHITE};
   flex: 1;
 `;

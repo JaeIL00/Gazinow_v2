@@ -175,6 +175,10 @@ export const pathSubwayLineName = (StationCode: StationCode) => {
   }
 };
 
+/**
+ * 나우탭 지하철 호선명 캡슐
+ * @param StationCode 유저가 저장한 경로의 노선 코드
+ */
 export const pathSubwayLineNameInLine = (StationCode: StationCode) => {
   switch (StationCode) {
     case 1:
@@ -202,25 +206,25 @@ export const pathSubwayLineNameInLine = (StationCode: StationCode) => {
     case 101:
       return '공항철도';
     case 104:
-      return '경의중앙선';
+      return '경의중앙';
     case 107:
       return '에버라인';
     case 108:
       return '경춘선';
     case 109:
-      return '신분당선';
+      return '신분당';
     case 110:
-      return '의정부선';
+      return '의정부';
     case 112:
       return '경강선';
     case 113:
       return '우이신설';
     case 114:
-      return '서해';
+      return '서해선';
     case 115:
       return '김포골드';
     case 116:
-      return '수인분당선';
+      return '수인분당';
     case 117:
       return '신림선';
     default:
@@ -308,3 +312,32 @@ export const subwayNameCutting = (name: string) => {
       return name;
   }
 };
+
+/**
+ * 나우탭 캡슐 - 모든 노선 데이터
+ */
+export const allLines: FreshSubwayLineName[] = [
+  '1호선',
+  '2호선',
+  '3호선',
+  '4호선',
+  '5호선',
+  '6호선',
+  '7호선',
+  '8호선',
+  '9호선',
+  '경의중앙',
+  '신분당',
+  '수인분당',
+  '공항철도',
+  '인천1호선',
+  '인천2호선',
+  '신림선',
+  '경강선',
+  '서해선',
+  '경춘선',
+  '의정부',
+  '에버라인',
+  '김포골드',
+  '우이신설',
+];

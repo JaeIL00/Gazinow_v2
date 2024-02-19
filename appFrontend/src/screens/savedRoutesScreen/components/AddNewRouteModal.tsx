@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Modal } from 'react-native';
+import { Modal, SafeAreaView } from 'react-native';
 import AddNewRouteHeader from './AddNewRouteHeader';
 import NewSearchSwapStation, { SelectedStationTypes } from './NewSearchSwapStation';
 import SelectNewRouteModal from './SelectNewRouteModal';
@@ -46,26 +46,28 @@ const AddNewRouteModal = ({ isVisible, onCancel }: ModalProps) => {
   };
 
   return (
-    <Modal visible={isVisible} onRequestClose={onBackBtnPress}>
-      <AddNewRouteHeader onBackBtnPress={onBackBtnPress} onCloseBtnPress={onCloseBtnPress} />
-      {(depth === 'search' || depth === 'pathList') && (
-        <NewSearchSwapStation setDepth={setDepth} setSeletedStation={setSeletedStation} />
-      )}
-      {depth === 'pathList' && (
-        <SelectNewRouteModal
-          setDepth={setDepth}
-          seletedStation={seletedStation}
-          selectedRoutePath={selectedRoutePath}
-          setSelectedRoutePath={setSelectedRoutePath}
-        />
-      )}
-      {selectedRoutePath && depth === 'detail' && (
-        <NewRouteDetailModal item={selectedRoutePath} setDepth={setDepth} />
-      )}
-      {selectedRoutePath && depth === 'name' && (
-        <NameNewRouteModal onCancel={onCancel} setDepth={setDepth} item={selectedRoutePath} />
-      )}
-    </Modal>
+    <SafeAreaView style={{ flex: 1 }}>
+      <Modal visible={isVisible} onRequestClose={onBackBtnPress}>
+        <AddNewRouteHeader onBackBtnPress={onBackBtnPress} onCloseBtnPress={onCloseBtnPress} />
+        {(depth === 'search' || depth === 'pathList') && (
+          <NewSearchSwapStation setDepth={setDepth} setSeletedStation={setSeletedStation} />
+        )}
+        {depth === 'pathList' && (
+          <SelectNewRouteModal
+            setDepth={setDepth}
+            seletedStation={seletedStation}
+            selectedRoutePath={selectedRoutePath}
+            setSelectedRoutePath={setSelectedRoutePath}
+          />
+        )}
+        {selectedRoutePath && depth === 'detail' && (
+          <NewRouteDetailModal item={selectedRoutePath} setDepth={setDepth} />
+        )}
+        {selectedRoutePath && depth === 'name' && (
+          <NameNewRouteModal onCancel={onCancel} setDepth={setDepth} item={selectedRoutePath} />
+        )}
+      </Modal>
+    </SafeAreaView>
   );
 };
 

@@ -10,6 +10,7 @@ import { SignUpParams } from '../type';
 import { useAppDispatch } from '@/store';
 import { saveUserInfo } from '@/store/modules';
 import StepButton from '../ui/StepButton';
+import { setEncryptedStorage } from '@/global/utils';
 
 interface NicknameStepProps {
   nicknameValue: string;
@@ -29,8 +30,10 @@ const NicknameStep = ({
   const [checkMessage, setCheckMessage] = useState<string>('');
 
   const { signUpMutate } = useSighUp({
-    onSuccess: ({ email, nickName }) => {
+    onSuccess: async ({ email, nickName, accessToken, refreshToken }) => {
       dispatch(saveUserInfo({ email, nickname: nickName }));
+      await setEncryptedStorage('access_token', accessToken);
+      await setEncryptedStorage('refresh_token', refreshToken);
       setStep();
     },
   });

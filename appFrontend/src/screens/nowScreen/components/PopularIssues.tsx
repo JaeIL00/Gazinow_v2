@@ -4,18 +4,21 @@ import { FlatList } from 'react-native';
 import { COLOR } from '@/global/constants';
 import styled from '@emotion/native';
 import { AllIssuesFL, FilterByLane, IssueContainer, LaneButtons } from '.';
+import { NowScreenCapsules } from '@/global/apis/entity';
 
 interface PopularIssuesProps {
-  activeButton: string;
-  setActiveButton: (activeButton: string) => void;
+  activeButton: NowScreenCapsules;
+  setActiveButton: (activeButton: NowScreenCapsules) => void;
 }
 
 const PopularIssues = ({ activeButton, setActiveButton }: PopularIssuesProps) => {
-  const { data: PopularIssues } = useGetPopularIssuesQuery();
-
+  const { data: popularIssues } = useGetPopularIssuesQuery();
+  if (!popularIssues) {
+    return null;
+  }
   return (
     <FlatList
-      data={PopularIssues?.content}
+      data={popularIssues}
       ListHeaderComponent={
         <>
           <Header>
@@ -26,7 +29,8 @@ const PopularIssues = ({ activeButton, setActiveButton }: PopularIssuesProps) =>
           </IssueLineType>
         </>
       }
-      renderItem={({ item }) => {
+      renderItem={({ item, index }) => {
+        const isLastItem = popularIssues && index === popularIssues.length - 1;
         return (
           <IssueContainer
             key={item.id}
@@ -36,6 +40,7 @@ const PopularIssues = ({ activeButton, setActiveButton }: PopularIssuesProps) =>
             // location="중구 만리동"
             time={item.agoTime}
             body={item.content}
+            isLastItem={isLastItem}
           />
         );
       }}

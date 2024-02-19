@@ -1,29 +1,32 @@
 import styled from '@emotion/native';
 import { useState } from 'react';
-import { Modal, Platform, Pressable, StatusBar, View } from 'react-native';
+import { Modal, Pressable, SafeAreaView, View } from 'react-native';
 import { FontText, Input, Space, TextButton } from '@/global/ui';
 import { COLOR } from '@/global/constants';
 import { useChangeNicknameQuery } from '@/global/apis/hook';
-import { getStatusBarHeight } from 'react-native-status-bar-height';
-import XCircle from '@assets/icons/x-circle.svg';
+import XCircle from '@assets/icons/x-circle-standard.svg';
 import IconXCircleFill from '@assets/icons/x_circle_fill.svg';
 import IconCrossX from '@assets/icons/cross_x.svg';
+import { useAppDispatch } from '@/store';
+import { saveUserInfo } from '@/store/modules';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/store/configureStore';
 
 interface ModalProps {
   onCancel: () => void;
 }
 
 const ChangeNickNameModal = ({ onCancel }: ModalProps) => {
-  const StatusBarHeight =
-    Platform.OS === 'ios' ? getStatusBarHeight(true) + 4 : (StatusBar.currentHeight as number) - 4;
-
+  const { email } = useSelector((state: RootState) => state.auth);
   const [newNickname, setNewNickname] = useState<string>('');
   const [isNicknameValid, setIsNicknameValid] = useState<boolean>(true);
   const [errorMessage, setErrorMessage] = useState<string>('');
+  const dispatch = useAppDispatch();
 
   const { mutate } = useChangeNicknameQuery({
     onSuccess: () => {
       onCancel();
+      dispatch(saveUserInfo({ email: email, nickname: newNickname }));
       //TODO: 성공 토스트 띄우기
     },
     onError: (error: any) => {
@@ -47,55 +50,57 @@ const ChangeNickNameModal = ({ onCancel }: ModalProps) => {
   };
 
   return (
-    <Modal visible onRequestClose={onCancel}>
-      <Header>
-        <Pressable hitSlop={20} onPress={onCancel}>
-          <IconCrossX />
-        </Pressable>
-        <Space width="12px" />
-        <FontText value="닉네임 수정" textSize="18px" lineHeight="23px" textWeight="Medium" />
-        <View style={{ flex: 1 }} />
-        <Pressable hitSlop={20} onPress={() => mutate(newNickname)}>
-          <TextButton
-            value="완료"
-            textSize="16px"
-            textColor={COLOR.GRAY_999}
-            textWeight="Medium"
-            lineHeight="21px"
-            onPress={() => mutate(newNickname)}
-          />
-        </Pressable>
-      </Header>
-      <Container>
-        <InputContainer>
-          <SearchInput
-            value={newNickname}
-            placeholder={`새 닉네임을 입력하세요`}
-            placeholderTextColor={COLOR.GRAY_999}
-            inputMode="search"
-            onChangeText={setNewNickname}
-            autoFocus
-          />
-          <Pressable onPress={() => setNewNickname('')}>
-            <IconXCircleFill width={19.5} />
+    <SafeAreaView style={{ flex: 1 }}>
+      <Modal visible onRequestClose={onCancel}>
+        <Header>
+          <Pressable hitSlop={20} onPress={onCancel}>
+            <IconCrossX width="24px" />
           </Pressable>
-        </InputContainer>
-
-        {!isNicknameValid && (
-          <MessageContainer>
-            <XCircle width={14} />
-            <Space width="5px" />
-            <FontText
-              value={errorMessage}
-              textSize="14px"
+          <Space width="12px" />
+          <FontText value="닉네임 수정" textSize="18px" lineHeight="23px" textWeight="Medium" />
+          <View style={{ flex: 1 }} />
+          <Pressable hitSlop={20} onPress={() => mutate(newNickname)} disabled={newNickname === ''}>
+            <TextButton
+              value="완료"
+              textSize="16px"
+              textColor={newNickname === '' ? COLOR.GRAY_999 : COLOR.BASIC_BLACK}
               textWeight="Medium"
-              lineHeight="16px"
-              textColor="#EB5147"
+              lineHeight="21px"
+              onPress={() => mutate(newNickname)}
+              disabled={newNickname === ''}
             />
-          </MessageContainer>
-        )}
-      </Container>
-    </Modal>
+          </Pressable>
+        </Header>
+        <Container>
+          <InputContainer>
+            <SearchInput
+              value={newNickname}
+              placeholder={`새 닉네임을 입력하세요`}
+              placeholderTextColor={COLOR.GRAY_999}
+              inputMode="search"
+              onChangeText={setNewNickname}
+              autoFocus
+              maxLength={7}
+            />
+            <IconXCircleFill width={19.5} onPress={() => setNewNickname('')} />
+          </InputContainer>
+
+          {!isNicknameValid && (
+            <MessageContainer>
+              <XCircle width={14} />
+              <Space width="5px" />
+              <FontText
+                value={errorMessage}
+                textSize="14px"
+                textWeight="Medium"
+                lineHeight="16px"
+                textColor="#EB5147"
+              />
+            </MessageContainer>
+          )}
+        </Container>
+      </Modal>
+    </SafeAreaView>
   );
 };
 export default ChangeNickNameModal;

@@ -2,7 +2,7 @@ import styled from '@emotion/native';
 import { FontText, Space, TextButton } from '@/global/ui';
 import { COLOR } from '@/global/constants';
 import { useState } from 'react';
-import { Modal, Switch } from 'react-native';
+import { Modal, SafeAreaView, Switch } from 'react-native';
 import IconLeftArrowHead from '@assets/icons/left_arrow_head.svg';
 
 interface ModalProps {
@@ -23,63 +23,65 @@ const NotiSettingsModal = ({ onCancel }: ModalProps) => {
   const submitNotificationSettings = () => {};
 
   return (
-    <Modal visible onRequestClose={onCancel}>
-      <Header>
-        <TitleContainer>
-          <IconLeftArrowHead width="24px" onPress={onCancel} />
-          <Space width="12px" />
-          <FontText value="알림 설정" textSize="18px" lineHeight="23px" textWeight="Medium" />
-        </TitleContainer>
-        <TextButton
-          value="완료    "
-          textSize="16px"
-          textColor={COLOR.GRAY_999}
-          textWeight="Medium"
-          lineHeight="21px"
-          onPress={() => submitNotificationSettings()}
-        />
-      </Header>
-      <Container>
-        <MenuContainer>
+    <SafeAreaView style={{ flex: 1 }}>
+      <Modal visible onRequestClose={onCancel}>
+        <Header>
+          <TitleContainer>
+            <IconLeftArrowHead width="24px" onPress={onCancel} />
+            <Space width="12px" />
+            <FontText value="알림 설정" textSize="18px" lineHeight="23px" textWeight="Medium" />
+          </TitleContainer>
           <TextButton
-            value="푸시 알림 받기"
+            value="완료    "
             textSize="16px"
-            textWeight="Regular"
+            textColor={COLOR.GRAY_999}
+            textWeight="Medium"
             lineHeight="21px"
+            onPress={() => submitNotificationSettings()}
           />
-          <Switch value={pushNotification} onValueChange={handlePushNotificationToggle} />
-        </MenuContainer>
-        {pushNotification && (
-          <>
-            <Space height="20px" backgroundColor={COLOR.GRAY_F9} />
-            <MenuContainer>
-              <TextButton
-                value="내가 저장한 경로 알림"
-                textSize="16px"
-                textWeight="Regular"
-                lineHeight="21px"
-              />
-              <Switch
-                value={savedPathNotification}
-                onValueChange={() => setSavedPathNotification(!savedPathNotification)}
-              />
-            </MenuContainer>
-            <MenuContainer>
-              <TextButton
-                value="새소식 알림"
-                textSize="16px"
-                textWeight="Regular"
-                lineHeight="21px"
-              />
-              <Switch
-                value={newsNotification}
-                onValueChange={() => setNewsNotification(!newsNotification)}
-              />
-            </MenuContainer>
-          </>
-        )}
-      </Container>
-    </Modal>
+        </Header>
+        <Container>
+          <MenuContainer>
+            <TextButton
+              value="푸시 알림 받기"
+              textSize="16px"
+              textWeight="Regular"
+              lineHeight="21px"
+            />
+            <Switch value={pushNotification} onValueChange={handlePushNotificationToggle} />
+          </MenuContainer>
+          {pushNotification && (
+            <>
+              <Space height="20px" backgroundColor={COLOR.GRAY_F9} />
+              <MenuContainer>
+                <TextButton
+                  value="내가 저장한 경로 알림"
+                  textSize="16px"
+                  textWeight="Regular"
+                  lineHeight="21px"
+                />
+                <Switch
+                  value={savedPathNotification}
+                  onValueChange={() => setSavedPathNotification(!savedPathNotification)}
+                />
+              </MenuContainer>
+              <MenuContainer>
+                <TextButton
+                  value="새소식 알림"
+                  textSize="16px"
+                  textWeight="Regular"
+                  lineHeight="21px"
+                />
+                <Switch
+                  value={newsNotification}
+                  onValueChange={() => setNewsNotification(!newsNotification)}
+                />
+              </MenuContainer>
+            </>
+          )}
+        </Container>
+      </Modal>
+    </SafeAreaView>
   );
 };
 export default NotiSettingsModal;

@@ -10,6 +10,7 @@ import { debounce } from 'lodash';
 import { SelectedStationTypes } from './NewSearchSwapStation';
 import IconXCircleFill from '@assets/icons/x_circle_fill.svg';
 import { Pressable } from 'react-native';
+import { subwayReturnLineName } from '@/global/utils/subwayLine';
 import IconLocationPin from '@assets/icons/location_pin.svg';
 
 interface SearchStationProps {
@@ -21,7 +22,7 @@ interface SearchStationProps {
 const NewSearchStation = ({ searchType, closeModal, setSubwayStation }: SearchStationProps) => {
   const dispatch = useAppDispatch();
 
-  const { data: history } = useGetSearchHistory();
+  const { historyData } = useGetSearchHistory();
 
   const [searchTextValue, setSearchTextValue] = useState<string>('');
 
@@ -55,7 +56,7 @@ const NewSearchStation = ({ searchType, closeModal, setSubwayStation }: SearchSt
 
   const stationBtnHandler = ({ stationName, stationLine }: (typeof searchResultData)[0]) => {
     if (!stationLine) return;
-    addRecentMutate({ stationName, stationLine });
+    addRecentMutate({ stationName, stationLine: subwayReturnLineName(stationLine) });
   };
 
   return (
@@ -87,9 +88,9 @@ const NewSearchStation = ({ searchType, closeModal, setSubwayStation }: SearchSt
           </Header>
 
           <Ul marginTop="18px">
-            {history?.map(({ id, stationName, stationLine }) => (
+            {historyData?.map(({ stationName, stationLine }) => (
               <Li
-                key={id}
+                key={stationName}
                 onPress={() =>
                   stationBtnHandler({
                     stationName,

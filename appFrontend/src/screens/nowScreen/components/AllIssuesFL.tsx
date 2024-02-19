@@ -5,13 +5,13 @@ import { COLOR } from '@/global/constants';
 import { IssueContainer } from '.';
 
 const AllIssuesFL = () => {
-  const { data: AllIssues } = useGetAllIssuesQuery();
+  const { data: allIssues } = useGetAllIssuesQuery();
 
   return (
     <FlatList
-      data={AllIssues?.content}
+      data={allIssues?.content}
       renderItem={({ item, index }) => {
-        const isLastItem = AllIssues?.content && index === AllIssues.content.length - 1;
+        const isLastItem = allIssues?.content && index === allIssues.content.length - 1;
         return (
           <IssueContainer
             key={item.id}

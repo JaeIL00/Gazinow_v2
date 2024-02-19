@@ -3,10 +3,10 @@ import { FontText, Space } from '@/global/ui';
 import { useAppSelect } from '@/store';
 import { Image, View } from 'react-native';
 import StepButton from '../ui/StepButton';
-import { useAuthNavigation } from '@/navigation/AuthNavigation';
+import { useRootNavigation } from '@/navigation/RootNavigation';
 
 const CompleteStep = () => {
-  const navigation = useAuthNavigation();
+  const navigation = useRootNavigation();
   const authInfo = useAppSelect((state) => state.auth);
 
   return (
@@ -35,7 +35,7 @@ const CompleteStep = () => {
       <StepButton
         value="확인"
         backgroundCondition={true} // 검정을 의미함
-        onPress={() => navigation.reset({ routes: [{ name: 'SignIn' }] })}
+        onPress={() => navigation.reset({ routes: [{ name: 'MainBottomTab' }] })}
       />
     </View>
   );

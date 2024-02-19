@@ -56,6 +56,11 @@ export type FreshSubwayLineName =
   | '우이신설';
 
 /**
+ * 나우탭 캡슐 타입
+ */
+export type NowScreenCapsules = FreshSubwayLineName | '전체';
+
+/**
  * 지하철 검색 이력 타입
  */
 export interface SearchHistoryStationNameTypes {
@@ -162,6 +167,7 @@ export interface SubPath {
   stations: {
     index: number;
     stationName: string;
+    issueSummary: IssueSummary[];
   }[];
 }
 
@@ -184,12 +190,20 @@ export interface RenderSavedRoutesType extends Path {
 
 export type IssueKeywords = '자연재해' | '연착' | '혼잡' | '행사' | '사고' | '공사' | '시위';
 
+export interface IssueSummary {
+  id: number;
+  title: string;
+  likeCount: number;
+  keyword: IssueKeywords;
+  agoTime: string;
+}
+
 export interface IssueContent {
   id: number;
   title: string;
   content: string;
   agoTime: string;
-  line: string;
+  line: RawSubwayLineName;
   likeCount: number;
   startDate: string;
   expireDate: string;

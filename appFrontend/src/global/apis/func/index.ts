@@ -10,6 +10,7 @@ import {
   SearchStationNameTypes,
   RawSubwayLineName,
   SubwayStrEnd,
+  IssueContent,
 } from '../entity';
 import { SignInFetchResponse } from '@/screens/signInScreen/apis/entity';
 import { API_BASE_URL } from '@env';
@@ -258,7 +259,7 @@ export const getIssuesByLaneFetch = async (params: { line: string }) => {
  */
 export const getPopularIssuesFetch = async () => {
   try {
-    const res = await axiosInstance.get<{ data: AllIssues }>(`/api/v1/issue/get_popular`);
+    const res = await axiosInstance.get<{ data: IssueContent[] }>(`/api/v1/issue/get_popular`);
     return res.data.data;
   } catch (err) {
     const er = err as AxiosError;

@@ -1,5 +1,5 @@
 import styled from '@emotion/native';
-import { Platform, Pressable, StatusBar } from 'react-native';
+import { Pressable } from 'react-native';
 import { FontText, Space, TextButton } from '@/global/ui';
 import { COLOR } from '@/global/constants';
 // import { RESULTS, requestNotifications } from 'react-native-permissions';
@@ -8,13 +8,12 @@ import ChangeNickNameModal from './components/ChangeNickNameModal';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store/configureStore';
 import packageJson from '../../../package.json';
-import ContractModal from './components/ContractModal';
 import ManageAccountModal from './components/ManageAccountModal';
 import NotiOnModal from './components/NotiOnModal';
 import NotiSettingsModal from './components/NotiSettingsModal';
-import { getStatusBarHeight } from 'react-native-status-bar-height';
 import IconPencil from '@assets/icons/pencil.svg';
 import IconRightArrowHead from '@/assets/icons/right_arrow_head.svg';
+import SubscribeTermsModal from './components/SubscribeTermsModal';
 
 interface RenderMenuProps {
   text: string;
@@ -35,14 +34,10 @@ const requestNotificationPermission = async () => {
 };
 
 const MyRootScreen = () => {
-  const StatusBarHeight =
-    Platform.OS === 'ios'
-      ? getStatusBarHeight(true) - 15
-      : (StatusBar.currentHeight as number) - 24;
-
   const { nickname, email } = useSelector((state: RootState) => state.auth);
   const versionInfo = packageJson.version;
 
+  const [isTermsOpenModal, setIsTermsOpenModal] = useState<boolean>(false);
   const [isNicknameModalOpen, setIsNicknameModalOpen] = useState<boolean>(false);
   const [isContractModalOpen, setIsContractModalOpen] = useState<boolean>(false);
   const [isManageAccountModalOpen, setIsManageAccountModalOpen] = useState<boolean>(false);
@@ -81,12 +76,7 @@ const MyRootScreen = () => {
   );
 
   return (
-    <Container
-      style={{
-        paddingTop: StatusBarHeight,
-        backgroundColor: COLOR.GRAY_F9,
-      }}
-    >
+    <Container>
       <ProfileContainer>
         <NickNameContainer>
           <FontText value={nickname} textSize="16px" textWeight="SemiBold" />
@@ -112,14 +102,14 @@ const MyRootScreen = () => {
         {/* {renderMenu({ text: '알림 설정', onPress: () => confirmUserNotificationOn() })} */}
         {renderMenu({
           text: '약관 및 정책',
-          onPress: () => setIsContractModalOpen(true),
+          onPress: () => setIsTermsOpenModal(true),
         })}
         {renderMenu({ text: '버전', versionInfo })}
 
+        {isTermsOpenModal && <SubscribeTermsModal closeModal={() => setIsTermsOpenModal(false)} />}
         {isNicknameModalOpen && (
           <ChangeNickNameModal onCancel={() => setIsNicknameModalOpen(false)} />
         )}
-        {isContractModalOpen && <ContractModal onCancel={() => setIsContractModalOpen(false)} />}
         {isManageAccountModalOpen && (
           <ManageAccountModal onCancel={() => setIsManageAccountModalOpen(false)} />
         )}
@@ -134,7 +124,7 @@ const MyRootScreen = () => {
 
 export default MyRootScreen;
 
-const Container = styled.View`
+const Container = styled.SafeAreaView`
   flex: 1;
 `;
 const NickNameContainer = styled.Pressable`
