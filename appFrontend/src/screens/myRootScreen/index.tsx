@@ -8,12 +8,12 @@ import ChangeNickNameModal from './components/ChangeNickNameModal';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store/configureStore';
 import packageJson from '../../../package.json';
-import ContractModal from './components/ContractModal';
 import ManageAccountModal from './components/ManageAccountModal';
 import NotiOnModal from './components/NotiOnModal';
 import NotiSettingsModal from './components/NotiSettingsModal';
 import IconPencil from '@assets/icons/pencil.svg';
 import IconRightArrowHead from '@/assets/icons/right_arrow_head.svg';
+import SubscribeTermsModal from './components/SubscribeTermsModal';
 
 interface RenderMenuProps {
   text: string;
@@ -37,6 +37,7 @@ const MyRootScreen = () => {
   const { nickname, email } = useSelector((state: RootState) => state.auth);
   const versionInfo = packageJson.version;
 
+  const [isTermsOpenModal, setIsTermsOpenModal] = useState<boolean>(false);
   const [isNicknameModalOpen, setIsNicknameModalOpen] = useState<boolean>(false);
   const [isContractModalOpen, setIsContractModalOpen] = useState<boolean>(false);
   const [isManageAccountModalOpen, setIsManageAccountModalOpen] = useState<boolean>(false);
@@ -101,14 +102,14 @@ const MyRootScreen = () => {
         {/* {renderMenu({ text: '알림 설정', onPress: () => confirmUserNotificationOn() })} */}
         {renderMenu({
           text: '약관 및 정책',
-          onPress: () => setIsContractModalOpen(true),
+          onPress: () => setIsTermsOpenModal(true),
         })}
         {renderMenu({ text: '버전', versionInfo })}
 
+        {isTermsOpenModal && <SubscribeTermsModal closeModal={() => setIsTermsOpenModal(false)} />}
         {isNicknameModalOpen && (
           <ChangeNickNameModal onCancel={() => setIsNicknameModalOpen(false)} />
         )}
-        {isContractModalOpen && <ContractModal onCancel={() => setIsContractModalOpen(false)} />}
         {isManageAccountModalOpen && (
           <ManageAccountModal onCancel={() => setIsManageAccountModalOpen(false)} />
         )}
