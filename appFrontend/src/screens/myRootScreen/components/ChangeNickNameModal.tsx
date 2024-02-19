@@ -4,9 +4,11 @@ import { Modal, Pressable, SafeAreaView, View } from 'react-native';
 import { FontText, Input, Space, TextButton } from '@/global/ui';
 import { COLOR } from '@/global/constants';
 import { useChangeNicknameQuery } from '@/global/apis/hook';
-import XCircle from '@assets/icons/x-circle.svg';
+import XCircle from '@assets/icons/x-circle-standard.svg';
 import IconXCircleFill from '@assets/icons/x_circle_fill.svg';
 import IconCrossX from '@assets/icons/cross_x.svg';
+import { useAppDispatch } from '@/store';
+import { saveUserInfo } from '@/store/modules';
 
 interface ModalProps {
   onCancel: () => void;
@@ -16,10 +18,12 @@ const ChangeNickNameModal = ({ onCancel }: ModalProps) => {
   const [newNickname, setNewNickname] = useState<string>('');
   const [isNicknameValid, setIsNicknameValid] = useState<boolean>(true);
   const [errorMessage, setErrorMessage] = useState<string>('');
+  const dispatch = useAppDispatch();
 
   const { mutate } = useChangeNicknameQuery({
     onSuccess: () => {
       onCancel();
+      dispatch(saveUserInfo({ nickname: newNickname }));
       //TODO: 성공 토스트 띄우기
     },
     onError: (error: any) => {
@@ -72,6 +76,7 @@ const ChangeNickNameModal = ({ onCancel }: ModalProps) => {
               inputMode="search"
               onChangeText={setNewNickname}
               autoFocus
+              maxLength={7}
             />
             <IconXCircleFill width={19.5} onPress={() => setNewNickname('')} />
           </InputContainer>
