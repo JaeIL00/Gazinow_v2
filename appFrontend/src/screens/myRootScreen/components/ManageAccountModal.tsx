@@ -37,11 +37,8 @@ const ManageAccountModal = ({ onCancel }: ManageAccountModalProps) => {
     const accessToken = await getEncryptedStorage('access_token');
     const refreshToken = await getEncryptedStorage('refresh_token');
     logoutMutate({ accessToken, refreshToken });
-    hideModal();
+    setPopupVisible(false);
   };
-
-  const showLogoutPopup = () => setPopupVisible(true);
-  const hideModal = () => setPopupVisible(false);
 
   const renderMenu = ({ text, onPress }: RenderMenuProps) => (
     <MenuContainer onPress={onPress}>
@@ -70,7 +67,7 @@ const ManageAccountModal = ({ onCancel }: ManageAccountModalProps) => {
             text: '비밀번호 변경',
             onPress: () => setIsChangePwModalOpened(true),
           })}
-          {renderMenu({ text: '로그아웃', onPress: () => showLogoutPopup() })}
+          {renderMenu({ text: '로그아웃', onPress: () => setPopupVisible(true) })}
           {renderMenu({
             text: '회원 탈퇴',
             onPress: () => setIsConfirmQuitModalOpen(true),
@@ -80,7 +77,7 @@ const ManageAccountModal = ({ onCancel }: ManageAccountModalProps) => {
           )}
           <MyTabModal
             isVisible={popupVisible}
-            onCancel={hideModal}
+            onCancel={() => setPopupVisible(false)}
             onConfirm={handleConfirm}
             title="로그아웃 할까요?"
             confirmText="로그아웃"
