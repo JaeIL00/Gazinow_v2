@@ -46,7 +46,7 @@ const AddNewRouteModal = ({ isVisible, onCancel }: ModalProps) => {
   };
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={{ flex: 1 }}>
       <Modal visible={isVisible} onRequestClose={onBackBtnPress}>
         <AddNewRouteHeader onBackBtnPress={onBackBtnPress} onCloseBtnPress={onCloseBtnPress} />
         {(depth === 'search' || depth === 'pathList') && (

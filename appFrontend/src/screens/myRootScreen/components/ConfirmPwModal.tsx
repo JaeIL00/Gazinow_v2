@@ -60,7 +60,7 @@ const ConfirmPwModal = ({ onCancel, isVisible }: ModalProps) => {
   });
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={{ flex: 1 }}>
       <Modal visible={isVisible} onRequestClose={onCancel}>
         <Header>
           <Pressable hitSlop={20} onPress={onCancel}>

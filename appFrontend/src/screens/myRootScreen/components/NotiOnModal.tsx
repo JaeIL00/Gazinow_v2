@@ -29,7 +29,7 @@ const NotiOnModal = ({ onCancel }: ModalProps) => {
   };
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={{ flex: 1 }}>
       <Modal visible onRequestClose={onCancel}>
         <Header>
           <TitleContainer>

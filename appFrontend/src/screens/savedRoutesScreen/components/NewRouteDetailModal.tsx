@@ -28,7 +28,7 @@ const NewRouteDetailModal = ({ item, setDepth, onRequestClose }: ModalProps) => 
   };
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={{ flex: 1 }}>
       <Modal onRequestClose={onRequestCloseByProp}>
         <View
           style={[

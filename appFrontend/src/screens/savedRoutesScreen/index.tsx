@@ -14,7 +14,7 @@ const SavedRoutesScreen = () => {
   const navigation = useRootNavigation();
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={{ flex: 1 }}>
       <Container>
         <Header>
           <Pressable hitSlop={20} onPress={() => navigation.goBack()}>

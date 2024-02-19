@@ -43,7 +43,7 @@ const ChangeNickNameModal = ({ onCancel }: ModalProps) => {
   };
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={{ flex: 1 }}>
       <Modal visible onRequestClose={onCancel}>
         <Header>
           <Pressable hitSlop={20} onPress={onCancel}>
