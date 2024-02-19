@@ -6,8 +6,8 @@ import { COLOR } from '@/global/constants';
 import AddNewRouteModal from './components/AddNewRouteModal';
 import { useRootNavigation } from '@/navigation/RootNavigation';
 import { Pressable, SafeAreaView } from 'react-native';
-import PlusBtn from '@assets/icons/plus-circle.svg';
-import BackBtn from '@assets/icons/backBtn.svg';
+import IconPlusBtn from '@assets/icons/plus_circle.svg';
+import IconLeftArrowHead from '@assets/icons/left_arrow_head.svg';
 
 const SavedRoutesScreen = () => {
   const [isAddRouteModalOpen, setIsAddRouteModalOpen] = useState<boolean>(false);
@@ -18,7 +18,7 @@ const SavedRoutesScreen = () => {
       <Container>
         <Header>
           <Pressable hitSlop={20} onPress={() => navigation.goBack()}>
-            <BackBtn />
+            <IconLeftArrowHead />
           </Pressable>
           <Space width="12px" />
           <FontText value="저장경로 편집" textSize="18px" textWeight="Medium" lineHeight="23px" />
@@ -27,7 +27,7 @@ const SavedRoutesScreen = () => {
         <RouteContainer>
           <RenderSavedRoutes />
           <AddContainer onPress={() => setIsAddRouteModalOpen(true)}>
-            <PlusBtn />
+            <IconPlusBtn />
             <FontText
               value="  경로 추가하기"
               textSize="14px"

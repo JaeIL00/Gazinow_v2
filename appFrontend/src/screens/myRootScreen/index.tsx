@@ -2,7 +2,7 @@ import styled from '@emotion/native';
 import { Pressable } from 'react-native';
 import { FontText, Space, TextButton } from '@/global/ui';
 import { COLOR } from '@/global/constants';
-import { RESULTS, requestNotifications } from 'react-native-permissions';
+// import { RESULTS, requestNotifications } from 'react-native-permissions';
 import { useState } from 'react';
 import ChangeNickNameModal from './components/ChangeNickNameModal';
 import { useSelector } from 'react-redux';
@@ -12,25 +12,25 @@ import ContractModal from './components/ContractModal';
 import ManageAccountModal from './components/ManageAccountModal';
 import NotiOnModal from './components/NotiOnModal';
 import NotiSettingsModal from './components/NotiSettingsModal';
-import Pencil from '@assets/icons/pencil.svg';
-import MoreBtn from '@/assets/icons/moreBtnMy.svg';
+import IconPencil from '@assets/icons/pencil.svg';
+import IconRightArrowHead from '@/assets/icons/right_arrow_head.svg';
 
 interface RenderMenuProps {
   text: string;
   onPress?: () => void;
   versionInfo?: string;
 }
-const ALLOWED_PERMISSIONS = {
-  [RESULTS.GRANTED]: true,
-  [RESULTS.LIMITED]: true,
-  [RESULTS.UNAVAILABLE]: true,
-  [RESULTS.BLOCKED]: false,
-  [RESULTS.DENIED]: false,
-};
+// const ALLOWED_PERMISSIONS = {
+//   [RESULTS.GRANTED]: true,
+//   [RESULTS.LIMITED]: true,
+//   [RESULTS.UNAVAILABLE]: true,
+//   [RESULTS.BLOCKED]: false,
+//   [RESULTS.DENIED]: false,
+// };
 
 const requestNotificationPermission = async () => {
-  const { status } = await requestNotifications(['alert']);
-  return ALLOWED_PERMISSIONS[status];
+  // const { status } = await requestNotifications(['alert']);
+  // return ALLOWED_PERMISSIONS[status];
 };
 
 const MyRootScreen = () => {
@@ -44,12 +44,12 @@ const MyRootScreen = () => {
   const [isNotiSettingsModalOpen, setIsNotiSettingsModalOpen] = useState<boolean>(false);
 
   const confirmUserNotificationOn = async () => {
-    const result = await requestNotificationPermission();
-    if (!result) {
-      setIsNotiOnModalOpen(true);
-    } else {
-      setIsNotiSettingsModalOpen(true);
-    }
+    // const result = await requestNotificationPermission();
+    // if (!result) {
+    //   setIsNotiOnModalOpen(true);
+    // } else {
+    //   setIsNotiSettingsModalOpen(true);
+    // }
   };
 
   const renderMenu = ({ text, onPress, versionInfo }: RenderMenuProps) => (
@@ -69,7 +69,7 @@ const MyRootScreen = () => {
           lineHeight="17px"
         />
       ) : (
-        <MoreBtn width={14} />
+        <IconRightArrowHead width={14} />
       )}
     </MenuContainer>
   );
@@ -78,10 +78,10 @@ const MyRootScreen = () => {
     <Container>
       <ProfileContainer>
         <NickNameContainer>
-          <FontText value={nickname} textSize="16px" textWeight="Medium" lineHeight="21px" />
+          <FontText value={nickname} textSize="16px" textWeight="SemiBold" />
           <Space width="5px" />
           <Pressable hitSlop={20} onPress={() => setIsNicknameModalOpen(true)}>
-            <Pencil width={15} />
+            <IconPencil width={15} />
           </Pressable>
         </NickNameContainer>
         <FontText

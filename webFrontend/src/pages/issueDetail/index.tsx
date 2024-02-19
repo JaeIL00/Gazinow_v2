@@ -7,8 +7,7 @@ import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import "dayjs/locale/ko";
 import color from "@global/constants/color";
-import { WrongInfoModal } from "./components";
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import { debounce } from "lodash";
 
 dayjs.locale("ko");

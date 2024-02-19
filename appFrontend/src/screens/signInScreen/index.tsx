@@ -8,6 +8,8 @@ import { SignInFormTypes } from './apis/entity';
 import { useSignInMutation } from './apis/hook';
 import { COLOR } from '@/global/constants';
 import CloseIcon from 'react-native-vector-icons/Ionicons';
+import { useAppDispatch } from '@/store';
+import { saveUserInfo } from '@/store/modules';
 
 const emailValidation = new RegExp(
   /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i,
@@ -20,11 +22,13 @@ const initialFormState: SignInFormTypes = {
 
 const SignInScreen = () => {
   const navigation = useRootNavigation();
+  const dispatch = useAppDispatch();
 
   const { isLoading, signInMutate } = useSignInMutation({
-    onSuccess: async ({ accessToken, refreshToken }) => {
-      await setEncryptedStorage('access_token', accessToken);
-      await setEncryptedStorage('refresh_token', refreshToken);
+    onSuccess: async (data) => {
+      dispatch(saveUserInfo({ nickname: data.nickName, email: data.email }));
+      await setEncryptedStorage('access_token', data.accessToken);
+      await setEncryptedStorage('refresh_token', data.refreshToken);
       navigation.reset({ routes: [{ name: 'MainBottomTab' }] });
     },
     onError: ({ status }) => {

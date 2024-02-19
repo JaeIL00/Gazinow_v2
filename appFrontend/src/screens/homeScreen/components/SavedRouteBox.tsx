@@ -7,7 +7,7 @@ import styled from '@emotion/native';
 import { SubwaySimplePath } from '@/global/components';
 import { Path, RenderSavedRoutesType } from '@/global/apis/entity';
 import NewRouteDetailModal from '@/screens/savedRoutesScreen/components/NewRouteDetailModal';
-import MoreBtn from '@/assets/icons/moreBtn.svg';
+import IconRightArrowHead from '@/assets/icons/right_arrow_head.svg';
 
 const SavedRouteBox = () => {
   const { data: savedRoutes } = useGetSavedRoutesQuery();
@@ -83,7 +83,7 @@ const SavedRouteBox = () => {
                     }}
                   />
                   <Space width="4px" />
-                  <MoreBtn />
+                  <IconRightArrowHead />
                 </TextContainer>
               </Pressable>
             </TitleContainer>

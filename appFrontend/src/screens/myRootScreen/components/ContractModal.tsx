@@ -1,7 +1,7 @@
 import styled from '@emotion/native';
 import { Modal } from 'react-native';
 import { FontText, Space } from '@/global/ui';
-import BackBtn from '@assets/icons/backBtn.svg';
+import IconLeftArrowHead from '@assets/icons/left_arrow_head.svg';
 
 interface ModalProps {
   onCancel: () => void;
@@ -10,7 +10,7 @@ interface ModalProps {
 const ContractModal = ({ onCancel }: ModalProps) => (
   <Modal visible onRequestClose={onCancel}>
     <Header>
-      <BackBtn width="24px" onPress={onCancel} />
+      <IconLeftArrowHead width="24px" onPress={onCancel} />
     </Header>
     <Container>
       <FontText value={`약관`} textSize="24px" textWeight="Bold" lineHeight="32px" />

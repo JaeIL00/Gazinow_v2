@@ -1,7 +1,16 @@
 import { COLOR } from '@/global/constants';
 import { FontText, IconButton, Space, TextButton } from '@/global/ui';
 import { useEffect, useRef, useState } from 'react';
-import { Animated, Dimensions, Modal, Pressable, View } from 'react-native';
+import {
+  Animated,
+  Dimensions,
+  KeyboardAvoidingView,
+  Modal,
+  Platform,
+  Pressable,
+  SafeAreaView,
+  View,
+} from 'react-native';
 import CheckIcon from 'react-native-vector-icons/Feather';
 import { WebView } from 'react-native-webview';
 import StepButton from '../ui/StepButton';
@@ -86,15 +95,9 @@ const SubscribeTermsModal = ({ setStep, closeModal }: SubscribeTermsModalProps) 
   }, []);
 
   return (
-    <Modal
-      visible
-      onRequestClose={!!openUrl ? () => setOpenUrl('') : closeModal}
-      transparent
-      // statusBarTranslucent FIXME: 모달 풀화면 요구시 활성화
-      // presentationStyle="overFullScreen" FIXME: 모달 풀화면 요구시 활성화
-    >
+    <Modal visible onRequestClose={!!openUrl ? () => setOpenUrl('') : closeModal} transparent>
       {!!openUrl ? (
-        <View style={{ flex: 1 }}>
+        <SafeAreaView style={{ flex: 1 }}>
           <View
             style={{
               paddingLeft: 16,
@@ -116,7 +119,7 @@ const SubscribeTermsModal = ({ setStep, closeModal }: SubscribeTermsModalProps) 
             />
           </View>
           <WebView source={{ uri: openUrl }} />
-        </View>
+        </SafeAreaView>
       ) : (
         <>
           {/* 백그라운드 */}

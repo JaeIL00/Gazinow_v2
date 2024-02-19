@@ -36,10 +36,7 @@ export const tokenReissueFetch = async ({
         baseURL: API_BASE_URL,
       },
     );
-    return {
-      newAccessToken: res.data.data.accessToken,
-      newRefreshToken: res.data.data.refreshToken,
-    };
+    return res.data.data;
   } catch (err) {
     const er = err as AxiosError;
     throw er;

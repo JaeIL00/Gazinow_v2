@@ -7,8 +7,8 @@ import { useChangePasswordQuery, useCheckPasswordQuery } from '@/global/apis/hoo
 import MyTabModal from '@/global/components/MyTabModal';
 import { debounce } from 'lodash';
 import XCircle from '@assets/icons/x-circle.svg';
-import BackBtn from '@assets/icons/backBtn.svg';
-import Check from '@assets/icons/check.svg';
+import IconLeftArrowHead from '@assets/icons/left_arrow_head.svg';
+import IconCheck from '@assets/icons/check.svg';
 
 interface ModalProps {
   onCancel: () => void;
@@ -99,7 +99,7 @@ const ChangePwModal = ({ onCancel }: ModalProps) => {
       <Modal visible onRequestClose={onCancel}>
         <Header>
           <Pressable hitSlop={20} onPress={onCancel}>
-            <BackBtn />
+            <IconLeftArrowHead />
           </Pressable>
           <Space width="21px" />
           <FontText value="비밀번호 변경" textSize="18px" lineHeight="23px" textWeight="Medium" />
@@ -157,7 +157,7 @@ const ChangePwModal = ({ onCancel }: ModalProps) => {
           </InputContainer>
           {curPassword !== '' && (
             <MessageContainer>
-              {isPwRight ? <Check stroke={COLOR.LIGHT_GREEN} /> : <XCircle width={14} />}
+              {isPwRight ? <IconCheck stroke={COLOR.LIGHT_GREEN} /> : <XCircle width={14} />}
               <FontText
                 value={isPwRight ? ' 비밀번호가 확인되었습니다' : ' 비밀번호가 틀립니다'}
                 textSize="12px"

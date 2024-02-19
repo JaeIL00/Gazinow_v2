@@ -1,9 +1,10 @@
 import { View } from 'react-native';
+import type { TextInput } from 'react-native/types';
 import { FontText, Input, Space } from '@/global/ui';
 import { COLOR } from '@/global/constants';
 import CheckIcon from 'react-native-vector-icons/Feather';
 import CloseIcon from 'react-native-vector-icons/Ionicons';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useEmailConfirm } from '../apis/hooks';
 import ConfirmEmailModal from './ConfirmEmailModal';
 import useBackgroundInterval from '../hooks/useBackgroundInterval';
@@ -25,21 +26,23 @@ interface EmailStepProps {
 }
 
 const EmailStep = ({ emailValue, setStep, changeEmailValue }: EmailStepProps) => {
+  const inputRef = useRef<TextInput>(null);
+
   const { authNumber, resetAuthNumber, emailConfirmMutate } = useEmailConfirm({
     onSuccess: () => {
-      setIsSuccess(true);
       setIsOpenConfirmModal(true);
     },
     onError: (error) => {
-      if (error.message.includes('409')) {
-        setIsValidEmail(false);
+      setIsValidEmail(false);
+      if (error.response?.status === 409) {
         setErrorMessage('이미 가입된 이메일입니다');
+      } else if (error.response?.status === 400) {
+        setErrorMessage('올바른 이메일 형식이 아닙니다');
       }
     },
   });
-
+  console.log(authNumber);
   const [errorMessage, setErrorMessage] = useState<string>('');
-  const [isSuccess, setIsSuccess] = useState<boolean>(false);
   const [isValidEmail, setIsValidEmail] = useState<boolean>(false);
   const [isOpenConfirmModal, setIsOpenConfirmModal] = useState<boolean>(false);
   const [timer, setTimer] = useState<TimerType>({
@@ -53,7 +56,6 @@ const EmailStep = ({ emailValue, setStep, changeEmailValue }: EmailStepProps) =>
     if (!text) return;
     const isValid = emailValidation.test(text);
     setIsValidEmail(isValid);
-    setIsSuccess(false);
   };
 
   const closeModal = () => {
@@ -131,6 +133,7 @@ const EmailStep = ({ emailValue, setStep, changeEmailValue }: EmailStepProps) =>
             }}
           >
             <Input
+              isBlur={isOpenConfirmModal}
               value={emailValue}
               placeholder="이메일(아이디)입력"
               placeholderTextColor={COLOR.GRAY_BE}
@@ -157,7 +160,7 @@ const EmailStep = ({ emailValue, setStep, changeEmailValue }: EmailStepProps) =>
                 <CloseIcon name="close-circle-outline" size={14} color={COLOR.LIGHT_RED} />
                 <Space width="3px" />
                 <FontText
-                  value="이메일 형식이 올바르지 않습니다"
+                  value="올바른 이메일 형식이 아닙니다"
                   textSize="12px"
                   textWeight="Medium"
                   textColor={COLOR.LIGHT_RED}

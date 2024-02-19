@@ -4,7 +4,7 @@ import { FontText, Space, TextButton } from '@/global/ui';
 import { COLOR } from '@/global/constants';
 import MyTabModal from '@/global/components/MyTabModal';
 import { Modal, Pressable, SafeAreaView } from 'react-native';
-import BackBtn from '@assets/icons/backBtn.svg';
+import IconLeftArrowHead from '@assets/icons/left_arrow_head.svg';
 import ConfirmPwModal from './ConfirmPwModal';
 
 interface ConfirmQuitModalProps {
@@ -32,7 +32,7 @@ const ConfirmQuitModal = ({ onCancel }: ConfirmQuitModalProps) => {
       <Modal visible onRequestClose={onCancel}>
         <Header>
           <Pressable hitSlop={20} onPress={onCancel}>
-            <BackBtn />
+            <IconLeftArrowHead />
           </Pressable>
         </Header>
         <Container>

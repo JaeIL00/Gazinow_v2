@@ -1,7 +1,6 @@
 import styled from '@emotion/native';
 import Icon from 'react-native-vector-icons/Feather';
 
-import { iconPath } from '@/assets/icons/iconPath';
 import { FontText, Input, IconButton, Space } from '@/global/ui';
 import { COLOR } from '@/global/constants';
 import { useAppDispatch } from '@/store';
@@ -12,6 +11,7 @@ import { debounce } from 'lodash';
 import { Modal, SafeAreaView } from 'react-native';
 import { SelectedStationTypes } from '../../screens/homeScreen/components/SwapStation';
 import { subwayReturnLineName } from '@/global/utils/subwayLine';
+import IconLocationPin from '@assets/icons/location_pin.svg';
 
 interface SearchStationModalProps {
   searchType: '출발역' | '도착역';
@@ -154,7 +154,7 @@ const SearchStationModal = ({
             <Ul marginTop="28px">
               {searchResultData.map(({ stationName, stationLine }, idx) => (
                 <Li key={idx} onPress={() => stationBtnHandler({ stationLine, stationName })}>
-                  <LocateIcon source={iconPath['location_pin_gray']} width={25} height={25} />
+                  <IconLocationPin />
                   <StationInfoBox>
                     <FontText
                       value={stationName}

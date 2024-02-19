@@ -2,11 +2,11 @@ import { css } from '@emotion/native';
 import { useState } from 'react';
 import { Image, View } from 'react-native';
 
-import { iconPath } from '@/assets/icons/iconPath';
 import { FontText, IconButton, Space } from '@/global/ui';
 import { subwayLineColor } from '@/global/utils';
 import { SubPath } from '@/global/apis/entity';
 import { COLOR } from '@/global/constants';
+import IconWalkHuman from '@assets/icons/walk_human.svg';
 
 interface SearchPathDetailItemProps {
   data: SubPath;
@@ -208,7 +208,8 @@ const SearchPathDetailItem = ({ data, isLastLane }: SearchPathDetailItemProps) =
             align-items: center;
           `}
         >
-          <Image source={iconPath.walk_human_gray} style={{ width: 24, height: 24 }} />
+          <IconWalkHuman width={24} height={24} />
+          {/* <Image source={iconPath.walk_human_gray} style={{ width: 24, height: 24 }} /> */}
           <View
             style={css`
               overflow: hidden;

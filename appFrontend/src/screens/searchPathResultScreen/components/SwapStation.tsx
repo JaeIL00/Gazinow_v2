@@ -6,8 +6,9 @@ import { COLOR, ARRIVAL_STATION, DEPARTURE_STATION } from '@/global/constants';
 import { useAppDispatch } from '@/store';
 import { getSeletedStation } from '@/store/modules';
 import { SearchStationModal } from '@/screens/homeScreen/components';
-import { View } from 'react-native';
+import { TouchableOpacity, View } from 'react-native';
 import { SelectedStationTypes } from '..';
+import IconSwapChange from '@assets/icons/swap_change.svg';
 
 type StationTypes = typeof DEPARTURE_STATION | typeof ARRIVAL_STATION;
 
@@ -99,13 +100,16 @@ const SwapStation = ({ selectedStation, setSelectedStation }: SwapStationProps) 
             onPress={() => openSearchModal(ARRIVAL_STATION)}
           />
         </View>
-        <IconButton
+        {/* <IconButton
           isFontIcon={false}
           imagePath="exchange_gray"
           iconWidth="20px"
           iconHeight="20px"
-          onPress={swapStation}
-        />
+          
+        /> */}
+        <TouchableOpacity onPress={swapStation}>
+          <IconSwapChange />
+        </TouchableOpacity>
       </View>
     </>
   );

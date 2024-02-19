@@ -3,7 +3,6 @@ import { SafeAreaView, ScrollView, StatusBar, TouchableOpacity, View } from 'rea
 
 import { FontText, IconButton, Space } from '@/global/ui';
 import { COLOR } from '@/global/constants';
-import { iconPath } from '@/assets/icons/iconPath';
 import dayjs from 'dayjs';
 import 'dayjs/locale/ko';
 import { SubwaySimplePath } from '@/global/components';
@@ -13,6 +12,8 @@ import { StationDataTypes, changeIsSearchedPath } from '@/store/modules';
 import { useEffect, useState } from 'react';
 import { useHomeNavigation } from '@/navigation/HomeNavigation';
 import SwapStation from './components/SwapStation';
+import IconRightArrowHead from '@assets/icons/right_arrow_head.svg';
+import IconLeftArrowHead from '@assets/icons/left_arrow_head.svg';
 
 dayjs.locale('ko');
 
@@ -62,13 +63,9 @@ const SearchPathResultScreen = () => {
           }}
         >
           <View style={{ marginTop: 4, marginRight: 16 }}>
-            <IconButton
-              isFontIcon={false}
-              imagePath="left_arrow_nonbar"
-              iconWidth="9px"
-              iconHeight="16px"
-              onPress={() => homeNavigation.goBack()}
-            />
+            <TouchableOpacity onPress={() => homeNavigation.goBack()}>
+              <IconLeftArrowHead />
+            </TouchableOpacity>
           </View>
           <SwapStation selectedStation={selectedStation} setSelectedStation={setSelectedStation} />
         </View>
@@ -138,7 +135,7 @@ const SearchPathResultScreen = () => {
                         textColor="#999"
                       />
                       <Space width="4px" />
-                      <MoreIcon source={iconPath['right_arrow_nonbar']} />
+                      <IconRightArrowHead />
                     </TouchableOpacity>
                   </View>
                   <View style={{ height: 4 }} />

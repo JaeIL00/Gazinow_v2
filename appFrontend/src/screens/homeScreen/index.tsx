@@ -1,6 +1,7 @@
 import { SafeAreaView, ScrollView, Text, View } from 'react-native';
 import { SavedRouteIssues, SwapStation } from './components';
 import { COLOR } from '@/global/constants';
+import { Space } from '@/global/ui';
 
 const HomeScreen = () => {
   return (
@@ -9,7 +10,7 @@ const HomeScreen = () => {
         contentContainerStyle={{ paddingHorizontal: 16, backgroundColor: COLOR.GRAY_F9 }}
         showsVerticalScrollIndicator={false}
       >
-        <Text>홈 페이지</Text>
+        <Space height="16px" />
         <SwapStation />
         <SavedRouteIssues />
       </ScrollView>
