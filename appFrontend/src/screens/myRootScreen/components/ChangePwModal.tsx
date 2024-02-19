@@ -204,7 +204,7 @@ const ChangePwModal = ({ onCancel }: ModalProps) => {
           {!isNewEqualsToOld && changePassword !== '' && (
             <>
               <MessageContainer>
-                <Check stroke={lengValidColor} />
+                <IconCheck stroke={lengValidColor} />
                 <Space width="4px" />
                 <FontText
                   value="8자-20자 이내"
@@ -213,7 +213,7 @@ const ChangePwModal = ({ onCancel }: ModalProps) => {
                   textColor={lengValidColor}
                 />
                 <Space width="12px" />
-                <Check stroke={comValidColor} />
+                <IconCheck stroke={comValidColor} />
                 <Space width="4px" />
                 <FontText
                   value="영어, 숫자, 특수문자 포함"
@@ -240,7 +240,7 @@ const ChangePwModal = ({ onCancel }: ModalProps) => {
               {confirmPassword !== changePassword ? (
                 <XCircle width={14} />
               ) : (
-                <Check stroke={COLOR.LIGHT_GREEN} />
+                <IconCheck stroke={COLOR.LIGHT_GREEN} />
               )}
               <FontText
                 value={
