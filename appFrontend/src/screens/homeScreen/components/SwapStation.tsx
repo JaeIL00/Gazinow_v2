@@ -7,10 +7,10 @@ import { COLOR, ARRIVAL_STATION, DEPARTURE_STATION } from '@/global/constants';
 import { useAppDispatch } from '@/store';
 import { getSeletedStation } from '@/store/modules';
 import type { StationDataTypes } from '@/store/modules';
-import SearchStationModal from '../../../global/components/SearchStationModal';
 import { useHomeNavigation } from '@/navigation/HomeNavigation';
 import { TouchableOpacity } from 'react-native';
 import IconSwapChange from '@assets/icons/swap_change.svg';
+import { useIssueNavigation } from '@/navigation/IssueNavigation';
 
 export interface SelectedStationTypes {
   departure: StationDataTypes;
@@ -22,6 +22,7 @@ type StationTypes = typeof DEPARTURE_STATION | typeof ARRIVAL_STATION;
 const SwapStation = () => {
   const homeNavigation = useHomeNavigation();
   const dispatch = useAppDispatch();
+  const navigation = useIssueNavigation();
 
   const [searchType, setSearchType] = useState<StationTypes>('출발역');
   const [isOpenSearchModal, setIsOpenSearchModal] = useState<boolean>(false);
@@ -36,11 +37,11 @@ const SwapStation = () => {
     },
   });
 
-  const closeSearchModal = () => setIsOpenSearchModal(false);
-
-  const openSearchModal = (type: StationTypes) => {
+  const navigateSearchStation = (type: StationTypes) => {
     setSearchType(type);
-    setIsOpenSearchModal(true);
+    // setIsOpenSearchModal(true);
+    console.log('hi');
+    navigation.navigate('SearchStation');
   };
 
   const swapStation = () => {
@@ -88,13 +89,13 @@ const SwapStation = () => {
 
   return (
     <>
-      {isOpenSearchModal && (
+      {/* {isOpenSearchModal && (
         <SearchStationModal
           closeModal={closeSearchModal}
           setSubwayStation={setSelectedStation}
           searchType={searchType}
         />
-      )}
+      )} */}
       <Container offset={[0, 4]} distance={34} startColor="rgba(0,0,0,0.05)">
         <InnerBox>
           <StationButton
@@ -107,7 +108,7 @@ const SwapStation = () => {
             textWeight="Regular"
             lineHeight="21px"
             textColor={selectedStation.departure.stationName ? COLOR.BASIC_BLACK : COLOR.GRAY_999}
-            onPress={() => openSearchModal(DEPARTURE_STATION)}
+            onPress={() => navigateSearchStation(DEPARTURE_STATION)}
           />
           <StationButton
             value={
@@ -119,7 +120,7 @@ const SwapStation = () => {
             textWeight="Regular"
             lineHeight="21px"
             textColor={selectedStation.arrival.stationName ? COLOR.BASIC_BLACK : COLOR.GRAY_999}
-            onPress={() => openSearchModal(ARRIVAL_STATION)}
+            onPress={() => navigateSearchStation(ARRIVAL_STATION)}
           />
         </InnerBox>
         {/* <IconButton
