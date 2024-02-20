@@ -19,7 +19,7 @@ const IssueModalTest = ({ id, onRequestClose }: IssueDetailProps) => {
     <Modal onRequestClose={onRequestClose}>
       <WebView
         ref={webViewRef}
-        source={{ uri: `http://192.168.0.3:3000/issue/${id}` }}
+        source={{ uri: `https://www.gazinow.com/issue/${id}` }}
         onLoadStart={() => {
           webViewRef.current?.postMessage(accessToken);
         }}
