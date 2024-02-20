@@ -8,7 +8,7 @@ export interface IssueGet {
   title: string;
   content: string;
   agoTime: string;
-  line: string | null;
+  line: string[] | null;
   likeCount: number;
   keyword: IssueKeywords;
   /**
