@@ -29,8 +29,8 @@ const NotiOnModal = ({ onCancel }: ModalProps) => {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <Modal visible onRequestClose={onCancel}>
+    <Modal visible onRequestClose={onCancel}>
+      <SafeAreaView style={{ flex: 1 }}>
         <Header>
           <TitleContainer>
             <IconLeftArrowHead width="24px" onPress={onCancel} />
@@ -74,8 +74,8 @@ const NotiOnModal = ({ onCancel }: ModalProps) => {
             />
           </BottomBtn>
         </Container>
-      </Modal>
-    </SafeAreaView>
+      </SafeAreaView>
+    </Modal>
   );
 };
 export default NotiOnModal;

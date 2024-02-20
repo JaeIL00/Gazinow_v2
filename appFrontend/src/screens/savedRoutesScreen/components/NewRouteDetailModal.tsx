@@ -28,8 +28,8 @@ const NewRouteDetailModal = ({ item, setDepth, onRequestClose }: ModalProps) => 
   };
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <Modal onRequestClose={onRequestCloseByProp}>
+    <Modal onRequestClose={onRequestCloseByProp}>
+      <SafeAreaView style={{ flex: 1 }}>
         <View
           style={[
             css`
@@ -125,8 +125,8 @@ const NewRouteDetailModal = ({ item, setDepth, onRequestClose }: ModalProps) => 
             )}
           />
         </View>
-      </Modal>
-    </SafeAreaView>
+      </SafeAreaView>
+    </Modal>
   );
 };
 

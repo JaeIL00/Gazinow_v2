@@ -23,8 +23,8 @@ const NotiSettingsModal = ({ onCancel }: ModalProps) => {
   const submitNotificationSettings = () => {};
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <Modal visible onRequestClose={onCancel}>
+    <Modal visible onRequestClose={onCancel}>
+      <SafeAreaView style={{ flex: 1 }}>
         <Header>
           <TitleContainer>
             <IconLeftArrowHead width="24px" onPress={onCancel} />
@@ -80,8 +80,8 @@ const NotiSettingsModal = ({ onCancel }: ModalProps) => {
             </>
           )}
         </Container>
-      </Modal>
-    </SafeAreaView>
+      </SafeAreaView>
+    </Modal>
   );
 };
 export default NotiSettingsModal;

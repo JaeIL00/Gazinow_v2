@@ -53,8 +53,8 @@ const ManageAccountModal = ({ onCancel }: ManageAccountModalProps) => {
   );
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <Modal visible onRequestClose={onCancel}>
+    <Modal visible onRequestClose={onCancel}>
+      <SafeAreaView style={{ flex: 1 }}>
         <Header>
           <Pressable hitSlop={20} onPress={onCancel}>
             <IconLeftArrowHead />
@@ -87,8 +87,8 @@ const ManageAccountModal = ({ onCancel }: ManageAccountModalProps) => {
         {isConfirmQuitModalOpen && (
           <ConfirmQuitModal onCancel={() => setIsConfirmQuitModalOpen(false)} />
         )}
-      </Modal>
-    </SafeAreaView>
+      </SafeAreaView>
+    </Modal>
   );
 };
 export default ManageAccountModal;
