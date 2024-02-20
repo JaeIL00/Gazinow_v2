@@ -6,6 +6,7 @@ import { STORAGE_ACCESS_KEY, STORAGE_REFRESH_KEY } from "@global/constants";
 
 const GaziAPI = axios.create({
   baseURL: import.meta.env.VITE_BACKEND_URL,
+  withCredentials: true,
 });
 
 GaziAPI.interceptors.request.use(async (requestConfig) => {
