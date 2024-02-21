@@ -10,7 +10,6 @@ export interface StationDataTypes {
 interface InitialStateTypes {
   stationType: null | '출발역' | '도착역';
   searchText: string;
-  isSearchedPath: boolean;
   selectedStation: {
     departure: StationDataTypes;
     arrival: StationDataTypes;
@@ -20,7 +19,6 @@ interface InitialStateTypes {
 const initialState: InitialStateTypes = {
   stationType: null,
   searchText: '',
-  isSearchedPath: false,
   selectedStation: {
     departure: {
       stationName: '',
@@ -33,8 +31,8 @@ const initialState: InitialStateTypes = {
   },
 };
 
-const subwaySearchSlice = createSlice({
-  name: 'subwaySearch',
+const stationSearchSlice = createSlice({
+  name: 'stationSearch',
   initialState,
   reducers: {
     getStationType: (state, action: PayloadAction<InitialStateTypes['stationType']>) => {
@@ -46,11 +44,14 @@ const subwaySearchSlice = createSlice({
     getSeletedStation: (state, action: PayloadAction<InitialStateTypes['selectedStation']>) => {
       state.selectedStation = action.payload;
     },
-    changeIsSearchedPath: (state, action: PayloadAction<boolean>) => {
-      state.isSearchedPath = action.payload;
+    swapStation: (state, action: PayloadAction<InitialStateTypes['selectedStation']>) => {
+      state.selectedStation = {
+        departure: action.payload.arrival,
+        arrival: action.payload.departure,
+      };
     },
     initialize: (state) => {
-      state.isSearchedPath = false;
+      state.stationType = null;
       state.selectedStation = {
         departure: {
           stationName: '',
@@ -66,11 +67,6 @@ const subwaySearchSlice = createSlice({
   },
 });
 
-export const {
-  getStationType,
-  getSearchText,
-  getSeletedStation,
-  changeIsSearchedPath,
-  initialize,
-} = subwaySearchSlice.actions;
-export default subwaySearchSlice.reducer;
+export const { swapStation, getStationType, getSearchText, getSeletedStation, initialize } =
+  stationSearchSlice.actions;
+export default stationSearchSlice.reducer;

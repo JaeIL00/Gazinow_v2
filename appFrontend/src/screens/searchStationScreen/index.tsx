@@ -2,8 +2,8 @@ import { useAddRecentSearch, useGetSearchHistory, useSearchStationName } from '@
 import { COLOR } from '@/global/constants';
 import { FontText, IconButton, Space } from '@/global/ui';
 import { subwayReturnLineName } from '@/global/utils/subwayLine';
-import { useAppDispatch } from '@/store';
-import { getSearchText } from '@/store/modules/subwaySearchModule';
+import { useAppDispatch, useAppSelect } from '@/store';
+import { getSearchText, getSeletedStation, initialize } from '@/store/modules/stationSearchModule';
 import styled from '@emotion/native';
 import { debounce } from 'lodash';
 import { useCallback, useState } from 'react';
@@ -13,6 +13,7 @@ import Icon from 'react-native-vector-icons/Feather';
 import { Input } from '@/global/ui';
 import IconLocationPin from '@assets/icons/location_pin.svg';
 import { useRoute } from '@react-navigation/native';
+import { useHomeNavigation } from '@/navigation/HomeNavigation';
 
 interface SearchStationModalProps {
   searchType: '출발역' | '도착역';
@@ -21,14 +22,9 @@ interface SearchStationModalProps {
 }
 
 const SearchStationScreen = () => {
-  // {
-  //   searchType,
-  //   closeModal,
-  //   setSubwayStation, 전역으로 관리해야해
-  // }: SearchStationModalProps
-
-  const { searchType } = useRoute().params as { searchType: '출발역' | '도착역' };
+  const navigation = useHomeNavigation();
   const dispatch = useAppDispatch();
+  const { selectedStation, stationType } = useAppSelect((state) => state.subwaySearch);
 
   const { historyData } = useGetSearchHistory();
 
@@ -54,15 +50,23 @@ const SearchStationScreen = () => {
   const { searchResultData } = useSearchStationName(searchTextValue);
   const { addRecentMutate } = useAddRecentSearch({
     onSuccess: ({ stationLine, stationName }) => {
-      const key = searchType === '출발역' ? 'departure' : 'arrival';
-      setSubwayStation((prev) => ({
-        ...prev,
-        [key]: {
-          stationLine,
-          stationName,
-        },
-      }));
-      closeModal();
+      const key = stationType === '출발역' ? 'departure' : 'arrival';
+      dispatch(
+        getSeletedStation({
+          ...selectedStation,
+          [key]: {
+            stationLine,
+            stationName,
+          },
+        }),
+      );
+
+      if (
+        (key === 'departure' && selectedStation.arrival.stationName) ||
+        (key === 'arrival' && selectedStation.departure.stationName)
+      ) {
+        navigation.navigate('SubwayPathResult');
+      } else navigation.goBack();
     },
   });
 
@@ -85,12 +89,12 @@ const SearchStationScreen = () => {
           iconName="arrow-back-sharp"
           iconWidth="19.5"
           iconColor="#49454F"
-          onPress={() => closeModal()}
+          onPress={() => navigation.goBack()}
         />
         <Space width="16px" />
         <SearchInput
           value={searchTextValue}
-          placeholder={`${searchType}을 검색해보세요`}
+          placeholder={`${stationType}을 검색해보세요`}
           placeholderTextColor={COLOR.GRAY_BE}
           inputMode="search"
           onChangeText={changeSearchText}

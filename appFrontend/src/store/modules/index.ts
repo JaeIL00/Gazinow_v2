@@ -3,8 +3,8 @@ export {
   default as subwaySearch,
   getStationType,
   getSeletedStation,
-  changeIsSearchedPath,
   initialize,
-} from './subwaySearchModule';
+  swapStation,
+} from './stationSearchModule';
 
-export type { StationDataTypes } from './subwaySearchModule';
+export type { StationDataTypes } from './stationSearchModule';

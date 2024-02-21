@@ -13,6 +13,7 @@ import { tokenReissueFetch } from '@/global/apis/func';
 import AuthNavigation from './AuthNavigation';
 import { useAppDispatch } from '@/store';
 import { saveUserInfo } from '@/store/modules';
+import IssueNavigation from './IssueNavigation';
 
 const Stack = createStackNavigator<RootStackParamList>();
 
@@ -68,6 +69,7 @@ const RootNavigation = () => {
         }}
       />
       <Stack.Screen name="AuthStack" component={AuthNavigation} />
+      <Stack.Screen name="IssueStack" component={IssueNavigation} />
       <Stack.Screen name={MAIN_BOTTOM_TAB} component={MainBottomTabNavigation} />
     </Stack.Navigator>
   );
