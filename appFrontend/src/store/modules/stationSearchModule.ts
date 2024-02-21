@@ -14,6 +14,7 @@ interface InitialStateTypes {
     departure: StationDataTypes;
     arrival: StationDataTypes;
   };
+  issueId: number | null;
 }
 
 const initialState: InitialStateTypes = {
@@ -29,6 +30,7 @@ const initialState: InitialStateTypes = {
       stationLine: null,
     },
   },
+  issueId: null,
 };
 
 const stationSearchSlice = createSlice({
@@ -64,9 +66,18 @@ const stationSearchSlice = createSlice({
       };
       state.stationType = null;
     },
+    getIssueId: (state, action: PayloadAction<InitialStateTypes['issueId']>) => {
+      state.issueId = action.payload;
+    },
   },
 });
 
-export const { swapStation, getStationType, getSearchText, getSeletedStation, initialize } =
-  stationSearchSlice.actions;
+export const {
+  swapStation,
+  getStationType,
+  getSearchText,
+  getSeletedStation,
+  initialize,
+  getIssueId,
+} = stationSearchSlice.actions;
 export default stationSearchSlice.reducer;

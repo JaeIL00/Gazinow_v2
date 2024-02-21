@@ -5,6 +5,7 @@ export {
   getSeletedStation,
   initialize,
   swapStation,
+  getIssueId,
 } from './stationSearchModule';
 
 export type { StationDataTypes } from './stationSearchModule';
