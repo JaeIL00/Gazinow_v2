@@ -1,26 +1,30 @@
-import styled from '@emotion/native';
-import Icon from 'react-native-vector-icons/Feather';
-import { FontText, Input } from '@/global/ui';
-import { COLOR } from '@/global/constants';
-import { useAppDispatch } from '@/store';
-import { getSearchText } from '@/store/modules/stationSearchModule';
 import { useAddRecentSearch, useGetSearchHistory, useSearchStationName } from '@/global/apis/hook';
-import { useCallback, useState } from 'react';
-import { debounce } from 'lodash';
-import { SelectedStationTypes } from './NewSearchSwapStation';
-import IconXCircleFill from '@assets/icons/x_circle_fill.svg';
-import { Pressable } from 'react-native';
+import { COLOR } from '@/global/constants';
+import { FontText, IconButton, Space } from '@/global/ui';
 import { subwayReturnLineName } from '@/global/utils/subwayLine';
+import { useAppDispatch, useAppSelect } from '@/store';
+import { getSearchText, getSeletedStation, initialize } from '@/store/modules/stationSearchModule';
+import styled from '@emotion/native';
+import { debounce } from 'lodash';
+import { useCallback, useState } from 'react';
+import { SafeAreaView } from 'react-native';
+import { SelectedStationTypes } from '../searchPathResultScreen';
+import Icon from 'react-native-vector-icons/Feather';
+import { Input } from '@/global/ui';
 import IconLocationPin from '@assets/icons/location_pin.svg';
+import { useRoute } from '@react-navigation/native';
+import { useHomeNavigation } from '@/navigation/HomeNavigation';
 
-interface SearchStationProps {
+interface SearchStationModalProps {
   searchType: '출발역' | '도착역';
   closeModal: () => void;
   setSubwayStation: React.Dispatch<React.SetStateAction<SelectedStationTypes>>;
 }
 
-const NewSearchStation = ({ searchType, closeModal, setSubwayStation }: SearchStationProps) => {
+const SearchStationScreen = () => {
+  const navigation = useHomeNavigation();
   const dispatch = useAppDispatch();
+  const { selectedStation, stationType } = useAppSelect((state) => state.subwaySearch);
 
   const { historyData } = useGetSearchHistory();
 
@@ -39,18 +43,30 @@ const NewSearchStation = ({ searchType, closeModal, setSubwayStation }: SearchSt
     [],
   );
 
+  const deleteInputText = () => {
+    setSearchTextValue('');
+  };
+
   const { searchResultData } = useSearchStationName(searchTextValue);
   const { addRecentMutate } = useAddRecentSearch({
     onSuccess: ({ stationLine, stationName }) => {
-      const key = searchType === '출발역' ? 'departure' : 'arrival';
-      setSubwayStation((prev) => ({
-        ...prev,
-        [key]: {
-          stationLine,
-          stationName,
-        },
-      }));
-      closeModal();
+      const key = stationType === '출발역' ? 'departure' : 'arrival';
+      dispatch(
+        getSeletedStation({
+          ...selectedStation,
+          [key]: {
+            stationLine,
+            stationName,
+          },
+        }),
+      );
+
+      if (
+        (key === 'departure' && selectedStation.arrival.stationName) ||
+        (key === 'arrival' && selectedStation.departure.stationName)
+      ) {
+        navigation.navigate('SubwayPathResult');
+      } else navigation.goBack();
     },
   });
 
@@ -60,20 +76,39 @@ const NewSearchStation = ({ searchType, closeModal, setSubwayStation }: SearchSt
   };
 
   return (
-    <>
+    <SafeAreaView
+      style={{
+        flex: 1,
+        backgroundColor: COLOR.WHITE,
+      }}
+    >
       <Container>
+        <IconButton
+          iconType="Ionicons"
+          isFontIcon
+          iconName="arrow-back-sharp"
+          iconWidth="19.5"
+          iconColor="#49454F"
+          onPress={() => navigation.goBack()}
+        />
+        <Space width="16px" />
         <SearchInput
           value={searchTextValue}
-          placeholder={`${searchType}을 검색해보세요`}
+          placeholder={`${stationType}을 검색해보세요`}
           placeholderTextColor={COLOR.GRAY_BE}
           inputMode="search"
           onChangeText={changeSearchText}
           autoFocus
           isSavingNewRoute
         />
-        <Pressable hitSlop={20} onPress={() => setSearchTextValue('')}>
-          <IconXCircleFill width={19.5} />
-        </Pressable>
+        <IconButton
+          iconType="Ionicons"
+          isFontIcon
+          iconName="close-circle"
+          iconWidth="19.5"
+          iconColor="rgba(0, 0, 0, 0.46)"
+          onPress={deleteInputText}
+        />
       </Container>
       {!searchTextValue ? (
         <ResultContainer>
@@ -148,11 +183,11 @@ const NewSearchStation = ({ searchType, closeModal, setSubwayStation }: SearchSt
           </Ul>
         </ResultContainer>
       )}
-    </>
+    </SafeAreaView>
   );
 };
 
-export default NewSearchStation;
+export default SearchStationScreen;
 
 const Container = styled.View`
   flex-direction: row;
@@ -160,7 +195,7 @@ const Container = styled.View`
   border-radius: 28px;
   border: 1px solid #d4d4d4;
   padding: 4px 16px 4px 18.25px;
-  margin: 20px 16px 0;
+  margin: 16px 16px 0;
 `;
 const SearchInput = styled(Input)<{ isSavingNewRoute?: boolean }>`
   height: 36px;

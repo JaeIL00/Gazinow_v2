@@ -8,7 +8,7 @@ import 'dayjs/locale/ko';
 import { SubwaySimplePath } from '@/global/components';
 import { useGetSearchPaths } from '@/global/apis/hook';
 import { useAppDispatch, useAppSelect } from '@/store';
-import { StationDataTypes, changeIsSearchedPath } from '@/store/modules';
+import { StationDataTypes } from '@/store/modules';
 import { useEffect, useState } from 'react';
 import { useHomeNavigation } from '@/navigation/HomeNavigation';
 import SwapStation from './components/SwapStation';
@@ -37,10 +37,6 @@ const SearchPathResultScreen = () => {
     endStationName: selectedStation.arrival.stationName,
     endStationLine: selectedStation.arrival.stationLine,
   });
-
-  useEffect(() => {
-    dispatch(changeIsSearchedPath(true));
-  }, []);
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: COLOR.WHITE }}>
