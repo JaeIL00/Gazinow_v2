@@ -32,7 +32,7 @@ const IssueDetailPage = () => {
       }, 300),
     [issueData]
   );
-  console.log(issueData);
+
   const createIssueDate = dayjs(issueData?.startDate).fromNow();
 
   if (!issueData) return;

@@ -30,12 +30,7 @@ const SearchPathResultScreen = () => {
 
   const [selectedStation, setSelectedStation] =
     useState<SelectedStationTypes>(selectedStationRedux);
-  console.log({
-    strStationName: selectedStation.departure.stationName,
-    strStationLine: selectedStation.departure.stationLine,
-    endStationName: selectedStation.arrival.stationName,
-    endStationLine: selectedStation.arrival.stationLine,
-  });
+
   const { data } = useGetSearchPaths({
     strStationName: selectedStation.departure.stationName,
     strStationLine: selectedStation.departure.stationLine,
