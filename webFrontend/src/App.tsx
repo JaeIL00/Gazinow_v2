@@ -11,8 +11,8 @@ function App() {
     e.stopPropagation();
     localStorageFunc.set(STORAGE_ACCESS_KEY, String(e.data));
   };
-  window.addEventListener("message", onMessageEvent, { capture: true });
   useEffect(() => {
+    window.addEventListener("message", onMessageEvent, { capture: true });
     return () => window.removeEventListener("message", onMessageEvent);
   }, []);
 

@@ -1,6 +1,14 @@
 import styled from '@emotion/native';
 import { useCallback, useState } from 'react';
-import { Alert, Keyboard, Modal, Pressable, SafeAreaView } from 'react-native';
+import {
+  Alert,
+  Keyboard,
+  KeyboardAvoidingView,
+  Modal,
+  Platform,
+  Pressable,
+  SafeAreaView,
+} from 'react-native';
 import { FontText, Input, Space, TextButton } from '@/global/ui';
 import { COLOR } from '@/global/constants';
 import { useCheckPasswordQuery, useDeleteAccountMutation } from '@/global/apis/hook';
@@ -60,67 +68,72 @@ const ConfirmPwModal = ({ onCancel, isVisible }: ModalProps) => {
   });
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <Modal visible={isVisible} onRequestClose={onCancel}>
-        <Header>
-          <Pressable hitSlop={20} onPress={onCancel}>
-            <IconLeftArrowHead />
-          </Pressable>
-        </Header>
-        <Container>
-          <AlertContainer>
-            <FontText
-              value="비밀번호 입력"
-              textSize="24px"
-              textWeight="SemiBold"
-              lineHeight="35px"
-            />
-            <Space height="20px" />
-            <FontText
-              value="탈퇴를 위해 비밀번호를 입력해주세요."
-              textSize="16px"
-              textWeight="Regular"
-              lineHeight="21px"
-            />
-          </AlertContainer>
-          <PwContainer>
-            <FontText
-              value="Password"
-              textSize="14px"
-              textWeight="Medium"
-              lineHeight="21px"
-              textColor="#7C8183 "
-            />
-            <InputBox>
-              <Input
-                placeholder="비밀번호를 입력해주세요"
-                value={passwordInput}
-                onChangeText={(text) => handleCurPasswordChange(text)}
-                inputMode="text"
-                placeholderTextColor={COLOR.GRAY_999}
-                secureTextEntry
+    <Modal visible={isVisible} onRequestClose={onCancel}>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        style={{ flex: 1 }}
+      >
+        <SafeAreaView style={{ flex: 1 }}>
+          <Header>
+            <Pressable hitSlop={20} onPress={onCancel}>
+              <IconLeftArrowHead />
+            </Pressable>
+          </Header>
+          <Container>
+            <AlertContainer>
+              <FontText
+                value="비밀번호 입력"
+                textSize="24px"
+                textWeight="SemiBold"
+                lineHeight="35px"
               />
-            </InputBox>
-          </PwContainer>
-          <BottomBtn
-            onPress={() => deleteAccountMutate()}
-            disabled={!isPwRight}
-            style={{
-              bottom: isKeyboardVisible ? 20 : 83,
-            }}
-          >
-            <TextButton
-              value="탈퇴하기"
-              textSize="17px"
-              textWeight="Regular"
-              lineHeight="26px"
-              textColor={COLOR.WHITE}
+              <Space height="20px" />
+              <FontText
+                value="탈퇴를 위해 비밀번호를 입력해주세요."
+                textSize="16px"
+                textWeight="Regular"
+                lineHeight="21px"
+              />
+            </AlertContainer>
+            <PwContainer>
+              <FontText
+                value="Password"
+                textSize="14px"
+                textWeight="Medium"
+                lineHeight="21px"
+                textColor="#7C8183 "
+              />
+              <InputBox>
+                <Input
+                  placeholder="비밀번호를 입력해주세요"
+                  value={passwordInput}
+                  onChangeText={(text) => handleCurPasswordChange(text)}
+                  inputMode="text"
+                  placeholderTextColor={COLOR.GRAY_999}
+                  secureTextEntry
+                />
+              </InputBox>
+            </PwContainer>
+            <BottomBtn
               onPress={() => deleteAccountMutate()}
-            />
-          </BottomBtn>
-        </Container>
-      </Modal>
-    </SafeAreaView>
+              disabled={!isPwRight}
+              style={{
+                bottom: isKeyboardVisible ? 20 : 83,
+              }}
+            >
+              <TextButton
+                value="탈퇴하기"
+                textSize="17px"
+                textWeight="Regular"
+                lineHeight="26px"
+                textColor={COLOR.WHITE}
+                onPress={() => deleteAccountMutate()}
+              />
+            </BottomBtn>
+          </Container>
+        </SafeAreaView>
+      </KeyboardAvoidingView>
+    </Modal>
   );
 };
 export default ConfirmPwModal;

@@ -18,7 +18,7 @@ const IssueDetailScreen = () => {
       <WebView
         ref={webViewRef}
         source={{ uri: `https://www.gazinow.com/issue/${issueId}` }}
-        onLoadStart={() => {
+        onLoadEnd={() => {
           webViewRef.current?.postMessage(accessToken);
         }}
       />

@@ -47,13 +47,15 @@ const NameNewRouteModal = ({ item, onCancel, setDepth }: ModalProps) => {
     },
   });
 
+  {
+    /* //FIXME: 풀블리드버튼 올라올 떄 애니메이션이 부자연스러움 */
+  }
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      {/* //FIXME: 풀블리드버튼 올라올 떄 애니메이션이 부자연스러움 */}
-      <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        style={{ flex: 1 }}
-      >
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      style={{ flex: 1 }}
+    >
+      <SafeAreaView style={{ flex: 1 }}>
         <Container>
           <SubPathContainer>
             <SubwaySimplePath
@@ -126,8 +128,8 @@ const NameNewRouteModal = ({ item, onCancel, setDepth }: ModalProps) => {
             lineHeight="26px"
           />
         </BottomBtn>
-      </KeyboardAvoidingView>
-    </SafeAreaView>
+      </SafeAreaView>
+    </KeyboardAvoidingView>
   );
 };
 
