@@ -14,7 +14,7 @@ const IssueDetailScreen = () => {
   );
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={{ flex: 1 }}>
       <WebView
         ref={webViewRef}
         source={{ uri: `https://www.gazinow.com/issue/${issueId}` }}
