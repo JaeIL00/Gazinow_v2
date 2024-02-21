@@ -46,8 +46,8 @@ const AddNewRouteModal = ({ isVisible, onCancel }: ModalProps) => {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <Modal visible={isVisible} onRequestClose={onBackBtnPress}>
+    <Modal visible={isVisible} onRequestClose={onBackBtnPress}>
+      <SafeAreaView style={{ flex: 1 }}>
         <AddNewRouteHeader onBackBtnPress={onBackBtnPress} onCloseBtnPress={onCloseBtnPress} />
         {(depth === 'search' || depth === 'pathList') && (
           <NewSearchSwapStation setDepth={setDepth} setSeletedStation={setSeletedStation} />
@@ -66,8 +66,8 @@ const AddNewRouteModal = ({ isVisible, onCancel }: ModalProps) => {
         {selectedRoutePath && depth === 'name' && (
           <NameNewRouteModal onCancel={onCancel} setDepth={setDepth} item={selectedRoutePath} />
         )}
-      </Modal>
-    </SafeAreaView>
+      </SafeAreaView>
+    </Modal>
   );
 };
 
