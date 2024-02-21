@@ -50,8 +50,8 @@ const ChangeNickNameModal = ({ onCancel }: ModalProps) => {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <Modal visible onRequestClose={onCancel}>
+    <Modal visible onRequestClose={onCancel}>
+      <SafeAreaView style={{ flex: 1 }}>
         <Header>
           <Pressable hitSlop={20} onPress={onCancel}>
             <IconCrossX width="24px" />
@@ -99,8 +99,8 @@ const ChangeNickNameModal = ({ onCancel }: ModalProps) => {
             </MessageContainer>
           )}
         </Container>
-      </Modal>
-    </SafeAreaView>
+      </SafeAreaView>
+    </Modal>
   );
 };
 export default ChangeNickNameModal;

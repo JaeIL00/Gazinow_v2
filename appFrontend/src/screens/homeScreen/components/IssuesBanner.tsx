@@ -35,7 +35,8 @@ const IssuesBanner = ({ issueSummary }: IssuesBannerProps) => {
           <Demonstration width={16} fill={issueIconColor()} />
           <Space width="10px" />
           <FontText
-            value={issueSummary.title}
+            // value={issueSummary.title}
+            value='test'
             textSize="13px"
             textWeight="SemiBold"
             lineHeight="19px"

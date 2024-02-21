@@ -95,8 +95,8 @@ const ChangePwModal = ({ onCancel }: ModalProps) => {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <Modal visible onRequestClose={onCancel}>
+    <Modal visible onRequestClose={onCancel}>
+      <SafeAreaView style={{ flex: 1 }}>
         <Header>
           <Pressable hitSlop={20} onPress={onCancel}>
             <IconLeftArrowHead />
@@ -266,8 +266,8 @@ const ChangePwModal = ({ onCancel }: ModalProps) => {
           cancelText="확인"
           btnColor={COLOR.GRAY_F9}
         />
-      </Modal>
-    </SafeAreaView>
+      </SafeAreaView>
+    </Modal>
   );
 };
 export default ChangePwModal;
