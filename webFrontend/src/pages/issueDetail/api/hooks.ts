@@ -5,11 +5,12 @@ import { getIssueDetail, postLike } from "./func";
  * 상세 이슈 조회 훅
  */
 export const useGetIssue = (id: string) => {
-  const { data } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: ["issue", id],
     queryFn: () => getIssueDetail({ id }),
+    enabled: !!id,
   });
-  return { issueData: data };
+  return { issueData: data, isLoadingIssue: isLoading };
 };
 
 /**
