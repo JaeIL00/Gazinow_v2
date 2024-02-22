@@ -11,6 +11,7 @@ import { useEffect, useMemo } from "react";
 import { debounce } from "lodash";
 import localStorageFunc from "@global/utils/localStorage";
 import { STORAGE_ACCESS_KEY } from "@global/constants";
+import cn from "classnames";
 
 dayjs.locale("ko");
 dayjs.extend(relativeTime);
@@ -69,13 +70,25 @@ const IssueDetailPage = () => {
 
         <footer className="pt-[17px] flex justify-between">
           <button className="flex items-center" onClick={likeHandler}>
-            <p className="text-gray-99 text-xs font-medium mr-[5px]">
+            <p
+              className={cn("text-gray-99 text-xs font-medium mr-[5px]", {
+                "text-blue": issueData?.isLike,
+              })}
+            >
               도움돼요
             </p>
             <div className="mr-px">
-              <IconThumsUp color={color.GRAY99} width={15} height={15} />
+              <IconThumsUp
+                color={issueData?.isLike ? color.BLUE : color.GRAY99}
+                width={15}
+                height={15}
+              />
             </div>
-            <p className="text-gray-99 text-xs font-medium mt-[0.5px]">
+            <p
+              className={cn("text-gray-99 text-xs font-medium mt-[0.5px]", {
+                "text-blue": issueData?.isLike,
+              })}
+            >
               {issueData?.likeCount}
             </p>
           </button>
