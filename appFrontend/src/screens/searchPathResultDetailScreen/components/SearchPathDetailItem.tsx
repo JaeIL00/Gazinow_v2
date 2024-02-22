@@ -1,12 +1,33 @@
 import { css } from '@emotion/native';
 import { useState } from 'react';
-import { Image, View } from 'react-native';
+import { Image, TouchableOpacity, View } from 'react-native';
 
 import { FontText, IconButton, Space } from '@/global/ui';
 import { subwayLineColor } from '@/global/utils';
-import { SubPath } from '@/global/apis/entity';
+import { IssueKeywords, SubPath } from '@/global/apis/entity';
 import { COLOR } from '@/global/constants';
 import IconWalkHuman from '@assets/icons/walk_human.svg';
+import IconAccident from '@assets/icons/path_accident.svg';
+import IconCrowded from '@assets/icons/path_crowded.svg';
+import IconDelayed from '@assets/icons/path_delayed.svg';
+import IconEvent from '@assets/icons/path_event.svg';
+import IconNaturalDisaster from '@assets/icons/path_natural_disaster.svg';
+import IconProtest from '@assets/icons/path_protest.svg';
+import IconConstruction from '@assets/icons/pathh_construction.svg';
+import IconRightArrowHead from '@assets/icons/right_arrow_head.svg';
+import { useRootNavigation } from '@/navigation/RootNavigation';
+import { useAppDispatch } from '@/store';
+import { getIssueId } from '@/store/modules';
+
+const issueKeywordIcon = (keyword: IssueKeywords, color: string) => {
+  if (keyword === '공사') return <IconConstruction width={22} height={22} color={color} />;
+  if (keyword === '자연재해') return <IconNaturalDisaster width={22} height={22} color={color} />;
+  if (keyword === '연착') return <IconDelayed width={22} height={22} color={color} />;
+  if (keyword === '사고') return <IconAccident width={22} height={22} color={color} />;
+  if (keyword === '혼잡') return <IconCrowded width={22} height={22} color={color} />;
+  if (keyword === '시위') return <IconProtest width={22} height={22} color={color} />;
+  if (keyword === '행사') return <IconEvent width={22} height={22} color={color} />;
+};
 
 interface SearchPathDetailItemProps {
   data: SubPath;
@@ -14,8 +35,13 @@ interface SearchPathDetailItemProps {
 }
 
 const SearchPathDetailItem = ({ data, isLastLane }: SearchPathDetailItemProps) => {
+  const navigation = useRootNavigation();
+  const dispatch = useAppDispatch();
+
   const [isOpenPathList, setIsOpenPathList] = useState<boolean>(false);
   const lastIdx = data.stations.length - 1;
+
+  console.log(data.lanes[0]);
   return (
     <View
       style={css`
@@ -65,6 +91,7 @@ const SearchPathDetailItem = ({ data, isLastLane }: SearchPathDetailItemProps) =
           <View
             style={css`
               flex-direction: row;
+              margin-bottom: 8px;
             `}
           >
             <FontText
@@ -84,18 +111,59 @@ const SearchPathDetailItem = ({ data, isLastLane }: SearchPathDetailItemProps) =
           </View>
 
           {/* 이슈박스 */}
-          <View
-            style={{
-              height: 54,
-              borderRadius: 10,
-              borderWidth: 1,
-              borderColor: 'rgba(0, 0, 0, 0.06)',
-              marginVertical: 8,
-            }}
-          />
+          {!!data.lanes[0].issueSummary.length &&
+            data.lanes[0].issueSummary.map((issue) => (
+              <TouchableOpacity
+                activeOpacity={1}
+                style={{
+                  borderRadius: 10,
+                  borderWidth: 1,
+                  borderColor: 'rgba(0, 0, 0, 0.06)',
+                  backgroundColor: COLOR.WHITE,
+                  paddingTop: 10,
+                  paddingBottom: 12,
+                  paddingLeft: 12,
+                  paddingRight: 10,
+                  flexDirection: 'row',
+                }}
+                onPress={() => {
+                  dispatch(getIssueId(issue.id));
+                  navigation.navigate('IssueStack', { screen: 'IssueDetail' });
+                }}
+              >
+                <View
+                  style={{
+                    marginTop: 2,
+                    marginRight: 8,
+                  }}
+                >
+                  {issueKeywordIcon(issue.keyword, subwayLineColor(data.lanes[0].stationCode))}
+                </View>
+                <View style={{ flex: 1, marginRight: 8 }}>
+                  <FontText
+                    value={issue.title}
+                    textSize="13px"
+                    textWeight="SemiBold"
+                    textColor={COLOR.BASIC_BLACK}
+                    lineHeight="19px"
+                    numberOfLines={1}
+                  />
+                  <FontText
+                    value={`도움돼요 ${issue.likeCount}개`}
+                    textSize="11px"
+                    textWeight="Medium"
+                    textColor={COLOR.GRAY_999}
+                  />
+                </View>
+                <View style={{ justifyContent: 'center' }}>
+                  <IconRightArrowHead style={{ marginBottom: 2 }} />
+                </View>
+              </TouchableOpacity>
+            ))}
 
           <View
             style={css`
+              margin-top: 8px;
               flex-direction: row;
               align-items: center;
             `}

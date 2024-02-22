@@ -151,6 +151,7 @@ export interface Lane {
   stationCode: StationCode;
   startName: string;
   endName: string;
+  issueSummary: IssueSummary[];
 }
 
 /**

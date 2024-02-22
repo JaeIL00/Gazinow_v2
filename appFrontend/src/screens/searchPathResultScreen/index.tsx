@@ -1,15 +1,15 @@
 import styled from '@emotion/native';
 import { SafeAreaView, ScrollView, StatusBar, TouchableOpacity, View } from 'react-native';
 
-import { FontText, IconButton, Space } from '@/global/ui';
+import { FontText, Space } from '@/global/ui';
 import { COLOR } from '@/global/constants';
 import dayjs from 'dayjs';
 import 'dayjs/locale/ko';
 import { SubwaySimplePath } from '@/global/components';
 import { useGetSearchPaths } from '@/global/apis/hook';
-import { useAppDispatch, useAppSelect } from '@/store';
+import { useAppSelect } from '@/store';
 import { StationDataTypes } from '@/store/modules';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useHomeNavigation } from '@/navigation/HomeNavigation';
 import SwapStation from './components/SwapStation';
 import IconRightArrowHead from '@assets/icons/right_arrow_head.svg';
@@ -24,7 +24,6 @@ export interface SelectedStationTypes {
 
 const SearchPathResultScreen = () => {
   const homeNavigation = useHomeNavigation();
-  const dispatch = useAppDispatch();
 
   const selectedStationRedux = useAppSelect(({ subwaySearch }) => subwaySearch.selectedStation);
 
