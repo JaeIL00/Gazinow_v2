@@ -1,19 +1,23 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { FontText, Space } from '@/global/ui';
 import { COLOR } from '@/global/constants';
 import styled from '@emotion/native';
 import { IssueSummary } from '@/global/apis/entity';
 import MoreBtn from '@/assets/icons/moreBtn.svg';
 import Demonstration from '@/assets/icons/issue_demonstration.svg';
-import { IssueModalTest } from '@/screens/nowScreen/components';
 import { subwayLineColor } from '@/global/utils';
+import { useAppDispatch } from '@/store';
+import { getIssueId } from '@/store/modules';
+import { useRootNavigation } from '@/navigation/RootNavigation';
 
 interface IssuesBannerProps {
   issueSummary: IssueSummary;
 }
 
 const IssuesBanner = ({ issueSummary }: IssuesBannerProps) => {
-  const [isIssueDetailOpened, setIsIssueDetailOpened] = useState<boolean>(false);
+  const dispatch = useAppDispatch();
+  const navigation = useRootNavigation();
+
   const issueIconColor = () => {
     return subwayLineColor(1);
     // return subwayLineColor(issueSummary.stationCode);
@@ -21,31 +25,27 @@ const IssuesBanner = ({ issueSummary }: IssuesBannerProps) => {
   };
 
   return (
-    <>
-      {isIssueDetailOpened && (
-        <IssueModalTest id={issueSummary.id} onRequestClose={() => setIsIssueDetailOpened(false)} />
-      )}
-      <Container
-        onPress={() => {
-          setIsIssueDetailOpened(true);
-        }}
-      >
-        <Issue>
-          {/* TODO: 이슈에 따라 아이콘 바꾸기 */}
-          <Demonstration width={16} fill={issueIconColor()} />
-          <Space width="10px" />
-          <FontText
-            // value={issueSummary.title}
-            value='test'
-            textSize="13px"
-            textWeight="SemiBold"
-            lineHeight="19px"
-            textColor={COLOR.BASIC_BLACK}
-          />
-        </Issue>
-        <MoreBtn />
-      </Container>
-    </>
+    <Container
+      onPress={() => {
+        dispatch(getIssueId(issueSummary.id));
+        navigation.navigate('IssueStack', { screen: 'IssueDetail' });
+      }}
+    >
+      <Issue>
+        {/* TODO: 이슈에 따라 아이콘 바꾸기 */}
+        <Demonstration width={16} fill={issueIconColor()} />
+        <Space width="10px" />
+        <FontText
+          // value={issueSummary.title}
+          value="test"
+          textSize="13px"
+          textWeight="SemiBold"
+          lineHeight="19px"
+          textColor={COLOR.BASIC_BLACK}
+        />
+      </Issue>
+      <MoreBtn />
+    </Container>
   );
 };
 export default IssuesBanner;

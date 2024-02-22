@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from '@emotion/native';
-import { FontText, IconButton, Space } from '@/global/ui';
+import { FontText, Space } from '@/global/ui';
 import { COLOR } from '@/global/constants';
-import { IssueModalTest } from '.';
+import { useAppDispatch } from '@/store';
+import { getIssueId } from '@/store/modules';
+import { useRootNavigation } from '@/navigation/RootNavigation';
 
 interface IssueDetailProps {
   id: number;
@@ -15,13 +17,17 @@ interface IssueDetailProps {
 }
 
 const IssueContainer = ({ id, title, location, time, body, isLastItem }: IssueDetailProps) => {
-  const [isIssueDetailOpened, setIsIssueDetailOpened] = useState<boolean>(false);
+  const dispatch = useAppDispatch();
+  const navigation = useRootNavigation();
+
   return (
     <>
-      {isIssueDetailOpened && (
-        <IssueModalTest id={id} onRequestClose={() => setIsIssueDetailOpened(false)} />
-      )}
-      <IssueList onPress={() => setIsIssueDetailOpened(true)}>
+      <IssueList
+        onPress={() => {
+          dispatch(getIssueId(id));
+          navigation.navigate('IssueStack', { screen: 'IssueDetail' });
+        }}
+      >
         <TextContainer>
           <FontText
             value={title}

@@ -41,7 +41,7 @@ const EmailStep = ({ emailValue, setStep, changeEmailValue }: EmailStepProps) =>
       }
     },
   });
-  console.log(authNumber);
+
   const [errorMessage, setErrorMessage] = useState<string>('');
   const [isValidEmail, setIsValidEmail] = useState<boolean>(false);
   const [isOpenConfirmModal, setIsOpenConfirmModal] = useState<boolean>(false);

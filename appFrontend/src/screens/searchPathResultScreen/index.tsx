@@ -8,7 +8,7 @@ import 'dayjs/locale/ko';
 import { SubwaySimplePath } from '@/global/components';
 import { useGetSearchPaths } from '@/global/apis/hook';
 import { useAppDispatch, useAppSelect } from '@/store';
-import { StationDataTypes, changeIsSearchedPath } from '@/store/modules';
+import { StationDataTypes } from '@/store/modules';
 import { useEffect, useState } from 'react';
 import { useHomeNavigation } from '@/navigation/HomeNavigation';
 import SwapStation from './components/SwapStation';
@@ -30,22 +30,13 @@ const SearchPathResultScreen = () => {
 
   const [selectedStation, setSelectedStation] =
     useState<SelectedStationTypes>(selectedStationRedux);
-  console.log({
-    strStationName: selectedStation.departure.stationName,
-    strStationLine: selectedStation.departure.stationLine,
-    endStationName: selectedStation.arrival.stationName,
-    endStationLine: selectedStation.arrival.stationLine,
-  });
+
   const { data } = useGetSearchPaths({
     strStationName: selectedStation.departure.stationName,
     strStationLine: selectedStation.departure.stationLine,
     endStationName: selectedStation.arrival.stationName,
     endStationLine: selectedStation.arrival.stationLine,
   });
-
-  useEffect(() => {
-    dispatch(changeIsSearchedPath(true));
-  }, []);
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: COLOR.WHITE }}>

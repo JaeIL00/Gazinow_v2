@@ -54,7 +54,6 @@ export const useGetSearchHistory = () => {
  */
 export const useGetSearchPaths = (params: SubwayStrEnd) => {
   const { data } = useQuery(['search_paths', params], () => searchPathsFetch(params));
-
   return { data };
 };
 
