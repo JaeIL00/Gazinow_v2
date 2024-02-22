@@ -4,15 +4,13 @@ import { FontText, Space, TextButton } from '@/global/ui';
 import { COLOR } from '@/global/constants';
 import SavedRouteBox from './SavedRouteBox';
 import IssueBox from './IssueBox';
-import { useHomeNavigation } from '@/navigation/HomeNavigation';
 import styled from '@emotion/native';
-import { useNewRouteNavigation } from '@/navigation/NewRouteNavigation';
+import { useRootNavigation } from '@/navigation/RootNavigation';
 
 const categoryName: ['저장경로', '이슈'] = ['저장경로', '이슈'];
 
 const SavedRouteIssues = () => {
-  const homeNavigation = useHomeNavigation();
-  const newRouteNavigation = useNewRouteNavigation();
+  const navigation = useRootNavigation();
   const [activeButton, setActiveButton] = useState<'저장경로' | '이슈'>('저장경로');
 
   const handleButtonClick = (buttonText: typeof activeButton) => setActiveButton(buttonText);
@@ -43,13 +41,16 @@ const SavedRouteIssues = () => {
     <Container>
       <CategoryContainer>
         <Category>{categoryName.map(renderButton)}</Category>
-        <Pressable hitSlop={20} onPress={() => newRouteNavigation.navigate('SavedRoutes')}>
+        <Pressable
+          hitSlop={20}
+          onPress={() => navigation.navigate('NewRouteNavigation', { screen: 'SavedRoutes' })}
+        >
           <TextButton
             value="저장경로 편집"
             textSize="12px"
             textColor={COLOR.GRAY_999}
             textWeight="Regular"
-            onPress={() => newRouteNavigation.navigate('SavedRoutes')}
+            onPress={() => navigation.navigate('NewRouteNavigation', { screen: 'SavedRoutes' })}
             lineHeight="15px"
           />
         </Pressable>

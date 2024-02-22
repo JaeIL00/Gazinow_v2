@@ -6,6 +6,7 @@ import ResultScreen from '@/screens/savedRoutesScreen/components/SelectNewRouteM
 import DetailScreen from '@/screens/savedRoutesScreen/components/NewRouteDetailModal';
 import NameScreen from '@/screens/savedRoutesScreen/components/NameNewRouteModal';
 import { useNavigation } from '@react-navigation/native';
+import SavedRoutesScreen from '@/screens/savedRoutesScreen';
 
 const Stack = createStackNavigator<NewRouteStackParamList>();
 
@@ -15,7 +16,8 @@ const screenOption = {
 
 const NewRouteNavigation = () => {
   return (
-    <Stack.Navigator initialRouteName="Swap" screenOptions={screenOption}>
+    <Stack.Navigator initialRouteName="SavedRoutes" screenOptions={screenOption}>
+      <Stack.Screen name="SavedRoutes" component={SavedRoutesScreen} />
       <Stack.Screen name="Swap" component={SwapScreen} />
       <Stack.Screen name="Search" component={SearchScreen} />
       <Stack.Screen name="Result" component={ResultScreen} />

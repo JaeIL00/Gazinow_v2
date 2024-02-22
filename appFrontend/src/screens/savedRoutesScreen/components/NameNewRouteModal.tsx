@@ -1,23 +1,22 @@
 import styled from '@emotion/native';
 import { FontText, Input } from '@/global/ui';
 import { COLOR } from '@/global/constants';
-import React, { Dispatch, SetStateAction, useMemo, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useSaveMyRoutesQuery } from '@/global/apis/hook';
 import { useQueryClient } from 'react-query';
 import { SubwaySimplePath } from '@/global/components';
 import { Path, SubPath } from '@/global/apis/entity';
 import { View, Keyboard, SafeAreaView } from 'react-native';
 import { KeyboardAvoidingView, Platform } from 'react-native';
-import XCircle from '@assets/icons/x-circle.svg';
+import XCircle from '@assets/icons/x-circle-standard.svg';
 import AddNewRouteHeader from './AddNewRouteHeader';
+import { useRoute } from '@react-navigation/native';
+import { useHomeNavigation } from '@/navigation/HomeNavigation';
 
-interface ModalProps {
-  item: Path;
-  onCancel: () => void;
-  setDepth: Dispatch<SetStateAction<'search' | 'pathList' | 'detail' | 'name'>>;
-}
+const NameNewRouteModal = () => {
+  const { state: resultData } = useRoute().params as { state: Path };
+  const homeNavigation = useHomeNavigation();
 
-const NameNewRouteModal = ({ item, onCancel, setDepth }: ModalProps) => {
   const [roadName, setRoadName] = useState<string>();
   const [isDuplicatedName, setIsDuplicatedName] = useState<boolean>(false);
   const [isKeyboardVisible, setKeyboardVisible] = useState(false);
@@ -30,15 +29,14 @@ const NameNewRouteModal = ({ item, onCancel, setDepth }: ModalProps) => {
   Keyboard.addListener('keyboardDidHide', keyboardDidHide);
 
   const freshSubPathData: SubPath[] = useMemo(() => {
-    const subPaths = item?.subPaths || [];
+    const subPaths = resultData?.subPaths || [];
     return subPaths.filter((subPath) => !!subPath.lanes.length && !!subPath.stations.length);
-  }, [item]);
+  }, [resultData]);
 
   const { mutate } = useSaveMyRoutesQuery({
     onSuccess: async () => {
       await queryClient.invalidateQueries('getRoads');
-      setDepth('search');
-      onCancel();
+      homeNavigation.reset({ routes: [{ name: 'SavedRoutes' }] });
     },
     onError: async (error: any) => {
       await queryClient.invalidateQueries('getRoads');
@@ -56,13 +54,13 @@ const NameNewRouteModal = ({ item, onCancel, setDepth }: ModalProps) => {
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       style={{ flex: 1 }}
     >
-      <SafeAreaView style={{ flex: 1 }}>
+      <SafeAreaView style={{ flex: 1, backgroundColor: COLOR.WHITE }}>
         <AddNewRouteHeader />
         <Container>
           <SubPathContainer>
             <SubwaySimplePath
               pathData={freshSubPathData}
-              arriveStationName={item.lastEndStation}
+              arriveStationName={resultData.lastEndStation}
               betweenPathMargin={24}
             />
           </SubPathContainer>
@@ -115,8 +113,8 @@ const NameNewRouteModal = ({ item, onCancel, setDepth }: ModalProps) => {
           onPress={() => {
             mutate({
               roadName: roadName,
-              lastEndStation: item.lastEndStation,
-              totalTime: item.totalTime,
+              lastEndStation: resultData.lastEndStation,
+              totalTime: resultData.totalTime,
               subPaths: freshSubPathData,
             });
           }}

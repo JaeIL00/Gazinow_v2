@@ -1,16 +1,15 @@
 import styled from '@emotion/native';
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 
 import { TextButton } from '@/global/ui';
 import { COLOR, ARRIVAL_STATION, DEPARTURE_STATION } from '@/global/constants';
-import { useAppDispatch } from '@/store';
-import { getSeletedStation } from '@/store/modules';
+import { useAppDispatch, useAppSelect } from '@/store';
+import { getSeletedStation, getStationType, initialize } from '@/store/modules';
 import type { StationDataTypes } from '@/store/modules';
-import SearchStation from './NewSearchStation';
 import IconSwapChange from '@assets/icons/swap_change.svg';
-import { Pressable } from 'react-native';
+import { SafeAreaView, TouchableOpacity } from 'react-native';
 import AddNewRouteHeader from './AddNewRouteHeader';
 import { useNewRouteNavigation } from '@/navigation/NewRouteNavigation';
+import { useFocusEffect } from '@react-navigation/native';
 
 export interface SelectedStationTypes {
   departure: StationDataTypes;
@@ -19,35 +18,21 @@ export interface SelectedStationTypes {
 
 type StationTypes = typeof DEPARTURE_STATION | typeof ARRIVAL_STATION;
 
-interface NewSearchSwapStationProps {
-  setSeletedStation: React.Dispatch<React.SetStateAction<SelectedStationTypes>>;
-  setDepth: Dispatch<SetStateAction<'search' | 'pathList' | 'detail' | 'name'>>;
-}
-
-const NewSearchSwapStation = ({ setSeletedStation, setDepth }: NewSearchSwapStationProps) => {
+const NewSearchSwapStation = () => {
   const newRouteNavigation = useNewRouteNavigation();
   const dispatch = useAppDispatch();
+  const selectedStation = useAppSelect((state) => state.subwaySearch.selectedStation);
 
-  const [searchType, setSearchType] = useState<StationTypes>('출발역');
-  const [isOpenSearchStation, setIsOpenSearchStation] = useState<boolean>(false);
-  const [selectedStation, setSelectedStation] = useState<SelectedStationTypes>({
-    departure: {
-      stationName: '',
-      stationLine: null,
-    },
-    arrival: {
-      stationName: '',
-      stationLine: null,
-    },
-  });
-
-  const closeSearchModal = () => setIsOpenSearchStation(false);
-
-  const openSearchModal = (type: StationTypes) => {
-    setDepth('search');
-    setSearchType(type);
-    setIsOpenSearchStation(true);
+  const navigateSearchStation = (type: StationTypes) => {
+    dispatch(getStationType(type));
+    newRouteNavigation.navigate('Search');
   };
+  
+  useFocusEffect(() => {
+    if (selectedStation.arrival.stationName && selectedStation.departure.stationName) {
+      dispatch(initialize());
+    }
+  });
 
   const swapStation = () => {
     dispatch(
@@ -56,38 +41,10 @@ const NewSearchSwapStation = ({ setSeletedStation, setDepth }: NewSearchSwapStat
         departure: selectedStation.arrival,
       }),
     );
-    setSelectedStation(({ departure, arrival }) => ({
-      departure: {
-        ...arrival,
-      },
-      arrival: {
-        ...departure,
-      },
-    }));
   };
 
-  useEffect(() => {
-    if (selectedStation.arrival.stationName && selectedStation.departure.stationName) {
-      setSeletedStation({
-        arrival: selectedStation.arrival,
-        departure: selectedStation.departure,
-      });
-      setDepth('pathList');
-      newRouteNavigation.navigate('Search');
-    }
-  }, [selectedStation]);
-
-  if (isOpenSearchStation) {
-    return (
-      <SearchStation
-        closeModal={closeSearchModal}
-        setSubwayStation={setSelectedStation}
-        searchType={searchType}
-      />
-    );
-  }
   return (
-    <>
+    <SafeAreaView style={{ flex: 1, backgroundColor: COLOR.WHITE }}>
       <AddNewRouteHeader />
       <Container>
         <InnerBox>
@@ -101,7 +58,7 @@ const NewSearchSwapStation = ({ setSeletedStation, setDepth }: NewSearchSwapStat
             textWeight="Regular"
             lineHeight="21px"
             textColor={selectedStation.departure.stationName ? COLOR.BASIC_BLACK : COLOR.GRAY_999}
-            onPress={() => openSearchModal(DEPARTURE_STATION)}
+            onPress={() => navigateSearchStation(DEPARTURE_STATION)}
           />
           <StationButton
             value={
@@ -113,14 +70,14 @@ const NewSearchSwapStation = ({ setSeletedStation, setDepth }: NewSearchSwapStat
             textWeight="Regular"
             lineHeight="21px"
             textColor={selectedStation.arrival.stationName ? COLOR.BASIC_BLACK : COLOR.GRAY_999}
-            onPress={() => openSearchModal(ARRIVAL_STATION)}
+            onPress={() => navigateSearchStation(ARRIVAL_STATION)}
           />
         </InnerBox>
-        <Pressable hitSlop={20} onPress={swapStation}>
+        <TouchableOpacity onPress={swapStation}>
           <IconSwapChange width={20} />
-        </Pressable>
+        </TouchableOpacity>
       </Container>
-    </>
+    </SafeAreaView>
   );
 };
 

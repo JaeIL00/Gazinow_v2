@@ -5,9 +5,11 @@ import { Pressable } from 'react-native';
 import IconLeftArrowHead from '@assets/icons/left_arrow_head.svg';
 import IconCrossX from '@assets/icons/cross_x.svg';
 import { useNewRouteNavigation } from '@/navigation/NewRouteNavigation';
+import { useHomeNavigation } from '@/navigation/HomeNavigation';
 
 const AddNewRouteHeader = () => {
   const newRouteNavigation = useNewRouteNavigation();
+  const homeNavigation = useHomeNavigation();
   return (
     <>
       <Header>
@@ -15,7 +17,7 @@ const AddNewRouteHeader = () => {
           <IconLeftArrowHead />
         </Pressable>
         <FontText value="새 경로 저장" textSize="18px" textWeight="Medium" lineHeight="23px" />
-        <Pressable hitSlop={20} onPress={() => newRouteNavigation.popToTop()}>
+        <Pressable hitSlop={20} onPress={() => homeNavigation.popToTop()}>
           <IconCrossX />
         </Pressable>
       </Header>

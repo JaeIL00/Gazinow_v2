@@ -20,7 +20,7 @@ const screenOption = {
 
 const MyPageNavigation = () => {
   return (
-    <Stack.Navigator initialRouteName={MyRootScreen} screenOptions={screenOption}>
+    <Stack.Navigator initialRouteName="MyRootScreen" screenOptions={screenOption}>
       <Stack.Screen name="MyRootScreen" component={MyRootScreen} />
       <Stack.Screen name="ChangeNickNameModal" component={ChangeNickNameModal} />
       <Stack.Screen name="ChangePwModal" component={ChangePwModal} />
