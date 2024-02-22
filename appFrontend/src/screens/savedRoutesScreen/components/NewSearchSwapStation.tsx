@@ -9,6 +9,8 @@ import type { StationDataTypes } from '@/store/modules';
 import SearchStation from './NewSearchStation';
 import IconSwapChange from '@assets/icons/swap_change.svg';
 import { Pressable } from 'react-native';
+import AddNewRouteHeader from './AddNewRouteHeader';
+import { useNewRouteNavigation } from '@/navigation/NewRouteNavigation';
 
 export interface SelectedStationTypes {
   departure: StationDataTypes;
@@ -23,6 +25,7 @@ interface NewSearchSwapStationProps {
 }
 
 const NewSearchSwapStation = ({ setSeletedStation, setDepth }: NewSearchSwapStationProps) => {
+  const newRouteNavigation = useNewRouteNavigation();
   const dispatch = useAppDispatch();
 
   const [searchType, setSearchType] = useState<StationTypes>('출발역');
@@ -70,6 +73,7 @@ const NewSearchSwapStation = ({ setSeletedStation, setDepth }: NewSearchSwapStat
         departure: selectedStation.departure,
       });
       setDepth('pathList');
+      newRouteNavigation.navigate('Search');
     }
   }, [selectedStation]);
 
@@ -83,37 +87,40 @@ const NewSearchSwapStation = ({ setSeletedStation, setDepth }: NewSearchSwapStat
     );
   }
   return (
-    <Container>
-      <InnerBox>
-        <StationButton
-          value={
-            selectedStation.departure.stationName
-              ? selectedStation.departure.stationName
-              : DEPARTURE_STATION
-          }
-          textSize="16px"
-          textWeight="Regular"
-          lineHeight="21px"
-          textColor={selectedStation.departure.stationName ? COLOR.BASIC_BLACK : COLOR.GRAY_999}
-          onPress={() => openSearchModal(DEPARTURE_STATION)}
-        />
-        <StationButton
-          value={
-            selectedStation.arrival.stationName
-              ? selectedStation.arrival.stationName
-              : ARRIVAL_STATION
-          }
-          textSize="16px"
-          textWeight="Regular"
-          lineHeight="21px"
-          textColor={selectedStation.arrival.stationName ? COLOR.BASIC_BLACK : COLOR.GRAY_999}
-          onPress={() => openSearchModal(ARRIVAL_STATION)}
-        />
-      </InnerBox>
-      <Pressable hitSlop={20} onPress={swapStation}>
-        <IconSwapChange width={20} />
-      </Pressable>
-    </Container>
+    <>
+      <AddNewRouteHeader />
+      <Container>
+        <InnerBox>
+          <StationButton
+            value={
+              selectedStation.departure.stationName
+                ? selectedStation.departure.stationName
+                : DEPARTURE_STATION
+            }
+            textSize="16px"
+            textWeight="Regular"
+            lineHeight="21px"
+            textColor={selectedStation.departure.stationName ? COLOR.BASIC_BLACK : COLOR.GRAY_999}
+            onPress={() => openSearchModal(DEPARTURE_STATION)}
+          />
+          <StationButton
+            value={
+              selectedStation.arrival.stationName
+                ? selectedStation.arrival.stationName
+                : ARRIVAL_STATION
+            }
+            textSize="16px"
+            textWeight="Regular"
+            lineHeight="21px"
+            textColor={selectedStation.arrival.stationName ? COLOR.BASIC_BLACK : COLOR.GRAY_999}
+            onPress={() => openSearchModal(ARRIVAL_STATION)}
+          />
+        </InnerBox>
+        <Pressable hitSlop={20} onPress={swapStation}>
+          <IconSwapChange width={20} />
+        </Pressable>
+      </Container>
+    </>
   );
 };
 

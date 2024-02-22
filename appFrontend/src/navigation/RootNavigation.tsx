@@ -1,7 +1,7 @@
 import { useNavigation } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import type { StackNavigationProp } from '@react-navigation/stack';
-import { MainBottomTabNavigation } from '@/navigation';
+import { MainBottomTabNavigation, MyPageNavigation, NewRouteNavigation } from '@/navigation';
 import { MAIN_BOTTOM_TAB } from '@/global/constants';
 import type { RootStackParamList } from '@/navigation/types/navigation';
 import { useMutation } from 'react-query';
@@ -69,6 +69,8 @@ const RootNavigation = () => {
       />
       <Stack.Screen name="AuthStack" component={AuthNavigation} />
       <Stack.Screen name={MAIN_BOTTOM_TAB} component={MainBottomTabNavigation} />
+      <Stack.Screen name="NewRouteNavigation" component={NewRouteNavigation} />
+      <Stack.Screen name="MyPageNavigation" component={MyPageNavigation} />
     </Stack.Navigator>
   );
 };

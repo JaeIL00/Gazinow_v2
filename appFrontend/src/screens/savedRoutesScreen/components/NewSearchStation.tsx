@@ -12,6 +12,7 @@ import IconXCircleFill from '@assets/icons/x_circle_fill.svg';
 import { Pressable } from 'react-native';
 import { subwayReturnLineName } from '@/global/utils/subwayLine';
 import IconLocationPin from '@assets/icons/location_pin.svg';
+import AddNewRouteHeader from './AddNewRouteHeader';
 
 interface SearchStationProps {
   searchType: '출발역' | '도착역';
@@ -61,6 +62,7 @@ const NewSearchStation = ({ searchType, closeModal, setSubwayStation }: SearchSt
 
   return (
     <>
+      <AddNewRouteHeader />
       <Container>
         <SearchInput
           value={searchTextValue}

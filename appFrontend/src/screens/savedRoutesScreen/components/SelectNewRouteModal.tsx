@@ -7,6 +7,7 @@ import { useGetSearchPaths } from '@/global/apis/hook';
 import { Dispatch, SetStateAction } from 'react';
 import { Path } from '@/global/apis/entity';
 import { StationDataTypes } from '@/store/modules';
+import AddNewRouteHeader from './AddNewRouteHeader';
 
 interface SelectedStationTypes {
   departure: StationDataTypes;
@@ -34,6 +35,7 @@ const SelectNewRouteModal = ({
 
   return (
     <Container>
+      <AddNewRouteHeader />
       <SubPathContainer>
         <ScrollView>
           {data?.paths.map((item) => {

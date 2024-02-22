@@ -34,10 +34,6 @@ const HomeNavigation = () => {
 };
 
 export default HomeNavigation;
-const HeaderLeft = styled.View`
-  margin-left: 10px;
-  flex-direction: row;
-`;
 
 export const useHomeNavigation = <RouteName extends keyof HomeStackParamList>() => {
   return useNavigation<StackNavigationProp<HomeStackParamList, RouteName>>();

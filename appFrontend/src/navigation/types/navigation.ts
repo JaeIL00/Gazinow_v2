@@ -18,3 +18,18 @@ export type HomeStackParamList = {
   SubwayPathDetail: { state?: Path | SubPath[]; pathId?: number | null };
   SavedRoutes: undefined;
 };
+
+export type NewRouteStackParamList = {
+  Swap: undefined;
+  Search: undefined;
+  Result: undefined;
+  Detail: { state?: Path | SubPath[]; pathId?: number | null };
+  Name: undefined;
+};
+
+export type MyPageStackParamList = {
+  Home: undefined;
+  SubwayPathResult: undefined;
+  SubwayPathDetail: { state?: Path | SubPath[]; pathId?: number | null };
+  SavedRoutes: undefined;
+};

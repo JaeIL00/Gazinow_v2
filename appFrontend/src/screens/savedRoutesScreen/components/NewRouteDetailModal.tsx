@@ -6,6 +6,7 @@ import { Path, SubPath } from '@/global/apis/entity';
 import SearchPathDetailItem from '@/screens/searchPathResultDetailScreen/components/SearchPathDetailItem';
 import { COLOR } from '@/global/constants';
 import IconLeftArrowHead from '@assets/icons/left_arrow_head.svg';
+import { useNewRouteNavigation } from '@/navigation/NewRouteNavigation';
 
 interface ModalProps {
   item: Path;
@@ -14,6 +15,7 @@ interface ModalProps {
 }
 
 const NewRouteDetailModal = ({ item, setDepth, onRequestClose }: ModalProps) => {
+  const newRouteNavigation = useNewRouteNavigation();
   const freshSubPathData: SubPath[] = useMemo(() => {
     const subPaths = item?.subPaths || [];
     return subPaths.filter((subPath) => !!subPath.lanes.length && !!subPath.stations.length);
@@ -48,7 +50,7 @@ const NewRouteDetailModal = ({ item, setDepth, onRequestClose }: ModalProps) => 
               alignItems: 'center',
             }}
           >
-            <Pressable hitSlop={20} onPress={onRequestCloseByProp}>
+            <Pressable hitSlop={20} onPress={() => newRouteNavigation.goBack()}>
               <IconLeftArrowHead style={{ paddingLeft: 8 }} />
             </Pressable>
           </View>

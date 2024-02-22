@@ -4,21 +4,18 @@ import { FontText, Space } from '@/global/ui';
 import { Pressable } from 'react-native';
 import IconLeftArrowHead from '@assets/icons/left_arrow_head.svg';
 import IconCrossX from '@assets/icons/cross_x.svg';
+import { useNewRouteNavigation } from '@/navigation/NewRouteNavigation';
 
-interface HeaderProps {
-  onBackBtnPress: () => void;
-  onCloseBtnPress: () => void;
-}
-
-const AddNewRouteHeader = ({ onBackBtnPress, onCloseBtnPress }: HeaderProps) => {
+const AddNewRouteHeader = () => {
+  const newRouteNavigation = useNewRouteNavigation();
   return (
     <>
       <Header>
-        <Pressable hitSlop={20} onPress={onBackBtnPress}>
+        <Pressable hitSlop={20} onPress={() => newRouteNavigation.goBack()}>
           <IconLeftArrowHead />
         </Pressable>
         <FontText value="새 경로 저장" textSize="18px" textWeight="Medium" lineHeight="23px" />
-        <Pressable hitSlop={20} onPress={onCloseBtnPress}>
+        <Pressable hitSlop={20} onPress={() => newRouteNavigation.popToTop()}>
           <IconCrossX />
         </Pressable>
       </Header>

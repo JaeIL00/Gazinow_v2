@@ -9,6 +9,7 @@ import { Path, SubPath } from '@/global/apis/entity';
 import { View, Keyboard, SafeAreaView } from 'react-native';
 import { KeyboardAvoidingView, Platform } from 'react-native';
 import XCircle from '@assets/icons/x-circle.svg';
+import AddNewRouteHeader from './AddNewRouteHeader';
 
 interface ModalProps {
   item: Path;
@@ -56,6 +57,7 @@ const NameNewRouteModal = ({ item, onCancel, setDepth }: ModalProps) => {
       style={{ flex: 1 }}
     >
       <SafeAreaView style={{ flex: 1 }}>
+        <AddNewRouteHeader />
         <Container>
           <SubPathContainer>
             <SubwaySimplePath

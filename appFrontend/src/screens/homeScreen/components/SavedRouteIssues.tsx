@@ -6,11 +6,13 @@ import SavedRouteBox from './SavedRouteBox';
 import IssueBox from './IssueBox';
 import { useHomeNavigation } from '@/navigation/HomeNavigation';
 import styled from '@emotion/native';
+import { useNewRouteNavigation } from '@/navigation/NewRouteNavigation';
 
 const categoryName: ['저장경로', '이슈'] = ['저장경로', '이슈'];
 
 const SavedRouteIssues = () => {
   const homeNavigation = useHomeNavigation();
+  const newRouteNavigation = useNewRouteNavigation();
   const [activeButton, setActiveButton] = useState<'저장경로' | '이슈'>('저장경로');
 
   const handleButtonClick = (buttonText: typeof activeButton) => setActiveButton(buttonText);
@@ -41,13 +43,13 @@ const SavedRouteIssues = () => {
     <Container>
       <CategoryContainer>
         <Category>{categoryName.map(renderButton)}</Category>
-        <Pressable hitSlop={20} onPress={() => homeNavigation.navigate('SavedRoutes')}>
+        <Pressable hitSlop={20} onPress={() => newRouteNavigation.navigate('SavedRoutes')}>
           <TextButton
             value="저장경로 편집"
             textSize="12px"
             textColor={COLOR.GRAY_999}
             textWeight="Regular"
-            onPress={() => homeNavigation.navigate('SavedRoutes')}
+            onPress={() => newRouteNavigation.navigate('SavedRoutes')}
             lineHeight="15px"
           />
         </Pressable>

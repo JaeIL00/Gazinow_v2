@@ -8,10 +8,13 @@ import { useRootNavigation } from '@/navigation/RootNavigation';
 import { Pressable, SafeAreaView } from 'react-native';
 import IconPlusBtn from '@assets/icons/plus_circle.svg';
 import IconLeftArrowHead from '@assets/icons/left_arrow_head.svg';
+import { useNewRouteNavigation } from '@/navigation/NewRouteNavigation';
+import HomeNavigation from '@/navigation/HomeNavigation';
 
 const SavedRoutesScreen = () => {
   const [isAddRouteModalOpen, setIsAddRouteModalOpen] = useState<boolean>(false);
   const navigation = useRootNavigation();
+  const newRouteNavigation = useNewRouteNavigation();
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -26,7 +29,7 @@ const SavedRoutesScreen = () => {
         <Space height="4px" />
         <RouteContainer>
           <RenderSavedRoutes />
-          <AddContainer onPress={() => setIsAddRouteModalOpen(true)}>
+          <AddContainer onPress={() => navigation.navigate('NewRouteNavigation')}>
             <IconPlusBtn />
             <FontText
               value="  경로 추가하기"
