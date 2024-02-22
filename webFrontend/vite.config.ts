@@ -12,4 +12,14 @@ export default defineConfig({
       { find: "@pages", replacement: "/src/pages" },
     ],
   },
+  server: {
+    proxy: {
+      "/api": {
+        target: "https://gazinow.com/api",
+        changeOrigin: true,
+        secure: false,
+        rewrite: (path) => path.replace(/^\/api/, ""),
+      },
+    },
+  },
 });
