@@ -6,17 +6,22 @@ import { useGetSavedRoutesQuery } from '@/global/apis/hook';
 import styled from '@emotion/native';
 import { SubwaySimplePath } from '@/global/components';
 import { Path, RenderSavedRoutesType } from '@/global/apis/entity';
-import NewRouteDetailModal from '@/screens/savedRoutesScreen/components/NewRouteDetailModal';
 import IconRightArrowHead from '@/assets/icons/right_arrow_head.svg';
+import { useHomeNavigation } from '@/navigation/HomeNavigation';
 
 const SavedRouteBox = () => {
+  const homeNavigation = useHomeNavigation();
   const { data: savedRoutes } = useGetSavedRoutesQuery();
   const isRoutesExist = savedRoutes && savedRoutes.length > 0;
-  const [isRouteDetailOpened, setIsRouteDetailOpened] = useState<boolean>(false);
   const [selectedRoute, setSelectedRoute] = useState<Path | null>(null);
 
   const [hasIssueRoutes, setHasIssueRoutes] = useState<RenderSavedRoutesType[]>([]);
-  const [routeDetail, setRouteDetail] = useState<Path>();
+
+  useEffect(() => {
+    if (selectedRoute) {
+      homeNavigation.push('SavedRoutesDetail', { state: selectedRoute! });
+    }
+  }, [selectedRoute]);
 
   useEffect(() => {
     if (savedRoutes) {
@@ -32,12 +37,6 @@ const SavedRouteBox = () => {
   if (isRoutesExist) {
     return (
       <View>
-        {isRouteDetailOpened && selectedRoute && (
-          <NewRouteDetailModal
-            item={selectedRoute}
-            onRequestClose={() => setIsRouteDetailOpened(false)}
-          />
-        )}
         {savedRoutes?.map((item: RenderSavedRoutesType, index: number) => (
           <RouteContainer key={item.id}>
             {index !== 0 && (
@@ -63,13 +62,7 @@ const SavedRouteBox = () => {
                   textColor={COLOR.GRAY_999}
                 />
               </TextContainer>
-              <Pressable
-                hitSlop={20}
-                onPress={() => {
-                  setIsRouteDetailOpened(true);
-                  setSelectedRoute(item);
-                }}
-              >
+              <Pressable hitSlop={20} onPress={() => setSelectedRoute(item)}>
                 <TextContainer>
                   <TextButton
                     value="세부정보"
@@ -77,10 +70,7 @@ const SavedRouteBox = () => {
                     textWeight="Regular"
                     lineHeight="19px"
                     textColor={COLOR.GRAY_999}
-                    onPress={() => {
-                      setIsRouteDetailOpened(true);
-                      setSelectedRoute(item);
-                    }}
+                    onPress={() => setSelectedRoute(item)}
                   />
                   <Space width="4px" />
                   <IconRightArrowHead />

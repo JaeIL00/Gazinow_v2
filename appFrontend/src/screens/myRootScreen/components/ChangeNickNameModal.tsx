@@ -11,12 +11,10 @@ import { useAppDispatch } from '@/store';
 import { saveUserInfo } from '@/store/modules';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store/configureStore';
+import { useMyPageNavigation } from '@/navigation/MyPageNavigation';
 
-interface ModalProps {
-  onCancel: () => void;
-}
-
-const ChangeNickNameModal = ({ onCancel }: ModalProps) => {
+const ChangeNickNameModal = () => {
+  const myPageNavigation = useMyPageNavigation();
   const { email } = useSelector((state: RootState) => state.auth);
   const [newNickname, setNewNickname] = useState<string>('');
   const [isNicknameValid, setIsNicknameValid] = useState<boolean>(true);
@@ -25,7 +23,7 @@ const ChangeNickNameModal = ({ onCancel }: ModalProps) => {
 
   const { mutate } = useChangeNicknameQuery({
     onSuccess: () => {
-      onCancel();
+      myPageNavigation.goBack();
       dispatch(saveUserInfo({ email: email, nickname: newNickname }));
       //TODO: 성공 토스트 띄우기
     },
@@ -50,57 +48,55 @@ const ChangeNickNameModal = ({ onCancel }: ModalProps) => {
   };
 
   return (
-    <Modal visible onRequestClose={onCancel}>
-      <SafeAreaView style={{ flex: 1 }}>
-        <Header>
-          <Pressable hitSlop={20} onPress={onCancel}>
-            <IconCrossX width="24px" />
-          </Pressable>
-          <Space width="12px" />
-          <FontText value="닉네임 수정" textSize="18px" lineHeight="23px" textWeight="Medium" />
-          <View style={{ flex: 1 }} />
-          <Pressable hitSlop={20} onPress={() => mutate(newNickname)} disabled={newNickname === ''}>
-            <TextButton
-              value="완료"
-              textSize="16px"
-              textColor={newNickname === '' ? COLOR.GRAY_999 : COLOR.BASIC_BLACK}
-              textWeight="Medium"
-              lineHeight="21px"
-              onPress={() => mutate(newNickname)}
-              disabled={newNickname === ''}
-            />
-          </Pressable>
-        </Header>
-        <Container>
-          <InputContainer>
-            <SearchInput
-              value={newNickname}
-              placeholder={`새 닉네임을 입력하세요`}
-              placeholderTextColor={COLOR.GRAY_999}
-              inputMode="search"
-              onChangeText={setNewNickname}
-              autoFocus
-              maxLength={7}
-            />
-            <IconXCircleFill width={19.5} onPress={() => setNewNickname('')} />
-          </InputContainer>
+    <SafeAreaView style={{ flex: 1, backgroundColor: COLOR.WHITE }}>
+      <Header>
+        <Pressable hitSlop={20} onPress={() => myPageNavigation.goBack()}>
+          <IconCrossX width="24px" />
+        </Pressable>
+        <Space width="12px" />
+        <FontText value="닉네임 수정" textSize="18px" lineHeight="23px" textWeight="Medium" />
+        <View style={{ flex: 1 }} />
+        <Pressable hitSlop={20} onPress={() => mutate(newNickname)} disabled={newNickname === ''}>
+          <TextButton
+            value="완료"
+            textSize="16px"
+            textColor={newNickname === '' ? COLOR.GRAY_999 : COLOR.BASIC_BLACK}
+            textWeight="Medium"
+            lineHeight="21px"
+            onPress={() => mutate(newNickname)}
+            disabled={newNickname === ''}
+          />
+        </Pressable>
+      </Header>
+      <Container>
+        <InputContainer>
+          <SearchInput
+            value={newNickname}
+            placeholder={`새 닉네임을 입력하세요`}
+            placeholderTextColor={COLOR.GRAY_999}
+            inputMode="search"
+            onChangeText={setNewNickname}
+            autoFocus
+            maxLength={7}
+          />
+          <IconXCircleFill width={19.5} onPress={() => setNewNickname('')} />
+        </InputContainer>
 
-          {!isNicknameValid && (
-            <MessageContainer>
-              <XCircle width={14} />
-              <Space width="5px" />
-              <FontText
-                value={errorMessage}
-                textSize="14px"
-                textWeight="Medium"
-                lineHeight="16px"
-                textColor="#EB5147"
-              />
-            </MessageContainer>
-          )}
-        </Container>
-      </SafeAreaView>
-    </Modal>
+        {!isNicknameValid && (
+          <MessageContainer>
+            <XCircle width={14} />
+            <Space width="5px" />
+            <FontText
+              value={errorMessage}
+              textSize="14px"
+              textWeight="Medium"
+              lineHeight="16px"
+              textColor="#EB5147"
+            />
+          </MessageContainer>
+        )}
+      </Container>
+    </SafeAreaView>
   );
 };
 export default ChangeNickNameModal;

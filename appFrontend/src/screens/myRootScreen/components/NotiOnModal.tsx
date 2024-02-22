@@ -1,16 +1,15 @@
 import styled from '@emotion/native';
 import { useRootNavigation } from '@/navigation/RootNavigation';
-import { Linking, Modal, SafeAreaView } from 'react-native';
+import { Linking, SafeAreaView } from 'react-native';
 import { COLOR } from '@/global/constants';
 import { FontText, Space, TextButton } from '@/global/ui';
 import IconLeftArrowHead from '@assets/icons/left_arrow_head.svg';
+import { useMyPageNavigation } from '@/navigation/MyPageNavigation';
 
-interface ModalProps {
-  onCancel: () => void;
-}
-
-const NotiOnModal = ({ onCancel }: ModalProps) => {
+const NotiOnModal = () => {
   const navigation = useRootNavigation();
+  const myPageNavigation = useMyPageNavigation();
+
   navigation.setOptions({
     headerRight: () => (
       <TextButton
@@ -29,53 +28,51 @@ const NotiOnModal = ({ onCancel }: ModalProps) => {
   };
 
   return (
-    <Modal visible onRequestClose={onCancel}>
-      <SafeAreaView style={{ flex: 1 }}>
-        <Header>
-          <TitleContainer>
-            <IconLeftArrowHead width="24px" onPress={onCancel} />
-            <Space width="12px" />
-            <FontText value="알림 설정" textSize="18px" lineHeight="23px" textWeight="Medium" />
-          </TitleContainer>
-          <TextButton
-            value="완료    "
-            textSize="16px"
-            textColor={COLOR.GRAY_999}
-            textWeight="Medium"
-            lineHeight="21px"
-            // onPress={() => submitNotificationSettings()}
+    <SafeAreaView style={{ flex: 1, backgroundColor: COLOR.WHITE }}>
+      <Header>
+        <TitleContainer>
+          <IconLeftArrowHead width="24px" onPress={() => myPageNavigation.goBack()} />
+          <Space width="12px" />
+          <FontText value="알림 설정" textSize="18px" lineHeight="23px" textWeight="Medium" />
+        </TitleContainer>
+        <TextButton
+          value="완료    "
+          textSize="16px"
+          textColor={COLOR.GRAY_999}
+          textWeight="Medium"
+          lineHeight="21px"
+          // onPress={() => submitNotificationSettings()}
+        />
+      </Header>
+      <Container>
+        <AlertContainer>
+          <FontText
+            value={`기기 알림을 켜주세요!`}
+            textSize="24px"
+            textWeight="Bold"
+            lineHeight="32px"
           />
-        </Header>
-        <Container>
-          <AlertContainer>
-            <FontText
-              value={`기기 알림을 켜주세요!`}
-              textSize="24px"
-              textWeight="Bold"
-              lineHeight="32px"
-            />
-            <Space height="7px" />
-            <FontText
-              value={`정보 알림을 받기 위해선 기기 알림을 켜주세요`}
-              textSize="16px"
-              textWeight="Regular"
-              lineHeight="21px"
-              textColor={COLOR.GRAY_999}
-            />
-          </AlertContainer>
-          <BottomBtn onPress={goToDeviceSettings}>
-            <TextButton
-              value="기기 알림 켜기"
-              textSize="17px"
-              textWeight="Regular"
-              lineHeight="26px"
-              textColor={COLOR.WHITE}
-              onPress={goToDeviceSettings}
-            />
-          </BottomBtn>
-        </Container>
-      </SafeAreaView>
-    </Modal>
+          <Space height="7px" />
+          <FontText
+            value={`정보 알림을 받기 위해선 기기 알림을 켜주세요`}
+            textSize="16px"
+            textWeight="Regular"
+            lineHeight="21px"
+            textColor={COLOR.GRAY_999}
+          />
+        </AlertContainer>
+        <BottomBtn onPress={goToDeviceSettings}>
+          <TextButton
+            value="기기 알림 켜기"
+            textSize="17px"
+            textWeight="Regular"
+            lineHeight="26px"
+            textColor={COLOR.WHITE}
+            onPress={goToDeviceSettings}
+          />
+        </BottomBtn>
+      </Container>
+    </SafeAreaView>
   );
 };
 export default NotiOnModal;

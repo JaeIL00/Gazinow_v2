@@ -8,6 +8,8 @@ export type RootStackParamList = {
     params?: { searchType: '출발역' | '도착역' };
   };
   MainBottomTab: { screen: 'homeStack' };
+  NewRouteNavigation: { screen: 'SavedRoutes' };
+  MyPageNavigation: { screen: unknown };
 };
 
 export type AuthStackStackParamList = {
@@ -21,6 +23,28 @@ export type HomeStackParamList = {
   SubwayPathResult: undefined;
   SubwayPathDetail: { state?: Path | SubPath[]; pathId?: number | null };
   SavedRoutes: undefined;
+  SavedRoutesDetail: { state?: Path | SubPath[]; pathId?: number | null };
+};
+
+export type NewRouteStackParamList = {
+  SavedRoutes: undefined;
+  Swap: undefined;
+  Search: undefined;
+  Result: undefined;
+  Detail: { state?: Path | SubPath[]; pathId?: number | null };
+  Name: { state?: Path | SubPath[]; pathId?: number | null };
+};
+
+export type MyPageStackParamList = {
+  MyRootScreen: undefined;
+  ChangeNickNameModal: undefined;
+  ChangePwModal: undefined;
+  ConfirmPwModal: undefined;
+  ConfirmQuitModal: undefined;
+  ManageAccountModal: undefined;
+  NotiOnModal: undefined;
+  NotiSettingsModal: undefined;
+  SubscribeTermsModal: undefined;
 };
 
 export type IssueStackParamList = {

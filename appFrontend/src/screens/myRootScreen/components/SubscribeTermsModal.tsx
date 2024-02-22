@@ -1,15 +1,13 @@
 import { COLOR } from '@/global/constants';
-import { Modal, Pressable, SafeAreaView, View } from 'react-native';
+import { Pressable, SafeAreaView, View } from 'react-native';
 import { WebView } from 'react-native-webview';
 import IconCrossX from '@assets/icons/cross_x.svg';
+import { useMyPageNavigation } from '@/navigation/MyPageNavigation';
 
-interface SubscribeTermsModalProps {
-  closeModal: () => void;
-}
-
-const SubscribeTermsModal = ({ closeModal }: SubscribeTermsModalProps) => (
-  <Modal onRequestClose={closeModal}>
-    <SafeAreaView style={{ flex: 1 }}>
+const SubscribeTermsModal = () => {
+  const myPageNavigation = useMyPageNavigation();
+  return (
+    <SafeAreaView style={{ flex: 1, backgroundColor: COLOR.WHITE }}>
       <View
         style={{
           paddingLeft: 16,
@@ -20,7 +18,7 @@ const SubscribeTermsModal = ({ closeModal }: SubscribeTermsModalProps) => (
           borderBottomColor: COLOR.GRAY_DDD,
         }}
       >
-        <Pressable hitSlop={20} onPress={closeModal}>
+        <Pressable hitSlop={20} onPress={() => myPageNavigation.goBack()}>
           <IconCrossX width="24px" />
         </Pressable>
       </View>
@@ -30,7 +28,7 @@ const SubscribeTermsModal = ({ closeModal }: SubscribeTermsModalProps) => (
         }}
       />
     </SafeAreaView>
-  </Modal>
-);
+  );
+};
 
 export default SubscribeTermsModal;

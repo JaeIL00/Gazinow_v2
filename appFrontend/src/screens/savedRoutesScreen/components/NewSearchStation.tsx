@@ -2,25 +2,23 @@ import styled from '@emotion/native';
 import Icon from 'react-native-vector-icons/Feather';
 import { FontText, Input } from '@/global/ui';
 import { COLOR } from '@/global/constants';
-import { useAppDispatch } from '@/store';
-import { getSearchText } from '@/store/modules/stationSearchModule';
+import { useAppDispatch, useAppSelect } from '@/store';
+import { getSearchText, getSeletedStation } from '@/store/modules/stationSearchModule';
 import { useAddRecentSearch, useGetSearchHistory, useSearchStationName } from '@/global/apis/hook';
 import { useCallback, useState } from 'react';
 import { debounce } from 'lodash';
 import { SelectedStationTypes } from './NewSearchSwapStation';
 import IconXCircleFill from '@assets/icons/x_circle_fill.svg';
-import { Pressable } from 'react-native';
+import { Pressable, SafeAreaView } from 'react-native';
 import { subwayReturnLineName } from '@/global/utils/subwayLine';
 import IconLocationPin from '@assets/icons/location_pin.svg';
+import AddNewRouteHeader from './AddNewRouteHeader';
+import { useNewRouteNavigation } from '@/navigation/NewRouteNavigation';
 
-interface SearchStationProps {
-  searchType: '출발역' | '도착역';
-  closeModal: () => void;
-  setSubwayStation: React.Dispatch<React.SetStateAction<SelectedStationTypes>>;
-}
-
-const NewSearchStation = ({ searchType, closeModal, setSubwayStation }: SearchStationProps) => {
+const NewSearchStation = () => {
+  const newRouteNavigation = useNewRouteNavigation();
   const dispatch = useAppDispatch();
+  const { selectedStation, stationType } = useAppSelect((state) => state.subwaySearch);
 
   const { historyData } = useGetSearchHistory();
 
@@ -35,22 +33,28 @@ const NewSearchStation = ({ searchType, closeModal, setSubwayStation }: SearchSt
     debounce((text: string) => {
       dispatch(getSearchText(text));
     }, 500),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     [],
   );
 
   const { searchResultData } = useSearchStationName(searchTextValue);
   const { addRecentMutate } = useAddRecentSearch({
     onSuccess: ({ stationLine, stationName }) => {
-      const key = searchType === '출발역' ? 'departure' : 'arrival';
-      setSubwayStation((prev) => ({
-        ...prev,
-        [key]: {
-          stationLine,
-          stationName,
-        },
-      }));
-      closeModal();
+      const key = stationType === '출발역' ? 'departure' : 'arrival';
+      dispatch(
+        getSeletedStation({
+          ...selectedStation,
+          [key]: {
+            stationLine,
+            stationName,
+          },
+        }),
+      );
+      if (
+        (key === 'departure' && selectedStation.arrival.stationName) ||
+        (key === 'arrival' && selectedStation.departure.stationName)
+      ) {
+        newRouteNavigation.push('Result');
+      } else newRouteNavigation.goBack();
     },
   });
 
@@ -60,11 +64,12 @@ const NewSearchStation = ({ searchType, closeModal, setSubwayStation }: SearchSt
   };
 
   return (
-    <>
+    <SafeAreaView style={{ flex: 1, backgroundColor: COLOR.WHITE }}>
+      <AddNewRouteHeader />
       <Container>
         <SearchInput
           value={searchTextValue}
-          placeholder={`${searchType}을 검색해보세요`}
+          placeholder={`${stationType}을 검색해보세요`}
           placeholderTextColor={COLOR.GRAY_BE}
           inputMode="search"
           onChangeText={changeSearchText}
@@ -148,7 +153,7 @@ const NewSearchStation = ({ searchType, closeModal, setSubwayStation }: SearchSt
           </Ul>
         </ResultContainer>
       )}
-    </>
+    </SafeAreaView>
   );
 };
 

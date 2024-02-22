@@ -4,45 +4,57 @@ import { FontText, Space } from '@/global/ui';
 import { COLOR } from '@/global/constants';
 import { SubwaySimplePath } from '@/global/components';
 import { useGetSearchPaths } from '@/global/apis/hook';
-import { Dispatch, SetStateAction } from 'react';
+import { useState } from 'react';
 import { Path } from '@/global/apis/entity';
 import { StationDataTypes } from '@/store/modules';
+import AddNewRouteHeader from './AddNewRouteHeader';
+import { useNewRouteNavigation } from '@/navigation/NewRouteNavigation';
+import { useAppSelect } from '@/store';
+import SwapStation from './SwapStation';
 
 interface SelectedStationTypes {
   departure: StationDataTypes;
   arrival: StationDataTypes;
 }
-interface SelectNewRouteProps {
-  setDepth: Dispatch<SetStateAction<'search' | 'pathList' | 'detail' | 'name'>>;
-  seletedStation: SelectedStationTypes;
-  selectedRoutePath: Path | null;
-  setSelectedRoutePath: Dispatch<SetStateAction<Path | null>>;
-}
 
-const SelectNewRouteModal = ({
-  setDepth,
-  seletedStation,
-  selectedRoutePath,
-  setSelectedRoutePath,
-}: SelectNewRouteProps) => {
+const SelectNewRouteModal = () => {
+  const newRouteNavigation = useNewRouteNavigation();
+  const selectedStationRedux = useAppSelect(({ subwaySearch }) => subwaySearch.selectedStation);
+  const [selectedRoutePath, setSelectedRoutePath] = useState<Path | null>(null);
+
+  const [selectedStation, setSelectedStation] =
+    useState<SelectedStationTypes>(selectedStationRedux);
+
   const { data } = useGetSearchPaths({
-    strStationName: seletedStation.departure.stationName,
-    strStationLine: seletedStation.departure.stationLine,
-    endStationName: seletedStation.arrival.stationName,
-    endStationLine: seletedStation.arrival.stationLine,
+    strStationName: selectedStation.departure.stationName,
+    strStationLine: selectedStation.departure.stationLine,
+    endStationName: selectedStation.arrival.stationName,
+    endStationLine: selectedStation.arrival.stationLine,
   });
 
   return (
     <Container>
+      <AddNewRouteHeader />
       <SubPathContainer>
+        <View
+          style={{
+            backgroundColor: COLOR.WHITE,
+            paddingTop: 20,
+            paddingBottom: 45,
+            marginHorizontal: 16,
+          }}
+        >
+          <SwapStation selectedStation={selectedStation} setSelectedStation={setSelectedStation} />
+        </View>
         <ScrollView>
           {data?.paths.map((item) => {
             return (
               <PathInner
                 key={item.firstStartStation + item.totalTime}
                 onPress={() => {
-                  setSelectedRoutePath(item);
-                  setDepth('detail');
+                  newRouteNavigation.push('Detail', {
+                    state: item,
+                  });
                 }}
               >
                 <PathTitleInfoBox>
@@ -91,7 +103,14 @@ const SelectNewRouteModal = ({
         </ScrollView>
       </SubPathContainer>
 
-      <BottomBtn onPress={() => setDepth('name')} disabled={selectedRoutePath === null}>
+      <BottomBtn
+        onPress={() =>
+          newRouteNavigation.push('Name', {
+            state: selectedRoutePath!,
+          })
+        }
+        disabled={selectedRoutePath === null}
+      >
         <FontText
           value="다음"
           textSize="17px"
