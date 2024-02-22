@@ -1,25 +1,22 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { FontText, Space } from '@/global/ui';
 import { COLOR } from '@/global/constants';
 import styled from '@emotion/native';
 import { SubwaySimplePath } from '@/global/components';
 import { RenderSavedRoutesType } from '@/global/apis/entity';
-import NewRouteDetailModal from '@/screens/savedRoutesScreen/components/NewRouteDetailModal';
 import IconRightArrowHead from '@/assets/icons/right_arrow_head.svg';
 import { Pressable } from 'react-native';
+import { useHomeNavigation } from '@/navigation/HomeNavigation';
 
 interface RecommendedRouteProps {
   pathData: RenderSavedRoutesType;
 }
 
 const RecommendedRoutes = ({ pathData }: RecommendedRouteProps) => {
-  const [isRouteDetailOpened, setIsRouteDetailOpened] = useState<boolean>(false);
+  const homeNavigation = useHomeNavigation();
 
   return (
     <Container>
-      {isRouteDetailOpened && (
-        <NewRouteDetailModal item={pathData} onRequestClose={() => setIsRouteDetailOpened(false)} />
-      )}
       <TextContainer>
         <TextContainer>
           <FontText
@@ -38,7 +35,10 @@ const RecommendedRoutes = ({ pathData }: RecommendedRouteProps) => {
             textColor={COLOR.GRAY_999}
           />
         </TextContainer>
-        <Pressable hitSlop={20} onPress={() => setIsRouteDetailOpened(true)}>
+        <Pressable
+          hitSlop={20}
+          onPress={() => homeNavigation.push('SavedRoutesDetail', { state: pathData })}
+        >
           <TextContainer>
             <FontText
               value="세부정보"

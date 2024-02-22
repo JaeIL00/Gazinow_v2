@@ -2,25 +2,25 @@ import React, { useEffect, useState } from 'react';
 import { FontText, Space, TextButton } from '@/global/ui';
 import { COLOR } from '@/global/constants';
 import IssuesBanner from './IssuesBanner';
-import RecommendedRoutes from './RecommendedRoutes';
 import styled from '@emotion/native';
 import { useGetSavedRoutesQuery } from '@/global/apis/hook';
 import { Path, RenderSavedRoutesType } from '@/global/apis/entity';
 import { SubwaySimplePath } from '@/global/components';
-import NewRouteDetailModal from '@/screens/savedRoutesScreen/components/NewRouteDetailModal';
 import IconRightArrowHead from '@/assets/icons/right_arrow_head.svg';
 import { Pressable } from 'react-native';
+import { useHomeNavigation } from '@/navigation/HomeNavigation';
 
 const IssueBox = () => {
+  const homeNavigation = useHomeNavigation();
   const { data: savedRoutes } = useGetSavedRoutesQuery();
   const [hasIssueRoutes, setHasIssueRoutes] = useState<RenderSavedRoutesType[]>([]);
-  const [isRouteDetailOpened, setIsRouteDetailOpened] = useState<boolean>(false);
   const [routeDetail, setRouteDetail] = useState<Path>();
 
-  const handleOpenDetail = (index: number) => {
-    setIsRouteDetailOpened(true);
-    setRouteDetail(hasIssueRoutes[index]);
-  };
+  useEffect(() => {
+    if (routeDetail) {
+      homeNavigation.push('SavedRoutesDetail', { state: routeDetail });
+    }
+  }, [routeDetail]);
 
   useEffect(() => {
     if (savedRoutes) {
@@ -35,12 +35,6 @@ const IssueBox = () => {
 
   return (
     <>
-      {isRouteDetailOpened && routeDetail && (
-        <NewRouteDetailModal
-          item={routeDetail}
-          onRequestClose={() => setIsRouteDetailOpened(false)}
-        />
-      )}
       {hasIssueRoutes.map((route, index) => (
         <RouteContainer key={index}>
           <TextContainer>
@@ -63,7 +57,7 @@ const IssueBox = () => {
                 />
               </GrayEllipse>
             </TextContainer>
-            <Pressable hitSlop={20} onPress={() => handleOpenDetail(index)}>
+            <Pressable hitSlop={20} onPress={() => setRouteDetail(hasIssueRoutes[index])}>
               <TextContainer>
                 <TextButton
                   value="세부정보"
@@ -71,7 +65,7 @@ const IssueBox = () => {
                   textWeight="Regular"
                   lineHeight="19px"
                   textColor={COLOR.GRAY_999}
-                  onPress={() => handleOpenDetail(index)}
+                  onPress={() => setRouteDetail(hasIssueRoutes[index])}
                 />
                 <Space width="4px" />
                 <IconRightArrowHead />

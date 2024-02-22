@@ -5,25 +5,20 @@ import { getEncryptedStorage, removeEncryptedStorage } from '@/global/utils';
 import { FontText, Space, TextButton } from '@/global/ui';
 import { COLOR } from '@/global/constants';
 import { useLogoutMutation } from '@/screens/signInScreen/apis/hook';
-import ChangePwModal from './ChangePwModal';
 import MyTabModal from '@/global/components/MyTabModal';
-import { Modal, Pressable, SafeAreaView } from 'react-native';
-import ConfirmQuitModal from './ConfirmQuitModal';
+import { Pressable, SafeAreaView } from 'react-native';
 import IconLeftArrowHead from '@assets/icons/left_arrow_head.svg';
+import { useMyPageNavigation } from '@/navigation/MyPageNavigation';
 
 interface RenderMenuProps {
   text: string;
   onPress: () => void;
 }
-interface ManageAccountModalProps {
-  onCancel: () => void;
-}
 
-const ManageAccountModal = ({ onCancel }: ManageAccountModalProps) => {
+const ManageAccountModal = () => {
+  const myPageNavigation = useMyPageNavigation();
   const navigation = useRootNavigation();
   const [popupVisible, setPopupVisible] = useState(false);
-  const [isChangePwModalOpened, setIsChangePwModalOpened] = useState(false);
-  const [isConfirmQuitModalOpen, setIsConfirmQuitModalOpen] = useState<boolean>(false);
 
   const { logoutMutate } = useLogoutMutation({
     onSuccess: () => {
@@ -53,42 +48,34 @@ const ManageAccountModal = ({ onCancel }: ManageAccountModalProps) => {
   );
 
   return (
-    <Modal visible onRequestClose={onCancel}>
-      <SafeAreaView style={{ flex: 1 }}>
-        <Header>
-          <Pressable hitSlop={20} onPress={onCancel}>
-            <IconLeftArrowHead />
-          </Pressable>
-          <Space width="21px" />
-          <FontText value="계정 관리" textSize="18px" lineHeight="23px" textWeight="Medium" />
-        </Header>
-        <Container>
-          {renderMenu({
-            text: '비밀번호 변경',
-            onPress: () => setIsChangePwModalOpened(true),
-          })}
-          {renderMenu({ text: '로그아웃', onPress: () => setPopupVisible(true) })}
-          {renderMenu({
-            text: '회원 탈퇴',
-            onPress: () => setIsConfirmQuitModalOpen(true),
-          })}
-          {isChangePwModalOpened && (
-            <ChangePwModal onCancel={() => setIsChangePwModalOpened(false)} />
-          )}
-          <MyTabModal
-            isVisible={popupVisible}
-            onCancel={() => setPopupVisible(false)}
-            onConfirm={handleConfirm}
-            title="로그아웃 할까요?"
-            confirmText="로그아웃"
-            cancelText="취소"
-          />
-        </Container>
-        {isConfirmQuitModalOpen && (
-          <ConfirmQuitModal onCancel={() => setIsConfirmQuitModalOpen(false)} />
-        )}
-      </SafeAreaView>
-    </Modal>
+    <SafeAreaView style={{ flex: 1, backgroundColor: COLOR.WHITE }}>
+      <Header>
+        <Pressable hitSlop={20} onPress={() => myPageNavigation.goBack()}>
+          <IconLeftArrowHead />
+        </Pressable>
+        <Space width="21px" />
+        <FontText value="계정 관리" textSize="18px" lineHeight="23px" textWeight="Medium" />
+      </Header>
+      <Container>
+        {renderMenu({
+          text: '비밀번호 변경',
+          onPress: () => myPageNavigation.navigate('ChangePwModal'),
+        })}
+        {renderMenu({ text: '로그아웃', onPress: () => setPopupVisible(true) })}
+        {renderMenu({
+          text: '회원 탈퇴',
+          onPress: () => myPageNavigation.navigate('ConfirmQuitModal'),
+        })}
+        <MyTabModal
+          isVisible={popupVisible}
+          onCancel={() => setPopupVisible(false)}
+          onConfirm={handleConfirm}
+          title="로그아웃 할까요?"
+          confirmText="로그아웃"
+          cancelText="취소"
+        />
+      </Container>
+    </SafeAreaView>
   );
 };
 export default ManageAccountModal;

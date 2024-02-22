@@ -9,7 +9,7 @@ export type RootStackParamList = {
   };
   MainBottomTab: { screen: 'homeStack' };
   NewRouteNavigation: { screen: 'SavedRoutes' };
-  MyPageNavigation: { screen: 'MyRootScreen' };
+  MyPageNavigation: { screen: unknown };
 };
 
 export type AuthStackStackParamList = {
@@ -23,6 +23,7 @@ export type HomeStackParamList = {
   SubwayPathResult: undefined;
   SubwayPathDetail: { state?: Path | SubPath[]; pathId?: number | null };
   SavedRoutes: undefined;
+  SavedRoutesDetail: { state?: Path | SubPath[]; pathId?: number | null };
 };
 
 export type NewRouteStackParamList = {

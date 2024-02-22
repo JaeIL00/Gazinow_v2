@@ -20,92 +20,100 @@ const NewRouteDetailModal = () => {
   }, [resultData]);
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: COLOR.WHITE, paddingHorizontal: 16 }}>
-      {/* header */}
+    <SafeAreaView style={{ flex: 1, backgroundColor: COLOR.WHITE }}>
       <View
-        style={{
-          paddingVertical: 16,
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-        }}
+        style={[
+          css`
+            padding: 0 16px;
+          `,
+        ]}
       >
-        <Pressable hitSlop={20} onPress={() => newRouteNavigation.goBack()}>
-          <IconLeftArrowHead style={{ paddingLeft: 8 }} />
-        </Pressable>
-      </View>
-      <View
-        style={css`
-          flex-direction: row;
-          align-items: center;
-          justify-content: space-between;
-        `}
-      >
-        <View>
-          <FontText
-            value="평균 소요시간"
-            textSize="12px"
-            textWeight="Medium"
-            lineHeight="14px"
-            textColor="#999"
-          />
-          <View
-            style={css`
-              flex-direction: row;
-              margin-top: 4px;
-            `}
-          >
+        {/* header */}
+        <View
+          style={{
+            paddingVertical: 16,
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+          }}
+        >
+          <Pressable hitSlop={20} onPress={() => newRouteNavigation.goBack()}>
+            <IconLeftArrowHead style={{ paddingLeft: 8 }} />
+          </Pressable>
+        </View>
+        <View
+          style={css`
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+          `}
+        >
+          <View>
             <FontText
-              value={
-                resultData.totalTime > 60
-                  ? Math.floor(resultData.totalTime / 60) +
-                    '시간 ' +
-                    (resultData.totalTime % 60) +
-                    '분'
-                  : resultData.totalTime + '분'
-              }
-              textSize="24px"
-              textWeight="Bold"
-              lineHeight="32px"
+              value="평균 소요시간"
+              textSize="12px"
+              textWeight="Medium"
+              lineHeight="14px"
+              textColor="#999"
             />
             <View
               style={css`
-                width: 8px;
+                flex-direction: row;
+                margin-top: 4px;
               `}
-            />
-            <View>
+            >
+              <FontText
+                value={
+                  resultData.totalTime > 60
+                    ? Math.floor(resultData.totalTime / 60) +
+                      '시간 ' +
+                      (resultData.totalTime % 60) +
+                      '분'
+                    : resultData.totalTime + '분'
+                }
+                textSize="24px"
+                textWeight="Bold"
+                lineHeight="32px"
+              />
               <View
                 style={css`
-                  flex: 1;
+                  width: 8px;
                 `}
               />
-              <FontText
-                value={`환승 ${freshSubPathData.length - 1}회`}
-                textSize="14px"
-                textWeight="Regular"
-                lineHeight="21px"
-                textColor="#999"
-              />
+              <View>
+                <View
+                  style={css`
+                    flex: 1;
+                  `}
+                />
+                <FontText
+                  value={`환승 ${freshSubPathData.length - 1}회`}
+                  textSize="14px"
+                  textWeight="Regular"
+                  lineHeight="21px"
+                  textColor="#999"
+                />
+              </View>
             </View>
           </View>
         </View>
+        <View
+          style={css`
+            margin-bottom: 21px;
+            margin-top: 16px;
+            height: 1px;
+            background-color: ${COLOR.GRAY_EB};
+          `}
+        />
+        <FlatList
+          data={freshSubPathData}
+          keyExtractor={(item) => item.distance + item.sectionTime + ''}
+          ListFooterComponent={<View style={{ height: 100 }} />}
+          renderItem={({ item, index }) => (
+            <SearchPathDetailItem data={item} isLastLane={freshSubPathData.length - 1 === index} />
+          )}
+        />
       </View>
-      <View
-        style={css`
-          margin-bottom: 21px;
-          margin-top: 16px;
-          height: 1px;
-          background-color: ${COLOR.GRAY_EB};
-        `}
-      />
-      <FlatList
-        data={freshSubPathData}
-        keyExtractor={(item) => item.distance + item.sectionTime + ''}
-        ListFooterComponent={<View style={{ height: 100 }} />}
-        renderItem={({ item, index }) => (
-          <SearchPathDetailItem data={item} isLastLane={freshSubPathData.length - 1 === index} />
-        )}
-      />
     </SafeAreaView>
   );
 };

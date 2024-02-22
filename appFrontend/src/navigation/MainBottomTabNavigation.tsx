@@ -3,7 +3,6 @@ import {
   createBottomTabNavigator,
 } from '@react-navigation/bottom-tabs';
 import { COLOR, HOME, MY_ROOT } from '@/global/constants';
-import MyRootScreen from '@/screens/myRootScreen';
 import HomeNavigation from './HomeNavigation';
 import NowScreen from '@screens/nowScreen';
 import IconFocusedMap from '@assets/icons/tab_map.svg';
@@ -11,7 +10,8 @@ import IconUnFocusedMap from '@assets/icons/tab_map_border.svg';
 import IconNow from '@assets/icons/tab_now.svg';
 import IconMy from '@assets/icons/tab_my.svg';
 import { FontText } from '@/global/ui';
-import { Platform, View } from 'react-native';
+import { Platform } from 'react-native';
+import { MyPageNavigation } from '.';
 
 const Tab = createBottomTabNavigator();
 
@@ -69,7 +69,7 @@ const MainBottomTabNavigation = () => {
       />
       <Tab.Screen
         name={MY_ROOT}
-        component={MyRootScreen}
+        component={MyPageNavigation}
         options={{
           tabBarLabel: ({ focused }) => (
             <FontText

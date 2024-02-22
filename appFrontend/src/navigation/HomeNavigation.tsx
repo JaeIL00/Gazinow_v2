@@ -9,7 +9,7 @@ import SearchPathResultScreen from '@/screens/searchPathResultScreen';
 import SearchPathResultDetailScreen from '@/screens/searchPathResultDetailScreen';
 import HomeScreen from '@/screens/homeScreen';
 import SavedRoutesScreen from '@/screens/savedRoutesScreen';
-import styled from '@emotion/native';
+import SavedRoutesDetail from '@/screens/savedRoutesScreen/components/NewRouteDetailModal';
 
 const Stack = createStackNavigator<HomeStackParamList>();
 
@@ -24,6 +24,7 @@ const HomeNavigation = () => {
       <Stack.Screen name={SUBWAY_PATH_RESULT} component={SearchPathResultScreen} />
       <Stack.Screen name={SUBWAY_PATH_DETAIL} component={SearchPathResultDetailScreen} />
       <Stack.Screen name="SavedRoutes" component={SavedRoutesScreen} />
+      <Stack.Screen name="SavedRoutesDetail" component={SavedRoutesDetail} />
     </Stack.Navigator>
   );
 };
