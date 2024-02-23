@@ -33,3 +33,17 @@ export const postLike = async (issueId: number) => {
     throw error;
   }
 };
+
+/**
+ * 도움돼요 삭제
+ */
+export const deletePostLike = async (issueId: number) => {
+  try {
+    const res = await GaziAPI.delete(`${apiUrls.like}?issueId=${issueId}`);
+    return res.data.data;
+  } catch (err) {
+    Sentry.captureException(err);
+    const error = err as AxiosError;
+    throw error;
+  }
+};

@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import { useGetIssue, usePostLike } from "./api/hooks";
+import { useDeletePostLike, useGetIssue, usePostLike } from "./api/hooks";
 
 import IconThumsUp from "@assets/icons/thumbs_up.svg?react";
 
@@ -27,18 +27,19 @@ const IssueDetailPage = () => {
   // const [isOpenModal, setIsOpenModal] = useState<boolean>(true);
   // const closeModal = () => setIsOpenModal(false);
 
-  const { doLikeMutate } = usePostLike();
-  const { issueData, isLoadingIssue } = useGetIssue({
+  const { issueData, isLoadingIssue, refetchIssue } = useGetIssue({
     id,
     enabled: !!storageAccessToken || (!!accessToken && !!id),
   });
+  const { doLikeMutate } = usePostLike({ onSuccess: refetchIssue });
+  const { deleteLikeMutate } = useDeletePostLike({ onSuccess: refetchIssue });
 
   const likeHandler = useMemo(
     () =>
       debounce(() => {
         if (!issueData) return;
-        doLikeMutate(issueData.id);
-        // TODO: 도움돼요 삭제 구현 필요
+        if (issueData.isLike) deleteLikeMutate(issueData.id);
+        else doLikeMutate(issueData.id);
       }, 300),
     [issueData]
   );
