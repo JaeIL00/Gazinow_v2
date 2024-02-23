@@ -2,15 +2,15 @@ import { COLOR } from '@/global/constants';
 import { FontText, Input, Space, TextButton } from '@/global/ui';
 import { useCallback, useState } from 'react';
 import { View } from 'react-native';
-import CloseIcon from 'react-native-vector-icons/Ionicons';
 import { useCheckNickname, useSighUp } from '../apis/hooks';
 import { debounce } from 'lodash';
-import CheckIcon from 'react-native-vector-icons/Feather';
 import { SignUpParams } from '../type';
 import { useAppDispatch } from '@/store';
 import { saveUserInfo } from '@/store/modules';
 import StepButton from '../ui/StepButton';
 import { setEncryptedStorage } from '@/global/utils';
+import IconCheck from '@assets/icons/check.svg';
+import IconXCircle from '@assets/icons/x-circle-standard.svg';
 
 interface NicknameStepProps {
   nicknameValue: string;
@@ -101,9 +101,9 @@ const NicknameStep = ({
           {checkMessage && (
             <>
               {data?.state === 200 ? (
-                <CheckIcon name="check" size={14} color={COLOR.LIGHT_GREEN} />
+                <IconCheck width={14} height={14} color={COLOR.LIGHT_GREEN} />
               ) : (
-                <CloseIcon name="close-circle-outline" size={14} color={COLOR.LIGHT_RED} />
+                <IconXCircle width={14} height={14} />
               )}
               <Space width="3px" />
               <FontText
@@ -116,7 +116,7 @@ const NicknameStep = ({
           )}
           {!!nicknameValue && nicknameValue.length < 2 && (
             <>
-              <CloseIcon name="close-circle-outline" size={14} color={COLOR.LIGHT_RED} />
+              <IconXCircle width={14} height={14} />
               <Space width="3px" />
               <FontText
                 value="2글자 이상 입력해주세요"

@@ -1,8 +1,8 @@
 import { css } from '@emotion/native';
 import { useState } from 'react';
-import { Image, TouchableOpacity, View } from 'react-native';
+import { TouchableOpacity, View } from 'react-native';
 
-import { FontText, IconButton, Space } from '@/global/ui';
+import { FontText, Space } from '@/global/ui';
 import { subwayLineColor } from '@/global/utils';
 import { IssueKeywords, SubPath } from '@/global/apis/entity';
 import { COLOR } from '@/global/constants';
@@ -18,6 +18,7 @@ import IconRightArrowHead from '@assets/icons/right_arrow_head.svg';
 import { useRootNavigation } from '@/navigation/RootNavigation';
 import { useAppDispatch } from '@/store';
 import { getIssueId } from '@/store/modules';
+import IconDownArrowHead from '@assets/icons/down_arrow_head.svg';
 
 const issueKeywordIcon = (keyword: IssueKeywords, color: string) => {
   if (keyword === '공사') return <IconConstruction width={22} height={22} color={color} />;
@@ -156,17 +157,20 @@ const SearchPathDetailItem = ({ data, isLastLane }: SearchPathDetailItemProps) =
                   />
                 </View>
                 <View style={{ justifyContent: 'center' }}>
-                  <IconRightArrowHead style={{ marginBottom: 2 }} />
+                  <IconRightArrowHead style={{ marginBottom: 2 }} color={COLOR.GRAY_999} />
                 </View>
               </TouchableOpacity>
             ))}
 
-          <View
+          <TouchableOpacity
             style={css`
               margin-top: 8px;
               flex-direction: row;
               align-items: center;
             `}
+            activeOpacity={1}
+            onPress={() => setIsOpenPathList((prev) => !prev)}
+            disabled={data.stations.length < 3}
           >
             <FontText
               value={data.stationCount + '개역 (' + data.sectionTime + '분)'}
@@ -178,17 +182,10 @@ const SearchPathDetailItem = ({ data, isLastLane }: SearchPathDetailItemProps) =
             {data.stations.length > 2 && (
               <>
                 <Space width="4px" />
-                <IconButton
-                  isFontIcon={true}
-                  iconType="Feather"
-                  iconName={isOpenPathList ? 'chevron-up' : 'chevron-down'}
-                  iconColor="#49454f"
-                  iconWidth="10"
-                  onPress={() => setIsOpenPathList((prev) => !prev)}
-                />
+                <IconDownArrowHead width={10} height={10} rotation={isOpenPathList ? 180 : 0} />
               </>
             )}
-          </View>
+          </TouchableOpacity>
           {isOpenPathList && (
             <View style={{ marginTop: 12 }}>
               {data.stations.map((item, idx) => {

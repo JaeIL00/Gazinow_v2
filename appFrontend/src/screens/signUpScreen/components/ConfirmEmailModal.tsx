@@ -1,19 +1,19 @@
 import { COLOR } from '@/global/constants';
-import { FontText, IconButton, Input, Space, TextButton } from '@/global/ui';
+import { FontText, Input, Space, TextButton } from '@/global/ui';
 import { useEffect, useRef, useState } from 'react';
 import {
   Animated,
-  Dimensions,
   KeyboardAvoidingView,
   Modal,
   Platform,
-  StatusBar,
+  TouchableOpacity,
   View,
 } from 'react-native';
 import { TimerType } from './EmailStep';
-import CloseIcon from 'react-native-vector-icons/Ionicons';
+import IconXCircle from '@assets/icons/x-circle-standard.svg';
 import StepButton from '../ui/StepButton';
 import { getStatusBarHeight } from 'react-native-status-bar-height';
+import IconLeftArrow from '@assets/icons/left_arrow_round.svg';
 
 interface ConfirmEmailModalProps {
   authNumber: string;
@@ -87,16 +87,14 @@ const ConfirmEmailModal = ({
               transform: [{ translateY: animRef }],
             }}
           >
-            <View style={{ marginBottom: 28 }}>
-              <IconButton
-                iconType="Ionicons"
-                isFontIcon
-                iconName="arrow-back-sharp"
-                iconWidth="19.5"
-                iconColor="#000"
-                onPress={closeModal}
-              />
-            </View>
+            <TouchableOpacity
+              hitSlop={10}
+              activeOpacity={1}
+              style={{ marginBottom: 28 }}
+              onPress={closeModal}
+            >
+              <IconLeftArrow color={COLOR.BASIC_BLACK} />
+            </TouchableOpacity>
 
             <FontText
               value={`메일로 받은 인증번호를\n입력해주세요`}
@@ -145,11 +143,7 @@ const ConfirmEmailModal = ({
                   marginTop: 7,
                 }}
               >
-                <CloseIcon
-                  name="close-circle-outline"
-                  size={14}
-                  color={isNotPass ? COLOR.LIGHT_RED : 'transparent'}
-                />
+                {isNotPass && <IconXCircle width={14} height={14} />}
                 <Space width="3px" />
                 <FontText
                   value={

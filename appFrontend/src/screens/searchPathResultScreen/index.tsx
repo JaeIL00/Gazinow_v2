@@ -27,19 +27,15 @@ const SearchPathResultScreen = () => {
 
   const selectedStationRedux = useAppSelect(({ subwaySearch }) => subwaySearch.selectedStation);
 
-  const [selectedStation, setSelectedStation] =
-    useState<SelectedStationTypes>(selectedStationRedux);
-
   const { data } = useGetSearchPaths({
-    strStationName: selectedStation.departure.stationName,
-    strStationLine: selectedStation.departure.stationLine,
-    endStationName: selectedStation.arrival.stationName,
-    endStationLine: selectedStation.arrival.stationLine,
+    strStationName: selectedStationRedux.departure.stationName,
+    strStationLine: selectedStationRedux.departure.stationLine,
+    endStationName: selectedStationRedux.arrival.stationName,
+    endStationLine: selectedStationRedux.arrival.stationLine,
   });
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: COLOR.WHITE }}>
-      <StatusBar backgroundColor={COLOR.WHITE} barStyle="dark-content" />
       <View style={{ backgroundColor: COLOR.GRAY_F2 }}>
         <View
           style={{
@@ -57,7 +53,7 @@ const SearchPathResultScreen = () => {
               <IconLeftArrowHead />
             </TouchableOpacity>
           </View>
-          <SwapStation selectedStation={selectedStation} setSelectedStation={setSelectedStation} />
+          <SwapStation selectedStation={selectedStationRedux} />
         </View>
 
         <View
@@ -125,7 +121,7 @@ const SearchPathResultScreen = () => {
                         textColor="#999"
                       />
                       <Space width="4px" />
-                      <IconRightArrowHead />
+                      <IconRightArrowHead color={COLOR.GRAY_999} />
                     </TouchableOpacity>
                   </View>
                   <View style={{ height: 4 }} />

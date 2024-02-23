@@ -1,7 +1,7 @@
 import { ScrollView, View } from 'react-native';
-import { FontText, Input, Space, TextButton } from '@/global/ui';
+import { FontText, Input, Space } from '@/global/ui';
 import { COLOR } from '@/global/constants';
-import CheckIcon from 'react-native-vector-icons/Feather';
+import IconCheck from '@assets/icons/check.svg';
 import { useState } from 'react';
 
 import SubscribeTermsModal from './SubscribeTermsModal';
@@ -110,7 +110,7 @@ const PasswordStep = ({
               marginTop: 8,
             }}
           >
-            <CheckIcon name="check" size={12} color={lengValidColor} />
+            <IconCheck width={12} height={12} color={lengValidColor} />
             <Space width="4px" />
             <FontText
               value="8자-20자 이내"
@@ -119,7 +119,7 @@ const PasswordStep = ({
               textColor={lengValidColor}
             />
             <Space width="12px" />
-            <CheckIcon name="check" size={12} color={comValidColor} />
+            <IconCheck width={12} height={12} color={comValidColor} />
             <Space width="4px" />
             <FontText
               value="영어, 숫자, 특수문자 포함"

@@ -43,7 +43,7 @@ const RecentSearchBox = () => {
                 onPress={routeDetail}
               />
               <Space width="4px" />
-              <IconRightArrowHead />
+              <IconRightArrowHead color={COLOR.GRAY_999} />
             </View>
           </Pressable>
         </View>

@@ -17,7 +17,7 @@ const SwapStation = ({ selectedStation, setSelectedStation }: SwapStationProps) 
   const dispatch = useAppDispatch();
   const newRouteNavigation = useNewRouteNavigation();
 
-  const swapStation = () => {
+  const swapStationHandler = () => {
     dispatch(
       getSeletedStation({
         arrival: selectedStation.departure,
@@ -68,7 +68,7 @@ const SwapStation = ({ selectedStation, setSelectedStation }: SwapStationProps) 
           }}
         />
       </View>
-      <TouchableOpacity onPress={swapStation}>
+      <TouchableOpacity onPress={swapStationHandler}>
         <IconSwapChange />
       </TouchableOpacity>
     </View>

@@ -1,10 +1,10 @@
-import { IconButton } from '@/global/ui';
 import { useState } from 'react';
-import { KeyboardAvoidingView, Platform, SafeAreaView, View } from 'react-native';
+import { KeyboardAvoidingView, Platform, SafeAreaView, TouchableOpacity, View } from 'react-native';
 import { CompleteStep, EmailStep, NicknameStep, PasswordStep } from './components';
 import { COLOR } from '@/global/constants';
 import { SignUpParams, SignUpStepType } from './type';
 import { useAuthNavigation } from '@/navigation/AuthNavigation';
+import IconLeftArrow from '@assets/icons/left_arrow_round.svg';
 
 const SignUpScreen = () => {
   const navigation = useAuthNavigation();
@@ -53,17 +53,15 @@ const SignUpScreen = () => {
           flex: 1,
         }}
       >
-        <View style={{ marginBottom: 43 }}>
-          <IconButton
-            iconType="Ionicons"
-            isFontIcon
-            iconName="arrow-back-sharp"
-            iconWidth="19.5"
-            iconColor={step === 'complete' ? 'transparent' : '#000'}
-            onPress={backStepHandler}
-            disabled={step === 'complete'}
-          />
-        </View>
+        <TouchableOpacity
+          hitSlop={10}
+          activeOpacity={1}
+          style={{ marginBottom: 43 }}
+          disabled={step === 'complete'}
+          onPress={backStepHandler}
+        >
+          <IconLeftArrow color={step === 'complete' ? 'transparent' : COLOR.BASIC_BLACK} />
+        </TouchableOpacity>
 
         <KeyboardAvoidingView
           style={{ flex: 1 }}

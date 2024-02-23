@@ -2,7 +2,6 @@ import axios, { AxiosError } from 'axios';
 import { axiosInstance } from '../axiosInstance';
 import {
   AllIssues,
-  Path,
   RenderSavedRoutesType,
   SavedRoute,
   SearchHistoryStationNameTypes,
@@ -14,6 +13,7 @@ import {
 } from '../entity';
 import { SignInFetchResponse } from '@/screens/signInScreen/apis/entity';
 import { API_BASE_URL } from '@env';
+import * as Sentry from '@sentry/react-native';
 
 /**
  * 인증 토큰 재인증 axios
@@ -38,6 +38,7 @@ export const tokenReissueFetch = async ({
     );
     return res.data.data;
   } catch (err) {
+    Sentry.captureException(err);
     const er = err as AxiosError;
     throw er;
   }
@@ -53,6 +54,7 @@ export const searchStationName = async (params: { stationName: string }) => {
     });
     return res.data.data;
   } catch (err) {
+    Sentry.captureException(err);
     const er = err as AxiosError;
     throw er;
   }
@@ -68,6 +70,7 @@ export const searchHistoryFetch = async () => {
     );
     return res.data.data;
   } catch (err) {
+    Sentry.captureException(err);
     const er = err as AxiosError;
     throw er;
   }
@@ -87,6 +90,7 @@ export const searchAddHistoryFetch = async (data: {
     );
     return res.data.data;
   } catch (err) {
+    Sentry.captureException(err);
     const er = err as AxiosError;
     throw er;
   }
@@ -102,6 +106,7 @@ export const searchPathsFetch = async (params: SubwayStrEnd) => {
     });
     return res.data.data;
   } catch (err) {
+    Sentry.captureException(err);
     const er = err as AxiosError;
     throw er;
   }
@@ -115,6 +120,7 @@ export const searchPathSaveFetch = async (data: SavedRoute) => {
     const res = await axiosInstance.post('/api/v1/my_find_road/add_route', data);
     return res.data.data;
   } catch (err) {
+    Sentry.captureException(err);
     const er = err as AxiosError;
     throw er;
   }
@@ -128,6 +134,7 @@ export const searchPathDeleteFetch = async (params: { id: number | null }) => {
     const res = await axiosInstance.delete('/api/v1/my_find_road/delete_route', { params });
     return res.data.data;
   } catch (err) {
+    Sentry.captureException(err);
     const er = err as AxiosError;
     throw er;
   }
@@ -140,6 +147,7 @@ export const deleteAccountFetch = async () => {
   try {
     await axiosInstance.delete('/api/v1/member/delete_member', { data: {} });
   } catch (err) {
+    Sentry.captureException(err);
     const er = err as AxiosError;
     throw er;
   }
@@ -153,6 +161,7 @@ export const getSearchRoutesFetch = async () => {
     const res = await axiosInstance.get(`/api/v1/recentSearch`);
     return res.data.data;
   } catch (err) {
+    Sentry.captureException(err);
     const er = err as AxiosError;
     throw er;
   }
@@ -168,6 +177,7 @@ export const getSavedRoutesFetch = async () => {
     );
     return res.data.data;
   } catch (err) {
+    Sentry.captureException(err);
     const er = err as AxiosError;
     throw er;
   }
@@ -181,6 +191,7 @@ export const saveMyRoutesFetch = async (newRoute: object) => {
     const res = await axiosInstance.post('/api/v1/my_find_road/add_route', newRoute);
     return res;
   } catch (err) {
+    Sentry.captureException(err);
     const er = err as AxiosError;
     throw er;
   }
@@ -195,6 +206,7 @@ export const changeNicknameFetch = async (newNickname: string) => {
       nickName: newNickname,
     });
   } catch (err) {
+    Sentry.captureException(err);
     const er = err as AxiosError;
     throw er;
   }
@@ -209,6 +221,7 @@ export const checkPasswordFetch = async (passwordInput: string) => {
       checkPassword: passwordInput,
     });
   } catch (err) {
+    Sentry.captureException(err);
     const er = err as AxiosError;
     throw er;
   }
@@ -221,6 +234,7 @@ export const changePasswordFetch = async (data: object) => {
   try {
     const res = await axiosInstance.post(`/api/v1/member/change_password`, data);
   } catch (err) {
+    Sentry.captureException(err);
     const er = err as AxiosError;
     throw er;
   }
@@ -234,6 +248,7 @@ export const getAllIssuesFetch = async () => {
     const res = await axiosInstance.get<{ data: AllIssues }>(`/api/v1/issue/get_all`);
     return res.data.data;
   } catch (err) {
+    Sentry.captureException(err);
     const er = err as AxiosError;
     throw er;
   }
@@ -249,6 +264,7 @@ export const getIssuesByLaneFetch = async (params: { line: string }) => {
     });
     return res.data.data;
   } catch (err) {
+    Sentry.captureException(err);
     const er = err as AxiosError;
     throw er;
   }
@@ -262,6 +278,7 @@ export const getPopularIssuesFetch = async () => {
     const res = await axiosInstance.get<{ data: IssueContent[] }>(`/api/v1/issue/get_popular`);
     return res.data.data;
   } catch (err) {
+    Sentry.captureException(err);
     const er = err as AxiosError;
     throw er;
   }

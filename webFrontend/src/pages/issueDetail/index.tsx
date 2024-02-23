@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import { useGetIssue, usePostLike } from "./api/hooks";
+import { useDeletePostLike, useGetIssue, usePostLike } from "./api/hooks";
 
 import IconThumsUp from "@assets/icons/thumbs_up.svg?react";
 
@@ -7,49 +7,57 @@ import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import "dayjs/locale/ko";
 import color from "@global/constants/color";
-import { useEffect, useMemo } from "react";
+import { useMemo } from "react";
 import { debounce } from "lodash";
+import cn from "classnames";
+import { useRecoilValue } from "recoil";
+import { accessTokenState } from "@global/atom";
 import localStorageFunc from "@global/utils/localStorage";
 import { STORAGE_ACCESS_KEY } from "@global/constants";
-import cn from "classnames";
 
 dayjs.locale("ko");
 dayjs.extend(relativeTime);
 
 const IssueDetailPage = () => {
   const { id } = useParams() as { id: string };
+  const accessToken = useRecoilValue(accessTokenState);
+  const storageAccessToken = localStorageFunc.get<string>(STORAGE_ACCESS_KEY);
 
   // TODO: MVP에서 빠짐
   // const [isOpenModal, setIsOpenModal] = useState<boolean>(true);
   // const closeModal = () => setIsOpenModal(false);
 
-  const { doLikeMutate } = usePostLike();
-  const { issueData, isLoadingIssue } = useGetIssue(id);
+  const { issueData, isLoadingIssue, refetchIssue } = useGetIssue({
+    id,
+    enabled: !!storageAccessToken || (!!accessToken && !!id),
+  });
+  const { doLikeMutate } = usePostLike({ onSuccess: refetchIssue });
+  const { deleteLikeMutate } = useDeletePostLike({ onSuccess: refetchIssue });
 
   const likeHandler = useMemo(
     () =>
       debounce(() => {
         if (!issueData) return;
-        doLikeMutate(issueData.id);
-        // TODO: 도움돼요 삭제 구현 필요
+        if (issueData.isLike) deleteLikeMutate(issueData.id);
+        else doLikeMutate(issueData.id);
       }, 300),
     [issueData]
   );
 
   const createIssueDate = dayjs(issueData?.startDate).fromNow();
 
-  const onMessageEvent = (e: MessageEvent) => {
-    e.stopPropagation();
-    localStorageFunc.set(STORAGE_ACCESS_KEY, String(e.data));
-  };
-
-  useEffect(() => {
-    window.addEventListener("message", onMessageEvent, { capture: true });
-    return () => window.removeEventListener("message", onMessageEvent);
-  }, []);
-
   if (!issueData && !isLoadingIssue) {
-    return <p>이슈 불러오기 실패 id: {id}</p>;
+    return (
+      <p>
+        이슈 불러오기 실패
+        <br />
+        id: {id}
+        <br />
+        storageAccessToken: {storageAccessToken}
+        <br />
+        accessToken: {accessToken}
+      </p>
+    );
   }
   if (isLoadingIssue) {
     return <p>로딩 중..</p>;
@@ -71,8 +79,9 @@ const IssueDetailPage = () => {
         <footer className="pt-[17px] flex justify-between">
           <button className="flex items-center" onClick={likeHandler}>
             <p
-              className={cn("text-gray-99 text-xs font-medium mr-[5px]", {
+              className={cn("text-xs font-medium mr-[5px]", {
                 "text-blue": issueData?.isLike,
+                "text-gray-99": !issueData?.isLike,
               })}
             >
               도움돼요
@@ -85,8 +94,9 @@ const IssueDetailPage = () => {
               />
             </div>
             <p
-              className={cn("text-gray-99 text-xs font-medium mt-[0.5px]", {
+              className={cn("text-xs font-medium mt-[0.5px]", {
                 "text-blue": issueData?.isLike,
+                "text-gray-99": !issueData?.isLike,
               })}
             >
               {issueData?.likeCount}

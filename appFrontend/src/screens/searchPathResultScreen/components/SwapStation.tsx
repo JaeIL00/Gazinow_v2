@@ -1,78 +1,34 @@
 import styled from '@emotion/native';
 import { useState } from 'react';
 
-import { IconButton, TextButton } from '@/global/ui';
+import { TextButton } from '@/global/ui';
 import { COLOR, ARRIVAL_STATION, DEPARTURE_STATION } from '@/global/constants';
 import { useAppDispatch } from '@/store';
-import { getSeletedStation } from '@/store/modules';
-import { SearchStationModal } from '@/screens/homeScreen/components';
+import { getSeletedStation, getStationType } from '@/store/modules';
 import { TouchableOpacity, View } from 'react-native';
 import { SelectedStationTypes } from '..';
 import IconSwapChange from '@assets/icons/swap_change.svg';
-
-type StationTypes = typeof DEPARTURE_STATION | typeof ARRIVAL_STATION;
+import { useRootNavigation } from '@/navigation/RootNavigation';
 
 interface SwapStationProps {
   selectedStation: SelectedStationTypes;
-  setSelectedStation: React.Dispatch<React.SetStateAction<SelectedStationTypes>>;
 }
 
-const SwapStation = ({ selectedStation, setSelectedStation }: SwapStationProps) => {
+const SwapStation = ({ selectedStation }: SwapStationProps) => {
   const dispatch = useAppDispatch();
+  const navigation = useRootNavigation();
 
-  const [searchType, setSearchType] = useState<StationTypes>('출발역');
-  const [isOpenSearchModal, setIsOpenSearchModal] = useState<boolean>(false);
-
-  const closeSearchModal = () => setIsOpenSearchModal(false);
-
-  const openSearchModal = (type: StationTypes) => {
-    setSearchType(type);
-    setIsOpenSearchModal(true);
-  };
-
-  const swapStation = () => {
+  const swapStationHandler = () => {
     dispatch(
       getSeletedStation({
         arrival: selectedStation.departure,
         departure: selectedStation.arrival,
       }),
     );
-    setSelectedStation(({ departure, arrival }) => ({
-      departure: {
-        ...arrival,
-      },
-      arrival: {
-        ...departure,
-      },
-    }));
   };
-
-  const initSelectedStation = () => {
-    setSelectedStation({
-      departure: {
-        stationName: '',
-        stationLine: null,
-      },
-      arrival: {
-        stationName: '',
-        stationLine: null,
-      },
-    });
-  };
-
-  // useEffect(() => {
-  //   queryClient.invalidateQueries(['search_paths']);
-  // }, [selectedStation]);
 
   return (
     <>
-      {isOpenSearchModal && (
-        <SearchStationModal
-          closeModal={closeSearchModal}
-          setSubwayStation={setSelectedStation}
-          searchType={searchType}
-        />
-      )}
       <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
         <View style={{ flex: 1, marginRight: 15, rowGap: 8 }}>
           <StationButton
@@ -85,7 +41,10 @@ const SwapStation = ({ selectedStation, setSelectedStation }: SwapStationProps) 
             textWeight="Regular"
             lineHeight="21px"
             textColor={selectedStation.departure.stationName ? COLOR.BASIC_BLACK : COLOR.GRAY_999}
-            onPress={() => openSearchModal(DEPARTURE_STATION)}
+            onPress={() => {
+              dispatch(getStationType(DEPARTURE_STATION));
+              navigation.navigate('IssueStack', { screen: 'SearchStation' });
+            }}
           />
           <StationButton
             value={
@@ -97,17 +56,14 @@ const SwapStation = ({ selectedStation, setSelectedStation }: SwapStationProps) 
             textWeight="Regular"
             lineHeight="21px"
             textColor={selectedStation.arrival.stationName ? COLOR.BASIC_BLACK : COLOR.GRAY_999}
-            onPress={() => openSearchModal(ARRIVAL_STATION)}
+            onPress={() => {
+              dispatch(getStationType(ARRIVAL_STATION));
+              navigation.navigate('IssueStack', { screen: 'SearchStation' });
+            }}
           />
         </View>
-        {/* <IconButton
-          isFontIcon={false}
-          imagePath="exchange_gray"
-          iconWidth="20px"
-          iconHeight="20px"
-          
-        /> */}
-        <TouchableOpacity onPress={swapStation}>
+
+        <TouchableOpacity onPress={swapStationHandler}>
           <IconSwapChange />
         </TouchableOpacity>
       </View>
