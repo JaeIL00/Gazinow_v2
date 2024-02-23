@@ -1,15 +1,16 @@
 import { useState } from 'react';
-import { KeyboardAvoidingView, Platform, SafeAreaView, View } from 'react-native';
+import { KeyboardAvoidingView, Platform, SafeAreaView, TouchableOpacity, View } from 'react-native';
 
-import { FontText, IconButton, Input, Space, TextButton } from '@/global/ui';
+import { FontText, Input, Space, TextButton } from '@/global/ui';
 import { setEncryptedStorage } from '@/global/utils';
 import { useRootNavigation } from '@/navigation/RootNavigation';
 import { SignInFormTypes } from './apis/entity';
 import { useSignInMutation } from './apis/hook';
 import { COLOR } from '@/global/constants';
-import CloseIcon from 'react-native-vector-icons/Ionicons';
 import { useAppDispatch } from '@/store';
 import { saveUserInfo } from '@/store/modules';
+import IconXCircle from '@assets/icons/x-circle-standard.svg';
+import IconLeftArrow from '@assets/icons/left_arrow_round.svg';
 
 const emailValidation = new RegExp(
   /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i,
@@ -61,16 +62,14 @@ const SignInScreen = () => {
         style={{ paddingHorizontal: 16, flex: 1 }}
         behavior={Platform.OS === 'ios' ? 'padding' : undefined}
       >
-        <View style={{ marginBottom: 43, marginTop: 30 }}>
-          <IconButton
-            iconType="Ionicons"
-            isFontIcon
-            iconName="arrow-back-sharp"
-            iconWidth="19.5"
-            iconColor={COLOR.REAL_BLACK}
-            onPress={() => navigation.goBack()}
-          />
-        </View>
+        <TouchableOpacity
+          hitSlop={10}
+          activeOpacity={1}
+          style={{ marginBottom: 43, marginTop: 30 }}
+          onPress={() => navigation.goBack()}
+        >
+          <IconLeftArrow color={COLOR.BASIC_BLACK} />
+        </TouchableOpacity>
 
         <FontText
           value="이메일로 로그인"
@@ -132,7 +131,7 @@ const SignInScreen = () => {
             <View
               style={{ flexDirection: 'row', alignItems: 'center', marginTop: 8, marginLeft: 9 }}
             >
-              <CloseIcon name="close-circle-outline" size={14} color={COLOR.LIGHT_RED} />
+              <IconXCircle width={14} height={14} />
               <Space width="3px" />
               <FontText
                 value={errorMessage}

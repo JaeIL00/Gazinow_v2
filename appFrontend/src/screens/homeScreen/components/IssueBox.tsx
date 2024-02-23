@@ -68,7 +68,7 @@ const IssueBox = () => {
                   onPress={() => setRouteDetail(hasIssueRoutes[index])}
                 />
                 <Space width="4px" />
-                <IconRightArrowHead />
+                <IconRightArrowHead color={COLOR.GRAY_999} />
               </TextContainer>
             </Pressable>
           </TextContainer>

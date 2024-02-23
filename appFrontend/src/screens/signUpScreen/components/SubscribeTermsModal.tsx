@@ -1,19 +1,20 @@
 import { COLOR } from '@/global/constants';
-import { FontText, IconButton, Space, TextButton } from '@/global/ui';
+import { FontText, Space } from '@/global/ui';
 import { useEffect, useRef, useState } from 'react';
 import {
   Animated,
   Dimensions,
-  KeyboardAvoidingView,
   Modal,
-  Platform,
   Pressable,
   SafeAreaView,
+  TouchableOpacity,
   View,
 } from 'react-native';
-import CheckIcon from 'react-native-vector-icons/Feather';
+import IconCheck from '@assets/icons/check.svg';
 import { WebView } from 'react-native-webview';
 import StepButton from '../ui/StepButton';
+import IconX from '@assets/icons/cross_x.svg';
+import IconRightArrowHead from '@assets/icons/right_arrow_head.svg';
 
 type AgreeTermsType =
   | '약관 전체 동의'
@@ -108,15 +109,9 @@ const SubscribeTermsModal = ({ setStep, closeModal }: SubscribeTermsModalProps) 
               borderBottomColor: COLOR.GRAY_DDD,
             }}
           >
-            <IconButton
-              isFontIcon
-              iconType="Ionicons"
-              iconName="close"
-              iconWidth="24"
-              iconColor={COLOR.BASIC_BLACK}
-              hitSlop={20}
-              onPress={() => setOpenUrl('')}
-            />
+            <TouchableOpacity hitSlop={20} activeOpacity={1} onPress={() => setOpenUrl('')}>
+              <IconX width={24} height={24} />
+            </TouchableOpacity>
           </View>
           <WebView source={{ uri: openUrl }} />
         </SafeAreaView>
@@ -166,7 +161,7 @@ const SubscribeTermsModal = ({ setStep, closeModal }: SubscribeTermsModalProps) 
                   }}
                 >
                   {agreeTerms.includes('약관 전체 동의') && (
-                    <CheckIcon name="check" size={18} color={COLOR.WHITE} />
+                    <IconCheck width={18} height={18} color={COLOR.WHITE} />
                   )}
                 </View>
                 <Space width="10px" />
@@ -209,7 +204,7 @@ const SubscribeTermsModal = ({ setStep, closeModal }: SubscribeTermsModalProps) 
                         }}
                       >
                         {agreeTerms.includes(text) && (
-                          <CheckIcon name="check" size={18} color={COLOR.WHITE} />
+                          <IconCheck width={18} height={18} color={COLOR.WHITE} />
                         )}
                       </View>
                       <Space width="10px" />
@@ -220,15 +215,9 @@ const SubscribeTermsModal = ({ setStep, closeModal }: SubscribeTermsModalProps) 
                         textColor={COLOR.BASIC_BLACK}
                       />
                     </View>
-                    <IconButton
-                      isFontIcon
-                      iconType="FontAwesome"
-                      iconName="angle-right"
-                      iconWidth="18"
-                      iconColor={COLOR.GRAY_E3}
-                      hitSlop={20}
-                      onPress={() => webViewHandler(text)}
-                    />
+                    <TouchableOpacity hitSlop={20} onPress={() => webViewHandler(text)}>
+                      <IconRightArrowHead width={12} height={12} color={COLOR.GRAY_CA} />
+                    </TouchableOpacity>
                   </Pressable>
                 ))}
               </View>

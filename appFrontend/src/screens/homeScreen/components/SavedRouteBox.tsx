@@ -73,7 +73,7 @@ const SavedRouteBox = () => {
                     onPress={() => setSelectedRoute(item)}
                   />
                   <Space width="4px" />
-                  <IconRightArrowHead />
+                  <IconRightArrowHead color={COLOR.GRAY_999} />
                 </TextContainer>
               </Pressable>
             </TitleContainer>

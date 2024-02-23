@@ -2,7 +2,7 @@ import { css } from '@emotion/native';
 import { useMemo, useState } from 'react';
 import { FlatList, SafeAreaView, TouchableOpacity, View } from 'react-native';
 
-import { FontText, IconButton } from '@/global/ui';
+import { FontText } from '@/global/ui';
 import { useRoute } from '@react-navigation/native';
 import NewRouteSaveModal from './components/NewRouteSaveModal';
 import SearchPathDetailItem from './components/SearchPathDetailItem';
