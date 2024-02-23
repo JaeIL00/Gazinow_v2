@@ -78,8 +78,9 @@ const IssueDetailPage = () => {
         <footer className="pt-[17px] flex justify-between">
           <button className="flex items-center" onClick={likeHandler}>
             <p
-              className={cn("text-gray-99 text-xs font-medium mr-[5px]", {
+              className={cn("text-xs font-medium mr-[5px]", {
                 "text-blue": issueData?.isLike,
+                "text-gray-99": !issueData?.isLike,
               })}
             >
               도움돼요
@@ -92,8 +93,9 @@ const IssueDetailPage = () => {
               />
             </div>
             <p
-              className={cn("text-gray-99 text-xs font-medium mt-[0.5px]", {
+              className={cn("text-xs font-medium mt-[0.5px]", {
                 "text-blue": issueData?.isLike,
+                "text-gray-99": !issueData?.isLike,
               })}
             >
               {issueData?.likeCount}

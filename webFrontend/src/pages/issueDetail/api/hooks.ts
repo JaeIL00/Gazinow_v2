@@ -23,6 +23,8 @@ export const useGetIssue = ({
  * 상세 이슈 조회 훅
  */
 export const usePostLike = () => {
-  const { mutate } = useMutation({ mutationFn: postLike });
+  const { mutate } = useMutation({
+    mutationFn: postLike,
+  });
   return { doLikeMutate: mutate };
 };
