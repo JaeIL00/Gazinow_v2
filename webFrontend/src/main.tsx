@@ -5,10 +5,11 @@ import router from "./router/index.tsx";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { RecoilRoot } from "recoil";
 import * as Sentry from "@sentry/react";
+import { version as currentVersion } from "../package.json";
 
 Sentry.init({
   dsn: import.meta.env.VITE_SENTRY_DSN,
-  release: "0.0.0",
+  release: currentVersion,
   integrations: [
     Sentry.browserTracingIntegration(),
     Sentry.replayIntegration({
