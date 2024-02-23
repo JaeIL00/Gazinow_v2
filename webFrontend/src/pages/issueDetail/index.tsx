@@ -46,7 +46,17 @@ const IssueDetailPage = () => {
   const createIssueDate = dayjs(issueData?.startDate).fromNow();
 
   if (!issueData && !isLoadingIssue) {
-    return <p>이슈 불러오기 실패 id: {id}</p>;
+    return (
+      <p>
+        이슈 불러오기 실패
+        <br />
+        id: {id}
+        <br />
+        storageAccessToken: {storageAccessToken}
+        <br />
+        accessToken: {accessToken}
+      </p>
+    );
   }
   if (isLoadingIssue) {
     return <p>로딩 중..</p>;
