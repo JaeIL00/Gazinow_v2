@@ -56,7 +56,7 @@ axiosInstance.interceptors.response.use(
       },
     );
 
-    const { newAccessToken } = await tokenReissueFetch({
+    const { accessToken: newAccessToken } = await tokenReissueFetch({
       accessToken,
       refreshToken,
     });

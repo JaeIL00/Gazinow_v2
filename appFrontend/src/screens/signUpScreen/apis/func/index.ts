@@ -1,6 +1,7 @@
 import { axiosInstance } from '@/global/apis/axiosInstance';
 import { AxiosError } from 'axios';
 import { SightUpResponse } from '../../type';
+import * as Sentry from '@sentry/react-native';
 
 /**
  * 이메일 인증 요청 axios
@@ -12,6 +13,7 @@ export const emailConfirmFetch = async (email: string) => {
     });
     return res.data.data;
   } catch (err) {
+    Sentry.captureException(err);
     const er = err as AxiosError;
     throw er;
   }
@@ -30,6 +32,7 @@ export const checkNicknameFetch = async (nickName: string) => {
     );
     return res.data;
   } catch (err) {
+    Sentry.captureException(err);
     const er = err as AxiosError;
     throw er;
   }
@@ -45,6 +48,7 @@ export const signUpFetch = async (data: { email: string; password: string; nickN
     }>('/api/v1/member/signup', data);
     return res.data.data;
   } catch (err) {
+    Sentry.captureException(err);
     const er = err as AxiosError;
     throw er;
   }
