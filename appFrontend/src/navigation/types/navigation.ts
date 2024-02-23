@@ -45,6 +45,7 @@ export type MyPageStackParamList = {
   NotiOnModal: undefined;
   NotiSettingsModal: undefined;
   SubscribeTermsModal: undefined;
+  PersonalTermsModal: undefined;
 };
 
 export type IssueStackParamList = {
