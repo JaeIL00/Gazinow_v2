@@ -7,24 +7,31 @@ import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import "dayjs/locale/ko";
 import color from "@global/constants/color";
-import { useEffect, useMemo } from "react";
+import { useMemo } from "react";
 import { debounce } from "lodash";
+import cn from "classnames";
+import { useRecoilValue } from "recoil";
+import { accessTokenState } from "@global/atom";
 import localStorageFunc from "@global/utils/localStorage";
 import { STORAGE_ACCESS_KEY } from "@global/constants";
-import cn from "classnames";
 
 dayjs.locale("ko");
 dayjs.extend(relativeTime);
 
 const IssueDetailPage = () => {
   const { id } = useParams() as { id: string };
+  const accessToken = useRecoilValue(accessTokenState);
+  const storageAccessToken = localStorageFunc.get<string>(STORAGE_ACCESS_KEY);
 
   // TODO: MVP에서 빠짐
   // const [isOpenModal, setIsOpenModal] = useState<boolean>(true);
   // const closeModal = () => setIsOpenModal(false);
 
   const { doLikeMutate } = usePostLike();
-  const { issueData, isLoadingIssue } = useGetIssue(id);
+  const { issueData, isLoadingIssue } = useGetIssue({
+    id,
+    enabled: !!storageAccessToken || (!!accessToken && !!id),
+  });
 
   const likeHandler = useMemo(
     () =>
@@ -37,16 +44,6 @@ const IssueDetailPage = () => {
   );
 
   const createIssueDate = dayjs(issueData?.startDate).fromNow();
-
-  const onMessageEvent = (e: MessageEvent) => {
-    e.stopPropagation();
-    localStorageFunc.set(STORAGE_ACCESS_KEY, String(e.data));
-  };
-
-  useEffect(() => {
-    window.addEventListener("message", onMessageEvent, { capture: true });
-    return () => window.removeEventListener("message", onMessageEvent);
-  }, []);
 
   if (!issueData && !isLoadingIssue) {
     return <p>이슈 불러오기 실패 id: {id}</p>;
