@@ -46,22 +46,23 @@ const IssueDetailPage = () => {
 
   const createIssueDate = dayjs(issueData?.startDate).fromNow();
 
-  if (!issueData && !isLoadingIssue) {
-    return (
-      <p>
-        이슈 불러오기 실패
-        <br />
-        id: {id}
-        <br />
-        storageAccessToken: {storageAccessToken}
-        <br />
-        accessToken: {accessToken}
-      </p>
-    );
-  }
-  if (isLoadingIssue) {
-    return <p>로딩 중..</p>;
-  }
+  // TODO: 개발 시 주석 해제
+  // if (!issueData && !isLoadingIssue) {
+  //   return (
+  //     <p>
+  //       이슈 불러오기 실패
+  //       <br />
+  //       id: {id}
+  //       <br />
+  //       storageAccessToken: {storageAccessToken}
+  //       <br />
+  //       accessToken: {accessToken}
+  //     </p>
+  //   );
+  // }
+  // if (isLoadingIssue) {
+  //   return <p>로딩 중..</p>;
+  // }
   return (
     <div className="relative">
       <section className="h-screen px-4 overflow-y-auto">
