@@ -72,6 +72,7 @@ const LandingScreen = () => {
             textWeight="Medium"
             textColor={COLOR.WHITE}
             onPress={() => navigation.navigate('SignIn')}
+            hitSlop={20}
           />
           <FontText
             value="|"
@@ -86,6 +87,7 @@ const LandingScreen = () => {
             textWeight="Medium"
             textColor={COLOR.WHITE}
             onPress={() => navigation.navigate('SignUp')}
+            hitSlop={20}
           />
         </View>
       </View>

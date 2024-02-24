@@ -91,7 +91,7 @@ const SignUpScreen = () => {
               setStep={() => setStep('complete')}
             />
           )}
-          {step === 'complete' && <CompleteStep />}
+          {step === 'complete' && <CompleteStep nickname={signUpData.nickname} />}
         </KeyboardAvoidingView>
       </View>
     </SafeAreaView>

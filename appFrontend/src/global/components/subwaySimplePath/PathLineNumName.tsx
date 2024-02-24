@@ -40,11 +40,12 @@ const PathLineNumName = ({ lane, stationName }: PathLineNumNameProps) => {
         />
         {lane.stationCode <= 9 && <Space height="1px" />}
       </View>
+
       <View
         style={{
           position: 'absolute',
           width: 100,
-          bottom: -(Dimensions.get('window').fontScale * 22),
+          top: Dimensions.get('window').fontScale * 22,
         }}
       >
         <FontText
