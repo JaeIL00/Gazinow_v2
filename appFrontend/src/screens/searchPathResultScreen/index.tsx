@@ -7,13 +7,16 @@ import dayjs from 'dayjs';
 import 'dayjs/locale/ko';
 import { SubwaySimplePath } from '@/global/components';
 import { useGetSearchPaths } from '@/global/apis/hook';
-import { useAppSelect } from '@/store';
-import { StationDataTypes } from '@/store/modules';
-import { useState } from 'react';
+import { useAppDispatch, useAppSelect } from '@/store';
+import { StationDataTypes, getIssueId } from '@/store/modules';
+import React, { useState } from 'react';
 import { useHomeNavigation } from '@/navigation/HomeNavigation';
 import SwapStation from './components/SwapStation';
 import IconRightArrowHead from '@assets/icons/right_arrow_head.svg';
 import IconLeftArrowHead from '@assets/icons/left_arrow_head.svg';
+import IssueKeywordIcon from '@/global/components/subwaySimplePath/IssueKeywordIcon';
+import { subwayLineColor } from '@/global/utils';
+import { useRootNavigation } from '@/navigation/RootNavigation';
 
 dayjs.locale('ko');
 
@@ -24,8 +27,9 @@ export interface SelectedStationTypes {
 
 const SearchPathResultScreen = () => {
   const homeNavigation = useHomeNavigation();
-
+  const rootNavigation = useRootNavigation();
   const selectedStationRedux = useAppSelect(({ subwaySearch }) => subwaySearch.selectedStation);
+  const dispatch = useAppDispatch();
 
   const { data } = useGetSearchPaths({
     strStationName: selectedStationRedux.departure.stationName,
@@ -36,7 +40,7 @@ const SearchPathResultScreen = () => {
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: COLOR.WHITE }}>
-      <View style={{ backgroundColor: COLOR.GRAY_F2 }}>
+      <View style={{ backgroundColor: COLOR.GRAY_F2, flex: 1 }}>
         <View
           style={{
             backgroundColor: COLOR.WHITE,
@@ -92,7 +96,7 @@ const SearchPathResultScreen = () => {
                   borderBottomWidth: data.paths.length - 1 !== idx ? 1 : 0,
                 }}
               >
-                <View>
+                <View style={{ marginBottom: 16 }}>
                   <View
                     style={{
                       flexDirection: 'row',
@@ -146,6 +150,69 @@ const SearchPathResultScreen = () => {
                   arriveStationName={item.lastEndStation}
                   betweenPathMargin={24}
                 />
+
+                <View>
+                  {item.subPaths.map((linePath) => {
+                    return (
+                      <React.Fragment
+                        key={linePath.distance + linePath.door + linePath.sectionTime}
+                      >
+                        {linePath.lanes[0] &&
+                          linePath.lanes[0].issueSummary.map(({ keyword, title, id }, idx) => {
+                            if (idx > 2) return;
+                            return (
+                              <TouchableOpacity
+                                key={id}
+                                style={{
+                                  borderWidth: 1,
+                                  borderColor: 'rgba(0, 0, 0, 0.06)',
+                                  borderRadius: 999,
+                                  paddingLeft: 17,
+                                  paddingRight: 12.5,
+                                  paddingTop: 9,
+                                  paddingBottom: 6,
+                                  flexDirection: 'row',
+                                  alignItems: 'center',
+                                  justifyContent: 'space-between',
+                                  flex: 1,
+                                  marginBottom: 8,
+                                }}
+                                onPress={
+                                  () => {
+                                    dispatch(getIssueId(id));
+                                    rootNavigation.navigate('IssueStack', {
+                                      screen: 'IssueDetail',
+                                    });
+                                  }
+                                  // homeNavigation.navigate('SubwayPathDetail', { state: item })
+                                }
+                              >
+                                <View style={{ flexDirection: 'row', flex: 1 }}>
+                                  <IssueKeywordIcon
+                                    width={24}
+                                    height={24}
+                                    keyword={keyword}
+                                    color={subwayLineColor(linePath.lanes[0].stationCode)}
+                                  />
+                                  <FontText
+                                    value={title}
+                                    textSize="13px"
+                                    textWeight="SemiBold"
+                                    textColor={COLOR.BASIC_BLACK}
+                                    numberOfLines={1}
+                                    style={{ marginLeft: 10 }}
+                                  />
+                                </View>
+                                <View style={{ marginBottom: 4, marginLeft: 40 }}>
+                                  <IconRightArrowHead width={8} height={8} color={COLOR.GRAY_999} />
+                                </View>
+                              </TouchableOpacity>
+                            );
+                          })}
+                      </React.Fragment>
+                    );
+                  })}
+                </View>
               </View>
             ))}
         </ScrollView>

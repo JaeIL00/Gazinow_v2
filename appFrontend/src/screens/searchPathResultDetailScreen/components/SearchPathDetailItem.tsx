@@ -4,31 +4,16 @@ import { TouchableOpacity, View } from 'react-native';
 
 import { FontText, Space } from '@/global/ui';
 import { subwayLineColor } from '@/global/utils';
-import { IssueKeywords, SubPath } from '@/global/apis/entity';
+import { SubPath } from '@/global/apis/entity';
 import { COLOR } from '@/global/constants';
 import IconWalkHuman from '@assets/icons/walk_human.svg';
-import IconAccident from '@assets/icons/path_accident.svg';
-import IconCrowded from '@assets/icons/path_crowded.svg';
-import IconDelayed from '@assets/icons/path_delayed.svg';
-import IconEvent from '@assets/icons/path_event.svg';
-import IconNaturalDisaster from '@assets/icons/path_natural_disaster.svg';
-import IconProtest from '@assets/icons/path_protest.svg';
-import IconConstruction from '@assets/icons/pathh_construction.svg';
+
 import IconRightArrowHead from '@assets/icons/right_arrow_head.svg';
 import { useRootNavigation } from '@/navigation/RootNavigation';
 import { useAppDispatch } from '@/store';
 import { getIssueId } from '@/store/modules';
 import IconDownArrowHead from '@assets/icons/down_arrow_head.svg';
-
-const issueKeywordIcon = (keyword: IssueKeywords, color: string) => {
-  if (keyword === '공사') return <IconConstruction width={22} height={22} color={color} />;
-  if (keyword === '자연재해') return <IconNaturalDisaster width={22} height={22} color={color} />;
-  if (keyword === '연착') return <IconDelayed width={22} height={22} color={color} />;
-  if (keyword === '사고') return <IconAccident width={22} height={22} color={color} />;
-  if (keyword === '혼잡') return <IconCrowded width={22} height={22} color={color} />;
-  if (keyword === '시위') return <IconProtest width={22} height={22} color={color} />;
-  if (keyword === '행사') return <IconEvent width={22} height={22} color={color} />;
-};
+import IssueKeywordIcon from '@/global/components/subwaySimplePath/IssueKeywordIcon';
 
 interface SearchPathDetailItemProps {
   data: SubPath;
@@ -137,7 +122,12 @@ const SearchPathDetailItem = ({ data, isLastLane }: SearchPathDetailItemProps) =
                     marginRight: 8,
                   }}
                 >
-                  {issueKeywordIcon(issue.keyword, subwayLineColor(data.lanes[0].stationCode))}
+                  <IssueKeywordIcon
+                    width={22}
+                    height={22}
+                    keyword={issue.keyword}
+                    color={subwayLineColor(data.lanes[0].stationCode)}
+                  />
                 </View>
                 <View style={{ flex: 1, marginRight: 8 }}>
                   <FontText

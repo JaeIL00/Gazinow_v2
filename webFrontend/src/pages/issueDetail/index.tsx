@@ -27,7 +27,7 @@ const IssueDetailPage = () => {
   // const [isOpenModal, setIsOpenModal] = useState<boolean>(true);
   // const closeModal = () => setIsOpenModal(false);
 
-  const { issueData, isLoadingIssue, refetchIssue } = useGetIssue({
+  const { issueData, refetchIssue } = useGetIssue({
     id,
     enabled: !!storageAccessToken || (!!accessToken && !!id),
   });
@@ -66,7 +66,7 @@ const IssueDetailPage = () => {
   return (
     <div className="relative bg-[#F9F9F9]">
       <section className="h-screen px-4 overflow-y-auto">
-        <header className="mt-[19px] mb-5">
+        <header className="mb-5">
           <h1 className="mb-1 text-xl font-semibold">{issueData?.title}</h1>
           <p className="text-xs">{createIssueDate}</p>
         </header>

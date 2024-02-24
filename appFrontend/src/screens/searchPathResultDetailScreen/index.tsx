@@ -26,7 +26,7 @@ const SearchPathResultDetailScreen = () => {
     },
   });
 
-  const [isBookmarking, setIsBookmarking] = useState<boolean>(resultData.myPath);
+  const [isBookmarking, setIsBookmarking] = useState<boolean>(resultData.myPath ?? false);
   const [isSaveRouteModalOpen, setIsSaveRouteModalOpen] = useState<boolean>(false);
 
   const freshSubPathData: SubPath[] = useMemo(() => {
