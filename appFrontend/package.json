@@ -5,7 +5,7 @@
   "scripts": {
     "android:development": "ENVFILE=.env.development react-native run-android",
     "android:production": "ENVFILE=.env.production react-native run-android",
-    "ios:development": "ENVFILE=.env.production react-native run-ios",
+    "ios:development": "ENVFILE=.env.development react-native run-ios",
     "ios:production": "ENVFILE=.env.production react-native run-ios",
     "lint": "eslint .",
     "start": "react-native start",
