@@ -9,7 +9,7 @@ import IconLeftArrow from '@assets/icons/left_arrow_round.svg';
 const SignUpScreen = () => {
   const navigation = useAuthNavigation();
 
-  const [step, setStep] = useState<SignUpStepType>('email');
+  const [step, setStep] = useState<SignUpStepType>('nickname');
   const [signUpData, setSignUpData] = useState<SignUpParams>({
     email: '',
     password: '',

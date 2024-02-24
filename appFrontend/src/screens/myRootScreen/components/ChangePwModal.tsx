@@ -66,7 +66,6 @@ const ChangePwModal = () => {
       setIsPwRight(true);
     },
     onError: (error: any) => {
-      console.log(error);
       setIsPwRight(false);
     },
   });

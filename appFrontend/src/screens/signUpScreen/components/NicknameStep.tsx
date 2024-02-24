@@ -40,11 +40,16 @@ const NicknameStep = ({
   const { data, checkNicknameMutate } = useCheckNickname({
     onSettled: (data, error) => {
       if (!!data) setCheckMessage(data.message);
-      else if (!!error && error.message.includes('409')) setCheckMessage('중복된 닉네임입니다');
+      else if (!!error) {
+        if (error.response?.status === 409) setCheckMessage('중복된 닉네임입니다');
+        if (error.response?.status === 400)
+          setCheckMessage('영어(소문자,대문자), 한글, 숫자만 입력 가능합니다');
+      }
     },
   });
 
   const changeNicknameHandler = (value: string) => {
+    if (value.length > 7) return;
     changeNicknameValue(value);
     setCheckMessage('');
     checkNicknameDebounce(value);
@@ -119,7 +124,7 @@ const NicknameStep = ({
               <IconXCircle width={14} height={14} />
               <Space width="3px" />
               <FontText
-                value="2글자 이상 입력해주세요"
+                value="2~7글자 입력해주세요"
                 textSize="12px"
                 textWeight="Medium"
                 textColor={COLOR.LIGHT_RED}
