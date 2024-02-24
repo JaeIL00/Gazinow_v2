@@ -6,10 +6,11 @@ import { RootNavigation } from '@/navigation';
 import { store } from '@/store';
 import { NavigationContainer } from '@react-navigation/native';
 import * as Sentry from '@sentry/react-native';
-import { SENTRY_DSN } from '@env';
+import { MODE, SENTRY_DSN } from '@env';
 import { version as currentVersion } from '../package.json';
 
 Sentry.init({
+  enabled: MODE === 'production',
   dsn: SENTRY_DSN,
   release: currentVersion,
   tracesSampleRate: 1.0,

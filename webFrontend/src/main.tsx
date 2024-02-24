@@ -8,6 +8,7 @@ import * as Sentry from "@sentry/react";
 import { version as currentVersion } from "../package.json";
 
 Sentry.init({
+  enabled: import.meta.env.MODE === "production",
   dsn: import.meta.env.VITE_SENTRY_DSN,
   release: currentVersion,
   integrations: [
