@@ -85,7 +85,7 @@ const PasswordStep = ({
           <FontText value="Password" textSize="14px" textWeight="Medium" textColor="#7C8183" />
           <View
             style={{
-              height: 48,
+              paddingVertical: 13,
               paddingHorizontal: 16,
               borderRadius: 5,
               backgroundColor: COLOR.GRAY_F2,
@@ -100,6 +100,7 @@ const PasswordStep = ({
               fontSize="16px"
               onChangeText={(text) => changeEmailHandler(text)}
               secureTextEntry
+              style={{ height: 25 }}
             />
           </View>
           <View
