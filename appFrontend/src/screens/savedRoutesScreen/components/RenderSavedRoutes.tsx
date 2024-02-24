@@ -8,6 +8,7 @@ import { useQueryClient } from 'react-query';
 import { SubwaySimplePath } from '@/global/components';
 import { RenderSavedRoutesType } from '@/global/apis/entity';
 import styled from '@emotion/native';
+import { showToast } from '@/global/utils/toast';
 
 const RenderSavedRoutes = () => {
   const [popupVisible, setPopupVisible] = useState<boolean>(false);
@@ -17,6 +18,7 @@ const RenderSavedRoutes = () => {
   const { deleteMutate } = useDeleteSavedSubwayRoute({
     onSuccess: async () => {
       await queryClient.invalidateQueries('getRoads');
+      showToast('deleteRoute');
     },
   });
 

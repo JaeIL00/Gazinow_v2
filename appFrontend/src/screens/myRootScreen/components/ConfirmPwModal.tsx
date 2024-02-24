@@ -4,7 +4,6 @@ import {
   Alert,
   Keyboard,
   KeyboardAvoidingView,
-  Modal,
   Platform,
   Pressable,
   SafeAreaView,
@@ -17,6 +16,7 @@ import IconLeftArrowHead from '@assets/icons/left_arrow_head.svg';
 import { removeEncryptedStorage } from '@/global/utils';
 import { debounce } from 'lodash';
 import { useMyPageNavigation } from '@/navigation/MyPageNavigation';
+import { showToast } from '@/global/utils/toast';
 
 const ConfirmPwModal = () => {
   const myPageNavigation = useMyPageNavigation();
@@ -35,6 +35,7 @@ const ConfirmPwModal = () => {
       removeEncryptedStorage('access_token');
       removeEncryptedStorage('refresh_token');
       navigation.reset({ routes: [{ name: 'AuthStack' }] });
+      showToast('quit');
     },
     onError: (error: any) => {
       console.log(error);

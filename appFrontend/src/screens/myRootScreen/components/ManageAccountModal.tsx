@@ -9,6 +9,7 @@ import MyTabModal from '@/global/components/MyTabModal';
 import { Pressable, SafeAreaView } from 'react-native';
 import IconLeftArrowHead from '@assets/icons/left_arrow_head.svg';
 import { useMyPageNavigation } from '@/navigation/MyPageNavigation';
+import { showToast } from '@/global/utils/toast';
 
 interface RenderMenuProps {
   text: string;
@@ -24,6 +25,7 @@ const ManageAccountModal = () => {
     onSuccess: () => {
       removeEncryptedStorage('access_token');
       removeEncryptedStorage('refresh_token');
+      showToast('logout');
       navigation.reset({ routes: [{ name: 'AuthStack' }] });
     },
   });
