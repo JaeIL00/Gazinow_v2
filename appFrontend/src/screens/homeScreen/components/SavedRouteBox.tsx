@@ -1,38 +1,19 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Pressable, View } from 'react-native';
-import { FontText, TextButton, Space } from '@/global/ui';
+import { FontText, Space } from '@/global/ui';
 import { COLOR } from '@/global/constants';
 import { useGetSavedRoutesQuery } from '@/global/apis/hook';
 import styled from '@emotion/native';
 import { SubwaySimplePath } from '@/global/components';
-import { Path, RenderSavedRoutesType } from '@/global/apis/entity';
+import { RenderSavedRoutesType } from '@/global/apis/entity';
 import IconRightArrowHead from '@/assets/icons/right_arrow_head.svg';
 import { useHomeNavigation } from '@/navigation/HomeNavigation';
+import { IssuesBanner } from '.';
 
 const SavedRouteBox = () => {
   const homeNavigation = useHomeNavigation();
   const { data: savedRoutes } = useGetSavedRoutesQuery();
   const isRoutesExist = savedRoutes && savedRoutes.length > 0;
-  const [selectedRoute, setSelectedRoute] = useState<Path | null>(null);
-
-  const [hasIssueRoutes, setHasIssueRoutes] = useState<RenderSavedRoutesType[]>([]);
-
-  useEffect(() => {
-    if (selectedRoute) {
-      homeNavigation.push('SavedRoutesDetail', { state: selectedRoute! });
-    }
-  }, [selectedRoute]);
-
-  useEffect(() => {
-    if (savedRoutes) {
-      const issueRoutes = savedRoutes.filter((savedRoute) => {
-        return savedRoute.subPaths.some((subPath) =>
-          subPath.stations.some((station) => station.issueSummary !== null),
-        );
-      });
-      setHasIssueRoutes(issueRoutes);
-    }
-  }, [savedRoutes]);
 
   if (isRoutesExist) {
     return (
@@ -41,7 +22,7 @@ const SavedRouteBox = () => {
           <RouteContainer key={item.id}>
             {index !== 0 && (
               <BorderContainer>
-                <Space height="1px" width="999px" backgroundColor={COLOR.GRAY_EB} />
+                <Space height="1px" width="999px" backgroundColor={COLOR.GRAY_F9} />
               </BorderContainer>
             )}
             <TitleContainer>
@@ -54,31 +35,60 @@ const SavedRouteBox = () => {
                   textColor={COLOR.BASIC_BLACK}
                 />
                 <Space width="8px" />
-                <FontText
-                  value={`${item.totalTime}분 소요`}
-                  textSize="12px"
-                  textWeight="Medium"
-                  lineHeight="15px"
-                  textColor={COLOR.GRAY_999}
-                />
+                {item.subPaths.every((subPath) => subPath.lanes[0].issueSummary.length < 1) ? (
+                  <FontText
+                    value={
+                      item.totalTime > 60
+                        ? Math.floor(item.totalTime / 60) +
+                          '시간 ' +
+                          (item.totalTime % 60) +
+                          '분 소요'
+                        : item.totalTime + '분 소요'
+                    }
+                    textSize="12px"
+                    textWeight="Medium"
+                    lineHeight="15px"
+                    textColor={COLOR.GRAY_999}
+                  />
+                ) : (
+                  <GrayEllipse>
+                    <FontText
+                      value={
+                        item.totalTime > 60
+                          ? Math.floor(item.totalTime / 60) +
+                            '시간 ' +
+                            (item.totalTime % 60) +
+                            '분 이상 예상'
+                          : item.totalTime + '분 이상 예상'
+                      }
+                      textSize="12px"
+                      textWeight="Medium"
+                      lineHeight="14px"
+                      textColor={COLOR.GRAY_999}
+                    />
+                  </GrayEllipse>
+                )}
               </TextContainer>
-              <Pressable hitSlop={20} onPress={() => setSelectedRoute(item)}>
-                <TextContainer>
-                  <TextButton
+              <Pressable
+                hitSlop={20}
+                onPress={() => homeNavigation.push('SubwayPathDetail', { state: item })}
+              >
+                <TextContainer
+                  onPress={() => homeNavigation.push('SubwayPathDetail', { state: item })}
+                >
+                  <FontText
                     value="세부정보"
                     textSize="13px"
                     textWeight="Regular"
                     lineHeight="19px"
                     textColor={COLOR.GRAY_999}
-                    onPress={() => setSelectedRoute(item)}
                   />
                   <Space width="4px" />
                   <IconRightArrowHead />
                 </TextContainer>
               </Pressable>
             </TitleContainer>
-            {/* 각 경로별로 수정하기 */}
-            {!hasIssueRoutes && (
+            {item.subPaths.every((subPath) => subPath.lanes[0].issueSummary.length < 1) && (
               <IssueContainer>
                 <FontText
                   value="아무런 이슈가 없어요!"
@@ -94,6 +104,7 @@ const SavedRouteBox = () => {
               arriveStationName={item.lastEndStation}
               betweenPathMargin={24}
             />
+            <IssuesBanner subPathss={item.subPaths} />
           </RouteContainer>
         ))}
       </View>
@@ -117,7 +128,7 @@ export default SavedRouteBox;
 const RouteContainer = styled.View`
   padding-bottom: 4px;
 `;
-const TextContainer = styled.View`
+const TextContainer = styled.Pressable`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
@@ -137,4 +148,9 @@ const IssueContainer = styled.View`
   justify-content: space-between;
   margin-bottom: 14px;
   margin-top: 8px;
+`;
+const GrayEllipse = styled.View`
+  padding: 4px 6px;
+  border-radius: 16px;
+  background: #f7f7f9;
 `;
