@@ -33,6 +33,10 @@
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string></string>
+	<!-- 코드 푸쉬 -->
+	<key>CodePushDeploymentKey</key>
+	<string>${CODEPUSH_KEY}</string>
+	<!-- 서비스 폰트 -->
 	<key>UIAppFonts</key>
 	<array>
 		<string>Pretendard-Bold.otf</string>
