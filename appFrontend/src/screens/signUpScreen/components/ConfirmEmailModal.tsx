@@ -110,7 +110,7 @@ const ConfirmEmailModal = ({
                 style={{
                   backgroundColor: COLOR.GRAY_F2,
                   paddingHorizontal: 16,
-                  height: 48,
+                  paddingVertical: 13,
                   justifyContent: 'center',
                   borderRadius: 5,
                   flexDirection: 'row',
@@ -124,7 +124,7 @@ const ConfirmEmailModal = ({
                   fontSize="14px"
                   onChangeText={(value) => changeValue(value)}
                   keyboardType="number-pad"
-                  style={{ flex: 1 }}
+                  style={{ flex: 1, height: 25 }}
                   maxLength={4}
                 />
                 <FontText

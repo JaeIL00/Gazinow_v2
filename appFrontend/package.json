@@ -26,6 +26,7 @@
     "react": "18.2.0",
     "react-native": "0.73.4",
     "react-native-background-timer": "^2.4.1",
+    "react-native-code-push": "^8.2.1",
     "react-native-config": "^1.5.1",
     "react-native-encrypted-storage": "^4.0.3",
     "react-native-gesture-handler": "^2.13.1",

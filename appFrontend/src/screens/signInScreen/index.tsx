@@ -1,5 +1,12 @@
 import { useState } from 'react';
-import { KeyboardAvoidingView, Platform, SafeAreaView, TouchableOpacity, View } from 'react-native';
+import {
+  KeyboardAvoidingView,
+  Platform,
+  SafeAreaView,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 
 import { FontText, Input, Space, TextButton } from '@/global/ui';
 import { setEncryptedStorage } from '@/global/utils';
@@ -85,8 +92,8 @@ const SignInScreen = () => {
           <View
             style={{
               backgroundColor: COLOR.GRAY_F2,
-              height: 48,
               marginTop: 6,
+              paddingVertical: 13,
               justifyContent: 'center',
               paddingLeft: 16,
               borderRadius: 5,
@@ -96,10 +103,12 @@ const SignInScreen = () => {
               value={formData.email}
               placeholder="이메일을 입력해주세요"
               placeholderTextColor={COLOR.GRAY_BE}
-              fontSize="14px"
+              fontSize="16px"
               onChangeText={(text) => changeFormText('email', text)}
               keyboardType="email-address"
               isBlur={isLoading}
+              textContentType="oneTimeCode"
+              style={{ height: 25 }}
             />
           </View>
 
@@ -109,8 +118,8 @@ const SignInScreen = () => {
           <View
             style={{
               backgroundColor: COLOR.GRAY_F2,
-              height: 48,
               marginTop: 6,
+              paddingVertical: 13,
               justifyContent: 'center',
               paddingLeft: 16,
               borderRadius: 5,
@@ -120,10 +129,11 @@ const SignInScreen = () => {
               placeholder="비밀번호를 입력해주세요"
               value={formData.password}
               placeholderTextColor={COLOR.GRAY_BE}
-              fontSize="14px"
+              fontSize="16px"
               onChangeText={(text) => changeFormText('password', text)}
               secureTextEntry
               isBlur={isLoading}
+              style={{ height: 25 }}
             />
           </View>
 
@@ -146,7 +156,7 @@ const SignInScreen = () => {
         <TextButton
           value="로그인"
           textSize="16px"
-          textWeight="Regular"
+          textWeight="SemiBold"
           textColor={COLOR.WHITE}
           onPress={submitFormData}
           disabled={!isValidEmail || !formData.password}
@@ -157,10 +167,12 @@ const SignInScreen = () => {
             justifyContent: 'center',
             alignItems: 'center',
             height: 48,
-            marginBottom: 41,
+            marginBottom: 20,
           }}
         />
       </KeyboardAvoidingView>
+
+      <Space height="20px" />
     </SafeAreaView>
   );
 };

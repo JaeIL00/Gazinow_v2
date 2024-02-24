@@ -124,7 +124,7 @@ const EmailStep = ({ emailValue, setStep, changeEmailValue }: EmailStepProps) =>
           <View
             style={{
               backgroundColor: COLOR.GRAY_F2,
-              height: 48,
+              paddingVertical: 13,
               marginTop: 6,
               marginBottom: 8,
               justifyContent: 'center',
@@ -137,9 +137,10 @@ const EmailStep = ({ emailValue, setStep, changeEmailValue }: EmailStepProps) =>
               value={emailValue}
               placeholder="이메일(아이디)입력"
               placeholderTextColor={COLOR.GRAY_BE}
-              fontSize="14px"
+              fontSize="16px"
               onChangeText={(text) => changeEmailHandler(text)}
               keyboardType="email-address"
+              style={{ height: 25 }}
             />
           </View>
           <View style={{ flexDirection: 'row', alignItems: 'center', marginLeft: 9 }}>

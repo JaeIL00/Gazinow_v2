@@ -85,20 +85,21 @@ const NicknameStep = ({
         <View
           style={{
             backgroundColor: COLOR.GRAY_F2,
-            height: 48,
             marginTop: 6,
             marginBottom: 8,
             justifyContent: 'center',
             paddingLeft: 16,
             borderRadius: 5,
+            paddingVertical: 13,
           }}
         >
           <Input
             value={nicknameValue}
             placeholder="닉네임 입력"
             placeholderTextColor={COLOR.GRAY_BE}
-            fontSize="14px"
+            fontSize="16px"
             onChangeText={(text) => changeNicknameHandler(text)}
+            style={{ height: 25 }}
           />
         </View>
 
@@ -136,14 +137,14 @@ const NicknameStep = ({
 
       <StepButton
         value="확인"
-        backgroundCondition={checkMessage.includes('가능')}
+        backgroundCondition={data?.state === 200}
         onPress={() => {
           signUpMutate({
             ...signUpData,
             nickName: signUpData.nickname,
           });
         }}
-        disabled={!checkMessage.includes('가능')}
+        disabled={data?.state === 200}
       />
     </View>
   );

@@ -26,17 +26,23 @@ import { subwayFreshLineName } from '@/global/utils';
 /**
  * 지하철역 검색 훅
  */
-export const useSearchStationName = (stationName: string) => {
+export const useSearchStationName = (nameValue: string) => {
+  const lastChar =
+    nameValue.slice(-1) === 'ㅇ' || nameValue.slice(-1) === '여' || nameValue.slice(-1) === '역';
+  const stationName = lastChar && nameValue !== '서울역' ? nameValue.slice(0, -1) : nameValue;
+
   const { data } = useQuery(
-    ['search-subway-name', stationName],
+    ['search-subway-name', nameValue],
     () => searchStationName({ stationName }),
     {
       enabled: !!stationName,
     },
   );
 
+  const freshData = data ? subwayFreshLineName(data) : [];
+
   return {
-    searchResultData: data ? subwayFreshLineName(data) : [],
+    searchResultData: freshData.sort((a, b) => a.stationName.localeCompare(b.stationName)),
   };
 };
 

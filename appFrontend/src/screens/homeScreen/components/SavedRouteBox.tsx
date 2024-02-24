@@ -19,7 +19,7 @@ const SavedRouteBox = () => {
 
   useEffect(() => {
     if (selectedRoute) {
-      homeNavigation.push('SavedRoutesDetail', { state: selectedRoute! });
+      homeNavigation.push('SubwayPathDetail', { state: selectedRoute! });
     }
   }, [selectedRoute]);
 

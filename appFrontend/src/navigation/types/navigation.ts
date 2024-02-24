@@ -31,7 +31,7 @@ export type NewRouteStackParamList = {
   Swap: undefined;
   Search: undefined;
   Result: undefined;
-  Detail: { state?: Path | SubPath[]; pathId?: number | null };
+  // Detail: { state?: Path | SubPath[]; pathId?: number | null };
   Name: { state?: Path | SubPath[]; pathId?: number | null };
 };
 

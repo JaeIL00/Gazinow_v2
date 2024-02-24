@@ -75,9 +75,11 @@ const ChangeNickNameModal = () => {
             placeholder={`새 닉네임을 입력하세요`}
             placeholderTextColor={COLOR.GRAY_999}
             inputMode="search"
-            onChangeText={setNewNickname}
+            onChangeText={(text) => {
+              if (text.length > 7) return;
+              setNewNickname(text);
+            }}
             autoFocus
-            maxLength={7}
           />
           <IconXCircleFill width={19.5} onPress={() => setNewNickname('')} />
         </InputContainer>

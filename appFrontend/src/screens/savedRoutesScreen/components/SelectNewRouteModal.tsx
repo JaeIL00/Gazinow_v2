@@ -51,11 +51,11 @@ const SelectNewRouteModal = () => {
             return (
               <PathInner
                 key={item.firstStartStation + item.totalTime}
-                onPress={() => {
-                  newRouteNavigation.push('Detail', {
-                    state: item,
-                  });
-                }}
+                // onPress={() => {
+                //   newRouteNavigation.push('Detail', {
+                //     state: item,
+                //   });
+                // }}
               >
                 <PathTitleInfoBox>
                   <View>
