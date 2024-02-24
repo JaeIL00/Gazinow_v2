@@ -126,6 +126,7 @@ const BorderContainer = styled.View`
   margin-start: -99px;
 `;
 const TitleContainer = styled.View`
+  margin-bottom: 16px;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;

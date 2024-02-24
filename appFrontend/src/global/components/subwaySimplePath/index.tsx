@@ -45,9 +45,10 @@ const SubwaySimplePath = ({
               return (
                 <React.Fragment key={lanes[0].stationCode + idx}>
                   <PathBar
-                    StationCode={lanes[0].stationCode}
+                    stationCode={lanes[0].stationCode}
                     isLast={idx === 1}
                     isFirst={idx === 0}
+                    issues={lanes[0].issueSummary}
                   />
                 </React.Fragment>
               );
@@ -56,9 +57,10 @@ const SubwaySimplePath = ({
               return (
                 <React.Fragment key={lanes[0].stationCode + idx}>
                   <PathBar
-                    StationCode={lanes[0].stationCode}
+                    stationCode={lanes[0].stationCode}
                     isLast={maxLength - 1 === idx}
                     isFirst={idx === 0}
+                    issues={lanes[0].issueSummary}
                   />
                 </React.Fragment>
               );
@@ -110,9 +112,10 @@ const SubwaySimplePath = ({
               <React.Fragment key={lanes[0].stationCode + idx + sectionTime}>
                 {idx >= 2 && (
                   <PathBar
-                    StationCode={lanes[0].stationCode}
+                    stationCode={lanes[0].stationCode}
                     isFirst={idx === 2}
                     isLast={maxLength === 3 ? false : maxLength - 1 === idx}
+                    issues={lanes[0].issueSummary}
                   />
                 )}
               </React.Fragment>

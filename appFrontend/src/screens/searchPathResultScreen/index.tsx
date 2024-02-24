@@ -92,7 +92,7 @@ const SearchPathResultScreen = () => {
                   borderBottomWidth: data.paths.length - 1 !== idx ? 1 : 0,
                 }}
               >
-                <View>
+                <View style={{ marginBottom: 16 }}>
                   <View
                     style={{
                       flexDirection: 'row',
