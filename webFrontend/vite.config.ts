@@ -10,7 +10,7 @@ export default defineConfig({
     svgr(),
     sentryVitePlugin({
       org: "gazinow",
-      project: "gazinow-web",
+      project: "production-web",
     }),
   ],
 
