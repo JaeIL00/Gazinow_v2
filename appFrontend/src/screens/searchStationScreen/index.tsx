@@ -3,10 +3,9 @@ import { COLOR } from '@/global/constants';
 import { FontText, Space } from '@/global/ui';
 import { subwayReturnLineName } from '@/global/utils/subwayLine';
 import { useAppDispatch, useAppSelect } from '@/store';
-import { getSearchText, getSeletedStation } from '@/store/modules/stationSearchModule';
+import { getSeletedStation } from '@/store/modules/stationSearchModule';
 import styled from '@emotion/native';
-import { debounce } from 'lodash';
-import { useCallback, useState } from 'react';
+import { useState } from 'react';
 import { SafeAreaView, TouchableOpacity } from 'react-native';
 import { SelectedStationTypes } from '../searchPathResultScreen';
 import { Input } from '@/global/ui';
@@ -33,16 +32,7 @@ const SearchStationScreen = () => {
 
   const changeSearchText = (text: string) => {
     setSearchTextValue(text);
-    sendSearchText(text);
   };
-
-  const sendSearchText = useCallback(
-    debounce((text: string) => {
-      dispatch(getSearchText(text));
-    }, 500),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [],
-  );
 
   const deleteInputText = () => {
     setSearchTextValue('');

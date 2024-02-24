@@ -1,7 +1,6 @@
 import { RawSubwayLineName } from '@/global/apis/entity';
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
-import { difference } from 'lodash';
 
 export interface StationDataTypes {
   stationName: string;
@@ -10,7 +9,6 @@ export interface StationDataTypes {
 
 interface InitialStateTypes {
   stationType: null | '출발역' | '도착역';
-  searchText: string;
   selectedStation: {
     departure: StationDataTypes;
     arrival: StationDataTypes;
@@ -20,7 +18,6 @@ interface InitialStateTypes {
 
 const initialState: InitialStateTypes = {
   stationType: null,
-  searchText: '',
   selectedStation: {
     departure: {
       stationName: '',
@@ -40,9 +37,6 @@ const stationSearchSlice = createSlice({
   reducers: {
     getStationType: (state, action: PayloadAction<InitialStateTypes['stationType']>) => {
       state.stationType = action.payload;
-    },
-    getSearchText: (state, action: PayloadAction<InitialStateTypes['searchText']>) => {
-      state.searchText = action.payload;
     },
     getSeletedStation: (state, action: PayloadAction<InitialStateTypes['selectedStation']>) => {
       const isDuplicate =
@@ -80,12 +74,6 @@ const stationSearchSlice = createSlice({
   },
 });
 
-export const {
-  swapStation,
-  getStationType,
-  getSearchText,
-  getSeletedStation,
-  initialize,
-  getIssueId,
-} = stationSearchSlice.actions;
+export const { swapStation, getStationType, getSeletedStation, initialize, getIssueId } =
+  stationSearchSlice.actions;
 export default stationSearchSlice.reducer;

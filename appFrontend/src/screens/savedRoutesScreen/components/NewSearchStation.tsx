@@ -2,7 +2,7 @@ import styled from '@emotion/native';
 import { FontText, Input } from '@/global/ui';
 import { COLOR } from '@/global/constants';
 import { useAppDispatch, useAppSelect } from '@/store';
-import { getSearchText, getSeletedStation } from '@/store/modules/stationSearchModule';
+import { getSeletedStation } from '@/store/modules/stationSearchModule';
 import { useAddRecentSearch, useGetSearchHistory, useSearchStationName } from '@/global/apis/hook';
 import { useCallback, useState } from 'react';
 import { debounce } from 'lodash';
@@ -26,15 +26,7 @@ const NewSearchStation = () => {
 
   const changeSearchText = (text: string) => {
     setSearchTextValue(text);
-    sendSearchText(text);
   };
-
-  const sendSearchText = useCallback(
-    debounce((text: string) => {
-      dispatch(getSearchText(text));
-    }, 500),
-    [],
-  );
 
   const { searchResultData } = useSearchStationName(searchTextValue);
   const { addRecentMutate } = useAddRecentSearch({
