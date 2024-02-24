@@ -16,17 +16,9 @@ import StepButton from '../ui/StepButton';
 import IconX from '@assets/icons/cross_x.svg';
 import IconRightArrowHead from '@assets/icons/right_arrow_head.svg';
 
-type AgreeTermsType =
-  | '약관 전체 동의'
-  | '(필수) 서비스 약관 동의'
-  | '(필수) 개인정보 수집 동의'
-  | '(필수) 위치기반 서비스 이용 동의';
+type AgreeTermsType = '약관 전체 동의' | '(필수) 서비스 약관 동의' | '(필수) 개인정보 수집 동의';
 
-const listData: AgreeTermsType[] = [
-  '(필수) 서비스 약관 동의',
-  '(필수) 개인정보 수집 동의',
-  '(필수) 위치기반 서비스 이용 동의',
-];
+const listData: AgreeTermsType[] = ['(필수) 서비스 약관 동의', '(필수) 개인정보 수집 동의'];
 
 interface SubscribeTermsModalProps {
   setStep: () => void;
@@ -62,25 +54,20 @@ const SubscribeTermsModal = ({ setStep, closeModal }: SubscribeTermsModalProps) 
 
   const allChangeAgreeTerms = () => {
     if (isCheckAll) setAgreeTerms([]);
-    else
-      setAgreeTerms([
-        '약관 전체 동의',
-        '(필수) 개인정보 수집 동의',
-        '(필수) 서비스 약관 동의',
-        '(필수) 위치기반 서비스 이용 동의',
-      ]);
+    else setAgreeTerms(['약관 전체 동의', '(필수) 개인정보 수집 동의', '(필수) 서비스 약관 동의']);
   };
 
   const webViewHandler = (text: AgreeTermsType) => {
     switch (text) {
       case '(필수) 서비스 약관 동의':
-        setOpenUrl('https://gilded-turn-6c9.notion.site/ver-1-10f4eab4c1c842cab3539cdd013dc0c7');
+        setOpenUrl(
+          'https://reflective-pincushion-d6c.notion.site/ver-1-12bd734b37b34bbaa58741e7f72bbda0',
+        );
         break;
       case '(필수) 개인정보 수집 동의':
-        setOpenUrl('https://gilded-turn-6c9.notion.site/ver-1-6992d062c19a466aaf4e37db4df2498b');
-        break;
-      case '(필수) 위치기반 서비스 이용 동의':
-        setOpenUrl('https://gilded-turn-6c9.notion.site/ver-1-9eabbc4300464d07adc940a1c7c33840');
+        setOpenUrl(
+          'https://reflective-pincushion-d6c.notion.site/ver-1-c94b91a436814e3f86881f9f144f8581?pvs=4',
+        );
         break;
       default:
         break;
