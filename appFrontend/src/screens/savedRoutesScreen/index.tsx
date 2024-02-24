@@ -3,7 +3,6 @@ import styled from '@emotion/native';
 import RenderSavedRoutes from './components/RenderSavedRoutes';
 import { FontText, Space } from '@/global/ui';
 import { COLOR } from '@/global/constants';
-import AddNewRouteModal from './components/AddNewRouteModal';
 import { useRootNavigation } from '@/navigation/RootNavigation';
 import { Pressable, SafeAreaView } from 'react-native';
 import IconPlusBtn from '@assets/icons/plus_circle.svg';
@@ -11,7 +10,6 @@ import IconLeftArrowHead from '@assets/icons/left_arrow_head.svg';
 import { useNewRouteNavigation } from '@/navigation/NewRouteNavigation';
 
 const SavedRoutesScreen = () => {
-  const [isAddRouteModalOpen, setIsAddRouteModalOpen] = useState<boolean>(false);
   const navigation = useRootNavigation();
   const newRouteNavigation = useNewRouteNavigation();
 
@@ -39,10 +37,6 @@ const SavedRoutesScreen = () => {
             />
           </AddContainer>
         </RouteContainer>
-        <AddNewRouteModal
-          isVisible={isAddRouteModalOpen}
-          onCancel={() => setIsAddRouteModalOpen(false)}
-        />
       </Container>
     </SafeAreaView>
   );
