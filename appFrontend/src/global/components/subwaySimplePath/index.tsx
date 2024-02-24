@@ -21,8 +21,18 @@ const SubwaySimplePath = ({
   }, [pathData]);
   const maxLength = freshLanesPathData.length;
 
+  const renderStationName = freshLanesPathData.reduce((acc, cur, idx) => {
+    const arr = cur.stations
+      .filter((_, idx) => idx === cur.stations.length - 1 || !idx)
+      .map((item) => item.stationName);
+    if (idx === freshLanesPathData.length - 1) return [...acc, ...arr];
+    return [...acc, ...arr.slice(0, 1), ...arr.slice(2)];
+  }, [] as string[]);
+
+  const isOverNameLength = renderStationName.some((item) => item.length > 5);
+
   return (
-    <View style={{ marginVertical: 16 }}>
+    <View style={{ marginBottom: isOverNameLength ? 32 : 16, marginTop: 16 }}>
       <View
         style={{
           flexDirection: 'row',

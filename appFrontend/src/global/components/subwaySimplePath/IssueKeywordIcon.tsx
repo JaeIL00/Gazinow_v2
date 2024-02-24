@@ -5,7 +5,7 @@ import IconDelayed from '@assets/icons/path_delayed.svg';
 import IconEvent from '@assets/icons/path_event.svg';
 import IconNaturalDisaster from '@assets/icons/path_natural_disaster.svg';
 import IconProtest from '@assets/icons/path_protest.svg';
-import IconConstruction from '@assets/icons/pathh_construction.svg';
+import IconConstruction from '@assets/icons/path_construction.svg';
 
 interface IssueKeywordIconProps {
   keyword: IssueKeywords;
