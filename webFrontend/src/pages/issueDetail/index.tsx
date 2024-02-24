@@ -64,7 +64,7 @@ const IssueDetailPage = () => {
   //   return <p>로딩 중..</p>;
   // }
   return (
-    <div className="relative">
+    <div className="relative bg-[#F9F9F9]">
       <section className="h-screen px-4 overflow-y-auto">
         <header className="mt-[19px] mb-5">
           <h1 className="mb-1 text-xl font-semibold">{issueData?.title}</h1>
