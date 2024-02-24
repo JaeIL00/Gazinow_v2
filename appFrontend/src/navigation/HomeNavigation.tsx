@@ -24,7 +24,7 @@ const HomeNavigation = () => {
       <Stack.Screen name={SUBWAY_PATH_RESULT} component={SearchPathResultScreen} />
       <Stack.Screen name={SUBWAY_PATH_DETAIL} component={SearchPathResultDetailScreen} />
       <Stack.Screen name="SavedRoutes" component={SavedRoutesScreen} />
-      <Stack.Screen name="SavedRoutesDetail" component={SavedRoutesDetail} />
+      {/* <Stack.Screen name="SavedRoutesDetail" component={SavedRoutesDetail} /> */}
     </Stack.Navigator>
   );
 };

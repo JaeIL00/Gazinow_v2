@@ -75,9 +75,11 @@ const NameNewRouteModal = () => {
             <Input
               placeholder="경로 이름을 입력하세요"
               value={roadName}
-              onChangeText={(text) => setRoadName(text)}
+              onChangeText={(text) => {
+                if (text.length > 10) return;
+                setRoadName(text);
+              }}
               inputMode="email"
-              maxLength={10}
               placeholderTextColor={COLOR.GRAY_999}
             ></Input>
           </InputBox>
