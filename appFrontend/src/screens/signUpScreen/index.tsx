@@ -9,7 +9,7 @@ import IconLeftArrow from '@assets/icons/left_arrow_round.svg';
 const SignUpScreen = () => {
   const navigation = useAuthNavigation();
 
-  const [step, setStep] = useState<SignUpStepType>('nickname');
+  const [step, setStep] = useState<SignUpStepType>('email');
   const [signUpData, setSignUpData] = useState<SignUpParams>({
     email: '',
     password: '',
@@ -91,7 +91,7 @@ const SignUpScreen = () => {
               setStep={() => setStep('complete')}
             />
           )}
-          {step === 'complete' && <CompleteStep />}
+          {step === 'complete' && <CompleteStep nickname={signUpData.nickname} />}
         </KeyboardAvoidingView>
       </View>
     </SafeAreaView>
