@@ -137,14 +137,14 @@ const NicknameStep = ({
 
       <StepButton
         value="확인"
-        backgroundCondition={checkMessage.includes('가능')}
+        backgroundCondition={data?.state === 200}
         onPress={() => {
           signUpMutate({
             ...signUpData,
             nickName: signUpData.nickname,
           });
         }}
-        disabled={!checkMessage.includes('가능')}
+        disabled={data?.state === 200}
       />
     </View>
   );
