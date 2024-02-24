@@ -308,6 +308,8 @@ export const subwayNameCutting = (name: string) => {
       return '서울지방\n병무청';
     case '송도달빛축제공원':
       return '송도달빛\n축제공원';
+    case '광교중앙(아주대)':
+      return '광교중앙\n(아주대)';
     default:
       return name;
   }
