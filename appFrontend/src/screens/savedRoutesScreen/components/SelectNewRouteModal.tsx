@@ -11,6 +11,7 @@ import AddNewRouteHeader from './AddNewRouteHeader';
 import { useNewRouteNavigation } from '@/navigation/NewRouteNavigation';
 import { useAppSelect } from '@/store';
 import SwapStation from './SwapStation';
+import EqualAlert from '@assets/icons/dep_equals_to_arr.svg';
 
 interface SelectedStationTypes {
   departure: StationDataTypes;
@@ -46,61 +47,67 @@ const SelectNewRouteModal = () => {
         >
           <SwapStation selectedStation={selectedStation} setSelectedStation={setSelectedStation} />
         </View>
-        <ScrollView>
-          {data?.paths.map((item) => {
-            return (
-              <PathInner
-                key={item.firstStartStation + item.totalTime}
-                onPress={() => {
-                  newRouteNavigation.push('Detail', {
-                    state: item,
-                  });
-                }}
-              >
-                <PathTitleInfoBox>
-                  <View>
-                    <FontText
-                      value="평균 소요시간"
-                      textSize="11px"
-                      textWeight="SemiBold"
-                      lineHeight="13px"
-                      textColor="#999"
-                    />
-                    <Space height="4px" />
-                    <FontText
-                      value={`${item.totalTime}분`}
-                      textSize="20px"
-                      textWeight="SemiBold"
-                      lineHeight="25px"
-                      textColor={COLOR.BASIC_BLACK}
-                    />
-                  </View>
-                  <Pressable
-                    hitSlop={20}
-                    onPress={() => {
-                      setSelectedRoutePath(item);
-                    }}
-                  >
-                    <RadioButtonContainer
-                      selected={selectedRoutePath === item}
+        {selectedStation.departure.stationName === selectedStation.arrival.stationName ? (
+          <View style={{ alignItems: 'center', paddingTop: 100 }}>
+            <EqualAlert />
+          </View>
+        ) : (
+          <ScrollView>
+            {data?.paths.map((item) => {
+              return (
+                <PathInner
+                  key={item.firstStartStation + item.totalTime}
+                  onPress={() => {
+                    newRouteNavigation.push('Detail', {
+                      state: item,
+                    });
+                  }}
+                >
+                  <PathTitleInfoBox>
+                    <View>
+                      <FontText
+                        value="평균 소요시간"
+                        textSize="11px"
+                        textWeight="SemiBold"
+                        lineHeight="13px"
+                        textColor="#999"
+                      />
+                      <Space height="4px" />
+                      <FontText
+                        value={`${item.totalTime}분`}
+                        textSize="20px"
+                        textWeight="SemiBold"
+                        lineHeight="25px"
+                        textColor={COLOR.BASIC_BLACK}
+                      />
+                    </View>
+                    <Pressable
+                      hitSlop={20}
                       onPress={() => {
                         setSelectedRoutePath(item);
                       }}
                     >
-                      {selectedRoutePath === item && <InnerCircle />}
-                    </RadioButtonContainer>
-                  </Pressable>
-                </PathTitleInfoBox>
-                <SubwaySimplePath
-                  pathData={item.subPaths}
-                  arriveStationName={item.lastEndStation}
-                  betweenPathMargin={24}
-                />
-              </PathInner>
-            );
-          })}
-          <Space height="1px" backgroundColor={COLOR.GRAY_EB} />
-        </ScrollView>
+                      <RadioButtonContainer
+                        selected={selectedRoutePath === item}
+                        onPress={() => {
+                          setSelectedRoutePath(item);
+                        }}
+                      >
+                        {selectedRoutePath === item && <InnerCircle />}
+                      </RadioButtonContainer>
+                    </Pressable>
+                  </PathTitleInfoBox>
+                  <SubwaySimplePath
+                    pathData={item.subPaths}
+                    arriveStationName={item.lastEndStation}
+                    betweenPathMargin={24}
+                  />
+                </PathInner>
+              );
+            })}
+            <Space height="1px" backgroundColor={COLOR.GRAY_EB} />
+          </ScrollView>
+        )}
       </SubPathContainer>
 
       <BottomBtn
