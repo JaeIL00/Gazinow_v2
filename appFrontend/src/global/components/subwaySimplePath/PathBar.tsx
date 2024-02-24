@@ -29,7 +29,7 @@ const PathBar = ({ stationCode, isFirst, isLast, issues }: PathBarProps) => {
           position: 'absolute',
           top: -31,
           width: '100%',
-          justifyContent: issues.length > 1 ? 'space-between' : 'center',
+          justifyContent: issues.length > 1 ? 'space-around' : 'center',
           alignItems: 'center',
           flexDirection: 'row',
           paddingHorizontal: 8,
