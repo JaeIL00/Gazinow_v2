@@ -3,7 +3,7 @@ import { NewRouteStackParamList } from './types/navigation';
 import SwapScreen from '@/screens/savedRoutesScreen/components/NewSearchSwapStation';
 import SearchScreen from '@/screens/savedRoutesScreen/components/NewSearchStation';
 import ResultScreen from '@/screens/savedRoutesScreen/components/SelectNewRouteModal';
-import DetailScreen from '@/screens/savedRoutesScreen/components/NewRouteDetailModal';
+import DetailScreen from '@/screens/searchPathResultDetailScreen';
 import NameScreen from '@/screens/savedRoutesScreen/components/NameNewRouteModal';
 import { useNavigation } from '@react-navigation/native';
 import SavedRoutesScreen from '@/screens/savedRoutesScreen';
