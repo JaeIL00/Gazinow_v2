@@ -7,6 +7,14 @@ import { saveUserInfo } from '@/store/modules';
 import { getEncryptedStorage, removeEncryptedStorage, setEncryptedStorage } from '@/global/utils';
 import SplashScreenLib from 'react-native-splash-screen';
 
+// 자동로그인, 비로그인
+// 적정 시간잡아서
+// 하이드해주면 됩니다
+// 둘다 1초 해도 되지 않을까싶은데
+// 보고서 settimeout추가해주세요
+// 자동로그인은 로그인 결과를 기점으로 셋타임하면 되고요
+// 비로그인은 토큰 여부 판단이끝나고서 시작때하명 될거같습니다
+
 const SplashScreen = () => {
   const rootNavigation = useRootNavigation();
   const dispatch = useAppDispatch();
