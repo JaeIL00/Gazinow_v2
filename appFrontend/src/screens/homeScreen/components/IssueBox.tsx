@@ -76,6 +76,8 @@ const IssueBox = () => {
             </Pressable>
           </TextContainer>
 
+          <Space height="16px" />
+
           <SubwaySimplePath
             pathData={route.subPaths}
             arriveStationName={route.lastEndStation}
