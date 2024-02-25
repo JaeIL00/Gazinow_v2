@@ -10,8 +10,6 @@ import color from "@global/constants/color";
 import { useMemo } from "react";
 import { debounce } from "lodash";
 import cn from "classnames";
-import { useRecoilValue } from "recoil";
-import { accessTokenState } from "@global/atom";
 import localStorageFunc from "@global/utils/localStorage";
 import { STORAGE_ACCESS_KEY } from "@global/constants";
 
@@ -20,7 +18,6 @@ dayjs.extend(relativeTime);
 
 const IssueDetailPage = () => {
   const { id } = useParams() as { id: string };
-  const accessToken = useRecoilValue(accessTokenState);
   const storageAccessToken = localStorageFunc.get<string>(STORAGE_ACCESS_KEY);
 
   // TODO: MVP에서 빠짐
@@ -29,7 +26,7 @@ const IssueDetailPage = () => {
 
   const { issueData, isLoadingIssue, refetchIssue } = useGetIssue({
     id,
-    enabled: !!storageAccessToken || (!!accessToken && !!id),
+    enabled: !!storageAccessToken && !!id,
   });
   const { doLikeMutate } = usePostLike({ onSuccess: refetchIssue });
   const { deleteLikeMutate } = useDeletePostLike({ onSuccess: refetchIssue });
