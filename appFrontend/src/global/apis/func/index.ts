@@ -38,7 +38,6 @@ export const tokenReissueFetch = async ({
     );
     return res.data.data;
   } catch (err) {
-    Sentry.captureException(err);
     const er = err as AxiosError;
     throw er;
   }
