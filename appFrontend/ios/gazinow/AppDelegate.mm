@@ -6,6 +6,8 @@
 
 #import "RNCConfig.h"
 
+#import "RNSplashScreen.h"
+
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -14,8 +16,12 @@
   // You can add your custom initial props in the dictionary below.
   // They will be passed down to the ViewController used by React Native.
   self.initialProps = @{};
-
-  return [super application:application didFinishLaunchingWithOptions:launchOptions];
+  
+  bool didFinish = [super application:application didFinishLaunchingWithOptions:launchOptions];
+  
+  [RNSplashScreen show];  // this needs to be called after [super application:application didFinishLaunchingWithOptions:launchOptions];
+  
+  return didFinish;
 }
 
 - (NSURL *)sourceURLForBridge:(RCTBridge *)bridge
@@ -30,6 +36,7 @@
 #else
   return [CodePush bundleURL];
 #endif
+ 
 }
 
 NSDictionary *config = [RNCConfig env];
