@@ -5,7 +5,6 @@ import { useRootNavigation } from '@/navigation/RootNavigation';
 import { tokenReissueFetch } from '@/global/apis/func';
 import { saveUserInfo } from '@/store/modules';
 import { getEncryptedStorage, removeEncryptedStorage, setEncryptedStorage } from '@/global/utils';
-import SplashScreenLib from 'react-native-splash-screen';
 
 const SplashScreen = () => {
   const rootNavigation = useRootNavigation();
@@ -16,19 +15,11 @@ const SplashScreen = () => {
       await setEncryptedStorage('access_token', data.accessToken);
       await setEncryptedStorage('refresh_token', data.refreshToken);
       rootNavigation.reset({ routes: [{ name: 'MainBottomTab' }] });
-
-      setTimeout(() => {
-        SplashScreenLib.hide();
-      }, 2000);
     },
     onError: () => {
       removeEncryptedStorage('access_token');
       removeEncryptedStorage('refresh_token');
       rootNavigation.reset({ routes: [{ name: 'AuthStack' }] });
-
-      setTimeout(() => {
-        SplashScreenLib.hide();
-      }, 2000);
     },
   });
 
@@ -37,9 +28,6 @@ const SplashScreen = () => {
     const refreshToken = await getEncryptedStorage('refresh_token');
     if (!accessToken) {
       rootNavigation.reset({ routes: [{ name: 'AuthStack' }] });
-      setTimeout(() => {
-        SplashScreenLib.hide();
-      }, 2000);
       return;
     } else {
       mutate({
