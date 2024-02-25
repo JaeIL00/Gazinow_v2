@@ -32,6 +32,16 @@ const SelectNewRouteModal = () => {
     endStationLine: selectedStation.arrival.stationLine,
   });
 
+  const pathTime = (item: Path) => {
+    const hasIssue = item.subPaths.some(
+      (sub) => !!sub.lanes[0] && !!sub.lanes[0].issueSummary.length,
+    );
+    const minute = hasIssue ? '분 이상' : '분';
+    return item.totalTime > 60
+      ? Math.floor(item.totalTime / 60) + '시간 ' + (item.totalTime % 60) + minute
+      : item.totalTime + minute;
+  };
+
   return (
     <Container>
       <AddNewRouteHeader />
@@ -69,7 +79,7 @@ const SelectNewRouteModal = () => {
                     />
                     <Space height="4px" />
                     <FontText
-                      value={`${item.totalTime}분`}
+                      value={pathTime(item)}
                       textSize="20px"
                       textWeight="SemiBold"
                       lineHeight="25px"

@@ -17,6 +17,7 @@ import IconLeftArrowHead from '@assets/icons/left_arrow_head.svg';
 import IssueKeywordIcon from '@/global/components/subwaySimplePath/IssueKeywordIcon';
 import { subwayLineColor } from '@/global/utils';
 import { useRootNavigation } from '@/navigation/RootNavigation';
+import { Path } from '@/global/apis/entity';
 
 dayjs.locale('ko');
 
@@ -37,6 +38,16 @@ const SearchPathResultScreen = () => {
     endStationName: selectedStationRedux.arrival.stationName,
     endStationLine: selectedStationRedux.arrival.stationLine,
   });
+
+  const pathTime = (item: Path) => {
+    const hasIssue = item.subPaths.some(
+      (sub) => !!sub.lanes[0] && !!sub.lanes[0].issueSummary.length,
+    );
+    const minute = hasIssue ? '분 이상' : '분';
+    return item.totalTime > 60
+      ? Math.floor(item.totalTime / 60) + '시간 ' + (item.totalTime % 60) + minute
+      : item.totalTime + minute;
+  };
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: COLOR.WHITE }}>
@@ -130,14 +141,7 @@ const SearchPathResultScreen = () => {
                   </View>
                   <View style={{ height: 4 }} />
                   <FontText
-                    value={
-                      item.totalTime > 60
-                        ? Math.floor(item.totalTime / 60) +
-                          '시간 ' +
-                          (item.totalTime % 60) +
-                          '분 이상'
-                        : item.totalTime + '분 이상'
-                    }
+                    value={pathTime(item)}
                     textSize="20px"
                     textWeight="SemiBold"
                     textColor={COLOR.BASIC_BLACK}
