@@ -162,9 +162,17 @@ const SearchPathResultDetailScreen = () => {
           data={freshSubPathData}
           keyExtractor={(item) => item.distance + item.sectionTime + ''}
           ListFooterComponent={<View style={{ height: 100 }} />}
-          renderItem={({ item, index }) => (
-            <SearchPathDetailItem data={item} isLastLane={freshSubPathData.length - 1 === index} />
-          )}
+          renderItem={({ item, index }) => {
+            const stationCount =
+              index === freshSubPathData.length - 1 ? item.stationCount + 1 : item.stationCount;
+            return (
+              <SearchPathDetailItem
+                data={item}
+                isLastLane={freshSubPathData.length - 1 === index}
+                stationCount={stationCount}
+              />
+            );
+          }}
         />
       </View>
     </SafeAreaView>
