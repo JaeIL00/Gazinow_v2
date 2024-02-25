@@ -6,6 +6,10 @@
 
 #import "RNCConfig.h"
 
+#import <AppCenterReactNative.h>
+#import <AppCenterReactNativeAnalytics.h>
+#import <AppCenterReactNativeCrashes.h>
+
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -15,6 +19,10 @@
   // They will be passed down to the ViewController used by React Native.
   self.initialProps = @{};
 
+  [AppCenterReactNative register];
+  [AppCenterReactNativeAnalytics registerWithInitiallyEnabled:true];
+  [AppCenterReactNativeCrashes registerWithAutomaticProcessing];
+  
   return [super application:application didFinishLaunchingWithOptions:launchOptions];
 }
 
@@ -25,11 +33,11 @@
 
 - (NSURL *)getBundleURL
 {
-#if DEBUG
-  return [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index"];
-#else
-  return [CodePush bundleURL];
-#endif
+  #if DEBUG
+    return [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index" fallbackResource:nil];
+  #else
+    return [CodePush bundleURL];
+  #endif
 }
 
 NSDictionary *config = [RNCConfig env];

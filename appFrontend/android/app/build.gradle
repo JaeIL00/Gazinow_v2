@@ -106,9 +106,8 @@ android {
             resValue "string", "CodePushDeploymentKey", CODEPUSH_DEPLOYMENT_KEY_DEBUG
         }
         releaseStaging {
+            initWith release
             resValue "string", "CodePushDeploymentKey", CODEPUSH_DEPLOYMENT_KEY_STAGING
-            // Note: It is a good idea to provide matchingFallbacks for the new buildType you create to prevent build issues
-            // Add the following line if not already there
             matchingFallbacks = ['release']
         }
         release {
@@ -132,7 +131,7 @@ dependencies {
     } else {
         implementation jscFlavor
     }
-    implementation project(':react-native-splash-screen')
+implementation project(':react-native-splash-screen')
 }
 
 apply from: file("../../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesAppBuildGradle(project)
