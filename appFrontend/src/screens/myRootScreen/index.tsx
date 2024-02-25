@@ -119,6 +119,7 @@ export default MyRootScreen;
 
 const Container = styled.SafeAreaView`
   flex: 1;
+  background-color: ${COLOR.GRAY_F9};
 `;
 const NickNameContainer = styled.Pressable`
   flex-direction: row;
