@@ -10,8 +10,6 @@ import color from "@global/constants/color";
 import { useMemo } from "react";
 import { debounce } from "lodash";
 import cn from "classnames";
-import { useRecoilValue } from "recoil";
-import { accessTokenState } from "@global/atom";
 import localStorageFunc from "@global/utils/localStorage";
 import { STORAGE_ACCESS_KEY } from "@global/constants";
 
@@ -20,16 +18,15 @@ dayjs.extend(relativeTime);
 
 const IssueDetailPage = () => {
   const { id } = useParams() as { id: string };
-  const accessToken = useRecoilValue(accessTokenState);
   const storageAccessToken = localStorageFunc.get<string>(STORAGE_ACCESS_KEY);
 
   // TODO: MVP에서 빠짐
   // const [isOpenModal, setIsOpenModal] = useState<boolean>(true);
   // const closeModal = () => setIsOpenModal(false);
 
-  const { issueData, refetchIssue } = useGetIssue({
+  const { issueData, isLoadingIssue, refetchIssue } = useGetIssue({
     id,
-    enabled: !!storageAccessToken || (!!accessToken && !!id),
+    enabled: !!storageAccessToken && !!id,
   });
   const { doLikeMutate } = usePostLike({ onSuccess: refetchIssue });
   const { deleteLikeMutate } = useDeletePostLike({ onSuccess: refetchIssue });
@@ -60,9 +57,9 @@ const IssueDetailPage = () => {
   //     </p>
   //   );
   // }
-  // if (isLoadingIssue) {
-  //   return <p>로딩 중..</p>;
-  // }
+  if (isLoadingIssue) {
+    return <div className="bg-[#F9F9F9] w-screen h-screen"></div>;
+  }
   return (
     <div className="relative bg-[#F9F9F9]">
       <section className="h-screen px-4 overflow-y-auto">

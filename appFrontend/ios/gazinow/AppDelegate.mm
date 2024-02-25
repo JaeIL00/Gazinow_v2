@@ -8,6 +8,11 @@
 
 #import "RNSplashScreen.h"
 
+#import <AppCenterReactNative.h>
+#import <AppCenterReactNativeAnalytics.h>
+#import <AppCenterReactNativeCrashes.h>
+
+
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -18,6 +23,10 @@
   self.initialProps = @{};
   
   bool didFinish = [super application:application didFinishLaunchingWithOptions:launchOptions];
+  
+  [AppCenterReactNative register];
+  [AppCenterReactNativeAnalytics registerWithInitiallyEnabled:true];
+  [AppCenterReactNativeCrashes registerWithAutomaticProcessing];
   
   [RNSplashScreen show];  // this needs to be called after [super application:application didFinishLaunchingWithOptions:launchOptions];
   
@@ -36,7 +45,6 @@
 #else
   return [CodePush bundleURL];
 #endif
- 
 }
 
 NSDictionary *config = [RNCConfig env];

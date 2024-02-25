@@ -13,8 +13,9 @@ const IssueDetailScreen = () => {
   const issueId = useAppSelect((state) => state.subwaySearch.issueId);
 
   const webViewRef = useRef<WebView>(null);
-  const { data: accessToken } = useQuery(['access-token'], () =>
-    getEncryptedStorage('access_token'),
+  const { data: accessToken } = useQuery(
+    ['access-token'],
+    async () => await getEncryptedStorage('access_token'),
   );
 
   return (
@@ -24,13 +25,17 @@ const IssueDetailScreen = () => {
           <IconLeftArrowHead />
         </TouchableOpacity>
       </View>
-      <WebView
-        ref={webViewRef}
-        source={{ uri: `https://www.gazinow.com/issue/${issueId}` }}
-        onLoadEnd={() => {
-          webViewRef.current?.postMessage(accessToken);
-        }}
-      />
+      {!!accessToken && (
+        <WebView
+          ref={webViewRef}
+          source={{ uri: `https://www.gazinow.com/issue/${issueId}` }}
+          onLoadEnd={() => {
+            setTimeout(() => {
+              webViewRef.current?.postMessage(accessToken);
+            }, 500);
+          }}
+        />
+      )}
     </SafeAreaView>
   );
 };
