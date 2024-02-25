@@ -162,7 +162,16 @@ const SearchPathDetailItem = ({ data, isLastLane }: SearchPathDetailItemProps) =
             disabled={data.stations.length < 3}
           >
             <FontText
-              value={data.stationCount + '개역 (' + data.sectionTime + '분)'}
+              value={
+                data.sectionTime > 60
+                  ? data.stationCount +
+                    '개역 (' +
+                    Math.floor(data.sectionTime / 60) +
+                    '시간 ' +
+                    (data.sectionTime % 60) +
+                    '분)'
+                  : data.stationCount + '개역 (' + data.sectionTime + '분)'
+              }
               textSize="11px"
               textWeight="Medium"
               lineHeight="13px"

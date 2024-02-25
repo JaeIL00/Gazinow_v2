@@ -1,7 +1,7 @@
 import { Path, SubPath } from '@/global/apis/entity';
 
 export type RootStackParamList = {
-  Temp: undefined;
+  SplashScreen: undefined;
   AuthStack: { screen: 'Landing' };
   IssueStack: {
     screen: 'SearchStation' | 'IssueDetail';
@@ -23,7 +23,6 @@ export type HomeStackParamList = {
   SubwayPathResult: undefined;
   SubwayPathDetail: { state?: Path | SubPath[]; pathId?: number | null };
   SavedRoutes: undefined;
-  SavedRoutesDetail: { state?: Path | SubPath[]; pathId?: number | null };
 };
 
 export type NewRouteStackParamList = {
@@ -31,7 +30,7 @@ export type NewRouteStackParamList = {
   Swap: undefined;
   Search: undefined;
   Result: undefined;
-  // Detail: { state?: Path | SubPath[]; pathId?: number | null };
+  Detail: { state?: Path | SubPath[]; pathId?: number | null };
   Name: { state?: Path | SubPath[]; pathId?: number | null };
 };
 
@@ -45,6 +44,7 @@ export type MyPageStackParamList = {
   NotiOnModal: undefined;
   NotiSettingsModal: undefined;
   SubscribeTermsModal: undefined;
+  PersonalTermsModal: undefined;
 };
 
 export type IssueStackParamList = {

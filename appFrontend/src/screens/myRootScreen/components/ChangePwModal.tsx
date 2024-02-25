@@ -73,7 +73,6 @@ const ChangePwModal = () => {
   const { changePasswordMutate } = useChangePasswordQuery({
     onSuccess: () => {
       setPopupVisible(true);
-      // TODO: 성공 토스트 띄우기
     },
     onError: (error: any) => {
       setIsNewPwValid(false);

@@ -11,6 +11,7 @@ import ManageAccountModal from '@/screens/myRootScreen/components/ManageAccountM
 import NotiOnModal from '@/screens/myRootScreen/components/NotiOnModal';
 import NotiSettingsModal from '@/screens/myRootScreen/components/NotiSettingsModal';
 import SubscribeTermsModal from '@/screens/myRootScreen/components/SubscribeTermsModal';
+import PersonalTermsModal from '@/screens/myRootScreen/components/PersonalTermsModal';
 
 const Stack = createStackNavigator<MyPageStackParamList>();
 
@@ -30,6 +31,7 @@ const MyPageNavigation = () => {
       <Stack.Screen name="NotiOnModal" component={NotiOnModal} />
       <Stack.Screen name="NotiSettingsModal" component={NotiSettingsModal} />
       <Stack.Screen name="SubscribeTermsModal" component={SubscribeTermsModal} />
+      <Stack.Screen name="PersonalTermsModal" component={PersonalTermsModal} />
     </Stack.Navigator>
   );
 };

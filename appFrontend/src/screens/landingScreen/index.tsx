@@ -1,7 +1,9 @@
 import { COLOR } from '@/global/constants';
 import { FontText, TextButton } from '@/global/ui';
 import { useAuthNavigation } from '@/navigation/AuthNavigation';
+import { useEffect } from 'react';
 import { Animated, Platform, StatusBar, View } from 'react-native';
+import SplashScreen from 'react-native-splash-screen';
 import { getStatusBarHeight } from 'react-native-status-bar-height';
 
 const LandingScreen = () => {
@@ -11,6 +13,12 @@ const LandingScreen = () => {
     Platform.OS === 'ios' ? getStatusBarHeight(true) : (StatusBar.currentHeight as number);
 
   const titlePaddingTop = 173 - StatusBarHeight;
+
+  useEffect(() => {
+    setTimeout(() => {
+      SplashScreen.hide();
+    }, 500);
+  }, []);
 
   return (
     <View style={{ flex: 1, position: 'relative' }}>

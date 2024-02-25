@@ -98,7 +98,16 @@ const MyRootScreen = () => {
         {renderMenu({
           text: '약관 및 정책',
           onPress: () =>
-            rootNavigation.navigate('MyPageNavigation', { screen: 'SubscribeTermsModal' }),
+            rootNavigation.navigate('MyPageNavigation', {
+              screen: 'SubscribeTermsModal',
+            }),
+        })}
+        {renderMenu({
+          text: '개인정보처리방침',
+          onPress: () =>
+            rootNavigation.navigate('MyPageNavigation', {
+              screen: 'PersonalTermsModal',
+            }),
         })}
         {renderMenu({ text: '버전', versionInfo })}
       </BtnContainer>
@@ -110,6 +119,7 @@ export default MyRootScreen;
 
 const Container = styled.SafeAreaView`
   flex: 1;
+  background-color: ${COLOR.GRAY_F9};
 `;
 const NickNameContainer = styled.Pressable`
   flex-direction: row;

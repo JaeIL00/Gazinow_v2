@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { TouchableOpacity, StyleSheet, Pressable } from 'react-native';
 import { FontText, Space, TextButton } from '@/global/ui';
 import { COLOR } from '@/global/constants';
@@ -6,12 +6,30 @@ import SavedRouteBox from './SavedRouteBox';
 import IssueBox from './IssueBox';
 import styled from '@emotion/native';
 import { useRootNavigation } from '@/navigation/RootNavigation';
-
-const categoryName: ['저장경로', '이슈'] = ['저장경로', '이슈'];
+import { RenderSavedRoutesType } from '@/global/apis/entity';
+import { useGetSavedRoutesQuery } from '@/global/apis/hook';
 
 const SavedRouteIssues = () => {
   const navigation = useRootNavigation();
-  const [activeButton, setActiveButton] = useState<'저장경로' | '이슈'>('저장경로');
+  const { data: savedRoutes } = useGetSavedRoutesQuery();
+  const [hasIssueRoutes, setHasIssueRoutes] = useState<RenderSavedRoutesType[]>([]);
+  const [activeButton, setActiveButton] = useState<'이슈' | '저장경로'>('저장경로');
+
+  useEffect(() => {
+    if (savedRoutes) {
+      const issueRoutes = savedRoutes.filter((savedRoute) => {
+        return savedRoute.subPaths.some((subPath) => subPath.lanes[0].issueSummary.length > 0);
+      });
+      setHasIssueRoutes(issueRoutes);
+    }
+  }, [savedRoutes]);
+
+  useEffect(() => {
+    hasIssueRoutes.length > 0 ? setActiveButton('이슈') : setActiveButton('저장경로');
+  }, [hasIssueRoutes]);
+
+  const categoryName: ['이슈', '저장경로'] | ['저장경로', '이슈'] =
+    hasIssueRoutes.length > 0 ? ['이슈', '저장경로'] : ['저장경로', '이슈'];
 
   const handleButtonClick = (buttonText: typeof activeButton) => setActiveButton(buttonText);
 

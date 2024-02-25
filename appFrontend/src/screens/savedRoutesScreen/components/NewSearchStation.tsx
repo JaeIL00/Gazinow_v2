@@ -41,7 +41,12 @@ const NewSearchStation = () => {
           },
         }),
       );
-      if (
+      const isDuplicate =
+        selectedStation.arrival.stationName === stationName ||
+        selectedStation.departure.stationName === stationName;
+      if (isDuplicate) {
+        newRouteNavigation.goBack();
+      } else if (
         (key === 'departure' && selectedStation.arrival.stationName) ||
         (key === 'arrival' && selectedStation.departure.stationName)
       ) {

@@ -37,9 +37,11 @@ const RecommendedRoutes = ({ pathData }: RecommendedRouteProps) => {
         </TextContainer>
         <Pressable
           hitSlop={20}
-          onPress={() => homeNavigation.push('SavedRoutesDetail', { state: pathData })}
+          onPress={() => homeNavigation.push('SubwayPathDetail', { state: pathData })}
         >
-          <TextContainer>
+          <TextContainer
+            onPress={() => homeNavigation.push('SubwayPathDetail', { state: pathData })}
+          >
             <FontText
               value="세부정보"
               textSize="13px"
@@ -67,7 +69,7 @@ const Container = styled.View`
   background: #f7f7f9;
   padding: 16px 16px 0;
   border-radius: 8px;
-  margin: 8px 2px 0;
+  margin: 8px 2px 16px;
 `;
 const TextContainer = styled.Pressable`
   flex-direction: row;
