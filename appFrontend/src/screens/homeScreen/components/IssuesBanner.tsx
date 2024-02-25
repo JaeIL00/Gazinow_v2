@@ -27,7 +27,6 @@ const IssuesBanner = ({ subPathss }: IssuesBannerProps) => {
   const hasIssueLane = subPathss.reduce((accumulator: Lane[], subPaths: SubPath) => {
     if (subPaths.lanes[0].issueSummary.length > 0) {
       accumulator.push(subPaths.lanes[0]);
-      console.log(subPaths.lanes[0].issueSummary);
     }
     return accumulator;
   }, []);
