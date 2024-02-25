@@ -85,7 +85,7 @@ const IssueBox = () => {
           />
           <IssuesBanner subPathss={route.subPaths} />
           {/* TODO: 대체경로 매핑 */}
-          <RecommendedRoutes pathData={route} />
+          {/* <RecommendedRoutes pathData={route} /> */}
         </RouteContainer>
       ))}
       {hasIssueRoutes.length === 0 && (
