@@ -59,7 +59,7 @@ const MyRootScreen = () => {
           lineHeight="17px"
         />
       ) : (
-        <IconRightArrowHead width={14} />
+        <IconRightArrowHead width={14} color={COLOR.GRAY_999} />
       )}
     </MenuContainer>
   );

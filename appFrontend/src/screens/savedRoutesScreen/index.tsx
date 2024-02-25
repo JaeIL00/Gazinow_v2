@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from '@emotion/native';
 import RenderSavedRoutes from './components/RenderSavedRoutes';
 import { FontText, Space } from '@/global/ui';

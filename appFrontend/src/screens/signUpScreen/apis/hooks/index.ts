@@ -36,10 +36,7 @@ export const useEmailConfirm = ({
 export const useCheckNickname = ({
   onSettled,
 }: {
-  onSettled: (
-    data?: { message: string; state: 200 | 409 },
-    error?: { message: string } | null,
-  ) => void;
+  onSettled: (data?: { message: string; state: 200 | 409 }, error?: AxiosError | null) => void;
 }) => {
   const { data, mutate: checkNicknameMutate } = useMutation(checkNicknameFetch, {
     onSettled,

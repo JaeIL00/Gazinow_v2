@@ -2,13 +2,13 @@ import { View } from 'react-native';
 import type { TextInput } from 'react-native/types';
 import { FontText, Input, Space } from '@/global/ui';
 import { COLOR } from '@/global/constants';
-import CheckIcon from 'react-native-vector-icons/Feather';
-import CloseIcon from 'react-native-vector-icons/Ionicons';
 import { useEffect, useRef, useState } from 'react';
 import { useEmailConfirm } from '../apis/hooks';
 import ConfirmEmailModal from './ConfirmEmailModal';
 import useBackgroundInterval from '../hooks/useBackgroundInterval';
 import StepButton from '../ui/StepButton';
+import IconCheck from '@assets/icons/check.svg';
+import IconXCircle from '@assets/icons/x-circle-standard.svg';
 
 const emailValidation = new RegExp(
   /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i,
@@ -124,7 +124,7 @@ const EmailStep = ({ emailValue, setStep, changeEmailValue }: EmailStepProps) =>
           <View
             style={{
               backgroundColor: COLOR.GRAY_F2,
-              height: 48,
+              paddingVertical: 13,
               marginTop: 6,
               marginBottom: 8,
               justifyContent: 'center',
@@ -137,15 +137,16 @@ const EmailStep = ({ emailValue, setStep, changeEmailValue }: EmailStepProps) =>
               value={emailValue}
               placeholder="이메일(아이디)입력"
               placeholderTextColor={COLOR.GRAY_BE}
-              fontSize="14px"
+              fontSize="16px"
               onChangeText={(text) => changeEmailHandler(text)}
               keyboardType="email-address"
+              style={{ height: 25 }}
             />
           </View>
           <View style={{ flexDirection: 'row', alignItems: 'center', marginLeft: 9 }}>
             {!errorMessage && isValidEmail && (
               <>
-                <CheckIcon name="check" size={14} color={COLOR.LIGHT_GREEN} />
+                <IconCheck width={14} height={14} color={COLOR.LIGHT_GREEN} />
                 <Space width="3px" />
                 <FontText
                   value="올바른 이메일 형식입니다"
@@ -157,7 +158,7 @@ const EmailStep = ({ emailValue, setStep, changeEmailValue }: EmailStepProps) =>
             )}
             {!errorMessage && !isValidEmail && emailValue && (
               <>
-                <CloseIcon name="close-circle-outline" size={14} color={COLOR.LIGHT_RED} />
+                <IconXCircle width={14} height={14} />
                 <Space width="3px" />
                 <FontText
                   value="올바른 이메일 형식이 아닙니다"
@@ -169,7 +170,7 @@ const EmailStep = ({ emailValue, setStep, changeEmailValue }: EmailStepProps) =>
             )}
             {errorMessage && (
               <>
-                <CloseIcon name="close-circle-outline" size={14} color={COLOR.LIGHT_RED} />
+                <IconXCircle width={14} height={14} />
                 <Space width="3px" />
                 <FontText
                   value={errorMessage}

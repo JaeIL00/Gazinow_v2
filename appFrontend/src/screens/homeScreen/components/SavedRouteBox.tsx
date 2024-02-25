@@ -84,7 +84,7 @@ const SavedRouteBox = () => {
                     textColor={COLOR.GRAY_999}
                   />
                   <Space width="4px" />
-                  <IconRightArrowHead />
+                  <IconRightArrowHead color={COLOR.GRAY_999} />
                 </TextContainer>
               </Pressable>
             </TitleContainer>
@@ -137,6 +137,7 @@ const BorderContainer = styled.View`
   margin-start: -99px;
 `;
 const TitleContainer = styled.View`
+  margin-bottom: 16px;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
@@ -147,7 +148,7 @@ const IssueContainer = styled.View`
   align-items: center;
   justify-content: space-between;
   margin-bottom: 14px;
-  margin-top: 8px;
+  margin-top: -10px;
 `;
 const GrayEllipse = styled.View`
   padding: 4px 6px;

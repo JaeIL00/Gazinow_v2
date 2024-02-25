@@ -2,6 +2,7 @@ import GaziAPI from "@global/apis";
 import apiUrls from "@global/apis/url";
 import { AxiosError } from "axios";
 import { IssueGet } from "./entity";
+import * as Sentry from "@sentry/react";
 
 /**
  * 상세 이슈 조회
@@ -13,6 +14,7 @@ export const getIssueDetail = async (params: { id: string }) => {
     });
     return res.data.data;
   } catch (err) {
+    Sentry.captureException(err);
     const error = err as AxiosError;
     throw error;
   }
@@ -26,6 +28,21 @@ export const postLike = async (issueId: number) => {
     const res = await GaziAPI.post(`${apiUrls.like}?issueId=${issueId}`);
     return res.data.data;
   } catch (err) {
+    Sentry.captureException(err);
+    const error = err as AxiosError;
+    throw error;
+  }
+};
+
+/**
+ * 도움돼요 삭제
+ */
+export const deletePostLike = async (issueId: number) => {
+  try {
+    const res = await GaziAPI.delete(`${apiUrls.like}?issueId=${issueId}`);
+    return res.data.data;
+  } catch (err) {
+    Sentry.captureException(err);
     const error = err as AxiosError;
     throw error;
   }

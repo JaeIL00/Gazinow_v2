@@ -4,6 +4,7 @@ import localStorageFunc from "@global/utils/localStorage";
 import { MemberReissue } from "./entity";
 import { STORAGE_ACCESS_KEY, STORAGE_REFRESH_KEY } from "@global/constants";
 
+// 로컬 개발 시 baseURL 주석처리하고 accessToken 직접 넣기
 const GaziAPI = axios.create({
   baseURL: import.meta.env.VITE_BACKEND_URL,
   withCredentials: true,

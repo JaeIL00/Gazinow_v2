@@ -1,19 +1,19 @@
 import { useAddRecentSearch, useGetSearchHistory, useSearchStationName } from '@/global/apis/hook';
 import { COLOR } from '@/global/constants';
-import { FontText, IconButton, Space } from '@/global/ui';
+import { FontText, Space } from '@/global/ui';
 import { subwayReturnLineName } from '@/global/utils/subwayLine';
 import { useAppDispatch, useAppSelect } from '@/store';
-import { getSearchText, getSeletedStation, initialize } from '@/store/modules/stationSearchModule';
+import { getSeletedStation } from '@/store/modules/stationSearchModule';
 import styled from '@emotion/native';
-import { debounce } from 'lodash';
-import { useCallback, useState } from 'react';
-import { SafeAreaView } from 'react-native';
+import { useState } from 'react';
+import { SafeAreaView, TouchableOpacity } from 'react-native';
 import { SelectedStationTypes } from '../searchPathResultScreen';
-import Icon from 'react-native-vector-icons/Feather';
 import { Input } from '@/global/ui';
 import IconLocationPin from '@assets/icons/location_pin.svg';
-import { useRoute } from '@react-navigation/native';
 import { useHomeNavigation } from '@/navigation/HomeNavigation';
+import IconClock from '@assets/icons/clock.svg';
+import IconLeftArrow from '@assets/icons/left_arrow_sharp.svg';
+import IconXCircleFill from '@assets/icons/x_circle_fill.svg';
 
 interface SearchStationModalProps {
   searchType: '출발역' | '도착역';
@@ -32,16 +32,7 @@ const SearchStationScreen = () => {
 
   const changeSearchText = (text: string) => {
     setSearchTextValue(text);
-    sendSearchText(text);
   };
-
-  const sendSearchText = useCallback(
-    debounce((text: string) => {
-      dispatch(getSearchText(text));
-    }, 500),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [],
-  );
 
   const deleteInputText = () => {
     setSearchTextValue('');
@@ -60,8 +51,12 @@ const SearchStationScreen = () => {
           },
         }),
       );
-
-      if (
+      const isDuplicate =
+        selectedStation.arrival.stationName === stationName ||
+        selectedStation.departure.stationName === stationName;
+      if (isDuplicate) {
+        navigation.goBack();
+      } else if (
         (key === 'departure' && selectedStation.arrival.stationName) ||
         (key === 'arrival' && selectedStation.departure.stationName)
       ) {
@@ -83,14 +78,9 @@ const SearchStationScreen = () => {
       }}
     >
       <Container>
-        <IconButton
-          iconType="Ionicons"
-          isFontIcon
-          iconName="arrow-back-sharp"
-          iconWidth="19.5"
-          iconColor="#49454F"
-          onPress={() => navigation.goBack()}
-        />
+        <TouchableOpacity activeOpacity={1} hitSlop={10} onPress={() => navigation.goBack()}>
+          <IconLeftArrow />
+        </TouchableOpacity>
         <Space width="16px" />
         <SearchInput
           value={searchTextValue}
@@ -101,14 +91,9 @@ const SearchStationScreen = () => {
           autoFocus
           isSavingNewRoute
         />
-        <IconButton
-          iconType="Ionicons"
-          isFontIcon
-          iconName="close-circle"
-          iconWidth="19.5"
-          iconColor="rgba(0, 0, 0, 0.46)"
-          onPress={deleteInputText}
-        />
+        <TouchableOpacity activeOpacity={1} onPress={deleteInputText}>
+          <IconXCircleFill />
+        </TouchableOpacity>
       </Container>
       {!searchTextValue ? (
         <ResultContainer>
@@ -133,7 +118,7 @@ const SearchStationScreen = () => {
                   })
                 }
               >
-                <Icon name="clock" size={25} color={COLOR.GRAY_BE} />
+                <IconClock />
                 <StationInfoBox>
                   <FontText
                     value={stationName}

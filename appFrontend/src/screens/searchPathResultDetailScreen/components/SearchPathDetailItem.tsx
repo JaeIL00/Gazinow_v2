@@ -1,12 +1,19 @@
 import { css } from '@emotion/native';
 import { useState } from 'react';
-import { Image, View } from 'react-native';
+import { TouchableOpacity, View } from 'react-native';
 
-import { FontText, IconButton, Space } from '@/global/ui';
+import { FontText, Space } from '@/global/ui';
 import { subwayLineColor } from '@/global/utils';
 import { SubPath } from '@/global/apis/entity';
 import { COLOR } from '@/global/constants';
 import IconWalkHuman from '@assets/icons/walk_human.svg';
+
+import IconRightArrowHead from '@assets/icons/right_arrow_head.svg';
+import { useRootNavigation } from '@/navigation/RootNavigation';
+import { useAppDispatch } from '@/store';
+import { getIssueId } from '@/store/modules';
+import IconDownArrowHead from '@assets/icons/down_arrow_head.svg';
+import IssueKeywordIcon from '@/global/components/subwaySimplePath/IssueKeywordIcon';
 
 interface SearchPathDetailItemProps {
   data: SubPath;
@@ -14,8 +21,12 @@ interface SearchPathDetailItemProps {
 }
 
 const SearchPathDetailItem = ({ data, isLastLane }: SearchPathDetailItemProps) => {
+  const navigation = useRootNavigation();
+  const dispatch = useAppDispatch();
+
   const [isOpenPathList, setIsOpenPathList] = useState<boolean>(false);
   const lastIdx = data.stations.length - 1;
+
   return (
     <View
       style={css`
@@ -65,6 +76,7 @@ const SearchPathDetailItem = ({ data, isLastLane }: SearchPathDetailItemProps) =
           <View
             style={css`
               flex-direction: row;
+              margin-bottom: 8px;
             `}
           >
             <FontText
@@ -84,21 +96,70 @@ const SearchPathDetailItem = ({ data, isLastLane }: SearchPathDetailItemProps) =
           </View>
 
           {/* 이슈박스 */}
-          <View
-            style={{
-              height: 54,
-              borderRadius: 10,
-              borderWidth: 1,
-              borderColor: 'rgba(0, 0, 0, 0.06)',
-              marginVertical: 8,
-            }}
-          />
+          {!!data.lanes[0].issueSummary.length &&
+            data.lanes[0].issueSummary.map((issue) => (
+              <TouchableOpacity
+                activeOpacity={1}
+                style={{
+                  borderRadius: 10,
+                  borderWidth: 1,
+                  borderColor: 'rgba(0, 0, 0, 0.06)',
+                  backgroundColor: COLOR.WHITE,
+                  paddingTop: 10,
+                  paddingBottom: 12,
+                  paddingLeft: 12,
+                  paddingRight: 10,
+                  flexDirection: 'row',
+                }}
+                onPress={() => {
+                  dispatch(getIssueId(issue.id));
+                  navigation.navigate('IssueStack', { screen: 'IssueDetail' });
+                }}
+              >
+                <View
+                  style={{
+                    marginTop: 2,
+                    marginRight: 8,
+                  }}
+                >
+                  <IssueKeywordIcon
+                    width={22}
+                    height={22}
+                    keyword={issue.keyword}
+                    color={subwayLineColor(data.lanes[0].stationCode)}
+                  />
+                </View>
+                <View style={{ flex: 1, marginRight: 8 }}>
+                  <FontText
+                    value={issue.title}
+                    textSize="13px"
+                    textWeight="SemiBold"
+                    textColor={COLOR.BASIC_BLACK}
+                    lineHeight="19px"
+                    numberOfLines={1}
+                  />
+                  <FontText
+                    value={`도움돼요 ${issue.likeCount}개`}
+                    textSize="11px"
+                    textWeight="Medium"
+                    textColor={COLOR.GRAY_999}
+                  />
+                </View>
+                <View style={{ justifyContent: 'center' }}>
+                  <IconRightArrowHead style={{ marginBottom: 2 }} color={COLOR.GRAY_999} />
+                </View>
+              </TouchableOpacity>
+            ))}
 
-          <View
+          <TouchableOpacity
             style={css`
+              margin-top: 8px;
               flex-direction: row;
               align-items: center;
             `}
+            activeOpacity={1}
+            onPress={() => setIsOpenPathList((prev) => !prev)}
+            disabled={data.stations.length < 3}
           >
             <FontText
               value={data.stationCount + '개역 (' + data.sectionTime + '분)'}
@@ -110,17 +171,10 @@ const SearchPathDetailItem = ({ data, isLastLane }: SearchPathDetailItemProps) =
             {data.stations.length > 2 && (
               <>
                 <Space width="4px" />
-                <IconButton
-                  isFontIcon={true}
-                  iconType="Feather"
-                  iconName={isOpenPathList ? 'chevron-up' : 'chevron-down'}
-                  iconColor="#49454f"
-                  iconWidth="10"
-                  onPress={() => setIsOpenPathList((prev) => !prev)}
-                />
+                <IconDownArrowHead width={10} height={10} rotation={isOpenPathList ? 180 : 0} />
               </>
             )}
-          </View>
+          </TouchableOpacity>
           {isOpenPathList && (
             <View style={{ marginTop: 12 }}>
               {data.stations.map((item, idx) => {

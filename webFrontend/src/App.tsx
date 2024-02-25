@@ -1,26 +1,26 @@
+import { accessTokenState } from "@global/atom";
 import { STORAGE_ACCESS_KEY } from "@global/constants";
 import localStorageFunc from "@global/utils/localStorage";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useEffect } from "react";
 import { Outlet } from "react-router-dom";
-
-const queryClient = new QueryClient();
+import { useSetRecoilState } from "recoil";
 
 function App() {
+  const setAccessToken = useSetRecoilState(accessTokenState);
+
   const onMessageEvent = (e: MessageEvent) => {
     e.stopPropagation();
-    localStorageFunc.set(STORAGE_ACCESS_KEY, String(e.data));
+    const accessToken = String(e.data);
+    setAccessToken(accessToken);
+    localStorageFunc.set(STORAGE_ACCESS_KEY, accessToken);
   };
+
   useEffect(() => {
     window.addEventListener("message", onMessageEvent, { capture: true });
     return () => window.removeEventListener("message", onMessageEvent);
   }, []);
 
-  return (
-    <QueryClientProvider client={queryClient}>
-      <Outlet />
-    </QueryClientProvider>
-  );
+  return <Outlet />;
 }
 
 export default App;

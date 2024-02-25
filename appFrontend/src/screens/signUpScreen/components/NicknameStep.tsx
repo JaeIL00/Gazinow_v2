@@ -2,15 +2,15 @@ import { COLOR } from '@/global/constants';
 import { FontText, Input, Space, TextButton } from '@/global/ui';
 import { useCallback, useState } from 'react';
 import { View } from 'react-native';
-import CloseIcon from 'react-native-vector-icons/Ionicons';
 import { useCheckNickname, useSighUp } from '../apis/hooks';
 import { debounce } from 'lodash';
-import CheckIcon from 'react-native-vector-icons/Feather';
 import { SignUpParams } from '../type';
 import { useAppDispatch } from '@/store';
 import { saveUserInfo } from '@/store/modules';
 import StepButton from '../ui/StepButton';
 import { setEncryptedStorage } from '@/global/utils';
+import IconCheck from '@assets/icons/check.svg';
+import IconXCircle from '@assets/icons/x-circle-standard.svg';
 
 interface NicknameStepProps {
   nicknameValue: string;
@@ -40,11 +40,16 @@ const NicknameStep = ({
   const { data, checkNicknameMutate } = useCheckNickname({
     onSettled: (data, error) => {
       if (!!data) setCheckMessage(data.message);
-      else if (!!error && error.message.includes('409')) setCheckMessage('중복된 닉네임입니다');
+      else if (!!error) {
+        if (error.response?.status === 409) setCheckMessage('중복된 닉네임입니다');
+        if (error.response?.status === 400)
+          setCheckMessage('영어(소문자,대문자), 한글, 숫자만 입력 가능합니다');
+      }
     },
   });
 
   const changeNicknameHandler = (value: string) => {
+    if (value.length > 7) return;
     changeNicknameValue(value);
     setCheckMessage('');
     checkNicknameDebounce(value);
@@ -80,20 +85,21 @@ const NicknameStep = ({
         <View
           style={{
             backgroundColor: COLOR.GRAY_F2,
-            height: 48,
             marginTop: 6,
             marginBottom: 8,
             justifyContent: 'center',
             paddingLeft: 16,
             borderRadius: 5,
+            paddingVertical: 13,
           }}
         >
           <Input
             value={nicknameValue}
             placeholder="닉네임 입력"
             placeholderTextColor={COLOR.GRAY_BE}
-            fontSize="14px"
+            fontSize="16px"
             onChangeText={(text) => changeNicknameHandler(text)}
+            style={{ height: 25 }}
           />
         </View>
 
@@ -101,9 +107,9 @@ const NicknameStep = ({
           {checkMessage && (
             <>
               {data?.state === 200 ? (
-                <CheckIcon name="check" size={14} color={COLOR.LIGHT_GREEN} />
+                <IconCheck width={14} height={14} color={COLOR.LIGHT_GREEN} />
               ) : (
-                <CloseIcon name="close-circle-outline" size={14} color={COLOR.LIGHT_RED} />
+                <IconXCircle width={14} height={14} />
               )}
               <Space width="3px" />
               <FontText
@@ -116,10 +122,10 @@ const NicknameStep = ({
           )}
           {!!nicknameValue && nicknameValue.length < 2 && (
             <>
-              <CloseIcon name="close-circle-outline" size={14} color={COLOR.LIGHT_RED} />
+              <IconXCircle width={14} height={14} />
               <Space width="3px" />
               <FontText
-                value="2글자 이상 입력해주세요"
+                value="2~7글자 입력해주세요"
                 textSize="12px"
                 textWeight="Medium"
                 textColor={COLOR.LIGHT_RED}
@@ -131,14 +137,14 @@ const NicknameStep = ({
 
       <StepButton
         value="확인"
-        backgroundCondition={checkMessage.includes('가능')}
+        backgroundCondition={data?.state === 200}
         onPress={() => {
           signUpMutate({
             ...signUpData,
             nickName: signUpData.nickname,
           });
         }}
-        disabled={!checkMessage.includes('가능')}
+        disabled={data?.state === 200}
       />
     </View>
   );

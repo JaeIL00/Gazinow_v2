@@ -1,8 +1,8 @@
 import { css } from '@emotion/native';
 import { useMemo, useState } from 'react';
-import { FlatList, SafeAreaView, StatusBar, TouchableOpacity, View } from 'react-native';
+import { FlatList, SafeAreaView, TouchableOpacity, View } from 'react-native';
 
-import { FontText, IconButton } from '@/global/ui';
+import { FontText } from '@/global/ui';
 import { useRoute } from '@react-navigation/native';
 import NewRouteSaveModal from './components/NewRouteSaveModal';
 import SearchPathDetailItem from './components/SearchPathDetailItem';
@@ -12,6 +12,7 @@ import { useHomeNavigation } from '@/navigation/HomeNavigation';
 import { COLOR } from '@/global/constants';
 import { useQueryClient } from 'react-query';
 import IconBookmark from '@assets/icons/bookmark.svg';
+import IconLeftArrowHead from '@assets/icons/left_arrow_head.svg';
 
 const SearchPathResultDetailScreen = () => {
   const queryClient = useQueryClient();
@@ -25,7 +26,7 @@ const SearchPathResultDetailScreen = () => {
     },
   });
 
-  const [isBookmarking, setIsBookmarking] = useState<boolean>(resultData.myPath);
+  const [isBookmarking, setIsBookmarking] = useState<boolean>(resultData.myPath ?? false);
   const [isSaveRouteModalOpen, setIsSaveRouteModalOpen] = useState<boolean>(false);
 
   const freshSubPathData: SubPath[] = useMemo(() => {
@@ -46,6 +47,11 @@ const SearchPathResultDetailScreen = () => {
       setIsSaveRouteModalOpen(true);
     }
   };
+
+  const isOccurIssue = resultData.subPaths.some(
+    (item) => item.lanes[0] && !!item.lanes[0].issueSummary.length,
+  );
+
   return (
     <SafeAreaView
       style={{
@@ -53,7 +59,6 @@ const SearchPathResultDetailScreen = () => {
         flex: 1,
       }}
     >
-      <StatusBar backgroundColor={COLOR.WHITE} barStyle="dark-content" />
       <View
         style={{
           paddingHorizontal: 16,
@@ -69,14 +74,9 @@ const SearchPathResultDetailScreen = () => {
             alignItems: 'center',
           }}
         >
-          <IconButton
-            isFontIcon={true}
-            iconType="Feather"
-            iconName="chevron-left"
-            iconColor="#3F3F46"
-            iconWidth="24"
-            onPress={() => navigation.goBack()}
-          />
+          <TouchableOpacity onPress={() => navigation.goBack()}>
+            <IconLeftArrowHead width={18} height={18} />
+          </TouchableOpacity>
           <TouchableOpacity onPress={bookmarkHandler}>
             <IconBookmark
               width={24}
@@ -122,12 +122,11 @@ const SearchPathResultDetailScreen = () => {
                     ? Math.floor(resultData.totalTime / 60) +
                       '시간 ' +
                       (resultData.totalTime % 60) +
-                      '분'
-                    : resultData.totalTime + '분 이상'
+                      `분 ${isOccurIssue ? '이상' : ''}`
+                    : resultData.totalTime + `분 ${isOccurIssue ? '이상' : ''}`
                 }
                 textSize="24px"
                 textWeight="Bold"
-                lineHeight="32px"
               />
               <View
                 style={css`

@@ -1,7 +1,8 @@
 const localStorageFunc = {
-  get: (key: string) => {
+  get: <T>(key: string): T | null => {
     const value = window.localStorage.getItem(key);
     if (value) return JSON.parse(value);
+    return null;
   },
   set: <T>(key: string, value: T) => {
     const jsonValue = JSON.stringify(value);

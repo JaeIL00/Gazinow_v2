@@ -9,7 +9,6 @@ export interface StationDataTypes {
 
 interface InitialStateTypes {
   stationType: null | '출발역' | '도착역';
-  searchText: string;
   selectedStation: {
     departure: StationDataTypes;
     arrival: StationDataTypes;
@@ -19,7 +18,6 @@ interface InitialStateTypes {
 
 const initialState: InitialStateTypes = {
   stationType: null,
-  searchText: '',
   selectedStation: {
     departure: {
       stationName: '',
@@ -40,11 +38,15 @@ const stationSearchSlice = createSlice({
     getStationType: (state, action: PayloadAction<InitialStateTypes['stationType']>) => {
       state.stationType = action.payload;
     },
-    getSearchText: (state, action: PayloadAction<InitialStateTypes['searchText']>) => {
-      state.searchText = action.payload;
-    },
     getSeletedStation: (state, action: PayloadAction<InitialStateTypes['selectedStation']>) => {
-      state.selectedStation = action.payload;
+      const isDuplicate =
+        action.payload.arrival.stationName === action.payload.departure.stationName;
+      if (isDuplicate) {
+        state.selectedStation = {
+          arrival: state.selectedStation.departure,
+          departure: state.selectedStation.arrival,
+        };
+      } else state.selectedStation = action.payload;
     },
     swapStation: (state, action: PayloadAction<InitialStateTypes['selectedStation']>) => {
       state.selectedStation = {
@@ -72,12 +74,6 @@ const stationSearchSlice = createSlice({
   },
 });
 
-export const {
-  swapStation,
-  getStationType,
-  getSearchText,
-  getSeletedStation,
-  initialize,
-  getIssueId,
-} = stationSearchSlice.actions;
+export const { swapStation, getStationType, getSeletedStation, initialize, getIssueId } =
+  stationSearchSlice.actions;
 export default stationSearchSlice.reducer;

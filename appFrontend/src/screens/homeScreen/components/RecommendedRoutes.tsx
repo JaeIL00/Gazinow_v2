@@ -50,7 +50,7 @@ const RecommendedRoutes = ({ pathData }: RecommendedRouteProps) => {
               textColor={COLOR.GRAY_999}
             />
             <Space width="4px" />
-            <IconRightArrowHead />
+            <IconRightArrowHead color={COLOR.GRAY_999} />
           </TextContainer>
         </Pressable>
       </TextContainer>

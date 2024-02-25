@@ -38,7 +38,6 @@ const ConfirmPwModal = () => {
       showToast('quit');
     },
     onError: (error: any) => {
-      console.log(error);
       Alert.alert('회원 탈퇴 오류', '탈퇴에 실패했습니다\n다시 시도해주세요');
     },
   });
@@ -60,7 +59,6 @@ const ConfirmPwModal = () => {
       setIsPwRight(true);
     },
     onError: (error: any) => {
-      console.log(error);
       setIsPwRight(false);
     },
   });

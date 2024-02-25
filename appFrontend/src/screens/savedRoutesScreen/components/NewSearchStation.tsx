@@ -1,9 +1,8 @@
 import styled from '@emotion/native';
-import Icon from 'react-native-vector-icons/Feather';
 import { FontText, Input } from '@/global/ui';
 import { COLOR } from '@/global/constants';
 import { useAppDispatch, useAppSelect } from '@/store';
-import { getSearchText, getSeletedStation } from '@/store/modules/stationSearchModule';
+import { getSeletedStation } from '@/store/modules/stationSearchModule';
 import { useAddRecentSearch, useGetSearchHistory, useSearchStationName } from '@/global/apis/hook';
 import { useCallback, useState } from 'react';
 import { debounce } from 'lodash';
@@ -14,6 +13,7 @@ import { subwayReturnLineName } from '@/global/utils/subwayLine';
 import IconLocationPin from '@assets/icons/location_pin.svg';
 import AddNewRouteHeader from './AddNewRouteHeader';
 import { useNewRouteNavigation } from '@/navigation/NewRouteNavigation';
+import IconClock from '@assets/icons/clock.svg';
 
 const NewSearchStation = () => {
   const newRouteNavigation = useNewRouteNavigation();
@@ -26,15 +26,7 @@ const NewSearchStation = () => {
 
   const changeSearchText = (text: string) => {
     setSearchTextValue(text);
-    sendSearchText(text);
   };
-
-  const sendSearchText = useCallback(
-    debounce((text: string) => {
-      dispatch(getSearchText(text));
-    }, 500),
-    [],
-  );
 
   const { searchResultData } = useSearchStationName(searchTextValue);
   const { addRecentMutate } = useAddRecentSearch({
@@ -103,7 +95,7 @@ const NewSearchStation = () => {
                   })
                 }
               >
-                <Icon name="clock" size={25} color={COLOR.GRAY_BE} />
+                <IconClock />
                 <StationInfoBox>
                   <FontText
                     value={stationName}

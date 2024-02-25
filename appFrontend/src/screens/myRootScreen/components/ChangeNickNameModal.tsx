@@ -1,10 +1,10 @@
 import styled from '@emotion/native';
 import { useState } from 'react';
-import { Modal, Pressable, SafeAreaView, View } from 'react-native';
+import { Pressable, SafeAreaView, View } from 'react-native';
 import { FontText, Input, Space, TextButton } from '@/global/ui';
 import { COLOR } from '@/global/constants';
 import { useChangeNicknameQuery } from '@/global/apis/hook';
-import XCircle from '@assets/icons/x-circle-standard.svg';
+import IconXCircle from '@assets/icons/x-circle-standard.svg';
 import IconXCircleFill from '@assets/icons/x_circle_fill.svg';
 import IconCrossX from '@assets/icons/cross_x.svg';
 import { useAppDispatch } from '@/store';
@@ -75,16 +75,18 @@ const ChangeNickNameModal = () => {
             placeholder={`새 닉네임을 입력하세요`}
             placeholderTextColor={COLOR.GRAY_999}
             inputMode="search"
-            onChangeText={setNewNickname}
+            onChangeText={(text) => {
+              if (text.length > 7) return;
+              setNewNickname(text);
+            }}
             autoFocus
-            maxLength={7}
           />
           <IconXCircleFill width={19.5} onPress={() => setNewNickname('')} />
         </InputContainer>
 
         {!isNicknameValid && (
           <MessageContainer>
-            <XCircle width={14} />
+            <IconXCircle width={14} />
             <Space width="5px" />
             <FontText
               value={errorMessage}
