@@ -28,11 +28,11 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="50.724637681159422" y="374.33035714285711"/>
+            <point key="canvasLocation" x="50.232558139534881" y="374.03433476394855"/>
         </scene>
     </scenes>
     <resources>
-        <image name="splash" width="360" height="800"/>
+        <image name="splash" width="480" height="1066.6666259765625"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
