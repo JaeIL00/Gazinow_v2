@@ -13,6 +13,7 @@ const SavedRouteIssues = () => {
   const navigation = useRootNavigation();
   const { data: savedRoutes } = useGetSavedRoutesQuery();
   const [hasIssueRoutes, setHasIssueRoutes] = useState<RenderSavedRoutesType[]>([]);
+  const [activeButton, setActiveButton] = useState<'이슈' | '저장경로'>('저장경로');
 
   useEffect(() => {
     if (savedRoutes) {
@@ -23,9 +24,10 @@ const SavedRouteIssues = () => {
     }
   }, [savedRoutes]);
 
-  const [activeButton, setActiveButton] = useState<'저장경로' | '이슈'>(
-    hasIssueRoutes.length > 0 ? '저장경로' : '이슈',
-  );
+  useEffect(() => {
+    hasIssueRoutes.length > 0 ? setActiveButton('이슈') : setActiveButton('저장경로');
+  }, [hasIssueRoutes]);
+
   const categoryName: ['이슈', '저장경로'] | ['저장경로', '이슈'] =
     hasIssueRoutes.length > 0 ? ['이슈', '저장경로'] : ['저장경로', '이슈'];
 
