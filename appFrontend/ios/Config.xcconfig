@@ -1,0 +1,9 @@
+//
+//  Config.xcconfig
+//  gazinow
+//
+//  Created by 신재일 on 2/16/24.
+//
+#include? "tmp.xcconfig"
+// Configuration settings file format documentation can be found at:
+// https://help.apple.com/xcode/#/dev745c5c974

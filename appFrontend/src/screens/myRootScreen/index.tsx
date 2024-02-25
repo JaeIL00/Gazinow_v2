@@ -1,0 +1,144 @@
+import styled from '@emotion/native';
+import { Pressable } from 'react-native';
+import { FontText, Space, TextButton } from '@/global/ui';
+import { COLOR } from '@/global/constants';
+// import { RESULTS, requestNotifications } from 'react-native-permissions';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/store/configureStore';
+import packageJson from '../../../package.json';
+import IconPencil from '@assets/icons/pencil.svg';
+import IconRightArrowHead from '@/assets/icons/right_arrow_head.svg';
+import { useRootNavigation } from '@/navigation/RootNavigation';
+
+interface RenderMenuProps {
+  text: string;
+  onPress?: () => void;
+  versionInfo?: string;
+}
+// const ALLOWED_PERMISSIONS = {
+//   [RESULTS.GRANTED]: true,
+//   [RESULTS.LIMITED]: true,
+//   [RESULTS.UNAVAILABLE]: true,
+//   [RESULTS.BLOCKED]: false,
+//   [RESULTS.DENIED]: false,
+// };
+
+const requestNotificationPermission = async () => {
+  // const { status } = await requestNotifications(['alert']);
+  // return ALLOWED_PERMISSIONS[status];
+};
+
+const MyRootScreen = () => {
+  const rootNavigation = useRootNavigation();
+  const { nickname, email } = useSelector((state: RootState) => state.auth);
+  const versionInfo = packageJson.version;
+
+  const confirmUserNotificationOn = async () => {
+    // const result = await requestNotificationPermission();
+    // if (!result) {
+    //   setIsNotiOnModalOpen(true);
+    // } else {
+    //   setIsNotiSettingsModalOpen(true);
+    // }
+  };
+
+  const renderMenu = ({ text, onPress, versionInfo }: RenderMenuProps) => (
+    <MenuContainer onPress={onPress}>
+      <TextButton
+        value={text}
+        textSize="16px"
+        textWeight="Regular"
+        lineHeight="21px"
+        onPress={onPress}
+      />
+      {versionInfo ? (
+        <FontText
+          value={`v ${versionInfo} 최신버전입니다`}
+          textSize="12px"
+          textWeight="Regular"
+          lineHeight="17px"
+        />
+      ) : (
+        <IconRightArrowHead width={14} color={COLOR.GRAY_999} />
+      )}
+    </MenuContainer>
+  );
+
+  return (
+    <Container>
+      <ProfileContainer>
+        <NickNameContainer>
+          <FontText value={nickname} textSize="16px" textWeight="SemiBold" />
+          <Space width="5px" />
+          <Pressable
+            hitSlop={20}
+            onPress={() =>
+              rootNavigation.navigate('MyPageNavigation', { screen: 'ChangeNickNameModal' })
+            }
+          >
+            <IconPencil width={15} />
+          </Pressable>
+        </NickNameContainer>
+        <FontText
+          value={email}
+          textSize="12px"
+          textWeight="Regular"
+          lineHeight="15px"
+          textColor={COLOR.GRAY_999}
+        />
+      </ProfileContainer>
+      <BtnContainer>
+        {renderMenu({
+          text: '계정 관리',
+          onPress: () =>
+            rootNavigation.navigate('MyPageNavigation', { screen: 'ManageAccountModal' }),
+        })}
+        {/* TODO: 페이지 들어가서 퍼미션 컨펌창 띄우는 로직으로 수정하기 */}
+        {/* {renderMenu({ text: '알림 설정', onPress: () => confirmUserNotificationOn() })} */}
+        {renderMenu({
+          text: '약관 및 정책',
+          onPress: () =>
+            rootNavigation.navigate('MyPageNavigation', {
+              screen: 'SubscribeTermsModal',
+            }),
+        })}
+        {renderMenu({
+          text: '개인정보처리방침',
+          onPress: () =>
+            rootNavigation.navigate('MyPageNavigation', {
+              screen: 'PersonalTermsModal',
+            }),
+        })}
+        {renderMenu({ text: '버전', versionInfo })}
+      </BtnContainer>
+    </Container>
+  );
+};
+
+export default MyRootScreen;
+
+const Container = styled.SafeAreaView`
+  flex: 1;
+  background-color: ${COLOR.GRAY_F9};
+`;
+const NickNameContainer = styled.Pressable`
+  flex-direction: row;
+  align-items: center;
+`;
+const ProfileContainer = styled.Pressable`
+  padding: 45px 16px;
+  background-color: ${COLOR.GRAY_F9};
+`;
+const MenuContainer = styled.Pressable`
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 0 16px;
+  height: 53px;
+  align-items: center;
+  border-bottom-width: 1px;
+  border-bottom-color: ${COLOR.GRAY_EB};
+`;
+const BtnContainer = styled.View`
+  background-color: white;
+  flex: 1;
+`;
