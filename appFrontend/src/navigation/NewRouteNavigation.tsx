@@ -21,7 +21,7 @@ const NewRouteNavigation = () => {
       <Stack.Screen name="Swap" component={SwapScreen} />
       <Stack.Screen name="Search" component={SearchScreen} />
       <Stack.Screen name="Result" component={ResultScreen} />
-      {/* <Stack.Screen name="Detail" component={DetailScreen} /> */}
+      <Stack.Screen name="Detail" component={DetailScreen} />
       <Stack.Screen name="Name" component={NameScreen} />
     </Stack.Navigator>
   );
