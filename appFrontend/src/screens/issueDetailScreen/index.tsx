@@ -34,6 +34,7 @@ const IssueDetailScreen = () => {
               webViewRef.current?.postMessage(accessToken);
             }, 500);
           }}
+          renderLoading={() => <View style={{ flex: 1, backgroundColor: COLOR.GRAY_F9 }} />}
         />
       )}
     </SafeAreaView>
