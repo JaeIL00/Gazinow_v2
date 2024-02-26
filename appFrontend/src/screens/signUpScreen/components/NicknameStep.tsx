@@ -37,7 +37,7 @@ const NicknameStep = ({
       setStep();
     },
   });
-  const { data, checkNicknameMutate } = useCheckNickname({
+  const { data, isLoading, checkNicknameMutate } = useCheckNickname({
     onSettled: (data, error) => {
       if (!!data) setCheckMessage(data.message);
       else if (!!error) {
@@ -137,14 +137,16 @@ const NicknameStep = ({
 
       <StepButton
         value="확인"
-        backgroundCondition={data?.state === 200}
+        backgroundCondition={
+          data?.state === 200 && !!checkMessage && !isLoading && nicknameValue.length >= 2
+        }
         onPress={() => {
           signUpMutate({
             ...signUpData,
             nickName: signUpData.nickname,
           });
         }}
-        disabled={data?.state === 200}
+        disabled={data?.state !== 200 || (!checkMessage && isLoading && nicknameValue.length < 2)}
       />
     </View>
   );

@@ -38,11 +38,15 @@ export const useCheckNickname = ({
 }: {
   onSettled: (data?: { message: string; state: 200 | 409 }, error?: AxiosError | null) => void;
 }) => {
-  const { data, mutate: checkNicknameMutate } = useMutation(checkNicknameFetch, {
+  const {
+    data,
+    isLoading,
+    mutate: checkNicknameMutate,
+  } = useMutation(checkNicknameFetch, {
     onSettled,
   });
 
-  return { data, checkNicknameMutate };
+  return { data, isLoading, checkNicknameMutate };
 };
 
 /**
