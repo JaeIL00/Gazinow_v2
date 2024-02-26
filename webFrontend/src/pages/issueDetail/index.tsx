@@ -47,7 +47,7 @@ const IssueDetailPage = () => {
   const onMessageEvent = (e: MessageEvent) => {
     e.stopPropagation();
     const accessToken = String(e.data);
-    if (!storageAccessToken && accessToken) {
+    if (!!accessToken) {
       localStorageFunc.set(STORAGE_ACCESS_KEY, accessToken);
       setToken(accessToken);
     }
