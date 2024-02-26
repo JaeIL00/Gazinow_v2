@@ -38,3 +38,14 @@ export interface MemberReissue {
   accessToken: string;
   refreshToken: string;
 }
+
+/**
+ * 로그인 응답
+ */
+export interface Login {
+  memberId: number;
+  nickName: string;
+  email: string;
+  accessToken: string;
+  refreshToken: string;
+}

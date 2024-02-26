@@ -158,10 +158,14 @@ const SearchPathResultDetailScreen = () => {
             background-color: ${COLOR.GRAY_EB};
           `}
         />
+
         <FlatList
           data={freshSubPathData}
-          keyExtractor={(item) => item.distance + item.sectionTime + ''}
-          ListFooterComponent={<View style={{ height: 100 }} />}
+          // contentContainerStyle={{ height: '100%', overflow: 'scroll' }}
+          keyExtractor={(item) => {
+            if (typeof item === 'string') return 'dance';
+            return item.distance + item.sectionTime + '';
+          }}
           renderItem={({ item, index }) => {
             const stationCount =
               index === freshSubPathData.length - 1 ? item.stationCount + 1 : item.stationCount;
@@ -173,6 +177,17 @@ const SearchPathResultDetailScreen = () => {
               />
             );
           }}
+          ListFooterComponent={
+            <View style={{ paddingTop: '60%', alignItems: 'center', paddingBottom: 24 }}>
+              <FontText
+                value="powered by www.ODsay.com"
+                textSize="10px"
+                textWeight="Regular"
+                textColor={COLOR.GRAY_DDD}
+              />
+            </View>
+          }
+          ListFooterComponentStyle={{ backgroundColor: 'tomao', flex: 1 }}
         />
       </View>
     </SafeAreaView>
