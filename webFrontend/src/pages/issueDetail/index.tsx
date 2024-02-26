@@ -7,7 +7,7 @@ import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import "dayjs/locale/ko";
 import color from "@global/constants/color";
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { debounce } from "lodash";
 import cn from "classnames";
 import localStorageFunc from "@global/utils/localStorage";
@@ -24,9 +24,10 @@ const IssueDetailPage = () => {
   // const [isOpenModal, setIsOpenModal] = useState<boolean>(true);
   // const closeModal = () => setIsOpenModal(false);
 
+  const [token, setToken] = useState<string>("");
   const { issueData, isLoadingIssue, refetchIssue } = useGetIssue({
     id,
-    enabled: !!storageAccessToken && !!id,
+    enabled: (!!storageAccessToken && !!id) || (!!token && !!id),
   });
   const { doLikeMutate } = usePostLike({ onSuccess: refetchIssue });
   const { deleteLikeMutate } = useDeletePostLike({ onSuccess: refetchIssue });
@@ -42,6 +43,19 @@ const IssueDetailPage = () => {
   );
 
   const createIssueDate = dayjs(issueData?.startDate).fromNow();
+
+  const onMessageEvent = (e: MessageEvent) => {
+    e.stopPropagation();
+    const accessToken = String(e.data);
+    if (!storageAccessToken && accessToken) {
+      localStorageFunc.set(STORAGE_ACCESS_KEY, accessToken);
+      setToken(accessToken);
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener("message", onMessageEvent);
+  });
 
   // TODO: 개발 시 주석 해제
   // if (!issueData && !isLoadingIssue) {
