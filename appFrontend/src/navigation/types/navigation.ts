@@ -1,7 +1,6 @@
 import { Path, SubPath } from '@/global/apis/entity';
 
 export type RootStackParamList = {
-  SplashScreen: undefined;
   AuthStack: { screen: 'Landing' };
   IssueStack: {
     screen: 'SearchStation' | 'IssueDetail';

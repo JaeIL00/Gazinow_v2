@@ -130,8 +130,10 @@ export const useGetSearchRoutesQuery = () => {
 /**
  * 저장한 지하철 경로 조회 훅
  */
-export const useGetSavedRoutesQuery = () => {
-  const { data } = useQuery(['getRoads'], getSavedRoutesFetch);
+export const useGetSavedRoutesQuery = ({ enabled = true }: { enabled?: boolean }) => {
+  const { data } = useQuery(['getRoads'], getSavedRoutesFetch, {
+    enabled,
+  });
   return { data };
 };
 

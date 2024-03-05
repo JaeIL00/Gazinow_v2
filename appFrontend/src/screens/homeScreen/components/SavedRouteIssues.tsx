@@ -8,10 +8,15 @@ import styled from '@emotion/native';
 import { useRootNavigation } from '@/navigation/RootNavigation';
 import { RenderSavedRoutesType } from '@/global/apis/entity';
 import { useGetSavedRoutesQuery } from '@/global/apis/hook';
+import { NonLoggedIn } from '.';
 
-const SavedRouteIssues = () => {
+interface SavedRouteIssuesProps {
+  authState: 'success auth' | 'fail auth' | 'yet';
+}
+
+const SavedRouteIssues = ({ authState }: SavedRouteIssuesProps) => {
   const navigation = useRootNavigation();
-  const { data: savedRoutes } = useGetSavedRoutesQuery();
+  const { data: savedRoutes } = useGetSavedRoutesQuery({ enabled: authState === 'success auth' });
   const [hasIssueRoutes, setHasIssueRoutes] = useState<RenderSavedRoutesType[]>([]);
   const [activeButton, setActiveButton] = useState<'이슈' | '저장경로'>('저장경로');
 
@@ -44,6 +49,7 @@ const SavedRouteIssues = () => {
           borderColor: activeButton === text ? 'transparent' : COLOR.GRAY_EB,
         },
       ]}
+      disabled={authState !== 'success auth'}
     >
       <FontText
         value={text}
@@ -62,6 +68,7 @@ const SavedRouteIssues = () => {
         <Pressable
           hitSlop={20}
           onPress={() => navigation.navigate('NewRouteNavigation', { screen: 'SavedRoutes' })}
+          disabled={authState !== 'success auth'}
         >
           <TextButton
             value="저장경로 편집"
@@ -70,6 +77,7 @@ const SavedRouteIssues = () => {
             textWeight="Regular"
             onPress={() => navigation.navigate('NewRouteNavigation', { screen: 'SavedRoutes' })}
             lineHeight="15px"
+            disabled={authState !== 'success auth'}
           />
         </Pressable>
       </CategoryContainer>
@@ -78,12 +86,14 @@ const SavedRouteIssues = () => {
 
       {/* 최근검색: <RecentSearchBox />, TODO: MVP에서 제외*/}
       <ContentsBox>
-        {
+        {authState === 'success auth' ? (
           {
             저장경로: <SavedRouteBox />,
             이슈: <IssueBox />,
           }[activeButton]
-        }
+        ) : (
+          <NonLoggedIn />
+        )}
       </ContentsBox>
     </Container>
   );
@@ -123,4 +133,5 @@ const CategoryContainer = styled.View`
 `;
 const ContentsBox = styled.View`
   padding: 0px 16px 4px;
+  flex: 1;
 `;
