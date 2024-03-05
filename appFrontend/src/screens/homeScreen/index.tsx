@@ -7,18 +7,18 @@ import SplashScreen from 'react-native-splash-screen';
 import { useTryAuthorization } from './hooks';
 
 const HomeScreen = () => {
-  const { authState, tryAuthorization } = useTryAuthorization();
+  const { isVerifiedUser, tryAuthorization } = useTryAuthorization();
 
   useEffect(() => {
-    if (authState === 'yet') {
+    if (isVerifiedUser !== 'yet') {
       setTimeout(() => {
         SplashScreen.hide();
       }, 500);
     }
-  }, [authState]);
+  }, [isVerifiedUser]);
 
   useEffect(() => {
-    // tryAuthorization();
+    if (isVerifiedUser === 'yet') tryAuthorization();
   }, []);
 
   return (
@@ -26,11 +26,11 @@ const HomeScreen = () => {
       <ScrollView
         contentContainerStyle={{ paddingHorizontal: 16 }}
         showsVerticalScrollIndicator={false}
-        scrollEnabled={authState === 'success auth'}
+        scrollEnabled={isVerifiedUser === 'success auth'}
       >
         <Space height="16px" />
         <SwapStation />
-        <SavedRouteIssues authState={authState} />
+        <SavedRouteIssues isVerifiedUser={isVerifiedUser} />
       </ScrollView>
     </SafeAreaView>
   );

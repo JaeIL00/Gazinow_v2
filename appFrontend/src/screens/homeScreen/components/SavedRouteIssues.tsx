@@ -11,12 +11,14 @@ import { useGetSavedRoutesQuery } from '@/global/apis/hook';
 import { NonLoggedIn } from '.';
 
 interface SavedRouteIssuesProps {
-  authState: 'success auth' | 'fail auth' | 'yet';
+  isVerifiedUser: 'success auth' | 'fail auth' | 'yet';
 }
 
-const SavedRouteIssues = ({ authState }: SavedRouteIssuesProps) => {
+const SavedRouteIssues = ({ isVerifiedUser }: SavedRouteIssuesProps) => {
   const navigation = useRootNavigation();
-  const { data: savedRoutes } = useGetSavedRoutesQuery({ enabled: authState === 'success auth' });
+  const { data: savedRoutes } = useGetSavedRoutesQuery({
+    enabled: isVerifiedUser === 'success auth',
+  });
   const [hasIssueRoutes, setHasIssueRoutes] = useState<RenderSavedRoutesType[]>([]);
   const [activeButton, setActiveButton] = useState<'이슈' | '저장경로'>('저장경로');
 
@@ -49,7 +51,7 @@ const SavedRouteIssues = ({ authState }: SavedRouteIssuesProps) => {
           borderColor: activeButton === text ? 'transparent' : COLOR.GRAY_EB,
         },
       ]}
-      disabled={authState !== 'success auth'}
+      disabled={isVerifiedUser !== 'success auth'}
     >
       <FontText
         value={text}
@@ -68,7 +70,7 @@ const SavedRouteIssues = ({ authState }: SavedRouteIssuesProps) => {
         <Pressable
           hitSlop={20}
           onPress={() => navigation.navigate('NewRouteNavigation', { screen: 'SavedRoutes' })}
-          disabled={authState !== 'success auth'}
+          disabled={isVerifiedUser !== 'success auth'}
         >
           <TextButton
             value="저장경로 편집"
@@ -77,7 +79,7 @@ const SavedRouteIssues = ({ authState }: SavedRouteIssuesProps) => {
             textWeight="Regular"
             onPress={() => navigation.navigate('NewRouteNavigation', { screen: 'SavedRoutes' })}
             lineHeight="15px"
-            disabled={authState !== 'success auth'}
+            disabled={isVerifiedUser !== 'success auth'}
           />
         </Pressable>
       </CategoryContainer>
@@ -86,7 +88,7 @@ const SavedRouteIssues = ({ authState }: SavedRouteIssuesProps) => {
 
       {/* 최근검색: <RecentSearchBox />, TODO: MVP에서 제외*/}
       <ContentsBox>
-        {authState === 'success auth' ? (
+        {isVerifiedUser === 'success auth' ? (
           {
             저장경로: <SavedRouteBox />,
             이슈: <IssueBox />,
