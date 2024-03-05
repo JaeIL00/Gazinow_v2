@@ -2,9 +2,10 @@ import { COLOR } from '@/global/constants';
 import { FontText, TextButton } from '@/global/ui';
 import { useAuthNavigation } from '@/navigation/AuthNavigation';
 import { useEffect } from 'react';
-import { Animated, Platform, StatusBar, View } from 'react-native';
+import { Animated, Platform, StatusBar, TouchableOpacity, View } from 'react-native';
 import SplashScreen from 'react-native-splash-screen';
 import { getStatusBarHeight } from 'react-native-status-bar-height';
+import IconLeftArrow from '@assets/icons/left_arrow_round.svg';
 
 const LandingScreen = () => {
   const navigation = useAuthNavigation();
@@ -22,6 +23,36 @@ const LandingScreen = () => {
 
   return (
     <View style={{ flex: 1, position: 'relative' }}>
+      <TouchableOpacity
+        activeOpacity={1}
+        style={{
+          width: 32,
+          height: 32,
+          position: 'absolute',
+          top: 13,
+          left: 13,
+          zIndex: 999,
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+        onPress={() => navigation.goBack()}
+      >
+        <View
+          style={{
+            width: '100%',
+            height: '100%',
+            backgroundColor: COLOR.WHITE,
+            borderRadius: 36,
+            opacity: 0.6,
+          }}
+        />
+        <IconLeftArrow
+          color={COLOR.BASIC_BLACK}
+          width={22}
+          height={22}
+          style={{ position: 'absolute' }}
+        />
+      </TouchableOpacity>
       <View
         style={{
           width: '100%',
