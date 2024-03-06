@@ -1,5 +1,5 @@
 import styled from '@emotion/native';
-import { Pressable } from 'react-native';
+import { Pressable, View } from 'react-native';
 import { FontText, Space, TextButton } from '@/global/ui';
 import { COLOR } from '@/global/constants';
 // import { RESULTS, requestNotifications } from 'react-native-permissions';
@@ -30,7 +30,7 @@ const requestNotificationPermission = async () => {
 
 const MyRootScreen = () => {
   const rootNavigation = useRootNavigation();
-  const { nickname, email } = useSelector((state: RootState) => state.auth);
+  const { nickname, email, isVerifiedUser } = useSelector((state: RootState) => state.auth);
   const versionInfo = packageJson.version;
 
   const confirmUserNotificationOn = async () => {
@@ -67,32 +67,55 @@ const MyRootScreen = () => {
   return (
     <Container>
       <ProfileContainer>
-        <NickNameContainer>
-          <FontText value={nickname} textSize="16px" textWeight="SemiBold" />
-          <Space width="5px" />
+        {isVerifiedUser !== 'success auth' ? (
           <Pressable
-            hitSlop={20}
-            onPress={() =>
-              rootNavigation.navigate('MyPageNavigation', { screen: 'ChangeNickNameModal' })
-            }
+            style={{ flexDirection: 'row', alignItems: 'center' }}
+            onPress={() => rootNavigation.navigate('AuthStack', { screen: 'Landing' })}
           >
-            <IconPencil width={15} />
+            <FontText
+              value="로그인하세요"
+              textSize="18px"
+              textWeight="SemiBold"
+              style={{ marginRight: 6 }}
+            />
+            <IconRightArrowHead
+              width={11}
+              height={11}
+              strokeWidth={1.2}
+              color={COLOR.BASIC_BLACK}
+            />
           </Pressable>
-        </NickNameContainer>
-        <FontText
-          value={email}
-          textSize="12px"
-          textWeight="Regular"
-          lineHeight="15px"
-          textColor={COLOR.GRAY_999}
-        />
+        ) : (
+          <>
+            <NickNameContainer>
+              <FontText value={nickname} textSize="16px" textWeight="SemiBold" />
+              <Space width="5px" />
+              <Pressable
+                hitSlop={20}
+                onPress={() =>
+                  rootNavigation.navigate('MyPageNavigation', { screen: 'ChangeNickNameModal' })
+                }
+              >
+                <IconPencil width={15} />
+              </Pressable>
+            </NickNameContainer>
+            <FontText
+              value={email}
+              textSize="12px"
+              textWeight="Regular"
+              lineHeight="15px"
+              textColor={COLOR.GRAY_999}
+            />
+          </>
+        )}
       </ProfileContainer>
       <BtnContainer>
-        {renderMenu({
-          text: '계정 관리',
-          onPress: () =>
-            rootNavigation.navigate('MyPageNavigation', { screen: 'ManageAccountModal' }),
-        })}
+        {isVerifiedUser === 'success auth' &&
+          renderMenu({
+            text: '계정 관리',
+            onPress: () =>
+              rootNavigation.navigate('MyPageNavigation', { screen: 'ManageAccountModal' }),
+          })}
         {/* TODO: 페이지 들어가서 퍼미션 컨펌창 띄우는 로직으로 수정하기 */}
         {/* {renderMenu({ text: '알림 설정', onPress: () => confirmUserNotificationOn() })} */}
         {renderMenu({
