@@ -6,7 +6,7 @@ import { COLOR } from '@/global/constants';
 import dayjs from 'dayjs';
 import 'dayjs/locale/ko';
 import { SubwaySimplePath } from '@/global/components';
-import { useGetSearchPaths } from '@/global/apis/hook';
+import { useGetSearchPaths } from '@/global/apis/hooks';
 import { useAppDispatch, useAppSelect } from '@/store';
 import { StationDataTypes, getIssueId } from '@/store/modules';
 import React, { useState } from 'react';

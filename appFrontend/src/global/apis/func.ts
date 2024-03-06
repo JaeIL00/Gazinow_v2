@@ -1,5 +1,5 @@
 import axios, { AxiosError } from 'axios';
-import { axiosInstance } from '../axiosInstance';
+import { axiosInstance } from './axiosInstance';
 import {
   AllIssues,
   RenderSavedRoutesType,
@@ -10,7 +10,7 @@ import {
   RawSubwayLineName,
   SubwayStrEnd,
   IssueContent,
-} from '../entity';
+} from './entity';
 import { SignInFetchResponse } from '@/screens/signInScreen/apis/entity';
 import { API_BASE_URL } from '@env';
 import * as Sentry from '@sentry/react-native';

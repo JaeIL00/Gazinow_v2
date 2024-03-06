@@ -7,7 +7,7 @@ import IssueBox from './IssueBox';
 import styled from '@emotion/native';
 import { useRootNavigation } from '@/navigation/RootNavigation';
 import { RenderSavedRoutesType } from '@/global/apis/entity';
-import { useGetSavedRoutesQuery } from '@/global/apis/hook';
+import { useGetSavedRoutesQuery } from '@/global/apis/hooks';
 import { NonLoggedIn } from '.';
 
 interface SavedRouteIssuesProps {

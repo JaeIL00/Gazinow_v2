@@ -2,7 +2,7 @@ import React from 'react';
 import styled from '@emotion/native';
 import { FontText, Space } from '@/global/ui';
 import { COLOR } from '@/global/constants';
-import { useGetSavedRoutesQuery } from '@/global/apis/hook';
+import { useGetSavedRoutesQuery } from '@/global/apis/hooks';
 import { FreshSubwayLineName, NowScreenCapsules, SubPath } from '@/global/apis/entity';
 import { ScrollView } from 'react-native';
 import { allLines, pathSubwayLineNameInLine } from '@/global/utils/subwayLine';

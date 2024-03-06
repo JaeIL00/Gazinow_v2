@@ -6,7 +6,7 @@ import { FontText } from '@/global/ui';
 import { useRoute } from '@react-navigation/native';
 import NewRouteSaveModal from './components/NewRouteSaveModal';
 import SearchPathDetailItem from './components/SearchPathDetailItem';
-import { useDeleteSavedSubwayRoute } from '@/global/apis/hook';
+import { useDeleteSavedSubwayRoute } from '@/global/apis/hooks';
 import { Path, SubPath } from '@/global/apis/entity';
 import { useHomeNavigation } from '@/navigation/HomeNavigation';
 import { COLOR } from '@/global/constants';

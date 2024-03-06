@@ -8,7 +8,7 @@ import {
   getSearchRoutesFetch,
   saveMyRoutesFetch,
   searchStationName,
-} from '../func';
+} from './func';
 import { useMutation, useQuery } from 'react-query';
 import {
   searchAddHistoryFetch,
@@ -19,7 +19,7 @@ import {
   getAllIssuesFetch,
   getIssuesByLaneFetch,
 } from '@/global/apis/func';
-import { RawSubwayLineName, SubwayStrEnd } from '../entity';
+import { RawSubwayLineName, SubwayStrEnd } from './entity';
 import { AxiosError } from 'axios';
 import { subwayFreshLineName } from '@/global/utils';
 import { useAppSelect } from '@/store';

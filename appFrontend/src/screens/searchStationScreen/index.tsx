@@ -1,4 +1,4 @@
-import { useAddRecentSearch, useGetSearchHistory, useSearchStationName } from '@/global/apis/hook';
+import { useAddRecentSearch, useGetSearchHistory, useSearchStationName } from '@/global/apis/hooks';
 import { COLOR } from '@/global/constants';
 import { FontText, Space } from '@/global/ui';
 import { subwayReturnLineName } from '@/global/utils/subwayLine';

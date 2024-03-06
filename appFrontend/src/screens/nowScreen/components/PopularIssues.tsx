@@ -1,4 +1,4 @@
-import { useGetPopularIssuesQuery } from '@/global/apis/hook';
+import { useGetPopularIssuesQuery } from '@/global/apis/hooks';
 import { FontText, Space } from '@/global/ui';
 import { FlatList } from 'react-native';
 import { COLOR } from '@/global/constants';
