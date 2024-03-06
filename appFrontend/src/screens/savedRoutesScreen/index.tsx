@@ -18,7 +18,7 @@ const SavedRoutesScreen = () => {
       <Container>
         <Header>
           <Pressable hitSlop={20} onPress={() => navigation.goBack()}>
-            <IconLeftArrowHead />
+            <IconLeftArrowHead color="#3F3F46" />
           </Pressable>
           <Space width="12px" />
           <FontText value="저장경로 편집" textSize="18px" textWeight="Medium" lineHeight="23px" />

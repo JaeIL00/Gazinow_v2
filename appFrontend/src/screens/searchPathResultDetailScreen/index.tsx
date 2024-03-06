@@ -75,7 +75,7 @@ const SearchPathResultDetailScreen = () => {
           }}
         >
           <TouchableOpacity onPress={() => navigation.goBack()}>
-            <IconLeftArrowHead width={18} height={18} />
+            <IconLeftArrowHead color="#3F3F46" width={18} height={18} />
           </TouchableOpacity>
           <TouchableOpacity onPress={bookmarkHandler}>
             <IconBookmark

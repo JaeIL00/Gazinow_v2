@@ -65,7 +65,7 @@ const SearchPathResultScreen = () => {
         >
           <View style={{ marginTop: 4, marginRight: 16 }}>
             <TouchableOpacity onPress={() => homeNavigation.goBack()}>
-              <IconLeftArrowHead />
+              <IconLeftArrowHead color="#3F3F46" />
             </TouchableOpacity>
           </View>
           <SwapStation selectedStation={selectedStationRedux} />

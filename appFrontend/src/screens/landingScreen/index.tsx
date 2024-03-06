@@ -5,7 +5,7 @@ import { useEffect } from 'react';
 import { Animated, Platform, StatusBar, TouchableOpacity, View } from 'react-native';
 import SplashScreen from 'react-native-splash-screen';
 import { getStatusBarHeight } from 'react-native-status-bar-height';
-import IconLeftArrow from '@assets/icons/left_arrow_round.svg';
+import IconLeftArrow from '@assets/icons/left_arrow_head.svg';
 
 const LandingScreen = () => {
   const navigation = useAuthNavigation();
@@ -37,21 +37,7 @@ const LandingScreen = () => {
         }}
         onPress={() => navigation.goBack()}
       >
-        <View
-          style={{
-            width: '100%',
-            height: '100%',
-            backgroundColor: COLOR.WHITE,
-            borderRadius: 36,
-            opacity: 0.6,
-          }}
-        />
-        <IconLeftArrow
-          color={COLOR.BASIC_BLACK}
-          width={22}
-          height={22}
-          style={{ position: 'absolute' }}
-        />
+        <IconLeftArrow color={COLOR.WHITE} />
       </TouchableOpacity>
       <View
         style={{

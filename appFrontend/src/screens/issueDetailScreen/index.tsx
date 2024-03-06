@@ -22,7 +22,7 @@ const IssueDetailScreen = () => {
     <SafeAreaView style={{ flex: 1 }}>
       <View style={{ padding: 16, backgroundColor: COLOR.GRAY_F9 }}>
         <TouchableOpacity activeOpacity={1} hitSlop={20} onPress={() => navigation.goBack()}>
-          <IconLeftArrowHead />
+          <IconLeftArrowHead color="#3F3F46" />
         </TouchableOpacity>
       </View>
       {!!accessToken && (
