@@ -16,9 +16,7 @@ interface SavedRouteIssuesProps {
 
 const SavedRouteIssues = ({ isVerifiedUser }: SavedRouteIssuesProps) => {
   const navigation = useRootNavigation();
-  const { data: savedRoutes } = useGetSavedRoutesQuery({
-    enabled: isVerifiedUser === 'success auth',
-  });
+  const { data: savedRoutes } = useGetSavedRoutesQuery();
   const [hasIssueRoutes, setHasIssueRoutes] = useState<RenderSavedRoutesType[]>([]);
   const [activeButton, setActiveButton] = useState<'이슈' | '저장경로'>('저장경로');
 
