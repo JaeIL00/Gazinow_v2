@@ -14,6 +14,7 @@ import { useHomeNavigation } from '@/navigation/HomeNavigation';
 import IconClock from '@assets/icons/clock.svg';
 import IconLeftArrow from '@assets/icons/left_arrow_sharp.svg';
 import IconXCircleFill from '@assets/icons/x_circle_fill.svg';
+import { RawSubwayLineName } from '@/global/apis/entity';
 
 interface SearchStationModalProps {
   searchType: '출발역' | '도착역';
@@ -25,6 +26,7 @@ const SearchStationScreen = () => {
   const navigation = useHomeNavigation();
   const dispatch = useAppDispatch();
   const { selectedStation, stationType } = useAppSelect((state) => state.subwaySearch);
+  const isVerifiedUser = useAppSelect((state) => state.auth.isVerifiedUser);
 
   const { historyData } = useGetSearchHistory();
 
@@ -38,36 +40,42 @@ const SearchStationScreen = () => {
     setSearchTextValue('');
   };
 
+  const saveSelectedStation = (stationLine: RawSubwayLineName, stationName: string) => {
+    const key = stationType === '출발역' ? 'departure' : 'arrival';
+    dispatch(
+      getSeletedStation({
+        ...selectedStation,
+        [key]: {
+          stationLine,
+          stationName,
+        },
+      }),
+    );
+    const isDuplicate =
+      selectedStation.arrival.stationName === stationName ||
+      selectedStation.departure.stationName === stationName;
+    if (isDuplicate) {
+      navigation.goBack();
+    } else if (
+      (key === 'departure' && selectedStation.arrival.stationName) ||
+      (key === 'arrival' && selectedStation.departure.stationName)
+    ) {
+      navigation.navigate('SubwayPathResult');
+    } else navigation.goBack();
+  };
+
   const { searchResultData } = useSearchStationName(searchTextValue);
   const { addRecentMutate } = useAddRecentSearch({
     onSuccess: ({ stationLine, stationName }) => {
-      const key = stationType === '출발역' ? 'departure' : 'arrival';
-      dispatch(
-        getSeletedStation({
-          ...selectedStation,
-          [key]: {
-            stationLine,
-            stationName,
-          },
-        }),
-      );
-      const isDuplicate =
-        selectedStation.arrival.stationName === stationName ||
-        selectedStation.departure.stationName === stationName;
-      if (isDuplicate) {
-        navigation.goBack();
-      } else if (
-        (key === 'departure' && selectedStation.arrival.stationName) ||
-        (key === 'arrival' && selectedStation.departure.stationName)
-      ) {
-        navigation.navigate('SubwayPathResult');
-      } else navigation.goBack();
+      saveSelectedStation(stationLine, stationName);
     },
   });
 
   const stationBtnHandler = ({ stationName, stationLine }: (typeof searchResultData)[0]) => {
     if (!stationLine) return;
-    addRecentMutate({ stationName, stationLine: subwayReturnLineName(stationLine) });
+    if (isVerifiedUser === 'success auth')
+      addRecentMutate({ stationName, stationLine: subwayReturnLineName(stationLine) });
+    else saveSelectedStation(subwayReturnLineName(stationLine), stationName);
   };
 
   return (
