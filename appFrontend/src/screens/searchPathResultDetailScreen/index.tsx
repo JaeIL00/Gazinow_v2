@@ -1,8 +1,8 @@
 import { css } from '@emotion/native';
 import { useMemo, useState } from 'react';
-import { FlatList, SafeAreaView, TouchableOpacity, View } from 'react-native';
+import { FlatList, Modal, SafeAreaView, TouchableOpacity, View } from 'react-native';
 
-import { FontText } from '@/global/ui';
+import { FontText, TextButton } from '@/global/ui';
 import { useRoute } from '@react-navigation/native';
 import NewRouteSaveModal from './components/NewRouteSaveModal';
 import SearchPathDetailItem from './components/SearchPathDetailItem';
@@ -13,11 +13,15 @@ import { COLOR } from '@/global/constants';
 import { useQueryClient } from 'react-query';
 import IconBookmark from '@assets/icons/bookmark.svg';
 import IconLeftArrowHead from '@assets/icons/left_arrow_head.svg';
+import { useAppSelect } from '@/store';
+import { useRootNavigation } from '@/navigation/RootNavigation';
 
 const SearchPathResultDetailScreen = () => {
   const queryClient = useQueryClient();
   const navigation = useHomeNavigation();
+  const rootNavigation = useRootNavigation();
   const { state: resultData } = useRoute().params as { state: Path };
+  const isVerifiedUser = useAppSelect((state) => state.auth.isVerifiedUser);
 
   const { deleteMutate } = useDeleteSavedSubwayRoute({
     onSuccess: async () => {
@@ -86,13 +90,89 @@ const SearchPathResultDetailScreen = () => {
               fill={isBookmarking ? COLOR.LIGHT_BLUE : 'transparent'}
             />
           </TouchableOpacity>
-          {isSaveRouteModalOpen && (
-            <NewRouteSaveModal
-              freshData={{ ...resultData, subPaths: freshSubPathData }}
-              closeModal={() => setIsSaveRouteModalOpen(false)}
-              onBookmark={() => setIsBookmarking(true)}
-            />
-          )}
+          {isSaveRouteModalOpen &&
+            (isVerifiedUser === 'success auth' ? (
+              <NewRouteSaveModal
+                freshData={{ ...resultData, subPaths: freshSubPathData }}
+                closeModal={() => setIsSaveRouteModalOpen(false)}
+                onBookmark={() => setIsBookmarking(true)}
+              />
+            ) : (
+              <Modal visible onRequestClose={() => setIsSaveRouteModalOpen(false)} transparent>
+                <View
+                  style={{
+                    position: 'relative',
+                    flex: 1,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}
+                >
+                  <View
+                    style={{
+                      backgroundColor: '#00000099',
+                      position: 'absolute',
+                      top: 0,
+                      width: '100%',
+                      height: '100%',
+                    }}
+                  />
+                  <View
+                    style={{
+                      position: 'absolute',
+                      backgroundColor: COLOR.WHITE,
+                      paddingTop: 32,
+                      paddingBottom: 24,
+                      paddingHorizontal: 24,
+                      borderRadius: 12,
+                      width: '80%',
+                    }}
+                  >
+                    <FontText
+                      value={`로그인하면 관심 경로의\n이슈를 알려드려요`}
+                      textSize="18px"
+                      textWeight="SemiBold"
+                      style={{ textAlign: 'center' }}
+                    />
+                    <View
+                      style={{ flexDirection: 'row', width: '100%', columnGap: 8, marginTop: 30 }}
+                    >
+                      <TextButton
+                        value="취소"
+                        textSize="14px"
+                        textColor={COLOR.GRAY_999}
+                        textWeight="SemiBold"
+                        onPress={() => setIsSaveRouteModalOpen(false)}
+                        style={{
+                          flex: 1,
+                          borderRadius: 5,
+                          borderWidth: 1,
+                          borderColor: COLOR.GRAY_999,
+                          alignItems: 'center',
+                          paddingVertical: 12,
+                        }}
+                      />
+                      <TextButton
+                        value="로그인"
+                        textSize="14px"
+                        textColor={COLOR.WHITE}
+                        textWeight="SemiBold"
+                        onPress={() => {
+                          setIsSaveRouteModalOpen(false);
+                          rootNavigation.navigate('AuthStack', { screen: 'Landing' });
+                        }}
+                        style={{
+                          flex: 1,
+                          borderRadius: 5,
+                          alignItems: 'center',
+                          paddingVertical: 12,
+                          backgroundColor: COLOR.BASIC_BLACK,
+                        }}
+                      />
+                    </View>
+                  </View>
+                </View>
+              </Modal>
+            ))}
         </View>
         <View
           style={css`
