@@ -103,7 +103,7 @@ const SearchStationScreen = () => {
           <IconXCircleFill />
         </TouchableOpacity>
       </Container>
-      {!searchTextValue ? (
+      {isVerifiedUser === 'success auth' && !searchTextValue ? (
         <ResultContainer>
           <Header>
             <FontText

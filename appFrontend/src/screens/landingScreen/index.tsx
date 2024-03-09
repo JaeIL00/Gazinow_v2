@@ -29,7 +29,7 @@ const LandingScreen = () => {
           width: 32,
           height: 32,
           position: 'absolute',
-          top: 13,
+          top: 13 + StatusBarHeight,
           left: 13,
           zIndex: 999,
           justifyContent: 'center',
