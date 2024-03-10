@@ -3,7 +3,7 @@ import React, { useCallback, useState } from 'react';
 import { Alert, Modal, Pressable, SafeAreaView, View } from 'react-native';
 import { FontText, Input, Space, TextButton } from '@/global/ui';
 import { COLOR } from '@/global/constants';
-import { useChangePasswordQuery, useCheckPasswordQuery } from '@/global/apis/hook';
+import { useChangePasswordQuery, useCheckPasswordQuery } from '@/global/apis/hooks';
 import MyTabModal from '@/global/components/MyTabModal';
 import { debounce } from 'lodash';
 import XCircle from '@assets/icons/x-circle-standard.svg';
@@ -94,7 +94,7 @@ const ChangePwModal = () => {
     <SafeAreaView style={{ flex: 1, backgroundColor: COLOR.WHITE }}>
       <Header>
         <Pressable hitSlop={20} onPress={() => myPageNavigation.goBack()}>
-          <IconLeftArrowHead />
+          <IconLeftArrowHead color="#3F3F46" />
         </Pressable>
         <Space width="21px" />
         <FontText value="비밀번호 변경" textSize="18px" lineHeight="23px" textWeight="Medium" />

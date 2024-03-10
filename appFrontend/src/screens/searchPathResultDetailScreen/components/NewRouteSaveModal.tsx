@@ -3,7 +3,7 @@ import { COLOR } from '@/global/constants';
 import { KeyboardAvoidingView, Modal, Platform, View } from 'react-native';
 import { useState } from 'react';
 import { SubwaySimplePath } from '@/global/components';
-import { useSavedSubwayRoute } from '@/global/apis/hook';
+import { useSavedSubwayRoute } from '@/global/apis/hooks';
 import { Path } from '@/global/apis/entity';
 import { useQueryClient } from 'react-query';
 

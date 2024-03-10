@@ -1,4 +1,4 @@
-export { default as auth, saveUserInfo } from './authModule';
+export { default as auth, saveUserInfo, getAuthorizationState } from './authModule';
 export {
   default as subwaySearch,
   getStationType,

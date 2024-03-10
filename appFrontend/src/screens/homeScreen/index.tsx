@@ -4,22 +4,33 @@ import { COLOR } from '@/global/constants';
 import { Space } from '@/global/ui';
 import { useEffect } from 'react';
 import SplashScreen from 'react-native-splash-screen';
+import { useTryAuthorization } from './hooks';
 
 const HomeScreen = () => {
+  const { isVerifiedUser, tryAuthorization } = useTryAuthorization();
+
   useEffect(() => {
-    setTimeout(() => {
-      SplashScreen.hide();
-    }, 500);
+    if (isVerifiedUser !== 'yet') {
+      setTimeout(() => {
+        SplashScreen.hide();
+      }, 500);
+    }
+  }, [isVerifiedUser]);
+
+  useEffect(() => {
+    if (isVerifiedUser === 'yet') tryAuthorization();
   }, []);
+
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: COLOR.GRAY_F9 }}>
       <ScrollView
         contentContainerStyle={{ paddingHorizontal: 16 }}
         showsVerticalScrollIndicator={false}
+        scrollEnabled={isVerifiedUser === 'success auth'}
       >
         <Space height="16px" />
         <SwapStation />
-        <SavedRouteIssues />
+        <SavedRouteIssues isVerifiedUser={isVerifiedUser} />
       </ScrollView>
     </SafeAreaView>
   );

@@ -2,17 +2,12 @@ import { COLOR } from '@/global/constants';
 import { FontText, TextButton } from '@/global/ui';
 import { useAuthNavigation } from '@/navigation/AuthNavigation';
 import { useEffect } from 'react';
-import { Animated, Platform, StatusBar, View } from 'react-native';
+import { Animated, SafeAreaView, TouchableOpacity, View } from 'react-native';
 import SplashScreen from 'react-native-splash-screen';
-import { getStatusBarHeight } from 'react-native-status-bar-height';
+import IconLeftArrow from '@assets/icons/left_arrow_head.svg';
 
 const LandingScreen = () => {
   const navigation = useAuthNavigation();
-
-  const StatusBarHeight =
-    Platform.OS === 'ios' ? getStatusBarHeight(true) : (StatusBar.currentHeight as number);
-
-  const titlePaddingTop = 173 - StatusBarHeight;
 
   useEffect(() => {
     setTimeout(() => {
@@ -37,21 +32,32 @@ const LandingScreen = () => {
         style={{ width: '100%', height: '100%' }}
         blurRadius={1.25}
       />
-      <View
+      <SafeAreaView
         style={{
           position: 'absolute',
           top: 0,
-          paddingHorizontal: 30,
-          paddingTop: titlePaddingTop,
           zIndex: 2,
-          justifyContent: 'space-between',
-          width: '100%',
           height: '100%',
+          width: '100%',
         }}
       >
-        <View>
+        <TouchableOpacity
+          activeOpacity={1}
+          style={{
+            width: 32,
+            height: 32,
+            justifyContent: 'center',
+            alignItems: 'center',
+            margin: 16,
+          }}
+          onPress={() => navigation.goBack()}
+        >
+          <IconLeftArrow color={COLOR.WHITE} />
+        </TouchableOpacity>
+
+        <View style={{ marginLeft: 37, marginTop: 68 }}>
           <FontText
-            value="가는길 지금"
+            value="가는길 지금,"
             textSize="27.34px"
             textWeight="Bold"
             lineHeight="36.454px"
@@ -66,9 +72,11 @@ const LandingScreen = () => {
           />
         </View>
 
+        <View style={{ flex: 1 }} />
+
         <View
           style={{
-            marginBottom: Platform.OS === 'ios' ? 83 + StatusBarHeight : 83,
+            marginBottom: 83,
             justifyContent: 'center',
             alignItems: 'center',
             flexDirection: 'row',
@@ -98,7 +106,7 @@ const LandingScreen = () => {
             hitSlop={20}
           />
         </View>
-      </View>
+      </SafeAreaView>
     </View>
   );
 };

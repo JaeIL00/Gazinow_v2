@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { Pressable, SafeAreaView, View } from 'react-native';
 import { FontText, Input, Space, TextButton } from '@/global/ui';
 import { COLOR } from '@/global/constants';
-import { useChangeNicknameQuery } from '@/global/apis/hook';
+import { useChangeNicknameQuery } from '@/global/apis/hooks';
 import IconXCircle from '@assets/icons/x-circle-standard.svg';
 import IconXCircleFill from '@assets/icons/x_circle_fill.svg';
 import IconCrossX from '@assets/icons/cross_x.svg';

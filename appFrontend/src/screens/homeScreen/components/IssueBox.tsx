@@ -3,7 +3,7 @@ import { FontText, Space } from '@/global/ui';
 import { COLOR } from '@/global/constants';
 import IssuesBanner from './IssuesBanner';
 import styled from '@emotion/native';
-import { useGetSavedRoutesQuery } from '@/global/apis/hook';
+import { useGetSavedRoutesQuery } from '@/global/apis/hooks';
 import { RenderSavedRoutesType } from '@/global/apis/entity';
 import { SubwaySimplePath } from '@/global/components';
 import IconRightArrowHead from '@/assets/icons/right_arrow_head.svg';

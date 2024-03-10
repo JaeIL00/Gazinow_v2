@@ -8,7 +8,7 @@ import {
   getSearchRoutesFetch,
   saveMyRoutesFetch,
   searchStationName,
-} from '../func';
+} from './func';
 import { useMutation, useQuery } from 'react-query';
 import {
   searchAddHistoryFetch,
@@ -19,9 +19,10 @@ import {
   getAllIssuesFetch,
   getIssuesByLaneFetch,
 } from '@/global/apis/func';
-import { RawSubwayLineName, SubwayStrEnd } from '../entity';
+import { RawSubwayLineName, SubwayStrEnd } from './entity';
 import { AxiosError } from 'axios';
 import { subwayFreshLineName } from '@/global/utils';
+import { useAppSelect } from '@/store';
 
 /**
  * 지하철역 검색 훅
@@ -50,7 +51,10 @@ export const useSearchStationName = (nameValue: string) => {
  * 지하철역 검색 이력 조회 훅
  */
 export const useGetSearchHistory = () => {
-  const { data } = useQuery(['searchHistory'], searchHistoryFetch);
+  const isVerifiedUser = useAppSelect((state) => state.auth.isVerifiedUser);
+  const { data } = useQuery(['searchHistory'], searchHistoryFetch, {
+    enabled: isVerifiedUser === 'success auth',
+  });
   const freshData = data?.map((item) => ({ name: item.stationName, line: item.stationLine }));
   return { historyData: freshData ? subwayFreshLineName(freshData) : [] };
 };
@@ -91,6 +95,10 @@ export const useDeleteSavedSubwayRoute = ({ onSuccess }: { onSuccess: () => void
 
   return { data, deleteMutate: mutate };
 };
+
+/**
+ * 최근 검색한 지하철역 기록 훅
+ */
 export const useAddRecentSearch = ({
   onSuccess,
 }: {
@@ -123,7 +131,10 @@ export const useDeleteAccountMutation = ({
  * 검색한 지하철 경로 조회 훅
  */
 export const useGetSearchRoutesQuery = () => {
-  const { data } = useQuery(['recentSearch'], getSearchRoutesFetch);
+  const isVerifiedUser = useAppSelect((state) => state.auth.isVerifiedUser);
+  const { data } = useQuery(['recentSearch'], getSearchRoutesFetch, {
+    enabled: isVerifiedUser === 'success auth',
+  });
   return { data };
 };
 
@@ -131,7 +142,10 @@ export const useGetSearchRoutesQuery = () => {
  * 저장한 지하철 경로 조회 훅
  */
 export const useGetSavedRoutesQuery = () => {
-  const { data } = useQuery(['getRoads'], getSavedRoutesFetch);
+  const isVerifiedUser = useAppSelect((state) => state.auth.isVerifiedUser);
+  const { data } = useQuery(['getRoads'], getSavedRoutesFetch, {
+    enabled: isVerifiedUser === 'success auth',
+  });
   return { data };
 };
 
