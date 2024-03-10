@@ -247,13 +247,10 @@ const SearchPathResultDetailScreen = () => {
             return item.distance + item.sectionTime + '';
           }}
           renderItem={({ item, index }) => {
-            const stationCount =
-              index === freshSubPathData.length - 1 ? item.stationCount + 1 : item.stationCount;
             return (
               <SearchPathDetailItem
                 data={item}
                 isLastLane={freshSubPathData.length - 1 === index}
-                stationCount={stationCount}
               />
             );
           }}

@@ -12,7 +12,7 @@ import { IssuesBanner } from '.';
 
 const SavedRouteBox = () => {
   const homeNavigation = useHomeNavigation();
-  const { data: savedRoutes } = useGetSavedRoutesQuery({});
+  const { data: savedRoutes } = useGetSavedRoutesQuery();
   const isRoutesExist = savedRoutes && savedRoutes.length > 0;
 
   if (isRoutesExist) {
