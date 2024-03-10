@@ -7,6 +7,7 @@ import { getEncryptedStorage, setEncryptedStorage } from '@/global/utils';
 import { SIGNIN } from '@/global/constants';
 import EncryptedStorage from 'react-native-encrypted-storage';
 import { tokenReissueFetch } from './func';
+import { useAppSelect } from '@/store';
 
 const navigationRef = createNavigationContainerRef<RootStackParamList>();
 
@@ -23,7 +24,8 @@ export const axiosInstance = axios.create({
 
 axiosInstance.interceptors.request.use(async (requestConfig) => {
   const token = await getEncryptedStorage('access_token');
-  requestConfig.headers.Authorization = `Bearer ${token}`;
+
+  if (!!token) requestConfig.headers.Authorization = `Bearer ${token}`;
 
   return requestConfig;
 });
