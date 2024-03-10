@@ -3,7 +3,7 @@ import { FontText, Input } from '@/global/ui';
 import { COLOR } from '@/global/constants';
 import { useAppDispatch, useAppSelect } from '@/store';
 import { getSeletedStation } from '@/store/modules/stationSearchModule';
-import { useAddRecentSearch, useGetSearchHistory, useSearchStationName } from '@/global/apis/hook';
+import { useAddRecentSearch, useGetSearchHistory, useSearchStationName } from '@/global/apis/hooks';
 import { useCallback, useState } from 'react';
 import { debounce } from 'lodash';
 import { SelectedStationTypes } from './NewSearchSwapStation';

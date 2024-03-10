@@ -23,7 +23,7 @@ const ConfirmQuitModal = () => {
     <SafeAreaView style={{ flex: 1, backgroundColor: COLOR.WHITE }}>
       <Header>
         <Pressable hitSlop={20} onPress={() => myPageNavigation.goBack()}>
-          <IconLeftArrowHead />
+          <IconLeftArrowHead color="#3F3F46" />
         </Pressable>
       </Header>
       <Container>

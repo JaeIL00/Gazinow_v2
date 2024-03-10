@@ -2,7 +2,7 @@ import React from 'react';
 import { View, StyleSheet, Pressable } from 'react-native';
 import { TextButton, FontText, Space } from '@/global/ui';
 import { COLOR } from '@/global/constants';
-import { useGetSearchRoutesQuery } from '@/global/apis/hook';
+import { useGetSearchRoutesQuery } from '@/global/apis/hooks';
 import IconRightArrowHead from '@/assets/icons/right_arrow_head.svg';
 
 const RecentSearchBox = () => {

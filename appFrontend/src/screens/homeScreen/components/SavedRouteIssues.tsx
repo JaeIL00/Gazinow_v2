@@ -7,9 +7,14 @@ import IssueBox from './IssueBox';
 import styled from '@emotion/native';
 import { useRootNavigation } from '@/navigation/RootNavigation';
 import { RenderSavedRoutesType } from '@/global/apis/entity';
-import { useGetSavedRoutesQuery } from '@/global/apis/hook';
+import { useGetSavedRoutesQuery } from '@/global/apis/hooks';
+import { NonLoggedIn } from '.';
 
-const SavedRouteIssues = () => {
+interface SavedRouteIssuesProps {
+  isVerifiedUser: 'success auth' | 'fail auth' | 'yet';
+}
+
+const SavedRouteIssues = ({ isVerifiedUser }: SavedRouteIssuesProps) => {
   const navigation = useRootNavigation();
   const { data: savedRoutes } = useGetSavedRoutesQuery();
   const [hasIssueRoutes, setHasIssueRoutes] = useState<RenderSavedRoutesType[]>([]);
@@ -44,6 +49,7 @@ const SavedRouteIssues = () => {
           borderColor: activeButton === text ? 'transparent' : COLOR.GRAY_EB,
         },
       ]}
+      disabled={isVerifiedUser !== 'success auth'}
     >
       <FontText
         value={text}
@@ -62,6 +68,7 @@ const SavedRouteIssues = () => {
         <Pressable
           hitSlop={20}
           onPress={() => navigation.navigate('NewRouteNavigation', { screen: 'SavedRoutes' })}
+          disabled={isVerifiedUser !== 'success auth'}
         >
           <TextButton
             value="저장경로 편집"
@@ -70,6 +77,7 @@ const SavedRouteIssues = () => {
             textWeight="Regular"
             onPress={() => navigation.navigate('NewRouteNavigation', { screen: 'SavedRoutes' })}
             lineHeight="15px"
+            disabled={isVerifiedUser !== 'success auth'}
           />
         </Pressable>
       </CategoryContainer>
@@ -78,12 +86,14 @@ const SavedRouteIssues = () => {
 
       {/* 최근검색: <RecentSearchBox />, TODO: MVP에서 제외*/}
       <ContentsBox>
-        {
+        {isVerifiedUser === 'success auth' ? (
           {
             저장경로: <SavedRouteBox />,
             이슈: <IssueBox />,
           }[activeButton]
-        }
+        ) : (
+          <NonLoggedIn />
+        )}
       </ContentsBox>
     </Container>
   );
@@ -123,4 +133,5 @@ const CategoryContainer = styled.View`
 `;
 const ContentsBox = styled.View`
   padding: 0px 16px 4px;
+  flex: 1;
 `;

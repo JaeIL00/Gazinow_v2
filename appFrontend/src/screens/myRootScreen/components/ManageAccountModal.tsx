@@ -53,7 +53,7 @@ const ManageAccountModal = () => {
     <SafeAreaView style={{ flex: 1, backgroundColor: COLOR.WHITE }}>
       <Header>
         <Pressable hitSlop={20} onPress={() => myPageNavigation.goBack()}>
-          <IconLeftArrowHead />
+          <IconLeftArrowHead color="#3F3F46" />
         </Pressable>
         <Space width="21px" />
         <FontText value="계정 관리" textSize="18px" lineHeight="23px" textWeight="Medium" />

@@ -18,10 +18,9 @@ import IssueKeywordIcon from '@/global/components/subwaySimplePath/IssueKeywordI
 interface SearchPathDetailItemProps {
   data: SubPath;
   isLastLane: boolean;
-  stationCount: number;
 }
 
-const SearchPathDetailItem = ({ data, isLastLane, stationCount }: SearchPathDetailItemProps) => {
+const SearchPathDetailItem = ({ data, isLastLane }: SearchPathDetailItemProps) => {
   const navigation = useRootNavigation();
   const dispatch = useAppDispatch();
 
@@ -166,13 +165,13 @@ const SearchPathDetailItem = ({ data, isLastLane, stationCount }: SearchPathDeta
               <FontText
                 value={
                   data.sectionTime > 60
-                    ? stationCount +
+                    ? data.stationCount +
                       '개역 (' +
                       Math.floor(data.sectionTime / 60) +
                       '시간 ' +
                       (data.sectionTime % 60) +
                       '분)'
-                    : stationCount + '개역 (' + data.sectionTime + '분)'
+                    : data.stationCount + '개역 (' + data.sectionTime + '분)'
                 }
                 textSize="11px"
                 textWeight="Medium"

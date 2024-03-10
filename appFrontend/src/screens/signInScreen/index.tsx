@@ -15,7 +15,7 @@ import { SignInFormTypes } from './apis/entity';
 import { useSignInMutation } from './apis/hook';
 import { COLOR } from '@/global/constants';
 import { useAppDispatch } from '@/store';
-import { saveUserInfo } from '@/store/modules';
+import { getAuthorizationState, saveUserInfo } from '@/store/modules';
 import IconXCircle from '@assets/icons/x-circle-standard.svg';
 import IconLeftArrow from '@assets/icons/left_arrow_round.svg';
 
@@ -35,6 +35,7 @@ const SignInScreen = () => {
   const { isLoading, signInMutate } = useSignInMutation({
     onSuccess: async (data) => {
       dispatch(saveUserInfo({ nickname: data.nickName, email: data.email }));
+      dispatch(getAuthorizationState('success auth'));
       await setEncryptedStorage('access_token', data.accessToken);
       await setEncryptedStorage('refresh_token', data.refreshToken);
       navigation.reset({ routes: [{ name: 'MainBottomTab' }] });

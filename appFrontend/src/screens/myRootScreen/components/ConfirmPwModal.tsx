@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import { FontText, Input, Space, TextButton } from '@/global/ui';
 import { COLOR } from '@/global/constants';
-import { useCheckPasswordQuery, useDeleteAccountMutation } from '@/global/apis/hook';
+import { useCheckPasswordQuery, useDeleteAccountMutation } from '@/global/apis/hooks';
 import { useRootNavigation } from '@/navigation/RootNavigation';
 import IconLeftArrowHead from '@assets/icons/left_arrow_head.svg';
 import { removeEncryptedStorage } from '@/global/utils';
@@ -71,7 +71,7 @@ const ConfirmPwModal = () => {
       <SafeAreaView style={{ flex: 1, backgroundColor: COLOR.WHITE }}>
         <Header>
           <Pressable hitSlop={20} onPress={() => myPageNavigation.goBack()}>
-            <IconLeftArrowHead />
+            <IconLeftArrowHead color="#3F3F46" />
           </Pressable>
         </Header>
         <Container>

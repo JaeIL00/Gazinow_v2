@@ -24,7 +24,11 @@ const NotiSettingsModal = () => {
     <SafeAreaView style={{ flex: 1, backgroundColor: COLOR.WHITE }}>
       <Header>
         <TitleContainer>
-          <IconLeftArrowHead width="24px" onPress={() => myPageNavigation.goBack()} />
+          <IconLeftArrowHead
+            color="#3F3F46"
+            width="24px"
+            onPress={() => myPageNavigation.goBack()}
+          />
           <Space width="12px" />
           <FontText value="알림 설정" textSize="18px" lineHeight="23px" textWeight="Medium" />
         </TitleContainer>

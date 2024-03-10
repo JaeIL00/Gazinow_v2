@@ -2,7 +2,7 @@ import React from 'react';
 import { Pressable, View } from 'react-native';
 import { FontText, Space } from '@/global/ui';
 import { COLOR } from '@/global/constants';
-import { useGetSavedRoutesQuery } from '@/global/apis/hook';
+import { useGetSavedRoutesQuery } from '@/global/apis/hooks';
 import styled from '@emotion/native';
 import { SubwaySimplePath } from '@/global/components';
 import { RenderSavedRoutesType } from '@/global/apis/entity';

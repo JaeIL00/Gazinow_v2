@@ -3,7 +3,7 @@ import { Pressable, ScrollView, View } from 'react-native';
 import { FontText, Space } from '@/global/ui';
 import { COLOR } from '@/global/constants';
 import { SubwaySimplePath } from '@/global/components';
-import { useGetSearchPaths } from '@/global/apis/hook';
+import { useGetSearchPaths } from '@/global/apis/hooks';
 import { useState } from 'react';
 import { Path } from '@/global/apis/entity';
 import { StationDataTypes } from '@/store/modules';

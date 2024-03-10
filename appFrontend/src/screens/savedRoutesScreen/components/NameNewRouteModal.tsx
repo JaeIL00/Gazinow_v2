@@ -2,7 +2,7 @@ import styled from '@emotion/native';
 import { FontText, Input } from '@/global/ui';
 import { COLOR } from '@/global/constants';
 import React, { useMemo, useState } from 'react';
-import { useSaveMyRoutesQuery } from '@/global/apis/hook';
+import { useSaveMyRoutesQuery } from '@/global/apis/hooks';
 import { useQueryClient } from 'react-query';
 import { SubwaySimplePath } from '@/global/components';
 import { Path, SubPath } from '@/global/apis/entity';

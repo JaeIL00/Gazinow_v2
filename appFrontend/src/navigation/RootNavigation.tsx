@@ -6,7 +6,6 @@ import { MAIN_BOTTOM_TAB } from '@/global/constants';
 import type { RootStackParamList } from '@/navigation/types/navigation';
 import AuthNavigation from './AuthNavigation';
 import IssueNavigation from './IssueNavigation';
-import SplashScreen from '@/screens/splashScreen';
 
 const Stack = createStackNavigator<RootStackParamList>();
 
@@ -16,8 +15,7 @@ const screenOption = {
 
 const RootNavigation = () => {
   return (
-    <Stack.Navigator screenOptions={screenOption} initialRouteName="SplashScreen">
-      <Stack.Screen name="SplashScreen" component={SplashScreen} />
+    <Stack.Navigator screenOptions={screenOption} initialRouteName="MainBottomTab">
       <Stack.Screen name="AuthStack" component={AuthNavigation} />
       <Stack.Screen name="IssueStack" component={IssueNavigation} />
       <Stack.Screen name={MAIN_BOTTOM_TAB} component={MainBottomTabNavigation} />

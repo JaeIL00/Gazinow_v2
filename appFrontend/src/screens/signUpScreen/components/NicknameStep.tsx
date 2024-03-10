@@ -6,7 +6,7 @@ import { useCheckNickname, useSighUp } from '../apis/hooks';
 import { debounce } from 'lodash';
 import { SignUpParams } from '../type';
 import { useAppDispatch } from '@/store';
-import { saveUserInfo } from '@/store/modules';
+import { getAuthorizationState, saveUserInfo } from '@/store/modules';
 import StepButton from '../ui/StepButton';
 import { setEncryptedStorage } from '@/global/utils';
 import IconCheck from '@assets/icons/check.svg';
@@ -32,6 +32,7 @@ const NicknameStep = ({
   const { signUpMutate } = useSighUp({
     onSuccess: async ({ email, nickName, accessToken, refreshToken }) => {
       dispatch(saveUserInfo({ email, nickname: nickName }));
+      dispatch(getAuthorizationState('success auth'));
       await setEncryptedStorage('access_token', accessToken);
       await setEncryptedStorage('refresh_token', refreshToken);
       setStep();
