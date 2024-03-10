@@ -41,7 +41,7 @@ const IssueDetailScreen = () => {
   const createIssueDate = dayjs(issueData?.startDate).fromNow();
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: COLOR.GRAY_F9 }}>
       {isOpenLoginModal && (
         <Modal visible onRequestClose={() => setIsOpenLoginModal(false)} transparent>
           <View
@@ -116,14 +116,14 @@ const IssueDetailScreen = () => {
           </View>
         </Modal>
       )}
-      <View style={{ padding: 16, backgroundColor: COLOR.GRAY_F9 }}>
+      <View style={{ padding: 16 }}>
         <TouchableOpacity activeOpacity={1} hitSlop={20} onPress={() => navigation.goBack()}>
           <IconLeftArrowHead color="#3F3F46" />
         </TouchableOpacity>
       </View>
 
       {issueData && (
-        <View style={{ position: 'relative', flex: 1, backgroundColor: COLOR.GRAY_F9 }}>
+        <View style={{ position: 'relative', flex: 1 }}>
           <ScrollView
             style={{ flex: 1, paddingHorizontal: 16 }}
             showsVerticalScrollIndicator={false}
