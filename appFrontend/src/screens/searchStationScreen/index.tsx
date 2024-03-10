@@ -16,12 +16,6 @@ import IconLeftArrow from '@assets/icons/left_arrow_sharp.svg';
 import IconXCircleFill from '@assets/icons/x_circle_fill.svg';
 import { RawSubwayLineName } from '@/global/apis/entity';
 
-interface SearchStationModalProps {
-  searchType: '출발역' | '도착역';
-  closeModal: () => void;
-  setSubwayStation: React.Dispatch<React.SetStateAction<SelectedStationTypes>>;
-}
-
 const SearchStationScreen = () => {
   const navigation = useHomeNavigation();
   const dispatch = useAppDispatch();
