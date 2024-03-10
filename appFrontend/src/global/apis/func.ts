@@ -26,7 +26,7 @@ export const tokenReissueFetch = async ({
   refreshToken: string;
 }) => {
   try {
-    const res = await axios.post<{ data: SignInFetchResponse }>(
+    const res = await axiosInstance.post<{ data: SignInFetchResponse }>(
       '/api/v1/member/reissue',
       {
         accessToken,
