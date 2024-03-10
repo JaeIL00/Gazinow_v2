@@ -1,5 +1,5 @@
 import styled from '@emotion/native';
-import { Pressable, View } from 'react-native';
+import { Platform, Pressable, View } from 'react-native';
 import { FontText, Space, TextButton } from '@/global/ui';
 import { COLOR } from '@/global/constants';
 // import { RESULTS, requestNotifications } from 'react-native-permissions';
@@ -9,6 +9,8 @@ import packageJson from '../../../package.json';
 import IconPencil from '@assets/icons/pencil.svg';
 import IconRightArrowHead from '@/assets/icons/right_arrow_head.svg';
 import { useRootNavigation } from '@/navigation/RootNavigation';
+import VersionCheck from 'react-native-version-check';
+import { useEffect, useState } from 'react';
 
 interface RenderMenuProps {
   text: string;
@@ -31,7 +33,9 @@ const requestNotificationPermission = async () => {
 const MyRootScreen = () => {
   const rootNavigation = useRootNavigation();
   const { nickname, email, isVerifiedUser } = useSelector((state: RootState) => state.auth);
-  const versionInfo = packageJson.version;
+  const currentVersionInfo = packageJson.version;
+
+  const [versionText, setVersionText] = useState<string>('');
 
   const confirmUserNotificationOn = async () => {
     // const result = await requestNotificationPermission();
@@ -41,6 +45,15 @@ const MyRootScreen = () => {
     //   setIsNotiSettingsModalOpen(true);
     // }
   };
+
+  useEffect(() => {
+    VersionCheck.getLatestVersion({
+      provider: Platform.OS === 'ios' ? 'appStore' : 'playStore',
+    }).then((latestVersion) => {
+      if (currentVersionInfo === latestVersion) setVersionText(`v${latestVersion} 최신버전 입니다`);
+      else setVersionText(`v${currentVersionInfo}`);
+    });
+  }, []);
 
   const renderMenu = ({ text, onPress, versionInfo }: RenderMenuProps) => (
     <MenuContainer onPress={onPress}>
@@ -52,12 +65,7 @@ const MyRootScreen = () => {
         onPress={onPress}
       />
       {versionInfo ? (
-        <FontText
-          value={`v ${versionInfo} 최신버전입니다`}
-          textSize="12px"
-          textWeight="Regular"
-          lineHeight="17px"
-        />
+        <FontText value={versionText} textSize="12px" textWeight="Regular" lineHeight="17px" />
       ) : (
         <IconRightArrowHead width={14} color={COLOR.GRAY_999} />
       )}
@@ -132,7 +140,7 @@ const MyRootScreen = () => {
               screen: 'PersonalTermsModal',
             }),
         })}
-        {renderMenu({ text: '버전', versionInfo })}
+        {renderMenu({ text: '버전', versionInfo: versionText })}
       </BtnContainer>
     </Container>
   );
