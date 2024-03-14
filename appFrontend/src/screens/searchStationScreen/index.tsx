@@ -154,7 +154,7 @@ const SearchStationScreen = () => {
             </NoResult>
           )}
           {/* 입력어가 있고 && 검색 결과가 있으면 결과 표시 */}
-          {searchResultData && (
+          {searchResultData.length > 0 && (
             <Ul marginTop="28px">
               {searchResultData.map(({ stationName, stationLine }, idx) => (
                 <Li key={idx} onPress={() => stationBtnHandler({ stationLine, stationName })}>
@@ -229,5 +229,4 @@ const NoResult = styled.View`
   flex: 1;
   align-items: center;
   justify-content: center;
-  padding: 150px 0 0;
 `;
