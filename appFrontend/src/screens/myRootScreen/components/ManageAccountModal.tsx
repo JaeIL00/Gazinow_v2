@@ -10,6 +10,8 @@ import { Pressable, SafeAreaView } from 'react-native';
 import IconLeftArrowHead from '@assets/icons/left_arrow_head.svg';
 import { useMyPageNavigation } from '@/navigation/MyPageNavigation';
 import { showToast } from '@/global/utils/toast';
+import { useAppDispatch } from '@/store';
+import { getAuthorizationState } from '@/store/modules';
 
 interface RenderMenuProps {
   text: string;
@@ -20,13 +22,15 @@ const ManageAccountModal = () => {
   const myPageNavigation = useMyPageNavigation();
   const navigation = useRootNavigation();
   const [popupVisible, setPopupVisible] = useState(false);
+  const dispatch = useAppDispatch();
 
   const { logoutMutate } = useLogoutMutation({
     onSuccess: () => {
       removeEncryptedStorage('access_token');
       removeEncryptedStorage('refresh_token');
       showToast('logout');
-      navigation.reset({ routes: [{ name: 'AuthStack' }] });
+      dispatch(getAuthorizationState('fail auth'));
+      navigation.goBack();
     },
   });
 
