@@ -3,6 +3,7 @@ import {
   KeyboardAvoidingView,
   Platform,
   SafeAreaView,
+  ScrollView,
   TextInput,
   TouchableOpacity,
   View,
@@ -88,7 +89,7 @@ const SignInScreen = () => {
 
         <Space height="75px" />
 
-        <View style={{ flex: 1 }}>
+        <ScrollView style={{ flex: 1 }}>
           <FontText value="Email" textSize="14px" textWeight="Medium" textColor="#7c8183" />
           <View
             style={{
@@ -152,7 +153,7 @@ const SignInScreen = () => {
               />
             </View>
           )}
-        </View>
+        </ScrollView>
 
         <TextButton
           value="로그인"
