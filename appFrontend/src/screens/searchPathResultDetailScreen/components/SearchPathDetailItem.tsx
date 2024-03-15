@@ -65,6 +65,7 @@ const SearchPathDetailItem = ({ data, isLastLane, lineLength }: SearchPathDetail
           <View
             style={css`
               margin-left: 14px;
+              flex: 1;
             `}
           >
             <FontText
