@@ -1,5 +1,5 @@
 import styled from '@emotion/native';
-import { FontText, Input } from '@/global/ui';
+import { FontText, Input, Space } from '@/global/ui';
 import { COLOR } from '@/global/constants';
 import { useAppDispatch, useAppSelect } from '@/store';
 import { getSeletedStation } from '@/store/modules/stationSearchModule';
@@ -14,6 +14,8 @@ import IconLocationPin from '@assets/icons/location_pin.svg';
 import AddNewRouteHeader from './AddNewRouteHeader';
 import { useNewRouteNavigation } from '@/navigation/NewRouteNavigation';
 import IconClock from '@assets/icons/clock.svg';
+import NoResultIcon from '@/assets/icons/no_result_icon.svg';
+import NoResultText from '@/assets/icons/no_result_text.svg';
 
 const NewSearchStation = () => {
   const newRouteNavigation = useNewRouteNavigation();
@@ -123,31 +125,40 @@ const NewSearchStation = () => {
         </ResultContainer>
       ) : (
         <ResultContainer>
-          {/* 입력어가 있고 && 검색 결과가 있으면 결과 표시 */}
           {/* 입력어가 있고 && 검색 결과가 없으면 없음 표시 */}
-          <Ul marginTop="28px">
-            {searchResultData.map(({ stationName, stationLine }, idx) => (
-              <Li key={idx} onPress={() => stationBtnHandler({ stationLine, stationName })}>
-                <IconLocationPin />
-                <StationInfoBox>
-                  <FontText
-                    value={stationName}
-                    textSize="16px"
-                    textWeight="Medium"
-                    lineHeight="21px"
-                    textColor="#000"
-                  />
-                  <FontText
-                    value={stationLine!}
-                    textSize="14px"
-                    textWeight="Regular"
-                    lineHeight="21px"
-                    textColor={COLOR.GRAY_999}
-                  />
-                </StationInfoBox>
-              </Li>
-            ))}
-          </Ul>
+          {searchResultData.length < 1 && (
+            <NoResult>
+              <NoResultIcon />
+              <Space height="17px" />
+              <NoResultText />
+            </NoResult>
+          )}
+          {/* 입력어가 있고 && 검색 결과가 있으면 결과 표시 */}
+          {searchResultData.length > 0 && (
+            <Ul marginTop="28px">
+              {searchResultData.map(({ stationName, stationLine }, idx) => (
+                <Li key={idx} onPress={() => stationBtnHandler({ stationLine, stationName })}>
+                  <IconLocationPin />
+                  <StationInfoBox>
+                    <FontText
+                      value={stationName}
+                      textSize="16px"
+                      textWeight="Medium"
+                      lineHeight="21px"
+                      textColor="#000"
+                    />
+                    <FontText
+                      value={stationLine!}
+                      textSize="14px"
+                      textWeight="Regular"
+                      lineHeight="21px"
+                      textColor={COLOR.GRAY_999}
+                    />
+                  </StationInfoBox>
+                </Li>
+              ))}
+            </Ul>
+          )}
         </ResultContainer>
       )}
     </SafeAreaView>
@@ -193,4 +204,9 @@ const StationInfoBox = styled.View`
 const LocateIcon = styled.Image`
   width: 25px;
   height: 25px;
+`;
+const NoResult = styled.View`
+  flex: 1;
+  align-items: center;
+  justify-content: center;
 `;
