@@ -1,4 +1,4 @@
-import { axiosInstance } from '@/global/apis';
+import { authServiceAPI, publicServiceAPI } from '@/global/apis';
 import { AxiosError } from 'axios';
 import { SightUpResponse } from '../../type';
 import * as Sentry from '@sentry/react-native';
@@ -8,7 +8,7 @@ import * as Sentry from '@sentry/react-native';
  */
 export const emailConfirmFetch = async (email: string) => {
   try {
-    const res = await axiosInstance.post<{ data: string }>('/api/v1/member/email-confirm', {
+    const res = await publicServiceAPI.post<{ data: string }>('/api/v1/member/email-confirm', {
       email,
     });
     return res.data.data;
@@ -24,7 +24,7 @@ export const emailConfirmFetch = async (email: string) => {
  */
 export const checkNicknameFetch = async (nickName: string) => {
   try {
-    const res = await axiosInstance.post<{ message: string; state: 200 | 409 }>(
+    const res = await publicServiceAPI.post<{ message: string; state: 200 | 409 }>(
       '/api/v1/member/check-nickname',
       {
         nickName,
@@ -43,7 +43,7 @@ export const checkNicknameFetch = async (nickName: string) => {
  */
 export const signUpFetch = async (data: { email: string; password: string; nickName: string }) => {
   try {
-    const res = await axiosInstance.post<{
+    const res = await publicServiceAPI.post<{
       data: SightUpResponse;
     }>('/api/v1/member/signup', data);
     return res.data.data;

@@ -3,7 +3,7 @@ import { Alert, FlatList } from 'react-native';
 import { FontText, Space } from '@/global/ui';
 import { IssueContainer } from '.';
 import { AllIssues, FreshSubwayLineName } from '@/global/apis/entity';
-import { axiosInstance } from '@/global/apis';
+import { publicServiceAPI } from '@/global/apis';
 import { COLOR } from '@/global/constants';
 import { subwayReturnLineName } from '@global/utils/subwayLine';
 
@@ -18,7 +18,7 @@ const FilterByLane = ({ lane }: FilterByLaneProps) => {
 
   useEffect(() => {
     const filteredLane = subwayReturnLineName(lane);
-    axiosInstance
+    publicServiceAPI
       .get<{ data: AllIssues }>('/api/v1/issue/get_line', {
         params: { line: filteredLane },
       })

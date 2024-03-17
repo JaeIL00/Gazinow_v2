@@ -1,5 +1,5 @@
 import styled from '@emotion/native';
-import { SafeAreaView, ScrollView, StatusBar, TouchableOpacity, View } from 'react-native';
+import { SafeAreaView, ScrollView, TouchableOpacity, View } from 'react-native';
 
 import { FontText, Space } from '@/global/ui';
 import { COLOR } from '@/global/constants';
@@ -9,7 +9,7 @@ import { SubwaySimplePath } from '@/global/components';
 import { useGetSearchPaths } from '@/global/apis/hooks';
 import { useAppDispatch, useAppSelect } from '@/store';
 import { StationDataTypes, getIssueId } from '@/store/modules';
-import React, { useState } from 'react';
+import React from 'react';
 import { useHomeNavigation } from '@/navigation/HomeNavigation';
 import SwapStation from './components/SwapStation';
 import IconRightArrowHead from '@assets/icons/right_arrow_head.svg';

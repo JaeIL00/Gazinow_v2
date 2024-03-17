@@ -7,7 +7,6 @@ import { getEncryptedStorage, setEncryptedStorage } from '@/global/utils';
 import { SIGNIN } from '@/global/constants';
 import EncryptedStorage from 'react-native-encrypted-storage';
 import { tokenReissueFetch } from './func';
-import { useAppSelect } from '@/store';
 
 const navigationRef = createNavigationContainerRef<RootStackParamList>();
 
@@ -18,25 +17,37 @@ const navigate = (name: any, params?: any): any => {
 };
 
 /**
- *
+ * 유저 토큰이 불필요한 api instance
  */
-export const axiosInstance = axios.create({
+export const publicServiceAPI = axios.create({
   baseURL: API_BASE_URL,
   withCredentials: true,
 });
 
-axiosInstance.interceptors.request.use(async (requestConfig) => {
-  const token = await getEncryptedStorage('access_token');
+/**
+ * header token 포함하는 instance
+ * 닉네임 수정
+ * 비밀번호 변경
+ * 회원 탈퇴
+ * 로그아웃
+ * 토큰 재발급
+ * 도움돼요 추가,삭제
+ * 지하철역 최근검색 조회, 저장
+ * 내 저장경로 조회,저장,삭제
+ */
+export const authServiceAPI = axios.create({
+  baseURL: API_BASE_URL,
+  withCredentials: true,
+});
 
-  if (!!token) {
-    requestConfig.headers.Authorization = `Bearer ${token}`;
-    console.log('token');
-  }
+authServiceAPI.interceptors.request.use(async (requestConfig) => {
+  const token = await getEncryptedStorage('access_token');
+  requestConfig.headers.Authorization = `Bearer ${token}`;
 
   return requestConfig;
 });
 
-axiosInstance.interceptors.response.use(
+authServiceAPI.interceptors.response.use(
   (response) => response,
   async (error: AxiosError) => {
     // network error
@@ -72,7 +83,7 @@ axiosInstance.interceptors.response.use(
     if (response.status === 200) {
       // refresh token is valid
       await setEncryptedStorage('access_token', newAccessToken);
-      return axiosInstance(error.config || {});
+      return authServiceAPI(error.config || {});
     } else {
       // refresh token is not valid
       await EncryptedStorage.removeItem('access_token');

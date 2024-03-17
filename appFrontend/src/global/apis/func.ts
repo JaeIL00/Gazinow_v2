@@ -1,5 +1,5 @@
-import axios, { AxiosError } from 'axios';
-import { axiosInstance } from '.';
+import { AxiosError } from 'axios';
+import { authServiceAPI, publicServiceAPI } from '.';
 import {
   AllIssues,
   RenderSavedRoutesType,
@@ -26,7 +26,7 @@ export const tokenReissueFetch = async ({
   refreshToken: string;
 }) => {
   try {
-    const res = await axiosInstance.post<{ data: SignInFetchResponse }>(
+    const res = await authServiceAPI.post<{ data: SignInFetchResponse }>(
       '/api/v1/member/reissue',
       {
         accessToken,
@@ -48,7 +48,7 @@ export const tokenReissueFetch = async ({
  */
 export const searchStationName = async (params: { stationName: string }) => {
   try {
-    const res = await axiosInstance.get<SearchStationNameTypes>('/api/v1/search/station', {
+    const res = await publicServiceAPI.get<SearchStationNameTypes>('/api/v1/search/station', {
       params,
     });
     return res.data.data;
@@ -64,7 +64,7 @@ export const searchStationName = async (params: { stationName: string }) => {
  */
 export const searchHistoryFetch = async () => {
   try {
-    const res = await axiosInstance.get<{ data: SearchHistoryStationNameTypes[] }>(
+    const res = await authServiceAPI.get<{ data: SearchHistoryStationNameTypes[] }>(
       '/api/v1/recentSearch',
     );
     return res.data.data;
@@ -83,7 +83,7 @@ export const searchAddHistoryFetch = async (data: {
   stationLine: RawSubwayLineName;
 }) => {
   try {
-    const res = await axiosInstance.post<{ data: SearchHistoryStationNameTypes }>(
+    const res = await authServiceAPI.post<{ data: SearchHistoryStationNameTypes }>(
       '/api/v1/recentSearch/add',
       data,
     );
@@ -100,7 +100,7 @@ export const searchAddHistoryFetch = async (data: {
  */
 export const searchPathsFetch = async (params: SubwayStrEnd) => {
   try {
-    const res = await axiosInstance.get<{ data: SearchPathsTypes }>('/api/v1/find_road', {
+    const res = await publicServiceAPI.get<{ data: SearchPathsTypes }>('/api/v1/find_road', {
       params,
     });
     return res.data.data;
@@ -116,7 +116,7 @@ export const searchPathsFetch = async (params: SubwayStrEnd) => {
  */
 export const searchPathSaveFetch = async (data: SavedRoute) => {
   try {
-    const res = await axiosInstance.post('/api/v1/my_find_road/add_route', data);
+    const res = await authServiceAPI.post('/api/v1/my_find_road/add_route', data);
     return res.data.data;
   } catch (err) {
     Sentry.captureException(err);
@@ -130,7 +130,7 @@ export const searchPathSaveFetch = async (data: SavedRoute) => {
  */
 export const searchPathDeleteFetch = async (params: { id: number | null }) => {
   try {
-    const res = await axiosInstance.delete('/api/v1/my_find_road/delete_route', { params });
+    const res = await authServiceAPI.delete('/api/v1/my_find_road/delete_route', { params });
     return res.data.data;
   } catch (err) {
     Sentry.captureException(err);
@@ -144,7 +144,7 @@ export const searchPathDeleteFetch = async (params: { id: number | null }) => {
  */
 export const deleteAccountFetch = async () => {
   try {
-    await axiosInstance.delete('/api/v1/member/delete_member', { data: {} });
+    await authServiceAPI.delete('/api/v1/member/delete_member', { data: {} });
   } catch (err) {
     Sentry.captureException(err);
     const er = err as AxiosError;
@@ -157,7 +157,8 @@ export const deleteAccountFetch = async () => {
  */
 export const getSearchRoutesFetch = async () => {
   try {
-    const res = await axiosInstance.get(`/api/v1/recentSearch`);
+    // TODO: 기획 최종 나오고 서버 api 개발 된다면 헤더에 토큰유무 필요에 맞는 인스턴스로 교체
+    const res = await authServiceAPI.get(`/api/v1/recentSearch`);
     return res.data.data;
   } catch (err) {
     Sentry.captureException(err);
@@ -171,7 +172,7 @@ export const getSearchRoutesFetch = async () => {
  */
 export const getSavedRoutesFetch = async () => {
   try {
-    const res = await axiosInstance.get<{ data: RenderSavedRoutesType[] }>(
+    const res = await authServiceAPI.get<{ data: RenderSavedRoutesType[] }>(
       `/api/v1/my_find_road/get_roads`,
     );
     return res.data.data;
@@ -187,7 +188,7 @@ export const getSavedRoutesFetch = async () => {
  */
 export const saveMyRoutesFetch = async (newRoute: object) => {
   try {
-    const res = await axiosInstance.post('/api/v1/my_find_road/add_route', newRoute);
+    const res = await authServiceAPI.post('/api/v1/my_find_road/add_route', newRoute);
     return res;
   } catch (err) {
     Sentry.captureException(err);
@@ -201,7 +202,7 @@ export const saveMyRoutesFetch = async (newRoute: object) => {
  */
 export const changeNicknameFetch = async (newNickname: string) => {
   try {
-    await axiosInstance.post(`/api/v1/member/change_nickname`, {
+    await authServiceAPI.post(`/api/v1/member/change_nickname`, {
       nickName: newNickname,
     });
   } catch (err) {
@@ -216,7 +217,7 @@ export const changeNicknameFetch = async (newNickname: string) => {
  */
 export const checkPasswordFetch = async (passwordInput: string) => {
   try {
-    const res = await axiosInstance.post(`/api/v1/member/check_password`, {
+    const res = await publicServiceAPI.post(`/api/v1/member/check_password`, {
       checkPassword: passwordInput,
     });
   } catch (err) {
@@ -231,7 +232,7 @@ export const checkPasswordFetch = async (passwordInput: string) => {
  */
 export const changePasswordFetch = async (data: object) => {
   try {
-    const res = await axiosInstance.post(`/api/v1/member/change_password`, data);
+    const res = await authServiceAPI.post(`/api/v1/member/change_password`, data);
   } catch (err) {
     Sentry.captureException(err);
     const er = err as AxiosError;
@@ -244,7 +245,7 @@ export const changePasswordFetch = async (data: object) => {
  */
 export const getAllIssuesFetch = async () => {
   try {
-    const res = await axiosInstance.get<{ data: AllIssues }>(`/api/v1/issue/get_all`);
+    const res = await publicServiceAPI.get<{ data: AllIssues }>(`/api/v1/issue/get_all`);
     return res.data.data;
   } catch (err) {
     Sentry.captureException(err);
@@ -258,7 +259,7 @@ export const getAllIssuesFetch = async () => {
  */
 export const getIssuesByLaneFetch = async (params: { line: string }) => {
   try {
-    const res = await axiosInstance.get<{ data: AllIssues }>('/api/v1/issue/get_line', {
+    const res = await publicServiceAPI.get<{ data: AllIssues }>('/api/v1/issue/get_line', {
       params,
     });
     return res.data.data;
@@ -274,7 +275,7 @@ export const getIssuesByLaneFetch = async (params: { line: string }) => {
  */
 export const getPopularIssuesFetch = async () => {
   try {
-    const res = await axiosInstance.get<{ data: IssueContent[] }>(`/api/v1/issue/get_popular`);
+    const res = await publicServiceAPI.get<{ data: IssueContent[] }>(`/api/v1/issue/get_popular`);
     return res.data.data;
   } catch (err) {
     Sentry.captureException(err);
