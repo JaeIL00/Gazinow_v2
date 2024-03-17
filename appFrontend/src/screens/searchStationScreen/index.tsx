@@ -101,38 +101,12 @@ const SearchStationScreen = () => {
       </Container>
 
       {/* 입력어가 있고 && 검색 결과가 없으면 없음 표시 */}
-      {!!searchTextValue && searchResultData.length < 1 ? (
+      {!!searchTextValue && searchResultData.length < 1 && (
         <NoResult>
           <NoResultIcon />
           <Space height="17px" />
           <NoResultText />
         </NoResult>
-      ) : (
-        <ResultContainer>
-          <Ul marginTop="28px">
-            {searchResultData.map(({ stationName, stationLine }, idx) => (
-              <Li key={idx} onPress={() => stationBtnHandler({ stationLine, stationName })}>
-                <IconLocationPin />
-                <StationInfoBox>
-                  <FontText
-                    value={stationName}
-                    textSize="16px"
-                    textWeight="Medium"
-                    lineHeight="21px"
-                    textColor="#000"
-                  />
-                  <FontText
-                    value={stationLine!}
-                    textSize="14px"
-                    textWeight="Regular"
-                    lineHeight="21px"
-                    textColor={COLOR.GRAY_999}
-                  />
-                </StationInfoBox>
-              </Li>
-            ))}
-          </Ul>
-        </ResultContainer>
       )}
 
       {/* 최근 검색 목록 */}
@@ -160,6 +134,34 @@ const SearchStationScreen = () => {
                 }
               >
                 <IconClock />
+                <StationInfoBox>
+                  <FontText
+                    value={stationName}
+                    textSize="16px"
+                    textWeight="Medium"
+                    lineHeight="21px"
+                    textColor="#000"
+                  />
+                  <FontText
+                    value={stationLine!}
+                    textSize="14px"
+                    textWeight="Regular"
+                    lineHeight="21px"
+                    textColor={COLOR.GRAY_999}
+                  />
+                </StationInfoBox>
+              </Li>
+            ))}
+          </Ul>
+        </ResultContainer>
+      )}
+
+      {!!searchTextValue && searchResultData.length > 0 && (
+        <ResultContainer>
+          <Ul marginTop="28px">
+            {searchResultData.map(({ stationName, stationLine }, idx) => (
+              <Li key={idx} onPress={() => stationBtnHandler({ stationLine, stationName })}>
+                <IconLocationPin />
                 <StationInfoBox>
                   <FontText
                     value={stationName}
