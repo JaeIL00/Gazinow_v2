@@ -15,6 +15,8 @@ import IconClock from '@assets/icons/clock.svg';
 import IconLeftArrow from '@assets/icons/left_arrow_sharp.svg';
 import IconXCircleFill from '@assets/icons/x_circle_fill.svg';
 import { RawSubwayLineName } from '@/global/apis/entity';
+import NoResultIcon from '@/assets/icons/no_result_icon.svg';
+import NoResultText from '@/assets/icons/no_result_text.svg';
 
 const SearchStationScreen = () => {
   const navigation = useHomeNavigation();
@@ -97,7 +99,44 @@ const SearchStationScreen = () => {
           <IconXCircleFill />
         </TouchableOpacity>
       </Container>
-      {isVerifiedUser === 'success auth' && !searchTextValue ? (
+
+      {/* 입력어가 있고 && 검색 결과가 없으면 없음 표시 */}
+      {!!searchTextValue && searchResultData.length < 1 ? (
+        <NoResult>
+          <NoResultIcon />
+          <Space height="17px" />
+          <NoResultText />
+        </NoResult>
+      ) : (
+        <ResultContainer>
+          <Ul marginTop="28px">
+            {searchResultData.map(({ stationName, stationLine }, idx) => (
+              <Li key={idx} onPress={() => stationBtnHandler({ stationLine, stationName })}>
+                <IconLocationPin />
+                <StationInfoBox>
+                  <FontText
+                    value={stationName}
+                    textSize="16px"
+                    textWeight="Medium"
+                    lineHeight="21px"
+                    textColor="#000"
+                  />
+                  <FontText
+                    value={stationLine!}
+                    textSize="14px"
+                    textWeight="Regular"
+                    lineHeight="21px"
+                    textColor={COLOR.GRAY_999}
+                  />
+                </StationInfoBox>
+              </Li>
+            ))}
+          </Ul>
+        </ResultContainer>
+      )}
+
+      {/* 최근 검색 목록 */}
+      {isVerifiedUser === 'success auth' && !searchTextValue && (
         <ResultContainer>
           <Header>
             <FontText
@@ -121,34 +160,6 @@ const SearchStationScreen = () => {
                 }
               >
                 <IconClock />
-                <StationInfoBox>
-                  <FontText
-                    value={stationName}
-                    textSize="16px"
-                    textWeight="Medium"
-                    lineHeight="21px"
-                    textColor="#000"
-                  />
-                  <FontText
-                    value={stationLine!}
-                    textSize="14px"
-                    textWeight="Regular"
-                    lineHeight="21px"
-                    textColor={COLOR.GRAY_999}
-                  />
-                </StationInfoBox>
-              </Li>
-            ))}
-          </Ul>
-        </ResultContainer>
-      ) : (
-        <ResultContainer>
-          {/* 입력어가 있고 && 검색 결과가 있으면 결과 표시 */}
-          {/* 입력어가 있고 && 검색 결과가 없으면 없음 표시 */}
-          <Ul marginTop="28px">
-            {searchResultData.map(({ stationName, stationLine }, idx) => (
-              <Li key={idx} onPress={() => stationBtnHandler({ stationLine, stationName })}>
-                <IconLocationPin />
                 <StationInfoBox>
                   <FontText
                     value={stationName}
@@ -213,4 +224,9 @@ const StationInfoBox = styled.View`
 const LocateIcon = styled.Image`
   width: 25px;
   height: 25px;
+`;
+const NoResult = styled.View`
+  flex: 1;
+  align-items: center;
+  justify-content: center;
 `;

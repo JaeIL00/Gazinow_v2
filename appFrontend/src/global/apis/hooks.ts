@@ -62,8 +62,16 @@ export const useGetSearchHistory = () => {
 /**
  * 지하철 경로 조회 훅
  */
-export const useGetSearchPaths = (params: SubwayStrEnd) => {
-  const { data } = useQuery(['search_paths', params], () => searchPathsFetch(params));
+export const useGetSearchPaths = ({
+  params,
+  enabled,
+}: {
+  params: SubwayStrEnd;
+  enabled: boolean;
+}) => {
+  const { data } = useQuery(['search_paths', params], () => searchPathsFetch(params), {
+    enabled,
+  });
   return { data };
 };
 
