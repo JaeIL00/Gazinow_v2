@@ -1,14 +1,14 @@
 import { AxiosError } from 'axios';
 import { IssueGet } from './entity';
 import * as Sentry from '@sentry/react';
-import { axiosInstance } from '@/global/apis/axiosInstance';
+import { authServiceAPI, publicServiceAPI } from '@/global/apis';
 
 /**
  * 상세 이슈 조회
  */
 export const getIssueDetail = async (params: { id: number | null }) => {
   try {
-    const res = await axiosInstance.get<{ data: IssueGet }>('/api/v1/issue/get', {
+    const res = await publicServiceAPI.get<{ data: IssueGet }>('/api/v1/issue/get', {
       params,
     });
     return res.data.data;
@@ -24,7 +24,7 @@ export const getIssueDetail = async (params: { id: number | null }) => {
  */
 export const postLike = async (issueId: number) => {
   try {
-    const res = await axiosInstance.post(`/api/v1/like?issueId=${issueId}`);
+    const res = await authServiceAPI.post(`/api/v1/like?issueId=${issueId}`);
     return res.data.data;
   } catch (err) {
     Sentry.captureException(err);
@@ -38,7 +38,7 @@ export const postLike = async (issueId: number) => {
  */
 export const deletePostLike = async (issueId: number) => {
   try {
-    const res = await axiosInstance.delete(`/api/v1/like?issueId=${issueId}`);
+    const res = await authServiceAPI.delete(`/api/v1/like?issueId=${issueId}`);
     return res.data.data;
   } catch (err) {
     Sentry.captureException(err);

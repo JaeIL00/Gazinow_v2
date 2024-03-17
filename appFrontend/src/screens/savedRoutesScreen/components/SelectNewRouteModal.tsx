@@ -26,10 +26,17 @@ const SelectNewRouteModal = () => {
     useState<SelectedStationTypes>(selectedStationRedux);
 
   const { data } = useGetSearchPaths({
-    strStationName: selectedStation.departure.stationName,
-    strStationLine: selectedStation.departure.stationLine,
-    endStationName: selectedStation.arrival.stationName,
-    endStationLine: selectedStation.arrival.stationLine,
+    params: {
+      strStationName: selectedStation.departure.stationName,
+      strStationLine: selectedStation.departure.stationLine,
+      endStationName: selectedStation.arrival.stationName,
+      endStationLine: selectedStation.arrival.stationLine,
+    },
+    enabled:
+      !!selectedStationRedux.departure.stationName &&
+      !!selectedStationRedux.departure.stationLine &&
+      !!selectedStationRedux.arrival.stationName &&
+      !!selectedStationRedux.arrival.stationLine,
   });
 
   const pathTime = (item: Path) => {

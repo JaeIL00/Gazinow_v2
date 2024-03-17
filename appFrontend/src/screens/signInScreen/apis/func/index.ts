@@ -1,4 +1,4 @@
-import { axiosInstance } from '@/global/apis/axiosInstance';
+import { authServiceAPI, publicServiceAPI } from '@/global/apis';
 import { AxiosError } from 'axios';
 import { SignInFetchResponse, SignInFormTypes, LogoutFetchData } from '../entity';
 import * as Sentry from '@sentry/react-native';
@@ -8,7 +8,7 @@ import * as Sentry from '@sentry/react-native';
  */
 export const signInFetch = async (data: SignInFormTypes) => {
   try {
-    const res = await axiosInstance.post<{ data: SignInFetchResponse }>(
+    const res = await publicServiceAPI.post<{ data: SignInFetchResponse }>(
       '/api/v1/member/login',
       data,
     );
@@ -25,7 +25,7 @@ export const signInFetch = async (data: SignInFormTypes) => {
  */
 export const logoutFetch = async ({ accessToken, refreshToken }: LogoutFetchData) => {
   try {
-    await axiosInstance.post('/api/v1/member/logout', { accessToken, refreshToken });
+    await authServiceAPI.post('/api/v1/member/logout', { accessToken, refreshToken });
   } catch (err) {
     Sentry.captureException(err);
     const er = err as AxiosError;
