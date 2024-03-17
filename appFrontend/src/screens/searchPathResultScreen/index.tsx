@@ -33,10 +33,17 @@ const SearchPathResultScreen = () => {
   const dispatch = useAppDispatch();
 
   const { data } = useGetSearchPaths({
-    strStationName: selectedStationRedux.departure.stationName,
-    strStationLine: selectedStationRedux.departure.stationLine,
-    endStationName: selectedStationRedux.arrival.stationName,
-    endStationLine: selectedStationRedux.arrival.stationLine,
+    params: {
+      strStationName: selectedStationRedux.departure.stationName,
+      strStationLine: selectedStationRedux.departure.stationLine,
+      endStationName: selectedStationRedux.arrival.stationName,
+      endStationLine: selectedStationRedux.arrival.stationLine,
+    },
+    enabled:
+      !!selectedStationRedux.departure.stationName &&
+      !!selectedStationRedux.departure.stationLine &&
+      !!selectedStationRedux.arrival.stationName &&
+      !!selectedStationRedux.arrival.stationLine,
   });
 
   const pathTime = (item: Path) => {
