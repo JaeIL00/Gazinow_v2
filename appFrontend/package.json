@@ -1,6 +1,6 @@
 {
   "name": "gazinow",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "private": true,
   "scripts": {
     "codepush:android": "appcenter codepush release-react -a gazinowcs-gmail.com/Gazinow_android -d Staging --sourcemap-output --output-dir ./build -m -t 1.0",
