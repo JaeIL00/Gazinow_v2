@@ -18,9 +18,10 @@ import IssueKeywordIcon from '@/global/components/subwaySimplePath/IssueKeywordI
 interface SearchPathDetailItemProps {
   data: SubPath;
   isLastLane: boolean;
+  lineLength: number;
 }
 
-const SearchPathDetailItem = ({ data, isLastLane }: SearchPathDetailItemProps) => {
+const SearchPathDetailItem = ({ data, isLastLane, lineLength }: SearchPathDetailItemProps) => {
   const navigation = useRootNavigation();
   const dispatch = useAppDispatch();
 
@@ -64,6 +65,7 @@ const SearchPathDetailItem = ({ data, isLastLane }: SearchPathDetailItemProps) =
           <View
             style={css`
               margin-left: 14px;
+              flex: 1;
             `}
           >
             <FontText
@@ -272,7 +274,9 @@ const SearchPathDetailItem = ({ data, isLastLane }: SearchPathDetailItemProps) =
               align-items: center;
             `}
           >
-            <IconWalkHuman width={24} height={24} />
+            <View style={{ marginTop: 10 }}>
+              <IconWalkHuman width={24} height={24} />
+            </View>
             <View
               style={css`
                 overflow: hidden;
@@ -289,6 +293,23 @@ const SearchPathDetailItem = ({ data, isLastLane }: SearchPathDetailItemProps) =
                 }}
               />
             </View>
+          </View>
+        )}
+        {isLastLane && (
+          <View
+            style={{
+              paddingTop: lineLength > 1 ? '60%' : '100%',
+              alignItems: 'center',
+              paddingBottom: 24,
+              paddingRight: 31,
+            }}
+          >
+            <FontText
+              value="powered by www.ODsay.com"
+              textSize="10px"
+              textWeight="Regular"
+              textColor={COLOR.GRAY_DDD}
+            />
           </View>
         )}
       </View>

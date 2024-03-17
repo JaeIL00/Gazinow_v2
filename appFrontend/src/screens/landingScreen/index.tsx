@@ -1,19 +1,11 @@
 import { COLOR } from '@/global/constants';
 import { FontText, TextButton } from '@/global/ui';
 import { useAuthNavigation } from '@/navigation/AuthNavigation';
-import { useEffect } from 'react';
 import { Animated, SafeAreaView, TouchableOpacity, View } from 'react-native';
-import SplashScreen from 'react-native-splash-screen';
 import IconLeftArrow from '@assets/icons/left_arrow_head.svg';
 
 const LandingScreen = () => {
   const navigation = useAuthNavigation();
-
-  useEffect(() => {
-    setTimeout(() => {
-      SplashScreen.hide();
-    }, 500);
-  }, []);
 
   return (
     <View style={{ flex: 1, position: 'relative' }}>
