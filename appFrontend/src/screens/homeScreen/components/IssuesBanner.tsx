@@ -15,6 +15,8 @@ import { subwayLineColor } from '@/global/utils';
 import { useAppDispatch } from '@/store';
 import { getIssueId } from '@/store/modules';
 import { useRootNavigation } from '@/navigation/RootNavigation';
+import IssueKeywordIcon from '@/global/components/subwaySimplePath/IssueKeywordIcon';
+import { View } from 'react-native';
 
 interface IssuesBannerProps {
   subPathss: SubPath[];
@@ -44,37 +46,21 @@ const IssuesBanner = ({ subPathss }: IssuesBannerProps) => {
             }}
           >
             <Issue>
-              {
-                {
-                  자연재해: (
-                    <NaturalDisasters width={16} fill={subwayLineColor(lane.stationCode)} />
-                  ),
-                  연착: (
-                    <Delayed
-                      width={16}
-                      fill={subwayLineColor(lane.stationCode)}
-                      stroke={subwayLineColor(lane.stationCode)}
-                    />
-                  ),
-                  혼잡: <Crowded width={16} fill={subwayLineColor(lane.stationCode)} />,
-                  행사: <Event width={16} fill={subwayLineColor(lane.stationCode)} />,
-                  사고: <Accident width={16} fill={subwayLineColor(lane.stationCode)} />,
-                  공사: <Construction width={16} fill={subwayLineColor(lane.stationCode)} />,
-                  시위: <Demonstration width={16} fill={subwayLineColor(lane.stationCode)} />,
-                }[issue.keyword]
-              }
+              <IssueKeywordIcon
+                width={16}
+                height={16}
+                keyword={issue.keyword}
+                color={subwayLineColor(lane.stationCode)}
+              />
               <Space width="10px" />
-              <More>
-                <FontText
-                  value={issue.title}
-                  textSize="13px"
-                  textWeight="SemiBold"
-                  lineHeight="19px"
-                  textColor={COLOR.BASIC_BLACK}
-                  numberOfLines={1}
-                  ellipsizeMode="middle"
-                />
-              </More>
+              <FontText
+                value={issue.title}
+                textSize="13px"
+                textWeight="SemiBold"
+                textColor={COLOR.BASIC_BLACK}
+                numberOfLines={1}
+                style={{ marginBottom: 3 }}
+              />
             </Issue>
             <More>
               <MoreBtn />
@@ -88,7 +74,7 @@ const IssuesBanner = ({ subPathss }: IssuesBannerProps) => {
 export default IssuesBanner;
 
 const Container = styled.Pressable`
-  padding: 3px 12.5px 3px 16px;
+  padding: 8px 12.5px 7px 16px;
   align-items: center;
   justify-content: space-between;
   flex-direction: row;
@@ -98,7 +84,11 @@ const Container = styled.Pressable`
   margin: 0 0 8px;
 `;
 const Issue = styled.View`
+  align-items: center;
   flex-direction: row;
+  flex: 1;
+  overflow: hidden;
+  padding-right: 30px;
 `;
 const More = styled.View`
   align-items: center;

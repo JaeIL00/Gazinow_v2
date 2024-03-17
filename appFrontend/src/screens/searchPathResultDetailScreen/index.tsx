@@ -2,7 +2,7 @@ import { css } from '@emotion/native';
 import { useMemo, useState } from 'react';
 import { FlatList, Modal, SafeAreaView, TouchableOpacity, View } from 'react-native';
 
-import { FontText, TextButton } from '@/global/ui';
+import { FontText, Space, TextButton } from '@/global/ui';
 import { useRoute } from '@react-navigation/native';
 import NewRouteSaveModal from './components/NewRouteSaveModal';
 import SearchPathDetailItem from './components/SearchPathDetailItem';
@@ -38,10 +38,6 @@ const SearchPathResultDetailScreen = () => {
     const subPaths = resultData.subPaths;
     return Object.values(subPaths).filter((item) => !!item.lanes.length && !!item.stations.length);
   }, [resultData]);
-
-  const transferCount = useMemo(() => {
-    return freshSubPathData.length <= 1 ? freshSubPathData.length : freshSubPathData.length - 1;
-  }, [freshSubPathData]);
 
   const bookmarkHandler = () => {
     // FIXME: 저장 후 경로 목록을 refetch하지 않는 이상 저장한 경로 아이디를 알 수 없음
@@ -208,11 +204,9 @@ const SearchPathResultDetailScreen = () => {
                 textSize="24px"
                 textWeight="Bold"
               />
-              <View
-                style={css`
-                  width: 8px;
-                `}
-              />
+
+              <Space width="8px" />
+
               <View>
                 <View
                   style={css`
@@ -220,11 +214,15 @@ const SearchPathResultDetailScreen = () => {
                   `}
                 />
                 <FontText
-                  value={'환승 ' + transferCount + '회'}
+                  value={
+                    freshSubPathData.length - 1 === 0
+                      ? '환승없음'
+                      : '환승 ' + (freshSubPathData.length - 1) + '회'
+                  }
                   textSize="14px"
                   textWeight="Regular"
-                  lineHeight="21px"
                   textColor="#999"
+                  style={{ marginBottom: 3 }}
                 />
               </View>
             </View>
@@ -241,7 +239,7 @@ const SearchPathResultDetailScreen = () => {
 
         <FlatList
           data={freshSubPathData}
-          // contentContainerStyle={{ height: '100%', overflow: 'scroll' }}
+          showsVerticalScrollIndicator={false}
           keyExtractor={(item) => {
             if (typeof item === 'string') return 'dance';
             return item.distance + item.sectionTime + '';
@@ -251,20 +249,10 @@ const SearchPathResultDetailScreen = () => {
               <SearchPathDetailItem
                 data={item}
                 isLastLane={freshSubPathData.length - 1 === index}
+                lineLength={freshSubPathData.length}
               />
             );
           }}
-          ListFooterComponent={
-            <View style={{ paddingTop: '60%', alignItems: 'center', paddingBottom: 24 }}>
-              <FontText
-                value="powered by www.ODsay.com"
-                textSize="10px"
-                textWeight="Regular"
-                textColor={COLOR.GRAY_DDD}
-              />
-            </View>
-          }
-          ListFooterComponentStyle={{ backgroundColor: 'tomao', flex: 1 }}
         />
       </View>
     </SafeAreaView>

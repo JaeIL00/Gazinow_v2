@@ -1,10 +1,11 @@
 import { useGetPopularIssuesQuery } from '@/global/apis/hooks';
 import { FontText, Space } from '@/global/ui';
-import { FlatList } from 'react-native';
+import { FlatList, RefreshControl } from 'react-native';
 import { COLOR } from '@/global/constants';
 import styled from '@emotion/native';
 import { AllIssuesFL, FilterByLane, IssueContainer, LaneButtons } from '.';
 import { NowScreenCapsules } from '@/global/apis/entity';
+import { useState } from 'react';
 
 interface PopularIssuesProps {
   activeButton: NowScreenCapsules;
@@ -12,10 +13,17 @@ interface PopularIssuesProps {
 }
 
 const PopularIssues = ({ activeButton, setActiveButton }: PopularIssuesProps) => {
-  const { data: popularIssues } = useGetPopularIssuesQuery();
-  if (!popularIssues) {
-    return null;
-  }
+  const [isRefresh, setRefresh] = useState<boolean>(false);
+  const { popularIssues, popularIssuesRefetch } = useGetPopularIssuesQuery({
+    onSuccess: () => setRefresh(false),
+  });
+
+  const refreshPopularIssues = () => {
+    setRefresh(true);
+    popularIssuesRefetch();
+  };
+
+  if (!popularIssues) return null;
   return (
     <FlatList
       data={popularIssues}
@@ -65,6 +73,13 @@ const PopularIssues = ({ activeButton, setActiveButton }: PopularIssuesProps) =>
           lineHeight="500px" //TODO: 크기 수정
           textColor={COLOR.GRAY_999}
           textAlign="center"
+        />
+      }
+      refreshControl={
+        <RefreshControl
+          onRefresh={refreshPopularIssues}
+          refreshing={isRefresh}
+          progressViewOffset={-10}
         />
       }
     />

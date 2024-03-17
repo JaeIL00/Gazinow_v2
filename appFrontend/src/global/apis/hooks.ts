@@ -19,7 +19,7 @@ import {
   getAllIssuesFetch,
   getIssuesByLaneFetch,
 } from '@/global/apis/func';
-import { RawSubwayLineName, SubwayStrEnd } from './entity';
+import { IssueContent, RawSubwayLineName, SubwayStrEnd } from './entity';
 import { AxiosError } from 'axios';
 import { subwayFreshLineName } from '@/global/utils';
 import { useAppSelect } from '@/store';
@@ -244,7 +244,13 @@ export const useGetIssuesByLaneQuery = (line: string) => {
 /**
  * 이슈 추천순 조회 훅
  */
-export const useGetPopularIssuesQuery = () => {
-  const { data } = useQuery(['getPopularIssues'], getPopularIssuesFetch);
-  return { data };
+export const useGetPopularIssuesQuery = ({
+  onSuccess,
+}: {
+  onSuccess: (data: IssueContent[]) => void;
+}) => {
+  const { data, refetch } = useQuery(['getPopularIssues'], getPopularIssuesFetch, {
+    onSuccess,
+  });
+  return { popularIssues: data, popularIssuesRefetch: refetch };
 };
