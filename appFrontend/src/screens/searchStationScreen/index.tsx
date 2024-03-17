@@ -99,7 +99,44 @@ const SearchStationScreen = () => {
           <IconXCircleFill />
         </TouchableOpacity>
       </Container>
-      {isVerifiedUser === 'success auth' && !searchTextValue ? (
+
+      {/* 입력어가 있고 && 검색 결과가 없으면 없음 표시 */}
+      {!!searchTextValue && searchResultData.length < 1 ? (
+        <NoResult>
+          <NoResultIcon />
+          <Space height="17px" />
+          <NoResultText />
+        </NoResult>
+      ) : (
+        <ResultContainer>
+          <Ul marginTop="28px">
+            {searchResultData.map(({ stationName, stationLine }, idx) => (
+              <Li key={idx} onPress={() => stationBtnHandler({ stationLine, stationName })}>
+                <IconLocationPin />
+                <StationInfoBox>
+                  <FontText
+                    value={stationName}
+                    textSize="16px"
+                    textWeight="Medium"
+                    lineHeight="21px"
+                    textColor="#000"
+                  />
+                  <FontText
+                    value={stationLine!}
+                    textSize="14px"
+                    textWeight="Regular"
+                    lineHeight="21px"
+                    textColor={COLOR.GRAY_999}
+                  />
+                </StationInfoBox>
+              </Li>
+            ))}
+          </Ul>
+        </ResultContainer>
+      )}
+
+      {/* 최근 검색 목록 */}
+      {isVerifiedUser === 'success auth' && !searchTextValue && (
         <ResultContainer>
           <Header>
             <FontText
@@ -142,43 +179,6 @@ const SearchStationScreen = () => {
               </Li>
             ))}
           </Ul>
-        </ResultContainer>
-      ) : (
-        <ResultContainer>
-          {/* 입력어가 있고 && 검색 결과가 없으면 없음 표시 */}
-          {searchResultData.length < 1 && (
-            <NoResult>
-              <NoResultIcon />
-              <Space height="17px" />
-              <NoResultText />
-            </NoResult>
-          )}
-          {/* 입력어가 있고 && 검색 결과가 있으면 결과 표시 */}
-          {searchResultData.length > 0 && (
-            <Ul marginTop="28px">
-              {searchResultData.map(({ stationName, stationLine }, idx) => (
-                <Li key={idx} onPress={() => stationBtnHandler({ stationLine, stationName })}>
-                  <IconLocationPin />
-                  <StationInfoBox>
-                    <FontText
-                      value={stationName}
-                      textSize="16px"
-                      textWeight="Medium"
-                      lineHeight="21px"
-                      textColor="#000"
-                    />
-                    <FontText
-                      value={stationLine!}
-                      textSize="14px"
-                      textWeight="Regular"
-                      lineHeight="21px"
-                      textColor={COLOR.GRAY_999}
-                    />
-                  </StationInfoBox>
-                </Li>
-              ))}
-            </Ul>
-          )}
         </ResultContainer>
       )}
     </SafeAreaView>
