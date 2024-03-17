@@ -1,5 +1,5 @@
 import axios, { AxiosError } from 'axios';
-import { axiosInstance } from './axiosInstance';
+import { axiosInstance } from '.';
 import {
   AllIssues,
   RenderSavedRoutesType,

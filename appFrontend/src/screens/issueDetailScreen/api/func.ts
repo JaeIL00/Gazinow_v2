@@ -1,7 +1,7 @@
 import { AxiosError } from 'axios';
 import { IssueGet } from './entity';
 import * as Sentry from '@sentry/react';
-import { axiosInstance } from '@/global/apis/axiosInstance';
+import { axiosInstance } from '@/global/apis';
 
 /**
  * 상세 이슈 조회

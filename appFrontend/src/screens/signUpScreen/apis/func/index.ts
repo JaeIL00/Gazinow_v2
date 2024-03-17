@@ -1,4 +1,4 @@
-import { axiosInstance } from '@/global/apis/axiosInstance';
+import { axiosInstance } from '@/global/apis';
 import { AxiosError } from 'axios';
 import { SightUpResponse } from '../../type';
 import * as Sentry from '@sentry/react-native';

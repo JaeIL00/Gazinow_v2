@@ -3,7 +3,7 @@ import { Alert, FlatList } from 'react-native';
 import { FontText, Space } from '@/global/ui';
 import { IssueContainer } from '.';
 import { AllIssues, FreshSubwayLineName } from '@/global/apis/entity';
-import { axiosInstance } from '@/global/apis/axiosInstance';
+import { axiosInstance } from '@/global/apis';
 import { COLOR } from '@/global/constants';
 import { subwayReturnLineName } from '@global/utils/subwayLine';
 

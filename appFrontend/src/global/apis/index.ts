@@ -17,6 +17,9 @@ const navigate = (name: any, params?: any): any => {
   }
 };
 
+/**
+ *
+ */
 export const axiosInstance = axios.create({
   baseURL: API_BASE_URL,
   withCredentials: true,
