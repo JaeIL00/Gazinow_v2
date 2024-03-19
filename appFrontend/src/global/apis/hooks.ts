@@ -237,7 +237,7 @@ export const useGetAllIssuesQuery = () => {
  * 이슈 노선별 조회 훅
  */
 export const useGetIssuesByLaneQuery = (line: string) => {
-  const { data } = useQuery(['getIssuesByLane'], () => getIssuesByLaneFetch({ line }));
+  const { data } = useQuery(['getIssuesByLane', line], () => getIssuesByLaneFetch({ line }));
   return { data };
 };
 
