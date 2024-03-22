@@ -19,7 +19,7 @@ import {
   getAllIssuesFetch,
   getIssuesByLaneFetch,
 } from '@/global/apis/func';
-import { IssueContent, RawSubwayLineName, SubwayStrEnd } from './entity';
+import { AllIssues, IssueContent, RawSubwayLineName, SubwayStrEnd } from './entity';
 import { AxiosError } from 'axios';
 import { subwayFreshLineName } from '@/global/utils';
 import { useAppSelect } from '@/store';
@@ -228,17 +228,39 @@ export const useChangePasswordQuery = ({
 /**
  * 이슈 전체 조회 훅
  */
-export const useGetAllIssuesQuery = () => {
-  const { data } = useQuery(['getAllIssues'], getAllIssuesFetch);
-  return { data };
+export const useGetAllIssuesQuery = ({
+  onSuccess,
+  onError,
+}: {
+  onSuccess: (data: AllIssues) => void;
+  onError: (error: AxiosError) => void;
+}) => {
+  const { data, refetch } = useQuery(['getAllIssues'], getAllIssuesFetch, {
+    onSuccess,
+    onError,
+  });
+  return { allIssues: data, allIssuesRefetch: refetch };
 };
 
 /**
  * 이슈 노선별 조회 훅
  */
-export const useGetIssuesByLaneQuery = (line: string) => {
-  const { data } = useQuery(['getIssuesByLane', line], () => getIssuesByLaneFetch({ line }));
-  return { data };
+export const useGetIssuesByLaneQuery = (
+  line: string,
+  {
+    onSuccess,
+    onError,
+  }: {
+    onSuccess: (data: AllIssues) => void;
+    onError: (error: AxiosError) => void;
+  },
+) => {
+  const { data, refetch } = useQuery(
+    ['getIssuesByLane', line],
+    () => getIssuesByLaneFetch({ line }),
+    { onSuccess, onError },
+  );
+  return { laneIssues: data, laneIssuesRefetch: refetch };
 };
 
 /**
@@ -246,11 +268,14 @@ export const useGetIssuesByLaneQuery = (line: string) => {
  */
 export const useGetPopularIssuesQuery = ({
   onSuccess,
+  onError,
 }: {
   onSuccess: (data: IssueContent[]) => void;
+  onError: (error: AxiosError) => void;
 }) => {
   const { data, refetch } = useQuery(['getPopularIssues'], getPopularIssuesFetch, {
     onSuccess,
+    onError,
   });
   return { popularIssues: data, popularIssuesRefetch: refetch };
 };
