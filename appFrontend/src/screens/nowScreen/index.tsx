@@ -87,30 +87,36 @@ const NowScreen = () => {
               <Header>
                 <FontText value="NOW" textSize="24px" textWeight="SemiBold" lineHeight="34px" />
               </Header>
-              <>
-                <IssueLineType>
-                  <FontText
-                    value="지금 인기"
-                    textSize="20px"
-                    textWeight="SemiBold"
-                    lineHeight="25px"
-                  />
-                </IssueLineType>
-                {popularIssues?.map((item, index) => (
-                  <IssueContainer
-                    key={item.id}
-                    id={item.id}
-                    title={item.title}
-                    time={item.agoTime}
-                    body={item.content}
-                    isLastItem={index === popularIssues.length - 1}
-                  />
-                ))}
-                <Space height="12px" width="999px" backgroundColor={COLOR.WHITE} />
-                <Space height="8px" width="999px" backgroundColor={COLOR.GRAY_F8} />
-                <Space height="12px" width="999px" backgroundColor={COLOR.WHITE} />
-                <LaneButtons activeButton={activeButton} setActiveButton={setActiveButton} />
-              </>
+              {popularIssues!.length > 0 && (
+                <>
+                  <IssueLineType>
+                    <FontText
+                      value="지금 인기"
+                      textSize="20px"
+                      textWeight="SemiBold"
+                      lineHeight="25px"
+                    />
+                  </IssueLineType>
+                  {popularIssues?.map((item, index) => (
+                    <IssueContainer
+                      key={item.id}
+                      id={item.id}
+                      title={item.title}
+                      time={item.agoTime}
+                      body={item.content}
+                      isLastItem={index === popularIssues.length - 1}
+                    />
+                  ))}
+                  <Space height="12px" width="999px" backgroundColor={COLOR.WHITE} />
+                  <Space height="8px" width="999px" backgroundColor={COLOR.GRAY_F8} />
+                  <Space height="12px" width="999px" backgroundColor={COLOR.WHITE} />
+                </>
+              )}
+              <LaneButtons
+                activeButton={activeButton}
+                setActiveButton={setActiveButton}
+                titleShown={popularIssues!.length > 0}
+              />
             </>
           }
           data={issuesList}

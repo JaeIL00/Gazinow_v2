@@ -11,10 +11,11 @@ import { useAppSelect } from '@/store';
 interface LaneButtonsProps {
   activeButton: NowScreenCapsules;
   setActiveButton: (activeButton: NowScreenCapsules) => void;
+  titleShown: boolean;
 }
 
 //TODO: + 버튼 구현
-const LaneButtons = ({ activeButton, setActiveButton }: LaneButtonsProps) => {
+const LaneButtons = ({ activeButton, setActiveButton, titleShown }: LaneButtonsProps) => {
   const isVerifiedUser = useAppSelect((state) => state.auth.isVerifiedUser);
 
   // 내가 저장한 경로의 노선만 가져옴
@@ -42,14 +43,16 @@ const LaneButtons = ({ activeButton, setActiveButton }: LaneButtonsProps) => {
 
   return (
     <>
-      <IssueLineType>
-        <FontText
-          value={activeButton === '전체' ? '전체' : `${activeButton} NOW`}
-          textSize="20px"
-          textWeight="SemiBold"
-          lineHeight="25px"
-        />
-      </IssueLineType>
+      {titleShown && (
+        <IssueLineType>
+          <FontText
+            value={activeButton === '전체' ? '전체' : `${activeButton} NOW`}
+            textSize="20px"
+            textWeight="SemiBold"
+            lineHeight="25px"
+          />
+        </IssueLineType>
+      )}
       <ScrollView
         horizontal={true}
         showsHorizontalScrollIndicator={false}
