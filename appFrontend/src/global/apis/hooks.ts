@@ -228,14 +228,17 @@ export const useChangePasswordQuery = ({
 /**
  * 이슈 전체 조회 훅
  */
-export const useGetAllIssuesQuery = ({
-  onSuccess,
-  onError,
-}: {
-  onSuccess: (data: AllIssues) => void;
-  onError: (error: AxiosError) => void;
-}) => {
-  const { data, refetch } = useQuery(['getAllIssues'], getAllIssuesFetch, {
+export const useGetAllIssuesQuery = (
+  page: number,
+  {
+    onSuccess,
+    onError,
+  }: {
+    onSuccess: (data: AllIssues) => void;
+    onError: (error: AxiosError) => void;
+  },
+) => {
+  const { data, refetch } = useQuery(['getAllIssues', page], () => getAllIssuesFetch({ page }), {
     onSuccess,
     onError,
   });
@@ -246,6 +249,7 @@ export const useGetAllIssuesQuery = ({
  * 이슈 노선별 조회 훅
  */
 export const useGetIssuesByLaneQuery = (
+  page: number,
   line: string,
   {
     onSuccess,
@@ -256,8 +260,8 @@ export const useGetIssuesByLaneQuery = (
   },
 ) => {
   const { data, refetch } = useQuery(
-    ['getIssuesByLane', line],
-    () => getIssuesByLaneFetch({ line }),
+    ['getIssuesByLane', page, line],
+    () => getIssuesByLaneFetch({ page, line }),
     { onSuccess, onError },
   );
   return { laneIssues: data, laneIssuesRefetch: refetch };

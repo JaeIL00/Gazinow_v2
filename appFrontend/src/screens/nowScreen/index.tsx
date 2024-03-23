@@ -3,7 +3,7 @@ import styled from '@emotion/native';
 import { COLOR } from '@/global/constants';
 import { useQueryClient } from 'react-query';
 import { IssueContainer, LaneButtons } from './components';
-import { FreshSubwayLineName, NowScreenCapsules } from '@/global/apis/entity';
+import { FreshSubwayLineName, IssueContent, NowScreenCapsules } from '@/global/apis/entity';
 import { Alert, FlatList, RefreshControl, View } from 'react-native';
 import {
   useGetAllIssuesQuery,
@@ -20,15 +20,18 @@ const NowScreen = () => {
   const [activeButton, setActiveButton] = useState<NowScreenCapsules>('전체');
   const [isLoading, setIsLoading] = useState(true);
   const [isActiveBtnChanged, setIsActiveBtnChanged] = useState(true);
+  const [isRefresh, setRefresh] = useState<boolean>(false);
+  const [issuesPage, setIssuesPage] = useState(0);
+  const [issuesList, setIssuesList] = useState<IssueContent[]>([]);
 
   useEffect(() => {
     // queryClient.invalidateQueries('getPopularIssues');
     queryClient.invalidateQueries('getAllIssues');
     queryClient.invalidateQueries('getIssuesByLane');
     setIsActiveBtnChanged(true);
+    setIssuesList([]);
+    setIssuesPage(0);
   }, [activeButton]);
-
-  const [isRefresh, setRefresh] = useState<boolean>(false);
 
   const callback = {
     onSuccess: () => {
@@ -49,11 +52,21 @@ const NowScreen = () => {
   };
 
   const { popularIssues, popularIssuesRefetch } = useGetPopularIssuesQuery(callback);
-  const { allIssues, allIssuesRefetch } = useGetAllIssuesQuery(callback);
+  const { allIssues, allIssuesRefetch } = useGetAllIssuesQuery(issuesPage, callback);
   const { laneIssues, laneIssuesRefetch } = useGetIssuesByLaneQuery(
+    issuesPage,
     subwayReturnLineName(activeButton as FreshSubwayLineName)!,
     callback,
   );
+
+  useEffect(() => {
+    if (allIssues) {
+      setIssuesList((prevList) => [...prevList, ...allIssues.content]);
+    }
+    if (laneIssues) {
+      setIssuesList(laneIssues.content);
+    }
+  }, [allIssues, laneIssues, activeButton]);
 
   const refreshIssues = () => {
     setRefresh(true);
@@ -62,8 +75,6 @@ const NowScreen = () => {
     allIssuesRefetch();
     laneIssuesRefetch();
   };
-
-  const issuesList = activeButton === '전체' ? allIssues?.content! : laneIssues?.content!;
 
   return (
     <Container>
@@ -128,7 +139,7 @@ const NowScreen = () => {
               value="올라온 이슈가 없어요"
               textSize="18px"
               textWeight="Regular"
-              lineHeight="500px"
+              lineHeight="400px"
               textColor={COLOR.GRAY_999}
               textAlign="center"
             />
@@ -140,6 +151,12 @@ const NowScreen = () => {
               progressViewOffset={-10}
             />
           }
+          onEndReached={() => {
+            if (issuesList.length >= 15) {
+              setIssuesPage((prevPage) => prevPage + 1);
+            }
+          }}
+          onEndReachedThreshold={0.4}
         />
       )}
     </Container>
