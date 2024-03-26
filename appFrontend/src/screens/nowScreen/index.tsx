@@ -78,7 +78,9 @@ const NowScreen = () => {
   return (
     <Container>
       {isLoading ? (
-        <LoadingAnimations />
+        <View style={{ marginTop: 30, alignItems: 'center' }}>
+          <LoadingAnimations width={50} height={50} />
+        </View>
       ) : (
         <FlatList
           ListHeaderComponent={
@@ -120,8 +122,8 @@ const NowScreen = () => {
           renderItem={({ item, index }) =>
             isActiveBtnChanged ? (
               index === 0 ? (
-                <View style={{ marginTop: 30 }}>
-                  <LoadingAnimations />
+                <View style={{ marginTop: 30, alignItems: 'center' }}>
+                  <LoadingAnimations width={50} height={50} />
                 </View>
               ) : null
             ) : (
