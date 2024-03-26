@@ -26,8 +26,7 @@ const NowScreen = () => {
 
   useEffect(() => {
     // queryClient.invalidateQueries('getPopularIssues');
-    queryClient.invalidateQueries('getAllIssues');
-    queryClient.invalidateQueries('getIssuesByLane');
+    queryClient.invalidateQueries(['getAllIssues', 'getIssuesByLane']);
     setIsActiveBtnChanged(true);
     setIssuesList([]);
     setIssuesPage(0);
