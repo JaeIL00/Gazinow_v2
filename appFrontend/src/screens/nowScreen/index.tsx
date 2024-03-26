@@ -33,7 +33,7 @@ const NowScreen = () => {
     setIssuesPage(0);
   }, [activeButton]);
 
-  const callback = {
+  const getIssuesCallback = {
     onSuccess: () => {
       setTimeout(() => {
         setRefresh(false);
@@ -51,12 +51,12 @@ const NowScreen = () => {
     },
   };
 
-  const { popularIssues, popularIssuesRefetch } = useGetPopularIssuesQuery(callback);
-  const { allIssues, allIssuesRefetch } = useGetAllIssuesQuery(issuesPage, callback);
+  const { popularIssues, popularIssuesRefetch } = useGetPopularIssuesQuery(getIssuesCallback);
+  const { allIssues, allIssuesRefetch } = useGetAllIssuesQuery(issuesPage, getIssuesCallback);
   const { laneIssues, laneIssuesRefetch } = useGetIssuesByLaneQuery(
     issuesPage,
     subwayReturnLineName(activeButton as FreshSubwayLineName)!,
-    callback,
+    getIssuesCallback,
   );
 
   useEffect(() => {
