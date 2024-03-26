@@ -18,8 +18,8 @@ import { AxiosError } from 'axios';
 const NowScreen = () => {
   const queryClient = useQueryClient();
   const [activeButton, setActiveButton] = useState<NowScreenCapsules>('전체');
-  const [isLoading, setIsLoading] = useState(true);
-  const [isActiveBtnChanged, setIsActiveBtnChanged] = useState(true);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isActiveBtnChanged, setIsActiveBtnChanged] = useState<boolean>(true);
   const [isRefresh, setRefresh] = useState<boolean>(false);
   const [issuesPage, setIssuesPage] = useState(0);
   const [issuesList, setIssuesList] = useState<IssueContent[]>([]);
