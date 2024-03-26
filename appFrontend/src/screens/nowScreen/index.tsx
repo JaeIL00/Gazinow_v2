@@ -105,11 +105,9 @@ const NowScreen = () => {
                       time={item.agoTime}
                       body={item.content}
                       isLastItem={index === popularIssues.length - 1}
+                      isHeader={true}
                     />
                   ))}
-                  <Space height="12px" width="999px" backgroundColor={COLOR.WHITE} />
-                  <Space height="8px" width="999px" backgroundColor={COLOR.GRAY_F8} />
-                  <Space height="12px" width="999px" backgroundColor={COLOR.WHITE} />
                 </>
               )}
               <LaneButtons
@@ -135,6 +133,7 @@ const NowScreen = () => {
                 time={item.agoTime}
                 body={item.content}
                 isLastItem={index === issuesList.length - 1}
+                isHeader={false}
               />
             )
           }
