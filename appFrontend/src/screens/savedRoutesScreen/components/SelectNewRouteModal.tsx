@@ -11,6 +11,7 @@ import AddNewRouteHeader from './AddNewRouteHeader';
 import { useNewRouteNavigation } from '@/navigation/NewRouteNavigation';
 import { useAppSelect } from '@/store';
 import SwapStation from './SwapStation';
+import LoadingAnimations from '@/global/components/animations/LoadingAnimations';
 
 interface SelectedStationTypes {
   departure: StationDataTypes;
@@ -25,7 +26,7 @@ const SelectNewRouteModal = () => {
   const [selectedStation, setSelectedStation] =
     useState<SelectedStationTypes>(selectedStationRedux);
 
-  const { data } = useGetSearchPaths({
+  const { data, isLoading } = useGetSearchPaths({
     params: {
       strStationName: selectedStation.departure.stationName,
       strStationLine: selectedStation.departure.stationLine,
@@ -63,6 +64,11 @@ const SelectNewRouteModal = () => {
         >
           <SwapStation selectedStation={selectedStation} setSelectedStation={setSelectedStation} />
         </View>
+        {isLoading && (
+          <View style={{ marginTop: 100, alignItems: 'center' }}>
+            <LoadingAnimations width={40} height={40} />
+          </View>
+        )}
         <ScrollView>
           {data?.paths.map((item) => {
             return (
@@ -117,7 +123,7 @@ const SelectNewRouteModal = () => {
               </PathInner>
             );
           })}
-          <Space height="1px" backgroundColor={COLOR.GRAY_EB} />
+          {!isLoading && <Space height="1px" backgroundColor={COLOR.GRAY_EB} />}
         </ScrollView>
       </SubPathContainer>
 

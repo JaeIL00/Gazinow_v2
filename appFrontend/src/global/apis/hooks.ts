@@ -69,10 +69,10 @@ export const useGetSearchPaths = ({
   params: SubwayStrEnd;
   enabled: boolean;
 }) => {
-  const { data } = useQuery(['search_paths', params], () => searchPathsFetch(params), {
+  const { data, isLoading } = useQuery(['search_paths', params], () => searchPathsFetch(params), {
     enabled,
   });
-  return { data };
+  return { data, isLoading };
 };
 
 /**

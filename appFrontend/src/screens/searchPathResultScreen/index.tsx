@@ -18,6 +18,7 @@ import IssueKeywordIcon from '@/global/components/subwaySimplePath/IssueKeywordI
 import { subwayLineColor } from '@/global/utils';
 import { useRootNavigation } from '@/navigation/RootNavigation';
 import { Path } from '@/global/apis/entity';
+import LoadingAnimations from '@/global/components/animations/LoadingAnimations';
 
 dayjs.locale('ko');
 
@@ -32,7 +33,7 @@ const SearchPathResultScreen = () => {
   const selectedStationRedux = useAppSelect(({ subwaySearch }) => subwaySearch.selectedStation);
   const dispatch = useAppDispatch();
 
-  const { data } = useGetSearchPaths({
+  const { data, isLoading } = useGetSearchPaths({
     params: {
       strStationName: selectedStationRedux.departure.stationName,
       strStationLine: selectedStationRedux.departure.stationLine,
@@ -94,8 +95,12 @@ const SearchPathResultScreen = () => {
             textColor="#49454F"
           />
         </View>
-
         <ScrollView style={{ backgroundColor: COLOR.WHITE }}>
+          {isLoading && (
+            <View style={{ marginTop: 100, alignItems: 'center' }}>
+              <LoadingAnimations width={40} height={40} />
+            </View>
+          )}
           {data &&
             data.paths.map((item, idx) => (
               <View
