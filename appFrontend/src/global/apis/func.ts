@@ -217,7 +217,7 @@ export const changeNicknameFetch = async (newNickname: string) => {
  */
 export const checkPasswordFetch = async (passwordInput: string) => {
   try {
-    const res = await publicServiceAPI.post(`/api/v1/member/check_password`, {
+    const res = await authServiceAPI.post(`/api/v1/member/check_password`, {
       checkPassword: passwordInput,
     });
   } catch (err) {
