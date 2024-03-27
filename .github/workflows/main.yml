@@ -19,6 +19,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           LANGUAGE: Korean
-          PROMPT: This is a code developed with React. Based on clean code principles, please provide a concise overall evaluation of any code defects in the modifications, with no more than 3 points for the evaluation. Please include specific examples and suggestions for improvement.
+          PROMPT: This is a code developed with React. Based on clean code principles, please provide a concise overall evaluation of any significant code defects that require immediate improvement in the modifications, with no more than 3 points for the evaluation. Please include specific examples and suggestions for improvement. Your review should be written in a list format.
           MODEL: gpt-3.5-turbo
           max_tokens: 4096
