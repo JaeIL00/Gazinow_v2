@@ -40,7 +40,7 @@ const PathBar = ({ stationCode, isFirst, isLast, issues }: PathBarProps) => {
             if (idx > 2) return;
             return (
               <IssueKeywordIcon
-                key={issue.id}
+                key={issue.id + issue.title}
                 width={24}
                 height={24}
                 keyword={issue.keyword}

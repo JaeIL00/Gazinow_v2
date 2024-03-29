@@ -163,17 +163,15 @@ const SearchPathResultScreen = () => {
                 />
 
                 <View>
-                  {item.subPaths.map((linePath) => {
+                  {item.subPaths.map((linePath, idx) => {
                     return (
-                      <React.Fragment
-                        key={linePath.distance + linePath.door + linePath.sectionTime}
-                      >
+                      <React.Fragment key={linePath.sectionTime + 'subPath' + idx}>
                         {linePath.lanes[0] &&
-                          linePath.lanes[0].issueSummary.map(({ keyword, title, id }, idx) => {
-                            if (idx > 2) return;
+                          linePath.lanes[0].issueSummary.map(({ keyword, title, id }, innerIdx) => {
+                            if (innerIdx > 2) return <></>;
                             return (
                               <TouchableOpacity
-                                key={id}
+                                key={id + title + innerIdx + 'idx' + idx}
                                 style={{
                                   borderWidth: 1,
                                   borderColor: 'rgba(0, 0, 0, 0.06)',
