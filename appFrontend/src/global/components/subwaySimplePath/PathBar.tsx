@@ -8,9 +8,10 @@ interface PathBarProps {
   isFirst?: boolean;
   isLast: boolean;
   issues: IssueSummary[];
+  isHideIsuue: boolean;
 }
 
-const PathBar = ({ stationCode, isFirst, isLast, issues }: PathBarProps) => {
+const PathBar = ({ stationCode, isFirst, isLast, issues, isHideIsuue }: PathBarProps) => {
   return (
     <View
       style={{
@@ -35,7 +36,8 @@ const PathBar = ({ stationCode, isFirst, isLast, issues }: PathBarProps) => {
           paddingHorizontal: 8,
         }}
       >
-        {issues &&
+        {!isHideIsuue &&
+          issues &&
           issues.map((issue, idx) => {
             if (idx > 2) return;
             return (

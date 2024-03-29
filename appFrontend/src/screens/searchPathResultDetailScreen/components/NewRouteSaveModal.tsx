@@ -84,6 +84,7 @@ const NewRouteSaveModal = ({
               pathData={freshData.subPaths}
               arriveStationName={freshData.lastEndStation}
               betweenPathMargin={16}
+              isHideIsuue
             />
           </View>
 

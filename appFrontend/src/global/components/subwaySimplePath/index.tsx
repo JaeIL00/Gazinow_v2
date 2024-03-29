@@ -9,12 +9,14 @@ interface SubwaySimplePathProps {
   pathData: SubPath[];
   arriveStationName: string;
   betweenPathMargin: number;
+  isHideIsuue?: boolean;
 }
 
 const SubwaySimplePath = ({
   pathData,
   arriveStationName,
   betweenPathMargin,
+  isHideIsuue = false,
 }: SubwaySimplePathProps) => {
   const freshLanesPathData = useMemo(() => {
     return pathData.filter((item) => !!item.lanes.length && !!item.stations.length);
@@ -59,6 +61,7 @@ const SubwaySimplePath = ({
                     isLast={idx === 1}
                     isFirst={idx === 0}
                     issues={lanes[0].issueSummary}
+                    isHideIsuue={isHideIsuue}
                   />
                 </React.Fragment>
               );
@@ -71,6 +74,7 @@ const SubwaySimplePath = ({
                     isLast={maxLength - 1 === idx}
                     isFirst={idx === 0}
                     issues={lanes[0].issueSummary}
+                    isHideIsuue={isHideIsuue}
                   />
                 </React.Fragment>
               );
@@ -126,6 +130,7 @@ const SubwaySimplePath = ({
                     isFirst={idx === 2}
                     isLast={maxLength === 3 ? false : maxLength - 1 === idx}
                     issues={lanes[0].issueSummary}
+                    isHideIsuue={isHideIsuue}
                   />
                 )}
               </React.Fragment>
