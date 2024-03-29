@@ -6,6 +6,7 @@ import { SubwaySimplePath } from '@/global/components';
 import { useSavedSubwayRoute } from '@/global/apis/hooks';
 import { Path } from '@/global/apis/entity';
 import { useQueryClient } from 'react-query';
+import { showToast } from '@/global/utils/toast';
 
 interface NewRouteSaveModalProps {
   freshData: Path;
@@ -27,10 +28,10 @@ const NewRouteSaveModal = ({
   const { mutate } = useSavedSubwayRoute({
     onSuccess: async (id) => {
       await queryClient.invalidateQueries(['getRoads']);
-      console.log({ id });
       setMyPathId(id);
       onBookmark();
       closeModal();
+      showToast('saveRoute');
     },
     onError: ({ response }) => {
       if (response?.status === 409) {

@@ -12,6 +12,7 @@ import XCircle from '@assets/icons/x-circle-standard.svg';
 import AddNewRouteHeader from './AddNewRouteHeader';
 import { useRoute } from '@react-navigation/native';
 import { useHomeNavigation } from '@/navigation/HomeNavigation';
+import { showToast } from '@/global/utils/toast';
 
 const NameNewRouteModal = () => {
   const { state: resultData } = useRoute().params as { state: Path };
@@ -36,7 +37,8 @@ const NameNewRouteModal = () => {
   const { mutate } = useSaveMyRoutesQuery({
     onSuccess: async () => {
       await queryClient.invalidateQueries('getRoads');
-      homeNavigation.reset({ routes: [{ name: 'SavedRoutes' }] });
+      homeNavigation.navigate('SavedRoutes');
+      showToast('saveRoute');
     },
     onError: async (error: any) => {
       await queryClient.invalidateQueries('getRoads');
