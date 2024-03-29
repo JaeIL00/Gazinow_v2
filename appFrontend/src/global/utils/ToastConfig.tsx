@@ -1,12 +1,10 @@
 import React from 'react';
-import ToastLogout from '@assets/icons/toast_logout.svg';
-import ToastQuit from '@assets/icons/toast_quit.svg';
-import ToastDeleteRoute from '@assets/icons/toast_route_deleted.svg';
+import Toast from '../ui/Toast';
 
 const ToastConfig = {
-  logout: () => <ToastLogout />,
-  quit: () => <ToastQuit />,
-  deleteRoute: () => <ToastDeleteRoute />,
+  logout: () => <Toast text="로그아웃 되었어요" />,
+  quit: () => <Toast text="탈퇴되었어요" />,
+  deleteRoute: () => <Toast text="경로가 삭제되었어요" />,
 };
 
 export default ToastConfig;
