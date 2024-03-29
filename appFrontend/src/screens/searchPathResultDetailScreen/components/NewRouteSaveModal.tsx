@@ -108,6 +108,7 @@ const NewRouteSaveModal = ({
               }}
             >
               <Input
+                placeholder="경로 이름을 입력하세요"
                 value={routeName}
                 isBlur={isLoading}
                 onChangeText={(text) => {
