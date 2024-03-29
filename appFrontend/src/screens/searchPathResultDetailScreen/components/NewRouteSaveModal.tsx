@@ -1,7 +1,7 @@
 import { FontText, Input, Space, TextButton } from '@/global/ui';
 import { COLOR } from '@/global/constants';
 import { KeyboardAvoidingView, Modal, Platform, View } from 'react-native';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { SubwaySimplePath } from '@/global/components';
 import { useSavedSubwayRoute } from '@/global/apis/hooks';
 import { Path } from '@/global/apis/entity';
@@ -25,7 +25,7 @@ const NewRouteSaveModal = ({
   const [isDuplicatedError, setIsDuplicatedError] = useState<boolean>(false);
   const [routeName, setRouteName] = useState<string>('');
 
-  const { mutate } = useSavedSubwayRoute({
+  const { isLoading, mutate } = useSavedSubwayRoute({
     onSuccess: async (id) => {
       await queryClient.invalidateQueries(['getRoads']);
       setMyPathId(id);
@@ -109,6 +109,7 @@ const NewRouteSaveModal = ({
             >
               <Input
                 value={routeName}
+                isBlur={isLoading}
                 onChangeText={(text) => {
                   if (text.length <= 10) {
                     setIsDuplicatedError(false);
