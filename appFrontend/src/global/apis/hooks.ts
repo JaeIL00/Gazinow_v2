@@ -82,7 +82,7 @@ export const useSavedSubwayRoute = ({
   onSuccess,
   onError,
 }: {
-  onSuccess: () => void;
+  onSuccess: (data: number) => void;
   onError: (error: AxiosError) => void;
 }) => {
   const { data, mutate } = useMutation(searchPathSaveFetch, {
@@ -97,11 +97,11 @@ export const useSavedSubwayRoute = ({
  * 저장한 지하철 경로 삭제 훅
  */
 export const useDeleteSavedSubwayRoute = ({ onSuccess }: { onSuccess: () => void }) => {
-  const { data, mutate } = useMutation(searchPathDeleteFetch, {
+  const { data, isLoading, mutate } = useMutation(searchPathDeleteFetch, {
     onSuccess,
   });
 
-  return { data, deleteMutate: mutate };
+  return { data, isLoading, deleteMutate: mutate };
 };
 
 /**

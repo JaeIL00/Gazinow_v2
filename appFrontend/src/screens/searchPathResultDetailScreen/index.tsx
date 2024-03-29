@@ -15,22 +15,30 @@ import IconBookmark from '@assets/icons/bookmark.svg';
 import IconLeftArrowHead from '@assets/icons/left_arrow_head.svg';
 import { useAppSelect } from '@/store';
 import { useRootNavigation } from '@/navigation/RootNavigation';
+import { showToast } from '@/global/utils/toast';
+
+interface DetailData extends Path {
+  id: number;
+}
 
 const SearchPathResultDetailScreen = () => {
   const queryClient = useQueryClient();
   const navigation = useHomeNavigation();
   const rootNavigation = useRootNavigation();
-  const { state: resultData } = useRoute().params as { state: Path };
+  const { state: resultData } = useRoute().params as { state: DetailData };
   const isVerifiedUser = useAppSelect((state) => state.auth.isVerifiedUser);
 
-  const { deleteMutate } = useDeleteSavedSubwayRoute({
+  const { isLoading, deleteMutate } = useDeleteSavedSubwayRoute({
     onSuccess: async () => {
       await queryClient.invalidateQueries(['getRoads']);
       setIsBookmarking(false);
+      showToast('deleteRoute');
     },
   });
 
-  const [isBookmarking, setIsBookmarking] = useState<boolean>(resultData.myPath ?? false);
+  // TODO: 검색 -> 상세경로 진입 시 myPathId 값을 바인딩해야함
+  const [myPathId, setMyPathId] = useState<number | null>(resultData.id ?? null);
+  const [isBookmarking, setIsBookmarking] = useState<boolean>(resultData.myPath ?? !!resultData.id);
   const [isSaveRouteModalOpen, setIsSaveRouteModalOpen] = useState<boolean>(false);
 
   const freshSubPathData: SubPath[] = useMemo(() => {
@@ -40,17 +48,17 @@ const SearchPathResultDetailScreen = () => {
   }, [resultData]);
 
   const bookmarkHandler = () => {
-    // FIXME: 저장 후 경로 목록을 refetch하지 않는 이상 저장한 경로 아이디를 알 수 없음
-    if (isBookmarking && !!resultData.myPathId) {
-      deleteMutate({ id: resultData.myPathId[0] });
-    } else {
+    if (!isBookmarking) {
       setIsSaveRouteModalOpen(true);
+      return;
+    } else if (myPathId) {
+      deleteMutate({ id: myPathId });
     }
   };
 
-  const isOccurIssue = resultData.subPaths.some(
-    (item) => item.lanes[0] && !!item.lanes[0].issueSummary.length,
-  );
+  const isOccurIssue = useMemo(() => {
+    return resultData.subPaths.some((item) => item.lanes[0] && !!item.lanes[0].issueSummary.length);
+  }, [resultData]);
 
   return (
     <SafeAreaView
@@ -77,7 +85,7 @@ const SearchPathResultDetailScreen = () => {
           <TouchableOpacity onPress={() => navigation.goBack()}>
             <IconLeftArrowHead color="#3F3F46" width={18} height={18} />
           </TouchableOpacity>
-          <TouchableOpacity onPress={bookmarkHandler}>
+          <TouchableOpacity onPress={bookmarkHandler} disabled={isLoading}>
             <IconBookmark
               width={24}
               height={24}
@@ -92,6 +100,7 @@ const SearchPathResultDetailScreen = () => {
                 freshData={{ ...resultData, subPaths: freshSubPathData }}
                 closeModal={() => setIsSaveRouteModalOpen(false)}
                 onBookmark={() => setIsBookmarking(true)}
+                setMyPathId={(id: number) => setMyPathId(id)}
               />
             ) : (
               <Modal visible onRequestClose={() => setIsSaveRouteModalOpen(false)} transparent>

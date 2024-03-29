@@ -11,16 +11,24 @@ interface NewRouteSaveModalProps {
   freshData: Path;
   closeModal: () => void;
   onBookmark: () => void;
+  setMyPathId: (id: number) => void;
 }
-const NewRouteSaveModal = ({ freshData, closeModal, onBookmark }: NewRouteSaveModalProps) => {
+const NewRouteSaveModal = ({
+  freshData,
+  closeModal,
+  onBookmark,
+  setMyPathId,
+}: NewRouteSaveModalProps) => {
   const queryClient = useQueryClient();
 
   const [isDuplicatedError, setIsDuplicatedError] = useState<boolean>(false);
   const [routeName, setRouteName] = useState<string>('');
 
   const { mutate } = useSavedSubwayRoute({
-    onSuccess: async () => {
+    onSuccess: async (id) => {
       await queryClient.invalidateQueries(['getRoads']);
+      console.log({ id });
+      setMyPathId(id);
       onBookmark();
       closeModal();
     },
