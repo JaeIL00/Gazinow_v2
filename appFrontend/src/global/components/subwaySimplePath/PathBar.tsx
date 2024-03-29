@@ -1,7 +1,7 @@
 import { IssueSummary, StationCode } from '@/global/apis/entity';
 import { subwayLineColor } from '@/global/utils';
 import { View } from 'react-native';
-import IssueKeywordIcon from './IssueKeywordIcon';
+import IssueKeywordIcon from '../IssueKeywordIcon';
 
 interface PathBarProps {
   stationCode: StationCode;
@@ -45,6 +45,7 @@ const PathBar = ({ stationCode, isFirst, isLast, issues }: PathBarProps) => {
                 height={24}
                 keyword={issue.keyword}
                 color={subwayLineColor(stationCode)}
+                isPath
               />
             );
           })}

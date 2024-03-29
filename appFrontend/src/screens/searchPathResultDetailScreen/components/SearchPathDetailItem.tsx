@@ -13,7 +13,7 @@ import { useRootNavigation } from '@/navigation/RootNavigation';
 import { useAppDispatch } from '@/store';
 import { getIssueId } from '@/store/modules';
 import IconDownArrowHead from '@assets/icons/down_arrow_head.svg';
-import IssueKeywordIcon from '@/global/components/subwaySimplePath/IssueKeywordIcon';
+import IssueKeywordIcon from '@/global/components/IssueKeywordIcon';
 
 interface SearchPathDetailItemProps {
   data: SubPath;
@@ -117,13 +117,13 @@ const SearchPathDetailItem = ({ data, isLastLane, lineLength }: SearchPathDetail
                 >
                   <View
                     style={{
-                      marginTop: 2,
+                      marginTop: 4,
                       marginRight: 8,
                     }}
                   >
                     <IssueKeywordIcon
-                      width={22}
-                      height={22}
+                      width={18}
+                      height={18}
                       keyword={issue.keyword}
                       color={subwayLineColor(data.lanes[0].stationCode)}
                     />

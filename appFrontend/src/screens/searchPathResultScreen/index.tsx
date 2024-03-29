@@ -14,7 +14,7 @@ import { useHomeNavigation } from '@/navigation/HomeNavigation';
 import SwapStation from './components/SwapStation';
 import IconRightArrowHead from '@assets/icons/right_arrow_head.svg';
 import IconLeftArrowHead from '@assets/icons/left_arrow_head.svg';
-import IssueKeywordIcon from '@/global/components/subwaySimplePath/IssueKeywordIcon';
+import IssueKeywordIcon from '@/global/components/IssueKeywordIcon';
 import { subwayLineColor } from '@/global/utils';
 import { useRootNavigation } from '@/navigation/RootNavigation';
 import { Path } from '@/global/apis/entity';
