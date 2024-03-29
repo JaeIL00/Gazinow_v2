@@ -91,7 +91,7 @@ const NewSearchStation = () => {
             />
           </Header>
 
-          <Ul marginTop="18px">
+          <Ul marginTop="18px" keyboardShouldPersistTaps="handled">
             {historyData?.map(({ stationName, stationLine }) => (
               <Li
                 key={stationName}
@@ -135,7 +135,7 @@ const NewSearchStation = () => {
           )}
           {/* 입력어가 있고 && 검색 결과가 있으면 결과 표시 */}
           {searchResultData.length > 0 && (
-            <Ul marginTop="28px">
+            <Ul marginTop="28px" keyboardShouldPersistTaps="handled">
               {searchResultData.map(({ stationName, stationLine }, idx) => (
                 <Li key={idx} onPress={() => stationBtnHandler({ stationLine, stationName })}>
                   <IconLocationPin />

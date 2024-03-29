@@ -51,7 +51,7 @@ const NameNewRouteModal = () => {
   }
   return (
     <KeyboardAvoidingView
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      behavior={Platform.OS === 'ios' ? 'padding' : undefined}
       style={{ flex: 1 }}
     >
       <SafeAreaView style={{ flex: 1, backgroundColor: COLOR.WHITE }}>
