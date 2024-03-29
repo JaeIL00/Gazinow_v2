@@ -129,7 +129,7 @@ const IssueDetailScreen = () => {
             showsVerticalScrollIndicator={false}
           >
             <View style={{ marginBottom: 20 }}>
-              <FontText value={issueData.title} textSize="20px" textWeight="Bold" />
+              <FontText value={issueData.title} textSize="20px" textWeight="SemiBold" />
               <FontText value={createIssueDate} textSize="12px" textWeight="Regular" />
             </View>
             <View
@@ -140,7 +140,13 @@ const IssueDetailScreen = () => {
                 borderBottomWidth: 1,
               }}
             >
-              <FontText value={issueData.content} textSize="14px" textWeight="Regular" />
+              <FontText
+                value={issueData.content}
+                textSize="16px"
+                textWeight="Regular"
+                lineHeight="21px"
+                textColor={COLOR.REAL_BLACK}
+              />
             </View>
 
             <View
@@ -159,10 +165,10 @@ const IssueDetailScreen = () => {
               >
                 <FontText
                   value="도움돼요"
-                  textSize="12px"
+                  textSize="14px"
                   textWeight="Medium"
                   textColor={issueData.isLike ? COLOR.LIGHT_BLUE : COLOR.GRAY_999}
-                  style={{ marginRight: 5 }}
+                  style={{ marginRight: 5, letterSpacing: -0.2 }}
                 />
                 <IconThumsUp
                   color={issueData?.isLike ? COLOR.LIGHT_BLUE : COLOR.GRAY_999}
