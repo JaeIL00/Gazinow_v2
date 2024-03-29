@@ -11,7 +11,7 @@ import AddNewRouteHeader from './AddNewRouteHeader';
 import { useNewRouteNavigation } from '@/navigation/NewRouteNavigation';
 import { useAppSelect } from '@/store';
 import SwapStation from './SwapStation';
-import LoadingAnimations from '@/global/components/animations/LoadingAnimations';
+import LoadingCircle from '@/global/components/animations/LoadingCircle';
 
 interface SelectedStationTypes {
   departure: StationDataTypes;
@@ -66,7 +66,7 @@ const SelectNewRouteModal = () => {
         </View>
         {isLoading && (
           <View style={{ marginTop: 100, alignItems: 'center' }}>
-            <LoadingAnimations width={40} height={40} />
+            <LoadingCircle width={40} height={40} />
           </View>
         )}
         <ScrollView>

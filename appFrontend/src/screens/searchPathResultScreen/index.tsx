@@ -18,7 +18,7 @@ import IssueKeywordIcon from '@/global/components/subwaySimplePath/IssueKeywordI
 import { subwayLineColor } from '@/global/utils';
 import { useRootNavigation } from '@/navigation/RootNavigation';
 import { Path } from '@/global/apis/entity';
-import LoadingAnimations from '@/global/components/animations/LoadingAnimations';
+import LoadingCircle from '@/global/components/animations/LoadingCircle';
 
 dayjs.locale('ko');
 
@@ -98,7 +98,7 @@ const SearchPathResultScreen = () => {
         <ScrollView style={{ backgroundColor: COLOR.WHITE }}>
           {isLoading && (
             <View style={{ marginTop: 100, alignItems: 'center' }}>
-              <LoadingAnimations width={40} height={40} />
+              <LoadingCircle width={40} height={40} />
             </View>
           )}
           {data &&

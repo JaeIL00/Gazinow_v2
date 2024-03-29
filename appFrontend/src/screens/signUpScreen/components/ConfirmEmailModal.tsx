@@ -14,7 +14,7 @@ import IconXCircle from '@assets/icons/x-circle-standard.svg';
 import StepButton from '../ui/StepButton';
 import { getStatusBarHeight } from 'react-native-status-bar-height';
 import IconLeftArrow from '@assets/icons/left_arrow_round.svg';
-import LoadingAnimations from '@/global/components/animations/LoadingAnimations';
+import LoadingCircle from '@/global/components/animations/LoadingCircle';
 
 interface ConfirmEmailModalProps {
   authNumber: string;
@@ -176,7 +176,7 @@ const ConfirmEmailModal = ({
                 />
                 <Space width="8px" />
                 {isLoading ? (
-                  <LoadingAnimations color="gray" width={34} height={27} />
+                  <LoadingCircle color="gray" width={34} height={27} />
                 ) : (
                   <TextButton
                     value="재전송"
