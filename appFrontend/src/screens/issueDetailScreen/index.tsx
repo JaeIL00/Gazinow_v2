@@ -145,7 +145,7 @@ const IssueDetailScreen = () => {
 
             <View
               style={{
-                paddingTop: 17,
+                paddingVertical: 17,
                 flexDirection: 'row',
                 alignItems: 'center',
                 justifyContent: 'space-between',
