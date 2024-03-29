@@ -4,7 +4,7 @@ import { COLOR } from '@/global/constants';
 import { useQueryClient } from 'react-query';
 import { IssueContainer, LaneButtons } from './components';
 import { FreshSubwayLineName, IssueContent, NowScreenCapsules } from '@/global/apis/entity';
-import { Alert, FlatList, RefreshControl, View } from 'react-native';
+import { FlatList, RefreshControl, View } from 'react-native';
 import {
   useGetAllIssuesQuery,
   useGetPopularIssuesQuery,
@@ -12,74 +12,57 @@ import {
 } from '@/global/apis/hooks';
 import { FontText, Space } from '@/global/ui';
 import { subwayReturnLineName } from '@/global/utils/subwayLine';
-import LoadingAnimations from '@/global/components/animations/LoadingAnimations';
-import { AxiosError } from 'axios';
+import LoadingCircle from '@/global/components/animations/LoadingCircle';
 
 const NowScreen = () => {
   const queryClient = useQueryClient();
   const [activeButton, setActiveButton] = useState<NowScreenCapsules>('전체');
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [isActiveBtnChanged, setIsActiveBtnChanged] = useState<boolean>(true);
   const [isRefresh, setRefresh] = useState<boolean>(false);
-  const [issuesPage, setIssuesPage] = useState(0);
   const [issuesList, setIssuesList] = useState<IssueContent[]>([]);
 
+  const { popularIssues, popularIssuesRefetch, isPopularIssuesLoading } =
+    useGetPopularIssuesQuery();
+
+  const {
+    allIssues,
+    allIssuesRefetch,
+    allIssuesHasNextPage,
+    fetchAllIssuesNextPage,
+    isAllIssuesLoading,
+  } = useGetAllIssuesQuery();
+
+  const { laneIssues, laneIssuesRefetch, laneIssuesHasNextPage, fetchLaneIssuesNextPage } =
+    useGetIssuesByLaneQuery(subwayReturnLineName(activeButton as FreshSubwayLineName)!);
+
   useEffect(() => {
-    // queryClient.invalidateQueries('getPopularIssues');
-    queryClient.invalidateQueries(['getAllIssues', 'getIssuesByLane']);
-    setIsActiveBtnChanged(true);
+    queryClient.invalidateQueries(['getAllIssues', 'getIssuesByLane', 'getPopularIssues']);
     setIssuesList([]);
-    setIssuesPage(0);
-  }, [activeButton]);
-
-  const getIssuesCallback = {
-    onSuccess: () => {
-      setTimeout(() => {
-        setRefresh(false);
-        setIsLoading(false);
-        setIsActiveBtnChanged(false);
-      }, 200);
-    },
-    onError: (error: AxiosError) => {
-      if (error.message.includes('Network Error')) {
-        Alert.alert('', '네트워크 연결을 확인해 주세요.');
-      }
-      setRefresh(false);
-      setIsLoading(false);
-      setIsActiveBtnChanged(false);
-    },
-  };
-
-  const { popularIssues, popularIssuesRefetch } = useGetPopularIssuesQuery(getIssuesCallback);
-  const { allIssues, allIssuesRefetch } = useGetAllIssuesQuery(issuesPage, getIssuesCallback);
-  const { laneIssues, laneIssuesRefetch } = useGetIssuesByLaneQuery(
-    issuesPage,
-    subwayReturnLineName(activeButton as FreshSubwayLineName)!,
-    getIssuesCallback,
-  );
-
-  useEffect(() => {
-    if (allIssues) {
-      setIssuesList((prevList) => [...prevList, ...allIssues.content]);
+    if (isRefresh) {
+      popularIssuesRefetch();
     }
-    if (laneIssues) {
-      setIssuesList(laneIssues.content);
+    if (activeButton === '전체' && allIssues) {
+      allIssuesRefetch();
+      setIssuesList(allIssues?.pages.flatMap((page) => page.content));
+    } else if (activeButton !== '전체' && laneIssues) {
+      laneIssuesRefetch();
+      setIssuesList(laneIssues?.pages.flatMap((page) => page.content));
     }
-  }, [allIssues, laneIssues, activeButton]);
+    setRefresh(false);
+  }, [allIssues, laneIssues, activeButton, isRefresh]);
 
-  const refreshIssues = () => {
-    setRefresh(true);
-    setIsLoading(true);
-    popularIssuesRefetch();
-    allIssuesRefetch();
-    laneIssuesRefetch();
+  const onEndReached = () => {
+    if (activeButton === '전체' && allIssuesHasNextPage) {
+      fetchAllIssuesNextPage();
+    } else if (activeButton !== '전체' && laneIssuesHasNextPage) {
+      fetchLaneIssuesNextPage();
+    }
   };
 
   return (
     <Container>
-      {isLoading ? (
-        <View style={{ marginTop: 30, alignItems: 'center' }}>
-          <LoadingAnimations width={50} height={50} />
+      {isPopularIssuesLoading || isAllIssuesLoading ? (
+        <View style={{ alignItems: 'center' }}>
+          <LoadingCircle width={50} height={50} />
         </View>
       ) : (
         <FlatList
@@ -88,7 +71,7 @@ const NowScreen = () => {
               <Header>
                 <FontText value="NOW" textSize="24px" textWeight="SemiBold" lineHeight="34px" />
               </Header>
-              {popularIssues!.length > 0 && (
+              {popularIssues && popularIssues?.length > 0 && (
                 <>
                   <IssueLineType>
                     <FontText
@@ -111,33 +94,27 @@ const NowScreen = () => {
                   ))}
                 </>
               )}
-              <LaneButtons
-                activeButton={activeButton}
-                setActiveButton={setActiveButton}
-                titleShown={popularIssues!.length > 0}
-              />
+              {popularIssues && (
+                <LaneButtons
+                  activeButton={activeButton}
+                  setActiveButton={setActiveButton}
+                  titleShown={popularIssues.length > 0}
+                />
+              )}
             </>
           }
           data={issuesList}
-          renderItem={({ item, index }) =>
-            isActiveBtnChanged ? (
-              index === 0 ? (
-                <View style={{ marginTop: 30, alignItems: 'center' }}>
-                  <LoadingAnimations width={50} height={50} />
-                </View>
-              ) : null
-            ) : (
-              <IssueContainer
-                key={item.id}
-                id={item.id}
-                title={item.title}
-                time={item.agoTime}
-                body={item.content}
-                isLastItem={index === issuesList.length - 1}
-                isHeader={false}
-              />
-            )
-          }
+          renderItem={({ item, index }) => (
+            <IssueContainer
+              key={item.id}
+              id={item.id}
+              title={item.title}
+              time={item.agoTime}
+              body={item.content}
+              isLastItem={index === issuesList.length - 1}
+              isHeader={false}
+            />
+          )}
           keyExtractor={(item, index) => `${item.id}_${index}`}
           ListFooterComponent={<Space height="64px" width="999px" />}
           ListEmptyComponent={
@@ -152,16 +129,12 @@ const NowScreen = () => {
           }
           refreshControl={
             <RefreshControl
-              onRefresh={refreshIssues}
+              onRefresh={() => setRefresh(true)}
               refreshing={isRefresh}
               progressViewOffset={-10}
             />
           }
-          onEndReached={() => {
-            if (issuesList.length >= 15) {
-              setIssuesPage((prevPage) => prevPage + 1);
-            }
-          }}
+          onEndReached={onEndReached}
           onEndReachedThreshold={0.4}
         />
       )}

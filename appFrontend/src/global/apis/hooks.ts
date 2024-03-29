@@ -9,7 +9,7 @@ import {
   saveMyRoutesFetch,
   searchStationName,
 } from './func';
-import { useMutation, useQuery } from 'react-query';
+import { useMutation, useQuery, useInfiniteQuery } from 'react-query';
 import {
   searchAddHistoryFetch,
   searchHistoryFetch,
@@ -228,58 +228,57 @@ export const useChangePasswordQuery = ({
 /**
  * 이슈 전체 조회 훅
  */
-export const useGetAllIssuesQuery = (
-  page: number,
-  {
-    onSuccess,
-    onError,
-  }: {
-    onSuccess: (data: AllIssues) => void;
-    onError: (error: AxiosError) => void;
-  },
-) => {
-  const { data, refetch } = useQuery(['getAllIssues', page], () => getAllIssuesFetch({ page }), {
-    onSuccess,
-    onError,
-  });
-  return { allIssues: data, allIssuesRefetch: refetch };
+export const useGetAllIssuesQuery = () => {
+  const { data, refetch, fetchNextPage, hasNextPage, isLoading } = useInfiniteQuery(
+    ['getAllIssues'],
+    ({ pageParam = 0 }) => getAllIssuesFetch({ page: pageParam }),
+    {
+      getNextPageParam: (lastPage, allPages) => {
+        if (lastPage?.content && lastPage?.content.length < 15) return undefined;
+        return allPages.length;
+      },
+    },
+  );
+  return {
+    allIssues: data,
+    allIssuesRefetch: refetch,
+    fetchAllIssuesNextPage: fetchNextPage,
+    allIssuesHasNextPage: hasNextPage,
+    isAllIssuesLoading: isLoading,
+  };
 };
 
 /**
  * 이슈 노선별 조회 훅
  */
-export const useGetIssuesByLaneQuery = (
-  page: number,
-  line: string,
-  {
-    onSuccess,
-    onError,
-  }: {
-    onSuccess: (data: AllIssues) => void;
-    onError: (error: AxiosError) => void;
-  },
-) => {
-  const { data, refetch } = useQuery(
-    ['getIssuesByLane', page, line],
-    () => getIssuesByLaneFetch({ page, line }),
-    { onSuccess, onError },
+export const useGetIssuesByLaneQuery = (line: string) => {
+  const { data, refetch, fetchNextPage, hasNextPage } = useInfiniteQuery(
+    ['getIssuesByLane', line],
+    ({ pageParam = 0 }) => getIssuesByLaneFetch({ page: pageParam, line }),
+    {
+      getNextPageParam: (lastPage, allPages) => {
+        if (lastPage?.content && lastPage?.content.length < 15) return undefined;
+        return allPages.length;
+      },
+      enabled: line !== '수도권 전체',
+    },
   );
-  return { laneIssues: data, laneIssuesRefetch: refetch };
+  return {
+    laneIssues: data,
+    laneIssuesRefetch: refetch,
+    fetchLaneIssuesNextPage: fetchNextPage,
+    laneIssuesHasNextPage: hasNextPage,
+  };
 };
 
 /**
  * 이슈 추천순 조회 훅
  */
-export const useGetPopularIssuesQuery = ({
-  onSuccess,
-  onError,
-}: {
-  onSuccess: (data: IssueContent[]) => void;
-  onError: (error: AxiosError) => void;
-}) => {
-  const { data, refetch } = useQuery(['getPopularIssues'], getPopularIssuesFetch, {
-    onSuccess,
-    onError,
-  });
-  return { popularIssues: data, popularIssuesRefetch: refetch };
+export const useGetPopularIssuesQuery = () => {
+  const { data, refetch, isLoading } = useQuery(['getPopularIssues'], getPopularIssuesFetch);
+  return {
+    popularIssues: data,
+    popularIssuesRefetch: refetch,
+    isPopularIssuesLoading: isLoading,
+  };
 };
