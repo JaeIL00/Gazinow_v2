@@ -1,13 +1,6 @@
 import styled from '@emotion/native';
 import { useCallback, useState } from 'react';
-import {
-  Alert,
-  Keyboard,
-  KeyboardAvoidingView,
-  Platform,
-  Pressable,
-  SafeAreaView,
-} from 'react-native';
+import { Alert, KeyboardAvoidingView, Platform, Pressable, SafeAreaView } from 'react-native';
 import { FontText, Input, Space, TextButton } from '@/global/ui';
 import { COLOR } from '@/global/constants';
 import { useCheckPasswordQuery, useDeleteAccountMutation } from '@/global/apis/hooks';
@@ -23,21 +16,15 @@ const ConfirmPwScreen = () => {
   const navigation = useRootNavigation();
   const [passwordInput, setPasswordInput] = useState<string>('');
   const [isPwRight, setIsPwRight] = useState<boolean>(false);
-  const [isKeyboardVisible, setKeyboardVisible] = useState(false);
-  const keyboardDidShow = () => setKeyboardVisible(true);
-  const keyboardDidHide = () => setKeyboardVisible(false);
-
-  Keyboard.addListener('keyboardDidShow', keyboardDidShow);
-  Keyboard.addListener('keyboardDidHide', keyboardDidHide);
 
   const { deleteAccountMutate } = useDeleteAccountMutation({
     onSuccess: () => {
       removeEncryptedStorage('access_token');
       removeEncryptedStorage('refresh_token');
-      navigation.reset({ routes: [{ name: 'AuthStack' }] });
+      navigation.reset({ routes: [{ name: 'MainBottomTab' }] });
       showToast('quit');
     },
-    onError: (error: any) => {
+    onError: () => {
       Alert.alert('회원 탈퇴 오류', '탈퇴에 실패했습니다\n다시 시도해주세요');
     },
   });
@@ -58,14 +45,14 @@ const ConfirmPwScreen = () => {
     onSuccess: () => {
       setIsPwRight(true);
     },
-    onError: (error: any) => {
+    onError: () => {
       setIsPwRight(false);
     },
   });
 
   return (
     <KeyboardAvoidingView
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      behavior={Platform.OS === 'ios' ? 'padding' : undefined}
       style={{ flex: 1 }}
     >
       <SafeAreaView style={{ flex: 1, backgroundColor: COLOR.WHITE }}>
@@ -109,22 +96,21 @@ const ConfirmPwScreen = () => {
               />
             </InputBox>
           </PwContainer>
-          <BottomBtn
-            onPress={() => deleteAccountMutate()}
+          <TextButton
+            value="탈퇴하기"
+            textSize="17px"
+            textWeight="SemiBold"
+            textColor={COLOR.WHITE}
             disabled={!isPwRight}
+            onPress={() => deleteAccountMutate()}
             style={{
-              bottom: isKeyboardVisible ? 20 : 83,
+              backgroundColor: isPwRight ? COLOR.BASIC_BLACK : COLOR.GRAY_DDD,
+              borderRadius: 5,
+              alignItems: 'center',
+              paddingVertical: 11,
+              marginBottom: 40,
             }}
-          >
-            <TextButton
-              value="탈퇴하기"
-              textSize="17px"
-              textWeight="Regular"
-              lineHeight="26px"
-              textColor={COLOR.WHITE}
-              onPress={() => deleteAccountMutate()}
-            />
-          </BottomBtn>
+          />
         </Container>
       </SafeAreaView>
     </KeyboardAvoidingView>
@@ -148,13 +134,6 @@ const PwContainer = styled.View`
 `;
 const AlertContainer = styled.Pressable`
   margin: 43px 0 29px;
-`;
-const BottomBtn = styled.Pressable`
-  padding-vertical: 11px;
-  border-radius: 5px;
-  align-items: center;
-  ${({ disabled }) =>
-    disabled ? `background-color : #dddddd` : `background-color : ${COLOR.BASIC_BLACK};`}
 `;
 const InputBox = styled.Pressable`
   padding: 12px 16px;
