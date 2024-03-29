@@ -188,17 +188,11 @@ const SearchPathResultDetailScreen = () => {
           `}
         >
           <View>
-            <FontText
-              value="평균 소요시간"
-              textSize="12px"
-              textWeight="Medium"
-              lineHeight="14px"
-              textColor="#999"
-            />
+            <FontText value="평균 소요시간" textSize="13px" textWeight="Medium" textColor="#999" />
             <View
               style={css`
                 flex-direction: row;
-                margin-top: 4px;
+                margin-top: 2px;
               `}
             >
               <FontText
@@ -210,7 +204,7 @@ const SearchPathResultDetailScreen = () => {
                       `분 ${isOccurIssue ? '이상' : ''}`
                     : resultData.totalTime + `분 ${isOccurIssue ? '이상' : ''}`
                 }
-                textSize="24px"
+                textSize="28px"
                 textWeight="Bold"
               />
 
@@ -228,15 +222,16 @@ const SearchPathResultDetailScreen = () => {
                       ? '환승없음'
                       : '환승 ' + (freshSubPathData.length - 1) + '회'
                   }
-                  textSize="14px"
+                  textSize="16px"
                   textWeight="Regular"
                   textColor="#999"
-                  style={{ marginBottom: 3 }}
+                  style={{ marginBottom: 2 }}
                 />
               </View>
             </View>
           </View>
         </View>
+
         <View
           style={css`
             margin-bottom: 21px;
