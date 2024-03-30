@@ -38,7 +38,7 @@ const IssueDetailScreen = () => {
     [issueData, isVerifiedUser],
   );
 
-  const createIssueDate = dayjs(issueData?.startDate).fromNow();
+  const startIssueDate = dayjs(issueData?.startDate).fromNow();
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: COLOR.GRAY_F9 }}>
@@ -130,7 +130,7 @@ const IssueDetailScreen = () => {
           >
             <View style={{ marginBottom: 20 }}>
               <FontText value={issueData.title} textSize="20px" textWeight="SemiBold" />
-              <FontText value={createIssueDate} textSize="12px" textWeight="Regular" />
+              <FontText value={startIssueDate} textSize="12px" textWeight="Regular" />
             </View>
             <View
               style={{

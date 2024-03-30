@@ -14,6 +14,7 @@ import { FontText, Space } from '@/global/ui';
 import { subwayReturnLineName } from '@/global/utils/subwayLine';
 import LoadingAnimations from '@/global/components/animations/LoadingAnimations';
 import { AxiosError } from 'axios';
+import dayjs from 'dayjs';
 
 const NowScreen = () => {
   const queryClient = useQueryClient();
@@ -103,7 +104,7 @@ const NowScreen = () => {
                       key={item.id}
                       id={item.id}
                       title={item.title}
-                      time={item.agoTime}
+                      time={item.startDate}
                       body={item.content}
                       isLastItem={index === popularIssues.length - 1}
                       isHeader={true}
@@ -131,7 +132,7 @@ const NowScreen = () => {
                 key={item.id}
                 id={item.id}
                 title={item.title}
-                time={item.agoTime}
+                time={item.startDate}
                 body={item.content}
                 isLastItem={index === issuesList.length - 1}
                 isHeader={false}
