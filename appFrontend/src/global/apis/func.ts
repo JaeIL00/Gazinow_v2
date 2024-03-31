@@ -184,20 +184,6 @@ export const getSavedRoutesFetch = async () => {
 };
 
 /**
- * 내 경로 저장 axios
- */
-export const saveMyRoutesFetch = async (newRoute: object) => {
-  try {
-    const res = await authServiceAPI.post('/api/v1/my_find_road/add_route', newRoute);
-    return res;
-  } catch (err) {
-    Sentry.captureException(err);
-    const er = err as AxiosError;
-    throw er;
-  }
-};
-
-/**
  * 닉네임 변경 axios
  */
 export const changeNicknameFetch = async (newNickname: string) => {

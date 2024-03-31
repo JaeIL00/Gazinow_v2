@@ -6,7 +6,6 @@ import {
   getPopularIssuesFetch,
   getSavedRoutesFetch,
   getSearchRoutesFetch,
-  saveMyRoutesFetch,
   searchStationName,
 } from './func';
 import { useMutation, useQuery, useInfiniteQuery } from 'react-query';
@@ -155,23 +154,6 @@ export const useGetSavedRoutesQuery = () => {
     enabled: isVerifiedUser === 'success auth',
   });
   return { data };
-};
-
-/**
- * 내 경로 저장 훅
- */
-export const useSaveMyRoutesQuery = ({
-  onSuccess,
-  onError,
-}: {
-  onSuccess: () => void;
-  onError?: (error: any) => void;
-}) => {
-  const { data, mutate } = useMutation(saveMyRoutesFetch, {
-    onSuccess,
-    onError,
-  });
-  return { data, mutate };
 };
 
 /**
