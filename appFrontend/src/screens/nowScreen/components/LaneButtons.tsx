@@ -4,18 +4,18 @@ import { FontText, Space } from '@/global/ui';
 import { COLOR } from '@/global/constants';
 import { useGetSavedRoutesQuery } from '@/global/apis/hooks';
 import { FreshSubwayLineName, NowScreenCapsules, SubPath } from '@/global/apis/entity';
-import { ScrollView } from 'react-native';
+import { ScrollView, View } from 'react-native';
 import { allLines, pathSubwayLineNameInLine } from '@/global/utils/subwayLine';
 import { useAppSelect } from '@/store';
 
 interface LaneButtonsProps {
   activeButton: NowScreenCapsules;
   setActiveButton: (activeButton: NowScreenCapsules) => void;
-  titleShown: boolean;
+  titleNotShown: boolean;
 }
 
 //TODO: + 버튼 구현
-const LaneButtons = ({ activeButton, setActiveButton, titleShown }: LaneButtonsProps) => {
+const LaneButtons = ({ activeButton, setActiveButton, titleNotShown }: LaneButtonsProps) => {
   const isVerifiedUser = useAppSelect((state) => state.auth.isVerifiedUser);
 
   // 내가 저장한 경로의 노선만 가져옴
@@ -42,8 +42,8 @@ const LaneButtons = ({ activeButton, setActiveButton, titleShown }: LaneButtonsP
   );
 
   return (
-    <>
-      {titleShown && (
+    <View style={{ backgroundColor: COLOR.WHITE }}>
+      {!titleNotShown ? (
         <IssueLineType>
           <FontText
             value={activeButton === '전체' ? '전체' : `${activeButton} NOW`}
@@ -52,32 +52,33 @@ const LaneButtons = ({ activeButton, setActiveButton, titleShown }: LaneButtonsP
             lineHeight="25px"
           />
         </IssueLineType>
+      ) : (
+        <ScrollView
+          horizontal={true}
+          showsHorizontalScrollIndicator={false}
+          style={{ flexDirection: 'row', paddingVertical: 12 }}
+        >
+          <Space width="16px" />
+          {savedStations &&
+            ['전체', ...savedStations, ...otherStations].map((text) => (
+              <ButtonStyle
+                key={text}
+                onPress={() => setActiveButton(text as NowScreenCapsules)}
+                activeButton={activeButton === text}
+              >
+                <FontText
+                  value={text}
+                  textSize="16px"
+                  textWeight="Medium"
+                  lineHeight="21px"
+                  textColor={activeButton === text ? 'white' : '#969696'}
+                />
+              </ButtonStyle>
+            ))}
+          <Space width="16px" />
+        </ScrollView>
       )}
-      <ScrollView
-        horizontal={true}
-        showsHorizontalScrollIndicator={false}
-        style={{ flexDirection: 'row', paddingVertical: 12 }}
-      >
-        <Space width="16px" />
-        {savedStations &&
-          ['전체', ...savedStations, ...otherStations].map((text) => (
-            <ButtonStyle
-              key={text}
-              onPress={() => setActiveButton(text as NowScreenCapsules)}
-              activeButton={activeButton === text}
-            >
-              <FontText
-                value={text}
-                textSize="16px"
-                textWeight="Medium"
-                lineHeight="21px"
-                textColor={activeButton === text ? 'white' : '#969696'}
-              />
-            </ButtonStyle>
-          ))}
-        <Space width="16px" />
-      </ScrollView>
-    </>
+    </View>
   );
 };
 
@@ -94,3 +95,4 @@ const IssueLineType = styled.View`
   padding: 24px 16px 12px;
 `;
 export default LaneButtons;
+

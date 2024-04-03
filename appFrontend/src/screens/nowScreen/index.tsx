@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styled from '@emotion/native';
 import { COLOR } from '@/global/constants';
 import { useQueryClient } from 'react-query';
@@ -19,6 +19,9 @@ const NowScreen = () => {
   const [activeButton, setActiveButton] = useState<NowScreenCapsules>('전체');
   const [isRefresh, setRefresh] = useState<boolean>(false);
   const [issuesList, setIssuesList] = useState<IssueContent[]>([]);
+  const [layoutHeight, setLayoutHeight] = useState<number>(0);
+  const [btnTitleHeight, setBtnTitleHeight] = useState<number>(0);
+  const flatListRef = useRef<FlatList>(null);
 
   const { popularIssues, popularIssuesRefetch, isPopularIssuesLoading } =
     useGetPopularIssuesQuery();
@@ -58,6 +61,14 @@ const NowScreen = () => {
     }
   };
 
+  useEffect(() => {
+    flatListRef.current?.scrollToIndex({
+      index: 2,
+      viewPosition: 0,
+      viewOffset: -btnTitleHeight,
+    });
+  }, [activeButton]);
+
   return (
     <Container>
       {isPopularIssuesLoading || isAllIssuesLoading ? (
@@ -65,78 +76,123 @@ const NowScreen = () => {
           <LoadingCircle width={50} height={50} />
         </View>
       ) : (
-        <FlatList
-          ListHeaderComponent={
-            <>
-              <Header>
-                <FontText value="NOW" textSize="24px" textWeight="SemiBold" lineHeight="34px" />
-              </Header>
-              {popularIssues && popularIssues?.length > 0 && (
-                <>
-                  <IssueLineType>
-                    <FontText
-                      value="지금 인기"
-                      textSize="20px"
-                      textWeight="SemiBold"
-                      lineHeight="25px"
+        <>
+          <Header>
+            <FontText value="NOW" textSize="24px" textWeight="SemiBold" lineHeight="34px" />
+          </Header>
+          <FlatList
+            ListHeaderComponent={
+              <>
+                {popularIssues && popularIssues?.length > 0 && (
+                  <>
+                    <View
+                      onLayout={(event) => {
+                        const { height } = event.nativeEvent.layout;
+                        setLayoutHeight(height);
+                      }}
+                    >
+                      <IssueLineType>
+                        <FontText
+                          value="지금 인기"
+                          textSize="20px"
+                          textWeight="SemiBold"
+                          lineHeight="25px"
+                        />
+                      </IssueLineType>
+                      {popularIssues?.map((item, index) => (
+                        <IssueContainer
+                          key={item.id}
+                          id={item.id}
+                          title={item.title}
+                          time={item.agoTime}
+                          body={item.content}
+                          isLastItem={index === popularIssues.length - 1}
+                          isHeader={true}
+                        />
+                      ))}
+                    </View>
+                  </>
+                )}
+              </>
+            }
+            ref={flatListRef}
+            stickyHeaderIndices={issuesList ? [2] : [0]}
+            getItemLayout={(data, index) => ({ length: 0, offset: layoutHeight, index })}
+            data={['버튼제목', '버튼', ...issuesList, '이슈없음']}
+            renderItem={({ item, index }) => {
+              if (popularIssues) {
+                if (index === 0 && popularIssues?.length < 1) return null;
+                else if (index === 0 && popularIssues?.length > 0)
+                  return (
+                    <View
+                      onLayout={(event) => {
+                        const { height } = event.nativeEvent.layout;
+                        setBtnTitleHeight(height);
+                      }}
+                    >
+                      <LaneButtons
+                        activeButton={activeButton}
+                        setActiveButton={setActiveButton}
+                        titleNotShown={popularIssues?.length < 1}
+                      />
+                    </View>
+                  );
+                else if (index === 1) {
+                  return (
+                    <LaneButtons
+                      activeButton={activeButton}
+                      setActiveButton={setActiveButton}
+                      titleNotShown={true}
                     />
-                  </IssueLineType>
-                  {popularIssues?.map((item, index) => (
+                  );
+                } else if (index === 2 && issuesList.length < 1) {
+                  return (
+                    <FontText
+                      value="올라온 이슈가 없어요"
+                      textSize="18px"
+                      textWeight="Regular"
+                      lineHeight="700px"
+                      textColor={COLOR.GRAY_999}
+                      textAlign="center"
+                    />
+                  );
+                } else if (index === issuesList.length + 2) return null;
+                else
+                  return (
                     <IssueContainer
                       key={item.id}
                       id={item.id}
                       title={item.title}
                       time={item.agoTime}
                       body={item.content}
-                      isLastItem={index === popularIssues.length - 1}
-                      isHeader={true}
+                      isLastItem={index === issuesList.length + 1}
+                      isHeader={false}
                     />
-                  ))}
-                </>
-              )}
-              {popularIssues && (
-                <LaneButtons
-                  activeButton={activeButton}
-                  setActiveButton={setActiveButton}
-                  titleShown={popularIssues.length > 0}
-                />
-              )}
-            </>
-          }
-          data={issuesList}
-          renderItem={({ item, index }) => (
-            <IssueContainer
-              key={item.id}
-              id={item.id}
-              title={item.title}
-              time={item.agoTime}
-              body={item.content}
-              isLastItem={index === issuesList.length - 1}
-              isHeader={false}
-            />
-          )}
-          keyExtractor={(item, index) => `${item.id}_${index}`}
-          ListFooterComponent={<Space height="64px" width="999px" />}
-          ListEmptyComponent={
-            <FontText
-              value="올라온 이슈가 없어요"
-              textSize="18px"
-              textWeight="Regular"
-              lineHeight="400px"
-              textColor={COLOR.GRAY_999}
-              textAlign="center"
-            />
-          }
-          refreshControl={
-            <RefreshControl
-              onRefresh={() => setRefresh(true)}
-              refreshing={isRefresh}
-              progressViewOffset={-10}
-            />
-          }
-          onEndReached={onEndReached}
-          onEndReachedThreshold={0.4}
-        />
+                  );
+              }
+              return null;
+            }}
+            ListFooterComponent={() => {
+              if (issuesList.length > 5) {
+                return <Space height="64px" width="999px" />;
+              } else if (issuesList.length < 1) {
+                return null;
+              } else {
+                return <Space height={`${700 - issuesList.length * 100}px`} />;
+              }
+            }}
+            keyExtractor={(item, index) => `${item.id}_${index}`}
+            refreshControl={
+              <RefreshControl
+                onRefresh={() => setRefresh(true)}
+                refreshing={isRefresh}
+                progressViewOffset={-10}
+              />
+            }
+            onEndReached={onEndReached}
+            onEndReachedThreshold={0.4}
+          />
+        </>
       )}
     </Container>
   );
