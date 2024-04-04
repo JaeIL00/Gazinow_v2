@@ -250,6 +250,8 @@ export const subwayNameCutting = (name: string) => {
       return '월드컵\n경기장';
     case '부천종합운동장':
       return '부천\n종합운동장';
+    case '석남(거북시장)':
+      return '석남\n(거북시장)';
     case '어린이대공원':
       return '어린이\n대공원';
     case '신대방삼거리':
