@@ -20,7 +20,6 @@ const NameNewRouteModal = () => {
   const [roadName, setRoadName] = useState<string>('');
   const [isDuplicatedName, setIsDuplicatedName] = useState<boolean>(false);
   const [isKeyboardVisible, setKeyboardVisible] = useState<boolean>(false);
-  const [isDisabled, setIsDisabled] = useState<boolean>(false);
 
   const queryClient = useQueryClient();
 
@@ -35,7 +34,7 @@ const NameNewRouteModal = () => {
     return subPaths.filter((subPath) => !!subPath.lanes.length && !!subPath.stations.length);
   }, [resultData]);
 
-  const { mutate } = useSavedSubwayRoute({
+  const { mutate, isLoading } = useSavedSubwayRoute({
     onSuccess: async () => {
       await queryClient.invalidateQueries('getRoads');
       homeNavigation.reset({ routes: [{ name: 'SavedRoutes' }] });
@@ -80,7 +79,6 @@ const NameNewRouteModal = () => {
                 if (text.length > 10) return;
                 setRoadName(text);
                 setIsDuplicatedName(false);
-                setIsDisabled(false);
               }}
               inputMode="email"
               placeholderTextColor={COLOR.GRAY_999}
@@ -121,9 +119,8 @@ const NameNewRouteModal = () => {
               ...resultData,
               subPaths: freshSubPathData,
             });
-            setIsDisabled(true);
           }}
-          disabled={!roadName || isDisabled}
+          disabled={!roadName || isLoading || isDuplicatedName}
         >
           <FontText
             value="완료"

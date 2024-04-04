@@ -17,9 +17,8 @@ const NewRouteSaveModal = ({ freshData, closeModal, onBookmark }: NewRouteSaveMo
 
   const [isDuplicatedError, setIsDuplicatedError] = useState<boolean>(false);
   const [routeName, setRouteName] = useState<string>('');
-  const [isDisabled, setIsDisabled] = useState<boolean>(false);
 
-  const { mutate } = useSavedSubwayRoute({
+  const { mutate, isLoading } = useSavedSubwayRoute({
     onSuccess: async () => {
       await queryClient.invalidateQueries(['getRoads']);
       onBookmark();
@@ -34,7 +33,6 @@ const NewRouteSaveModal = ({ freshData, closeModal, onBookmark }: NewRouteSaveMo
 
   const saveHandler = () => {
     if (routeName.length === 0) return;
-    setIsDisabled(true);
     mutate({
       roadName: routeName,
       ...freshData,
@@ -105,7 +103,6 @@ const NewRouteSaveModal = ({ freshData, closeModal, onBookmark }: NewRouteSaveMo
                   if (text.length <= 10) {
                     setIsDuplicatedError(false);
                     setRouteName(text);
-                    setIsDisabled(false);
                   }
                 }}
                 style={{
@@ -163,12 +160,14 @@ const NewRouteSaveModal = ({ freshData, closeModal, onBookmark }: NewRouteSaveMo
                 paddingVertical: 12,
                 borderRadius: 5,
                 backgroundColor:
-                  isDisabled || routeName.length < 1 ? COLOR.GRAY_DDD : COLOR.BASIC_BLACK,
+                  isLoading || isDuplicatedError || routeName.length < 1
+                    ? COLOR.GRAY_DDD
+                    : COLOR.BASIC_BLACK,
                 flex: 1,
                 alignItems: 'center',
               }}
               onPress={saveHandler}
-              disabled={isDisabled}
+              disabled={isLoading || isDuplicatedError}
             />
           </View>
         </View>

@@ -84,12 +84,12 @@ export const useSavedSubwayRoute = ({
   onSuccess: () => void;
   onError: (error: AxiosError) => void;
 }) => {
-  const { data, mutate } = useMutation(searchPathSaveFetch, {
+  const { data, mutate, isLoading } = useMutation(searchPathSaveFetch, {
     onSuccess,
     onError,
   });
 
-  return { data, mutate };
+  return { data, mutate, isLoading };
 };
 
 /**
