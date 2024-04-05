@@ -10,7 +10,7 @@ import { RenderSavedRoutesType } from '@/global/apis/entity';
 import styled from '@emotion/native';
 import { showToast } from '@/global/utils/toast';
 
-const RenderSavedRoutes = () => {
+const EditSavedRoutesList = () => {
   const [popupVisible, setPopupVisible] = useState<boolean>(false);
   const [routeToDelete, setRouteToDelete] = useState<number | null>(null);
   const queryClient = useQueryClient();
@@ -83,7 +83,7 @@ const RenderSavedRoutes = () => {
   );
 };
 
-export default RenderSavedRoutes;
+export default EditSavedRoutesList;
 
 const RouteContainer = styled.View`
   padding: 20px 16px 0;

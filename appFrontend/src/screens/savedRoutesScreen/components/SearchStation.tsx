@@ -4,9 +4,7 @@ import { COLOR } from '@/global/constants';
 import { useAppDispatch, useAppSelect } from '@/store';
 import { getSeletedStation } from '@/store/modules/stationSearchModule';
 import { useAddRecentSearch, useGetSearchHistory, useSearchStationName } from '@/global/apis/hooks';
-import { useCallback, useState } from 'react';
-import { debounce } from 'lodash';
-import { SelectedStationTypes } from './NewSearchSwapStation';
+import { useState } from 'react';
 import IconXCircleFill from '@assets/icons/x_circle_fill.svg';
 import { Pressable, SafeAreaView } from 'react-native';
 import { subwayReturnLineName } from '@/global/utils/subwayLine';
@@ -17,7 +15,7 @@ import IconClock from '@assets/icons/clock.svg';
 import NoResultIcon from '@/assets/icons/no_result_icon.svg';
 import NoResultText from '@/assets/icons/no_result_text.svg';
 
-const NewSearchStation = () => {
+const SearchStation = () => {
   const newRouteNavigation = useNewRouteNavigation();
   const dispatch = useAppDispatch();
   const { selectedStation, stationType } = useAppSelect((state) => state.subwaySearch);
@@ -165,7 +163,7 @@ const NewSearchStation = () => {
   );
 };
 
-export default NewSearchStation;
+export default SearchStation;
 
 const Container = styled.View`
   flex-direction: row;
