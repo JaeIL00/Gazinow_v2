@@ -310,6 +310,14 @@ export const subwayNameCutting = (name: string) => {
       return '송도달빛\n축제공원';
     case '광교중앙(아주대)':
       return '광교중앙\n(아주대)';
+    case '아시아드경기장(공촌사거리)':
+      return '아시아드경기장\n(공촌사거리)';
+    case '쌍용(나사렛대)':
+      return '쌍용\n(나사렛대)';
+    case '녹사평(용산구청)':
+      return '녹사평\n(용산구청)';
+    case '수유(강북구청)':
+      return '수유\n(강북구청)';
     default:
       return name;
   }
