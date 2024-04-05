@@ -234,6 +234,8 @@ export const pathSubwayLineNameInLine = (StationCode: StationCode) => {
 
 export const subwayNameCutting = (name: string) => {
   switch (name) {
+    case '4.19민주묘지':
+      return '4.19\n민주묘지';
     case '가산디지털단지':
       return '가산\n디지털단지';
     case '구로디지털단지':
@@ -270,18 +272,28 @@ export const subwayNameCutting = (name: string) => {
       return '압구정\n로데오';
     case '남동인더스파크':
       return '남동\n인더스파크';
+    case '녹사평(용산구청)':
+      return '녹사평\n(용산구청)';
+    case '봉화산(서울의료원)':
+      return '봉화산\n(서울의료원)'; //FIXME: 잘라도 길다
+    case '시민공원(문화창작지대)':
+      return '시민공원\n(문화창작지대)'; //FIXME: 잘라도 길다
+    case '신창(순천향대)':
+      return '신창\n(순천향대)';
     case '양재시민의숲':
       return '양재\n시민의숲';
+    case '용인중앙시장':
+      return '용인\n중앙시장';
     case '시청.용인대':
       return '시청.\n용인대';
     case '운동장.송담대':
       return '운동장.\n송담대';
     case '전대.에버랜드':
       return '전대.\n에버랜드';
+    case '주안국가산단(인천J밸리)':
+      return '주안국가산단\n(인천J밸리)'; //FIXME: 잘라도 길다
     case '총신대입구(이수)':
       return '총신대입구\n(이수)';
-    case '419민주묘지':
-      return '419\n민주묘지';
     case '북한산보국문':
       return '북한산\n보국문';
     case '경기도청북부청사':
@@ -292,6 +304,14 @@ export const subwayNameCutting = (name: string) => {
       return '주안\n국가산단';
     case '가정중앙시장':
       return '가정\n중앙시장';
+    case '가정(루원시티)':
+      return '가정\n루원시티';
+    case '검단오류(검단산업단지)':
+      return '검단오류\n(검단산업단지)'; //FIXME: 잘라도 길다
+    case '관악산(서울대)':
+      return '관악산\n(서울대)';
+    case '광교(경기대)':
+      return '광교\n(경기대)';
     case '서부여성회관':
       return '서부\n여성회관';
     case '아시아드경기장':
@@ -311,7 +331,7 @@ export const subwayNameCutting = (name: string) => {
     case '광교중앙(아주대)':
       return '광교중앙\n(아주대)';
     case '아시아드경기장(공촌사거리)':
-      return '아시아드경기장\n(공촌사거리)';
+      return '아시아드경기장\n(공촌사거리)'; //FIXME: 잘라도 길다
     case '쌍용(나사렛대)':
       return '쌍용\n(나사렛대)';
     case '녹사평(용산구청)':
