@@ -1,5 +1,5 @@
 import styled from '@emotion/native';
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Alert, Pressable, SafeAreaView, View } from 'react-native';
 import { FontText, Input, Space, TextButton } from '@/global/ui';
 import { COLOR } from '@/global/constants';
@@ -19,10 +19,12 @@ const ChangePwScreen = () => {
   const [changePassword, setChangePassword] = useState<string>('');
   const [confirmPassword, setConfirmPassword] = useState<string>('');
 
+  const [isDoneBtnDisabled, setIsDoneBtnDisabled] = useState<boolean>(true);
+
   const [isPwRight, setIsPwRight] = useState<boolean>(false);
   const [isNewPwValid, setIsNewPwValid] = useState<boolean>(false);
 
-  const [isValueCombination, setIsValidCombination] = useState<boolean>(false);
+  const [isValidCombination, setIsValidCombination] = useState<boolean>(false);
   const [isValidLength, setIsValidLength] = useState<boolean>(false);
 
   const combinationValidation = new RegExp(
@@ -37,7 +39,7 @@ const ChangePwScreen = () => {
     const isLength = text.length >= 8 && text.length <= 20;
     setIsValidLength(isLength);
 
-    if (isValueCombination && isValidLength) {
+    if (isCombination && isLength) {
       setIsNewPwValid(true);
     } else {
       setIsNewPwValid(false);
@@ -45,7 +47,7 @@ const ChangePwScreen = () => {
   };
 
   const lengValidColor = isValidLength ? COLOR.LIGHT_GREEN : COLOR.GRAY_999;
-  const comValidColor = isValueCombination ? COLOR.LIGHT_GREEN : COLOR.GRAY_999;
+  const comValidColor = isValidCombination ? COLOR.LIGHT_GREEN : COLOR.GRAY_999;
 
   const isNewEqualsToOld = curPassword === changePassword;
 
@@ -90,6 +92,21 @@ const ChangePwScreen = () => {
     myPageNavigation.goBack();
   };
 
+  useEffect(() => {
+    if (
+      isPwRight &&
+      isNewPwValid &&
+      isValidLength &&
+      isValidCombination &&
+      !isNewEqualsToOld &&
+      confirmPassword === changePassword
+    ) {
+      setIsDoneBtnDisabled(false);
+    } else {
+      setIsDoneBtnDisabled(true);
+    }
+  }, [isPwRight, curPassword, confirmPassword, changePassword]);
+
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: COLOR.WHITE }}>
       <Header>
@@ -103,27 +120,11 @@ const ChangePwScreen = () => {
           <TextButton
             value="완료"
             textSize="16px"
-            textColor={
-              !isPwRight ||
-              !isNewPwValid ||
-              !isValidLength ||
-              !isValueCombination ||
-              isNewEqualsToOld ||
-              confirmPassword !== changePassword
-                ? COLOR.GRAY_999
-                : COLOR.BASIC_BLACK
-            }
+            textColor={isDoneBtnDisabled ? COLOR.GRAY_999 : COLOR.BASIC_BLACK}
             textWeight="SemiBold"
             lineHeight="21px"
             onPress={onPressDone}
-            disabled={
-              !isPwRight ||
-              !isNewPwValid ||
-              !isValidLength ||
-              !isValueCombination ||
-              isNewEqualsToOld ||
-              confirmPassword !== changePassword
-            }
+            disabled={isDoneBtnDisabled}
           />
         </Pressable>
       </Header>
