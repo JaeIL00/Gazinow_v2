@@ -15,9 +15,9 @@ export const useTryAuthorization = () => {
       await setEncryptedStorage('access_token', data.accessToken);
       await setEncryptedStorage('refresh_token', data.refreshToken);
     },
-    onError: () => {
-      removeEncryptedStorage('access_token');
-      removeEncryptedStorage('refresh_token');
+    onError: async () => {
+      await removeEncryptedStorage('access_token');
+      await removeEncryptedStorage('refresh_token');
       dispatch(getAuthorizationState('fail auth'));
     },
   });

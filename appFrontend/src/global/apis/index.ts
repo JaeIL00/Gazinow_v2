@@ -4,17 +4,17 @@ import axios, { AxiosError } from 'axios';
 import { createNavigationContainerRef } from '@react-navigation/native';
 import { RootStackParamList } from '@/navigation/types/navigation';
 import { getEncryptedStorage, setEncryptedStorage } from '@/global/utils';
-import { SIGNIN } from '@/global/constants';
 import EncryptedStorage from 'react-native-encrypted-storage';
-import { tokenReissueFetch } from './func';
+import { store } from '@/store';
+import { getAuthorizationState } from '@/store/modules';
 
-const navigationRef = createNavigationContainerRef<RootStackParamList>();
+// const navigationRef = createNavigationContainerRef<RootStackParamList>();
 
-const navigate = (name: any, params?: any): any => {
-  if (navigationRef.isReady()) {
-    navigationRef.navigate(name, params);
-  }
-};
+// const navigate = (name: any, params?: any): any => {
+//   if (navigationRef.isReady()) {
+//     navigationRef.navigate(name, params);
+//   }
+// };
 
 /**
  * 유저 토큰이 불필요한 api instance
@@ -50,17 +50,16 @@ authServiceAPI.interceptors.request.use(async (requestConfig) => {
 authServiceAPI.interceptors.response.use(
   (response) => response,
   async (error: AxiosError) => {
-    // network error
     if (!error.response || error.response.status !== 401) {
       throw error;
     }
 
-    // access token is not valid
     const accessToken = await getEncryptedStorage('access_token');
     const refreshToken = await getEncryptedStorage('refresh_token');
 
     if (!refreshToken) {
-      return navigate(SIGNIN);
+      store.dispatch(getAuthorizationState('fail auth'));
+      return error;
     }
 
     const response = await axios.post(
@@ -71,24 +70,20 @@ authServiceAPI.interceptors.response.use(
       },
       {
         baseURL: API_BASE_URL,
-        headers: { Authorization: `Bearer ${refreshToken}` },
+        headers: { Authorization: `Bearer ${accessToken}` },
       },
     );
 
-    const { accessToken: newAccessToken } = await tokenReissueFetch({
-      accessToken,
-      refreshToken,
-    });
-
     if (response.status === 200) {
-      // refresh token is valid
-      await setEncryptedStorage('access_token', newAccessToken);
+      await setEncryptedStorage('access_token', response.data.data.accessToken);
+      await setEncryptedStorage('refresh_token', response.data.data.refreshToken);
+      // api 재요청
       return authServiceAPI(error.config || {});
     } else {
       // refresh token is not valid
-      await EncryptedStorage.removeItem('access_token');
-      await EncryptedStorage.removeItem('refresh_token');
-      return navigate(SIGNIN);
+      await EncryptedStorage.clear();
+      store.dispatch(getAuthorizationState('fail auth'));
+      return error;
     }
   },
 );
