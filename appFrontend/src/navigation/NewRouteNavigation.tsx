@@ -1,12 +1,12 @@
 import { StackNavigationProp, createStackNavigator } from '@react-navigation/stack';
 import { NewRouteStackParamList } from './types/navigation';
-import SwapScreen from '@/screens/savedRoutesScreen/components/NewSearchSwapStation';
-import SearchScreen from '@/screens/savedRoutesScreen/components/NewSearchStation';
-import ResultScreen from '@/screens/savedRoutesScreen/components/SelectNewRouteModal';
-import DetailScreen from '@/screens/searchPathResultDetailScreen';
-import NameScreen from '@/screens/savedRoutesScreen/components/NameNewRouteModal';
 import { useNavigation } from '@react-navigation/native';
 import SavedRoutesScreen from '@/screens/savedRoutesScreen';
+import SwapScreen from '@/screens/savedRoutesScreen/components/SwapStation';
+import SearchScreen from '@/screens/savedRoutesScreen/components/SearchStation';
+import ResultScreen from '@/screens/savedRoutesScreen/components/SelectNewRoute';
+import DetailScreen from '@/screens/searchPathResultDetailScreen';
+import NameScreen from '@/screens/savedRoutesScreen/components/SaveNewRoute';
 
 const Stack = createStackNavigator<NewRouteStackParamList>();
 

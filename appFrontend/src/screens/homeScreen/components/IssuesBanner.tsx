@@ -4,19 +4,11 @@ import { COLOR } from '@/global/constants';
 import styled from '@emotion/native';
 import { IssueSummary, Lane, SubPath } from '@/global/apis/entity';
 import MoreBtn from '@/assets/icons/moreBtn.svg';
-import Accident from '@/assets/icons/issue_accident.svg';
-import Construction from '@/assets/icons/issue_construction.svg';
-import Crowded from '@/assets/icons/issue_crowded.svg';
-import Delayed from '@/assets/icons/issue_delayed.svg';
-import Demonstration from '@/assets/icons/issue_demonstration.svg';
-import Event from '@/assets/icons/issue_event.svg';
-import NaturalDisasters from '@/assets/icons/issue_naturaldisasters.svg';
 import { subwayLineColor } from '@/global/utils';
 import { useAppDispatch } from '@/store';
 import { getIssueId } from '@/store/modules';
 import { useRootNavigation } from '@/navigation/RootNavigation';
 import IssueKeywordIcon from '@/global/components/subwaySimplePath/IssueKeywordIcon';
-import { View } from 'react-native';
 
 interface IssuesBannerProps {
   subPathss: SubPath[];

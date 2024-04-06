@@ -123,9 +123,9 @@ const SearchStationScreen = () => {
           </Header>
 
           <Ul marginTop="18px">
-            {historyData?.map(({ stationName, stationLine }) => (
+            {historyData?.map(({ stationName, stationLine }, index) => (
               <Li
-                key={stationName}
+                key={index}
                 onPress={() =>
                   stationBtnHandler({
                     stationName,

@@ -13,7 +13,7 @@ import AddNewRouteHeader from './AddNewRouteHeader';
 import { useRoute } from '@react-navigation/native';
 import { useHomeNavigation } from '@/navigation/HomeNavigation';
 
-const NameNewRouteModal = () => {
+const SaveNewRoute = () => {
   const { state: resultData } = useRoute().params as { state: Path };
   const homeNavigation = useHomeNavigation();
 
@@ -135,7 +135,7 @@ const NameNewRouteModal = () => {
   );
 };
 
-export default NameNewRouteModal;
+export default SaveNewRoute;
 
 const Container = styled.View`
   background-color: ${COLOR.WHITE};
