@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from '@emotion/native';
-import RenderSavedRoutes from './components/RenderSavedRoutes';
+import EditSavedRoutesList from './components/EditSavedRoutesList';
 import { FontText, Space } from '@/global/ui';
 import { COLOR } from '@/global/constants';
 import { useRootNavigation } from '@/navigation/RootNavigation';
@@ -25,7 +25,7 @@ const SavedRoutesScreen = () => {
         </Header>
         <Space height="4px" />
         <RouteContainer>
-          <RenderSavedRoutes />
+          <EditSavedRoutesList />
           <AddContainer onPress={() => newRouteNavigation.navigate('Swap')}>
             <IconPlusBtn />
             <FontText
