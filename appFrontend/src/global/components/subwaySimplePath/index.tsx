@@ -87,7 +87,15 @@ const SubwaySimplePath = ({
           if (maxLength > 3 && idx <= 2) {
             return (
               <React.Fragment key={stations[0].stationName + lanes[0].name + 'c' + way + idx}>
-                <PathLineNumName lane={lanes[0]} stationName={stations[0].stationName} />
+                {idx < 2 && (
+                  <PathLineNumName lane={lanes[0]} stationName={stations[0].stationName} />
+                )}
+                {idx === 1 && (
+                  <PathLineNumName
+                    lane={lanes[0]}
+                    stationName={stations[stations.length - 1].stationName}
+                  />
+                )}
               </React.Fragment>
             );
           }
