@@ -2,7 +2,7 @@ import styled from '@emotion/native';
 import { FontText, Input } from '@/global/ui';
 import { COLOR } from '@/global/constants';
 import React, { useMemo, useState } from 'react';
-import { useSaveMyRoutesQuery } from '@/global/apis/hooks';
+import { useSavedSubwayRoute } from '@/global/apis/hooks';
 import { useQueryClient } from 'react-query';
 import { SubwaySimplePath } from '@/global/components';
 import { Path, SubPath } from '@/global/apis/entity';
@@ -17,9 +17,10 @@ const SaveNewRoute = () => {
   const { state: resultData } = useRoute().params as { state: Path };
   const homeNavigation = useHomeNavigation();
 
-  const [roadName, setRoadName] = useState<string>();
+  const [roadName, setRoadName] = useState<string>('');
   const [isDuplicatedName, setIsDuplicatedName] = useState<boolean>(false);
-  const [isKeyboardVisible, setKeyboardVisible] = useState(false);
+  const [isKeyboardVisible, setKeyboardVisible] = useState<boolean>(false);
+
   const queryClient = useQueryClient();
 
   const keyboardDidShow = () => setKeyboardVisible(true);
@@ -33,13 +34,12 @@ const SaveNewRoute = () => {
     return subPaths.filter((subPath) => !!subPath.lanes.length && !!subPath.stations.length);
   }, [resultData]);
 
-  const { mutate } = useSaveMyRoutesQuery({
+  const { mutate, isLoading } = useSavedSubwayRoute({
     onSuccess: async () => {
       await queryClient.invalidateQueries('getRoads');
       homeNavigation.reset({ routes: [{ name: 'SavedRoutes' }] });
     },
     onError: async (error: any) => {
-      await queryClient.invalidateQueries('getRoads');
       if (error.response.status === 409) {
         setIsDuplicatedName(true);
       }
@@ -78,6 +78,7 @@ const SaveNewRoute = () => {
               onChangeText={(text) => {
                 if (text.length > 10) return;
                 setRoadName(text);
+                setIsDuplicatedName(false);
               }}
               inputMode="email"
               placeholderTextColor={COLOR.GRAY_999}
@@ -119,7 +120,7 @@ const SaveNewRoute = () => {
               subPaths: freshSubPathData,
             });
           }}
-          disabled={!roadName}
+          disabled={!roadName || isLoading || isDuplicatedName}
         >
           <FontText
             value="완료"

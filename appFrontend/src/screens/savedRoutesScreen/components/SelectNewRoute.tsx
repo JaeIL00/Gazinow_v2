@@ -10,6 +10,7 @@ import { StationDataTypes } from '@/store/modules';
 import { useNewRouteNavigation } from '@/navigation/NewRouteNavigation';
 import { useAppSelect } from '@/store';
 import SwapStation from './SwapStation';
+import LoadingCircle from '@/global/components/animations/LoadingCircle';
 
 interface SelectedStationTypes {
   departure: StationDataTypes;
@@ -24,7 +25,7 @@ const SelectNewRoute = () => {
   const [selectedStation, setSelectedStation] =
     useState<SelectedStationTypes>(selectedStationRedux);
 
-  const { data } = useGetSearchPaths({
+  const { data, isLoading } = useGetSearchPaths({
     params: {
       strStationName: selectedStation.departure.stationName,
       strStationLine: selectedStation.departure.stationLine,
@@ -52,6 +53,21 @@ const SelectNewRoute = () => {
     <Container>
       <SwapStation setSelectedStation={setSelectedStation} />
       <SubPathContainer>
+        <View
+          style={{
+            backgroundColor: COLOR.WHITE,
+            paddingTop: 20,
+            paddingBottom: 45,
+            marginHorizontal: 16,
+          }}
+        >
+          <SwapStation setSelectedStation={setSelectedStation} />
+        </View>
+        {isLoading && (
+          <View style={{ marginTop: 100, alignItems: 'center' }}>
+            <LoadingCircle width={40} height={40} />
+          </View>
+        )}
         <ScrollView>
           {data?.paths.map((item) => (
             <PathInner
@@ -104,7 +120,7 @@ const SelectNewRoute = () => {
               />
             </PathInner>
           ))}
-          <Space height="1px" backgroundColor={COLOR.GRAY_EB} />
+          {!isLoading && <Space height="1px" backgroundColor={COLOR.GRAY_EB} />}
         </ScrollView>
       </SubPathContainer>
 
