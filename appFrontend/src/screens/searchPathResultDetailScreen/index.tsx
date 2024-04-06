@@ -246,7 +246,7 @@ const SearchPathResultDetailScreen = () => {
           showsVerticalScrollIndicator={false}
           keyExtractor={(item) => {
             if (typeof item === 'string') return 'dance';
-            return item.distance + item.sectionTime + '';
+            return item.distance + 'detail' + item.sectionTime;
           }}
           renderItem={({ item, index }) => {
             return (

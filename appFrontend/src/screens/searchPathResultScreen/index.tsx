@@ -99,13 +99,7 @@ const SearchPathResultScreen = () => {
           {data &&
             data.paths.map((item, idx) => (
               <View
-                key={
-                  item.firstStartStation +
-                  item.totalTime +
-                  item.subPaths.length +
-                  item.subwayTransitCount +
-                  idx
-                }
+                key={item.firstStartStation + item.subPaths.length + idx}
                 style={{
                   paddingHorizontal: 18,
                   paddingBottom: 24,

@@ -1,22 +1,23 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useState } from 'react';
 import { FontText, Space } from '@/global/ui';
 import { COLOR } from '@/global/constants';
 import IssuesBanner from './IssuesBanner';
 import styled from '@emotion/native';
-import { useGetSavedRoutesQuery } from '@/global/apis/hooks';
 import { RenderSavedRoutesType } from '@/global/apis/entity';
 import { SubwaySimplePath } from '@/global/components';
 import IconRightArrowHead from '@/assets/icons/right_arrow_head.svg';
 import { Pressable } from 'react-native';
 import { useHomeNavigation } from '@/navigation/HomeNavigation';
-import { RecommendedRoutes } from '.';
 
-const IssueBox = () => {
+interface IssueBoxProps {
+  savedRoutes: RenderSavedRoutesType[];
+}
+
+const IssueBox = ({ savedRoutes }: IssueBoxProps) => {
   const homeNavigation = useHomeNavigation();
-  const { data: savedRoutes } = useGetSavedRoutesQuery();
   const [hasIssueRoutes, setHasIssueRoutes] = useState<RenderSavedRoutesType[]>([]);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (savedRoutes) {
       const issueRoutes = savedRoutes.filter((savedRoute) => {
         return savedRoute.subPaths.some((subPath) => subPath.lanes[0].issueSummary.length > 0);
@@ -28,7 +29,7 @@ const IssueBox = () => {
   return (
     <>
       {hasIssueRoutes.map((route, index) => (
-        <RouteContainer key={index}>
+        <RouteContainer key={route.id + index}>
           <TextContainer>
             <TextContainer>
               <FontText

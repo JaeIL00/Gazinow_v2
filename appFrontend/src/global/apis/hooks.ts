@@ -19,7 +19,13 @@ import {
   getAllIssuesFetch,
   getIssuesByLaneFetch,
 } from '@/global/apis/func';
-import { AllIssues, IssueContent, RawSubwayLineName, SubwayStrEnd } from './entity';
+import {
+  AllIssues,
+  IssueContent,
+  RawSubwayLineName,
+  RenderSavedRoutesType,
+  SubwayStrEnd,
+} from './entity';
 import { AxiosError } from 'axios';
 import { subwayFreshLineName } from '@/global/utils';
 import { useAppSelect } from '@/store';
@@ -149,10 +155,13 @@ export const useGetSearchRoutesQuery = () => {
 /**
  * 저장한 지하철 경로 조회 훅
  */
-export const useGetSavedRoutesQuery = () => {
+export const useGetSavedRoutesQuery = ({
+  onSuccess,
+}: { onSuccess?: (data: RenderSavedRoutesType[]) => void } = {}) => {
   const isVerifiedUser = useAppSelect((state) => state.auth.isVerifiedUser);
   const { data } = useQuery(['getRoads'], getSavedRoutesFetch, {
     enabled: isVerifiedUser === 'success auth',
+    onSuccess,
   });
   return { data };
 };
