@@ -29,7 +29,12 @@ const IssueBox = () => {
     <>
       {hasIssueRoutes.map((route, index) => (
         <RouteContainer key={index}>
-          <TextContainer>
+          {index !== 0 && (
+            <BorderContainer>
+              <Space height="1px" width="999px" backgroundColor={COLOR.GRAY_F9} />
+            </BorderContainer>
+          )}
+          <TitleContainer>
             <TextContainer>
               <FontText
                 value={route.roadName}
@@ -74,9 +79,7 @@ const IssueBox = () => {
                 <IconRightArrowHead color={COLOR.GRAY_999} />
               </TextContainer>
             </Pressable>
-          </TextContainer>
-
-          <Space height="16px" />
+          </TitleContainer>
 
           <SubwaySimplePath
             pathData={route.subPaths}
@@ -105,12 +108,22 @@ const IssueBox = () => {
 export default IssueBox;
 
 const RouteContainer = styled.View`
-  margin: 20px 0 4px;
+  padding-bottom: 4px;
 `;
 const TextContainer = styled.Pressable`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
+`;
+const BorderContainer = styled.View`
+  margin-start: -99px;
+`;
+const TitleContainer = styled.View`
+  margin-bottom: 16px;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 20px;
 `;
 const GrayEllipse = styled.View`
   padding: 4px 6px;

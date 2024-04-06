@@ -99,6 +99,7 @@ const NewRouteSaveModal = ({ freshData, closeModal, onBookmark }: NewRouteSaveMo
             >
               <Input
                 value={routeName}
+                placeholder="경로 이름을 입력하세요"
                 onChangeText={(text) => {
                   if (text.length <= 10) {
                     setIsDuplicatedError(false);
@@ -140,6 +141,7 @@ const NewRouteSaveModal = ({ freshData, closeModal, onBookmark }: NewRouteSaveMo
               value="취소"
               textSize="14px"
               textWeight="SemiBold"
+              textColor={COLOR.GRAY_999}
               style={{
                 paddingVertical: 12,
                 borderRadius: 5,
