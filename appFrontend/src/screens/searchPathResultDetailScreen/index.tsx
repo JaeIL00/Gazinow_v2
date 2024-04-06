@@ -27,7 +27,7 @@ const SearchPathResultDetailScreen = () => {
   const rootNavigation = useRootNavigation();
   const { state: resultData } = useRoute().params as { state: DetailData };
   const isVerifiedUser = useAppSelect((state) => state.auth.isVerifiedUser);
-  console.log(resultData);
+
   const { isLoading, deleteMutate } = useDeleteSavedSubwayRoute({
     onSuccess: async () => {
       await queryClient.invalidateQueries(['getRoads']);

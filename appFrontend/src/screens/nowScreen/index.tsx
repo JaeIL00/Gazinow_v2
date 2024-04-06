@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styled from '@emotion/native';
 import { COLOR } from '@/global/constants';
 import { useQueryClient } from 'react-query';
 import { IssueContainer, LaneButtons } from './components';
 import { FreshSubwayLineName, IssueContent, NowScreenCapsules } from '@/global/apis/entity';
-import { Alert, FlatList, RefreshControl, View } from 'react-native';
+import { FlatList, RefreshControl, View } from 'react-native';
 import {
   useGetAllIssuesQuery,
   useGetPopularIssuesQuery,
@@ -12,159 +12,187 @@ import {
 } from '@/global/apis/hooks';
 import { FontText, Space } from '@/global/ui';
 import { subwayReturnLineName } from '@/global/utils/subwayLine';
-import LoadingAnimations from '@/global/components/animations/LoadingAnimations';
-import { AxiosError } from 'axios';
-import dayjs from 'dayjs';
+import LoadingCircle from '@/global/components/animations/LoadingCircle';
 
 const NowScreen = () => {
   const queryClient = useQueryClient();
   const [activeButton, setActiveButton] = useState<NowScreenCapsules>('전체');
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [isActiveBtnChanged, setIsActiveBtnChanged] = useState<boolean>(true);
   const [isRefresh, setRefresh] = useState<boolean>(false);
-  const [issuesPage, setIssuesPage] = useState(0);
   const [issuesList, setIssuesList] = useState<IssueContent[]>([]);
+  const [layoutHeight, setLayoutHeight] = useState<number>(0);
+  const [btnTitleHeight, setBtnTitleHeight] = useState<number>(0);
+  const flatListRef = useRef<FlatList>(null);
+
+  const { popularIssues, popularIssuesRefetch, isPopularIssuesLoading } =
+    useGetPopularIssuesQuery();
+
+  const {
+    allIssues,
+    allIssuesRefetch,
+    allIssuesHasNextPage,
+    fetchAllIssuesNextPage,
+    isAllIssuesLoading,
+  } = useGetAllIssuesQuery();
+
+  const { laneIssues, laneIssuesRefetch, laneIssuesHasNextPage, fetchLaneIssuesNextPage } =
+    useGetIssuesByLaneQuery(subwayReturnLineName(activeButton as FreshSubwayLineName)!);
 
   useEffect(() => {
-    // queryClient.invalidateQueries('getPopularIssues');
-    queryClient.invalidateQueries(['getAllIssues', 'getIssuesByLane']);
-    setIsActiveBtnChanged(true);
+    queryClient.invalidateQueries(['getAllIssues', 'getIssuesByLane', 'getPopularIssues']);
     setIssuesList([]);
-    setIssuesPage(0);
-  }, [activeButton]);
+    if (isRefresh) {
+      popularIssuesRefetch();
+    }
+    if (activeButton === '전체' && allIssues) {
+      allIssuesRefetch();
+      setIssuesList(allIssues?.pages.flatMap((page) => page.content));
+    } else if (activeButton !== '전체' && laneIssues) {
+      laneIssuesRefetch();
+      setIssuesList(laneIssues?.pages.flatMap((page) => page.content));
+    }
+    setRefresh(false);
+  }, [allIssues, laneIssues, activeButton, isRefresh]);
 
-  const getIssuesCallback = {
-    onSuccess: () => {
-      setTimeout(() => {
-        setRefresh(false);
-        setIsLoading(false);
-        setIsActiveBtnChanged(false);
-      }, 200);
-    },
-    onError: (error: AxiosError) => {
-      if (error.message.includes('Network Error')) {
-        Alert.alert('', '네트워크 연결을 확인해 주세요.');
-      }
-      setRefresh(false);
-      setIsLoading(false);
-      setIsActiveBtnChanged(false);
-    },
+  const onEndReached = () => {
+    if (activeButton === '전체' && allIssuesHasNextPage) {
+      fetchAllIssuesNextPage();
+    } else if (activeButton !== '전체' && laneIssuesHasNextPage) {
+      fetchLaneIssuesNextPage();
+    }
   };
-
-  const { popularIssues, popularIssuesRefetch } = useGetPopularIssuesQuery(getIssuesCallback);
-  const { allIssues, allIssuesRefetch } = useGetAllIssuesQuery(issuesPage, getIssuesCallback);
-  const { laneIssues, laneIssuesRefetch } = useGetIssuesByLaneQuery(
-    issuesPage,
-    subwayReturnLineName(activeButton as FreshSubwayLineName)!,
-    getIssuesCallback,
-  );
 
   useEffect(() => {
-    if (allIssues) {
-      setIssuesList((prevList) => [...prevList, ...allIssues.content]);
-    }
-    if (laneIssues) {
-      setIssuesList(laneIssues.content);
-    }
-  }, [allIssues, laneIssues, activeButton]);
-
-  const refreshIssues = () => {
-    setRefresh(true);
-    setIsLoading(true);
-    popularIssuesRefetch();
-    allIssuesRefetch();
-    laneIssuesRefetch();
-  };
+    flatListRef.current?.scrollToIndex({
+      index: 2,
+      viewPosition: 0,
+      viewOffset: -btnTitleHeight,
+    });
+  }, [activeButton]);
 
   return (
     <Container>
-      {isLoading ? (
-        <View style={{ marginTop: 30, alignItems: 'center' }}>
-          <LoadingAnimations width={50} height={50} />
+      {isPopularIssuesLoading || isAllIssuesLoading ? (
+        <View style={{ alignItems: 'center' }}>
+          <LoadingCircle width={50} height={50} />
         </View>
       ) : (
-        <FlatList
-          ListHeaderComponent={
-            <>
-              <Header>
-                <FontText value="NOW" textSize="24px" textWeight="SemiBold" lineHeight="34px" />
-              </Header>
-              {popularIssues!.length > 0 && (
-                <>
-                  <IssueLineType>
-                    <FontText
-                      value="지금 인기"
-                      textSize="20px"
-                      textWeight="SemiBold"
-                      lineHeight="25px"
+        <>
+          <Header>
+            <FontText value="NOW" textSize="24px" textWeight="SemiBold" lineHeight="34px" />
+          </Header>
+          <FlatList
+            ListHeaderComponent={
+              <>
+                {popularIssues && popularIssues?.length > 0 && (
+                  <>
+                    <View
+                      onLayout={(event) => {
+                        const { height } = event.nativeEvent.layout;
+                        setLayoutHeight(height);
+                      }}
+                    >
+                      <IssueLineType>
+                        <FontText
+                          value="지금 인기"
+                          textSize="20px"
+                          textWeight="SemiBold"
+                          lineHeight="25px"
+                        />
+                      </IssueLineType>
+                      {popularIssues?.map((item, index) => (
+                        <IssueContainer
+                          key={item.id}
+                          id={item.id}
+                          title={item.title}
+                          time={item.agoTime}
+                          body={item.content}
+                          isLastItem={index === popularIssues.length - 1}
+                          isHeader={true}
+                        />
+                      ))}
+                    </View>
+                  </>
+                )}
+              </>
+            }
+            ref={flatListRef}
+            stickyHeaderIndices={issuesList ? [2] : [0]}
+            getItemLayout={(data, index) => ({ length: 0, offset: layoutHeight, index })}
+            data={['버튼제목', '버튼', ...issuesList, '이슈없음']}
+            renderItem={({ item, index }) => {
+              if (popularIssues) {
+                if (index === 0 && popularIssues?.length < 1) return null;
+                else if (index === 0 && popularIssues?.length > 0)
+                  return (
+                    <View
+                      onLayout={(event) => {
+                        const { height } = event.nativeEvent.layout;
+                        setBtnTitleHeight(height);
+                      }}
+                    >
+                      <LaneButtons
+                        activeButton={activeButton}
+                        setActiveButton={setActiveButton}
+                        titleNotShown={popularIssues?.length < 1}
+                      />
+                    </View>
+                  );
+                else if (index === 1) {
+                  return (
+                    <LaneButtons
+                      activeButton={activeButton}
+                      setActiveButton={setActiveButton}
+                      titleNotShown={true}
                     />
-                  </IssueLineType>
-                  {popularIssues?.map((item, index) => (
+                  );
+                } else if (index === 2 && issuesList.length < 1) {
+                  return (
+                    <FontText
+                      value="올라온 이슈가 없어요"
+                      textSize="18px"
+                      textWeight="Regular"
+                      lineHeight="700px"
+                      textColor={COLOR.GRAY_999}
+                      textAlign="center"
+                    />
+                  );
+                } else if (index === issuesList.length + 2) return null;
+                else
+                  return (
                     <IssueContainer
                       key={item.id}
                       id={item.id}
                       title={item.title}
-                      time={item.startDate}
+                      time={item.agoTime}
                       body={item.content}
-                      isLastItem={index === popularIssues.length - 1}
-                      isHeader={true}
+                      isLastItem={index === issuesList.length + 1}
+                      isHeader={false}
                     />
-                  ))}
-                </>
-              )}
-              <LaneButtons
-                activeButton={activeButton}
-                setActiveButton={setActiveButton}
-                titleShown={popularIssues!.length > 0}
+                  );
+              }
+              return null;
+            }}
+            ListFooterComponent={() => {
+              if (issuesList.length > 5) {
+                return <Space height="64px" width="999px" />;
+              } else if (issuesList.length < 1) {
+                return null;
+              } else {
+                return <Space height={`${700 - issuesList.length * 100}px`} />;
+              }
+            }}
+            keyExtractor={(item, index) => `${item.id}_${index}`}
+            refreshControl={
+              <RefreshControl
+                onRefresh={() => setRefresh(true)}
+                refreshing={isRefresh}
+                progressViewOffset={-10}
               />
-            </>
-          }
-          data={issuesList}
-          renderItem={({ item, index }) =>
-            isActiveBtnChanged ? (
-              index === 0 ? (
-                <View style={{ marginTop: 30, alignItems: 'center' }}>
-                  <LoadingAnimations width={50} height={50} />
-                </View>
-              ) : null
-            ) : (
-              <IssueContainer
-                key={item.id}
-                id={item.id}
-                title={item.title}
-                time={item.startDate}
-                body={item.content}
-                isLastItem={index === issuesList.length - 1}
-                isHeader={false}
-              />
-            )
-          }
-          keyExtractor={(item, index) => `${item.id}_${index}`}
-          ListFooterComponent={<Space height="64px" width="999px" />}
-          ListEmptyComponent={
-            <FontText
-              value="올라온 이슈가 없어요"
-              textSize="18px"
-              textWeight="Regular"
-              lineHeight="400px"
-              textColor={COLOR.GRAY_999}
-              textAlign="center"
-            />
-          }
-          refreshControl={
-            <RefreshControl
-              onRefresh={refreshIssues}
-              refreshing={isRefresh}
-              progressViewOffset={-10}
-            />
-          }
-          onEndReached={() => {
-            if (issuesList.length >= 15) {
-              setIssuesPage((prevPage) => prevPage + 1);
             }
-          }}
-          onEndReachedThreshold={0.4}
-        />
+            onEndReached={onEndReached}
+            onEndReachedThreshold={0.4}
+          />
+        </>
       )}
     </Container>
   );

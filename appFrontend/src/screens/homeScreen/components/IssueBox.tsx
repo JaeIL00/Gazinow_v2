@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect, useState } from 'react';
+import React, { useLayoutEffect, useState } from 'react';
 import { FontText, Space } from '@/global/ui';
 import { COLOR } from '@/global/constants';
 import IssuesBanner from './IssuesBanner';
@@ -77,8 +77,6 @@ const IssueBox = ({ savedRoutes }: IssueBoxProps) => {
             </Pressable>
           </TextContainer>
 
-          <Space height="16px" />
-
           <SubwaySimplePath
             pathData={route.subPaths}
             arriveStationName={route.lastEndStation}
@@ -106,12 +104,22 @@ const IssueBox = ({ savedRoutes }: IssueBoxProps) => {
 export default IssueBox;
 
 const RouteContainer = styled.View`
-  margin: 20px 0 4px;
+  padding-bottom: 4px;
 `;
 const TextContainer = styled.Pressable`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
+`;
+const BorderContainer = styled.View`
+  margin-start: -99px;
+`;
+const TitleContainer = styled.View`
+  margin-bottom: 16px;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 20px;
 `;
 const GrayEllipse = styled.View`
   padding: 4px 6px;

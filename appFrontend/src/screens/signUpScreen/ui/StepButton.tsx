@@ -1,4 +1,4 @@
-import LoadingAnimations from '@/global/components/animations/LoadingAnimations';
+import LoadingDots from '@/global/components/animations/LoadingDots';
 import { COLOR } from '@/global/constants';
 import { TextButton } from '@/global/ui';
 import { View } from 'react-native';
@@ -23,17 +23,16 @@ const StepButton = ({
       {isLoading ? (
         <View
           style={{
-            backgroundColor: COLOR.GRAY_DDD,
+            backgroundColor: COLOR.BASIC_BLACK,
             borderRadius: 5,
             alignItems: 'center',
             justifyContent: 'center',
             height: 48,
             marginBottom: 41,
-            flexDirection: 'row',
+            paddingTop: 8,
           }}
         >
-          <LoadingAnimations color="white" width={34} height={27} />
-          <TextButton value={value} textSize="17px" textWeight="SemiBold" textColor={COLOR.WHITE} />
+          <LoadingDots width={200} height={90} />
         </View>
       ) : (
         <TextButton

@@ -1,7 +1,7 @@
 import { FontText, Input, Space, TextButton } from '@/global/ui';
 import { COLOR } from '@/global/constants';
 import { KeyboardAvoidingView, Modal, Platform, View } from 'react-native';
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import { SubwaySimplePath } from '@/global/components';
 import { useSavedSubwayRoute } from '@/global/apis/hooks';
 import { Path } from '@/global/apis/entity';
@@ -110,7 +110,6 @@ const NewRouteSaveModal = ({
               <Input
                 placeholder="경로 이름을 입력하세요"
                 value={routeName}
-                isBlur={isLoading}
                 onChangeText={(text) => {
                   if (text.length <= 10) {
                     setIsDuplicatedError(false);
@@ -152,6 +151,7 @@ const NewRouteSaveModal = ({
               value="취소"
               textSize="14px"
               textWeight="SemiBold"
+              textColor={COLOR.GRAY_999}
               style={{
                 paddingVertical: 12,
                 borderRadius: 5,
@@ -171,11 +171,15 @@ const NewRouteSaveModal = ({
               style={{
                 paddingVertical: 12,
                 borderRadius: 5,
-                backgroundColor: routeName.length > 0 ? COLOR.BASIC_BLACK : COLOR.GRAY_DDD,
+                backgroundColor:
+                  isLoading || isDuplicatedError || routeName.length < 1
+                    ? COLOR.GRAY_DDD
+                    : COLOR.BASIC_BLACK,
                 flex: 1,
                 alignItems: 'center',
               }}
               onPress={saveHandler}
+              disabled={isLoading || isDuplicatedError}
             />
           </View>
         </View>
