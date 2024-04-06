@@ -1,7 +1,7 @@
 import { FontText, Input, Space, TextButton } from '@/global/ui';
 import { COLOR } from '@/global/constants';
 import { KeyboardAvoidingView, Modal, Platform, View } from 'react-native';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { SubwaySimplePath } from '@/global/components';
 import { useSavedSubwayRoute } from '@/global/apis/hooks';
 import { Path } from '@/global/apis/entity';
@@ -18,7 +18,7 @@ const NewRouteSaveModal = ({ freshData, closeModal, onBookmark }: NewRouteSaveMo
   const [isDuplicatedError, setIsDuplicatedError] = useState<boolean>(false);
   const [routeName, setRouteName] = useState<string>('');
 
-  const { mutate } = useSavedSubwayRoute({
+  const { mutate, isLoading } = useSavedSubwayRoute({
     onSuccess: async () => {
       await queryClient.invalidateQueries(['getRoads']);
       onBookmark();
@@ -159,11 +159,15 @@ const NewRouteSaveModal = ({ freshData, closeModal, onBookmark }: NewRouteSaveMo
               style={{
                 paddingVertical: 12,
                 borderRadius: 5,
-                backgroundColor: routeName.length > 0 ? COLOR.BASIC_BLACK : COLOR.GRAY_DDD,
+                backgroundColor:
+                  isLoading || isDuplicatedError || routeName.length < 1
+                    ? COLOR.GRAY_DDD
+                    : COLOR.BASIC_BLACK,
                 flex: 1,
                 alignItems: 'center',
               }}
               onPress={saveHandler}
+              disabled={isLoading || isDuplicatedError}
             />
           </View>
         </View>
