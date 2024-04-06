@@ -6,12 +6,25 @@ import { authServiceAPI, publicServiceAPI } from '@/global/apis';
 /**
  * 상세 이슈 조회
  */
-export const getIssueDetail = async (params: { id: number | null }) => {
+export const getIssueDetail = async ({
+  params,
+  isVerifiedUser,
+}: {
+  params: { id: number | null };
+  isVerifiedUser: 'success auth' | 'fail auth' | 'yet';
+}) => {
   try {
-    const res = await publicServiceAPI.get<{ data: IssueGet }>('/api/v1/issue/get', {
-      params,
-    });
-    return res.data.data;
+    if (isVerifiedUser === 'success auth') {
+      const res = await authServiceAPI.get<{ data: IssueGet }>('/api/v1/issue/get', {
+        params,
+      });
+      return res.data.data;
+    } else {
+      const res = await publicServiceAPI.get<{ data: IssueGet }>('/api/v1/issue/get', {
+        params,
+      });
+      return res.data.data;
+    }
   } catch (err) {
     Sentry.captureException(err);
     const error = err as AxiosError;
