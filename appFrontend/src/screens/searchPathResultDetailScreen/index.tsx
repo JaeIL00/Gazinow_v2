@@ -27,7 +27,7 @@ const SearchPathResultDetailScreen = () => {
   const rootNavigation = useRootNavigation();
   const { state: resultData } = useRoute().params as { state: DetailData };
   const isVerifiedUser = useAppSelect((state) => state.auth.isVerifiedUser);
-
+  console.log(resultData);
   const { isLoading, deleteMutate } = useDeleteSavedSubwayRoute({
     onSuccess: async () => {
       await queryClient.invalidateQueries(['getRoads']);
@@ -36,8 +36,9 @@ const SearchPathResultDetailScreen = () => {
     },
   });
 
-  // TODO: 검색 -> 상세경로 진입 시 myPathId 값을 바인딩해야함
-  const [myPathId, setMyPathId] = useState<number | null>(resultData.id ?? null);
+  const [myPathId, setMyPathId] = useState<number | null>(
+    resultData.id || (resultData.myPathId ? resultData.myPathId[0] : null),
+  );
   const [isBookmarking, setIsBookmarking] = useState<boolean>(resultData.myPath ?? !!resultData.id);
   const [isSaveRouteModalOpen, setIsSaveRouteModalOpen] = useState<boolean>(false);
 

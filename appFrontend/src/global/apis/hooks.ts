@@ -75,9 +75,14 @@ export const useGetSearchPaths = ({
   params: SubwayStrEnd;
   enabled: boolean;
 }) => {
-  const { data } = useQuery(['search_paths', params], () => searchPathsFetch(params), {
-    enabled,
-  });
+  const isVerifiedUser = useAppSelect((state) => state.auth.isVerifiedUser);
+  const { data } = useQuery(
+    ['search_paths', params],
+    () => searchPathsFetch({ params, isVerifiedUser }),
+    {
+      enabled,
+    },
+  );
   return { data };
 };
 
