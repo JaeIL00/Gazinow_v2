@@ -18,7 +18,13 @@ import {
   getAllIssuesFetch,
   getIssuesByLaneFetch,
 } from '@/global/apis/func';
-import { AllIssues, IssueContent, RawSubwayLineName, SubwayStrEnd } from './entity';
+import {
+  AllIssues,
+  IssueContent,
+  RawSubwayLineName,
+  RenderSavedRoutesType,
+  SubwayStrEnd,
+} from './entity';
 import { AxiosError } from 'axios';
 import { subwayFreshLineName } from '@/global/utils';
 import { useAppSelect } from '@/store';
@@ -68,10 +74,15 @@ export const useGetSearchPaths = ({
   params: SubwayStrEnd;
   enabled: boolean;
 }) => {
-  const { data, isLoading } = useQuery(['search_paths', params], () => searchPathsFetch(params), {
-    enabled,
-  });
-  return { data, isLoading };
+  const isVerifiedUser = useAppSelect((state) => state.auth.isVerifiedUser);
+  const { data } = useQuery(
+    ['search_paths', params],
+    () => searchPathsFetch({ params, isVerifiedUser }),
+    {
+      enabled,
+    },
+  );
+  return { data };
 };
 
 /**
@@ -81,26 +92,26 @@ export const useSavedSubwayRoute = ({
   onSuccess,
   onError,
 }: {
-  onSuccess: () => void;
+  onSuccess: (data: number) => void;
   onError: (error: AxiosError) => void;
 }) => {
-  const { data, mutate, isLoading } = useMutation(searchPathSaveFetch, {
+  const { data, isLoading, mutate } = useMutation(searchPathSaveFetch, {
     onSuccess,
     onError,
   });
 
-  return { data, mutate, isLoading };
+  return { data, isLoading, mutate };
 };
 
 /**
  * 저장한 지하철 경로 삭제 훅
  */
 export const useDeleteSavedSubwayRoute = ({ onSuccess }: { onSuccess: () => void }) => {
-  const { data, mutate } = useMutation(searchPathDeleteFetch, {
+  const { data, isLoading, mutate } = useMutation(searchPathDeleteFetch, {
     onSuccess,
   });
 
-  return { data, deleteMutate: mutate };
+  return { data, isLoading, deleteMutate: mutate };
 };
 
 /**
@@ -148,10 +159,13 @@ export const useGetSearchRoutesQuery = () => {
 /**
  * 저장한 지하철 경로 조회 훅
  */
-export const useGetSavedRoutesQuery = () => {
+export const useGetSavedRoutesQuery = ({
+  onSuccess,
+}: { onSuccess?: (data: RenderSavedRoutesType[]) => void } = {}) => {
   const isVerifiedUser = useAppSelect((state) => state.auth.isVerifiedUser);
   const { data } = useQuery(['getRoads'], getSavedRoutesFetch, {
     enabled: isVerifiedUser === 'success auth',
+    onSuccess,
   });
   return { data };
 };

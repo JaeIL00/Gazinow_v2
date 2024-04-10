@@ -13,7 +13,7 @@ import { useRootNavigation } from '@/navigation/RootNavigation';
 import { useAppDispatch } from '@/store';
 import { getIssueId } from '@/store/modules';
 import IconDownArrowHead from '@assets/icons/down_arrow_head.svg';
-import IssueKeywordIcon from '@/global/components/subwaySimplePath/IssueKeywordIcon';
+import IssueKeywordIcon from '@/global/components/IssueKeywordIcon';
 
 interface SearchPathDetailItemProps {
   data: SubPath;
@@ -70,9 +70,8 @@ const SearchPathDetailItem = ({ data, isLastLane, lineLength }: SearchPathDetail
           >
             <FontText
               value={data.stations[0].stationName}
-              textSize="14px"
+              textSize="18px"
               textWeight="SemiBold"
-              lineHeight="21px"
               textColor={subwayLineColor(data.lanes[0].stationCode)}
             />
             <View
@@ -83,16 +82,14 @@ const SearchPathDetailItem = ({ data, isLastLane, lineLength }: SearchPathDetail
             >
               <FontText
                 value={data.way + ' 방향'}
-                textSize="11px"
-                textWeight="Medium"
-                lineHeight="13px"
+                textSize="13px"
+                textWeight="Regular"
                 textColor={COLOR.GRAY_999}
               />
               <FontText
                 value={data.door !== 'null' ? ' | 빠른환승 ' + data.door : ''}
-                textSize="11px"
-                textWeight="Medium"
-                lineHeight="13px"
+                textSize="13px"
+                textWeight="Regular"
                 textColor={COLOR.GRAY_999}
               />
             </View>
@@ -120,13 +117,13 @@ const SearchPathDetailItem = ({ data, isLastLane, lineLength }: SearchPathDetail
                 >
                   <View
                     style={{
-                      marginTop: 2,
+                      marginTop: 4,
                       marginRight: 8,
                     }}
                   >
                     <IssueKeywordIcon
-                      width={22}
-                      height={22}
+                      width={18}
+                      height={18}
                       keyword={issue.keyword}
                       color={subwayLineColor(data.lanes[0].stationCode)}
                     />
@@ -137,8 +134,8 @@ const SearchPathDetailItem = ({ data, isLastLane, lineLength }: SearchPathDetail
                       textSize="13px"
                       textWeight="SemiBold"
                       textColor={COLOR.BASIC_BLACK}
-                      lineHeight="19px"
                       numberOfLines={1}
+                      style={{ marginBottom: 2 }}
                     />
                     <FontText
                       value={`도움돼요 ${issue.likeCount}개`}
@@ -154,11 +151,11 @@ const SearchPathDetailItem = ({ data, isLastLane, lineLength }: SearchPathDetail
               ))}
 
             <TouchableOpacity
-              style={css`
-                margin-top: 8px;
-                flex-direction: row;
-                align-items: center;
-              `}
+              style={{
+                marginTop: !!data.lanes[0].issueSummary.length ? 8 : 0,
+                flexDirection: 'row',
+                alignItems: 'center',
+              }}
               activeOpacity={1}
               onPress={() => setIsOpenPathList((prev) => !prev)}
               disabled={data.stations.length < 3}
@@ -175,9 +172,8 @@ const SearchPathDetailItem = ({ data, isLastLane, lineLength }: SearchPathDetail
                       '분)'
                     : data.stationCount + '개역 (' + data.sectionTime + '분)'
                 }
-                textSize="11px"
-                textWeight="Medium"
-                lineHeight="13px"
+                textSize="13px"
+                textWeight="Regular"
                 textColor="#49454f"
               />
               {data.stations.length > 2 && (
@@ -213,10 +209,9 @@ const SearchPathDetailItem = ({ data, isLastLane, lineLength }: SearchPathDetail
                         />
                         <FontText
                           value={item.stationName}
-                          textSize="11px"
-                          textWeight="Medium"
-                          lineHeight="13px"
-                          textColor="#49454f"
+                          textSize="13px"
+                          textWeight="Regular"
+                          textColor={COLOR.GRAY_999}
                         />
                       </View>
                     );
@@ -250,9 +245,8 @@ const SearchPathDetailItem = ({ data, isLastLane, lineLength }: SearchPathDetail
           >
             <FontText
               value={data.stations[lastIdx].stationName}
-              textSize="14px"
+              textSize="18px"
               textWeight="SemiBold"
-              lineHeight="21px"
               textColor={subwayLineColor(data.lanes[0].stationCode)}
             />
             {/* 외부에서 내리는문 데이터를 얻을 수 없음 */}

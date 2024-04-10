@@ -1,16 +1,17 @@
 import { IssueSummary, StationCode } from '@/global/apis/entity';
 import { subwayLineColor } from '@/global/utils';
 import { View } from 'react-native';
-import IssueKeywordIcon from './IssueKeywordIcon';
+import IssueKeywordIcon from '../IssueKeywordIcon';
 
 interface PathBarProps {
   stationCode: StationCode;
   isFirst?: boolean;
   isLast: boolean;
   issues: IssueSummary[];
+  isHideIsuue: boolean;
 }
 
-const PathBar = ({ stationCode, isFirst, isLast, issues }: PathBarProps) => {
+const PathBar = ({ stationCode, isFirst, isLast, issues, isHideIsuue }: PathBarProps) => {
   return (
     <View
       style={{
@@ -35,16 +36,18 @@ const PathBar = ({ stationCode, isFirst, isLast, issues }: PathBarProps) => {
           paddingHorizontal: 8,
         }}
       >
-        {issues &&
+        {!isHideIsuue &&
+          issues &&
           issues.map((issue, idx) => {
             if (idx > 2) return;
             return (
               <IssueKeywordIcon
-                key={issue.id}
+                key={issue.id + issue.title}
                 width={24}
                 height={24}
                 keyword={issue.keyword}
                 color={subwayLineColor(stationCode)}
+                isPath
               />
             );
           })}

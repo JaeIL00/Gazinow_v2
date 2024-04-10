@@ -14,7 +14,7 @@ import { useHomeNavigation } from '@/navigation/HomeNavigation';
 import SwapStation from './components/SwapStation';
 import IconRightArrowHead from '@assets/icons/right_arrow_head.svg';
 import IconLeftArrowHead from '@assets/icons/left_arrow_head.svg';
-import IssueKeywordIcon from '@/global/components/subwaySimplePath/IssueKeywordIcon';
+import IssueKeywordIcon from '@/global/components/IssueKeywordIcon';
 import { subwayLineColor } from '@/global/utils';
 import { useRootNavigation } from '@/navigation/RootNavigation';
 import { Path } from '@/global/apis/entity';
@@ -104,13 +104,7 @@ const SearchPathResultScreen = () => {
           {data &&
             data.paths.map((item, idx) => (
               <View
-                key={
-                  item.firstStartStation +
-                  item.totalTime +
-                  item.subPaths.length +
-                  item.subwayTransitCount +
-                  idx
-                }
+                key={item.firstStartStation + item.subPaths.length + idx}
                 style={{
                   paddingHorizontal: 18,
                   paddingBottom: 24,
@@ -168,17 +162,15 @@ const SearchPathResultScreen = () => {
                 />
 
                 <View>
-                  {item.subPaths.map((linePath) => {
+                  {item.subPaths.map((linePath, idx) => {
                     return (
-                      <React.Fragment
-                        key={linePath.distance + linePath.door + linePath.sectionTime}
-                      >
+                      <React.Fragment key={linePath.sectionTime + 'subPath' + idx}>
                         {linePath.lanes[0] &&
-                          linePath.lanes[0].issueSummary.map(({ keyword, title, id }, idx) => {
-                            if (idx > 2) return;
+                          linePath.lanes[0].issueSummary.map(({ keyword, title, id }, innerIdx) => {
+                            if (innerIdx > 2) return <></>;
                             return (
                               <TouchableOpacity
-                                key={id}
+                                key={id + title + innerIdx + 'idx' + idx}
                                 style={{
                                   borderWidth: 1,
                                   borderColor: 'rgba(0, 0, 0, 0.06)',

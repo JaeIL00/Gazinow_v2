@@ -132,13 +132,7 @@ const SelectNewRoute = () => {
         }
         disabled={selectedRoutePath === null}
       >
-        <FontText
-          value="다음"
-          textSize="17px"
-          textWeight="SemiBold"
-          textColor={COLOR.WHITE}
-          lineHeight="26px"
-        />
+        <FontText value="다음" textSize="17px" textWeight="SemiBold" textColor={COLOR.WHITE} />
       </BottomBtn>
     </Container>
   );
@@ -151,7 +145,7 @@ const Container = styled.SafeAreaView`
   flex: 1;
 `;
 const SubPathContainer = styled.View`
-  padding-bottom: 30px;
+  padding-bottom: 10px;
   flex: 1;
 `;
 const PathTitleInfoBox = styled.View`
@@ -190,7 +184,7 @@ const BottomBtn = styled.Pressable`
   margin-horizontal: 16px;
   border-radius: 5px;
   align-items: center;
-  bottom: 41px;
+  margin-bottom: 40px;
   ${({ disabled }) =>
     disabled ? `background-color : #dddddd` : `background-color : ${COLOR.BASIC_BLACK};`}
 `;

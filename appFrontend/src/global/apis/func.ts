@@ -98,12 +98,25 @@ export const searchAddHistoryFetch = async (data: {
 /**
  * 지하철 경로 검색 조회 axios
  */
-export const searchPathsFetch = async (params: SubwayStrEnd) => {
+export const searchPathsFetch = async ({
+  params,
+  isVerifiedUser,
+}: {
+  params: SubwayStrEnd;
+  isVerifiedUser: 'success auth' | 'fail auth' | 'yet';
+}) => {
   try {
-    const res = await publicServiceAPI.get<{ data: SearchPathsTypes }>('/api/v1/find_road', {
-      params,
-    });
-    return res.data.data;
+    if (isVerifiedUser === 'success auth') {
+      const res = await authServiceAPI.get<{ data: SearchPathsTypes }>('/api/v1/find_road', {
+        params,
+      });
+      return res.data.data;
+    } else {
+      const res = await publicServiceAPI.get<{ data: SearchPathsTypes }>('/api/v1/find_road', {
+        params,
+      });
+      return res.data.data;
+    }
   } catch (err) {
     Sentry.captureException(err);
     const er = err as AxiosError;
@@ -203,11 +216,10 @@ export const changeNicknameFetch = async (newNickname: string) => {
  */
 export const checkPasswordFetch = async (passwordInput: string) => {
   try {
-    const res = await authServiceAPI.post(`/api/v1/member/check_password`, {
+    await authServiceAPI.post(`/api/v1/member/check_password`, {
       checkPassword: passwordInput,
     });
   } catch (err) {
-    Sentry.captureException(err);
     const er = err as AxiosError;
     throw er;
   }

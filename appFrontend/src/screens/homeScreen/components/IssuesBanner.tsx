@@ -8,7 +8,7 @@ import { subwayLineColor } from '@/global/utils';
 import { useAppDispatch } from '@/store';
 import { getIssueId } from '@/store/modules';
 import { useRootNavigation } from '@/navigation/RootNavigation';
-import IssueKeywordIcon from '@/global/components/subwaySimplePath/IssueKeywordIcon';
+import IssueKeywordIcon from '@/global/components/IssueKeywordIcon';
 
 interface IssuesBannerProps {
   subPathss: SubPath[];

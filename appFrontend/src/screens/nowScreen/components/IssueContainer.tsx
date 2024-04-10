@@ -5,6 +5,7 @@ import { COLOR } from '@/global/constants';
 import { useAppDispatch } from '@/store';
 import { getIssueId } from '@/store/modules';
 import { useRootNavigation } from '@/navigation/RootNavigation';
+import dayjs from 'dayjs';
 
 interface IssueDetailProps {
   id: number;
@@ -53,7 +54,12 @@ const IssueContainer = ({
             textWeight="Medium"
             lineHeight="13px"
           /> */}
-          <FontText value={time} textSize="11px" textWeight="Medium" lineHeight="13px" />
+          <FontText
+            value={dayjs(time).fromNow()}
+            textSize="11px"
+            textWeight="Medium"
+            lineHeight="13px"
+          />
           <Space height="6px" />
           <FontText
             value={body}

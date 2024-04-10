@@ -15,22 +15,31 @@ import IconBookmark from '@assets/icons/bookmark.svg';
 import IconLeftArrowHead from '@assets/icons/left_arrow_head.svg';
 import { useAppSelect } from '@/store';
 import { useRootNavigation } from '@/navigation/RootNavigation';
+import { showToast } from '@/global/utils/toast';
+
+interface DetailData extends Path {
+  id: number;
+}
 
 const SearchPathResultDetailScreen = () => {
   const queryClient = useQueryClient();
   const navigation = useHomeNavigation();
   const rootNavigation = useRootNavigation();
-  const { state: resultData } = useRoute().params as { state: Path };
+  const { state: resultData } = useRoute().params as { state: DetailData };
   const isVerifiedUser = useAppSelect((state) => state.auth.isVerifiedUser);
 
-  const { deleteMutate } = useDeleteSavedSubwayRoute({
+  const { isLoading, deleteMutate } = useDeleteSavedSubwayRoute({
     onSuccess: async () => {
       await queryClient.invalidateQueries(['getRoads']);
       setIsBookmarking(false);
+      showToast('deleteRoute');
     },
   });
 
-  const [isBookmarking, setIsBookmarking] = useState<boolean>(resultData.myPath ?? false);
+  const [myPathId, setMyPathId] = useState<number | null>(
+    resultData.id || (resultData.myPathId ? resultData.myPathId[0] : null),
+  );
+  const [isBookmarking, setIsBookmarking] = useState<boolean>(resultData.myPath ?? !!resultData.id);
   const [isSaveRouteModalOpen, setIsSaveRouteModalOpen] = useState<boolean>(false);
 
   const freshSubPathData: SubPath[] = useMemo(() => {
@@ -40,17 +49,17 @@ const SearchPathResultDetailScreen = () => {
   }, [resultData]);
 
   const bookmarkHandler = () => {
-    // FIXME: 저장 후 경로 목록을 refetch하지 않는 이상 저장한 경로 아이디를 알 수 없음
-    if (isBookmarking && !!resultData.myPathId) {
-      deleteMutate({ id: resultData.myPathId[0] });
-    } else {
+    if (!isBookmarking) {
       setIsSaveRouteModalOpen(true);
+      return;
+    } else if (myPathId) {
+      deleteMutate({ id: myPathId });
     }
   };
 
-  const isOccurIssue = resultData.subPaths.some(
-    (item) => item.lanes[0] && !!item.lanes[0].issueSummary.length,
-  );
+  const isOccurIssue = useMemo(() => {
+    return resultData.subPaths.some((item) => item.lanes[0] && !!item.lanes[0].issueSummary.length);
+  }, [resultData]);
 
   return (
     <SafeAreaView
@@ -77,7 +86,7 @@ const SearchPathResultDetailScreen = () => {
           <TouchableOpacity onPress={() => navigation.goBack()}>
             <IconLeftArrowHead color="#3F3F46" width={18} height={18} />
           </TouchableOpacity>
-          <TouchableOpacity onPress={bookmarkHandler}>
+          <TouchableOpacity onPress={bookmarkHandler} disabled={isLoading}>
             <IconBookmark
               width={24}
               height={24}
@@ -92,6 +101,7 @@ const SearchPathResultDetailScreen = () => {
                 freshData={{ ...resultData, subPaths: freshSubPathData }}
                 closeModal={() => setIsSaveRouteModalOpen(false)}
                 onBookmark={() => setIsBookmarking(true)}
+                setMyPathId={(id: number) => setMyPathId(id)}
               />
             ) : (
               <Modal visible onRequestClose={() => setIsSaveRouteModalOpen(false)} transparent>
@@ -179,17 +189,11 @@ const SearchPathResultDetailScreen = () => {
           `}
         >
           <View>
-            <FontText
-              value="평균 소요시간"
-              textSize="12px"
-              textWeight="Medium"
-              lineHeight="14px"
-              textColor="#999"
-            />
+            <FontText value="평균 소요시간" textSize="13px" textWeight="Medium" textColor="#999" />
             <View
               style={css`
                 flex-direction: row;
-                margin-top: 4px;
+                margin-top: 2px;
               `}
             >
               <FontText
@@ -201,7 +205,7 @@ const SearchPathResultDetailScreen = () => {
                       `분 ${isOccurIssue ? '이상' : ''}`
                     : resultData.totalTime + `분 ${isOccurIssue ? '이상' : ''}`
                 }
-                textSize="24px"
+                textSize="28px"
                 textWeight="Bold"
               />
 
@@ -219,15 +223,16 @@ const SearchPathResultDetailScreen = () => {
                       ? '환승없음'
                       : '환승 ' + (freshSubPathData.length - 1) + '회'
                   }
-                  textSize="14px"
+                  textSize="16px"
                   textWeight="Regular"
                   textColor="#999"
-                  style={{ marginBottom: 3 }}
+                  style={{ marginBottom: 2 }}
                 />
               </View>
             </View>
           </View>
         </View>
+
         <View
           style={css`
             margin-bottom: 21px;
@@ -242,7 +247,7 @@ const SearchPathResultDetailScreen = () => {
           showsVerticalScrollIndicator={false}
           keyExtractor={(item) => {
             if (typeof item === 'string') return 'dance';
-            return item.distance + item.sectionTime + '';
+            return item.distance + 'detail' + item.sectionTime;
           }}
           renderItem={({ item, index }) => {
             return (

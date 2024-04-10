@@ -1,28 +1,37 @@
 import { FontText, Input, Space, TextButton } from '@/global/ui';
 import { COLOR } from '@/global/constants';
 import { KeyboardAvoidingView, Modal, Platform, View } from 'react-native';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { SubwaySimplePath } from '@/global/components';
 import { useSavedSubwayRoute } from '@/global/apis/hooks';
 import { Path } from '@/global/apis/entity';
 import { useQueryClient } from 'react-query';
+import { showToast } from '@/global/utils/toast';
 
 interface NewRouteSaveModalProps {
   freshData: Path;
   closeModal: () => void;
   onBookmark: () => void;
+  setMyPathId: (id: number) => void;
 }
-const NewRouteSaveModal = ({ freshData, closeModal, onBookmark }: NewRouteSaveModalProps) => {
+const NewRouteSaveModal = ({
+  freshData,
+  closeModal,
+  onBookmark,
+  setMyPathId,
+}: NewRouteSaveModalProps) => {
   const queryClient = useQueryClient();
 
   const [isDuplicatedError, setIsDuplicatedError] = useState<boolean>(false);
   const [routeName, setRouteName] = useState<string>('');
 
-  const { mutate, isLoading } = useSavedSubwayRoute({
-    onSuccess: async () => {
+  const { isLoading, mutate } = useSavedSubwayRoute({
+    onSuccess: async (id) => {
       await queryClient.invalidateQueries(['getRoads']);
+      setMyPathId(id);
       onBookmark();
       closeModal();
+      showToast('saveRoute');
     },
     onError: ({ response }) => {
       if (response?.status === 409) {
@@ -75,6 +84,7 @@ const NewRouteSaveModal = ({ freshData, closeModal, onBookmark }: NewRouteSaveMo
               pathData={freshData.subPaths}
               arriveStationName={freshData.lastEndStation}
               betweenPathMargin={16}
+              isHideIsuue
             />
           </View>
 
@@ -98,8 +108,8 @@ const NewRouteSaveModal = ({ freshData, closeModal, onBookmark }: NewRouteSaveMo
               }}
             >
               <Input
-                value={routeName}
                 placeholder="경로 이름을 입력하세요"
+                value={routeName}
                 onChangeText={(text) => {
                   if (text.length <= 10) {
                     setIsDuplicatedError(false);

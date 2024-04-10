@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useMemo, useState } from 'react';
 import { TouchableOpacity, StyleSheet, Pressable } from 'react-native';
 import { FontText, Space, TextButton } from '@/global/ui';
 import { COLOR } from '@/global/constants';
@@ -16,25 +16,24 @@ interface SavedRouteIssuesProps {
 
 const SavedRouteIssues = ({ isVerifiedUser }: SavedRouteIssuesProps) => {
   const navigation = useRootNavigation();
-  const { data: savedRoutes } = useGetSavedRoutesQuery();
-  const [hasIssueRoutes, setHasIssueRoutes] = useState<RenderSavedRoutesType[]>([]);
-  const [activeButton, setActiveButton] = useState<'이슈' | '저장경로'>('저장경로');
-
-  useEffect(() => {
-    if (savedRoutes) {
-      const issueRoutes = savedRoutes.filter((savedRoute) => {
+  const { data } = useGetSavedRoutesQuery({
+    onSuccess: (data) => {
+      const issueRoutes = data.some((savedRoute) => {
         return savedRoute.subPaths.some((subPath) => subPath.lanes[0].issueSummary.length > 0);
       });
       setHasIssueRoutes(issueRoutes);
-    }
-  }, [savedRoutes]);
+      issueRoutes ? setActiveButton('이슈') : setActiveButton('저장경로');
+    },
+  });
 
-  useEffect(() => {
-    hasIssueRoutes.length > 0 ? setActiveButton('이슈') : setActiveButton('저장경로');
+  const [hasIssueRoutes, setHasIssueRoutes] = useState<boolean>(false);
+  const [activeButton, setActiveButton] = useState<'이슈' | '저장경로'>('저장경로');
+  const [categoryList, setCategoryList] = useState<('이슈' | '저장경로')[]>(['저장경로', '이슈']);
+
+  useLayoutEffect(() => {
+    if (!data) return;
+    setCategoryList(() => (hasIssueRoutes ? ['이슈', '저장경로'] : ['저장경로', '이슈']));
   }, [hasIssueRoutes]);
-
-  const categoryName: ['이슈', '저장경로'] | ['저장경로', '이슈'] =
-    hasIssueRoutes.length > 0 ? ['이슈', '저장경로'] : ['저장경로', '이슈'];
 
   const handleButtonClick = (buttonText: typeof activeButton) => setActiveButton(buttonText);
 
@@ -68,10 +67,19 @@ const SavedRouteIssues = ({ isVerifiedUser }: SavedRouteIssuesProps) => {
     </TouchableOpacity>
   );
 
+  const MemoIssueBox = useMemo(() => {
+    if (!data) return <></>;
+    return <IssueBox savedRoutes={data} />;
+  }, [data]);
+  const MemoSavedRouteBox = useMemo(() => {
+    if (!data) return <></>;
+    return <SavedRouteBox savedRoutes={data} />;
+  }, [data]);
+
   return (
     <Container>
       <CategoryContainer>
-        <Category>{categoryName.map(renderButton)}</Category>
+        <Category>{categoryList.map(renderButton)}</Category>
         <Pressable
           hitSlop={20}
           onPress={() => navigation.navigate('NewRouteNavigation', { screen: 'SavedRoutes' })}
@@ -93,11 +101,11 @@ const SavedRouteIssues = ({ isVerifiedUser }: SavedRouteIssuesProps) => {
 
       {/* 최근검색: <RecentSearchBox />, TODO: MVP에서 제외*/}
       <ContentsBox>
-        {isVerifiedUser === 'success auth' ? (
-          {
-            저장경로: <SavedRouteBox />,
-            이슈: <IssueBox />,
-          }[activeButton]
+        {isVerifiedUser === 'success auth' && data ? (
+          <>
+            {activeButton === '이슈' && MemoIssueBox}
+            {activeButton === '저장경로' && MemoSavedRouteBox}
+          </>
         ) : (
           <NonLoggedIn />
         )}

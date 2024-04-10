@@ -122,7 +122,7 @@ const SearchStationScreen = () => {
             />
           </Header>
 
-          <Ul marginTop="18px">
+          <Ul marginTop="18px" keyboardShouldPersistTaps="handled">
             {historyData?.map(({ stationName, stationLine }, index) => (
               <Li
                 key={index}
@@ -158,7 +158,7 @@ const SearchStationScreen = () => {
 
       {!!searchTextValue && searchResultData.length > 0 && (
         <ResultContainer>
-          <Ul marginTop="28px">
+          <Ul marginTop="28px" keyboardShouldPersistTaps="handled">
             {searchResultData.map(({ stationName, stationLine }, idx) => (
               <Li key={idx} onPress={() => stationBtnHandler({ stationLine, stationName })}>
                 <IconLocationPin />

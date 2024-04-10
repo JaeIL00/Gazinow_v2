@@ -12,6 +12,7 @@ import XCircle from '@assets/icons/x-circle-standard.svg';
 import AddNewRouteHeader from './AddNewRouteHeader';
 import { useRoute } from '@react-navigation/native';
 import { useHomeNavigation } from '@/navigation/HomeNavigation';
+import { showToast } from '@/global/utils/toast';
 
 const SaveNewRoute = () => {
   const { state: resultData } = useRoute().params as { state: Path };
@@ -37,7 +38,8 @@ const SaveNewRoute = () => {
   const { mutate, isLoading } = useSavedSubwayRoute({
     onSuccess: async () => {
       await queryClient.invalidateQueries('getRoads');
-      homeNavigation.reset({ routes: [{ name: 'SavedRoutes' }] });
+      homeNavigation.navigate('SavedRoutes');
+      showToast('saveRoute');
     },
     onError: async (error: any) => {
       if (error.response.status === 409) {
@@ -51,7 +53,7 @@ const SaveNewRoute = () => {
   }
   return (
     <KeyboardAvoidingView
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      behavior={Platform.OS === 'ios' ? 'padding' : undefined}
       style={{ flex: 1 }}
     >
       <SafeAreaView style={{ flex: 1, backgroundColor: COLOR.WHITE }}>
