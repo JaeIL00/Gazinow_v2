@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect, useMemo, useState } from 'react';
+import React, { useLayoutEffect, useMemo, useState } from 'react';
 import { TouchableOpacity, StyleSheet, Pressable } from 'react-native';
 import { FontText, Space, TextButton } from '@/global/ui';
 import { COLOR } from '@/global/constants';
