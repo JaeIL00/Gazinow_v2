@@ -63,15 +63,15 @@ const App = (): JSX.Element => {
 };
 
 const codePushOptions = {
-  checkFrequency: CodePush.CheckFrequency.ON_APP_START,
+  // checkFrequency: CodePush.CheckFrequency.ON_APP_START,
   // updateDialog: {
   //   title: '버전 업데이트 안내',
   //   optionalUpdateMessage: '최신 버전이 업로드 됐습니다.',
   //   optionalInstallButtonLabel: '예',
   //   optionalIgnoreButtonLabel: '아니요.',
   // },
-  installMode: CodePush.InstallMode.ON_NEXT_RESUME,
-  mandatoryInstallMode: CodePush.InstallMode.IMMEDIATE,
+  // installMode: CodePush.InstallMode.ON_NEXT_RESUME,
+  // mandatoryInstallMode: CodePush.InstallMode.IMMEDIATE,
 };
 
 export default CodePush(codePushOptions)(Sentry.wrap(App));
