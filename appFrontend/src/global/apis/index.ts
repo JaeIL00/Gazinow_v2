@@ -1,20 +1,17 @@
 import { API_BASE_URL } from '@env';
 import axios, { AxiosError } from 'axios';
 
-import { createNavigationContainerRef } from '@react-navigation/native';
-import { RootStackParamList } from '@/navigation/types/navigation';
 import { getEncryptedStorage, setEncryptedStorage } from '@/global/utils';
 import EncryptedStorage from 'react-native-encrypted-storage';
 import { store } from '@/store';
 import { getAuthorizationState } from '@/store/modules';
+import { navigationRef } from '@/App';
 
-// const navigationRef = createNavigationContainerRef<RootStackParamList>();
-
-// const navigate = (name: any, params?: any): any => {
-//   if (navigationRef.isReady()) {
-//     navigationRef.navigate(name, params);
-//   }
-// };
+const navigateReset = (name: 'MainBottomTab') => {
+  if (navigationRef.isReady()) {
+    navigationRef.reset({ routes: [{ name }] });
+  }
+};
 
 /**
  * 유저 토큰이 불필요한 api instance
@@ -59,6 +56,7 @@ authServiceAPI.interceptors.response.use(
 
     if (!refreshToken) {
       store.dispatch(getAuthorizationState('fail auth'));
+      navigateReset('MainBottomTab');
       return error;
     }
 
@@ -78,11 +76,12 @@ authServiceAPI.interceptors.response.use(
       await setEncryptedStorage('access_token', response.data.data.accessToken);
       await setEncryptedStorage('refresh_token', response.data.data.refreshToken);
       // api 재요청
-      return authServiceAPI(error.config || {});
+      // return authServiceAPI(error.config || {});
     } else {
       // refresh token is not valid
       await EncryptedStorage.clear();
       store.dispatch(getAuthorizationState('fail auth'));
+      navigateReset('MainBottomTab');
       return error;
     }
   },
