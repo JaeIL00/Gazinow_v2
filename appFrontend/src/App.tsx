@@ -1,11 +1,10 @@
 import React, { useEffect } from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { Provider } from 'react-redux';
-import CodePush from 'react-native-code-push';
 
 import { RootNavigation } from '@/navigation';
 import { store } from '@/store';
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, createNavigationContainerRef } from '@react-navigation/native';
 import Toast from 'react-native-toast-message';
 import toastConfig from '@global/utils/ToastConfig';
 import * as Sentry from '@sentry/react-native';
@@ -14,6 +13,7 @@ import { version as currentVersion } from '../package.json';
 import { fetch } from '@react-native-community/netinfo';
 import { Alert } from 'react-native';
 import RNExitApp from 'react-native-exit-app';
+import { RootStackParamList } from './navigation/types/navigation';
 
 Sentry.init({
   enabled: MODE === 'production',
@@ -23,6 +23,8 @@ Sentry.init({
 });
 
 const queryClient = new QueryClient();
+
+export const navigationRef = createNavigationContainerRef<RootStackParamList>();
 
 const App = (): JSX.Element => {
   useEffect(() => {
@@ -53,7 +55,7 @@ const App = (): JSX.Element => {
   return (
     <Provider store={store}>
       <QueryClientProvider client={queryClient}>
-        <NavigationContainer>
+        <NavigationContainer ref={navigationRef}>
           <RootNavigation />
           <Toast config={toastConfig} />
         </NavigationContainer>
@@ -62,16 +64,4 @@ const App = (): JSX.Element => {
   );
 };
 
-const codePushOptions = {
-  // checkFrequency: CodePush.CheckFrequency.ON_APP_START,
-  // updateDialog: {
-  //   title: '버전 업데이트 안내',
-  //   optionalUpdateMessage: '최신 버전이 업로드 됐습니다.',
-  //   optionalInstallButtonLabel: '예',
-  //   optionalIgnoreButtonLabel: '아니요.',
-  // },
-  // installMode: CodePush.InstallMode.ON_NEXT_RESUME,
-  // mandatoryInstallMode: CodePush.InstallMode.IMMEDIATE,
-};
-
-export default CodePush(codePushOptions)(Sentry.wrap(App));
+export default Sentry.wrap(App);
