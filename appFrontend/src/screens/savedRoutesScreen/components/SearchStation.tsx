@@ -89,7 +89,7 @@ const SearchStation = () => {
             />
           </Header>
 
-          <Ul marginTop="18px">
+          <Ul marginTop="18px" keyboardShouldPersistTaps="handled">
             {historyData?.map(({ stationName, stationLine }, index) => (
               <Li
                 key={index}
