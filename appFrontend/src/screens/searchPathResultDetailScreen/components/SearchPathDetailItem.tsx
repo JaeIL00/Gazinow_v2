@@ -87,7 +87,11 @@ const SearchPathDetailItem = ({ data, isLastLane, lineLength }: SearchPathDetail
                 textColor={COLOR.GRAY_999}
               />
               <FontText
-                value={data.door !== 'null' ? ' | 빠른환승 ' + data.door : ''}
+                value={
+                  data.door !== 'null'
+                    ? ` | 빠른환승 ${data.door === '0-0' ? '모든 칸' : data.door}`
+                    : ''
+                }
                 textSize="13px"
                 textWeight="Regular"
                 textColor={COLOR.GRAY_999}
