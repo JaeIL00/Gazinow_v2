@@ -203,7 +203,7 @@ export interface IssueContent {
   title: string;
   content: string;
   agoTime: string;
-  line: RawSubwayLineName;
+  lines: RawSubwayLineName[];
   likeCount: number;
   startDate: string;
   expireDate: string;
