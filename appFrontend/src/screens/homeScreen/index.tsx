@@ -5,6 +5,7 @@ import { Space } from '@/global/ui';
 import { useEffect } from 'react';
 import SplashScreen from 'react-native-splash-screen';
 import { useTryAuthorization } from './hooks';
+import IssueCarrousel from './components/IssueCarrousel';
 
 const HomeScreen = () => {
   const { isVerifiedUser, tryAuthorization } = useTryAuthorization();
@@ -28,6 +29,8 @@ const HomeScreen = () => {
         showsVerticalScrollIndicator={false}
         scrollEnabled={isVerifiedUser === 'success auth'}
       >
+        <Space height="16px" />
+        <IssueCarrousel />
         <Space height="16px" />
         <SwapStation />
         <SavedRouteIssues isVerifiedUser={isVerifiedUser} />
