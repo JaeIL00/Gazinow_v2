@@ -108,6 +108,7 @@ const NowScreen = () => {
                           body={item.content}
                           isLastItem={index === popularIssues.length - 1}
                           isHeader={true}
+                          lanes={item.lines}
                         />
                       ))}
                     </View>
@@ -167,6 +168,7 @@ const NowScreen = () => {
                       body={item.content}
                       isLastItem={index === issuesList.length + 1}
                       isHeader={false}
+                      lanes={item.lines}
                     />
                   );
               }

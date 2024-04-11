@@ -6,32 +6,34 @@ import { useAppDispatch } from '@/store';
 import { getIssueId } from '@/store/modules';
 import { useRootNavigation } from '@/navigation/RootNavigation';
 import dayjs from 'dayjs';
+import LaneCapsulesPerIssue from './LaneCapsulesPerIssue';
+import { RawSubwayLineName } from '@/global/apis/entity';
 
 interface IssueDetailProps {
   id: number;
   title: string;
-  // {/* TODO: mvp 이후 장소 넣기 */}
-  location?: string;
   time: string;
   body: string;
   isLastItem: boolean;
   isHeader: boolean;
+  lanes: RawSubwayLineName[];
 }
 
 const IssueContainer = ({
   id,
   title,
-  location,
   time,
   body,
   isLastItem,
   isHeader,
+  lanes,
 }: IssueDetailProps) => {
   const dispatch = useAppDispatch();
   const navigation = useRootNavigation();
 
   return (
     <>
+      <LaneCapsulesPerIssue lanes={lanes} />
       <IssueList
         onPress={() => {
           dispatch(getIssueId(id));
@@ -47,13 +49,6 @@ const IssueContainer = ({
             numberOfLines={2}
           />
           <Space height="2px" />
-          {/* TODO: mvp 이후 장소 넣기 */}
-          {/* <FontText
-            value={`${location} | ${time}`}
-            textSize="11px"
-            textWeight="Medium"
-            lineHeight="13px"
-          /> */}
           <FontText
             value={dayjs(time).fromNow()}
             textSize="11px"
@@ -70,10 +65,6 @@ const IssueContainer = ({
           />
         </TextContainer>
         <Space width="12px" />
-        {/* TODO: mvp 이후 이미지 생기면 넣기 */}
-        {/* <MapContainer>
-          <IconButton isFontIcon={false} imagePath="issueMap" iconWidth="72px" iconHeight="72px" />
-        </MapContainer> */}
       </IssueList>
       {!isLastItem && <Space height="1px" width="999px" backgroundColor={COLOR.GRAY_F8} />}
       {isHeader && isLastItem && (
@@ -88,13 +79,10 @@ const IssueContainer = ({
 };
 
 const IssueList = styled.Pressable`
-  padding: 16px 16px;
+  padding: 0 16px 16px;
   flex-direction: row;
 `;
 const TextContainer = styled.View`
   flex: 3.3;
-`;
-const MapContainer = styled.View`
-  flex: 1;
 `;
 export default IssueContainer;
