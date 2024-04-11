@@ -68,9 +68,8 @@ const LaneButtons = ({ activeButton, setActiveButton, titleNotShown }: LaneButto
               >
                 <FontText
                   value={text}
-                  textSize="16px"
+                  textSize="14px"
                   textWeight="Medium"
-                  lineHeight="21px"
                   textColor={activeButton === text ? 'white' : '#969696'}
                 />
               </ButtonStyle>
@@ -86,8 +85,7 @@ const ButtonStyle = styled.TouchableOpacity<{ activeButton: boolean }>`
   border-width: 1px;
   border-color: ${({ activeButton }) => (activeButton ? 'transparent' : COLOR.GRAY_EB)};
   border-radius: 999px;
-  padding-vertical: 8px;
-  padding-horizontal: 16px;
+  padding: 8px 12px;
   margin-right: 6px;
   background-color: ${({ activeButton }) => (activeButton ? '#171717' : 'white')};
 `;
@@ -95,4 +93,3 @@ const IssueLineType = styled.View`
   padding: 24px 16px 12px;
 `;
 export default LaneButtons;
-

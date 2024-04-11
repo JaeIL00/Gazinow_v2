@@ -175,7 +175,7 @@ const NowScreen = () => {
               return null;
             }}
             ListFooterComponent={() => {
-              if (issuesList.length > 5) {
+              if (issuesList.length > 3) {
                 return <Space height="64px" width="999px" />;
               } else if (issuesList.length < 1) {
                 return null;

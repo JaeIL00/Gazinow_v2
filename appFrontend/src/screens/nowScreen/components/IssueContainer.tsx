@@ -48,19 +48,21 @@ const IssueContainer = ({
             lineHeight="21px"
             numberOfLines={2}
           />
-          <Space height="2px" />
+          <Space height="4px" />
           <FontText
             value={dayjs(time).fromNow()}
-            textSize="11px"
-            textWeight="Medium"
-            lineHeight="13px"
+            textSize="14px"
+            textWeight="Regular"
+            lineHeight="21px"
+            textColor={COLOR.GRAY_999}
           />
-          <Space height="6px" />
+          <Space height="4px" />
           <FontText
             value={body}
-            textSize="12px"
+            textSize="14px"
             textWeight="Regular"
-            lineHeight="15px"
+            lineHeight="21px"
+            textColor="#6A6A6A"
             numberOfLines={2}
           />
         </TextContainer>
