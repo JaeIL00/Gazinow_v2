@@ -69,6 +69,178 @@ export const subwayReturnLineName = (lineName: FreshSubwayLineName): RawSubwayLi
   }
 };
 
+/**
+ * 오디세이 지하철 호선 표기를 컬러로
+ * @param lineName 응답받은 지하철 검색 결과
+ */
+export const rawLineNameToColor = (lineName: RawSubwayLineName) => {
+  switch (lineName) {
+    case '수도권 1호선':
+      return COLOR.LINE1;
+    case '수도권 2호선':
+      return COLOR.LINE2;
+    case '수도권 3호선':
+      return COLOR.LINE3;
+    case '수도권 4호선':
+      return COLOR.LINE4;
+    case '수도권 5호선':
+      return COLOR.LINE5;
+    case '수도권 6호선':
+      return COLOR.LINE6;
+    case '수도권 7호선':
+      return COLOR.LINE7;
+    case '수도권 8호선':
+      return COLOR.LINE8;
+    case '수도권 9호선':
+      return COLOR.LINE9;
+    case '인천 1호선':
+      return COLOR.LINEIO;
+    case '인천 2호선':
+      return COLOR.LINEIT;
+    case '수도권 공항철도':
+      return COLOR.LINEGH;
+    case '경의중앙선':
+      return COLOR.LINEKJ;
+    case '수도권 에버라인':
+      return COLOR.LINEEL;
+    case '수도권 경춘선':
+      return COLOR.LINEKC;
+    case '수도권 신분당선':
+      return COLOR.LINENBD;
+    case '수도권 수인.분당선':
+      return COLOR.LINESBD;
+    case '수도권 의정부경전철':
+      return COLOR.LINEEGB;
+    case '수도권 경강선':
+      return COLOR.LINEKK;
+    case '수도권 우이신설경전철':
+      return COLOR.LINEUS;
+    case '수도권 서해선(대곡-원시)':
+      return COLOR.LINESH;
+    case '수도권 김포골드라인':
+      return COLOR.LINEGG;
+    case '수도권 신림선':
+      return COLOR.LINESL;
+    default:
+      return '#222';
+  }
+};
+
+
+/**
+ * 오디세이 지하철 호선 표기를 나우탭 캡슐 컬러로
+ * @param lineName 응답받은 지하철 검색 결과
+ */
+export const rawLineNameToNowCapsuleColor = (lineName: RawSubwayLineName) => {
+  switch (lineName) {
+    case '수도권 1호선':
+      return COLOR.NOW_LINE1;
+    case '수도권 2호선':
+      return COLOR.NOW_LINE2;
+    case '수도권 3호선':
+      return COLOR.NOW_LINE3;
+    case '수도권 4호선':
+      return COLOR.NOW_LINE4;
+    case '수도권 5호선':
+      return COLOR.NOW_LINE5;
+    case '수도권 6호선':
+      return COLOR.NOW_LINE6;
+    case '수도권 7호선':
+      return COLOR.NOW_LINE7;
+    case '수도권 8호선':
+      return COLOR.NOW_LINE8;
+    case '수도권 9호선':
+      return COLOR.NOW_LINE9;
+    case '인천 1호선':
+      return COLOR.NOW_LINEIO;
+    case '인천 2호선':
+      return COLOR.NOW_LINEIT;
+    case '수도권 공항철도':
+      return COLOR.NOW_LINEGH;
+    case '경의중앙선':
+      return COLOR.NOW_LINEKJ;
+    case '수도권 에버라인':
+      return COLOR.NOW_LINEEL;
+    case '수도권 경춘선':
+      return COLOR.NOW_LINEKC;
+    case '수도권 신분당선':
+      return COLOR.NOW_LINENBD;
+    case '수도권 수인.분당선':
+      return COLOR.NOW_LINESBD;
+    case '수도권 의정부경전철':
+      return COLOR.NOW_LINEEGB;
+    case '수도권 경강선':
+      return COLOR.NOW_LINEKK;
+    case '수도권 우이신설경전철':
+      return COLOR.NOW_LINEUS;
+    case '수도권 서해선(대곡-원시)':
+      return COLOR.NOW_LINESH;
+    case '수도권 김포골드라인':
+      return COLOR.NOW_LINEGG;
+    case '수도권 신림선':
+      return COLOR.NOW_LINESL;
+    default:
+      return '#222';
+  }
+};
+
+/**
+ * 나우탭 호선 캡슐에 띄울 이름
+ * @param lineName 응답받은 호선
+ */
+export const rawLineNameToNowCapsuleText = (lineName: RawSubwayLineName) => {
+  switch (lineName) {
+    case '수도권 1호선':
+      return '1호선';
+    case '수도권 2호선':
+      return '2호선';
+    case '수도권 3호선':
+      return '3호선';
+    case '수도권 4호선':
+      return '4호선';
+    case '수도권 5호선':
+      return '5호선';
+    case '수도권 6호선':
+      return '6호선';
+    case '수도권 7호선':
+      return '7호선';
+    case '수도권 8호선':
+      return '8호선';
+    case '수도권 9호선':
+      return '9호선';
+    case '인천 1호선':
+      return '인천1';
+    case '인천 2호선':
+      return '인천2';
+    case '수도권 공항철도':
+      return '공항철도';
+    case '경의중앙선':
+      return '경의중앙';
+    case '수도권 에버라인':
+      return '에버라인';
+    case '수도권 경춘선':
+      return '경춘';
+    case '수도권 신분당선':
+      return '신분당';
+    case '수도권 수인.분당선':
+      return '수인분당';
+    case '수도권 의정부경전철':
+      return '의정부';
+    case '수도권 경강선':
+      return '경강';
+    case '수도권 우이신설경전철':
+      return '우이신설';
+    case '수도권 서해선(대곡-원시)':
+      return '서해';
+    case '수도권 김포골드라인':
+      return '김포골드';
+    case '수도권 신림선':
+      return '신림';
+    default:
+      return '#222';
+  }
+};
+
 export const subwayLineColor = (StationCode: StationCode) => {
   switch (StationCode) {
     case 1:
