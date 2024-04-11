@@ -53,16 +53,6 @@ const SelectNewRoute = () => {
     <Container>
       <SwapStation setSelectedStation={setSelectedStation} />
       <SubPathContainer>
-        <View
-          style={{
-            backgroundColor: COLOR.WHITE,
-            paddingTop: 20,
-            paddingBottom: 45,
-            marginHorizontal: 16,
-          }}
-        >
-          <SwapStation setSelectedStation={setSelectedStation} />
-        </View>
         {isLoading && (
           <View style={{ marginTop: 100, alignItems: 'center' }}>
             <LoadingCircle width={40} height={40} />
