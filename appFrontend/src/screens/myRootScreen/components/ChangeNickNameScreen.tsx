@@ -12,6 +12,7 @@ import { saveUserInfo } from '@/store/modules';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store/configureStore';
 import { useMyPageNavigation } from '@/navigation/MyPageNavigation';
+import { showToast } from '@/global/utils/toast';
 
 const ChangeNickNameScreen = () => {
   const myPageNavigation = useMyPageNavigation();
@@ -25,7 +26,7 @@ const ChangeNickNameScreen = () => {
     onSuccess: () => {
       myPageNavigation.goBack();
       dispatch(saveUserInfo({ email: email, nickname: newNickname }));
-      //TODO: 성공 토스트 띄우기
+      showToast('nickNameChanged');
     },
     onError: (error: any) => {
       setIsNicknameValid(false);
