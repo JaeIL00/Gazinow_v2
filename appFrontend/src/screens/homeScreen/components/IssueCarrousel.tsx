@@ -36,7 +36,9 @@ const IssueCarrousel = () => {
 
   if (!popularIssues) return null;
   return (
-    <View style={{ backgroundColor: COLOR.WHITE, borderRadius: 12 }}>
+    <View
+      style={{ backgroundColor: COLOR.WHITE, borderRadius: 12, padding: 16, flexDirection: 'row' }}
+    >
       <ScrollView
         ref={scrollViewRef}
         horizontal
@@ -51,12 +53,6 @@ const IssueCarrousel = () => {
           {popularIssues.map((issue, index: number) => (
             <View style={{ width: itemWidth }} key={index}>
               <TouchableOpacity
-                style={{
-                  padding: 16,
-                  flex: 1,
-                  justifyContent: 'center',
-                  overflow: 'scroll',
-                }}
                 onPress={() => {
                   dispatch(getIssueId(issue.id));
                   navigation.navigate('IssueStack', { screen: 'IssueDetail' });
@@ -89,39 +85,40 @@ const IssueCarrousel = () => {
                       textColor={COLOR.GRAY_999}
                     />
                   </View>
-
-                  <View style={{ alignItems: 'flex-end', marginLeft: 16 }}>
-                    <FontText
-                      value="NOW"
-                      textSize="12px"
-                      lineHeight="14px"
-                      textWeight="Bold"
-                      textColor="#346BF7"
-                    />
-                    <View
-                      style={{
-                        backgroundColor: '#F3F3F3',
-                        borderRadius: 27,
-                        width: 36,
-                        height: 16,
-                        marginTop: 4,
-                      }}
-                    >
-                      <FontText
-                        value={`${index + 1}/${popularIssues.length}`}
-                        textSize="11px"
-                        textWeight="Medium"
-                        textColor="#B4B4B4"
-                        textAlign="center"
-                      />
-                    </View>
-                  </View>
                 </View>
               </TouchableOpacity>
             </View>
           ))}
         </View>
       </ScrollView>
+      <View style={{ alignItems: 'flex-end', marginLeft: 16 }}>
+        <FontText
+          value="NOW"
+          textSize="12px"
+          lineHeight="14px"
+          textWeight="Bold"
+          textColor="#346BF7"
+        />
+        <View
+          style={{
+            backgroundColor: '#F3F3F3',
+            borderRadius: 27,
+            width: 36,
+            height: 16,
+            marginTop: 4,
+            justifyContent: 'center',
+          }}
+        >
+          <FontText
+            value={`${currentIndex + 1}/${popularIssues.length}`}
+            textSize="11px"
+            lineHeight="13px"
+            textWeight="Medium"
+            textColor="#B4B4B4"
+            textAlign="center"
+          />
+        </View>
+      </View>
     </View>
   );
 };
