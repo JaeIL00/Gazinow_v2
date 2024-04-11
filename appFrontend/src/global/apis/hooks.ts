@@ -75,14 +75,14 @@ export const useGetSearchPaths = ({
   enabled: boolean;
 }) => {
   const isVerifiedUser = useAppSelect((state) => state.auth.isVerifiedUser);
-  const { data } = useQuery(
+  const { data, isLoading } = useQuery(
     ['search_paths', params],
     () => searchPathsFetch({ params, isVerifiedUser }),
     {
       enabled,
     },
   );
-  return { data };
+  return { data, isLoading };
 };
 
 /**
