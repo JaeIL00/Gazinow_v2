@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { ScrollView, TouchableOpacity, View } from 'react-native';
 import { useGetPopularIssuesQuery } from '@/global/apis/hooks';
 import IssueKeywordIcon from '@/global/components/IssueKeywordIcon';
@@ -15,11 +15,30 @@ const IssueCarrousel = () => {
   const dispatch = useAppDispatch();
   const { popularIssues } = useGetPopularIssuesQuery();
   const [itemWidth, setItemWidth] = useState<number>(0);
+  const scrollViewRef = useRef<ScrollView>(null);
+  const [currentIndex, setCurrentIndex] = useState<number>(0);
+
+  useEffect(() => {
+    if (!popularIssues || popularIssues.length === 0) return;
+
+    const interval = setInterval(() => {
+      if (currentIndex === popularIssues.length - 1) {
+        scrollViewRef.current?.scrollTo({ x: 0, animated: true });
+        setCurrentIndex(0);
+      } else {
+        scrollViewRef.current?.scrollTo({ x: itemWidth * (currentIndex + 1), animated: true });
+        setCurrentIndex((prevIndex) => prevIndex + 1);
+      }
+    }, 3000);
+
+    return () => clearInterval(interval);
+  }, [currentIndex, itemWidth, popularIssues]);
 
   if (!popularIssues) return null;
   return (
     <View style={{ backgroundColor: COLOR.WHITE, borderRadius: 12 }}>
       <ScrollView
+        ref={scrollViewRef}
         horizontal
         pagingEnabled
         scrollEventThrottle={200}
@@ -30,7 +49,7 @@ const IssueCarrousel = () => {
       >
         <View style={{ flexDirection: 'row' }}>
           {popularIssues.map((issue, index: number) => (
-            <View style={{ width: itemWidth }}>
+            <View style={{ width: itemWidth }} key={index}>
               <TouchableOpacity
                 style={{
                   padding: 16,
