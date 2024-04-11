@@ -8,7 +8,7 @@ import { useRootNavigation } from '@/navigation/RootNavigation';
 import { useAppDispatch } from '@/store';
 import { getIssueId } from '@/store/modules';
 import dayjs from 'dayjs';
-import { subwayLineColor } from '@/global/utils';
+import { rawLineNameToColor } from '@/global/utils/subwayLine';
 
 const IssueCarrousel = () => {
   const navigation = useRootNavigation();
@@ -68,7 +68,7 @@ const IssueCarrousel = () => {
                       width={30}
                       height={30}
                       keyword={issue.keyword}
-                      color={subwayLineColor(issue?.lines[0])} //FIXME: 여러 호선에 걸친 이슈인 경우?
+                      color={rawLineNameToColor(issue.lines[0])} //FIXME: 여러 호선에 걸친 이슈인 경우?
                     />
                   </View>
 
