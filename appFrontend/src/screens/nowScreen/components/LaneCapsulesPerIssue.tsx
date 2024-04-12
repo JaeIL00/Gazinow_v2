@@ -13,7 +13,7 @@ interface LaneCapsulesProps {
 }
 
 const LaneCapsulesPerIssue = ({ lanes }: LaneCapsulesProps) => {
-  const uniqueLanes = Array.from(new Set(lanes));
+  const uniqueLanes = Array.from(new Set(lanes)).sort();
   return (
     <View style={{ flexDirection: 'row', padding: 16, paddingBottom: 8 }}>
       {uniqueLanes.map((lane: RawSubwayLineName, index) => (
