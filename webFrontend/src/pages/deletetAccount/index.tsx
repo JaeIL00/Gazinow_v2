@@ -125,7 +125,7 @@ const DeleteAccountPage = () => {
               </button>
               <button
                 className="flex justify-center flex-1 py-3 text-white bg-black rounded-md"
-                onClick={() => deleteMemberMutate(form.email)}
+                onClick={() => deleteMemberMutate()}
               >
                 탈퇴할래요
               </button>

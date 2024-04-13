@@ -23,11 +23,3 @@ export interface SignInFetchResponse {
   notificationByLike: boolean;
   firebaseToken: boolean;
 }
-
-/**
- * 로그아웃
- */
-export interface LogoutFetchData {
-  accessToken: string;
-  refreshToken: string;
-}

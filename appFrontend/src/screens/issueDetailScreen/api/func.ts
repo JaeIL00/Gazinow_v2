@@ -26,8 +26,12 @@ export const getIssueDetail = async ({
       return res.data.data;
     }
   } catch (err) {
-    Sentry.captureException(err);
     const error = err as AxiosError;
+    Sentry.captureException({
+      target: '상세 이슈 조회',
+      input: { params, isVerifiedUser, request: error.request },
+      output: { status: error.response?.status, error: error.message, response: error.response },
+    });
     throw error;
   }
 };
@@ -40,8 +44,12 @@ export const postLike = async (issueId: number) => {
     const res = await authServiceAPI.post(`/api/v1/like?issueId=${issueId}`);
     return res.data.data;
   } catch (err) {
-    Sentry.captureException(err);
     const error = err as AxiosError;
+    Sentry.captureException({
+      target: '도움돼요 추가',
+      input: { issueId, request: error.request },
+      output: { status: error.response?.status, error: error.message, response: error.response },
+    });
     throw error;
   }
 };
@@ -54,8 +62,12 @@ export const deletePostLike = async (issueId: number) => {
     const res = await authServiceAPI.delete(`/api/v1/like?issueId=${issueId}`);
     return res.data.data;
   } catch (err) {
-    Sentry.captureException(err);
     const error = err as AxiosError;
+    Sentry.captureException({
+      target: '도움돼요 삭제',
+      input: { issueId, request: error.request },
+      output: { status: error.response?.status, error: error.message, response: error.response },
+    });
     throw error;
   }
 };

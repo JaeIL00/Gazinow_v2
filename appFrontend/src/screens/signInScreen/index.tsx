@@ -13,7 +13,7 @@ import { FontText, Input, Space, TextButton } from '@/global/ui';
 import { setEncryptedStorage } from '@/global/utils';
 import { useRootNavigation } from '@/navigation/RootNavigation';
 import { SignInFormTypes } from './apis/entity';
-import { useSignInMutation } from './apis/hook';
+import { useSignInMutation } from './apis/hooks';
 import { COLOR } from '@/global/constants';
 import { useAppDispatch } from '@/store';
 import { getAuthorizationState, saveUserInfo } from '@/store/modules';
