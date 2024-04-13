@@ -108,6 +108,7 @@ const NowScreen = () => {
                           body={item.content}
                           isLastItem={index === popularIssues.length - 1}
                           isHeader={true}
+                          lanes={item.lines}
                         />
                       ))}
                     </View>
@@ -167,13 +168,14 @@ const NowScreen = () => {
                       body={item.content}
                       isLastItem={index === issuesList.length + 1}
                       isHeader={false}
+                      lanes={item.lines}
                     />
                   );
               }
               return null;
             }}
             ListFooterComponent={() => {
-              if (issuesList.length > 5) {
+              if (issuesList.length > 3) {
                 return <Space height="64px" width="999px" />;
               } else if (issuesList.length < 1) {
                 return null;
