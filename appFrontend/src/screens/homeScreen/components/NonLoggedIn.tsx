@@ -10,7 +10,7 @@ const NonLoggedIn = () => {
       style={{
         alignItems: 'center',
         justifyContent: 'center',
-        height: Dimensions.get('screen').height * 0.531,
+        height: Dimensions.get('screen').height * 0.431,
         paddingBottom: 10,
       }}
     >
