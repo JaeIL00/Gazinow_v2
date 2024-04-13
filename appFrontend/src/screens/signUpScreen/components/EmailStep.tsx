@@ -65,7 +65,7 @@ const EmailStep = ({ emailValue, setStep, changeEmailValue }: EmailStepProps) =>
   };
 
   const emailConfirmMutateHandler = () => emailConfirmMutate(emailValue);
-  
+
   const resetTimer = () => {
     setTimer({
       minutes: 5,

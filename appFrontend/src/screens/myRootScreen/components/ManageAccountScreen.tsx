@@ -4,7 +4,6 @@ import { useRootNavigation } from '@/navigation/RootNavigation';
 import { getEncryptedStorage, removeEncryptedStorage } from '@/global/utils';
 import { FontText, Space, TextButton } from '@/global/ui';
 import { COLOR } from '@/global/constants';
-import { useLogoutMutation } from '@/screens/signInScreen/apis/hook';
 import MyTabModal from '@/global/components/MyTabModal';
 import { Pressable, SafeAreaView } from 'react-native';
 import IconLeftArrowHead from '@assets/icons/left_arrow_head.svg';
@@ -12,6 +11,7 @@ import { useMyPageNavigation } from '@/navigation/MyPageNavigation';
 import { showToast } from '@/global/utils/toast';
 import { useAppDispatch } from '@/store';
 import { getAuthorizationState } from '@/store/modules';
+import { useLogoutMutation } from '../apis/hooks';
 
 interface RenderMenuProps {
   text: string;

@@ -1,7 +1,7 @@
 import { authServiceAPI, publicServiceAPI } from '@/global/apis';
 import { AxiosError } from 'axios';
-import { SightUpResponse } from '../../type';
 import * as Sentry from '@sentry/react-native';
+import { SignUpResponse } from './entity';
 
 /**
  * 이메일 인증 요청 axios
@@ -44,7 +44,7 @@ export const checkNicknameFetch = async (nickName: string) => {
 export const signUpFetch = async (data: { email: string; password: string; nickName: string }) => {
   try {
     const res = await publicServiceAPI.post<{
-      data: SightUpResponse;
+      data: SignUpResponse;
     }>('/api/v1/member/signup', data);
     return res.data.data;
   } catch (err) {
