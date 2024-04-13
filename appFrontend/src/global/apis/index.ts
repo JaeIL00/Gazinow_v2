@@ -47,7 +47,12 @@ authServiceAPI.interceptors.request.use(async (requestConfig) => {
 authServiceAPI.interceptors.response.use(
   (response) => response,
   async (error: AxiosError) => {
-    if (!error.response || error.response.status !== 401) {
+    console.log(error.response);
+    if (
+      !error.response ||
+      error.response.status !== 401 ||
+      error.response.config.url === '/api/v1/member/reissue'
+    ) {
       throw error;
     }
 
