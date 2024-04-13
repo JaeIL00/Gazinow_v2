@@ -28,7 +28,6 @@ export const postLogout = async (data: {
     const res = await GaziAPI.post(apiUrls.member_logout, data);
     return res.data.data;
   } catch (err) {
-    Sentry.captureException(err);
     const error = err as AxiosError;
     throw error;
   }
