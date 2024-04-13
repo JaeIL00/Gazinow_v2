@@ -126,7 +126,6 @@ export const rawLineNameToColor = (lineName: RawSubwayLineName) => {
   }
 };
 
-
 /**
  * 오디세이 지하철 호선 표기를 나우탭 캡슐 컬러로
  * @param lineName 응답받은 지하철 검색 결과
@@ -449,9 +448,9 @@ export const subwayNameCutting = (name: string) => {
     case '녹사평(용산구청)':
       return '녹사평\n(용산구청)';
     case '봉화산(서울의료원)':
-      return '봉화산\n(서울의료원)'; //FIXME: 잘라도 길다
+      return '봉화산';
     case '시민공원(문화창작지대)':
-      return '시민공원\n(문화창작지대)'; //FIXME: 잘라도 길다
+      return '시민공원';
     case '신창(순천향대)':
       return '신창\n(순천향대)';
     case '양재시민의숲':
@@ -465,7 +464,7 @@ export const subwayNameCutting = (name: string) => {
     case '전대.에버랜드':
       return '전대.\n에버랜드';
     case '주안국가산단(인천J밸리)':
-      return '주안국가산단\n(인천J밸리)'; //FIXME: 잘라도 길다
+      return '주안\n국가산단';
     case '총신대입구(이수)':
       return '총신대입구\n(이수)';
     case '북한산보국문':
@@ -474,14 +473,12 @@ export const subwayNameCutting = (name: string) => {
       return '경기도청\n북부청사';
     case '경전철의정부':
       return '경전철\n의정부';
-    case '주안국가산단':
-      return '주안\n국가산단';
     case '가정중앙시장':
       return '가정\n중앙시장';
     case '가정(루원시티)':
       return '가정\n루원시티';
     case '검단오류(검단산업단지)':
-      return '검단오류\n(검단산업단지)'; //FIXME: 잘라도 길다
+      return '검단오류';
     case '관악산(서울대)':
       return '관악산\n(서울대)';
     case '광교(경기대)':
@@ -505,7 +502,7 @@ export const subwayNameCutting = (name: string) => {
     case '광교중앙(아주대)':
       return '광교중앙\n(아주대)';
     case '아시아드경기장(공촌사거리)':
-      return '아시아드경기장\n(공촌사거리)'; //FIXME: 잘라도 길다
+      return '아시아드\n경기장';
     case '쌍용(나사렛대)':
       return '쌍용\n(나사렛대)';
     case '녹사평(용산구청)':

@@ -109,6 +109,7 @@ const NewRouteSaveModal = ({
             >
               <Input
                 placeholder="경로 이름을 입력하세요"
+                placeholderTextColor={COLOR.GRAY_999}
                 value={routeName}
                 onChangeText={(text) => {
                   if (text.length <= 10) {
