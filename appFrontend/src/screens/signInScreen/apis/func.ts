@@ -1,7 +1,6 @@
 import { publicServiceAPI } from '@/global/apis';
 import { AxiosError } from 'axios';
 import { SignInFetchResponse, SignInFormTypes } from './entity';
-import * as Sentry from '@sentry/react-native';
 
 /**
  * 로그인 요청 axios
@@ -14,8 +13,7 @@ export const signInFetch = async (data: SignInFormTypes) => {
     );
     return res.data.data;
   } catch (err) {
-    Sentry.captureException(err);
-    const er = err as AxiosError;
-    throw er;
+    const error = err as AxiosError;
+    throw error;
   }
 };

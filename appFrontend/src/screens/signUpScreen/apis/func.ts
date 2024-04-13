@@ -1,4 +1,4 @@
-import { authServiceAPI, publicServiceAPI } from '@/global/apis';
+import { publicServiceAPI } from '@/global/apis';
 import { AxiosError } from 'axios';
 import * as Sentry from '@sentry/react-native';
 import { SignUpResponse } from './entity';
@@ -13,9 +13,13 @@ export const emailConfirmFetch = async (email: string) => {
     });
     return res.data.data;
   } catch (err) {
-    Sentry.captureException(err);
-    const er = err as AxiosError;
-    throw er;
+    const error = err as AxiosError;
+    Sentry.captureException({
+      target: '이메일 인증 요청',
+      input: { email, request: error.request },
+      output: { status: error.response?.status, error: error.message, response: error.response },
+    });
+    throw error;
   }
 };
 
@@ -32,9 +36,8 @@ export const checkNicknameFetch = async (nickName: string) => {
     );
     return res.data;
   } catch (err) {
-    Sentry.captureException(err);
-    const er = err as AxiosError;
-    throw er;
+    const error = err as AxiosError;
+    throw error;
   }
 };
 
@@ -48,8 +51,7 @@ export const signUpFetch = async (data: { email: string; password: string; nickN
     }>('/api/v1/member/signup', data);
     return res.data.data;
   } catch (err) {
-    Sentry.captureException(err);
-    const er = err as AxiosError;
-    throw er;
+    const error = err as AxiosError;
+    throw error;
   }
 };

@@ -1,8 +1,5 @@
 import {
   changeNicknameFetch,
-  changePasswordFetch,
-  checkPasswordFetch,
-  deleteAccountFetch,
   getPopularIssuesFetch,
   getSavedRoutesFetch,
   getSearchRoutesFetch,
@@ -132,20 +129,6 @@ export const useAddRecentSearch = ({
 };
 
 /**
- * 회원 탈퇴 훅
- */
-export const useDeleteAccountMutation = ({
-  onSuccess,
-  onError,
-}: {
-  onSuccess: () => void;
-  onError: (error: any) => void;
-}) => {
-  const { mutate: deleteAccountMutate } = useMutation(deleteAccountFetch, { onSuccess, onError });
-  return { deleteAccountMutate };
-};
-
-/**
  * 검색한 지하철 경로 조회 훅
  */
 export const useGetSearchRoutesQuery = () => {
@@ -185,40 +168,6 @@ export const useChangeNicknameQuery = ({
     onError,
   });
   return { data, mutate };
-};
-
-/**
- * 비밀번호 확인 훅
- */
-export const useCheckPasswordQuery = ({
-  onSuccess,
-  onError,
-}: {
-  onSuccess: () => void;
-  onError?: (error: any) => void;
-}) => {
-  const { mutate: checkPasswordMutate } = useMutation(checkPasswordFetch, {
-    onSuccess,
-    onError,
-  });
-  return { checkPasswordMutate };
-};
-
-/**
- * 비밀번호 변경 훅
- */
-export const useChangePasswordQuery = ({
-  onSuccess,
-  onError,
-}: {
-  onSuccess: () => void;
-  onError?: (error: any) => void;
-}) => {
-  const { mutate: changePasswordMutate } = useMutation(changePasswordFetch, {
-    onSuccess,
-    onError,
-  });
-  return { changePasswordMutate };
 };
 
 /**

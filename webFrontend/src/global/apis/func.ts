@@ -37,13 +37,12 @@ export const postLogout = async (data: {
 /**
  * 회원 탈퇴
  */
-export const deleteMember = async (email: string) => {
+export const deleteMember = async () => {
   try {
     await GaziAPI.delete(apiUrls.member_delete_member, { data: {} });
-    Sentry.captureException(`${email}가 탈퇴했어요ㅠㅠ`);
+    Sentry.captureMessage("유저가 탈퇴했어요");
   } catch (err) {
-    Sentry.captureException(err);
-    const er = err as AxiosError;
-    throw er;
+    const error = err as AxiosError;
+    throw error;
   }
 };

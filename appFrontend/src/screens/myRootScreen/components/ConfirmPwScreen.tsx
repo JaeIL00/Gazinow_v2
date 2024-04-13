@@ -3,13 +3,14 @@ import { useCallback, useState } from 'react';
 import { Alert, KeyboardAvoidingView, Platform, Pressable, SafeAreaView } from 'react-native';
 import { FontText, Input, Space, TextButton } from '@/global/ui';
 import { COLOR } from '@/global/constants';
-import { useCheckPasswordQuery, useDeleteAccountMutation } from '@/global/apis/hooks';
 import { useRootNavigation } from '@/navigation/RootNavigation';
 import IconLeftArrowHead from '@assets/icons/left_arrow_head.svg';
 import { removeEncryptedStorage } from '@/global/utils';
 import { debounce } from 'lodash';
 import { useMyPageNavigation } from '@/navigation/MyPageNavigation';
 import { showToast } from '@/global/utils/toast';
+import { useCheckPasswordQuery, useDeleteAccountMutation } from '../apis/hooks';
+import * as Sentry from '@sentry/react-native';
 
 const ConfirmPwScreen = () => {
   const myPageNavigation = useMyPageNavigation();
@@ -19,6 +20,7 @@ const ConfirmPwScreen = () => {
 
   const { deleteAccountMutate } = useDeleteAccountMutation({
     onSuccess: () => {
+      Sentry.captureMessage('유저가 탈퇴했어요');
       removeEncryptedStorage('access_token');
       removeEncryptedStorage('refresh_token');
       navigation.reset({ routes: [{ name: 'MainBottomTab' }] });
