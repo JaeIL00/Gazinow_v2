@@ -53,36 +53,62 @@ const IssueCarrousel = () => {
           {popularIssues.map((issue, index: number) => (
             <View style={{ width: itemWidth }} key={index}>
               <TouchableOpacity
+                style={{ flexDirection: 'row' }}
                 onPress={() => {
                   dispatch(getIssueId(issue.id));
                   navigation.navigate('IssueStack', { screen: 'IssueDetail' });
                 }}
               >
-                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                  <View style={{ marginRight: 14 }}>
-                    <IssueKeywordIcon
-                      width={30}
-                      height={30}
-                      keyword={issue.keyword}
-                      color={rawLineNameToColor(issue.lines[0])} //FIXME: 여러 호선에 걸친 이슈인 경우?
-                    />
-                  </View>
+                <IssueKeywordIcon
+                  width={30}
+                  height={30}
+                  keyword={issue.keyword}
+                  color={rawLineNameToColor(issue.lines[0])}
+                />
 
-                  <View style={{ flex: 1 }}>
+                <View style={{ flex: 1, marginHorizontal:14 }}>
+                  <FontText
+                    value={issue.title}
+                    textSize="13px"
+                    lineHeight="19px"
+                    textWeight="SemiBold"
+                    textColor={COLOR.BASIC_BLACK}
+                    numberOfLines={1}
+                  />
+                  <FontText
+                    value={dayjs(issue.startDate).fromNow()}
+                    textSize="11px"
+                    lineHeight="13px"
+                    textWeight="Medium"
+                    textColor={COLOR.GRAY_999}
+                  />
+                </View>
+
+                <View style={{ alignItems: 'flex-end' }}>
+                  <FontText
+                    value="NOW"
+                    textSize="12px"
+                    lineHeight="14px"
+                    textWeight="Bold"
+                    textColor="#346BF7"
+                  />
+                  <View
+                    style={{
+                      backgroundColor: '#F3F3F3',
+                      borderRadius: 27,
+                      width: 36,
+                      height: 16,
+                      marginTop: 4,
+                      justifyContent: 'center',
+                    }}
+                  >
                     <FontText
-                      value={issue.title}
-                      textSize="13px"
-                      lineHeight="19px"
-                      textWeight="SemiBold"
-                      textColor={COLOR.BASIC_BLACK}
-                      numberOfLines={1}
-                    />
-                    <FontText
-                      value={dayjs(issue.startDate).fromNow()}
+                      value={`${index + 1}/${popularIssues.length}`}
                       textSize="11px"
                       lineHeight="13px"
                       textWeight="Medium"
-                      textColor={COLOR.GRAY_999}
+                      textColor="#B4B4B4"
+                      textAlign="center"
                     />
                   </View>
                 </View>
@@ -91,34 +117,6 @@ const IssueCarrousel = () => {
           ))}
         </View>
       </ScrollView>
-      <View style={{ alignItems: 'flex-end', marginLeft: 16 }}>
-        <FontText
-          value="NOW"
-          textSize="12px"
-          lineHeight="14px"
-          textWeight="Bold"
-          textColor="#346BF7"
-        />
-        <View
-          style={{
-            backgroundColor: '#F3F3F3',
-            borderRadius: 27,
-            width: 36,
-            height: 16,
-            marginTop: 4,
-            justifyContent: 'center',
-          }}
-        >
-          <FontText
-            value={`${currentIndex + 1}/${popularIssues.length}`}
-            textSize="11px"
-            lineHeight="13px"
-            textWeight="Medium"
-            textColor="#B4B4B4"
-            textAlign="center"
-          />
-        </View>
-      </View>
     </View>
   );
 };
