@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { ScrollView, TouchableOpacity, View } from 'react-native';
-import { useGetPopularIssuesQuery } from '@/global/apis/hooks';
+import { useGetAllIssuesQuery, useGetPopularIssuesQuery } from '@/global/apis/hooks';
 import IssueKeywordIcon from '@/global/components/IssueKeywordIcon';
 import { COLOR } from '@/global/constants';
 import { FontText } from '@/global/ui';
@@ -13,16 +13,25 @@ import { rawLineNameToColor } from '@/global/utils/subwayLine';
 const IssueCarrousel = () => {
   const navigation = useRootNavigation();
   const dispatch = useAppDispatch();
-  const { popularIssues } = useGetPopularIssuesQuery();
+  // const { popularIssues } = useGetPopularIssuesQuery();
+  const { allIssues } = useGetAllIssuesQuery();
   const [itemWidth, setItemWidth] = useState<number>(0);
   const scrollViewRef = useRef<ScrollView>(null);
   const [currentIndex, setCurrentIndex] = useState<number>(0);
 
+  //TODO: 도움돼요 5개 이상 눌릴만큼 유저 쌓이면 인기이슈로 바꾸기
+  const currentDate = new Date();
+  const currentIssues = Array.from(
+    new Set(
+      allIssues?.pages[0].content.filter((issue) => new Date(issue.expireDate) >= currentDate),
+    ),
+  ).slice(0, 3);
+
   useEffect(() => {
-    if (!popularIssues || popularIssues.length === 0) return;
+    if (!currentIssues || currentIssues.length === 0) return;
 
     const interval = setInterval(() => {
-      if (currentIndex === popularIssues.length - 1) {
+      if (currentIndex === currentIssues.length - 1) {
         scrollViewRef.current?.scrollTo({ x: 0, animated: true });
         setCurrentIndex(0);
       } else {
@@ -32,9 +41,9 @@ const IssueCarrousel = () => {
     }, 3000);
 
     return () => clearInterval(interval);
-  }, [currentIndex, itemWidth, popularIssues]);
+  }, [currentIndex, itemWidth, currentIssues]);
 
-  if (!popularIssues) return null;
+  if (currentIssues.length < 1) return null;
   return (
     <View
       style={{ backgroundColor: COLOR.WHITE, borderRadius: 12, padding: 16, flexDirection: 'row' }}
@@ -46,11 +55,11 @@ const IssueCarrousel = () => {
         scrollEventThrottle={200}
         decelerationRate="fast"
         showsHorizontalScrollIndicator={false}
-        contentContainerStyle={{ width: `${100 * popularIssues.length}%` }}
-        onContentSizeChange={(width) => setItemWidth(width / popularIssues.length)}
+        contentContainerStyle={{ width: `${100 * currentIssues.length}%` }}
+        onContentSizeChange={(width) => setItemWidth(width / currentIssues.length)}
       >
         <View style={{ flexDirection: 'row' }}>
-          {popularIssues.map((issue, index: number) => (
+          {currentIssues.map((issue, index: number) => (
             <View style={{ width: itemWidth }} key={index}>
               <TouchableOpacity
                 style={{ flexDirection: 'row' }}
@@ -66,7 +75,7 @@ const IssueCarrousel = () => {
                   color={rawLineNameToColor(issue.lines[0])}
                 />
 
-                <View style={{ flex: 1, marginHorizontal:14 }}>
+                <View style={{ flex: 1, marginHorizontal: 14 }}>
                   <FontText
                     value={issue.title}
                     textSize="13px"
@@ -103,7 +112,7 @@ const IssueCarrousel = () => {
                     }}
                   >
                     <FontText
-                      value={`${index + 1}/${popularIssues.length}`}
+                      value={`${index + 1}/${currentIssues.length}`}
                       textSize="11px"
                       lineHeight="13px"
                       textWeight="Medium"
