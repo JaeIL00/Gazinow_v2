@@ -104,7 +104,7 @@ const NowScreen = () => {
                           key={item.id}
                           id={item.id}
                           title={item.title}
-                          time={item.agoTime}
+                          time={item.startDate}
                           body={item.content}
                           isLastItem={index === popularIssues.length - 1}
                           isHeader={true}
@@ -164,7 +164,7 @@ const NowScreen = () => {
                       key={item.id}
                       id={item.id}
                       title={item.title}
-                      time={item.agoTime}
+                      time={item.startDate}
                       body={item.content}
                       isLastItem={index === issuesList.length + 1}
                       isHeader={false}
