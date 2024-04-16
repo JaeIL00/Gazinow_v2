@@ -179,11 +179,7 @@ export interface SubwayStrEnd {
   endStationLine: RawSubwayLineName;
 }
 
-export interface SavedRoute extends Path {
-  roadName: string;
-}
-
-export interface RenderSavedRoutesType extends Path {
+export interface MyRoutesType extends Path {
   roadName: string;
   id: number;
 }
