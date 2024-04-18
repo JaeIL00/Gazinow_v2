@@ -7,33 +7,23 @@ import { getIssueId } from '@/store/modules';
 import { useRootNavigation } from '@/navigation/RootNavigation';
 import dayjs from 'dayjs';
 import LaneCapsulesPerIssue from './LaneCapsulesPerIssue';
-import { RawSubwayLineName } from '@/global/apis/entity';
+import { IssueContent } from '@/global/apis/entity';
 
-interface IssueDetailProps {
-  id: number;
-  title: string;
-  time: string;
-  body: string;
+interface IssueContainerProps {
   isLastItem: boolean;
-  isHeader: boolean;
-  lanes: RawSubwayLineName[];
+  issue: IssueContent;
+  isHeader?: boolean;
 }
 
-const IssueContainer = ({
-  id,
-  title,
-  time,
-  body,
-  isLastItem,
-  isHeader,
-  lanes,
-}: IssueDetailProps) => {
+const IssueContainer = ({ isLastItem, isHeader, issue }: IssueContainerProps) => {
+  const { id, title, lines, startDate, content } = issue;
+
   const dispatch = useAppDispatch();
   const navigation = useRootNavigation();
 
   return (
     <>
-      <LaneCapsulesPerIssue lanes={lanes} />
+      <LaneCapsulesPerIssue lanes={lines} />
       <IssueList
         onPress={() => {
           dispatch(getIssueId(id));
@@ -50,7 +40,7 @@ const IssueContainer = ({
           />
           <Space height="4px" />
           <FontText
-            value={dayjs(time).fromNow()}
+            value={dayjs(startDate).fromNow()}
             textSize="14px"
             textWeight="Regular"
             lineHeight="21px"
@@ -58,7 +48,7 @@ const IssueContainer = ({
           />
           <Space height="4px" />
           <FontText
-            value={body}
+            value={content}
             textSize="14px"
             textWeight="Regular"
             lineHeight="21px"
