@@ -29,7 +29,7 @@ const SearchPathDetailItem = ({ data, isLastLane, lineLength }: SearchPathDetail
   const lastIdx = data.stations.length - 1;
 
   return (
-    <View className="ml-31">
+    <View className="ml-38">
       {/* 출발역 */}
       <View
         className={cn('flex-row', {
@@ -39,13 +39,13 @@ const SearchPathDetailItem = ({ data, isLastLane, lineLength }: SearchPathDetail
         {/* 점과 선 */}
         <View>
           <View
-            className="w-24 h-24 rounded-24"
+            className="w-20 h-20 rounded-full"
             style={{
               backgroundColor: subwayLineColor(data.lanes[0].stationCode),
             }}
           />
           <View
-            className={cn('w-6 flex-1 ml-9 mt-[-10px]', {
+            className={cn('w-4 flex-1 ml-8 mt-[-10px]', {
               'mb-[-40px]': !isOpenPathList,
             })}
             style={{
@@ -53,7 +53,7 @@ const SearchPathDetailItem = ({ data, isLastLane, lineLength }: SearchPathDetail
             }}
           />
         </View>
-        <View className="flex-1 ml-14">
+        <View className="flex-1 ml-16">
           <FontText
             value={data.stations[0].stationName}
             textSize="18px"
@@ -188,29 +188,28 @@ const SearchPathDetailItem = ({ data, isLastLane, lineLength }: SearchPathDetail
         </View>
       </View>
       {/* 도착역 */}
-      <View className="flex-row z-[99999]">
+      <View className="flex-row z-[99999] relative">
         <View
-          className="w-24 h-24 rounded-24"
+          className="w-20 h-20 rounded-full"
           style={{
             backgroundColor: subwayLineColor(data.lanes[0].stationCode),
           }}
         />
-        <View className="ml-14">
-          <FontText
-            value={data.stations[lastIdx].stationName}
-            textSize="18px"
-            textWeight="SemiBold"
-            textColor={subwayLineColor(data.lanes[0].stationCode)}
-          />
-        </View>
+        <FontText
+          value={data.stations[lastIdx].stationName}
+          textSize="18px"
+          textWeight="SemiBold"
+          textColor={subwayLineColor(data.lanes[0].stationCode)}
+          className="absolute top-[-1px] left-36"
+        />
       </View>
       {!isLastLane && (
         <View className="mt-[-20px] ml-[-25px] flex-row items-center">
-          <View className="mt-10">
+          <View className="mt-18">
             <IconWalkHuman width={24} height={24} />
           </View>
           <View className="overflow-hidden">
-            <View className="ml-10 border-l-4 h-60 z-[-1] border-gray-dd" />
+            <View className="ml-9 w-4 h-60 z-[-1] bg-gray-dd" />
           </View>
         </View>
       )}
