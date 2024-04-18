@@ -4,11 +4,7 @@ const px0_100 = { ...Array.from(Array(101)).map((_, i) => `${i}px`) };
 const px0_999 = { ...Array.from(Array(1000)).map((_, i) => `${i}px`) };
 
 module.exports = {
-  content: [
-    './src/App.{js,jsx,ts,tsx}',
-    './src/screens/**/*.{js,jsx,ts,tsx}',
-    './src/screens/**/**/*.{js,jsx,ts,tsx}',
-  ],
+  content: ['./src/**/*.{js,jsx,ts,tsx}'],
   theme: {
     extend: {
       borderWidth: px0_999,
