@@ -1,4 +1,3 @@
-import { css } from '@emotion/native';
 import { useMemo, useState } from 'react';
 import { FlatList, Modal, SafeAreaView, TouchableOpacity, View } from 'react-native';
 
@@ -62,27 +61,10 @@ const SearchPathResultDetailScreen = () => {
   }, [resultData]);
 
   return (
-    <SafeAreaView
-      style={{
-        backgroundColor: COLOR.WHITE,
-        flex: 1,
-      }}
-    >
-      <View
-        style={{
-          paddingHorizontal: 16,
-          flex: 1,
-        }}
-      >
+    <SafeAreaView className="flex-1 bg-white">
+      <View className="flex-1 px-16">
         {/* header */}
-        <View
-          style={{
-            paddingVertical: 16,
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-          }}
-        >
+        <View className="flex-row items-center justify-between py-16">
           <TouchableOpacity onPress={() => navigation.goBack()}>
             <IconLeftArrowHead color="#3F3F46" width={18} height={18} />
           </TouchableOpacity>
@@ -105,57 +87,23 @@ const SearchPathResultDetailScreen = () => {
               />
             ) : (
               <Modal visible onRequestClose={() => setIsSaveRouteModalOpen(false)} transparent>
-                <View
-                  style={{
-                    position: 'relative',
-                    flex: 1,
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                  }}
-                >
-                  <View
-                    style={{
-                      backgroundColor: '#00000099',
-                      position: 'absolute',
-                      top: 0,
-                      width: '100%',
-                      height: '100%',
-                    }}
-                  />
-                  <View
-                    style={{
-                      position: 'absolute',
-                      backgroundColor: COLOR.WHITE,
-                      paddingTop: 32,
-                      paddingBottom: 24,
-                      paddingHorizontal: 24,
-                      borderRadius: 12,
-                      width: '80%',
-                    }}
-                  >
+                <View className="relative items-center justify-center flex-1">
+                  <View className="bg-[#00000099] absolute top-0 w-full h-full" />
+                  <View className="absolute w-4/5 px-24 pt-32 pb-24 bg-white rounded-12">
                     <FontText
                       value={`로그인하면 관심 경로의\n이슈를 알려드려요`}
                       textSize="18px"
                       textWeight="SemiBold"
-                      style={{ textAlign: 'center' }}
+                      className="text-center"
                     />
-                    <View
-                      style={{ flexDirection: 'row', width: '100%', columnGap: 8, marginTop: 30 }}
-                    >
+                    <View className="flex-row w-full gap-x-8 mt-30">
                       <TextButton
                         value="취소"
                         textSize="14px"
                         textColor={COLOR.GRAY_999}
                         textWeight="SemiBold"
                         onPress={() => setIsSaveRouteModalOpen(false)}
-                        style={{
-                          flex: 1,
-                          borderRadius: 5,
-                          borderWidth: 1,
-                          borderColor: COLOR.GRAY_999,
-                          alignItems: 'center',
-                          paddingVertical: 12,
-                        }}
+                        className="items-center flex-1 py-12 border rounded-5 border-gray-99"
                       />
                       <TextButton
                         value="로그인"
@@ -166,13 +114,7 @@ const SearchPathResultDetailScreen = () => {
                           setIsSaveRouteModalOpen(false);
                           rootNavigation.navigate('AuthStack', { screen: 'Landing' });
                         }}
-                        style={{
-                          flex: 1,
-                          borderRadius: 5,
-                          alignItems: 'center',
-                          paddingVertical: 12,
-                          backgroundColor: COLOR.BASIC_BLACK,
-                        }}
+                        className="items-center flex-1 py-12 rounded-5 bg-black-17"
                       />
                     </View>
                   </View>
@@ -180,22 +122,11 @@ const SearchPathResultDetailScreen = () => {
               </Modal>
             ))}
         </View>
-        <View
-          style={css`
-            flex-direction: row;
-            align-items: center;
-            justify-content: space-between;
-            padding-left: 10px;
-          `}
-        >
+
+        <View className="flex-row items-center justify-between pl-10">
           <View>
             <FontText value="평균 소요시간" textSize="13px" textWeight="Medium" textColor="#999" />
-            <View
-              style={css`
-                flex-direction: row;
-                margin-top: 2px;
-              `}
-            >
+            <View className="flex-row mt-2">
               <FontText
                 value={
                   resultData.totalTime > 60
@@ -212,11 +143,7 @@ const SearchPathResultDetailScreen = () => {
               <Space width="8px" />
 
               <View>
-                <View
-                  style={css`
-                    flex: 1;
-                  `}
-                />
+                <View className="flex-1" />
                 <FontText
                   value={
                     freshSubPathData.length - 1 === 0
@@ -226,21 +153,15 @@ const SearchPathResultDetailScreen = () => {
                   textSize="16px"
                   textWeight="Regular"
                   textColor="#999"
-                  style={{ marginBottom: 2 }}
+                  className="mb-2"
                 />
               </View>
             </View>
           </View>
         </View>
 
-        <View
-          style={css`
-            margin-bottom: 21px;
-            margin-top: 16px;
-            height: 1px;
-            background-color: ${COLOR.GRAY_EB};
-          `}
-        />
+        {/* 경계선 */}
+        <View className="h-px mt-16 mb-21 bg-gray-eb" />
 
         <FlatList
           data={freshSubPathData}
