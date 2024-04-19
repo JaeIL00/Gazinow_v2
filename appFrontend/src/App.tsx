@@ -6,7 +6,6 @@ import { RootNavigation } from '@/navigation';
 import { store } from '@/store';
 import { NavigationContainer, createNavigationContainerRef } from '@react-navigation/native';
 import Toast from 'react-native-toast-message';
-import toastConfig from '@global/utils/ToastConfig';
 import * as Sentry from '@sentry/react-native';
 import { MODE, SENTRY_DSN } from '@env';
 import { version as currentVersion } from '../package.json';
@@ -57,7 +56,6 @@ const App = (): JSX.Element => {
       <QueryClientProvider client={queryClient}>
         <NavigationContainer ref={navigationRef}>
           <RootNavigation />
-          <Toast config={toastConfig} />
         </NavigationContainer>
       </QueryClientProvider>
     </Provider>

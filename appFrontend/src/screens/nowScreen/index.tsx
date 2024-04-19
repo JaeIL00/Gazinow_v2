@@ -13,6 +13,11 @@ import {
 import { FontText, Space } from '@/global/ui';
 import { subwayReturnLineName } from '@/global/utils/subwayLine';
 import LoadingCircle from '@/global/components/animations/LoadingCircle';
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
+
+dayjs.locale('ko');
+dayjs.extend(relativeTime);
 
 const NowScreen = () => {
   const queryClient = useQueryClient();
@@ -102,13 +107,9 @@ const NowScreen = () => {
                       {popularIssues?.map((item, index) => (
                         <IssueContainer
                           key={item.id}
-                          id={item.id}
-                          title={item.title}
-                          time={item.agoTime}
-                          body={item.content}
+                          issue={item}
                           isLastItem={index === popularIssues.length - 1}
-                          isHeader={true}
-                          lanes={item.lines}
+                          isHeader
                         />
                       ))}
                     </View>
@@ -162,13 +163,8 @@ const NowScreen = () => {
                   return (
                     <IssueContainer
                       key={item.id}
-                      id={item.id}
-                      title={item.title}
-                      time={item.agoTime}
-                      body={item.content}
                       isLastItem={index === issuesList.length + 1}
-                      isHeader={false}
-                      lanes={item.lines}
+                      issue={item}
                     />
                   );
               }
