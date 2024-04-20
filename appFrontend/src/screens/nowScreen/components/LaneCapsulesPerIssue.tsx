@@ -12,31 +12,23 @@ interface LaneCapsulesProps {
   lanes: RawSubwayLineName[];
 }
 
-const LaneCapsulesPerIssue = ({ lanes }: LaneCapsulesProps) => {
-  const uniqueLanes = Array.from(new Set(lanes)).sort();
-  return (
-    <View style={{ flexDirection: 'row', padding: 16, paddingBottom: 8 }}>
-      {uniqueLanes.map((lane: RawSubwayLineName, index) => (
-        <View
-          key={index}
-          style={{
-            borderRadius: 999,
-            backgroundColor: rawLineNameToNowCapsuleColor(lane),
-            paddingHorizontal: 8,
-            paddingVertical: 6,
-            marginRight: 4,
-          }}
-        >
-          <FontText
-            value={rawLineNameToNowCapsuleText(lane)}
-            textSize="12px"
-            lineHeight="14.32px"
-            textWeight="SemiBold"
-            textColor={rawLineNameToColor(lane)}
-          />
-        </View>
-      ))}
-    </View>
-  );
-};
+const LaneCapsulesPerIssue = ({ lanes }: LaneCapsulesProps) => (
+  <View className="flex-row pt-16 pb-8">
+    {lanes.map((lane: RawSubwayLineName, index) => (
+      <View
+        key={index}
+        className={`rounded-full px-8 py-6 mr-4`}
+        style={{ backgroundColor: rawLineNameToNowCapsuleColor(lane) }}
+      >
+        <FontText
+          value={rawLineNameToNowCapsuleText(lane)}
+          textSize="12px"
+          lineHeight="14.32px"
+          textWeight="SemiBold"
+          textColor={rawLineNameToColor(lane)}
+        />
+      </View>
+    ))}
+  </View>
+);
 export default LaneCapsulesPerIssue;
