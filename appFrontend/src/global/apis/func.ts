@@ -211,25 +211,6 @@ export const getSavedRoutesFetch = async () => {
 };
 
 /**
- * 닉네임 변경 axios
- */
-export const changeNicknameFetch = async (newNickname: string) => {
-  try {
-    await authServiceAPI.post(`/api/v1/member/change_nickname`, {
-      nickName: newNickname,
-    });
-  } catch (err) {
-    const error = err as AxiosError;
-    Sentry.captureException({
-      target: '닉네임 변경',
-      input: { newNickname, request: error.request },
-      output: { status: error.response?.status, error: error.message, response: error.response },
-    });
-    throw error;
-  }
-};
-
-/**
  * 이슈 전체 조회 axios
  */
 export const getAllIssuesFetch = async (params: { page: number }) => {

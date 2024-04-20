@@ -1,5 +1,4 @@
 import {
-  changeNicknameFetch,
   getPopularIssuesFetch,
   getSavedRoutesFetch,
   getSearchRoutesFetch,
@@ -16,8 +15,6 @@ import {
   getIssuesByLaneFetch,
 } from '@/global/apis/func';
 import {
-  AllIssues,
-  IssueContent,
   RawSubwayLineName,
   RenderSavedRoutesType,
   SubwayStrEnd,
@@ -151,23 +148,6 @@ export const useGetSavedRoutesQuery = ({
     onSuccess,
   });
   return { data };
-};
-
-/**
- * 닉네임 변경 훅
- */
-export const useChangeNicknameQuery = ({
-  onSuccess,
-  onError,
-}: {
-  onSuccess: () => void;
-  onError?: (error: any) => void;
-}) => {
-  const { data, mutate } = useMutation(changeNicknameFetch, {
-    onSuccess,
-    onError,
-  });
-  return { data, mutate };
 };
 
 /**
