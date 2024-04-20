@@ -1,12 +1,11 @@
-import styled from '@emotion/native';
-import { FontText, Input, Space } from '@/global/ui';
+import { FontText, Input } from '@/global/ui';
 import { COLOR } from '@/global/constants';
 import { useAppDispatch, useAppSelect } from '@/store';
 import { getSeletedStation } from '@/store/modules/stationSearchModule';
 import { useAddRecentSearch, useGetSearchHistory, useSearchStationName } from '@/global/apis/hooks';
 import { useState } from 'react';
 import IconXCircleFill from '@assets/icons/x_circle_fill.svg';
-import { Pressable, SafeAreaView } from 'react-native';
+import { SafeAreaView, ScrollView, TouchableOpacity, View } from 'react-native';
 import { subwayReturnLineName } from '@/global/utils/subwayLine';
 import IconLocationPin from '@assets/icons/location_pin.svg';
 import AddNewRouteHeader from './AddNewRouteHeader';
@@ -61,37 +60,38 @@ const SearchStation = () => {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: COLOR.WHITE }}>
+    <SafeAreaView className="flex-1 bg-white">
       <AddNewRouteHeader />
-      <Container>
-        <SearchInput
+
+      <View className="flex-row items-center rounded-28 border-1 border-[#d4d4d4] px-18 py-4 mt-20 mx-16">
+        <Input
+          className="flex-1 h-36"
           value={searchTextValue}
           placeholder={`${stationType}을 검색해보세요`}
           placeholderTextColor={COLOR.GRAY_BE}
           inputMode="search"
           onChangeText={changeSearchText}
           autoFocus
-          isSavingNewRoute
         />
-        <Pressable hitSlop={20} onPress={() => setSearchTextValue('')}>
+        <TouchableOpacity hitSlop={20} onPress={() => setSearchTextValue('')}>
           <IconXCircleFill width={19.5} />
-        </Pressable>
-      </Container>
-      {!searchTextValue ? (
-        <ResultContainer>
-          <Header>
-            <FontText
-              value="최근검색"
-              textSize="14px"
-              textWeight="Regular"
-              lineHeight="24px"
-              textColor="#757575"
-            />
-          </Header>
+        </TouchableOpacity>
+      </View>
 
-          <Ul marginTop="18px" keyboardShouldPersistTaps="handled">
+      {!searchTextValue ? (
+        <View className="flex-1 pt-18 ml-16">
+          <FontText
+            value="최근검색"
+            textSize="14px"
+            textWeight="Regular"
+            lineHeight="24px"
+            textColor="#757575"
+          />
+
+          <ScrollView className="mt-18" keyboardShouldPersistTaps="handled">
             {historyData?.map(({ stationName, stationLine }, index) => (
-              <Li
+              <TouchableOpacity
+                className="flex-row gap-7 py-12 border-b-1 border-gray-eb"
                 key={index}
                 onPress={() =>
                   stationBtnHandler({
@@ -101,7 +101,7 @@ const SearchStation = () => {
                 }
               >
                 <IconClock />
-                <StationInfoBox>
+                <View className="gap-3">
                   <FontText
                     value={stationName}
                     textSize="16px"
@@ -116,28 +116,31 @@ const SearchStation = () => {
                     lineHeight="21px"
                     textColor={COLOR.GRAY_999}
                   />
-                </StationInfoBox>
-              </Li>
+                </View>
+              </TouchableOpacity>
             ))}
-          </Ul>
-        </ResultContainer>
+          </ScrollView>
+        </View>
       ) : (
-        <ResultContainer>
+        <View className="flex-1">
           {/* 입력어가 있고 && 검색 결과가 없으면 없음 표시 */}
           {searchResultData.length < 1 && (
-            <NoResult>
+            <View className="flex-1 items-center justify-center gap-17">
               <NoResultIcon />
-              <Space height="17px" />
               <NoResultText />
-            </NoResult>
+            </View>
           )}
           {/* 입력어가 있고 && 검색 결과가 있으면 결과 표시 */}
           {searchResultData.length > 0 && (
-            <Ul marginTop="28px">
+            <ScrollView className="mt-28 ml-16">
               {searchResultData.map(({ stationName, stationLine }, idx) => (
-                <Li key={idx} onPress={() => stationBtnHandler({ stationLine, stationName })}>
+                <TouchableOpacity
+                  className="flex-row gap-7 py-12 border-b-1 border-gray-eb"
+                  key={idx}
+                  onPress={() => stationBtnHandler({ stationLine, stationName })}
+                >
                   <IconLocationPin />
-                  <StationInfoBox>
+                  <View className="gap-3">
                     <FontText
                       value={stationName}
                       textSize="16px"
@@ -152,59 +155,15 @@ const SearchStation = () => {
                       lineHeight="21px"
                       textColor={COLOR.GRAY_999}
                     />
-                  </StationInfoBox>
-                </Li>
+                  </View>
+                </TouchableOpacity>
               ))}
-            </Ul>
+            </ScrollView>
           )}
-        </ResultContainer>
+        </View>
       )}
     </SafeAreaView>
   );
 };
 
 export default SearchStation;
-
-const Container = styled.View`
-  flex-direction: row;
-  align-items: center;
-  border-radius: 28px;
-  border: 1px solid #d4d4d4;
-  padding: 4px 16px 4px 18.25px;
-  margin: 20px 16px 0;
-`;
-const SearchInput = styled(Input)<{ isSavingNewRoute?: boolean }>`
-  height: 36px;
-  flex: 1;
-  margin-left: ${({ isSavingNewRoute }) => (isSavingNewRoute ? '1.75px' : '18.25px')};
-  margin-right: 31.2px;
-`;
-const ResultContainer = styled.View`
-  flex: 1;
-`;
-const Header = styled.View`
-  padding-left: 16px;
-  margin-top: 18px;
-`;
-const Ul = styled.ScrollView<{ marginTop: string }>`
-  margin-top: ${({ marginTop }) => marginTop};
-`;
-const Li = styled.Pressable`
-  flex-direction: row;
-  gap: 7px;
-  padding: 12px 16px;
-  border-bottom-width: 1px;
-  border-bottom-color: ${COLOR.GRAY_EB};
-`;
-const StationInfoBox = styled.View`
-  gap: 2.95px;
-`;
-const LocateIcon = styled.Image`
-  width: 25px;
-  height: 25px;
-`;
-const NoResult = styled.View`
-  flex: 1;
-  align-items: center;
-  justify-content: center;
-`;
