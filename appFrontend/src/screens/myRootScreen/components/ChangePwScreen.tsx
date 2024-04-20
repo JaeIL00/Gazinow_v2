@@ -189,16 +189,15 @@ const ChangePwScreen = () => {
         <View className="flex-row items-center mt-6 mb-10 ml-9">
           <IconCheck stroke={lengValidColor} />
           <FontText
-            className="mt-4 mb-12"
-            value="8자-20자 이내"
+            className="mr-12"
+            value=" 8자-20자 이내"
             textSize="12px"
             textWeight="Medium"
             textColor={lengValidColor}
           />
           <IconCheck stroke={comValidColor} />
           <FontText
-            className="mt-4"
-            value="영어, 숫자, 특수문자 포함"
+            value=" 영어, 숫자, 특수문자 포함"
             textSize="12px"
             textWeight="Medium"
             textColor={comValidColor}
@@ -242,7 +241,7 @@ const ChangePwScreen = () => {
         }}
         title="비밀번호가 변경되었습니다"
         cancelText="확인"
-        btnColor={COLOR.GRAY_F9}
+        isSingleBtn
       />
     </SafeAreaView>
   );
