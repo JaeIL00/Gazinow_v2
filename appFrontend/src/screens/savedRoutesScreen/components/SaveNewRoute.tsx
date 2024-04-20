@@ -5,7 +5,7 @@ import { useSavedSubwayRoute } from '@/global/apis/hooks';
 import { useQueryClient } from 'react-query';
 import { SubwaySimplePath } from '@/global/components';
 import { Path, SubPath } from '@/global/apis/entity';
-import { View, Keyboard, SafeAreaView, TouchableOpacity, Dimensions } from 'react-native';
+import { View, Keyboard, SafeAreaView, TouchableOpacity } from 'react-native';
 import { KeyboardAvoidingView, Platform } from 'react-native';
 import XCircle from '@assets/icons/x-circle-standard.svg';
 import AddNewRouteHeader from './AddNewRouteHeader';
@@ -16,18 +16,24 @@ import { showToast } from '@/global/utils/toast';
 const SaveNewRoute = () => {
   const { state: resultData } = useRoute().params as { state: Path };
   const homeNavigation = useHomeNavigation();
+  const queryClient = useQueryClient();
 
   const [roadName, setRoadName] = useState<string>('');
   const [isDuplicatedName, setIsDuplicatedName] = useState<boolean>(false);
-  const [isKeyboardVisible, setKeyboardVisible] = useState<boolean>(false);
+  const [isKeyboardVisible, setIsKeyboardVisible] = useState<boolean>(false);
 
-  const queryClient = useQueryClient();
-
-  const keyboardDidShow = () => setKeyboardVisible(true);
-  const keyboardDidHide = () => setKeyboardVisible(false);
-
-  Keyboard.addListener('keyboardDidShow', keyboardDidShow);
-  Keyboard.addListener('keyboardDidHide', keyboardDidHide);
+  useEffect(() => {
+    const keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', () => {
+      setIsKeyboardVisible(true);
+    });
+    const keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', () => {
+      setIsKeyboardVisible(false);
+    });
+    return () => {
+      keyboardDidShowListener.remove();
+      keyboardDidHideListener.remove();
+    };
+  }, []);
 
   const freshSubPathData: SubPath[] = useMemo(() => {
     const subPaths = resultData?.subPaths || [];
