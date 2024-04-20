@@ -13,9 +13,9 @@ const SavedRoutesScreen = () => {
   const newRouteNavigation = useNewRouteNavigation();
 
   return (
-    <SafeAreaView className="flex-1 px-16 bg-gray-f9">
+    <SafeAreaView className="flex-1 bg-gray-f9">
       <TouchableOpacity
-        className="flex-row py-16 items-center gap-12"
+        className="flex-row p-16 items-center gap-12"
         onPress={() => navigation.goBack()}
       >
         <IconLeftArrowHead color="#3F3F46" width={24} />
@@ -23,7 +23,7 @@ const SavedRoutesScreen = () => {
       </TouchableOpacity>
 
       <ScrollView>
-        <View className="rounded-15 bg-white">
+        <View className="mx-16 rounded-15 bg-white">
           <SavedRoutesList />
           <TouchableOpacity
             className="flex-row py-20 items-center justify-center gap-6"

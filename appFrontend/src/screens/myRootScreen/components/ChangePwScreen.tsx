@@ -107,142 +107,144 @@ const ChangePwScreen = () => {
   }, [isPwRight, curPassword, confirmPassword, changePassword]);
 
   return (
-    <SafeAreaView className="flex-1 px-16 bg-white">
-      <View className="flex-row mb-39 items-center justify-between">
-        <TouchableOpacity
-          className="flex-row pl-4 py-16 items-center gap-21"
-          onPress={() => myPageNavigation.goBack()}
-        >
-          <IconLeftArrowHead color="#3F3F46" />
-          <FontText value="비밀번호 변경" textSize="18px" lineHeight="23px" textWeight="Medium" />
-        </TouchableOpacity>
-        <TouchableOpacity onPress={onPressDone} disabled={isDoneBtnDisabled}>
-          <FontText
-            value="완료"
-            textSize="16px"
-            textColor={isDoneBtnDisabled ? COLOR.GRAY_999 : COLOR.BASIC_BLACK}
-            textWeight="SemiBold"
-            lineHeight="21px"
-          />
-        </TouchableOpacity>
+    <SafeAreaView className="flex-1 bg-white">
+      <View className="px-16">
+        <View className="flex-row mb-39 items-center justify-between">
+          <TouchableOpacity
+            className="flex-row py-16 items-center gap-16"
+            onPress={() => myPageNavigation.goBack()}
+          >
+            <IconLeftArrowHead color="#3F3F46" width={24} />
+            <FontText value="비밀번호 변경" textSize="18px" lineHeight="23px" textWeight="Medium" />
+          </TouchableOpacity>
+          <TouchableOpacity onPress={onPressDone} disabled={isDoneBtnDisabled}>
+            <FontText
+              value="완료"
+              textSize="16px"
+              textColor={isDoneBtnDisabled ? COLOR.GRAY_999 : COLOR.BASIC_BLACK}
+              textWeight="SemiBold"
+              lineHeight="21px"
+            />
+          </TouchableOpacity>
+        </View>
+
+        <FontText
+          value="현재 비밀번호"
+          textSize="14px"
+          textWeight="Medium"
+          lineHeight="21px"
+          textColor={COLOR.BASIC_BLACK}
+        />
+        <Input
+          className="px-18 py-12 mt-6 mb-2 rounded-5 bg-gray-f2"
+          value={curPassword}
+          placeholder={`비밀번호를 입력해주세요`}
+          placeholderTextColor={COLOR.GRAY_BE}
+          inputMode="text"
+          onChangeText={handleCurPasswordChange}
+          autoFocus
+          secureTextEntry
+        />
+        {curPassword !== '' && (
+          <View className="flex-row items-center mt-6 ml-9">
+            {isPwRight ? <IconCheck stroke={COLOR.LIGHT_GREEN} /> : <XCircle width={14} />}
+            <FontText
+              value={isPwRight ? ' 비밀번호가 확인되었습니다' : ' 비밀번호가 틀립니다'}
+              textSize="12px"
+              textWeight="Medium"
+              lineHeight="14px"
+              textColor={isPwRight ? COLOR.LIGHT_GREEN : COLOR.LIGHT_RED}
+            />
+          </View>
+        )}
+        <FontText
+          className="mt-28"
+          value="새로운 비밀번호"
+          textSize="14px"
+          textWeight="Medium"
+          lineHeight="21px"
+          textColor={COLOR.BASIC_BLACK}
+        />
+        <Input
+          className="px-18 py-12 mt-6 mb-2 rounded-5 bg-gray-f2"
+          value={changePassword}
+          placeholder={`변경하실 비밀번호를 입력해주세요`}
+          placeholderTextColor={COLOR.GRAY_BE}
+          inputMode="text"
+          onChangeText={(text) => checkInputValid(text)}
+          secureTextEntry
+        />
+        {isNewEqualsToOld && changePassword !== '' && (
+          <View className="flex-row items-center mt-6 mb-10 ml-9">
+            <XCircle height={14} />
+            <FontText
+              value=" 기존 비밀번호는 사용할 수 없어요"
+              textSize="12px"
+              textWeight="Medium"
+              lineHeight="14px"
+              textColor={COLOR.LIGHT_RED}
+            />
+          </View>
+        )}
+        {!isNewEqualsToOld && changePassword !== '' && (
+          <View className="flex-row items-center mt-6 mb-10 ml-9">
+            <IconCheck stroke={lengValidColor} />
+            <FontText
+              className="mr-12"
+              value=" 8자-20자 이내"
+              textSize="12px"
+              textWeight="Medium"
+              textColor={lengValidColor}
+            />
+            <IconCheck stroke={comValidColor} />
+            <FontText
+              value=" 영어, 숫자, 특수문자 포함"
+              textSize="12px"
+              textWeight="Medium"
+              textColor={comValidColor}
+            />
+          </View>
+        )}
+        <Input
+          className="px-18 py-12 mt-6 mb-2 rounded-5 bg-gray-f2"
+          value={confirmPassword}
+          placeholder={`비밀번호를 확인해주세요`}
+          placeholderTextColor={COLOR.GRAY_BE}
+          inputMode="text"
+          onChangeText={setConfirmPassword}
+          secureTextEntry
+        />
+        {confirmPassword !== '' && changePassword !== '' && (
+          <View className="flex-row items-center mt-6 ml-9">
+            {confirmPassword !== changePassword ? (
+              <XCircle width={14} />
+            ) : (
+              <IconCheck stroke={COLOR.LIGHT_GREEN} />
+            )}
+            <FontText
+              value={
+                confirmPassword !== changePassword
+                  ? ' 비밀번호가 일치하지 않습니다'
+                  : ' 비밀번호가 일치합니다'
+              }
+              textSize="12px"
+              textWeight="Medium"
+              lineHeight="14px"
+              textColor={confirmPassword !== changePassword ? COLOR.LIGHT_RED : COLOR.LIGHT_GREEN}
+            />
+          </View>
+        )}
+
+        <MyTabModal
+          isVisible={popupVisible}
+          onCancel={() => {
+            handleOnCancel();
+          }}
+          title="비밀번호가 변경되었습니다"
+          cancelText="확인"
+          isSingleBtn
+        />
       </View>
-
-      <FontText
-        value="현재 비밀번호"
-        textSize="14px"
-        textWeight="Medium"
-        lineHeight="21px"
-        textColor={COLOR.BASIC_BLACK}
-      />
-      <Input
-        className="px-18 py-12 mt-6 mb-2 rounded-5 bg-gray-f2"
-        value={curPassword}
-        placeholder={`비밀번호를 입력해주세요`}
-        placeholderTextColor={COLOR.GRAY_BE}
-        inputMode="text"
-        onChangeText={handleCurPasswordChange}
-        autoFocus
-        secureTextEntry
-      />
-      {curPassword !== '' && (
-        <View className="flex-row items-center mt-6 ml-9">
-          {isPwRight ? <IconCheck stroke={COLOR.LIGHT_GREEN} /> : <XCircle width={14} />}
-          <FontText
-            value={isPwRight ? ' 비밀번호가 확인되었습니다' : ' 비밀번호가 틀립니다'}
-            textSize="12px"
-            textWeight="Medium"
-            lineHeight="14px"
-            textColor={isPwRight ? COLOR.LIGHT_GREEN : COLOR.LIGHT_RED}
-          />
-        </View>
-      )}
-      <FontText
-        className="mt-28"
-        value="새로운 비밀번호"
-        textSize="14px"
-        textWeight="Medium"
-        lineHeight="21px"
-        textColor={COLOR.BASIC_BLACK}
-      />
-      <Input
-        className="px-18 py-12 mt-6 mb-2 rounded-5 bg-gray-f2"
-        value={changePassword}
-        placeholder={`변경하실 비밀번호를 입력해주세요`}
-        placeholderTextColor={COLOR.GRAY_BE}
-        inputMode="text"
-        onChangeText={(text) => checkInputValid(text)}
-        secureTextEntry
-      />
-      {isNewEqualsToOld && changePassword !== '' && (
-        <View className="flex-row items-center mt-6 mb-10 ml-9">
-          <XCircle height={14} />
-          <FontText
-            value=" 기존 비밀번호는 사용할 수 없어요"
-            textSize="12px"
-            textWeight="Medium"
-            lineHeight="14px"
-            textColor={COLOR.LIGHT_RED}
-          />
-        </View>
-      )}
-      {!isNewEqualsToOld && changePassword !== '' && (
-        <View className="flex-row items-center mt-6 mb-10 ml-9">
-          <IconCheck stroke={lengValidColor} />
-          <FontText
-            className="mr-12"
-            value=" 8자-20자 이내"
-            textSize="12px"
-            textWeight="Medium"
-            textColor={lengValidColor}
-          />
-          <IconCheck stroke={comValidColor} />
-          <FontText
-            value=" 영어, 숫자, 특수문자 포함"
-            textSize="12px"
-            textWeight="Medium"
-            textColor={comValidColor}
-          />
-        </View>
-      )}
-      <Input
-        className="px-18 py-12 mt-6 mb-2 rounded-5 bg-gray-f2"
-        value={confirmPassword}
-        placeholder={`비밀번호를 확인해주세요`}
-        placeholderTextColor={COLOR.GRAY_BE}
-        inputMode="text"
-        onChangeText={setConfirmPassword}
-        secureTextEntry
-      />
-      {confirmPassword !== '' && changePassword !== '' && (
-        <View className="flex-row items-center mt-6 ml-9">
-          {confirmPassword !== changePassword ? (
-            <XCircle width={14} />
-          ) : (
-            <IconCheck stroke={COLOR.LIGHT_GREEN} />
-          )}
-          <FontText
-            value={
-              confirmPassword !== changePassword
-                ? ' 비밀번호가 일치하지 않습니다'
-                : ' 비밀번호가 일치합니다'
-            }
-            textSize="12px"
-            textWeight="Medium"
-            lineHeight="14px"
-            textColor={confirmPassword !== changePassword ? COLOR.LIGHT_RED : COLOR.LIGHT_GREEN}
-          />
-        </View>
-      )}
-
-      <MyTabModal
-        isVisible={popupVisible}
-        onCancel={() => {
-          handleOnCancel();
-        }}
-        title="비밀번호가 변경되었습니다"
-        cancelText="확인"
-        isSingleBtn
-      />
     </SafeAreaView>
   );
 };

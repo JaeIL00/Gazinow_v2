@@ -9,7 +9,7 @@ import {
   useGetPopularIssuesQuery,
   useGetIssuesByLaneQuery,
 } from '@/global/apis/hooks';
-import { FontText } from '@/global/ui';
+import { FontText, Space } from '@/global/ui';
 import { subwayReturnLineName } from '@/global/utils/subwayLine';
 import LoadingCircle from '@/global/components/animations/LoadingCircle';
 import dayjs from 'dayjs';
@@ -175,7 +175,7 @@ const NowScreen = () => {
               } else if (issuesList.length < 1) {
                 return null;
               } else {
-                return <View className={`h-${700 - issuesList.length * 100}`} />;
+                return <Space height={`${700 - issuesList.length * 100}px`} />;
               }
             }}
             keyExtractor={(item, index) => `${item.id}_${index}`}

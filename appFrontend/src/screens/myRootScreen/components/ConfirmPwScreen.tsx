@@ -63,63 +63,65 @@ const ConfirmPwScreen = () => {
       behavior={Platform.OS === 'ios' ? 'padding' : undefined}
       className="flex-1"
     >
-      <SafeAreaView className="flex-1 px-16 bg-white">
-        <TouchableOpacity
-          className="pl-4 h-56 items-center flex-row"
-          onPress={() => myPageNavigation.goBack()}
-        >
-          <IconLeftArrowHead color="#3F3F46" />
-        </TouchableOpacity>
+      <SafeAreaView className="flex-1 bg-white">
+        <View className="flex-1 px-16">
+          <TouchableOpacity
+            className="pl-4 h-56 items-center flex-row"
+            onPress={() => myPageNavigation.goBack()}
+          >
+            <IconLeftArrowHead color="#3F3F46" />
+          </TouchableOpacity>
 
-        <View className="flex-1 bg-white">
-          <View className="pt-43 pb-29 gap-20">
+          <View className="flex-1 bg-white">
+            <View className="pt-43 pb-29 gap-20">
+              <FontText
+                value="비밀번호 입력"
+                textSize="24px"
+                textWeight="SemiBold"
+                lineHeight="35px"
+              />
+              <FontText
+                value="탈퇴를 위해 비밀번호를 입력해주세요."
+                textSize="16px"
+                textWeight="Regular"
+                lineHeight="21px"
+              />
+            </View>
+
             <FontText
-              value="비밀번호 입력"
-              textSize="24px"
-              textWeight="SemiBold"
-              lineHeight="35px"
-            />
-            <FontText
-              value="탈퇴를 위해 비밀번호를 입력해주세요."
-              textSize="16px"
-              textWeight="Regular"
+              value="Password"
+              textSize="14px"
+              textWeight="Medium"
               lineHeight="21px"
+              textColor="#7C8183 "
+            />
+
+            <Input
+              className="px-16 py-12 my-7 rounded-5 bg-gray-f2"
+              placeholder="비밀번호를 입력해주세요"
+              value={passwordInput}
+              onChangeText={(text) => handleCurPasswordChange(text)}
+              inputMode="text"
+              placeholderTextColor={COLOR.GRAY_999}
+              secureTextEntry
             />
           </View>
 
-          <FontText
-            value="Password"
-            textSize="14px"
-            textWeight="Medium"
-            lineHeight="21px"
-            textColor="#7C8183 "
-          />
-
-          <Input
-            className="px-16 py-12 my-7 rounded-5 bg-gray-f2"
-            placeholder="비밀번호를 입력해주세요"
-            value={passwordInput}
-            onChangeText={(text) => handleCurPasswordChange(text)}
-            inputMode="text"
-            placeholderTextColor={COLOR.GRAY_999}
-            secureTextEntry
-          />
+          <TouchableOpacity
+            className={`py-11 mb-40 rounded-5 items-center ${
+              isPwRight ? `bg-black-17` : `bg-gray-dd`
+            }`}
+            onPress={() => deleteAccountMutate()}
+            disabled={!isPwRight}
+          >
+            <FontText
+              value="탈퇴하기"
+              textSize="17px"
+              textWeight="SemiBold"
+              textColor={COLOR.WHITE}
+            />
+          </TouchableOpacity>
         </View>
-
-        <TouchableOpacity
-          className={`py-11 mb-40 rounded-5 items-center ${
-            isPwRight ? `bg-black-17` : `bg-gray-dd`
-          }`}
-          onPress={() => deleteAccountMutate()}
-          disabled={!isPwRight}
-        >
-          <FontText
-            value="탈퇴하기"
-            textSize="17px"
-            textWeight="SemiBold"
-            textColor={COLOR.WHITE}
-          />
-        </TouchableOpacity>
       </SafeAreaView>
     </KeyboardAvoidingView>
   );

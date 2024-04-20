@@ -79,8 +79,9 @@ const SearchStation = () => {
       </View>
 
       {!searchTextValue ? (
-        <View className="flex-1 pt-18 ml-16">
+        <View className="flex-1 pt-18">
           <FontText
+            className="pl-16"
             value="최근검색"
             textSize="14px"
             textWeight="Regular"
@@ -90,34 +91,37 @@ const SearchStation = () => {
 
           <ScrollView className="mt-18" keyboardShouldPersistTaps="handled">
             {historyData?.map(({ stationName, stationLine }, index) => (
-              <TouchableOpacity
-                className="flex-row gap-7 py-12 border-b-1 border-gray-eb"
-                key={index}
-                onPress={() =>
-                  stationBtnHandler({
-                    stationName,
-                    stationLine,
-                  })
-                }
-              >
-                <IconClock />
-                <View className="gap-3">
-                  <FontText
-                    value={stationName}
-                    textSize="16px"
-                    textWeight="Medium"
-                    lineHeight="21px"
-                    textColor="#000"
-                  />
-                  <FontText
-                    value={stationLine!}
-                    textSize="14px"
-                    textWeight="Regular"
-                    lineHeight="21px"
-                    textColor={COLOR.GRAY_999}
-                  />
-                </View>
-              </TouchableOpacity>
+              <>
+                <TouchableOpacity
+                  className="flex-row gap-7 py-12 pl-16"
+                  key={index}
+                  onPress={() =>
+                    stationBtnHandler({
+                      stationName,
+                      stationLine,
+                    })
+                  }
+                >
+                  <IconClock />
+                  <View className="gap-3">
+                    <FontText
+                      value={stationName}
+                      textSize="16px"
+                      textWeight="Medium"
+                      lineHeight="21px"
+                      textColor="#000"
+                    />
+                    <FontText
+                      value={stationLine}
+                      textSize="14px"
+                      textWeight="Regular"
+                      lineHeight="21px"
+                      textColor={COLOR.GRAY_999}
+                    />
+                  </View>
+                </TouchableOpacity>
+                <View className="h-1 bg-gray-eb" />
+              </>
             ))}
           </ScrollView>
         </View>
@@ -132,31 +136,34 @@ const SearchStation = () => {
           )}
           {/* 입력어가 있고 && 검색 결과가 있으면 결과 표시 */}
           {searchResultData.length > 0 && (
-            <ScrollView className="mt-28 ml-16">
+            <ScrollView className="mt-28">
               {searchResultData.map(({ stationName, stationLine }, idx) => (
-                <TouchableOpacity
-                  className="flex-row gap-7 py-12 border-b-1 border-gray-eb"
-                  key={idx}
-                  onPress={() => stationBtnHandler({ stationLine, stationName })}
-                >
-                  <IconLocationPin />
-                  <View className="gap-3">
-                    <FontText
-                      value={stationName}
-                      textSize="16px"
-                      textWeight="Medium"
-                      lineHeight="21px"
-                      textColor="#000"
-                    />
-                    <FontText
-                      value={stationLine!}
-                      textSize="14px"
-                      textWeight="Regular"
-                      lineHeight="21px"
-                      textColor={COLOR.GRAY_999}
-                    />
-                  </View>
-                </TouchableOpacity>
+                <>
+                  <TouchableOpacity
+                    className="flex-row gap-7 py-12 pl-16"
+                    key={idx}
+                    onPress={() => stationBtnHandler({ stationLine, stationName })}
+                  >
+                    <IconLocationPin />
+                    <View className="gap-3">
+                      <FontText
+                        value={stationName}
+                        textSize="16px"
+                        textWeight="Medium"
+                        lineHeight="21px"
+                        textColor="#000"
+                      />
+                      <FontText
+                        value={stationLine!}
+                        textSize="14px"
+                        textWeight="Regular"
+                        lineHeight="21px"
+                        textColor={COLOR.GRAY_999}
+                      />
+                    </View>
+                  </TouchableOpacity>
+                  <View className="h-1 bg-gray-eb" />
+                </>
               ))}
             </ScrollView>
           )}
