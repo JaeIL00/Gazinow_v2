@@ -61,7 +61,7 @@ const ConfirmPwScreen = () => {
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-      style={{ flex: 1 }}
+      className="flex-1"
     >
       <SafeAreaView className="flex-1 px-16 bg-white">
         <TouchableOpacity
