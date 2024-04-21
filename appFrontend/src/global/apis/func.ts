@@ -2,8 +2,7 @@ import { AxiosError } from 'axios';
 import { authServiceAPI, publicServiceAPI } from '.';
 import {
   AllIssues,
-  RenderSavedRoutesType,
-  SavedRoute,
+  MyRoutesType,
   SearchHistoryStationNameTypes,
   SearchPathsTypes,
   SearchStationNameTypes,
@@ -143,7 +142,7 @@ export const searchPathsFetch = async ({
 /**
  * 지하철 경로 저장 axios
  */
-export const searchPathSaveFetch = async (data: SavedRoute) => {
+export const searchPathSaveFetch = async (data: MyRoutesType) => {
   try {
     const res = await authServiceAPI.post('/api/v1/my_find_road/add_route', data);
     return res.data.data;
@@ -195,7 +194,7 @@ export const getSearchRoutesFetch = async () => {
  */
 export const getSavedRoutesFetch = async () => {
   try {
-    const res = await authServiceAPI.get<{ data: RenderSavedRoutesType[] }>(
+    const res = await authServiceAPI.get<{ data: MyRoutesType[] }>(
       `/api/v1/my_find_road/get_roads`,
     );
     return res.data.data;
