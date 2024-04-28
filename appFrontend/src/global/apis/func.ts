@@ -9,6 +9,7 @@ import {
   RawSubwayLineName,
   SubwayStrEnd,
   IssueContent,
+  SaveMyRoutesType,
 } from './entity';
 import { SignInFetchResponse } from '@/screens/signInScreen/apis/entity';
 import { API_BASE_URL } from '@env';
@@ -142,7 +143,7 @@ export const searchPathsFetch = async ({
 /**
  * 지하철 경로 저장 axios
  */
-export const searchPathSaveFetch = async (data: MyRoutesType) => {
+export const searchPathSaveFetch = async (data: SaveMyRoutesType) => {
   try {
     const res = await authServiceAPI.post('/api/v1/my_find_road/add_route', data);
     return res.data.data;
