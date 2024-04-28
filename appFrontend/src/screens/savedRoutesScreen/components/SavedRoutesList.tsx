@@ -6,7 +6,6 @@ import { useDeleteSavedSubwayRoute, useGetSavedRoutesQuery } from '@/global/apis
 import MyTabModal from '@/global/components/MyTabModal';
 import { useQueryClient } from 'react-query';
 import { SubwaySimplePath } from '@/global/components';
-import { RenderSavedRoutesType } from '@/global/apis/entity';
 import { showToast } from '@/global/utils/toast';
 
 const SavedRoutesList = () => {
@@ -37,7 +36,7 @@ const SavedRoutesList = () => {
 
   return (
     <>
-      {savedRoutes?.map((item: RenderSavedRoutesType) => (
+      {savedRoutes?.map((item) => (
         <View className="pt-20 px-16 pb-8 border-b-1 border-gray-eb" key={item.id}>
           <View className="flex-row justify-between items-center mb-24">
             <FontText

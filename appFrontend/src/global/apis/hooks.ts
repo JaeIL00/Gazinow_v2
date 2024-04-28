@@ -14,11 +14,7 @@ import {
   getAllIssuesFetch,
   getIssuesByLaneFetch,
 } from '@/global/apis/func';
-import {
-  RawSubwayLineName,
-  RenderSavedRoutesType,
-  SubwayStrEnd,
-} from './entity';
+import { RawSubwayLineName, MyRoutesType, SubwayStrEnd } from './entity';
 import { AxiosError } from 'axios';
 import { subwayFreshLineName } from '@/global/utils';
 import { useAppSelect } from '@/store';
@@ -141,7 +137,7 @@ export const useGetSearchRoutesQuery = () => {
  */
 export const useGetSavedRoutesQuery = ({
   onSuccess,
-}: { onSuccess?: (data: RenderSavedRoutesType[]) => void } = {}) => {
+}: { onSuccess?: (data: MyRoutesType[]) => void } = {}) => {
   const isVerifiedUser = useAppSelect((state) => state.auth.isVerifiedUser);
   const { data } = useQuery(['getRoads'], getSavedRoutesFetch, {
     enabled: isVerifiedUser === 'success auth',
