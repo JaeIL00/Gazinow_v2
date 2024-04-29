@@ -9,6 +9,7 @@ import AddNewRouteHeader from './AddNewRouteHeader';
 import { useNewRouteNavigation } from '@/navigation/NewRouteNavigation';
 import { useFocusEffect, useRoute } from '@react-navigation/native';
 import React from 'react';
+import cn from 'classname';
 
 export interface SelectedStationTypes {
   departure: StationDataTypes;
@@ -70,7 +71,7 @@ const SwapStation = ({ setSelectedStation }: SwapStationProps) => {
   };
 
   return (
-    <SafeAreaView className={`${route.name === 'Swap' ? `flex-1 bg-white` : ``}`}>
+    <SafeAreaView className={cn({ 'flex-1 bg-white': route.name === 'Swap' })}>
       <AddNewRouteHeader />
       <View className="flex-row pt-28 pb-45 px-16 items-center bg-white">
         <View className="flex-1 mr-15 gap-8">

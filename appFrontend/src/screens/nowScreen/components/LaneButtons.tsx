@@ -6,6 +6,7 @@ import { ScrollView, View } from 'react-native';
 import { allLines, pathSubwayLineNameInLine } from '@/global/utils/subwayLine';
 import { useAppSelect } from '@/store';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import cn from 'classname';
 
 interface LaneButtonsProps {
   activeButton: NowScreenCapsules;
@@ -63,11 +64,10 @@ const LaneButtons = ({ activeButton, setActiveButton, titleNotShown }: LaneButto
               <TouchableOpacity
                 key={text}
                 onPress={() => setActiveButton(text as NowScreenCapsules)}
-                className={`px-12 py-8 mr-6 rounded-999 border-1 ${
-                  activeButton === text
-                    ? 'bg-black-17 border-transparent'
-                    : 'bg-white border-gray-eb'
-                }`}
+                className={cn('px-12 py-8 mr-6 rounded-999 border-1', {
+                  'bg-black-17 border-transparent': activeButton === text,
+                  'bg-white border-gray-eb': activeButton !== text,
+                })}
               >
                 <FontText
                   value={text}

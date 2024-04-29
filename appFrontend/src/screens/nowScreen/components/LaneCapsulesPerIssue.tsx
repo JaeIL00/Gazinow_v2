@@ -19,7 +19,7 @@ const LaneCapsulesPerIssue = ({ lanes }: LaneCapsulesProps) => {
       {sortedLanes.map((lane: RawSubwayLineName, index) => (
         <View
           key={index}
-          className={`rounded-full px-8 py-6 mr-4`}
+          className="rounded-full px-8 py-6 mr-4"
           style={{ backgroundColor: rawLineNameToNowCapsuleColor(lane) }}
         >
           <FontText

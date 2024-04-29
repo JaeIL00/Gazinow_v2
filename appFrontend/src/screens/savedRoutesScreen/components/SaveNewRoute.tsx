@@ -12,6 +12,7 @@ import AddNewRouteHeader from './AddNewRouteHeader';
 import { useRoute } from '@react-navigation/native';
 import { useHomeNavigation } from '@/navigation/HomeNavigation';
 import { showToast } from '@/global/utils/toast';
+import cn from 'classname';
 
 const SaveNewRoute = () => {
   const { state: resultData } = useRoute().params as { state: Path };
@@ -112,9 +113,11 @@ const SaveNewRoute = () => {
           </View>
         </View>
         <TouchableOpacity
-          className={`py-11 items-center ${
-            !roadName || isLoading || isDuplicatedName ? `bg-gray-dd` : `bg-black-17`
-          } ${isKeyboardVisible ? `` : `mb-41 mx-16 rounded-5`}`}
+          className={cn('py-11 items-center', {
+            'bg-gray-dd': !roadName || isLoading || isDuplicatedName,
+            'bg-black-17': roadName && !isLoading && !isDuplicatedName,
+            'mb-41 mx-16 rounded-5': !isKeyboardVisible,
+          })}
           onPress={() => {
             mutate({
               roadName: roadName,

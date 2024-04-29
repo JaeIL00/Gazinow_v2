@@ -112,7 +112,7 @@ const SearchStation = () => {
                       textColor="#000"
                     />
                     <FontText
-                      value={stationLine}
+                      value={stationLine!}
                       textSize="14px"
                       textWeight="Regular"
                       lineHeight="21px"

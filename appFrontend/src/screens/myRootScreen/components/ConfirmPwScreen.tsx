@@ -17,6 +17,7 @@ import { useMyPageNavigation } from '@/navigation/MyPageNavigation';
 import { showToast } from '@/global/utils/toast';
 import { useCheckPasswordMutation, useDeleteAccountMutation } from '../apis/hooks';
 import * as Sentry from '@sentry/react-native';
+import cn from 'classname';
 
 const ConfirmPwScreen = () => {
   const myPageNavigation = useMyPageNavigation();
@@ -108,9 +109,10 @@ const ConfirmPwScreen = () => {
           </View>
 
           <TouchableOpacity
-            className={`py-11 mb-40 rounded-5 items-center ${
-              isPwRight ? `bg-black-17` : `bg-gray-dd`
-            }`}
+            className={cn('py-11 mb-40 rounded-5 items-center', {
+              'bg-black-17': isPwRight,
+              'bg-gray-dd': !isPwRight,
+            })}
             onPress={() => deleteAccountMutate()}
             disabled={!isPwRight}
           >

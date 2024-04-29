@@ -7,6 +7,7 @@ import { View } from 'react-native';
 import IssuesBanner from './IssuesBanner';
 import IconRightArrowHead from '@/assets/icons/right_arrow_head.svg';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import cn from 'classname';
 
 interface RouteItemProps {
   route: MyRoutesType;
@@ -31,7 +32,10 @@ const RouteItem = ({ route, hasIssues }: RouteItemProps) => {
           textColor={COLOR.BASIC_BLACK}
         />
         <View
-          className={`${hasIssues ? 'bg-[#FBDCDA]' : 'bg-transparent'} px-6 py-4 ml-8 rounded-16`}
+          className={cn('px-6 py-4 ml-8 rounded-16', {
+            'bg-[#FBDCDA]': hasIssues,
+            'bg-transparent': !hasIssues,
+          })}
         >
           <FontText
             value={hasIssues ? `${filteredTotalTime} 이상 예상` : `평균 ${filteredTotalTime}`}

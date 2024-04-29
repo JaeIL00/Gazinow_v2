@@ -10,6 +10,7 @@ import { useNewRouteNavigation } from '@/navigation/NewRouteNavigation';
 import { useAppSelect } from '@/store';
 import SwapStation from './SwapStation';
 import LoadingCircle from '@/global/components/animations/LoadingCircle';
+import cn from 'classname';
 
 interface SelectedStationTypes {
   departure: StationDataTypes;
@@ -89,9 +90,12 @@ const SelectNewRoute = () => {
                   </View>
 
                   <TouchableOpacity
-                    className={`w-24 h-24 rounded-full border-1 items-center justify-center ${
-                      selectedRoutePath === item ? `border-[#346BF7]` : `border-gray-be `
-                    }`}
+                    className={cn(
+                      'w-24 h-24 rounded-full border-1 items-center justify-center border-gray-be',
+                      {
+                        'border-[#346BF7]': selectedRoutePath === item,
+                      },
+                    )}
                     onPress={() => {
                       setSelectedRoutePath(item);
                     }}
@@ -115,9 +119,9 @@ const SelectNewRoute = () => {
       </View>
 
       <TouchableOpacity
-        className={`py-11 mx-16 mb-40 rounded-5 items-center ${
-          selectedRoutePath === null ? `bg-gray-dd` : `bg-black-17`
-        }`}
+        className={cn('py-11 mx-16 mb-40 rounded-5 items-center bg-gray-dd', {
+          'bg-black-17': selectedRoutePath !== null,
+        })}
         onPress={() =>
           newRouteNavigation.push('Name', {
             state: selectedRoutePath!,

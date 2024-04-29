@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Modal, TouchableOpacity } from 'react-native';
 import { FontText } from '@/global/ui';
 import { COLOR } from '@/global/constants';
+import cn from 'classname';
 
 interface ModalProps {
   isVisible: boolean;
@@ -38,9 +39,10 @@ const MyTabModal = ({
           />
           <View className="flex-row justify-between mt-20">
             <TouchableOpacity
-              className={`flex-1 mr-5 rounded-5 p-10 items-center ${
-                isSingleBtn ? `bg-black-17` : `bg-transparent border-1 border-gray-99`
-              }`}
+              className={cn('flex-1 mr-5 rounded-5 p-10 items-center', {
+                'bg-black-17': isSingleBtn,
+                'bg-transparent border-1 border-gray-99': !isSingleBtn,
+              })}
               onPress={onCancel}
             >
               <FontText
