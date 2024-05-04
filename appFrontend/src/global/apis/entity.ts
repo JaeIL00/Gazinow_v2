@@ -90,6 +90,7 @@ export interface SearchPathsTypes {
  * 지하철 경로 데이터
  */
 export interface Path {
+  id?: number;
   totalTime: number;
   subwayTransitCount: number;
   firstStartStation: string;
@@ -185,7 +186,6 @@ export interface SaveMyRoutesType extends Path {
 
 export interface MyRoutesType extends Path {
   roadName: string;
-  id: number;
 }
 
 export type IssueKeywords = '자연재해' | '연착' | '혼잡' | '행사' | '사고' | '공사' | '시위';

@@ -1,6 +1,6 @@
 import { COLOR } from '@/global/constants';
-import { FontText } from '@/global/ui';
-import { useEffect, useRef, useState } from 'react';
+import { FontText, Space } from '@/global/ui';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import {
   Animated,
   Dimensions,
@@ -31,9 +31,16 @@ const SubscribeTermsModal = ({ setStep, closeModal }: SubscribeTermsModalProps) 
   const animRef = useRef(new Animated.Value(height)).current;
 
   const [openUrl, setOpenUrl] = useState<string>('');
+  const [isCheckAll, setIsCheckAll] = useState<boolean>(false);
   const [agreeTerms, setAgreeTerms] = useState<AgreeTermsType[]>([]);
 
-  const isCheckAll = agreeTerms.includes('약관 전체 동의');
+  useLayoutEffect(() => {
+    setIsCheckAll(() => {
+      return (
+        agreeTerms.includes('약관 전체 동의') || listData.every((term) => agreeTerms.includes(term))
+      );
+    });
+  }, [agreeTerms]);
 
   const changeAgreeTerms = (text: AgreeTermsType) => {
     const isExist = agreeTerms.includes(text);
@@ -111,9 +118,7 @@ const SubscribeTermsModal = ({ setStep, closeModal }: SubscribeTermsModalProps) 
                 onPress={allChangeAgreeTerms}
               >
                 <View className="bg-gray-e3 rounded-3 w-22 h-22 mr-10 items-center justify-center">
-                  {agreeTerms.includes('약관 전체 동의') && (
-                    <IconCheck width={18} height={18} color={COLOR.WHITE} />
-                  )}
+                  {isCheckAll && <IconCheck width={18} height={18} color={COLOR.WHITE} />}
                 </View>
                 <FontText
                   value="약관 전체 동의"
