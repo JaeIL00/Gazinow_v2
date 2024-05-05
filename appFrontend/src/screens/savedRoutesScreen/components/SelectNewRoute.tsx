@@ -1,6 +1,5 @@
-import styled, { css } from '@emotion/native';
-import { Pressable, ScrollView, View } from 'react-native';
-import { FontText, Space } from '@/global/ui';
+import { SafeAreaView, ScrollView, TouchableOpacity, View } from 'react-native';
+import { FontText } from '@/global/ui';
 import { COLOR } from '@/global/constants';
 import { SubwaySimplePath } from '@/global/components';
 import { useGetSearchPaths } from '@/global/apis/hooks';
@@ -11,6 +10,7 @@ import { useNewRouteNavigation } from '@/navigation/NewRouteNavigation';
 import { useAppSelect } from '@/store';
 import SwapStation from './SwapStation';
 import LoadingCircle from '@/global/components/animations/LoadingCircle';
+import cn from 'classname';
 
 interface SelectedStationTypes {
   departure: StationDataTypes;
@@ -50,71 +50,78 @@ const SelectNewRoute = () => {
   };
 
   return (
-    <Container>
+    <SafeAreaView className="flex-1 bg-white">
       <SwapStation setSelectedStation={setSelectedStation} />
-      <SubPathContainer>
+      <View className="flex-1 pb-10">
         {isLoading && (
-          <View style={{ marginTop: 100, alignItems: 'center' }}>
+          <View className="mt-200 items-center">
             <LoadingCircle width={40} height={40} />
           </View>
         )}
         <ScrollView>
           {data?.paths.map((item) => (
-            <PathInner
-              key={item.firstStartStation + item.totalTime}
-              onPress={() => {
-                setSelectedRoutePath(item);
-                newRouteNavigation.push('Detail', {
-                  state: item,
-                });
-              }}
-            >
-              <PathTitleInfoBox>
-                <View>
-                  <FontText
-                    value="평균 소요시간"
-                    textSize="11px"
-                    textWeight="SemiBold"
-                    lineHeight="13px"
-                    textColor="#999"
-                  />
-                  <Space height="4px" />
-                  <FontText
-                    value={pathTime(item)}
-                    textSize="20px"
-                    textWeight="SemiBold"
-                    lineHeight="25px"
-                    textColor={COLOR.BASIC_BLACK}
-                  />
-                </View>
-                <Pressable
-                  hitSlop={20}
-                  onPress={() => {
-                    setSelectedRoutePath(item);
-                  }}
-                >
-                  <RadioButtonContainer
-                    selected={selectedRoutePath === item}
+            <View key={item.firstStartStation + item.totalTime}>
+              <View className="h-1 bg-gray-eb" />
+              <TouchableOpacity
+                className="pt-20 px-16 pb-8"
+                onPress={() => {
+                  setSelectedRoutePath(item);
+                  newRouteNavigation.push('Detail', {
+                    state: item,
+                  });
+                }}
+              >
+                <View className="flex-row items-center justify-between mb-8">
+                  <View className="gap-4">
+                    <FontText
+                      value="평균 소요시간"
+                      textSize="11px"
+                      textWeight="SemiBold"
+                      lineHeight="13px"
+                      textColor="#999"
+                    />
+                    <FontText
+                      value={pathTime(item)}
+                      textSize="20px"
+                      textWeight="SemiBold"
+                      lineHeight="25px"
+                      textColor={COLOR.BASIC_BLACK}
+                    />
+                  </View>
+
+                  <TouchableOpacity
+                    className={cn(
+                      'w-24 h-24 rounded-full border-1 items-center justify-center border-gray-be',
+                      {
+                        'border-[#346BF7]': selectedRoutePath === item,
+                      },
+                    )}
                     onPress={() => {
                       setSelectedRoutePath(item);
                     }}
+                    hitSlop={20}
                   >
-                    {selectedRoutePath === item && <InnerCircle />}
-                  </RadioButtonContainer>
-                </Pressable>
-              </PathTitleInfoBox>
-              <SubwaySimplePath
-                pathData={item.subPaths}
-                arriveStationName={item.lastEndStation}
-                betweenPathMargin={24}
-              />
-            </PathInner>
+                    {selectedRoutePath === item && (
+                      <View className="w-11 h-11 rounded-full bg-[#346BF7]" />
+                    )}
+                  </TouchableOpacity>
+                </View>
+                <SubwaySimplePath
+                  pathData={item.subPaths}
+                  arriveStationName={item.lastEndStation}
+                  betweenPathMargin={24}
+                />
+              </TouchableOpacity>
+            </View>
           ))}
-          {!isLoading && <Space height="1px" backgroundColor={COLOR.GRAY_EB} />}
+          {!isLoading && <View className="h-1 bg-gray-eb" />}
         </ScrollView>
-      </SubPathContainer>
+      </View>
 
-      <BottomBtn
+      <TouchableOpacity
+        className={cn('py-11 mx-16 mb-40 rounded-5 items-center bg-gray-dd', {
+          'bg-black-17': selectedRoutePath !== null,
+        })}
         onPress={() =>
           newRouteNavigation.push('Name', {
             state: selectedRoutePath!,
@@ -123,58 +130,9 @@ const SelectNewRoute = () => {
         disabled={selectedRoutePath === null}
       >
         <FontText value="다음" textSize="17px" textWeight="SemiBold" textColor={COLOR.WHITE} />
-      </BottomBtn>
-    </Container>
+      </TouchableOpacity>
+    </SafeAreaView>
   );
 };
 
 export default SelectNewRoute;
-
-const Container = styled.SafeAreaView`
-  background-color: ${COLOR.WHITE};
-  flex: 1;
-`;
-const SubPathContainer = styled.View`
-  padding-bottom: 10px;
-  flex: 1;
-`;
-const PathTitleInfoBox = styled.View`
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  margin: 0 0 8px;
-`;
-const PathInner = styled.Pressable`
-  padding: 20px 16px 8px;
-  border-top-color: ${COLOR.GRAY_EB};
-  border-top-width: 1px;
-`;
-const RadioButtonContainer = styled(Pressable)<{ selected?: boolean }>`
-  width: 24px;
-  height: 24px;
-  border-radius: 12px;
-  border-width: 2px;
-  border-color: gray;
-  align-items: center;
-  justify-content: center;
-  ${(props) =>
-    props.selected &&
-    css`
-      border-color: blue;
-    `}
-`;
-const InnerCircle = styled.View`
-  width: 11px;
-  height: 11px;
-  border-radius: 6px;
-  background-color: blue;
-`;
-const BottomBtn = styled.Pressable`
-  padding-vertical: 11px;
-  margin-horizontal: 16px;
-  border-radius: 5px;
-  align-items: center;
-  margin-bottom: 40px;
-  ${({ disabled }) =>
-    disabled ? `background-color : #dddddd` : `background-color : ${COLOR.BASIC_BLACK};`}
-`;

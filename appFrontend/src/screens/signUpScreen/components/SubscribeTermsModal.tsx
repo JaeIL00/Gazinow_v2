@@ -92,17 +92,8 @@ const SubscribeTermsModal = ({ setStep, closeModal }: SubscribeTermsModalProps) 
   return (
     <Modal visible onRequestClose={!!openUrl ? () => setOpenUrl('') : closeModal} transparent>
       {!!openUrl ? (
-        <SafeAreaView style={{ flex: 1 }}>
-          <View
-            style={{
-              paddingLeft: 16,
-              paddingTop: 13,
-              paddingBottom: 10,
-              backgroundColor: COLOR.WHITE,
-              borderBottomWidth: 1,
-              borderBottomColor: COLOR.GRAY_DDD,
-            }}
-          >
+        <SafeAreaView className="flex-1">
+          <View className="pl-16 pt-13 pb-10 bg-white border-b-1 border-gray-dd">
             <TouchableOpacity hitSlop={20} activeOpacity={1} onPress={() => setOpenUrl('')}>
               <IconX width={24} height={24} />
             </TouchableOpacity>
@@ -112,50 +103,23 @@ const SubscribeTermsModal = ({ setStep, closeModal }: SubscribeTermsModalProps) 
       ) : (
         <>
           {/* 백그라운드 */}
-          <View
-            style={{
-              backgroundColor: '#00000099',
-              flex: 1,
-              justifyContent: 'flex-end',
-            }}
-          >
+          <View className="flex-1 bg-[#00000099] justify-end">
             <Animated.View
+              className="h-[65%] bg-white pt-33 px-16 "
               style={{
-                height: '65%',
-                backgroundColor: COLOR.WHITE,
                 borderTopStartRadius: 14,
                 borderTopEndRadius: 14,
-                paddingTop: 33,
-                paddingHorizontal: 16,
                 transform: [{ translateY: animRef }],
               }}
             >
               <Pressable
                 hitSlop={10}
-                style={{
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  marginBottom: 15,
-                  paddingVertical: 13,
-                  paddingLeft: 10,
-                  backgroundColor: COLOR.GRAY_F9,
-                  borderRadius: 5,
-                }}
+                className="flex-row items-center mb-15 py-13 pl-10 bg-gray-f9 rounded-5"
                 onPress={allChangeAgreeTerms}
               >
-                <View
-                  style={{
-                    borderRadius: 3,
-                    backgroundColor: COLOR.GRAY_E3,
-                    width: 22,
-                    height: 22,
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                  }}
-                >
+                <View className="bg-gray-e3 rounded-3 w-22 h-22 mr-10 items-center justify-center">
                   {isCheckAll && <IconCheck width={18} height={18} color={COLOR.WHITE} />}
                 </View>
-                <Space width="10px" />
                 <FontText
                   value="약관 전체 동의"
                   textSize="14px"
@@ -164,41 +128,20 @@ const SubscribeTermsModal = ({ setStep, closeModal }: SubscribeTermsModalProps) 
                 />
               </Pressable>
 
-              <View style={{ flex: 1 }}>
+              <View className="flex-1">
                 {listData.map((text) => (
                   <Pressable
                     key={text}
                     hitSlop={10}
-                    style={{
-                      flexDirection: 'row',
-                      alignItems: 'center',
-                      justifyContent: 'space-between',
-                      marginBottom: 24,
-                      paddingLeft: 10,
-                    }}
+                    className="flex-row items-center justify-between mb-24 pl-10"
                     onPress={() => changeAgreeTerms(text)}
                   >
-                    <View
-                      style={{
-                        flexDirection: 'row',
-                        alignItems: 'center',
-                      }}
-                    >
-                      <View
-                        style={{
-                          borderRadius: 3,
-                          backgroundColor: COLOR.GRAY_E3,
-                          width: 22,
-                          height: 22,
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                        }}
-                      >
+                    <View className="flex-row items-center">
+                      <View className="rounded-3 bg-gray-e3 w-22 h-22 mr-10 items-center justify-center">
                         {agreeTerms.includes(text) && (
                           <IconCheck width={18} height={18} color={COLOR.WHITE} />
                         )}
                       </View>
-                      <Space width="10px" />
                       <FontText
                         value={text}
                         textSize="14px"

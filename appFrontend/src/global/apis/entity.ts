@@ -180,6 +180,10 @@ export interface SubwayStrEnd {
   endStationLine: RawSubwayLineName;
 }
 
+export interface SaveMyRoutesType extends Path {
+  roadName: string;
+}
+
 export interface MyRoutesType extends Path {
   roadName: string;
 }
