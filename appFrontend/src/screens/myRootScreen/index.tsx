@@ -58,18 +58,18 @@ const MyRootScreen = () => {
   const renderMenu = ({ text, onPress, versionText }: RenderMenuProps) => (
     <>
       <TouchableOpacity
-        className="px-16 h-53 flex-row justify-between items-center"
+        className="flex-row items-center justify-between px-16 h-53"
         onPress={onPress}
         disabled={versionText ? true : false}
       >
-        <FontText value={text} textSize="16px" textWeight="Regular" lineHeight="21px" />
+        <FontText value={text} textSize="16px" textWeight="Regular" lineHeight={21} />
         {versionText ? (
-          <FontText value={versionText} textSize="12px" textWeight="Regular" lineHeight="17px" />
+          <FontText value={versionText} textSize="12px" textWeight="Regular" lineHeight={17} />
         ) : (
           <IconRightArrowHead width={14} color={COLOR.GRAY_999} />
         )}
       </TouchableOpacity>
-      <View className="bg-gray-eb h-1" />
+      <View className="h-1 bg-gray-eb" />
     </>
   );
 
@@ -98,14 +98,14 @@ const MyRootScreen = () => {
                 rootNavigation.navigate('MyPageNavigation', { screen: 'ChangeNickNameScreen' })
               }
             >
-              <FontText value={nickname} textSize="18px" lineHeight="23px" textWeight="SemiBold" />
+              <FontText value={nickname} textSize="18px" lineHeight={23} textWeight="SemiBold" />
               <IconPencil width={18} />
             </TouchableOpacity>
 
             <FontText
               value={email}
               textSize="14px"
-              lineHeight="21px"
+              lineHeight={21}
               textWeight="Regular"
               textColor={COLOR.GRAY_999}
             />

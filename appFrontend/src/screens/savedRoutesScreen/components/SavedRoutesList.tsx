@@ -37,8 +37,8 @@ const SavedRoutesList = () => {
   return (
     <>
       {savedRoutes?.map((item) => (
-        <View className="pt-20 px-16 pb-8 border-b-1 border-gray-eb" key={item.id}>
-          <View className="flex-row justify-between items-center mb-24">
+        <View className="px-16 pt-20 pb-8 border-b-1 border-gray-eb" key={item.id}>
+          <View className="flex-row items-center justify-between mb-24">
             <FontText
               value={item.roadName}
               textSize="18px"

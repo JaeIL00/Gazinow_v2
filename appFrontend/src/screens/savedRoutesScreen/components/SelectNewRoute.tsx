@@ -54,7 +54,7 @@ const SelectNewRoute = () => {
       <SwapStation setSelectedStation={setSelectedStation} />
       <View className="flex-1 pb-10">
         {isLoading && (
-          <View className="mt-200 items-center">
+          <View className="items-center mt-200">
             <LoadingCircle width={40} height={40} />
           </View>
         )}
@@ -63,7 +63,7 @@ const SelectNewRoute = () => {
             <View key={item.firstStartStation + item.totalTime}>
               <View className="h-1 bg-gray-eb" />
               <TouchableOpacity
-                className="pt-20 px-16 pb-8"
+                className="px-16 pt-20 pb-8"
                 onPress={() => {
                   setSelectedRoutePath(item);
                   newRouteNavigation.push('Detail', {
@@ -77,14 +77,12 @@ const SelectNewRoute = () => {
                       value="평균 소요시간"
                       textSize="11px"
                       textWeight="SemiBold"
-                      lineHeight="13px"
                       textColor="#999"
                     />
                     <FontText
                       value={pathTime(item)}
                       textSize="20px"
                       textWeight="SemiBold"
-                      lineHeight="25px"
                       textColor={COLOR.BASIC_BLACK}
                     />
                   </View>

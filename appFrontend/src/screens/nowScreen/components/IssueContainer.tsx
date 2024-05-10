@@ -30,19 +30,12 @@ const IssueContainer = ({ issue, isLastItem, isHeader }: IssueDetailProps) => {
         }}
       >
         <LaneCapsulesPerIssue lanes={issue.lines} />
-        <FontText
-          value={issue.title}
-          textSize="16px"
-          textWeight="SemiBold"
-          lineHeight="21px"
-          numberOfLines={2}
-        />
+        <FontText value={issue.title} textSize="16px" textWeight="SemiBold" numberOfLines={2} />
         <View className="h-4" />
         <FontText
           value={dayjs(issue.agoTime).fromNow()}
           textSize="14px"
           textWeight="Regular"
-          lineHeight="21px"
           textColor={COLOR.GRAY_999}
         />
         <View className="h-4" />
@@ -50,7 +43,6 @@ const IssueContainer = ({ issue, isLastItem, isHeader }: IssueDetailProps) => {
           value={issue.content}
           textSize="14px"
           textWeight="Regular"
-          lineHeight="21px"
           textColor="#6A6A6A"
           numberOfLines={2}
         />
@@ -58,9 +50,9 @@ const IssueContainer = ({ issue, isLastItem, isHeader }: IssueDetailProps) => {
       {!isLastItem && <View className="h-1 w-999 bg-gray-f8" />}
       {isHeader && isLastItem && (
         <>
-          <View className="h-12 w-999 bg-white" />
+          <View className="h-12 bg-white w-999" />
           <View className="h-8 w-999 bg-gray-f8" />
-          <View className="h-12 w-999 bg-white" />
+          <View className="h-12 bg-white w-999" />
         </>
       )}
     </>

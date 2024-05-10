@@ -73,7 +73,7 @@ const SaveNewRoute = () => {
             value="새 경로 이름"
             textSize="14px"
             textWeight="Medium"
-            lineHeight="21px"
+            lineHeight={21}
             textColor={COLOR.BASIC_BLACK}
           />
           <Input
@@ -90,13 +90,13 @@ const SaveNewRoute = () => {
           />
           <View className="flex-row justify-between">
             {isDuplicatedName ? (
-              <View className="flex-row h-14 ml-9 items-center">
+              <View className="flex-row items-center h-14 ml-9">
                 <XCircle width={14} />
                 <FontText
                   value={` 이미 존재하는 이름입니다`}
                   textSize="12px"
                   textWeight="Medium"
-                  lineHeight="14px"
+                  lineHeight={14}
                   textColor={COLOR.LIGHT_RED}
                 />
               </View>
@@ -108,7 +108,7 @@ const SaveNewRoute = () => {
               textSize="12px"
               textWeight="Regular"
               textColor={COLOR.GRAY_999}
-              lineHeight="14px"
+              lineHeight={14}
             />
           </View>
         </View>

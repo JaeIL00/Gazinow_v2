@@ -17,7 +17,7 @@ const NotiOnScreen = () => {
         textSize="16px"
         textColor={COLOR.GRAY_999}
         textWeight="Medium"
-        lineHeight="21px"
+        lineHeight={21}
         // onPress={() => submitNotificationSettings()}
       />
     ),
@@ -37,14 +37,14 @@ const NotiOnScreen = () => {
             onPress={() => myPageNavigation.goBack()}
           />
           <Space width="12px" />
-          <FontText value="알림 설정" textSize="18px" lineHeight="23px" textWeight="Medium" />
+          <FontText value="알림 설정" textSize="18px" lineHeight={23} textWeight="Medium" />
         </TitleContainer>
         <TextButton
           value="완료    "
           textSize="16px"
           textColor={COLOR.GRAY_999}
           textWeight="Medium"
-          lineHeight="21px"
+          lineHeight={21}
           // onPress={() => submitNotificationSettings()}
         />
       </Header>
@@ -54,14 +54,14 @@ const NotiOnScreen = () => {
             value={`기기 알림을 켜주세요!`}
             textSize="24px"
             textWeight="Bold"
-            lineHeight="32px"
+            lineHeight={32}
           />
           <Space height="7px" />
           <FontText
             value={`정보 알림을 받기 위해선 기기 알림을 켜주세요`}
             textSize="16px"
             textWeight="Regular"
-            lineHeight="21px"
+            lineHeight={21}
             textColor={COLOR.GRAY_999}
           />
         </AlertContainer>
@@ -70,7 +70,7 @@ const NotiOnScreen = () => {
             value="기기 알림 켜기"
             textSize="17px"
             textWeight="Regular"
-            lineHeight="26px"
+            lineHeight={26}
             textColor={COLOR.WHITE}
             onPress={goToDeviceSettings}
           />

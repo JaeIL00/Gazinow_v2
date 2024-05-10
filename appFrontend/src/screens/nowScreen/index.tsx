@@ -74,7 +74,7 @@ const NowScreen = () => {
   }, [activeButton]);
 
   return (
-    <SafeAreaView className="flex-1 bg-white justify-center">
+    <SafeAreaView className="justify-center flex-1 bg-white">
       {isPopularIssuesLoading || isAllIssuesLoading ? (
         <View className="items-center">
           <LoadingCircle width={50} height={50} />
@@ -82,7 +82,7 @@ const NowScreen = () => {
       ) : (
         <>
           <View className="pt-32 pl-16 pb-11">
-            <FontText value="NOW" textSize="24px" textWeight="SemiBold" lineHeight="34px" />
+            <FontText value="NOW" textSize="24px" textWeight="SemiBold" lineHeight={34} />
           </View>
           <FlatList
             ListHeaderComponent={
@@ -95,12 +95,12 @@ const NowScreen = () => {
                         setLayoutHeight(height);
                       }}
                     >
-                      <View className="pt-24 pl-16 pb-12">
+                      <View className="pt-24 pb-12 pl-16">
                         <FontText
                           value="지금 인기"
                           textSize="20px"
                           textWeight="SemiBold"
-                          lineHeight="25px"
+                          lineHeight={25}
                         />
                       </View>
                       {popularIssues?.map((item, index) => (
@@ -152,7 +152,7 @@ const NowScreen = () => {
                       value="올라온 이슈가 없어요"
                       textSize="18px"
                       textWeight="Regular"
-                      lineHeight="700px"
+                      lineHeight={700}
                       textColor={COLOR.GRAY_999}
                       textAlign="center"
                     />

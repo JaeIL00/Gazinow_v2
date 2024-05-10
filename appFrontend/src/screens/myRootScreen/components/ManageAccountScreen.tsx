@@ -41,29 +41,23 @@ const ManageAccountScreen = () => {
 
   const renderMenu = ({ text, onPress }: RenderMenuProps) => (
     <>
-      <TouchableOpacity className="px-16 h-53 flex-row items-center" onPress={onPress}>
-        <TextButton
-          value={text}
-          textSize="16px"
-          textWeight="Regular"
-          lineHeight="21px"
-          onPress={onPress}
-        />
+      <TouchableOpacity className="flex-row items-center px-16 h-53" onPress={onPress}>
+        <TextButton value={text} textSize="16px" textWeight="Regular" onPress={onPress} />
       </TouchableOpacity>
-      <View className="bg-gray-eb h-1" />
+      <View className="h-1 bg-gray-eb" />
     </>
   );
 
   return (
     <SafeAreaView className="flex-1 bg-white">
       <TouchableOpacity
-        className="flex-row pl-22 py-16 items-center gap-21"
+        className="flex-row items-center py-16 pl-22 gap-21"
         onPress={() => myPageNavigation.goBack()}
       >
         <IconLeftArrowHead color="#3F3F46" />
         <FontText value="계정 관리" textSize="18px" lineHeight="23px" textWeight="Medium" />
       </TouchableOpacity>
-      <View className="bg-gray-eb h-1" />
+      <View className="h-1 bg-gray-eb" />
       {renderMenu({
         text: '비밀번호 변경',
         onPress: () => myPageNavigation.navigate('ChangePwScreen'),

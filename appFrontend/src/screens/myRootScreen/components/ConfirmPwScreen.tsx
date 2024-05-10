@@ -67,25 +67,19 @@ const ConfirmPwScreen = () => {
       <SafeAreaView className="flex-1 bg-white">
         <View className="flex-1 px-16">
           <TouchableOpacity
-            className="pl-4 h-56 items-center flex-row"
+            className="flex-row items-center h-56 pl-4"
             onPress={() => myPageNavigation.goBack()}
           >
             <IconLeftArrowHead color="#3F3F46" />
           </TouchableOpacity>
 
           <View className="flex-1 bg-white">
-            <View className="pt-43 pb-29 gap-20">
-              <FontText
-                value="비밀번호 입력"
-                textSize="24px"
-                textWeight="SemiBold"
-                lineHeight="35px"
-              />
+            <View className="gap-20 pt-43 pb-29">
+              <FontText value="비밀번호 입력" textSize="24px" textWeight="SemiBold" />
               <FontText
                 value="탈퇴를 위해 비밀번호를 입력해주세요."
                 textSize="16px"
                 textWeight="Regular"
-                lineHeight="21px"
               />
             </View>
 
@@ -93,7 +87,7 @@ const ConfirmPwScreen = () => {
               value="Password"
               textSize="14px"
               textWeight="Medium"
-              lineHeight="21px"
+              lineHeight={21}
               textColor="#7C8183 "
             />
 

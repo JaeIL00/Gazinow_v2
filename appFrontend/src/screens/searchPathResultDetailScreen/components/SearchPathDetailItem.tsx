@@ -60,13 +60,16 @@ const SearchPathDetailItem = ({ data, isLastLane, lineLength }: SearchPathDetail
             textWeight="SemiBold"
             textColor={subwayLineColor(data.lanes[0].stationCode)}
           />
-          <View className="flex-row mt-4">
+          <View className="flex-row items-center mt-4">
             <FontText
               value={data.way + ' 방향'}
               textSize="13px"
               textWeight="Regular"
               textColor={COLOR.GRAY_999}
             />
+            {data.lanes[0].direct && (
+              <FontText value=" 급행" textSize="12px" textWeight="Regular" textColor="#EB5147" />
+            )}
             <FontText
               value={
                 data.door !== 'null'

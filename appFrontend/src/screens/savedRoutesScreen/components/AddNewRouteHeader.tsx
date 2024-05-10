@@ -11,12 +11,12 @@ const AddNewRouteHeader = () => {
   const homeNavigation = useHomeNavigation();
 
   return (
-    <View className="flex-row h-56 px-16 justify-between items-center">
+    <View className="flex-row items-center justify-between h-56 px-16">
       <TouchableOpacity hitSlop={20} onPress={() => newRouteNavigation.goBack()}>
         <IconLeftArrowHead color="#3F3F46" width={24} />
       </TouchableOpacity>
 
-      <FontText value="새 경로 저장" textSize="18px" textWeight="Medium" lineHeight="23px" />
+      <FontText value="새 경로 저장" textSize="18px" textWeight="Medium" />
 
       <TouchableOpacity hitSlop={20} onPress={() => homeNavigation.popToTop()}>
         <IconCrossX />

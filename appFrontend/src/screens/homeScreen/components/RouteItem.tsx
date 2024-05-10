@@ -42,7 +42,7 @@ const RouteItem = ({ route, hasIssues }: RouteItemProps) => {
             textSize={'12px'}
             textWeight={'Medium'}
             textColor={hasIssues ? COLOR.LIGHT_RED : COLOR.GRAY_999}
-            lineHeight="14px"
+            lineHeight={14}
           />
         </View>
         <View className="flex-1" />
@@ -52,7 +52,7 @@ const RouteItem = ({ route, hasIssues }: RouteItemProps) => {
             value={'세부정보'}
             textSize={'13px'}
             textWeight={'Regular'}
-            lineHeight="19px"
+            lineHeight={19}
             textColor={COLOR.GRAY_999}
             onPress={() => homeNavigation.push('SubwayPathDetail', { state: route })}
             hitSlop={20}

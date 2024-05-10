@@ -22,47 +22,46 @@ const ConfirmQuitScreen = () => {
     <SafeAreaView className="flex-1 bg-white">
       <View className="flex-1 px-16">
         <TouchableOpacity
-          className="pl-4 h-56 items-center flex-row"
+          className="flex-row items-center h-56 pl-4"
           onPress={() => myPageNavigation.goBack()}
         >
           <IconLeftArrowHead color="#3F3F46" />
         </TouchableOpacity>
 
-        <View className="flex-1 pt-29 gap-20">
+        <View className="flex-1 gap-20 pt-29">
           <FontText
             value={`${nickname}님,\n정말 탈퇴하시겠어요?`}
             textSize="24px"
             textWeight="Bold"
-            lineHeight="32px"
+            lineHeight={32}
           />
           <FontText
             value={`탈퇴 시 계정의 모든 정보는 삭제되고\n재가입 시에도 복구하기 어려워요.`}
             textSize="16px"
             textWeight="Regular"
-            lineHeight="21px"
+            lineHeight={21}
           />
         </View>
 
         <TouchableOpacity
-          className="py-11 mb-24 rounded-5 items-center bg-black-17"
+          className="items-center mb-24 py-11 rounded-5 bg-black-17"
           onPress={() => myPageNavigation.goBack()}
         >
           <FontText
             value="이전으로 돌아가기"
             textSize="17px"
             textWeight="Regular"
-            lineHeight="26px"
+            lineHeight={26}
             textColor={COLOR.WHITE}
           />
         </TouchableOpacity>
 
-        <TouchableOpacity className="mb-79 items-center" onPress={() => setPopupVisible(true)}>
+        <TouchableOpacity className="items-center mb-79" onPress={() => setPopupVisible(true)}>
           <View className="border-b-1 border-gray-99">
             <FontText
               value="탈퇴하기"
               textSize="13px"
               textWeight="Regular"
-              lineHeight="18px"
               textColor={COLOR.GRAY_999}
             />
           </View>

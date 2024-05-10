@@ -80,13 +80,13 @@ const ChangeNickNameScreen = () => {
 
   return (
     <SafeAreaView className="flex-1 bg-white">
-      <View className="flex-row px-16 items-center justify-between">
+      <View className="flex-row items-center justify-between px-16">
         <TouchableOpacity
-          className="flex-row pl-4 py-16 items-center gap-12"
+          className="flex-row items-center gap-12 py-16 pl-4"
           onPress={() => myPageNavigation.goBack()}
         >
           <IconCrossX width="24px" />
-          <FontText value="닉네임 수정" textSize="18px" lineHeight="23px" textWeight="Medium" />
+          <FontText value="닉네임 수정" textSize="18px" lineHeight={23} textWeight="Medium" />
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => changeNicknameMutate(newNickname)}
@@ -120,7 +120,7 @@ const ChangeNickNameScreen = () => {
         </View>
 
         {isNicknameValid !== null && newNickname !== '' && (
-          <View className="flex-row pl-9 gap-5">
+          <View className="flex-row gap-5 pl-9">
             {isNicknameValid ? (
               <IconCheck stroke={COLOR.LIGHT_GREEN} />
             ) : (

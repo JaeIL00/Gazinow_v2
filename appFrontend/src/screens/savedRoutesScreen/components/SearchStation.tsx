@@ -85,7 +85,6 @@ const SearchStation = () => {
             value="최근검색"
             textSize="14px"
             textWeight="Regular"
-            lineHeight="24px"
             textColor="#757575"
           />
 
@@ -93,7 +92,7 @@ const SearchStation = () => {
             {historyData?.map(({ stationName, stationLine }, index) => (
               <>
                 <TouchableOpacity
-                  className="flex-row gap-7 py-12 pl-16"
+                  className="flex-row py-12 pl-16 gap-7"
                   key={index}
                   onPress={() =>
                     stationBtnHandler({
@@ -108,14 +107,12 @@ const SearchStation = () => {
                       value={stationName}
                       textSize="16px"
                       textWeight="Medium"
-                      lineHeight="21px"
                       textColor="#000"
                     />
                     <FontText
                       value={stationLine!}
                       textSize="14px"
                       textWeight="Regular"
-                      lineHeight="21px"
                       textColor={COLOR.GRAY_999}
                     />
                   </View>
@@ -129,7 +126,7 @@ const SearchStation = () => {
         <View className="flex-1">
           {/* 입력어가 있고 && 검색 결과가 없으면 없음 표시 */}
           {searchResultData.length < 1 && (
-            <View className="flex-1 items-center justify-center gap-17">
+            <View className="items-center justify-center flex-1 gap-17">
               <NoResultIcon />
               <NoResultText />
             </View>
@@ -140,7 +137,7 @@ const SearchStation = () => {
               {searchResultData.map(({ stationName, stationLine }, idx) => (
                 <>
                   <TouchableOpacity
-                    className="flex-row gap-7 py-12 pl-16"
+                    className="flex-row py-12 pl-16 gap-7"
                     key={idx}
                     onPress={() => stationBtnHandler({ stationLine, stationName })}
                   >

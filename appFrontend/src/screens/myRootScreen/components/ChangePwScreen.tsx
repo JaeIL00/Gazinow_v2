@@ -109,13 +109,13 @@ const ChangePwScreen = () => {
   return (
     <SafeAreaView className="flex-1 bg-white">
       <View className="px-16">
-        <View className="flex-row mb-39 items-center justify-between">
+        <View className="flex-row items-center justify-between mb-39">
           <TouchableOpacity
-            className="flex-row py-16 items-center gap-16"
+            className="flex-row items-center gap-16 py-16"
             onPress={() => myPageNavigation.goBack()}
           >
             <IconLeftArrowHead color="#3F3F46" width={24} />
-            <FontText value="비밀번호 변경" textSize="18px" lineHeight="23px" textWeight="Medium" />
+            <FontText value="비밀번호 변경" textSize="18px" lineHeight={23} textWeight="Medium" />
           </TouchableOpacity>
           <TouchableOpacity onPress={onPressDone} disabled={isDoneBtnDisabled}>
             <FontText
@@ -123,7 +123,7 @@ const ChangePwScreen = () => {
               textSize="16px"
               textColor={isDoneBtnDisabled ? COLOR.GRAY_999 : COLOR.BASIC_BLACK}
               textWeight="SemiBold"
-              lineHeight="21px"
+              lineHeight={21}
             />
           </TouchableOpacity>
         </View>
@@ -132,11 +132,11 @@ const ChangePwScreen = () => {
           value="현재 비밀번호"
           textSize="14px"
           textWeight="Medium"
-          lineHeight="21px"
+          lineHeight={21}
           textColor={COLOR.BASIC_BLACK}
         />
         <Input
-          className="px-18 py-12 mt-6 mb-2 rounded-5 bg-gray-f2"
+          className="py-12 mt-6 mb-2 px-18 rounded-5 bg-gray-f2"
           value={curPassword}
           placeholder={`비밀번호를 입력해주세요`}
           placeholderTextColor={COLOR.GRAY_BE}
@@ -152,7 +152,7 @@ const ChangePwScreen = () => {
               value={isPwRight ? ' 비밀번호가 확인되었습니다' : ' 비밀번호가 틀립니다'}
               textSize="12px"
               textWeight="Medium"
-              lineHeight="14px"
+              lineHeight={14}
               textColor={isPwRight ? COLOR.LIGHT_GREEN : COLOR.LIGHT_RED}
             />
           </View>
@@ -162,11 +162,11 @@ const ChangePwScreen = () => {
           value="새로운 비밀번호"
           textSize="14px"
           textWeight="Medium"
-          lineHeight="21px"
+          lineHeight={21}
           textColor={COLOR.BASIC_BLACK}
         />
         <Input
-          className="px-18 py-12 mt-6 mb-2 rounded-5 bg-gray-f2"
+          className="py-12 mt-6 mb-2 px-18 rounded-5 bg-gray-f2"
           value={changePassword}
           placeholder={`변경하실 비밀번호를 입력해주세요`}
           placeholderTextColor={COLOR.GRAY_BE}
@@ -206,7 +206,7 @@ const ChangePwScreen = () => {
           </View>
         )}
         <Input
-          className="px-18 py-12 mt-6 mb-2 rounded-5 bg-gray-f2"
+          className="py-12 mt-6 mb-2 px-18 rounded-5 bg-gray-f2"
           value={confirmPassword}
           placeholder={`비밀번호를 확인해주세요`}
           placeholderTextColor={COLOR.GRAY_BE}
@@ -229,7 +229,7 @@ const ChangePwScreen = () => {
               }
               textSize="12px"
               textWeight="Medium"
-              lineHeight="14px"
+              lineHeight={14}
               textColor={confirmPassword !== changePassword ? COLOR.LIGHT_RED : COLOR.LIGHT_GREEN}
             />
           </View>

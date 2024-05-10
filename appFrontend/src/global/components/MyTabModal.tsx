@@ -26,15 +26,15 @@ const MyTabModal = ({
   return (
     <Modal animationType="fade" transparent visible={isVisible} onRequestClose={onCancel}>
       <View
-        className="flex-1 justify-center items-center"
+        className="items-center justify-center flex-1"
         style={{ backgroundColor: 'rgba(0, 0, 0, 0.3)' }}
       >
-        <View className="w-350 h-160 p-30 bg-white rounded-10 items-center">
+        <View className="items-center bg-white w-350 h-160 p-30 rounded-10">
           <FontText
             value={title}
             textSize="20px"
             textWeight="SemiBold"
-            lineHeight="30px"
+            lineHeight={30}
             textColor={COLOR.BASIC_BLACK}
           />
           <View className="flex-row justify-between mt-20">
@@ -49,20 +49,20 @@ const MyTabModal = ({
                 value={cancelText}
                 textSize="16px"
                 textWeight="SemiBold"
-                lineHeight="30px"
+                lineHeight={30}
                 textColor={isSingleBtn ? COLOR.WHITE : COLOR.GRAY_999}
               />
             </TouchableOpacity>
             {confirmText && onConfirm && (
               <TouchableOpacity
-                className="flex-1 ml-5 bg-black-17 rounded-5 p-10 items-center"
+                className="items-center flex-1 p-10 ml-5 bg-black-17 rounded-5"
                 onPress={onConfirm}
               >
                 <FontText
                   value={confirmText}
                   textSize="16px"
                   textWeight="Bold"
-                  lineHeight="30px"
+                  lineHeight={30}
                   textColor={COLOR.WHITE}
                 />
               </TouchableOpacity>

@@ -73,8 +73,8 @@ const SwapStation = ({ setSelectedStation }: SwapStationProps) => {
   return (
     <SafeAreaView className={cn({ 'flex-1 bg-white': route.name === 'Swap' })}>
       <AddNewRouteHeader />
-      <View className="flex-row pt-28 pb-45 px-16 items-center bg-white">
-        <View className="flex-1 mr-15 gap-8">
+      <View className="flex-row items-center px-16 bg-white pt-28 pb-45">
+        <View className="flex-1 gap-8 mr-15">
           {renderStationButton(selectedStation.departure, DEPARTURE_STATION)}
           {renderStationButton(selectedStation.arrival, ARRIVAL_STATION)}
         </View>
