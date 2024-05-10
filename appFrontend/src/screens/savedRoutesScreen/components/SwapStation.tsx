@@ -73,7 +73,7 @@ const SwapStation = ({ setSelectedStation }: SwapStationProps) => {
               }
               textSize="16px"
               textWeight="Regular"
-              lineHeight="21px"
+              lineHeight={21}
               textColor={selectedStation.departure.stationName ? COLOR.BASIC_BLACK : COLOR.GRAY_999}
               onPress={() => navigateSearchStation(DEPARTURE_STATION)}
             />
@@ -85,7 +85,7 @@ const SwapStation = ({ setSelectedStation }: SwapStationProps) => {
               }
               textSize="16px"
               textWeight="Regular"
-              lineHeight="21px"
+              lineHeight={21}
               textColor={selectedStation.arrival.stationName ? COLOR.BASIC_BLACK : COLOR.GRAY_999}
               onPress={() => navigateSearchStation(ARRIVAL_STATION)}
             />

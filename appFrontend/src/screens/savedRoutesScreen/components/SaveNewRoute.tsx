@@ -70,7 +70,7 @@ const SaveNewRoute = () => {
             value="새 경로 이름"
             textSize="14px"
             textWeight="Medium"
-            lineHeight="21px"
+            lineHeight={21}
             textColor={COLOR.BASIC_BLACK}
           />
           <InputBox>
@@ -94,7 +94,7 @@ const SaveNewRoute = () => {
                   value={` 이미 존재하는 이름입니다`}
                   textSize="12px"
                   textWeight="Medium"
-                  lineHeight="14px"
+                  lineHeight={14}
                   textColor={COLOR.LIGHT_RED}
                 />
               </MessageContainer>
@@ -106,7 +106,7 @@ const SaveNewRoute = () => {
               textSize="12px"
               textWeight="Regular"
               textColor={COLOR.GRAY_999}
-              lineHeight="14px"
+              lineHeight={14}
             />
           </TextLengthBox>
         </Container>
@@ -129,7 +129,7 @@ const SaveNewRoute = () => {
             textSize="17px"
             textWeight="SemiBold"
             textColor={COLOR.WHITE}
-            lineHeight="26px"
+            lineHeight={26}
           />
         </BottomBtn>
       </SafeAreaView>

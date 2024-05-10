@@ -75,7 +75,7 @@ const SelectNewRoute = () => {
                     value="평균 소요시간"
                     textSize="11px"
                     textWeight="SemiBold"
-                    lineHeight="13px"
+                    lineHeight={13}
                     textColor="#999"
                   />
                   <Space height="4px" />
@@ -83,7 +83,7 @@ const SelectNewRoute = () => {
                     value={pathTime(item)}
                     textSize="20px"
                     textWeight="SemiBold"
-                    lineHeight="25px"
+                    lineHeight={25}
                     textColor={COLOR.BASIC_BLACK}
                   />
                 </View>

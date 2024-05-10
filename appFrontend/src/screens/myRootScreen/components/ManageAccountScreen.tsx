@@ -47,7 +47,7 @@ const ManageAccountScreen = () => {
         value={text}
         textSize="16px"
         textWeight="Regular"
-        lineHeight="21px"
+        lineHeight={21}
         onPress={onPress}
       />
     </MenuContainer>
@@ -60,7 +60,7 @@ const ManageAccountScreen = () => {
           <IconLeftArrowHead color="#3F3F46" />
         </Pressable>
         <Space width="21px" />
-        <FontText value="계정 관리" textSize="18px" lineHeight="23px" textWeight="Medium" />
+        <FontText value="계정 관리" textSize="18px" lineHeight={23} textWeight="Medium" />
       </Header>
       <Container>
         {renderMenu({

@@ -45,7 +45,7 @@ const EditSavedRoutesList = () => {
               value={item.roadName}
               textSize="18px"
               textWeight="SemiBold"
-              lineHeight="23px"
+              lineHeight={23}
               textColor={COLOR.BASIC_BLACK}
             />
             <TextButton
@@ -53,8 +53,11 @@ const EditSavedRoutesList = () => {
               textSize="13px"
               textColor={COLOR.GRAY_999}
               textWeight="Regular"
-              onPress={() => showDeletePopup(item.id)}
-              lineHeight="19px"
+              onPress={() => {
+                if (!item.id) return;
+                showDeletePopup(item.id);
+              }}
+              lineHeight={19}
             />
           </TitleContainer>
           <SubwaySimplePath

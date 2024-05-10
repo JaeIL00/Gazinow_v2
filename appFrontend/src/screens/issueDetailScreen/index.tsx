@@ -144,7 +144,7 @@ const IssueDetailScreen = () => {
                 value={issueData.content}
                 textSize="16px"
                 textWeight="Regular"
-                lineHeight="21px"
+                lineHeight={21}
                 textColor={COLOR.REAL_BLACK}
               />
             </View>

@@ -8,7 +8,7 @@ const NoRoutes = () => (
       value="저장한 경로가 없어요"
       textSize="13px"
       textWeight="Regular"
-      lineHeight="400px"
+      lineHeight={400}
       textColor={COLOR.GRAY_999}
       textAlign="center"
     />

@@ -49,7 +49,7 @@ const LaneButtons = ({ activeButton, setActiveButton, titleNotShown }: LaneButto
             value={activeButton === '전체' ? '전체' : `${activeButton} NOW`}
             textSize="20px"
             textWeight="SemiBold"
-            lineHeight="25px"
+            lineHeight={25}
           />
         </IssueLineType>
       ) : (

@@ -32,14 +32,14 @@ const ConfirmQuitScreen = () => {
             value={`${nickname}님,\n정말 탈퇴하시겠어요?`}
             textSize="24px"
             textWeight="Bold"
-            lineHeight="32px"
+            lineHeight={32}
           />
           <Space height="20px" />
           <FontText
             value={`탈퇴 시 계정의 모든 정보는 삭제되고\n재가입 시에도 복구하기 어려워요.`}
             textSize="16px"
             textWeight="Regular"
-            lineHeight="21px"
+            lineHeight={21}
           />
         </AlertContainer>
         <BottomBtn onPress={() => myPageNavigation.goBack()}>
@@ -47,7 +47,7 @@ const ConfirmQuitScreen = () => {
             value="이전으로 돌아가기"
             textSize="17px"
             textWeight="Regular"
-            lineHeight="26px"
+            lineHeight={26}
             textColor={COLOR.WHITE}
             onPress={() => myPageNavigation.goBack()}
           />
@@ -59,7 +59,7 @@ const ConfirmQuitScreen = () => {
                 value="탈퇴하기"
                 textSize="13px"
                 textWeight="Regular"
-                lineHeight="18px"
+                lineHeight={18}
                 textColor={COLOR.GRAY_999}
                 onPress={() => setPopupVisible(true)}
               />

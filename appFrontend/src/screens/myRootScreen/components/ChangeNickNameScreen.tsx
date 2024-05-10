@@ -55,7 +55,7 @@ const ChangeNickNameScreen = () => {
           <IconCrossX width="24px" />
         </Pressable>
         <Space width="12px" />
-        <FontText value="닉네임 수정" textSize="18px" lineHeight="23px" textWeight="Medium" />
+        <FontText value="닉네임 수정" textSize="18px" lineHeight={23} textWeight="Medium" />
         <View style={{ flex: 1 }} />
         <Pressable hitSlop={20} onPress={() => mutate(newNickname)} disabled={newNickname === ''}>
           <TextButton
@@ -63,7 +63,7 @@ const ChangeNickNameScreen = () => {
             textSize="16px"
             textColor={newNickname === '' ? COLOR.GRAY_999 : COLOR.BASIC_BLACK}
             textWeight="Medium"
-            lineHeight="21px"
+            lineHeight={21}
             onPress={() => mutate(newNickname)}
             disabled={newNickname === ''}
           />
@@ -93,7 +93,7 @@ const ChangeNickNameScreen = () => {
               value={errorMessage}
               textSize="14px"
               textWeight="Medium"
-              lineHeight="16px"
+              lineHeight={16}
               textColor="#EB5147"
             />
           </MessageContainer>

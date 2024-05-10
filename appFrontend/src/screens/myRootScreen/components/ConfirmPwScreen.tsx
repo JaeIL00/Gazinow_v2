@@ -65,18 +65,13 @@ const ConfirmPwScreen = () => {
         </Header>
         <Container>
           <AlertContainer>
-            <FontText
-              value="비밀번호 입력"
-              textSize="24px"
-              textWeight="SemiBold"
-              lineHeight="35px"
-            />
+            <FontText value="비밀번호 입력" textSize="24px" textWeight="SemiBold" lineHeight={35} />
             <Space height="20px" />
             <FontText
               value="탈퇴를 위해 비밀번호를 입력해주세요."
               textSize="16px"
               textWeight="Regular"
-              lineHeight="21px"
+              lineHeight={21}
             />
           </AlertContainer>
           <PwContainer>
@@ -84,7 +79,7 @@ const ConfirmPwScreen = () => {
               value="Password"
               textSize="14px"
               textWeight="Medium"
-              lineHeight="21px"
+              lineHeight={21}
               textColor="#7C8183 "
             />
             <InputBox>

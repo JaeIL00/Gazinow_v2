@@ -83,7 +83,7 @@ const NowScreen = () => {
       ) : (
         <>
           <Header>
-            <FontText value="NOW" textSize="24px" textWeight="SemiBold" lineHeight="34px" />
+            <FontText value="NOW" textSize="24px" textWeight="SemiBold" lineHeight={34} />
           </Header>
           <FlatList
             ListHeaderComponent={
@@ -101,7 +101,7 @@ const NowScreen = () => {
                           value="지금 인기"
                           textSize="20px"
                           textWeight="SemiBold"
-                          lineHeight="25px"
+                          lineHeight={25}
                         />
                       </IssueLineType>
                       {popularIssues?.map((item, index) => (
@@ -153,7 +153,7 @@ const NowScreen = () => {
                       value="올라온 이슈가 없어요"
                       textSize="18px"
                       textWeight="Regular"
-                      lineHeight="700px"
+                      lineHeight={700}
                       textColor={COLOR.GRAY_999}
                       textAlign="center"
                     />

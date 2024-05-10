@@ -84,7 +84,7 @@ const SearchStation = () => {
               value="최근검색"
               textSize="14px"
               textWeight="Regular"
-              lineHeight="24px"
+              lineHeight={21}
               textColor="#757575"
             />
           </Header>
@@ -106,14 +106,14 @@ const SearchStation = () => {
                     value={stationName}
                     textSize="16px"
                     textWeight="Medium"
-                    lineHeight="21px"
+                    lineHeight={21}
                     textColor="#000"
                   />
                   <FontText
                     value={stationLine!}
                     textSize="14px"
                     textWeight="Regular"
-                    lineHeight="21px"
+                    lineHeight={21}
                     textColor={COLOR.GRAY_999}
                   />
                 </StationInfoBox>
@@ -142,14 +142,14 @@ const SearchStation = () => {
                       value={stationName}
                       textSize="16px"
                       textWeight="Medium"
-                      lineHeight="21px"
+                      lineHeight={21}
                       textColor="#000"
                     />
                     <FontText
                       value={stationLine!}
                       textSize="14px"
                       textWeight="Regular"
-                      lineHeight="21px"
+                      lineHeight={21}
                       textColor={COLOR.GRAY_999}
                     />
                   </StationInfoBox>

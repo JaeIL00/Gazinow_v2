@@ -35,7 +35,7 @@ const IssueContainer = ({ isLastItem, isHeader, issue }: IssueContainerProps) =>
             value={title}
             textSize="16px"
             textWeight="SemiBold"
-            lineHeight="21px"
+            lineHeight={21}
             numberOfLines={2}
           />
           <Space height="4px" />
@@ -43,7 +43,7 @@ const IssueContainer = ({ isLastItem, isHeader, issue }: IssueContainerProps) =>
             value={dayjs(startDate).fromNow()}
             textSize="14px"
             textWeight="Regular"
-            lineHeight="21px"
+            lineHeight={21}
             textColor={COLOR.GRAY_999}
           />
           <Space height="4px" />
@@ -51,7 +51,7 @@ const IssueContainer = ({ isLastItem, isHeader, issue }: IssueContainerProps) =>
             value={content}
             textSize="14px"
             textWeight="Regular"
-            lineHeight="21px"
+            lineHeight={21}
             textColor="#6A6A6A"
             numberOfLines={2}
           />

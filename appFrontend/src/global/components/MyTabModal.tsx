@@ -31,7 +31,7 @@ const MyTabModal = ({
             value={title}
             textSize="20px"
             textWeight="SemiBold"
-            lineHeight="30px"
+            lineHeight={30}
             textColor={COLOR.BASIC_BLACK}
           />
           <View style={styles.buttonContainer}>
@@ -40,7 +40,7 @@ const MyTabModal = ({
                 value={cancelText}
                 textSize="16px"
                 textWeight="SemiBold"
-                lineHeight="30px"
+                lineHeight={30}
                 textColor={COLOR.GRAY_999}
               />
             </CancelButton>
@@ -50,7 +50,7 @@ const MyTabModal = ({
                   value={confirmText}
                   textSize="16px"
                   textWeight="Bold"
-                  lineHeight="30px"
+                  lineHeight={30}
                   textColor={COLOR.WHITE}
                 />
               </DeleteButton>

@@ -148,6 +148,7 @@ export type StationCode =
  * 지하철 경로 호선 데이터
  */
 export interface Lane {
+  direct: boolean;
   name: string;
   stationCode: StationCode;
   startName: string;

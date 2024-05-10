@@ -21,7 +21,7 @@ const SavedRoutesScreen = () => {
             <IconLeftArrowHead color="#3F3F46" />
           </Pressable>
           <Space width="12px" />
-          <FontText value="저장경로 편집" textSize="18px" textWeight="Medium" lineHeight="23px" />
+          <FontText value="저장경로 편집" textSize="18px" textWeight="Medium" lineHeight={23} />
         </Header>
         <Space height="4px" />
         <RouteContainer>
@@ -32,7 +32,7 @@ const SavedRoutesScreen = () => {
               value="  경로 추가하기"
               textSize="14px"
               textWeight="Medium"
-              lineHeight="21px"
+              lineHeight={21}
               textColor={COLOR.GRAY_999}
             />
           </AddContainer>

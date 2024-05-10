@@ -61,11 +61,11 @@ const MyRootScreen = () => {
         value={text}
         textSize="16px"
         textWeight="Regular"
-        lineHeight="21px"
+        lineHeight={21}
         onPress={onPress}
       />
       {versionInfo ? (
-        <FontText value={versionText} textSize="12px" textWeight="Regular" lineHeight="17px" />
+        <FontText value={versionText} textSize="12px" textWeight="Regular" lineHeight={17} />
       ) : (
         <IconRightArrowHead width={14} color={COLOR.GRAY_999} />
       )}
@@ -111,7 +111,7 @@ const MyRootScreen = () => {
               value={email}
               textSize="12px"
               textWeight="Regular"
-              lineHeight="15px"
+              lineHeight={15}
               textColor={COLOR.GRAY_999}
             />
           </>

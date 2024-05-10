@@ -30,7 +30,7 @@ const LaneCapsulesPerIssue = ({ lanes }: LaneCapsulesProps) => {
           <FontText
             value={rawLineNameToNowCapsuleText(lane)}
             textSize="12px"
-            lineHeight="14.32px"
+            lineHeight={14.32}
             textWeight="SemiBold"
             textColor={rawLineNameToColor(lane)}
           />

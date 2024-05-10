@@ -16,7 +16,7 @@ const AddNewRouteHeader = () => {
         <Pressable hitSlop={20} onPress={() => newRouteNavigation.goBack()}>
           <IconLeftArrowHead color="#3F3F46" />
         </Pressable>
-        <FontText value="새 경로 저장" textSize="18px" textWeight="Medium" lineHeight="23px" />
+        <FontText value="새 경로 저장" textSize="18px" textWeight="Medium" lineHeight={23} />
         <Pressable hitSlop={20} onPress={() => homeNavigation.popToTop()}>
           <IconCrossX />
         </Pressable>

@@ -72,7 +72,7 @@ const IssueCarrousel = () => {
                     <FontText
                       value={issue.title}
                       textSize="13px"
-                      lineHeight="19px"
+                      lineHeight={19}
                       textWeight="SemiBold"
                       textColor={COLOR.BASIC_BLACK}
                       numberOfLines={1}
@@ -80,7 +80,7 @@ const IssueCarrousel = () => {
                     <FontText
                       value={dayjs(issue.startDate).fromNow()}
                       textSize="11px"
-                      lineHeight="13px"
+                      lineHeight={13}
                       textWeight="Medium"
                       textColor={COLOR.GRAY_999}
                     />
@@ -95,7 +95,7 @@ const IssueCarrousel = () => {
         <FontText
           value="NOW"
           textSize="12px"
-          lineHeight="14px"
+          lineHeight={14}
           textWeight="Bold"
           textColor="#346BF7"
         />
@@ -112,7 +112,7 @@ const IssueCarrousel = () => {
           <FontText
             value={`${currentIndex + 1}/${popularIssues.length}`}
             textSize="11px"
-            lineHeight="13px"
+            lineHeight={13}
             textWeight="Medium"
             textColor="#B4B4B4"
             textAlign="center"

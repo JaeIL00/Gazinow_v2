@@ -114,7 +114,7 @@ const ChangePwScreen = () => {
           <IconLeftArrowHead color="#3F3F46" />
         </Pressable>
         <Space width="21px" />
-        <FontText value="비밀번호 변경" textSize="18px" lineHeight="23px" textWeight="Medium" />
+        <FontText value="비밀번호 변경" textSize="18px" lineHeight={23} textWeight="Medium" />
         <View style={{ flex: 1 }} />
         <Pressable hitSlop={20} onPress={onPressDone}>
           <TextButton
@@ -122,7 +122,7 @@ const ChangePwScreen = () => {
             textSize="16px"
             textColor={isDoneBtnDisabled ? COLOR.GRAY_999 : COLOR.BASIC_BLACK}
             textWeight="SemiBold"
-            lineHeight="21px"
+            lineHeight={21}
             onPress={onPressDone}
             disabled={isDoneBtnDisabled}
           />
@@ -136,7 +136,7 @@ const ChangePwScreen = () => {
           value="현재 비밀번호"
           textSize="14px"
           textWeight="Medium"
-          lineHeight="21px"
+          lineHeight={21}
           textColor={COLOR.BASIC_BLACK}
         />
 
@@ -158,7 +158,7 @@ const ChangePwScreen = () => {
               value={isPwRight ? ' 비밀번호가 확인되었습니다' : ' 비밀번호가 틀립니다'}
               textSize="12px"
               textWeight="Medium"
-              lineHeight="14px"
+              lineHeight={14}
               textColor={isPwRight ? COLOR.LIGHT_GREEN : COLOR.LIGHT_RED}
             />
           </MessageContainer>
@@ -169,7 +169,7 @@ const ChangePwScreen = () => {
           value="새로운 비밀번호"
           textSize="14px"
           textWeight="Medium"
-          lineHeight="21px"
+          lineHeight={21}
           textColor={COLOR.BASIC_BLACK}
         />
         <InputContainer>
@@ -190,7 +190,7 @@ const ChangePwScreen = () => {
                 value=" 기존 비밀번호는 사용할 수 없어요"
                 textSize="12px"
                 textWeight="Medium"
-                lineHeight="14px"
+                lineHeight={14}
                 textColor={COLOR.LIGHT_RED}
               />
             </MessageContainer>
@@ -246,7 +246,7 @@ const ChangePwScreen = () => {
               }
               textSize="12px"
               textWeight="Medium"
-              lineHeight="14px"
+              lineHeight={14}
               textColor={confirmPassword !== changePassword ? COLOR.LIGHT_RED : COLOR.LIGHT_GREEN}
             />
           </MessageContainer>
