@@ -1,9 +1,8 @@
-import styled from '@emotion/native';
 import { useState } from 'react';
-import { FontText, Space, TextButton } from '@/global/ui';
+import { FontText, TextButton } from '@/global/ui';
 import { COLOR } from '@/global/constants';
 import MyTabModal from '@/global/components/MyTabModal';
-import { Pressable, SafeAreaView } from 'react-native';
+import { SafeAreaView, TouchableOpacity, View } from 'react-native';
 import IconLeftArrowHead from '@assets/icons/left_arrow_head.svg';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store/configureStore';
@@ -20,52 +19,54 @@ const ConfirmQuitScreen = () => {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: COLOR.WHITE }}>
-      <Header>
-        <Pressable hitSlop={20} onPress={() => myPageNavigation.goBack()}>
+    <SafeAreaView className="flex-1 bg-white">
+      <View className="flex-1 px-16">
+        <TouchableOpacity
+          className="flex-row items-center h-56 pl-4"
+          onPress={() => myPageNavigation.goBack()}
+        >
           <IconLeftArrowHead color="#3F3F46" />
-        </Pressable>
-      </Header>
-      <Container>
-        <AlertContainer>
+        </TouchableOpacity>
+
+        <View className="flex-1 gap-20 pt-29">
           <FontText
             value={`${nickname}님,\n정말 탈퇴하시겠어요?`}
             textSize="24px"
             textWeight="Bold"
             lineHeight={32}
           />
-          <Space height="20px" />
           <FontText
             value={`탈퇴 시 계정의 모든 정보는 삭제되고\n재가입 시에도 복구하기 어려워요.`}
             textSize="16px"
             textWeight="Regular"
             lineHeight={21}
           />
-        </AlertContainer>
-        <BottomBtn onPress={() => myPageNavigation.goBack()}>
-          <TextButton
+        </View>
+
+        <TouchableOpacity
+          className="items-center mb-24 py-11 rounded-5 bg-black-17"
+          onPress={() => myPageNavigation.goBack()}
+        >
+          <FontText
             value="이전으로 돌아가기"
             textSize="17px"
             textWeight="Regular"
             lineHeight={26}
             textColor={COLOR.WHITE}
-            onPress={() => myPageNavigation.goBack()}
           />
-        </BottomBtn>
-        <Pressable hitSlop={20} onPress={() => setPopupVisible(true)}>
-          <QuitBtn>
-            <UnderLine>
-              <TextButton
-                value="탈퇴하기"
-                textSize="13px"
-                textWeight="Regular"
-                lineHeight={18}
-                textColor={COLOR.GRAY_999}
-                onPress={() => setPopupVisible(true)}
-              />
-            </UnderLine>
-          </QuitBtn>
-        </Pressable>
+        </TouchableOpacity>
+
+        <TouchableOpacity className="items-center mb-79" onPress={() => setPopupVisible(true)}>
+          <View className="border-b-1 border-gray-99">
+            <FontText
+              value="탈퇴하기"
+              textSize="13px"
+              textWeight="Regular"
+              textColor={COLOR.GRAY_999}
+            />
+          </View>
+        </TouchableOpacity>
+
         <MyTabModal
           isVisible={popupVisible}
           onCancel={() => setPopupVisible(false)}
@@ -74,39 +75,9 @@ const ConfirmQuitScreen = () => {
           confirmText="탈퇴할래요"
           cancelText="아니요"
         />
-      </Container>
+      </View>
     </SafeAreaView>
   );
 };
-export default ConfirmQuitScreen;
 
-const Header = styled.View`
-  padding: 0 0 0 22px;
-  height: 56px;
-  flex-direction: row;
-  align-items: center;
-`;
-const Container = styled.View`
-  background-color: white;
-  padding: 0 16px;
-  flex: 1;
-`;
-const AlertContainer = styled.Pressable`
-  flex: 1;
-  margin-top: 29px;
-`;
-const BottomBtn = styled.Pressable`
-  padding-vertical: 11px;
-  margin-bottom: 24px;
-  border-radius: 5px;
-  align-items: center;
-  background-color: ${COLOR.BASIC_BLACK};
-`;
-const QuitBtn = styled.Pressable`
-  align-items: center;
-  margin-bottom: 79px;
-`;
-const UnderLine = styled.Pressable`
-  border-bottom-width: 1px;
-  border-bottom-color: ${COLOR.GRAY_999};
-`;
+export default ConfirmQuitScreen;

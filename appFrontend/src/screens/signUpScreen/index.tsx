@@ -42,23 +42,12 @@ const SignUpScreen = () => {
   };
 
   return (
-    <SafeAreaView
-      style={{
-        flex: 1,
-        backgroundColor: COLOR.GRAY_F9,
-      }}
-    >
-      <View
-        style={{
-          paddingTop: 30,
-          paddingHorizontal: 16,
-          flex: 1,
-        }}
-      >
+    <SafeAreaView className="flex-1 bg-gray-f9">
+      <View className="flex-1 pt-30 px-16">
         <TouchableOpacity
           hitSlop={10}
           activeOpacity={1}
-          style={{ marginBottom: 43 }}
+          className="mb-43"
           disabled={step === 'complete'}
           onPress={backStepHandler}
         >
@@ -66,7 +55,7 @@ const SignUpScreen = () => {
         </TouchableOpacity>
 
         <KeyboardAvoidingView
-          style={{ flex: 1 }}
+          className="flex-1"
           behavior={Platform.OS === 'ios' ? 'padding' : undefined}
           keyboardVerticalOffset={30}
         >

@@ -1,15 +1,14 @@
-import styled from '@emotion/native';
 import React, { useCallback, useEffect, useState } from 'react';
-import { Alert, Pressable, SafeAreaView, View } from 'react-native';
-import { FontText, Input, Space, TextButton } from '@/global/ui';
+import { Alert, SafeAreaView, TouchableOpacity, View } from 'react-native';
+import { FontText, Input } from '@/global/ui';
 import { COLOR } from '@/global/constants';
 import MyTabModal from '@/global/components/MyTabModal';
 import { debounce } from 'lodash';
 import XCircle from '@assets/icons/x-circle-standard.svg';
 import IconLeftArrowHead from '@assets/icons/left_arrow_head.svg';
-import IconCheck from '@assets/icons/check_standard.svg';
+import IconCheck from '@assets/icons/check_green.svg';
 import { useMyPageNavigation } from '@/navigation/MyPageNavigation';
-import { useChangePasswordQuery, useCheckPasswordQuery } from '../apis/hooks';
+import { useChangePasswordMutation, useCheckPasswordMutation } from '../apis/hooks';
 
 const ChangePwScreen = () => {
   const myPageNavigation = useMyPageNavigation();
@@ -63,7 +62,7 @@ const ChangePwScreen = () => {
     checkPasswordDebounce(curPassword);
   };
 
-  const { checkPasswordMutate } = useCheckPasswordQuery({
+  const { checkPasswordMutate } = useCheckPasswordMutation({
     onSuccess: () => {
       setIsPwRight(true);
     },
@@ -72,7 +71,7 @@ const ChangePwScreen = () => {
     },
   });
 
-  const { changePasswordMutate } = useChangePasswordQuery({
+  const { changePasswordMutate } = useChangePasswordMutation({
     onSuccess: () => {
       setPopupVisible(true);
     },
@@ -108,29 +107,26 @@ const ChangePwScreen = () => {
   }, [isPwRight, curPassword, confirmPassword, changePassword]);
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: COLOR.WHITE }}>
-      <Header>
-        <Pressable hitSlop={20} onPress={() => myPageNavigation.goBack()}>
-          <IconLeftArrowHead color="#3F3F46" />
-        </Pressable>
-        <Space width="21px" />
-        <FontText value="비밀번호 변경" textSize="18px" lineHeight={23} textWeight="Medium" />
-        <View style={{ flex: 1 }} />
-        <Pressable hitSlop={20} onPress={onPressDone}>
-          <TextButton
-            value="완료"
-            textSize="16px"
-            textColor={isDoneBtnDisabled ? COLOR.GRAY_999 : COLOR.BASIC_BLACK}
-            textWeight="SemiBold"
-            lineHeight={21}
-            onPress={onPressDone}
-            disabled={isDoneBtnDisabled}
-          />
-        </Pressable>
-      </Header>
-
-      <Container>
-        <Space height="39px" />
+    <SafeAreaView className="flex-1 bg-white">
+      <View className="px-16">
+        <View className="flex-row items-center justify-between mb-39">
+          <TouchableOpacity
+            className="flex-row items-center gap-16 py-16"
+            onPress={() => myPageNavigation.goBack()}
+          >
+            <IconLeftArrowHead color="#3F3F46" width={24} />
+            <FontText value="비밀번호 변경" textSize="18px" lineHeight={23} textWeight="Medium" />
+          </TouchableOpacity>
+          <TouchableOpacity onPress={onPressDone} disabled={isDoneBtnDisabled}>
+            <FontText
+              value="완료"
+              textSize="16px"
+              textColor={isDoneBtnDisabled ? COLOR.GRAY_999 : COLOR.BASIC_BLACK}
+              textWeight="SemiBold"
+              lineHeight={21}
+            />
+          </TouchableOpacity>
+        </View>
 
         <FontText
           value="현재 비밀번호"
@@ -139,20 +135,18 @@ const ChangePwScreen = () => {
           lineHeight={21}
           textColor={COLOR.BASIC_BLACK}
         />
-
-        <InputContainer>
-          <PwInput
-            value={curPassword}
-            placeholder={`비밀번호를 입력해주세요`}
-            placeholderTextColor={COLOR.GRAY_BE}
-            inputMode="text"
-            onChangeText={handleCurPasswordChange}
-            autoFocus
-            secureTextEntry
-          />
-        </InputContainer>
+        <Input
+          className="py-12 mt-6 mb-2 px-18 rounded-5 bg-gray-f2"
+          value={curPassword}
+          placeholder={`비밀번호를 입력해주세요`}
+          placeholderTextColor={COLOR.GRAY_BE}
+          inputMode="text"
+          onChangeText={handleCurPasswordChange}
+          autoFocus
+          secureTextEntry
+        />
         {curPassword !== '' && (
-          <MessageContainer>
+          <View className="flex-row items-center mt-6 ml-9">
             {isPwRight ? <IconCheck stroke={COLOR.LIGHT_GREEN} /> : <XCircle width={14} />}
             <FontText
               value={isPwRight ? ' 비밀번호가 확인되었습니다' : ' 비밀번호가 틀립니다'}
@@ -161,78 +155,67 @@ const ChangePwScreen = () => {
               lineHeight={14}
               textColor={isPwRight ? COLOR.LIGHT_GREEN : COLOR.LIGHT_RED}
             />
-          </MessageContainer>
+          </View>
         )}
-
-        <Space height="28px" />
         <FontText
+          className="mt-28"
           value="새로운 비밀번호"
           textSize="14px"
           textWeight="Medium"
           lineHeight={21}
           textColor={COLOR.BASIC_BLACK}
         />
-        <InputContainer>
-          <PwInput
-            value={changePassword}
-            placeholder={`변경하실 비밀번호를 입력해주세요`}
-            placeholderTextColor={COLOR.GRAY_BE}
-            inputMode="text"
-            onChangeText={(text) => checkInputValid(text)}
-            secureTextEntry
-          />
-        </InputContainer>
+        <Input
+          className="py-12 mt-6 mb-2 px-18 rounded-5 bg-gray-f2"
+          value={changePassword}
+          placeholder={`변경하실 비밀번호를 입력해주세요`}
+          placeholderTextColor={COLOR.GRAY_BE}
+          inputMode="text"
+          onChangeText={(text) => checkInputValid(text)}
+          secureTextEntry
+        />
         {isNewEqualsToOld && changePassword !== '' && (
-          <>
-            <MessageContainer>
-              <XCircle height={14} />
-              <FontText
-                value=" 기존 비밀번호는 사용할 수 없어요"
-                textSize="12px"
-                textWeight="Medium"
-                lineHeight={14}
-                textColor={COLOR.LIGHT_RED}
-              />
-            </MessageContainer>
-            <Space height="10px" />
-          </>
+          <View className="flex-row items-center mt-6 mb-10 ml-9">
+            <XCircle height={14} />
+            <FontText
+              value=" 기존 비밀번호는 사용할 수 없어요"
+              textSize="12px"
+              textWeight="Medium"
+              lineHeight="14px"
+              textColor={COLOR.LIGHT_RED}
+            />
+          </View>
         )}
         {!isNewEqualsToOld && changePassword !== '' && (
-          <>
-            <MessageContainer>
-              <IconCheck stroke={lengValidColor} />
-              <Space width="4px" />
-              <FontText
-                value="8자-20자 이내"
-                textSize="12px"
-                textWeight="Medium"
-                textColor={lengValidColor}
-              />
-              <Space width="12px" />
-              <IconCheck stroke={comValidColor} />
-              <Space width="4px" />
-              <FontText
-                value="영어, 숫자, 특수문자 포함"
-                textSize="12px"
-                textWeight="Medium"
-                textColor={comValidColor}
-              />
-            </MessageContainer>
-            <Space height="10px" />
-          </>
+          <View className="flex-row items-center mt-6 mb-10 ml-9">
+            <IconCheck stroke={lengValidColor} />
+            <FontText
+              className="mr-12"
+              value=" 8자-20자 이내"
+              textSize="12px"
+              textWeight="Medium"
+              textColor={lengValidColor}
+            />
+            <IconCheck stroke={comValidColor} />
+            <FontText
+              value=" 영어, 숫자, 특수문자 포함"
+              textSize="12px"
+              textWeight="Medium"
+              textColor={comValidColor}
+            />
+          </View>
         )}
-        <InputContainer>
-          <PwInput
-            value={confirmPassword}
-            placeholder={`비밀번호를 확인해주세요`}
-            placeholderTextColor={COLOR.GRAY_BE}
-            inputMode="text"
-            onChangeText={setConfirmPassword}
-            secureTextEntry
-          />
-        </InputContainer>
+        <Input
+          className="py-12 mt-6 mb-2 px-18 rounded-5 bg-gray-f2"
+          value={confirmPassword}
+          placeholder={`비밀번호를 확인해주세요`}
+          placeholderTextColor={COLOR.GRAY_BE}
+          inputMode="text"
+          onChangeText={setConfirmPassword}
+          secureTextEntry
+        />
         {confirmPassword !== '' && changePassword !== '' && (
-          <MessageContainer>
+          <View className="flex-row items-center mt-6 ml-9">
             {confirmPassword !== changePassword ? (
               <XCircle width={14} />
             ) : (
@@ -249,49 +232,20 @@ const ChangePwScreen = () => {
               lineHeight={14}
               textColor={confirmPassword !== changePassword ? COLOR.LIGHT_RED : COLOR.LIGHT_GREEN}
             />
-          </MessageContainer>
+          </View>
         )}
-      </Container>
 
-      <MyTabModal
-        isVisible={popupVisible}
-        onCancel={() => {
-          handleOnCancel();
-        }}
-        title="비밀번호가 변경되었습니다"
-        cancelText="확인"
-        btnColor={COLOR.GRAY_F9}
-      />
+        <MyTabModal
+          isVisible={popupVisible}
+          onCancel={() => {
+            handleOnCancel();
+          }}
+          title="비밀번호가 변경되었습니다"
+          cancelText="확인"
+          isSingleBtn
+        />
+      </View>
     </SafeAreaView>
   );
 };
 export default ChangePwScreen;
-
-const Header = styled.View`
-  padding: 0 22px;
-  height: 56px;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-`;
-const Container = styled.View`
-  flex: 1;
-  padding: 0 16px;
-`;
-const InputContainer = styled.View`
-  flex-direction: row;
-  align-items: center;
-  padding: 8px 16px 8px 18.25px;
-  margin: 6px 0 2px;
-  background-color: ${COLOR.GRAY_F2};
-  border-radius: 5px;
-`;
-const MessageContainer = styled.View`
-  flex-direction: row;
-  align-items: center;
-  margin: 6px 0 0 9px;
-`;
-const PwInput = styled(Input)`
-  height: 36px;
-  flex: 1;
-`;

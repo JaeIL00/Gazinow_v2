@@ -1,5 +1,12 @@
 import { useMutation } from 'react-query';
-import { changePasswordFetch, checkPasswordFetch, deleteAccountFetch, logoutFetch } from './func';
+import {
+  changePasswordFetch,
+  checkPasswordFetch,
+  deleteAccountFetch,
+  logoutFetch,
+  changeNicknameFetch,
+  checkNicknameFetch,
+} from './func';
 
 /**
  * 로그아웃 요청 훅
@@ -26,7 +33,7 @@ export const useDeleteAccountMutation = ({
 /**
  * 비밀번호 확인 훅
  */
-export const useCheckPasswordQuery = ({
+export const useCheckPasswordMutation = ({
   onSuccess,
   onError,
 }: {
@@ -43,7 +50,7 @@ export const useCheckPasswordQuery = ({
 /**
  * 비밀번호 변경 훅
  */
-export const useChangePasswordQuery = ({
+export const useChangePasswordMutation = ({
   onSuccess,
   onError,
 }: {
@@ -55,4 +62,38 @@ export const useChangePasswordQuery = ({
     onError,
   });
   return { changePasswordMutate };
+};
+
+/**
+ * 닉네임 변경 훅
+ */
+export const useChangeNicknameMutation = ({
+  onSuccess,
+  onError,
+}: {
+  onSuccess: () => void;
+  onError?: (error: any) => void;
+}) => {
+  const { data, mutate } = useMutation(changeNicknameFetch, {
+    onSuccess,
+    onError,
+  });
+  return { data, changeNicknameMutate: mutate };
+};
+
+/**
+ * 닉네임 중복 검사 훅
+ */
+export const useCheckNicknameMutation = ({
+  onSuccess,
+  onError,
+}: {
+  onSuccess: () => void;
+  onError?: (error: any) => void;
+}) => {
+  const { data, mutate } = useMutation(checkNicknameFetch, {
+    onSuccess,
+    onError,
+  });
+  return { data, checkNicknameMutate: mutate };
 };
