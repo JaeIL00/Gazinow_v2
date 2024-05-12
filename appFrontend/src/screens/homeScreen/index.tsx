@@ -26,7 +26,6 @@ const HomeScreen = () => {
         showsVerticalScrollIndicator={false}
         scrollEnabled={isVerifiedUser === 'success auth'}
       >
-        <View className="h-16" />
         <IssueCarrousel />
         <View className="h-16" />
         <SwapStation />

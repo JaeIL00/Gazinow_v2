@@ -46,7 +46,13 @@ const IssueCarrousel = () => {
   if (currentIssues.length < 1) return null;
   return (
     <View
-      style={{ backgroundColor: COLOR.WHITE, borderRadius: 12, padding: 16, flexDirection: 'row' }}
+      style={{
+        backgroundColor: COLOR.WHITE,
+        borderRadius: 12,
+        padding: 16,
+        marginTop: 16,
+        flexDirection: 'row',
+      }}
     >
       <ScrollView
         ref={scrollViewRef}
