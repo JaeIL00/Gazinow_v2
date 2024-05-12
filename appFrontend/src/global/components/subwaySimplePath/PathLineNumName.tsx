@@ -35,16 +35,15 @@ const PathLineNumName = ({ lane, stationName }: PathLineNumNameProps) => {
           textSize={lane.stationCode <= 9 ? '13px' : '6px'}
           textWeight={lane.stationCode <= 9 ? 'SemiBold' : 'Bold'}
           textColor={COLOR.WHITE}
-          lineHeight={lane.stationCode > 9 ? '6px' : undefined}
+          lineHeight={lane.stationCode > 9 ? 6 : undefined}
           style={{ letterSpacing: lane.stationCode > 9 ? -0.3 : undefined }}
         />
         {lane.stationCode <= 9 && <Space height="1px" />}
       </View>
 
       <View
+        className="absolute flex-row"
         style={{
-          position: 'absolute',
-          width: 100,
           top: Dimensions.get('window').fontScale * 22,
         }}
       >
@@ -55,6 +54,15 @@ const PathLineNumName = ({ lane, stationName }: PathLineNumNameProps) => {
           textColor={subwayLineColor(lane.stationCode)}
           textAlign="center"
         />
+        {lane.direct && (
+          <FontText
+            className="ml-2"
+            value="급행"
+            textSize="12px"
+            textWeight="Regular"
+            textColor="#EB5147"
+          />
+        )}
       </View>
     </View>
   );

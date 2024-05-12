@@ -1,10 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
-import styled from '@emotion/native';
 import { COLOR } from '@/global/constants';
 import { useQueryClient } from 'react-query';
 import { IssueContainer, LaneButtons } from './components';
 import { FreshSubwayLineName, IssueContent, NowScreenCapsules } from '@/global/apis/entity';
-import { FlatList, RefreshControl, View } from 'react-native';
+import { FlatList, RefreshControl, SafeAreaView, View } from 'react-native';
 import {
   useGetAllIssuesQuery,
   useGetPopularIssuesQuery,
@@ -13,6 +12,11 @@ import {
 import { FontText, Space } from '@/global/ui';
 import { subwayReturnLineName } from '@/global/utils/subwayLine';
 import LoadingCircle from '@/global/components/animations/LoadingCircle';
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
+
+dayjs.locale('ko');
+dayjs.extend(relativeTime);
 
 const NowScreen = () => {
   const queryClient = useQueryClient();
@@ -70,16 +74,16 @@ const NowScreen = () => {
   }, [activeButton]);
 
   return (
-    <Container>
+    <SafeAreaView className="justify-center flex-1 bg-white">
       {isPopularIssuesLoading || isAllIssuesLoading ? (
-        <View style={{ alignItems: 'center' }}>
+        <View className="items-center">
           <LoadingCircle width={50} height={50} />
         </View>
       ) : (
         <>
-          <Header>
-            <FontText value="NOW" textSize="24px" textWeight="SemiBold" lineHeight="34px" />
-          </Header>
+          <View className="pt-32 pl-16 pb-11">
+            <FontText value="NOW" textSize="24px" textWeight="SemiBold" lineHeight={34} />
+          </View>
           <FlatList
             ListHeaderComponent={
               <>
@@ -91,24 +95,20 @@ const NowScreen = () => {
                         setLayoutHeight(height);
                       }}
                     >
-                      <IssueLineType>
+                      <View className="pt-24 pb-12 pl-16">
                         <FontText
                           value="지금 인기"
                           textSize="20px"
                           textWeight="SemiBold"
-                          lineHeight="25px"
+                          lineHeight={25}
                         />
-                      </IssueLineType>
+                      </View>
                       {popularIssues?.map((item, index) => (
                         <IssueContainer
                           key={item.id}
-                          id={item.id}
-                          title={item.title}
-                          time={item.agoTime}
-                          body={item.content}
+                          issue={item}
                           isLastItem={index === popularIssues.length - 1}
-                          isHeader={true}
-                          lanes={item.lines}
+                          isHeader
                         />
                       ))}
                     </View>
@@ -152,7 +152,7 @@ const NowScreen = () => {
                       value="올라온 이슈가 없어요"
                       textSize="18px"
                       textWeight="Regular"
-                      lineHeight="700px"
+                      lineHeight={700}
                       textColor={COLOR.GRAY_999}
                       textAlign="center"
                     />
@@ -162,13 +162,8 @@ const NowScreen = () => {
                   return (
                     <IssueContainer
                       key={item.id}
-                      id={item.id}
-                      title={item.title}
-                      time={item.agoTime}
-                      body={item.content}
                       isLastItem={index === issuesList.length + 1}
-                      isHeader={false}
-                      lanes={item.lines}
+                      issue={item}
                     />
                   );
               }
@@ -176,7 +171,7 @@ const NowScreen = () => {
             }}
             ListFooterComponent={() => {
               if (issuesList.length > 3) {
-                return <Space height="64px" width="999px" />;
+                return <View className="h-64 w-999" />;
               } else if (issuesList.length < 1) {
                 return null;
               } else {
@@ -196,20 +191,8 @@ const NowScreen = () => {
           />
         </>
       )}
-    </Container>
+    </SafeAreaView>
   );
 };
-
-const Container = styled.SafeAreaView`
-  background-color: ${COLOR.WHITE};
-  flex: 1;
-  justify-content: center;
-`;
-const Header = styled.View`
-  padding: 32px 16px 11px;
-`;
-const IssueLineType = styled.View`
-  padding: 24px 16px 12px;
-`;
 
 export default NowScreen;

@@ -1,5 +1,5 @@
 import { ScrollView, View } from 'react-native';
-import { FontText, Input, Space } from '@/global/ui';
+import { FontText, Input } from '@/global/ui';
 import { COLOR } from '@/global/constants';
 import IconCheck from '@assets/icons/check.svg';
 import { useState } from 'react';
@@ -45,15 +45,14 @@ const PasswordStep = ({
   return (
     <>
       {isTermsOpenModal && <SubscribeTermsModal setStep={setStep} closeModal={closeModal} />}
-      <View style={{ flex: 1 }}>
-        <View>
+      <View className="flex-1">
+        <View className="gap-10">
           <FontText
             value="회원가입"
             textSize="24px"
             textWeight="Bold"
             textColor={COLOR.BASIC_BLACK}
           />
-          <Space height="10px" />
           <FontText
             value="비밀번호를 입력해주세요"
             textSize="13px"
@@ -62,19 +61,9 @@ const PasswordStep = ({
           />
         </View>
 
-        <ScrollView style={{ marginTop: 51, flex: 1 }}>
+        <ScrollView className="flex-1 mt-51">
           <FontText value="Email" textSize="14px" textWeight="Medium" textColor="#7C8183" />
-          <View
-            style={{
-              height: 48,
-              paddingHorizontal: 16,
-              borderRadius: 5,
-              backgroundColor: COLOR.GRAY_F2,
-              justifyContent: 'center',
-              marginTop: 6,
-              marginBottom: 20,
-            }}
-          >
+          <View className="h-48 px-16 rounded-5 bg-gray-f2 justify-center mt-6 mb-20">
             <FontText
               value={emailValue}
               textSize="16px"
@@ -83,16 +72,7 @@ const PasswordStep = ({
             />
           </View>
           <FontText value="Password" textSize="14px" textWeight="Medium" textColor="#7C8183" />
-          <View
-            style={{
-              paddingVertical: 13,
-              paddingHorizontal: 16,
-              borderRadius: 5,
-              backgroundColor: COLOR.GRAY_F2,
-              justifyContent: 'center',
-              marginTop: 6,
-            }}
-          >
+          <View className="px-16 py-13 rounded-5 bg-gray-f2 justify-center mt-6">
             <Input
               value={passwordValue}
               placeholder="비밀번호 입력"
@@ -100,36 +80,27 @@ const PasswordStep = ({
               fontSize="16px"
               onChangeText={(text) => changeEmailHandler(text)}
               secureTextEntry
-              style={{ height: 25 }}
+              className="h-25"
             />
           </View>
-          <View
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              marginLeft: 9,
-              marginTop: 8,
-            }}
-          >
+          <View className="flex-row items-center ml-9 mt-8 mb-40">
             <IconCheck width={12} height={12} color={lengValidColor} />
-            <Space width="4px" />
             <FontText
               value="8자-20자 이내"
               textSize="12px"
               textWeight="Medium"
               textColor={lengValidColor}
+              className="ml-4 mr-12"
             />
-            <Space width="12px" />
             <IconCheck width={12} height={12} color={comValidColor} />
-            <Space width="4px" />
             <FontText
               value="영어, 숫자, 특수문자 포함"
               textSize="12px"
               textWeight="Medium"
               textColor={comValidColor}
+              className="mr-12"
             />
           </View>
-          <Space height="40px" />
         </ScrollView>
 
         <StepButton

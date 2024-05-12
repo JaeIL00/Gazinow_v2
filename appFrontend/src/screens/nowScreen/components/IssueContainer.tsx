@@ -1,90 +1,62 @@
 import React from 'react';
-import styled from '@emotion/native';
-import { FontText, Space } from '@/global/ui';
+import { FontText } from '@/global/ui';
 import { COLOR } from '@/global/constants';
 import { useAppDispatch } from '@/store';
 import { getIssueId } from '@/store/modules';
 import { useRootNavigation } from '@/navigation/RootNavigation';
 import dayjs from 'dayjs';
-import LaneCapsulesPerIssue from './LaneCapsulesPerIssue';
-import { RawSubwayLineName } from '@/global/apis/entity';
+import { IssueContent } from '@/global/apis/entity';
+import { LaneCapsulesPerIssue } from '.';
+import { View } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 interface IssueDetailProps {
-  id: number;
-  title: string;
-  time: string;
-  body: string;
+  issue: IssueContent;
   isLastItem: boolean;
-  isHeader: boolean;
-  lanes: RawSubwayLineName[];
+  isHeader?: boolean;
 }
 
-const IssueContainer = ({
-  id,
-  title,
-  time,
-  body,
-  isLastItem,
-  isHeader,
-  lanes,
-}: IssueDetailProps) => {
+const IssueContainer = ({ issue, isLastItem, isHeader }: IssueDetailProps) => {
   const dispatch = useAppDispatch();
   const navigation = useRootNavigation();
 
   return (
     <>
-      <LaneCapsulesPerIssue lanes={lanes} />
-      <IssueList
+      <TouchableOpacity
+        className="px-16 pb-16"
         onPress={() => {
-          dispatch(getIssueId(id));
+          dispatch(getIssueId(issue.id));
           navigation.navigate('IssueStack', { screen: 'IssueDetail' });
         }}
       >
-        <TextContainer>
-          <FontText
-            value={title}
-            textSize="16px"
-            textWeight="SemiBold"
-            lineHeight="21px"
-            numberOfLines={2}
-          />
-          <Space height="4px" />
-          <FontText
-            value={dayjs(time).fromNow()}
-            textSize="14px"
-            textWeight="Regular"
-            lineHeight="21px"
-            textColor={COLOR.GRAY_999}
-          />
-          <Space height="4px" />
-          <FontText
-            value={body}
-            textSize="14px"
-            textWeight="Regular"
-            lineHeight="21px"
-            textColor="#6A6A6A"
-            numberOfLines={2}
-          />
-        </TextContainer>
-        <Space width="12px" />
-      </IssueList>
-      {!isLastItem && <Space height="1px" width="999px" backgroundColor={COLOR.GRAY_F8} />}
+        <LaneCapsulesPerIssue lanes={issue.lines} />
+        <FontText value={issue.title} textSize="16px" textWeight="SemiBold" numberOfLines={2} />
+        <View className="h-4" />
+        <FontText
+          value={dayjs(issue.agoTime).fromNow()}
+          textSize="14px"
+          textWeight="Regular"
+          textColor={COLOR.GRAY_999}
+        />
+        <View className="h-4" />
+        <FontText
+          value={issue.content}
+          textSize="14px"
+          textWeight="Regular"
+          textColor="#6A6A6A"
+          numberOfLines={2}
+        />
+      </TouchableOpacity>
+      {!isLastItem && <View className="h-1 w-999 bg-gray-f8" />}
       {isHeader && isLastItem && (
         <>
-          <Space height="12px" width="999px" backgroundColor={COLOR.WHITE} />
-          <Space height="8px" width="999px" backgroundColor={COLOR.GRAY_F8} />
-          <Space height="12px" width="999px" backgroundColor={COLOR.WHITE} />
+          <View className="h-12 bg-white w-999" />
+          <View className="h-8 w-999 bg-gray-f8" />
+          <View className="h-12 bg-white w-999" />
         </>
       )}
     </>
   );
 };
 
-const IssueList = styled.Pressable`
-  padding: 0 16px 16px;
-  flex-direction: row;
-`;
-const TextContainer = styled.View`
-  flex: 3.3;
-`;
 export default IssueContainer;

@@ -1,36 +1,40 @@
-import styled from '@emotion/native';
+import { Text } from 'react-native';
 import type { TextProps } from 'react-native/types';
 
-import { COLOR } from '@/global/constants';
-
-interface NormalTextProps extends TextProps, TextStyleProps {
+interface NormalTextProps extends TextProps {
   value: string;
+  textSize: string;
+  textWeight: 'Bold' | 'SemiBold' | 'Medium' | 'Regular';
+  textColor?: string;
+  lineHeight?: number;
+  textAlign?: 'center';
 }
 
-const FontText = (props: NormalTextProps) => {
+const FontText = ({
+  textWeight,
+  lineHeight,
+  textAlign,
+  textSize,
+  textColor,
+  ...props
+}: NormalTextProps) => {
   const { value } = props;
 
   return (
-    <Normal {...props} allowFontScaling>
+    <Text
+      {...props}
+      allowFontScaling
+      style={{
+        fontFamily: `Pretendard-${textWeight}`,
+        lineHeight,
+        textAlign,
+        fontSize: Number(textSize.split('px')[0]),
+        color: textColor,
+      }}
+    >
       {value}
-    </Normal>
+    </Text>
   );
 };
 
 export default FontText;
-
-interface TextStyleProps {
-  textSize: string;
-  textWeight: 'Bold' | 'SemiBold' | 'Medium' | 'Regular';
-  textColor?: string;
-  lineHeight?: string;
-  textAlign?: 'center';
-}
-
-const Normal = styled.Text<TextStyleProps>`
-  font-size: ${({ textSize }) => textSize};
-  font-family: Pretendard-${({ textWeight }) => textWeight};
-  color: ${({ textColor = COLOR.BASIC_BLACK }) => textColor};
-  line-height: ${({ lineHeight }) => lineHeight};
-  text-align: ${({ textAlign }) => textAlign};
-`;
