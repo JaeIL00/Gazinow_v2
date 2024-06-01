@@ -1,6 +1,6 @@
 import { View } from 'react-native';
 import type { TextInput } from 'react-native/types';
-import { FontText, Input, Space } from '@/global/ui';
+import { FontText, Input } from '@/global/ui';
 import { COLOR } from '@/global/constants';
 import { useEffect, useRef, useState } from 'react';
 import { useEmailConfirm } from '../apis/hooks';
@@ -28,7 +28,7 @@ interface EmailStepProps {
 const EmailStep = ({ emailValue, setStep, changeEmailValue }: EmailStepProps) => {
   const inputRef = useRef<TextInput>(null);
 
-  const { authNumber, resetAuthNumber, emailConfirmMutate } = useEmailConfirm({
+  const { authNumber, resetAuthNumber, emailConfirmMutate, isLoading } = useEmailConfirm({
     onSuccess: () => {
       setIsOpenConfirmModal(true);
     },
@@ -99,18 +99,18 @@ const EmailStep = ({ emailValue, setStep, changeEmailValue }: EmailStepProps) =>
           closeModal={closeModal}
           setStep={setStep}
           emailConfirmMutateHandler={emailConfirmMutateHandler}
+          isLoading={isLoading}
         />
       )}
 
-      <View style={{ flex: 1 }}>
-        <View style={{ marginBottom: 51 }}>
+      <View className="flex-1">
+        <View className="mb-51 gap-10">
           <FontText
             value="회원가입"
             textSize="24px"
             textWeight="Bold"
             textColor={COLOR.BASIC_BLACK}
           />
-          <Space height="10px" />
           <FontText
             value="본인인증을 위한 이메일을 입력해주세요"
             textSize="13px"
@@ -119,19 +119,9 @@ const EmailStep = ({ emailValue, setStep, changeEmailValue }: EmailStepProps) =>
           />
         </View>
 
-        <View style={{ flex: 1 }}>
+        <View className="flex-1">
           <FontText value="Email" textSize="14px" textWeight="Medium" textColor="#7c8183" />
-          <View
-            style={{
-              backgroundColor: COLOR.GRAY_F2,
-              paddingVertical: 13,
-              marginTop: 6,
-              marginBottom: 8,
-              justifyContent: 'center',
-              paddingLeft: 16,
-              borderRadius: 5,
-            }}
-          >
+          <View className="bg-gray-f2 py-13 mt-6 mb-8 justify-center pl-16 rounded-5">
             <Input
               isBlur={isOpenConfirmModal}
               value={emailValue}
@@ -140,14 +130,14 @@ const EmailStep = ({ emailValue, setStep, changeEmailValue }: EmailStepProps) =>
               fontSize="16px"
               onChangeText={(text) => changeEmailHandler(text)}
               keyboardType="email-address"
-              style={{ height: 25 }}
+              className="h-25"
             />
           </View>
-          <View style={{ flexDirection: 'row', alignItems: 'center', marginLeft: 9 }}>
+          <View className="flex-row items-center ml-9">
             {!errorMessage && isValidEmail && (
               <>
                 <IconCheck width={14} height={14} color={COLOR.LIGHT_GREEN} />
-                <Space width="3px" />
+                <View className="w-3" />
                 <FontText
                   value="올바른 이메일 형식입니다"
                   textSize="12px"
@@ -159,7 +149,7 @@ const EmailStep = ({ emailValue, setStep, changeEmailValue }: EmailStepProps) =>
             {!errorMessage && !isValidEmail && emailValue && (
               <>
                 <IconXCircle width={14} height={14} />
-                <Space width="3px" />
+                <View className="w-3" />
                 <FontText
                   value="올바른 이메일 형식이 아닙니다"
                   textSize="12px"
@@ -171,7 +161,7 @@ const EmailStep = ({ emailValue, setStep, changeEmailValue }: EmailStepProps) =>
             {errorMessage && (
               <>
                 <IconXCircle width={14} height={14} />
-                <Space width="3px" />
+                <View className="w-3" />
                 <FontText
                   value={errorMessage}
                   textSize="12px"
@@ -187,7 +177,8 @@ const EmailStep = ({ emailValue, setStep, changeEmailValue }: EmailStepProps) =>
           value="인증메일 전송"
           backgroundCondition={isValidEmail}
           onPress={emailConfirmMutateHandler}
-          disabled={!isValidEmail}
+          disabled={!isValidEmail || isLoading}
+          isLoading={isLoading}
         />
       </View>
     </>

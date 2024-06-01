@@ -1,15 +1,10 @@
 import {
-  changeNicknameFetch,
-  changePasswordFetch,
-  checkPasswordFetch,
-  deleteAccountFetch,
   getPopularIssuesFetch,
   getSavedRoutesFetch,
   getSearchRoutesFetch,
-  saveMyRoutesFetch,
   searchStationName,
 } from './func';
-import { useMutation, useQuery } from 'react-query';
+import { useMutation, useQuery, useInfiniteQuery } from 'react-query';
 import {
   searchAddHistoryFetch,
   searchHistoryFetch,
@@ -19,7 +14,7 @@ import {
   getAllIssuesFetch,
   getIssuesByLaneFetch,
 } from '@/global/apis/func';
-import { IssueContent, RawSubwayLineName, SubwayStrEnd } from './entity';
+import { RawSubwayLineName, MyRoutesType, SubwayStrEnd } from './entity';
 import { AxiosError } from 'axios';
 import { subwayFreshLineName } from '@/global/utils';
 import { useAppSelect } from '@/store';
@@ -69,10 +64,15 @@ export const useGetSearchPaths = ({
   params: SubwayStrEnd;
   enabled: boolean;
 }) => {
-  const { data } = useQuery(['search_paths', params], () => searchPathsFetch(params), {
-    enabled,
-  });
-  return { data };
+  const isVerifiedUser = useAppSelect((state) => state.auth.isVerifiedUser);
+  const { data, isLoading } = useQuery(
+    ['search_paths', params],
+    () => searchPathsFetch({ params, isVerifiedUser }),
+    {
+      enabled,
+    },
+  );
+  return { data, isLoading };
 };
 
 /**
@@ -82,26 +82,26 @@ export const useSavedSubwayRoute = ({
   onSuccess,
   onError,
 }: {
-  onSuccess: () => void;
+  onSuccess: (data: number) => void;
   onError: (error: AxiosError) => void;
 }) => {
-  const { data, mutate } = useMutation(searchPathSaveFetch, {
+  const { data, isLoading, mutate } = useMutation(searchPathSaveFetch, {
     onSuccess,
     onError,
   });
 
-  return { data, mutate };
+  return { data, isLoading, mutate };
 };
 
 /**
  * 저장한 지하철 경로 삭제 훅
  */
 export const useDeleteSavedSubwayRoute = ({ onSuccess }: { onSuccess: () => void }) => {
-  const { data, mutate } = useMutation(searchPathDeleteFetch, {
+  const { data, isLoading, mutate } = useMutation(searchPathDeleteFetch, {
     onSuccess,
   });
 
-  return { data, deleteMutate: mutate };
+  return { data, isLoading, deleteMutate: mutate };
 };
 
 /**
@@ -122,20 +122,6 @@ export const useAddRecentSearch = ({
 };
 
 /**
- * 회원 탈퇴 훅
- */
-export const useDeleteAccountMutation = ({
-  onSuccess,
-  onError,
-}: {
-  onSuccess: () => void;
-  onError: (error: any) => void;
-}) => {
-  const { mutate: deleteAccountMutate } = useMutation(deleteAccountFetch, { onSuccess, onError });
-  return { deleteAccountMutate };
-};
-
-/**
  * 검색한 지하철 경로 조회 훅
  */
 export const useGetSearchRoutesQuery = () => {
@@ -149,108 +135,71 @@ export const useGetSearchRoutesQuery = () => {
 /**
  * 저장한 지하철 경로 조회 훅
  */
-export const useGetSavedRoutesQuery = () => {
+export const useGetSavedRoutesQuery = ({
+  onSuccess,
+}: { onSuccess?: (data: MyRoutesType[]) => void } = {}) => {
   const isVerifiedUser = useAppSelect((state) => state.auth.isVerifiedUser);
   const { data } = useQuery(['getRoads'], getSavedRoutesFetch, {
     enabled: isVerifiedUser === 'success auth',
+    onSuccess,
   });
   return { data };
-};
-
-/**
- * 내 경로 저장 훅
- */
-export const useSaveMyRoutesQuery = ({
-  onSuccess,
-  onError,
-}: {
-  onSuccess: () => void;
-  onError?: (error: any) => void;
-}) => {
-  const { data, mutate } = useMutation(saveMyRoutesFetch, {
-    onSuccess,
-    onError,
-  });
-  return { data, mutate };
-};
-
-/**
- * 닉네임 변경 훅
- */
-export const useChangeNicknameQuery = ({
-  onSuccess,
-  onError,
-}: {
-  onSuccess: () => void;
-  onError?: (error: any) => void;
-}) => {
-  const { data, mutate } = useMutation(changeNicknameFetch, {
-    onSuccess,
-    onError,
-  });
-  return { data, mutate };
-};
-
-/**
- * 비밀번호 확인 훅
- */
-export const useCheckPasswordQuery = ({
-  onSuccess,
-  onError,
-}: {
-  onSuccess: () => void;
-  onError?: (error: any) => void;
-}) => {
-  const { mutate: checkPasswordMutate } = useMutation(checkPasswordFetch, {
-    onSuccess,
-    onError,
-  });
-  return { checkPasswordMutate };
-};
-
-/**
- * 비밀번호 변경 훅
- */
-export const useChangePasswordQuery = ({
-  onSuccess,
-  onError,
-}: {
-  onSuccess: () => void;
-  onError?: (error: any) => void;
-}) => {
-  const { mutate: changePasswordMutate } = useMutation(changePasswordFetch, {
-    onSuccess,
-    onError,
-  });
-  return { changePasswordMutate };
 };
 
 /**
  * 이슈 전체 조회 훅
  */
 export const useGetAllIssuesQuery = () => {
-  const { data } = useQuery(['getAllIssues'], getAllIssuesFetch);
-  return { data };
+  const { data, refetch, fetchNextPage, hasNextPage, isLoading } = useInfiniteQuery(
+    ['getAllIssues'],
+    ({ pageParam = 0 }) => getAllIssuesFetch({ page: pageParam }),
+    {
+      getNextPageParam: (lastPage, allPages) => {
+        if (lastPage?.content && lastPage?.content.length < 15) return undefined;
+        return allPages.length;
+      },
+    },
+  );
+  return {
+    allIssues: data,
+    allIssuesRefetch: refetch,
+    fetchAllIssuesNextPage: fetchNextPage,
+    allIssuesHasNextPage: hasNextPage,
+    isAllIssuesLoading: isLoading,
+  };
 };
 
 /**
  * 이슈 노선별 조회 훅
  */
 export const useGetIssuesByLaneQuery = (line: string) => {
-  const { data } = useQuery(['getIssuesByLane'], () => getIssuesByLaneFetch({ line }));
-  return { data };
+  const { data, refetch, fetchNextPage, hasNextPage } = useInfiniteQuery(
+    ['getIssuesByLane', line],
+    ({ pageParam = 0 }) => getIssuesByLaneFetch({ page: pageParam, line }),
+    {
+      getNextPageParam: (lastPage, allPages) => {
+        if (lastPage?.content && lastPage?.content.length < 15) return undefined;
+        return allPages.length;
+      },
+      enabled: line !== '수도권 전체',
+    },
+  );
+  return {
+    laneIssues: data,
+    laneIssuesRefetch: refetch,
+    fetchLaneIssuesNextPage: fetchNextPage,
+    laneIssuesHasNextPage: hasNextPage,
+  };
 };
 
 /**
  * 이슈 추천순 조회 훅
  */
-export const useGetPopularIssuesQuery = ({
-  onSuccess,
-}: {
-  onSuccess: (data: IssueContent[]) => void;
-}) => {
-  const { data, refetch } = useQuery(['getPopularIssues'], getPopularIssuesFetch, {
-    onSuccess,
-  });
-  return { popularIssues: data, popularIssuesRefetch: refetch };
+export const useGetPopularIssuesQuery = () => {
+  const { data, refetch, isLoading } = useQuery(['getPopularIssues'], getPopularIssuesFetch);
+  return {
+    popularIssues: data,
+    popularIssuesRefetch: refetch,
+    isPopularIssuesLoading: isLoading,
+  };
 };

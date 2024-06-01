@@ -2,6 +2,8 @@ const COLOR = {
   WHITE: '#ffffff' as const,
   REAL_BLACK: '#000' as const,
   BASIC_BLACK: '#171717' as const,
+  RGB_WHITE: [255, 255, 255] as number[],
+  RGB_GRAY_999: [153, 153, 153] as number[],
   GRAY_F9: '#F9F9F9' as const,
   GRAY_F8: '#F8F8F8' as const,
   GRAY_F2: '#f2f2f2' as const,
@@ -38,6 +40,28 @@ const COLOR = {
   LINESL: '#547FB7' as const, // 신림
   LINEIO: '#94B9EA' as const, // 인천1
   LINEIT: '#FB9A41' as const, // 인천2
+  NOW_LINE1: '#D6DCF3' as const,
+  NOW_LINE2: '#CEF7E5' as const,
+  NOW_LINE3: '#FFE4D3' as const,
+  NOW_LINE4: '#CFF0FB' as const,
+  NOW_LINE5: '#E8DCF8' as const,
+  NOW_LINE6: '#F3DFD1' as const,
+  NOW_LINE7: '#E9EAD9' as const,
+  NOW_LINE8: '#F9D7E6' as const,
+  NOW_LINE9: '#EDECE6' as const,
+  NOW_LINEEGB: '#F8E8D4' as const, // 의정부
+  NOW_LINEEL: '#E2EEDF' as const, // 에버라인
+  NOW_LINEGG: '#E9E3D3' as const, // 김포골드
+  NOW_LINEGH: '#CDE3EF' as const, // 공항철도
+  NOW_LINEKC: '#CDE4E0' as const, // 경춘선
+  NOW_LINEKJ: '#E0F4F0' as const, // 경의중앙
+  NOW_LINEKK: '#CCD6E9' as const, // 경강선
+  NOW_LINENBD: '#F3D5DA' as const, // 신분당
+  NOW_LINESBD: '#FCF0D4' as const, // 수인분당
+  NOW_LINESH: '#E1F0D6' as const, // 서해선
+  NOW_LINEUS: '#F1F5CD' as const, // 우이신설
+  NOW_LINESL: '#DEE4F1' as const, // 신림
+  NOW_LINEIO: '#EAF1FB' as const, // 인천1
+  NOW_LINEIT: '#FEEAD9' as const, // 인천2
 };
-
 export default COLOR;

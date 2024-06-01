@@ -90,6 +90,7 @@ export interface SearchPathsTypes {
  * 지하철 경로 데이터
  */
 export interface Path {
+  id?: number;
   totalTime: number;
   subwayTransitCount: number;
   firstStartStation: string;
@@ -147,6 +148,7 @@ export type StationCode =
  * 지하철 경로 호선 데이터
  */
 export interface Lane {
+  direct: boolean;
   name: string;
   stationCode: StationCode;
   startName: string;
@@ -179,13 +181,12 @@ export interface SubwayStrEnd {
   endStationLine: RawSubwayLineName;
 }
 
-export interface SavedRoute extends Path {
+export interface SaveMyRoutesType extends Path {
   roadName: string;
 }
 
-export interface RenderSavedRoutesType extends Path {
+export interface MyRoutesType extends Path {
   roadName: string;
-  id: number;
 }
 
 export type IssueKeywords = '자연재해' | '연착' | '혼잡' | '행사' | '사고' | '공사' | '시위';
@@ -203,7 +204,7 @@ export interface IssueContent {
   title: string;
   content: string;
   agoTime: string;
-  line: RawSubwayLineName;
+  lines: RawSubwayLineName[];
   likeCount: number;
   startDate: string;
   expireDate: string;

@@ -38,7 +38,7 @@ const IssueDetailScreen = () => {
     [issueData, isVerifiedUser],
   );
 
-  const createIssueDate = dayjs(issueData?.startDate).fromNow();
+  const startIssueDate = dayjs(issueData?.startDate).fromNow();
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: COLOR.GRAY_F9 }}>
@@ -129,8 +129,8 @@ const IssueDetailScreen = () => {
             showsVerticalScrollIndicator={false}
           >
             <View style={{ marginBottom: 20 }}>
-              <FontText value={issueData.title} textSize="20px" textWeight="Bold" />
-              <FontText value={createIssueDate} textSize="12px" textWeight="Regular" />
+              <FontText value={issueData.title} textSize="20px" textWeight="SemiBold" />
+              <FontText value={startIssueDate} textSize="12px" textWeight="Regular" />
             </View>
             <View
               style={{
@@ -140,12 +140,18 @@ const IssueDetailScreen = () => {
                 borderBottomWidth: 1,
               }}
             >
-              <FontText value={issueData.content} textSize="14px" textWeight="Regular" />
+              <FontText
+                value={issueData.content}
+                textSize="16px"
+                textWeight="Regular"
+                lineHeight={21}
+                textColor={COLOR.REAL_BLACK}
+              />
             </View>
 
             <View
               style={{
-                paddingTop: 17,
+                paddingVertical: 17,
                 flexDirection: 'row',
                 alignItems: 'center',
                 justifyContent: 'space-between',
@@ -159,10 +165,10 @@ const IssueDetailScreen = () => {
               >
                 <FontText
                   value="도움돼요"
-                  textSize="12px"
+                  textSize="14px"
                   textWeight="Medium"
                   textColor={issueData.isLike ? COLOR.LIGHT_BLUE : COLOR.GRAY_999}
-                  style={{ marginRight: 5 }}
+                  style={{ marginRight: 5, letterSpacing: -0.2 }}
                 />
                 <IconThumsUp
                   color={issueData?.isLike ? COLOR.LIGHT_BLUE : COLOR.GRAY_999}

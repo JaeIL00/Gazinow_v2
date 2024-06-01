@@ -1,5 +1,3 @@
-#import <CodePush/CodePush.h>
-
 #import "AppDelegate.h"
 
 #import <React/RCTBundleURLProvider.h>
@@ -7,10 +5,6 @@
 #import "RNCConfig.h"
 
 #import "RNSplashScreen.h"
-
-#import <AppCenterReactNative.h>
-#import <AppCenterReactNativeAnalytics.h>
-#import <AppCenterReactNativeCrashes.h>
 
 
 @implementation AppDelegate
@@ -23,10 +17,6 @@
   self.initialProps = @{};
   
   bool didFinish = [super application:application didFinishLaunchingWithOptions:launchOptions];
-  
-  [AppCenterReactNative register];
-  [AppCenterReactNativeAnalytics registerWithInitiallyEnabled:true];
-  [AppCenterReactNativeCrashes registerWithAutomaticProcessing];
   
   [RNSplashScreen show];  // this needs to be called after [super application:application didFinishLaunchingWithOptions:launchOptions];
   
@@ -43,7 +33,7 @@
 #if DEBUG
   return [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index"];
 #else
-  return [CodePush bundleURL];
+  return [[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"];
 #endif
 }
 

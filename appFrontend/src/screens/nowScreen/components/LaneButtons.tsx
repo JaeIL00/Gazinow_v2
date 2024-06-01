@@ -1,28 +1,40 @@
 import React from 'react';
-import styled from '@emotion/native';
-import { FontText, Space } from '@/global/ui';
-import { COLOR } from '@/global/constants';
+import { FontText } from '@/global/ui';
 import { useGetSavedRoutesQuery } from '@/global/apis/hooks';
 import { FreshSubwayLineName, NowScreenCapsules, SubPath } from '@/global/apis/entity';
-import { ScrollView } from 'react-native';
+import { ScrollView, View } from 'react-native';
 import { allLines, pathSubwayLineNameInLine } from '@/global/utils/subwayLine';
+import { useAppSelect } from '@/store';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import cn from 'classname';
 
 interface LaneButtonsProps {
   activeButton: NowScreenCapsules;
   setActiveButton: (activeButton: NowScreenCapsules) => void;
+  titleNotShown: boolean;
 }
 
 //TODO: + 버튼 구현
-const LaneButtons = ({ activeButton, setActiveButton }: LaneButtonsProps) => {
+const LaneButtons = ({ activeButton, setActiveButton, titleNotShown }: LaneButtonsProps) => {
+  const isVerifiedUser = useAppSelect((state) => state.auth.isVerifiedUser);
+
   // 내가 저장한 경로의 노선만 가져옴
   const { data: savedRoutes } = useGetSavedRoutesQuery();
-  const savedStations = savedRoutes?.reduce((acc, current) => {
-    const { subPaths } = current;
-    const lineOfSubPath = subPaths.map((sub: SubPath) => {
-      return pathSubwayLineNameInLine(sub.lanes[0].stationCode);
-    });
-    return Array.from(new Set([...acc, ...lineOfSubPath])).sort();
-  }, [] as string[]);
+
+  let savedStations: string[] | undefined;
+
+  // isVerifiedUser 상태에 따라 표시할 노선 캡슐 변경
+  if (isVerifiedUser === 'success auth') {
+    savedStations = savedRoutes?.reduce((acc, current) => {
+      const { subPaths } = current;
+      const lineOfSubPath = subPaths.map((sub: SubPath) => {
+        return pathSubwayLineNameInLine(sub.lanes[0].stationCode);
+      });
+      return Array.from(new Set([...acc, ...lineOfSubPath])).sort();
+    }, [] as string[]);
+  } else {
+    savedStations = [];
+  }
 
   // savedStations에 없는 나머지 노선
   const otherStations: FreshSubwayLineName[] = allLines.filter(
@@ -30,53 +42,46 @@ const LaneButtons = ({ activeButton, setActiveButton }: LaneButtonsProps) => {
   );
 
   return (
-    <>
-      <IssueLineType>
-        <FontText
-          value={activeButton === '전체' ? '전체' : `${activeButton} NOW`}
-          textSize="20px"
-          textWeight="SemiBold"
-          lineHeight="25px"
-        />
-      </IssueLineType>
-      <ScrollView
-        horizontal={true}
-        showsHorizontalScrollIndicator={false}
-        style={{ flexDirection: 'row', paddingVertical: 12 }}
-      >
-        <Space width="16px" />
-        {savedStations &&
-          ['전체', ...savedStations, ...otherStations].map((text) => (
-            <ButtonStyle
-              key={text}
-              onPress={() => setActiveButton(text as NowScreenCapsules)}
-              activeButton={activeButton === text}
-            >
-              <FontText
-                value={text}
-                textSize="16px"
-                textWeight="Medium"
-                lineHeight="21px"
-                textColor={activeButton === text ? 'white' : '#969696'}
-              />
-            </ButtonStyle>
-          ))}
-        <Space width="16px" />
-      </ScrollView>
-    </>
+    <View className="bg-white">
+      {!titleNotShown ? (
+        <View className="pt-24 px-16 pb-12">
+          <FontText
+            value={activeButton === '전체' ? '전체' : `${activeButton} NOW`}
+            textSize="20px"
+            textWeight="SemiBold"
+            lineHeight={25}
+          />
+        </View>
+      ) : (
+        <ScrollView
+          horizontal={true}
+          showsHorizontalScrollIndicator={false}
+          className="flex-row py-12"
+        >
+          <View className="w-16" />
+          {savedStations &&
+            ['전체', ...savedStations, ...otherStations].map((text) => (
+              <TouchableOpacity
+                key={text}
+                onPress={() => setActiveButton(text as NowScreenCapsules)}
+                className={cn('px-12 py-8 mr-6 rounded-999 border-1', {
+                  'bg-black-17 border-transparent': activeButton === text,
+                  'bg-white border-gray-eb': activeButton !== text,
+                })}
+              >
+                <FontText
+                  value={text}
+                  textSize="14px"
+                  textWeight="Medium"
+                  textColor={activeButton === text ? 'white' : '#969696'}
+                />
+              </TouchableOpacity>
+            ))}
+          <View className="w-16" />
+        </ScrollView>
+      )}
+    </View>
   );
 };
 
-const ButtonStyle = styled.TouchableOpacity<{ activeButton: boolean }>`
-  border-width: 1px;
-  border-color: ${({ activeButton }) => (activeButton ? 'transparent' : COLOR.GRAY_EB)};
-  border-radius: 999px;
-  padding-vertical: 8px;
-  padding-horizontal: 16px;
-  margin-right: 6px;
-  background-color: ${({ activeButton }) => (activeButton ? '#171717' : 'white')};
-`;
-const IssueLineType = styled.View`
-  padding: 24px 16px 12px;
-`;
 export default LaneButtons;

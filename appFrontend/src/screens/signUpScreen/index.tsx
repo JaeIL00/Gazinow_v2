@@ -2,9 +2,11 @@ import { useState } from 'react';
 import { KeyboardAvoidingView, Platform, SafeAreaView, TouchableOpacity, View } from 'react-native';
 import { CompleteStep, EmailStep, NicknameStep, PasswordStep } from './components';
 import { COLOR } from '@/global/constants';
-import { SignUpParams, SignUpStepType } from './type';
 import { useAuthNavigation } from '@/navigation/AuthNavigation';
 import IconLeftArrow from '@assets/icons/left_arrow_round.svg';
+import { SignUpParams } from './apis/entity';
+
+export type SignUpStepType = 'email' | 'password' | 'nickname' | 'complete';
 
 const SignUpScreen = () => {
   const navigation = useAuthNavigation();
@@ -40,23 +42,12 @@ const SignUpScreen = () => {
   };
 
   return (
-    <SafeAreaView
-      style={{
-        flex: 1,
-        backgroundColor: COLOR.GRAY_F9,
-      }}
-    >
-      <View
-        style={{
-          paddingTop: 30,
-          paddingHorizontal: 16,
-          flex: 1,
-        }}
-      >
+    <SafeAreaView className="flex-1 bg-gray-f9">
+      <View className="flex-1 pt-30 px-16">
         <TouchableOpacity
           hitSlop={10}
           activeOpacity={1}
-          style={{ marginBottom: 43 }}
+          className="mb-43"
           disabled={step === 'complete'}
           onPress={backStepHandler}
         >
@@ -64,7 +55,7 @@ const SignUpScreen = () => {
         </TouchableOpacity>
 
         <KeyboardAvoidingView
-          style={{ flex: 1 }}
+          className="flex-1"
           behavior={Platform.OS === 'ios' ? 'padding' : undefined}
           keyboardVerticalOffset={30}
         >

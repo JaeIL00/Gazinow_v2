@@ -1,5 +1,5 @@
 import { COLOR } from '@/global/constants';
-import { FontText, Input, Space, TextButton } from '@/global/ui';
+import { FontText, Input, TextButton } from '@/global/ui';
 import { useEffect, useRef, useState } from 'react';
 import {
   Animated,
@@ -14,6 +14,7 @@ import IconXCircle from '@assets/icons/x-circle-standard.svg';
 import StepButton from '../ui/StepButton';
 import { getStatusBarHeight } from 'react-native-status-bar-height';
 import IconLeftArrow from '@assets/icons/left_arrow_round.svg';
+import LoadingCircle from '@/global/components/animations/LoadingCircle';
 
 interface ConfirmEmailModalProps {
   authNumber: string;
@@ -21,6 +22,7 @@ interface ConfirmEmailModalProps {
   closeModal: () => void;
   setStep: () => void;
   emailConfirmMutateHandler: () => void;
+  isLoading: boolean;
 }
 
 const ConfirmEmailModal = ({
@@ -29,6 +31,7 @@ const ConfirmEmailModal = ({
   closeModal,
   setStep,
   emailConfirmMutateHandler,
+  isLoading,
 }: ConfirmEmailModalProps) => {
   const StatusBarHeight = Platform.OS === 'ios' ? getStatusBarHeight(true) + 30 : 30;
 
@@ -67,32 +70,19 @@ const ConfirmEmailModal = ({
       // presentationStyle="overFullScreen" FIXME: 모달 풀화면 요구시 활성화
     >
       {/* 백그라운드 */}
-      <View
-        style={{
-          backgroundColor: '#00000099',
-          flex: 1,
-        }}
-      >
+      <View className="flex-1 bg-[#00000099]">
         {/* 콘텐츠 */}
-        <KeyboardAvoidingView behavior="height" style={{ flex: 1, justifyContent: 'flex-end' }}>
+        <KeyboardAvoidingView behavior="height" className="flex-1 justify-end">
           <Animated.View
+            className="flex-1 bg-white pt-32 px-16"
             style={{
-              flex: 1,
               borderTopStartRadius: 14,
               borderTopEndRadius: 14,
-              backgroundColor: COLOR.WHITE,
-              paddingTop: 32,
               paddingBottom: StatusBarHeight,
-              paddingHorizontal: 16,
               transform: [{ translateY: animRef }],
             }}
           >
-            <TouchableOpacity
-              hitSlop={10}
-              activeOpacity={1}
-              style={{ marginBottom: 28 }}
-              onPress={closeModal}
-            >
+            <TouchableOpacity hitSlop={10} activeOpacity={1} className="mb-28" onPress={closeModal}>
               <IconLeftArrow color={COLOR.BASIC_BLACK} />
             </TouchableOpacity>
 
@@ -103,20 +93,8 @@ const ConfirmEmailModal = ({
               textColor={COLOR.BASIC_BLACK}
             />
 
-            <Space height="57px" />
-
-            <View style={{ flex: 1 }}>
-              <View
-                style={{
-                  backgroundColor: COLOR.GRAY_F2,
-                  paddingHorizontal: 16,
-                  paddingVertical: 13,
-                  justifyContent: 'center',
-                  borderRadius: 5,
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                }}
-              >
+            <View className="flex-1 mt-57">
+              <View className="bg-gray-f2 px-16 py-13 justify-center rounded-5 flex-row items-center">
                 <Input
                   value={authNumberValue}
                   placeholder="인증번호 4자리"
@@ -124,7 +102,7 @@ const ConfirmEmailModal = ({
                   fontSize="14px"
                   onChangeText={(value) => changeValue(value)}
                   keyboardType="number-pad"
-                  style={{ flex: 1, height: 25 }}
+                  className="flex-1 h-25"
                   maxLength={4}
                 />
                 <FontText
@@ -135,16 +113,9 @@ const ConfirmEmailModal = ({
                 />
               </View>
 
-              <View
-                style={{
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  marginLeft: 10.17,
-                  marginTop: 7,
-                }}
-              >
+              <View className="flex-row items-center ml-[10.17] mt-7">
                 {isNotPass && <IconXCircle width={14} height={14} />}
-                <Space width="3px" />
+                <View className="w-3" />
                 <FontText
                   value={
                     timerValue.minutes === 0 && timerValue.seconds === 0
@@ -157,22 +128,26 @@ const ConfirmEmailModal = ({
                 />
               </View>
 
-              <View style={{ flexDirection: 'row', justifyContent: 'center', marginTop: 34 }}>
+              <View className="flex-row justify-center mt-34 items-start">
                 <FontText
                   value="메일을 받지 못하셨나요?"
                   textSize="13px"
                   textWeight="Regular"
                   textColor={COLOR.GRAY_999}
                 />
-                <Space width="8px" />
-                <TextButton
-                  value="재전송"
-                  textSize="13px"
-                  textWeight="Bold"
-                  textColor={COLOR.GRAY_999}
-                  isTextUnderline
-                  onPress={emailConfirmMutateHandler}
-                />
+                <View className="w-8" />
+                {isLoading ? (
+                  <LoadingCircle color="gray" width={34} height={27} />
+                ) : (
+                  <TextButton
+                    value="재전송"
+                    textSize="13px"
+                    textWeight="Bold"
+                    textColor={COLOR.GRAY_999}
+                    isTextUnderline
+                    onPress={emailConfirmMutateHandler}
+                  />
+                )}
               </View>
             </View>
 

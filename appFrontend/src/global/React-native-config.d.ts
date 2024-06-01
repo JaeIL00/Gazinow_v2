@@ -1,3 +1,5 @@
+/// <reference types="nativewind/types" />
+
 declare module 'react-native-config' {
   export interface NativeConfig {}
 
@@ -11,3 +13,5 @@ declare module '*.svg' {
   const content: React.FC<SvgProps>;
   export default content;
 }
+
+declare module 'classname';

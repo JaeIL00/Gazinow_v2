@@ -1,7 +1,5 @@
-import { SafeAreaView, ScrollView } from 'react-native';
-import { SavedRouteIssues, SwapStation } from './components';
-import { COLOR } from '@/global/constants';
-import { Space } from '@/global/ui';
+import { SafeAreaView, ScrollView, View } from 'react-native';
+import { IssueCarrousel, SwapStation, MyRoutes } from './components';
 import { useEffect } from 'react';
 import SplashScreen from 'react-native-splash-screen';
 import { useTryAuthorization } from './hooks';
@@ -22,15 +20,16 @@ const HomeScreen = () => {
   }, []);
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: COLOR.GRAY_F9 }}>
+    <SafeAreaView className="flex-1 bg-gray-f9">
       <ScrollView
         contentContainerStyle={{ paddingHorizontal: 16 }}
         showsVerticalScrollIndicator={false}
         scrollEnabled={isVerifiedUser === 'success auth'}
       >
-        <Space height="16px" />
+        <IssueCarrousel />
+        <View className="h-16" />
         <SwapStation />
-        <SavedRouteIssues isVerifiedUser={isVerifiedUser} />
+        <MyRoutes isVerifiedUser={isVerifiedUser} />
       </ScrollView>
     </SafeAreaView>
   );

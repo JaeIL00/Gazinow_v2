@@ -1,6 +1,5 @@
 import { COLOR } from '@/global/constants';
-import { FontText, Space } from '@/global/ui';
-import { useAppSelect } from '@/store';
+import { FontText } from '@/global/ui';
 import { Image, View } from 'react-native';
 import StepButton from '../ui/StepButton';
 import { useRootNavigation } from '@/navigation/RootNavigation';
@@ -13,7 +12,7 @@ const CompleteStep = ({ nickname }: CompleteStepProps) => {
   const navigation = useRootNavigation();
 
   return (
-    <View style={{ flex: 1 }}>
+    <View className="flex-1">
       <FontText
         value={`${nickname}님의 \n회원가입을 축하드립니다!`}
         textSize="24px"
@@ -21,18 +20,8 @@ const CompleteStep = ({ nickname }: CompleteStepProps) => {
         textColor={COLOR.BASIC_BLACK}
       />
 
-      <Space height="52px" />
-
-      <View
-        style={{
-          alignItems: 'center',
-          flex: 1,
-        }}
-      >
-        <Image
-          source={require('../../../assets/images/clap_3d.png')}
-          style={{ width: 328, height: 342 }}
-        />
+      <View className="flex-1 items-center mt-52">
+        <Image source={require('../../../assets/images/clap_3d.png')} className="w-328 h-342" />
       </View>
 
       <StepButton

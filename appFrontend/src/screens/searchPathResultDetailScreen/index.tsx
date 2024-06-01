@@ -1,4 +1,3 @@
-import { css } from '@emotion/native';
 import { useMemo, useState } from 'react';
 import { FlatList, Modal, SafeAreaView, TouchableOpacity, View } from 'react-native';
 
@@ -15,22 +14,31 @@ import IconBookmark from '@assets/icons/bookmark.svg';
 import IconLeftArrowHead from '@assets/icons/left_arrow_head.svg';
 import { useAppSelect } from '@/store';
 import { useRootNavigation } from '@/navigation/RootNavigation';
+import { showToast } from '@/global/utils/toast';
+
+interface DetailData extends Path {
+  id: number;
+}
 
 const SearchPathResultDetailScreen = () => {
   const queryClient = useQueryClient();
   const navigation = useHomeNavigation();
   const rootNavigation = useRootNavigation();
-  const { state: resultData } = useRoute().params as { state: Path };
+  const { state: resultData } = useRoute().params as { state: DetailData };
   const isVerifiedUser = useAppSelect((state) => state.auth.isVerifiedUser);
 
-  const { deleteMutate } = useDeleteSavedSubwayRoute({
+  const { isLoading, deleteMutate } = useDeleteSavedSubwayRoute({
     onSuccess: async () => {
       await queryClient.invalidateQueries(['getRoads']);
       setIsBookmarking(false);
+      showToast('deleteRoute');
     },
   });
 
-  const [isBookmarking, setIsBookmarking] = useState<boolean>(resultData.myPath ?? false);
+  const [myPathId, setMyPathId] = useState<number | null>(
+    resultData.id || (resultData.myPathId ? resultData.myPathId[0] : null),
+  );
+  const [isBookmarking, setIsBookmarking] = useState<boolean>(resultData.myPath ?? !!resultData.id);
   const [isSaveRouteModalOpen, setIsSaveRouteModalOpen] = useState<boolean>(false);
 
   const freshSubPathData: SubPath[] = useMemo(() => {
@@ -40,44 +48,27 @@ const SearchPathResultDetailScreen = () => {
   }, [resultData]);
 
   const bookmarkHandler = () => {
-    // FIXME: 저장 후 경로 목록을 refetch하지 않는 이상 저장한 경로 아이디를 알 수 없음
-    if (isBookmarking && !!resultData.myPathId) {
-      deleteMutate({ id: resultData.myPathId[0] });
-    } else {
+    if (!isBookmarking) {
       setIsSaveRouteModalOpen(true);
+      return;
+    } else if (myPathId) {
+      deleteMutate({ id: myPathId });
     }
   };
 
-  const isOccurIssue = resultData.subPaths.some(
-    (item) => item.lanes[0] && !!item.lanes[0].issueSummary.length,
-  );
+  const isOccurIssue = useMemo(() => {
+    return resultData.subPaths.some((item) => item.lanes[0] && !!item.lanes[0].issueSummary.length);
+  }, [resultData]);
 
   return (
-    <SafeAreaView
-      style={{
-        backgroundColor: COLOR.WHITE,
-        flex: 1,
-      }}
-    >
-      <View
-        style={{
-          paddingHorizontal: 16,
-          flex: 1,
-        }}
-      >
+    <SafeAreaView className="flex-1 bg-white">
+      <View className="flex-1 px-16">
         {/* header */}
-        <View
-          style={{
-            paddingVertical: 16,
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-          }}
-        >
+        <View className="flex-row items-center justify-between py-16">
           <TouchableOpacity onPress={() => navigation.goBack()}>
             <IconLeftArrowHead color="#3F3F46" width={18} height={18} />
           </TouchableOpacity>
-          <TouchableOpacity onPress={bookmarkHandler}>
+          <TouchableOpacity onPress={bookmarkHandler} disabled={isLoading}>
             <IconBookmark
               width={24}
               height={24}
@@ -92,60 +83,27 @@ const SearchPathResultDetailScreen = () => {
                 freshData={{ ...resultData, subPaths: freshSubPathData }}
                 closeModal={() => setIsSaveRouteModalOpen(false)}
                 onBookmark={() => setIsBookmarking(true)}
+                setMyPathId={(id: number) => setMyPathId(id)}
               />
             ) : (
               <Modal visible onRequestClose={() => setIsSaveRouteModalOpen(false)} transparent>
-                <View
-                  style={{
-                    position: 'relative',
-                    flex: 1,
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                  }}
-                >
-                  <View
-                    style={{
-                      backgroundColor: '#00000099',
-                      position: 'absolute',
-                      top: 0,
-                      width: '100%',
-                      height: '100%',
-                    }}
-                  />
-                  <View
-                    style={{
-                      position: 'absolute',
-                      backgroundColor: COLOR.WHITE,
-                      paddingTop: 32,
-                      paddingBottom: 24,
-                      paddingHorizontal: 24,
-                      borderRadius: 12,
-                      width: '80%',
-                    }}
-                  >
+                <View className="relative items-center justify-center flex-1">
+                  <View className="bg-[#00000099] absolute top-0 w-full h-full" />
+                  <View className="absolute w-4/5 px-24 pt-32 pb-24 bg-white rounded-12">
                     <FontText
                       value={`로그인하면 관심 경로의\n이슈를 알려드려요`}
                       textSize="18px"
                       textWeight="SemiBold"
-                      style={{ textAlign: 'center' }}
+                      className="text-center"
                     />
-                    <View
-                      style={{ flexDirection: 'row', width: '100%', columnGap: 8, marginTop: 30 }}
-                    >
+                    <View className="flex-row w-full gap-x-8 mt-30">
                       <TextButton
                         value="취소"
                         textSize="14px"
                         textColor={COLOR.GRAY_999}
                         textWeight="SemiBold"
                         onPress={() => setIsSaveRouteModalOpen(false)}
-                        style={{
-                          flex: 1,
-                          borderRadius: 5,
-                          borderWidth: 1,
-                          borderColor: COLOR.GRAY_999,
-                          alignItems: 'center',
-                          paddingVertical: 12,
-                        }}
+                        className="items-center flex-1 py-12 border rounded-5 border-gray-99"
                       />
                       <TextButton
                         value="로그인"
@@ -156,13 +114,7 @@ const SearchPathResultDetailScreen = () => {
                           setIsSaveRouteModalOpen(false);
                           rootNavigation.navigate('AuthStack', { screen: 'Landing' });
                         }}
-                        style={{
-                          flex: 1,
-                          borderRadius: 5,
-                          alignItems: 'center',
-                          paddingVertical: 12,
-                          backgroundColor: COLOR.BASIC_BLACK,
-                        }}
+                        className="items-center flex-1 py-12 rounded-5 bg-black-17"
                       />
                     </View>
                   </View>
@@ -170,28 +122,11 @@ const SearchPathResultDetailScreen = () => {
               </Modal>
             ))}
         </View>
-        <View
-          style={css`
-            flex-direction: row;
-            align-items: center;
-            justify-content: space-between;
-            padding-left: 10px;
-          `}
-        >
+
+        <View className="flex-row items-center justify-between pl-10">
           <View>
-            <FontText
-              value="평균 소요시간"
-              textSize="12px"
-              textWeight="Medium"
-              lineHeight="14px"
-              textColor="#999"
-            />
-            <View
-              style={css`
-                flex-direction: row;
-                margin-top: 4px;
-              `}
-            >
+            <FontText value="평균 소요시간" textSize="13px" textWeight="Medium" textColor="#999" />
+            <View className="flex-row mt-2">
               <FontText
                 value={
                   resultData.totalTime > 60
@@ -201,48 +136,39 @@ const SearchPathResultDetailScreen = () => {
                       `분 ${isOccurIssue ? '이상' : ''}`
                     : resultData.totalTime + `분 ${isOccurIssue ? '이상' : ''}`
                 }
-                textSize="24px"
+                textSize="28px"
                 textWeight="Bold"
               />
 
               <Space width="8px" />
 
               <View>
-                <View
-                  style={css`
-                    flex: 1;
-                  `}
-                />
+                <View className="flex-1" />
                 <FontText
                   value={
                     freshSubPathData.length - 1 === 0
                       ? '환승없음'
                       : '환승 ' + (freshSubPathData.length - 1) + '회'
                   }
-                  textSize="14px"
+                  textSize="16px"
                   textWeight="Regular"
                   textColor="#999"
-                  style={{ marginBottom: 3 }}
+                  className="mb-2"
                 />
               </View>
             </View>
           </View>
         </View>
-        <View
-          style={css`
-            margin-bottom: 21px;
-            margin-top: 16px;
-            height: 1px;
-            background-color: ${COLOR.GRAY_EB};
-          `}
-        />
+
+        {/* 경계선 */}
+        <View className="h-px mt-16 mb-21 bg-gray-eb" />
 
         <FlatList
           data={freshSubPathData}
           showsVerticalScrollIndicator={false}
           keyExtractor={(item) => {
             if (typeof item === 'string') return 'dance';
-            return item.distance + item.sectionTime + '';
+            return item.distance + 'detail' + item.sectionTime;
           }}
           renderItem={({ item, index }) => {
             return (
