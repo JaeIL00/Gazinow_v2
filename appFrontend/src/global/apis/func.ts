@@ -2,14 +2,14 @@ import { AxiosError } from 'axios';
 import { authServiceAPI, publicServiceAPI } from '.';
 import {
   AllIssues,
-  RenderSavedRoutesType,
-  SavedRoute,
+  MyRoutesType,
   SearchHistoryStationNameTypes,
   SearchPathsTypes,
   SearchStationNameTypes,
   RawSubwayLineName,
   SubwayStrEnd,
   IssueContent,
+  SaveMyRoutesType,
 } from './entity';
 import { SignInFetchResponse } from '@/screens/signInScreen/apis/entity';
 import { API_BASE_URL } from '@env';
@@ -143,7 +143,7 @@ export const searchPathsFetch = async ({
 /**
  * 지하철 경로 저장 axios
  */
-export const searchPathSaveFetch = async (data: SavedRoute) => {
+export const searchPathSaveFetch = async (data: SaveMyRoutesType) => {
   try {
     const res = await authServiceAPI.post('/api/v1/my_find_road/add_route', data);
     return res.data.data;
@@ -195,7 +195,7 @@ export const getSearchRoutesFetch = async () => {
  */
 export const getSavedRoutesFetch = async () => {
   try {
-    const res = await authServiceAPI.get<{ data: RenderSavedRoutesType[] }>(
+    const res = await authServiceAPI.get<{ data: MyRoutesType[] }>(
       `/api/v1/my_find_road/get_roads`,
     );
     return res.data.data;
@@ -204,25 +204,6 @@ export const getSavedRoutesFetch = async () => {
     Sentry.captureException({
       target: '저장된 지하철 경로 조회',
       input: { request: error.request },
-      output: { status: error.response?.status, error: error.message, response: error.response },
-    });
-    throw error;
-  }
-};
-
-/**
- * 닉네임 변경 axios
- */
-export const changeNicknameFetch = async (newNickname: string) => {
-  try {
-    await authServiceAPI.post(`/api/v1/member/change_nickname`, {
-      nickName: newNickname,
-    });
-  } catch (err) {
-    const error = err as AxiosError;
-    Sentry.captureException({
-      target: '닉네임 변경',
-      input: { newNickname, request: error.request },
       output: { status: error.response?.status, error: error.message, response: error.response },
     });
     throw error;

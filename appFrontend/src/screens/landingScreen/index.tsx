@@ -53,14 +53,14 @@ const LandingScreen = () => {
             value="가는길 지금,"
             textSize="27.34px"
             textWeight="Bold"
-            lineHeight="36.454px"
+            lineHeight={36.454}
             textColor={COLOR.WHITE}
           />
           <FontText
             value={`무슨 일이\n일어나고 있을까요?`}
             textSize="27.34px"
             textWeight="Regular"
-            lineHeight="36.454px"
+            lineHeight={36.454}
             textColor={COLOR.WHITE}
           />
         </View>

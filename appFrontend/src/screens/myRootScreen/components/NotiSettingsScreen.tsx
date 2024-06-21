@@ -30,25 +30,20 @@ const NotiSettingsScreen = () => {
             onPress={() => myPageNavigation.goBack()}
           />
           <Space width="12px" />
-          <FontText value="알림 설정" textSize="18px" lineHeight="23px" textWeight="Medium" />
+          <FontText value="알림 설정" textSize="18px" lineHeight={23} textWeight="Medium" />
         </TitleContainer>
         <TextButton
           value="완료    "
           textSize="16px"
           textColor={COLOR.GRAY_999}
           textWeight="Medium"
-          lineHeight="21px"
+          lineHeight={21}
           onPress={() => submitNotificationSettings()}
         />
       </Header>
       <Container>
         <MenuContainer>
-          <TextButton
-            value="푸시 알림 받기"
-            textSize="16px"
-            textWeight="Regular"
-            lineHeight="21px"
-          />
+          <TextButton value="푸시 알림 받기" textSize="16px" textWeight="Regular" lineHeight={21} />
           <Switch value={pushNotification} onValueChange={handlePushNotificationToggle} />
         </MenuContainer>
         {pushNotification && (
@@ -59,7 +54,7 @@ const NotiSettingsScreen = () => {
                 value="내가 저장한 경로 알림"
                 textSize="16px"
                 textWeight="Regular"
-                lineHeight="21px"
+                lineHeight={21}
               />
               <Switch
                 value={savedPathNotification}
@@ -71,7 +66,7 @@ const NotiSettingsScreen = () => {
                 value="새소식 알림"
                 textSize="16px"
                 textWeight="Regular"
-                lineHeight="21px"
+                lineHeight={21}
               />
               <Switch
                 value={newsNotification}
