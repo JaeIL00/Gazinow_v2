@@ -77,7 +77,7 @@ const IssueCarrousel = () => {
                   keyword={issue.keyword}
                   color={rawLineNameToColor(issue.lines[0])}
                 />
-                <View style={{ flex: 1, marginHorizontal: 14 }}>
+                <View className="flex-1 mx-14">
                   <FontText
                     value={issue.title}
                     textSize="13px"
@@ -95,7 +95,7 @@ const IssueCarrousel = () => {
                   />
                 </View>
 
-                <View style={{ alignItems: 'flex-end' }}>
+                <View className="items-end">
                   <FontText
                     value="NOW"
                     textSize="12px"
@@ -103,16 +103,7 @@ const IssueCarrousel = () => {
                     textWeight="Bold"
                     textColor="#346BF7"
                   />
-                  <View
-                    style={{
-                      backgroundColor: '#F3F3F3',
-                      borderRadius: 27,
-                      width: 36,
-                      height: 16,
-                      marginTop: 4,
-                      justifyContent: 'center',
-                    }}
-                  >
+                  <View className="bg-[#F3F3F3] rounded-27 w-36 h-16 mt-4 justify-center">
                     <FontText
                       value={`${index + 1}/${popularIssues.length}`}
                       textSize="11px"
