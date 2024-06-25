@@ -13,25 +13,26 @@ import { rawLineNameToColor } from '@/global/utils/subwayLine';
 const IssueCarrousel = () => {
   const navigation = useRootNavigation();
   const dispatch = useAppDispatch();
-  // const { popularIssues } = useGetPopularIssuesQuery();
+  const { popularIssues, popularIssuesRefetch, isPopularIssuesLoading } =
+    useGetPopularIssuesQuery();
   const { allIssues } = useGetAllIssuesQuery();
   const [itemWidth, setItemWidth] = useState<number>(0);
   const scrollViewRef = useRef<ScrollView>(null);
   const [currentIndex, setCurrentIndex] = useState<number>(0);
 
-  //TODO: 도움돼요 5개 이상 눌릴만큼 유저 쌓이면 인기이슈로 바꾸기
-  const currentDate = new Date();
-  const currentIssues = Array.from(
-    new Set(
-      allIssues?.pages[0].content.filter((issue) => new Date(issue.expireDate) >= currentDate),
-    ),
-  ).slice(0, 3);
+  //TODO: 현재 유효한 이슈 배열
+  // const currentDate = new Date();
+  // const currentIssues = Array.from(
+  //   new Set(
+  //     allIssues?.pages[0].content.filter((issue) => new Date(issue.expireDate) >= currentDate),
+  //   ),
+  // ).slice(0, 3);
 
   useEffect(() => {
-    if (!currentIssues || currentIssues.length === 0) return;
+    if (!popularIssues || popularIssues.length === 0) return;
 
     const interval = setInterval(() => {
-      if (currentIndex === currentIssues.length - 1) {
+      if (currentIndex === popularIssues.length - 1) {
         scrollViewRef.current?.scrollTo({ x: 0, animated: true });
         setCurrentIndex(0);
       } else {
@@ -41,34 +42,30 @@ const IssueCarrousel = () => {
     }, 3000);
 
     return () => clearInterval(interval);
-  }, [currentIndex, itemWidth, currentIssues]);
+  }, [currentIndex, itemWidth, popularIssues]);
 
-  if (currentIssues.length < 1) return null;
+  if (!popularIssues || popularIssues.length < 1) return null;
   return (
-    <View
-      style={{
-        backgroundColor: COLOR.WHITE,
-        borderRadius: 12,
-        padding: 16,
-        marginTop: 16,
-        flexDirection: 'row',
-      }}
-    >
+    <View className="mx-[-16px] flex-row bg-white rounded-13">
       <ScrollView
         ref={scrollViewRef}
         horizontal
         pagingEnabled
         scrollEventThrottle={200}
-        decelerationRate="fast"
+        decelerationRate="normal"
         showsHorizontalScrollIndicator={false}
-        contentContainerStyle={{ width: `${100 * currentIssues.length}%` }}
-        onContentSizeChange={(width) => setItemWidth(width / currentIssues.length)}
+        contentContainerStyle={{ width: `${100 * popularIssues.length}%` }}
+        onContentSizeChange={(width) => setItemWidth(width / popularIssues.length)}
       >
-        <View style={{ flexDirection: 'row' }}>
-          {currentIssues.map((issue, index: number) => (
-            <View style={{ width: itemWidth }} key={index}>
+        <View className="flex-row">
+          {popularIssues.map((issue, index: number) => (
+            <View
+              className="rounded-12 border-16 border-b-0 border-gray-f9 p-16"
+              style={{ width: itemWidth }}
+              key={index}
+            >
               <TouchableOpacity
-                style={{ flexDirection: 'row' }}
+                className="flex-row"
                 onPress={() => {
                   dispatch(getIssueId(issue.id));
                   navigation.navigate('IssueStack', { screen: 'IssueDetail' });
@@ -80,7 +77,6 @@ const IssueCarrousel = () => {
                   keyword={issue.keyword}
                   color={rawLineNameToColor(issue.lines[0])}
                 />
-
                 <View style={{ flex: 1, marginHorizontal: 14 }}>
                   <FontText
                     value={issue.title}
@@ -118,7 +114,7 @@ const IssueCarrousel = () => {
                     }}
                   >
                     <FontText
-                      value={`${index + 1}/${currentIssues.length}`}
+                      value={`${index + 1}/${popularIssues.length}`}
                       textSize="11px"
                       lineHeight={13}
                       textWeight="Medium"
