@@ -9,6 +9,7 @@ import { useAppDispatch } from '@/store';
 import { getIssueId } from '@/store/modules';
 import dayjs from 'dayjs';
 import { rawLineNameToColor } from '@/global/utils/subwayLine';
+import { IssueContent } from '@/global/apis/entity';
 
 const IssueCarrousel = () => {
   const navigation = useRootNavigation();
@@ -28,23 +29,44 @@ const IssueCarrousel = () => {
   //   ),
   // ).slice(0, 3);
 
+  const [newPopularIssues, setNewPopularIssues] = useState<IssueContent[]>();
+
+  useEffect(() => {
+    if (!popularIssues || popularIssues.length === 0) return;
+
+    const startData = popularIssues[0];
+    const newList = [...popularIssues, startData];
+
+    setNewPopularIssues(newList);
+  }, [popularIssues]);
+
+  const [autoScrollTime, setAutoscrollTime] = useState<number>(3000);
+
   useEffect(() => {
     if (!popularIssues || popularIssues.length === 0) return;
 
     const interval = setInterval(() => {
-      if (currentIndex === popularIssues.length - 1) {
-        scrollViewRef.current?.scrollTo({ x: 0, animated: true });
+      if (currentIndex === popularIssues.length) {
+        setAutoscrollTime(1);
+        scrollViewRef.current?.scrollTo({ x: 0, animated: false });
         setCurrentIndex(0);
+        setAutoscrollTime(3000);
       } else {
         scrollViewRef.current?.scrollTo({ x: itemWidth * (currentIndex + 1), animated: true });
         setCurrentIndex((prevIndex) => prevIndex + 1);
+        setAutoscrollTime(3000);
       }
-    }, 3000);
+    }, autoScrollTime);
 
     return () => clearInterval(interval);
   }, [currentIndex, itemWidth, popularIssues]);
 
-  if (!popularIssues || popularIssues.length < 1) return null;
+  const newListIndex = () => {
+    if (popularIssues && currentIndex === popularIssues.length) return 1;
+    else return currentIndex + 1;
+  };
+
+  if (!popularIssues || !newPopularIssues || newPopularIssues.length < 1) return null;
   return (
     <View className="mx-[-16px] flex-row bg-white rounded-13">
       <ScrollView
@@ -54,11 +76,11 @@ const IssueCarrousel = () => {
         scrollEventThrottle={200}
         decelerationRate="normal"
         showsHorizontalScrollIndicator={false}
-        contentContainerStyle={{ width: `${100 * popularIssues.length}%` }}
-        onContentSizeChange={(width) => setItemWidth(width / popularIssues.length)}
+        contentContainerStyle={{ width: `${100 * newPopularIssues.length}%` }}
+        onContentSizeChange={(width) => setItemWidth(width / newPopularIssues.length)}
       >
         <View className="flex-row">
-          {popularIssues.map((issue, index: number) => (
+          {newPopularIssues.map((issue, index: number) => (
             <View
               className="rounded-12 border-16 border-b-0 border-gray-f9 p-16"
               style={{ width: itemWidth }}
@@ -105,7 +127,7 @@ const IssueCarrousel = () => {
                   />
                   <View className="bg-[#F3F3F3] rounded-27 w-36 h-16 mt-4 justify-center">
                     <FontText
-                      value={`${index + 1}/${popularIssues.length}`}
+                      value={`${newListIndex()}/${popularIssues.length}`}
                       textSize="11px"
                       lineHeight={13}
                       textWeight="Medium"
