@@ -113,14 +113,21 @@ const MyRootScreen = () => {
         )}
       </View>
       <View className="flex-1 bg-white">
-        {isVerifiedUser === 'success auth' &&
-          renderMenu({
+        {isVerifiedUser === 'success auth' && (
+          <>
+            {renderMenu({
               text: '계정 관리',
               onPress: () =>
                 rootNavigation.navigate('MyPageNavigation', { screen: 'ManageAccountScreen' }),
             })}
-        {/* TODO: 페이지 들어가서 퍼미션 컨펌창 띄우는 로직으로 수정하기 */}
-        {/* {renderMenu({ text: '알림 설정', onPress: () => confirmUserNotificationOn() })} */}
+            {renderMenu({
+              text: '알림 설정',
+              onPress: () =>
+                rootNavigation.push('MyPageNavigation', { screen: 'NotiSettingsScreen' }),
+            })}
+          </>
+        )}
+
         {renderMenu({
           text: '약관 및 정책',
           onPress: () =>
