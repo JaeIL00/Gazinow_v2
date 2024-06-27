@@ -35,6 +35,7 @@
     "react-native": "0.73.4",
     "react-native-background-timer": "^2.4.1",
     "react-native-config": "^1.5.1",
+    "react-native-date-picker": "4.4.2",
     "react-native-encrypted-storage": "^4.0.3",
     "react-native-exit-app": "^2.0.0",
     "react-native-gesture-handler": "^2.13.1",
