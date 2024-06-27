@@ -78,7 +78,7 @@ const MyRootScreen = () => {
       <View className="pl-16 pt-45 pb-37">
         {isVerifiedUser !== 'success auth' ? (
           <Pressable
-            className="flex-row items-center gap-6"
+            className="flex-row items-center space-x-6"
             onPress={() => rootNavigation.navigate('AuthStack', { screen: 'Landing' })}
           >
             <FontText value="로그인하세요" textSize="18px" textWeight="SemiBold" />
@@ -92,7 +92,7 @@ const MyRootScreen = () => {
         ) : (
           <>
             <TouchableOpacity
-              className="flex-row items-center gap-5"
+              className="flex-row items-center space-x-5"
               hitSlop={20}
               onPress={() =>
                 rootNavigation.navigate('MyPageNavigation', { screen: 'ChangeNickNameScreen' })
@@ -115,10 +115,10 @@ const MyRootScreen = () => {
       <View className="flex-1 bg-white">
         {isVerifiedUser === 'success auth' &&
           renderMenu({
-            text: '계정 관리',
-            onPress: () =>
-              rootNavigation.navigate('MyPageNavigation', { screen: 'ManageAccountScreen' }),
-          })}
+              text: '계정 관리',
+              onPress: () =>
+                rootNavigation.navigate('MyPageNavigation', { screen: 'ManageAccountScreen' }),
+            })}
         {/* TODO: 페이지 들어가서 퍼미션 컨펌창 띄우는 로직으로 수정하기 */}
         {/* {renderMenu({ text: '알림 설정', onPress: () => confirmUserNotificationOn() })} */}
         {renderMenu({
