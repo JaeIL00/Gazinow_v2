@@ -1,4 +1,4 @@
-import { Path, SubPath } from '@/global/apis/entity';
+import { MyRoutesType, Path, SubPath } from '@/global/apis/entity';
 
 export type RootStackParamList = {
   AuthStack: { screen: 'Landing' };
@@ -42,6 +42,7 @@ export type MyPageStackParamList = {
   ManageAccountScreen: undefined;
   NotiOnScreen: undefined;
   NotiSettingsScreen: undefined;
+  NotiSettingsDetailScreen: { myRoutes?: MyRoutesType };
   SubscribeTermsScreen: undefined;
   PersonalTermsScreen: undefined;
 };

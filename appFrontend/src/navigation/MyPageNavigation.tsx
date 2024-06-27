@@ -10,6 +10,7 @@ import ConfirmQuitScreen from '@/screens/myRootScreen/components/ConfirmQuitScre
 import ManageAccountScreen from '@/screens/myRootScreen/components/ManageAccountScreen';
 import NotiOnScreen from '@/screens/myRootScreen/components/NotiOnScreen';
 import NotiSettingsScreen from '@/screens/myRootScreen/components/NotiSettingsScreen';
+import NotiSettingsDetailScreen from '@/screens/myRootScreen/components/NotiSettingsDetailScreen';
 import SubscribeTermsScreen from '@/screens/myRootScreen/components/SubscribeTermsScreen';
 import PersonalTermsScreen from '@/screens/myRootScreen/components/PersonalTermsScreen';
 import Toast from 'react-native-toast-message';
@@ -33,6 +34,7 @@ const MyPageNavigation = () => {
         <Stack.Screen name="ManageAccountScreen" component={ManageAccountScreen} />
         <Stack.Screen name="NotiOnScreen" component={NotiOnScreen} />
         <Stack.Screen name="NotiSettingsScreen" component={NotiSettingsScreen} />
+        <Stack.Screen name="NotiSettingsDetailScreen" component={NotiSettingsDetailScreen} />
         <Stack.Screen name="SubscribeTermsScreen" component={SubscribeTermsScreen} />
         <Stack.Screen name="PersonalTermsScreen" component={PersonalTermsScreen} />
       </Stack.Navigator>
