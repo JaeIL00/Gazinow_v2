@@ -68,80 +68,72 @@ const IssueCarrousel = () => {
 
   if (!popularIssues || !newPopularIssues || newPopularIssues.length < 1) return null;
   return (
-    <View className="mx-[-16px] flex-row bg-white rounded-13">
-      <ScrollView
-        ref={scrollViewRef}
-        horizontal
-        pagingEnabled
-        scrollEventThrottle={200}
-        decelerationRate="normal"
-        showsHorizontalScrollIndicator={false}
-        contentContainerStyle={{ width: `${100 * newPopularIssues.length}%` }}
-        onContentSizeChange={(width) => setItemWidth(width / newPopularIssues.length)}
-      >
-        <View className="flex-row">
-          {newPopularIssues.map((issue, index: number) => (
-            <View
-              className="rounded-12 border-16 border-b-0 border-gray-f9 p-16"
-              style={{ width: itemWidth }}
-              key={index}
-            >
-              <TouchableOpacity
-                className="flex-row"
-                onPress={() => {
-                  dispatch(getIssueId(issue.id));
-                  navigation.navigate('IssueStack', { screen: 'IssueDetail' });
-                }}
-              >
-                <IssueKeywordIcon
-                  width={30}
-                  height={30}
-                  keyword={issue.keyword}
-                  color={rawLineNameToColor(issue.lines[0])}
-                />
-                <View className="flex-1 mx-14">
-                  <FontText
-                    value={issue.title}
-                    textSize="13px"
-                    lineHeight={19}
-                    textWeight="SemiBold"
-                    textColor={COLOR.BASIC_BLACK}
-                    numberOfLines={1}
-                  />
-                  <FontText
-                    value={dayjs(issue.startDate).fromNow()}
-                    textSize="11px"
-                    lineHeight={13}
-                    textWeight="Medium"
-                    textColor={COLOR.GRAY_999}
-                  />
-                </View>
-
-                <View className="items-end">
-                  <FontText
-                    value="NOW"
-                    textSize="12px"
-                    lineHeight={14}
-                    textWeight="Bold"
-                    textColor="#346BF7"
-                  />
-                  <View className="bg-[#F3F3F3] rounded-27 w-36 h-16 mt-4 justify-center">
-                    <FontText
-                      value={`${newListIndex()}/${popularIssues.length}`}
-                      textSize="11px"
-                      lineHeight={13}
-                      textWeight="Medium"
-                      textColor="#B4B4B4"
-                      textAlign="center"
-                    />
-                  </View>
-                </View>
-              </TouchableOpacity>
+    <ScrollView
+      className="mx-[-16px] flex-row rounded-13"
+      ref={scrollViewRef}
+      horizontal
+      scrollEventThrottle={200}
+      decelerationRate="normal"
+      showsHorizontalScrollIndicator={false}
+      contentContainerStyle={{ width: `${100 * newPopularIssues.length}%` }}
+      onContentSizeChange={(width) => setItemWidth(width / newPopularIssues.length)}
+    >
+      {newPopularIssues.map((issue, index: number) => (
+        <View style={{ width: itemWidth }} key={index}>
+          <TouchableOpacity
+            className="flex-row m-16 mb-0 p-16 rounded-12 bg-white"
+            onPress={() => {
+              dispatch(getIssueId(issue.id));
+              navigation.navigate('IssueStack', { screen: 'IssueDetail' });
+            }}
+          >
+            <IssueKeywordIcon
+              width={30}
+              height={30}
+              keyword={issue.keyword}
+              color={rawLineNameToColor(issue.lines[0])}
+            />
+            <View className="flex-1 mx-14">
+              <FontText
+                value={issue.title}
+                textSize="13px"
+                lineHeight={19}
+                textWeight="SemiBold"
+                textColor={COLOR.BASIC_BLACK}
+                numberOfLines={1}
+              />
+              <FontText
+                value={dayjs(issue.startDate).fromNow()}
+                textSize="11px"
+                lineHeight={13}
+                textWeight="Medium"
+                textColor={COLOR.GRAY_999}
+              />
             </View>
-          ))}
+
+            <View className="items-end">
+              <FontText
+                value="NOW"
+                textSize="12px"
+                lineHeight={14}
+                textWeight="Bold"
+                textColor="#346BF7"
+              />
+              <View className="bg-[#F3F3F3] rounded-27 w-36 h-16 mt-4 justify-center">
+                <FontText
+                  value={`${newListIndex()}/${popularIssues.length}`}
+                  textSize="11px"
+                  lineHeight={13}
+                  textWeight="Medium"
+                  textColor="#B4B4B4"
+                  textAlign="center"
+                />
+              </View>
+            </View>
+          </TouchableOpacity>
         </View>
-      </ScrollView>
-    </View>
+      ))}
+    </ScrollView>
   );
 };
 
