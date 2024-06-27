@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Animated, Easing } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { Animated, Easing, Pressable } from 'react-native';
 import cn from 'classname';
 
 type ToggleProps = {
@@ -27,7 +26,7 @@ const Toggle = ({ isOn, onToggle, disabled }: ToggleProps) => {
   });
 
   return (
-    <TouchableOpacity
+    <Pressable
       className={cn('w-44 h-26 rounded-full justify-center', {
         'bg-[#346BF7]': isOn,
         'bg-[#DFDFDF]': !isOn,
@@ -42,7 +41,7 @@ const Toggle = ({ isOn, onToggle, disabled }: ToggleProps) => {
           transform: [{ translateX }],
         }}
       />
-    </TouchableOpacity>
+    </Pressable>
   );
 };
 
