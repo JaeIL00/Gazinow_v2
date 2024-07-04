@@ -1,7 +1,6 @@
 import { Platform, Pressable, SafeAreaView, View } from 'react-native';
 import { FontText } from '@/global/ui';
 import { COLOR } from '@/global/constants';
-// import { RESULTS, requestNotifications } from 'react-native-permissions';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store/configureStore';
 import packageJson from '../../../package.json';
@@ -17,18 +16,6 @@ interface RenderMenuProps {
   onPress?: () => void;
   versionText?: string;
 }
-// const ALLOWED_PERMISSIONS = {
-//   [RESULTS.GRANTED]: true,
-//   [RESULTS.LIMITED]: true,
-//   [RESULTS.UNAVAILABLE]: true,
-//   [RESULTS.BLOCKED]: false,
-//   [RESULTS.DENIED]: false,
-// };
-
-const requestNotificationPermission = async () => {
-  // const { status } = await requestNotifications(['alert']);
-  // return ALLOWED_PERMISSIONS[status];
-};
 
 const MyRootScreen = () => {
   const rootNavigation = useRootNavigation();
@@ -36,15 +23,6 @@ const MyRootScreen = () => {
   const currentVersionInfo = packageJson.version;
 
   const [versionText, setVersionText] = useState<string>('');
-
-  const confirmUserNotificationOn = async () => {
-    // const result = await requestNotificationPermission();
-    // if (!result) {
-    //   setIsNotiOnScreenOpen(true);
-    // } else {
-    //   setIsNotiSettingsScreenOpen(true);
-    // }
-  };
 
   useEffect(() => {
     VersionCheck.getLatestVersion({
