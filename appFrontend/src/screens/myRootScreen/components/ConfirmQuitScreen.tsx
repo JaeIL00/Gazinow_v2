@@ -57,7 +57,7 @@ const ConfirmQuitScreen = () => {
           />
         </TouchableOpacity>
 
-        <TouchableOpacity className="items-center mb-79" onPress={() => setPopupVisible(true)}>
+        <TouchableOpacity className="items-center mb-36" onPress={() => setPopupVisible(true)}>
           <View className="border-b-1 border-gray-99">
             <FontText
               value="탈퇴하기"
