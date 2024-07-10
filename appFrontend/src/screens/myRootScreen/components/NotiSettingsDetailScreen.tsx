@@ -3,7 +3,6 @@ import { COLOR } from '@/global/constants';
 import { FontText, Toggle } from '@/global/ui';
 import { Pressable, SafeAreaView, TouchableOpacity, View } from 'react-native';
 import IconLeftArrowHead from '@assets/icons/left_arrow_head.svg';
-import IconCrossX from '@assets/icons/cross_x.svg';
 import { useMyPageNavigation } from '@/navigation/MyPageNavigation';
 import { useRoute } from '@react-navigation/native';
 import { MyRoutesType } from '@/global/apis/entity';
@@ -14,7 +13,7 @@ import SetNotiTimesBtn from './SetNotiTimesBtn';
 const NotiSettingsDetailScreen = () => {
   const myPageNavigation = useMyPageNavigation();
   const { myRoutes } = useRoute().params as { myRoutes: MyRoutesType };
-  const [pushNotificationOn, setPushNotificationOn] = useState(false); //FIXME: api 나오면
+  const [pushNotificationOn, setPushNotificationOn] = useState<boolean>(false); //FIXME: api 나오면
   const [selectedDays, setSelectedDays] = useState<string[]>([]);
 
   const days = ['월', '화', '수', '목', '금', '토', '일'];
@@ -31,6 +30,7 @@ const NotiSettingsDetailScreen = () => {
 
   const handlePushNotificationOnToggle = () => {
     setPushNotificationOn(!pushNotificationOn);
+    setSelectedDays([]);
   };
 
   return (

@@ -70,7 +70,7 @@ const SetNotiTimesBtn = ({ disabled }: SetNotiTimesBtnProps) => {
         </Pressable>
       </View>
 
-      {whichTimePickerIsOpened === 'start' && (
+      {!disabled && whichTimePickerIsOpened === 'start' && (
         <Animated.View style={{ transform: [{ translateY: translateYStart }] }}>
           <TimePicker selectedTime={selectedStartTime} setSelectedTime={setSelectedStartTime} />
         </Animated.View>
@@ -103,7 +103,7 @@ const SetNotiTimesBtn = ({ disabled }: SetNotiTimesBtnProps) => {
         </Pressable>
       </View>
 
-      {whichTimePickerIsOpened === 'end' && (
+      {!disabled && whichTimePickerIsOpened === 'end' && (
         <Animated.View style={{ transform: [{ translateY: translateYEnd }] }}>
           <TimePicker selectedTime={selectedEndTime} setSelectedTime={setSelectedEndTime} />
         </Animated.View>
