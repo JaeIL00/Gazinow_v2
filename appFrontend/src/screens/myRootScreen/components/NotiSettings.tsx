@@ -1,7 +1,7 @@
 import { FontText, TextButton, Toggle } from '@/global/ui';
 import { COLOR } from '@/global/constants';
 import { useEffect, useState } from 'react';
-import { TouchableOpacity, View } from 'react-native';
+import { ScrollView, TouchableOpacity, View } from 'react-native';
 import { useMyPageNavigation } from '@/navigation/MyPageNavigation';
 import { useGetSavedRoutesQuery } from '@/global/apis/hooks';
 import MoreBtn from '@/assets/icons/moreBtn.svg';
@@ -84,33 +84,35 @@ const NotiSettings = () => {
         />
       </View>
       <View className="h-1 bg-gray-eb" />
-      {routeDetailSettings &&
-        myRoutes?.map((myRoutes, index) => (
-          <View key={myRoutes.roadName + index}>
-            <TouchableOpacity
-              className="flex-row ml-24 mr-16 h-53 items-center justify-between"
-              onPress={() => myPageNavigation.push('NotiSettingsDetailScreen', { myRoutes })}
-            >
-              <FontText
-                value={myRoutes.roadName}
-                textColor={COLOR.GRAY_999}
-                textSize="16px"
-                textWeight="Medium"
-              />
-              <View className="flex-row items-center">
+      <ScrollView>
+        {routeDetailSettings &&
+          myRoutes?.map((myRoutes, index) => (
+            <View key={myRoutes.roadName + index}>
+              <TouchableOpacity
+                className="flex-row ml-24 mr-16 h-53 items-center justify-between"
+                onPress={() => myPageNavigation.push('NotiSettingsDetailScreen', { myRoutes })}
+              >
                 <FontText
-                  value="편집"
+                  value={myRoutes.roadName}
                   textColor={COLOR.GRAY_999}
-                  textSize="13px"
-                  textWeight="Regular"
-                  lineHeight={19}
+                  textSize="16px"
+                  textWeight="Medium"
                 />
-                <MoreBtn height={19} className="ml-4" />
-              </View>
-            </TouchableOpacity>
-            <View className="h-1 bg-gray-eb" />
-          </View>
-        ))}
+                <View className="flex-row items-center">
+                  <FontText
+                    value="편집"
+                    textColor={COLOR.GRAY_999}
+                    textSize="13px"
+                    textWeight="Regular"
+                    lineHeight={19}
+                  />
+                  <MoreBtn height={19} className="ml-4" />
+                </View>
+              </TouchableOpacity>
+              <View className="h-1 bg-gray-eb" />
+            </View>
+          ))}
+      </ScrollView>
     </>
   );
 };
