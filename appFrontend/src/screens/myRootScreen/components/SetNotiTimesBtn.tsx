@@ -2,6 +2,7 @@ import { FontText } from '@/global/ui';
 import { Animated, Easing, Pressable, View } from 'react-native';
 import { useEffect, useState } from 'react';
 import TimePicker from '@/global/ui/TimePicker';
+import { COLOR } from '@/global/constants';
 
 interface SetNotiTimesBtnProps {
   disabled: boolean;
@@ -43,7 +44,12 @@ const SetNotiTimesBtn = ({ disabled }: SetNotiTimesBtnProps) => {
   return (
     <>
       <View className="flex-row h-53 px-16 items-center justify-between border-b-1 border-gray-eb">
-        <FontText value="시작 시간" textSize="16px" textWeight="Regular" />
+        <FontText
+          value="시작 시간"
+          textSize="16px"
+          textWeight="Regular"
+          textColor={disabled ? COLOR.GRAY_BE : COLOR.BASIC_BLACK}
+        />
         <Pressable
           className="w-76 h-36 rounded-8 bg-gray-eb items-center justify-center"
           onPress={() => {
@@ -57,7 +63,7 @@ const SetNotiTimesBtn = ({ disabled }: SetNotiTimesBtnProps) => {
         >
           <FontText
             value={selectedStartTime}
-            textColor="#346BF7"
+            textColor={disabled ? COLOR.GRAY_BE : '#346BF7'}
             textSize="16px"
             textWeight="Regular"
           />
@@ -71,7 +77,12 @@ const SetNotiTimesBtn = ({ disabled }: SetNotiTimesBtnProps) => {
       )}
 
       <View className="flex-row h-53 px-16 items-center justify-between border-b-1 border-gray-eb">
-        <FontText value="종료 시간" textSize="16px" textWeight="Regular" />
+        <FontText
+          value="종료 시간"
+          textSize="16px"
+          textWeight="Regular"
+          textColor={disabled ? COLOR.GRAY_BE : COLOR.BASIC_BLACK}
+        />
         <Pressable
           className="w-76 h-36 rounded-8 bg-gray-eb items-center justify-center"
           onPress={() => {
@@ -85,7 +96,7 @@ const SetNotiTimesBtn = ({ disabled }: SetNotiTimesBtnProps) => {
         >
           <FontText
             value={selectedEndTime}
-            textColor="#346BF7"
+            textColor={disabled ? COLOR.GRAY_BE : '#346BF7'}
             textSize="16px"
             textWeight="Regular"
           />

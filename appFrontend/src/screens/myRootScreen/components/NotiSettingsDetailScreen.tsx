@@ -68,7 +68,12 @@ const NotiSettingsDetailScreen = () => {
         <SetNotiTimesBtn disabled={!pushNotificationOn} />
 
         <View className="px-16 py-12 border-b-1 border-gray-eb bg-white">
-          <FontText value="반복 요일" textSize="16px" textWeight="Regular" />
+          <FontText
+            value="반복 요일"
+            textSize="16px"
+            textWeight="Regular"
+            textColor={pushNotificationOn ? COLOR.BASIC_BLACK : COLOR.GRAY_BE}
+          />
           <View className="flex-row pt-16 justify-between">
             {days.map((day) => (
               <Pressable

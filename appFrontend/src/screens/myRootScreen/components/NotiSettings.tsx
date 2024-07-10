@@ -42,9 +42,14 @@ const NotiSettings = () => {
           onToggle={() => setPushNotificationOn(!pushNotificationOn)}
         />
       </View>
-      <View className="h-20 mx-[-16px] bg-gray-f9" />
-      <View className="flex-row h-53 items-center justify-between">
-        <TextButton value="내가 저장한 경로 알림" textSize="16px" textWeight="SemiBold" />
+      <View className="h-20 bg-gray-f9" />
+      <View className="flex-row mx-16 h-53 items-center justify-between">
+        <TextButton
+          value="내가 저장한 경로 알림"
+          textSize="16px"
+          textWeight="SemiBold"
+          textColor={pushNotificationOn ? COLOR.BASIC_BLACK : COLOR.GRAY_BE}
+        />
         <Toggle
           isOn={myRoutesNotification}
           onToggle={() => setMyRoutesNotification(!myRoutesNotification)}
@@ -54,12 +59,22 @@ const NotiSettings = () => {
       <View className="h-1 mx-[-16px] bg-gray-eb" />
       <View className="flex-row h-72 items-center justify-between">
         <View className="gap-6">
-          <TextButton value="경로 상세 설정" textSize="16px" textWeight="SemiBold" />
+          <TextButton
+            value="경로 상세 설정"
+            textSize="16px"
+            textWeight="SemiBold"
+            textColor={
+              pushNotificationOn && myRoutesNotification ? COLOR.BASIC_BLACK : COLOR.GRAY_BE
+            }
+          />
           <TextButton
             value="개별 경로의 알림이 활성화되는 시간을 설정해요"
             textSize="12px"
             textWeight="Regular"
             lineHeight={14}
+            textColor={
+              pushNotificationOn && myRoutesNotification ? COLOR.BASIC_BLACK : COLOR.GRAY_BE
+            }
           />
         </View>
         <Toggle
