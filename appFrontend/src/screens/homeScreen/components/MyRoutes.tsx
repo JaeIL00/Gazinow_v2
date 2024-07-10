@@ -44,15 +44,13 @@ const MyRoutes = ({ isVerifiedUser }: MyRoutesProps) => {
           textColor={isVerifiedUser === 'success auth' ? COLOR.REAL_BLACK : COLOR.GRAY_999}
           lineHeight={23}
         />
-        <TouchableOpacity>
-          <TextButton
+        <TouchableOpacity onPress={editMyRoutesHandler} hitSlop={20}>
+          <FontText
             value="저장경로 편집"
             textSize="12px"
             textWeight="Regular"
             lineHeight={15}
             textColor={COLOR.GRAY_999}
-            onPress={editMyRoutesHandler}
-            hitSlop={20}
           />
         </TouchableOpacity>
       </View>
