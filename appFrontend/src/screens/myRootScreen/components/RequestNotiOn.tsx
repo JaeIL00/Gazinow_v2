@@ -9,7 +9,7 @@ const RequestNotiOn = () => {
 
   return (
     <>
-      <View className="flex-1 mt-229 items-center">
+      <View className="flex-1 mx-16 mt-229 items-center">
         <FontText
           value="기기 알림을 켜주세요!"
           textSize="20px"
@@ -27,7 +27,7 @@ const RequestNotiOn = () => {
       </View>
 
       <TouchableOpacity
-        className="h-48 mb-40 rounded-5 justify-center items-center bg-black-17"
+        className="h-48 mb-40 mx-16 rounded-5 justify-center items-center bg-black-17"
         onPress={goToDeviceSettings}
       >
         <FontText

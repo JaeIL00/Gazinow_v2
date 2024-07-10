@@ -34,8 +34,8 @@ const NotiSettings = () => {
 
   return (
     <>
-      <View className="h-1 mx-[-16px] bg-gray-eb" />
-      <View className="flex-row h-53 items-center justify-between">
+      <View className="h-1 bg-gray-eb" />
+      <View className="flex-row mx-16 h-53 items-center justify-between">
         <TextButton value="푸시 알림 받기" textSize="16px" textWeight="SemiBold" />
         <Toggle
           isOn={pushNotificationOn}
@@ -56,8 +56,8 @@ const NotiSettings = () => {
           disabled={!pushNotificationOn}
         />
       </View>
-      <View className="h-1 mx-[-16px] bg-gray-eb" />
-      <View className="flex-row h-72 items-center justify-between">
+      <View className="h-1 bg-gray-eb" />
+      <View className="flex-row mx-16 h-72 items-center justify-between">
         <View className="gap-6">
           <TextButton
             value="경로 상세 설정"
@@ -83,12 +83,12 @@ const NotiSettings = () => {
           disabled={!pushNotificationOn}
         />
       </View>
-      <View className="h-1 mx-[-16px] bg-gray-eb" />
+      <View className="h-1 bg-gray-eb" />
       {routeDetailSettings &&
         myRoutes?.map((myRoutes, index) => (
           <View key={myRoutes.roadName + index}>
             <TouchableOpacity
-              className="flex-row h-53 ml-8 items-center justify-between"
+              className="flex-row ml-24 mr-16 h-53 items-center justify-between"
               onPress={() => myPageNavigation.push('NotiSettingsDetailScreen', { myRoutes })}
             >
               <FontText
@@ -108,7 +108,7 @@ const NotiSettings = () => {
                 <MoreBtn height={19} className="ml-4" />
               </View>
             </TouchableOpacity>
-            <View className="h-1 mx-[-16px] bg-gray-eb" />
+            <View className="h-1 bg-gray-eb" />
           </View>
         ))}
     </>

@@ -29,7 +29,6 @@ const NotiSettingsDetailScreen = () => {
     });
   };
 
-  //TODO: 토글 기능 추가
   const handlePushNotificationOnToggle = () => {
     setPushNotificationOn(!pushNotificationOn);
   };
@@ -46,9 +45,7 @@ const NotiSettingsDetailScreen = () => {
           textWeight="Medium"
           lineHeight={23}
         />
-        <TouchableOpacity hitSlop={20} onPress={() => myPageNavigation.popToTop()}>
-          <IconCrossX />
-        </TouchableOpacity>
+        <View className="w-24" />
       </View>
 
       <View className="flex-1 mt-20 bg-white">
@@ -84,6 +81,7 @@ const NotiSettingsDetailScreen = () => {
                 })}
                 onPress={() => toggleDay(day)}
                 disabled={!pushNotificationOn}
+                hitSlop={10}
               >
                 <FontText
                   value={day}
@@ -98,7 +96,7 @@ const NotiSettingsDetailScreen = () => {
       </View>
 
       <TouchableOpacity
-        className="h-48 mx-16 mb-50 bg-black-17 rounded-5 items-center justify-center"
+        className="h-48 mx-16 mb-10 bg-black-17 rounded-5 items-center justify-center"
         onPress={() => {}} //FIXME: api 나오면
       >
         <FontText value="완료" textSize="17px" textWeight="SemiBold" textColor={COLOR.WHITE} />

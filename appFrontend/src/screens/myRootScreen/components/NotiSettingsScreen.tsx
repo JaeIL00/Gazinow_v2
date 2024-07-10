@@ -15,8 +15,8 @@ const NotiSettingsScreen = () => {
   const submitNotificationSettings = () => {};
 
   return (
-    <SafeAreaView className="flex-1 bg-white px-16">
-      <View className="flex-row items-center justify-between">
+    <SafeAreaView className="flex-1 bg-white">
+      <View className="flex-row px-16 items-center justify-between">
         <TouchableOpacity
           className="flex-row items-center py-16"
           onPress={() => myPageNavigation.goBack()}
@@ -33,4 +33,5 @@ const NotiSettingsScreen = () => {
     </SafeAreaView>
   );
 };
+
 export default NotiSettingsScreen;
