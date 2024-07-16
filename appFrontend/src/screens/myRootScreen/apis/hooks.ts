@@ -1,4 +1,4 @@
-import { useMutation } from 'react-query';
+import { useMutation, useQuery } from 'react-query';
 import {
   changePasswordFetch,
   checkPasswordFetch,
@@ -6,6 +6,10 @@ import {
   logoutFetch,
   changeNicknameFetch,
   checkNicknameFetch,
+  addPathNotiSettingsFetch,
+  disablePathNotiFetch,
+  updatePathNotiSettingsFetch,
+  getPathNotiFetch,
 } from './func';
 
 /**
@@ -96,4 +100,63 @@ export const useCheckNicknameMutation = ({
     onError,
   });
   return { data, checkNicknameMutate: mutate };
+};
+
+/**
+ * 알림 비활성화 훅
+ */
+export const useDisablePathNotiMutation = ({
+  onSuccess,
+  onError,
+}: {
+  onSuccess: () => void;
+  onError?: (error: any) => void;
+}) => {
+  const { mutate } = useMutation(disablePathNotiFetch, {
+    onSuccess,
+    onError,
+  });
+  return { disablePathNotiMutate: mutate };
+};
+
+/**
+ * 알림 설정 등록 훅
+ */
+export const useAddPathNotiSettingsMutation = ({
+  onSuccess,
+  onError,
+}: {
+  onSuccess: () => void;
+  onError?: (error: any) => void;
+}) => {
+  const { mutate } = useMutation(addPathNotiSettingsFetch, {
+    onSuccess,
+    onError,
+  });
+  return { addPathNotiSettingsMutate: mutate };
+};
+
+/**
+ * 알림 설정 수정 훅
+ */
+export const usePathUpdateNotiSettingsMutation = ({
+  onSuccess,
+  onError,
+}: {
+  onSuccess: () => void;
+  onError?: (error: any) => void;
+}) => {
+  const { mutate } = useMutation(updatePathNotiSettingsFetch, {
+    onSuccess,
+    onError,
+  });
+  return { updatePathNotiSettingsMutate: mutate };
+};
+
+/**
+ * 경로별 알림 설정 불러오기 훅
+ */
+export const useGetPathNotiQuery = (myPathId: number) => {
+  const { data, isLoading } = useQuery(['getPathNoti'], () => getPathNotiFetch(myPathId));
+  return { pathNotiData: data, isLoading };
 };
