@@ -186,6 +186,7 @@ export interface SaveMyRoutesType extends Path {
 }
 
 export interface MyRoutesType extends Path {
+  id: number;
   roadName: string;
 }
 
