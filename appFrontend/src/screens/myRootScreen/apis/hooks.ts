@@ -157,6 +157,6 @@ export const usePathUpdateNotiSettingsMutation = ({
  * 경로별 알림 설정 불러오기 훅
  */
 export const useGetPathNotiQuery = (myPathId: number) => {
-  const { data, isLoading } = useQuery(['getPathNoti'], () => getPathNotiFetch(myPathId));
-  return { pathNotiData: data, isLoading };
+  const { data } = useQuery(['getPathNoti'], () => getPathNotiFetch(myPathId));
+  return { pathNotiData: data };
 };
