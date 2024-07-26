@@ -6,18 +6,50 @@ import IconLeftArrowHead from '@assets/icons/left_arrow_head.svg';
 import { useMyPageNavigation } from '@/navigation/MyPageNavigation';
 import { useRoute } from '@react-navigation/native';
 import { MyRoutesType } from '@/global/apis/entity';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import cn from 'classname';
 import SetNotiTimesBtn from './SetNotiTimesBtn';
+import {
+  useAddPathNotiSettingsMutation,
+  useDisablePathNotiMutation,
+  useGetPathNotiQuery,
+  usePathUpdateNotiSettingsMutation,
+} from '../apis/hooks';
+import { rawTimeToReqTimeFormat } from '../util/timeFormatChange';
 
 const NotiSettingsDetailScreen = () => {
   const myPageNavigation = useMyPageNavigation();
   const { myRoutes } = useRoute().params as { myRoutes: MyRoutesType };
-  const [pushNotificationOn, setPushNotificationOn] = useState<boolean>(false); //FIXME: api 나오면
-  const [selectedDays, setSelectedDays] = useState<string[]>([]);
 
+  const { pathNotiData } = useGetPathNotiQuery(myRoutes.id);
+  const [pushNotificationOn, setPushNotificationOn] = useState<boolean>(false);
+  const [savedStartTime, setSavedStartTime] = useState<string>('07:00');
+  const [savedEndTime, setSavedEndTime] = useState<string>('09:00');
+
+  // 저장된 설정 불러오기
+  useEffect(() => {
+    if (pathNotiData?.enabled) {
+      setPushNotificationOn(true);
+      setSelectedDays(pathNotiData.notificationTimes.map((notiTimes) => notiTimes.dayOfWeek));
+      setSavedStartTime(pathNotiData?.notificationTimes[0].fromTime);
+      setSavedEndTime(pathNotiData?.notificationTimes[0].toTime);
+    } else {
+      setPushNotificationOn(false);
+      setSavedStartTime('07:00');
+      setSavedEndTime('09:00');
+      setSelectedDays([]);
+    }
+  }, [pathNotiData]);
+
+  // 푸시 알림 on 토글
+  const handlePushNotificationOnToggle = () => {
+    setPushNotificationOn(!pushNotificationOn);
+    setSelectedDays([]);
+  };
+
+  // 알림 받을 요일 선택
   const days = ['월', '화', '수', '목', '금', '토', '일'];
-
+  const [selectedDays, setSelectedDays] = useState<string[]>([]);
   const toggleDay = (day: string) => {
     setSelectedDays((prevSelectedDays) => {
       if (prevSelectedDays.includes(day)) {
@@ -62,7 +94,13 @@ const NotiSettingsDetailScreen = () => {
           <Toggle isOn={pushNotificationOn} onToggle={handlePushNotificationOnToggle} />
         </View>
 
-        <SetNotiTimesBtn disabled={!pushNotificationOn} />
+        <SetNotiTimesBtn
+          pushNotificationOn={pushNotificationOn}
+          savedStartTime={savedStartTime}
+          setSavedStartTime={setSavedStartTime}
+          savedEndTime={savedEndTime}
+          setSavedEndTime={setSavedEndTime}
+        />
 
         <View className="px-16 py-12 border-b-1 border-gray-eb bg-white">
           <FontText
