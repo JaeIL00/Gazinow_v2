@@ -60,9 +60,37 @@ const NotiSettingsDetailScreen = () => {
     });
   };
 
-  const handlePushNotificationOnToggle = () => {
-    setPushNotificationOn(!pushNotificationOn);
-    setSelectedDays([]);
+  // 완료 버튼 클릭 시 요청 전송
+  const { addPathNotiSettingsMutate } = useAddPathNotiSettingsMutation({
+    onSuccess: async () => myPageNavigation.goBack(),
+  });
+  const { updatePathNotiSettingsMutate } = usePathUpdateNotiSettingsMutation({
+    onSuccess: async () => myPageNavigation.goBack(),
+  });
+  const { disablePathNotiMutate } = useDisablePathNotiMutation({
+    onSuccess: async () => myPageNavigation.goBack(),
+  });
+
+  const createNotiSettingsBody = (selectedDays: string[], myRoutesId: number) => {
+    return {
+      myPathId: myRoutesId,
+      dayTimeRanges: selectedDays.map((day) => ({
+        day,
+        fromTime: rawTimeToReqTimeFormat(savedStartTime),
+        toTime: rawTimeToReqTimeFormat(savedEndTime),
+      })),
+    };
+  };
+
+  const saveSettingsHandler = () => {
+    const notiSettings = createNotiSettingsBody(selectedDays, myRoutes.id);
+    if (!pushNotificationOn) {
+      disablePathNotiMutate(myRoutes.id);
+    } else if (pathNotiData?.enabled) {
+      updatePathNotiSettingsMutate(notiSettings);
+    } else {
+      addPathNotiSettingsMutate(notiSettings);
+    }
   };
 
   return (
@@ -134,8 +162,12 @@ const NotiSettingsDetailScreen = () => {
       </View>
 
       <TouchableOpacity
-        className="h-48 mx-16 mb-10 bg-black-17 rounded-5 items-center justify-center"
-        onPress={() => {}} //FIXME: api 나오면
+        className={cn('h-48 mx-16 mb-10 rounded-5 items-center justify-center', {
+          'bg-black-17 ': !pushNotificationOn || selectedDays.length !== 0,
+          'bg-gray-dd': pushNotificationOn && selectedDays.length === 0,
+        })}
+        onPress={saveSettingsHandler}
+        disabled={pushNotificationOn && selectedDays.length === 0}
       >
         <FontText value="완료" textSize="17px" textWeight="SemiBold" textColor={COLOR.WHITE} />
       </TouchableOpacity>
