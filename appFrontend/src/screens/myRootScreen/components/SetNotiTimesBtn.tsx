@@ -3,25 +3,38 @@ import { Animated, Easing, Pressable, View } from 'react-native';
 import { useEffect, useState } from 'react';
 import TimePicker from '@/global/ui/TimePicker';
 import { COLOR } from '@/global/constants';
+import { resTimeToTimeIndicatorFormat } from '../util/timeFormatChange';
 
 interface SetNotiTimesBtnProps {
-  disabled: boolean;
+  pushNotificationOn: boolean;
+  savedStartTime: string;
+  savedEndTime: string;
+  setSavedStartTime: (time: string) => void;
+  setSavedEndTime: (time: string) => void;
 }
 
-const SetNotiTimesBtn = ({ disabled }: SetNotiTimesBtnProps) => {
-  const [selectedStartTime, setSelectedStartTime] = useState<string>('오전 7시'); //FIXME: api 나오면
-  const [selectedEndTime, setSelectedEndTime] = useState<string>('오전 9시'); //FIXME: api 나오면
+const SetNotiTimesBtn = ({
+  pushNotificationOn,
+  savedStartTime,
+  savedEndTime,
+  setSavedStartTime,
+  setSavedEndTime,
+}: SetNotiTimesBtnProps) => {
+  const [openedTimePicker, setOpenedTimePicker] = useState<'start' | 'end' | null>(null);
 
-  const [whichTimePickerIsOpened, setWhichTimePickerIsOpened] = useState<'start' | 'end' | null>(
-    null,
-  );
+  useEffect(() => {
+    if (!pushNotificationOn) {
+      setOpenedTimePicker(null);
+    }
+  }, [pushNotificationOn]);
 
+  // 타임피커 펼쳐지는 애니메이션
   const [animatedValue] = useState(new Animated.Value(0));
 
   useEffect(() => {
     let toValue = 0;
-    if (whichTimePickerIsOpened === 'start') toValue = 1;
-    else if (whichTimePickerIsOpened === 'end') toValue = 2;
+    if (openedTimePicker === 'start') toValue = 1;
+    else if (openedTimePicker === 'end') toValue = 2;
 
     Animated.timing(animatedValue, {
       toValue,
@@ -29,7 +42,7 @@ const SetNotiTimesBtn = ({ disabled }: SetNotiTimesBtnProps) => {
       easing: Easing.inOut(Easing.ease),
       useNativeDriver: false,
     }).start();
-  }, [whichTimePickerIsOpened]);
+  }, [openedTimePicker]);
 
   const translateYStart = animatedValue.interpolate({
     inputRange: [0, 1, 2],
@@ -48,31 +61,24 @@ const SetNotiTimesBtn = ({ disabled }: SetNotiTimesBtnProps) => {
           value="시작 시간"
           textSize="16px"
           textWeight="Regular"
-          textColor={disabled ? COLOR.GRAY_BE : COLOR.BASIC_BLACK}
+          textColor={!pushNotificationOn ? COLOR.GRAY_BE : COLOR.BASIC_BLACK}
         />
         <Pressable
-          className="w-76 h-36 rounded-8 bg-gray-eb items-center justify-center"
-          onPress={() => {
-            if (whichTimePickerIsOpened === 'start') {
-              setWhichTimePickerIsOpened(null);
-            } else {
-              setWhichTimePickerIsOpened('start');
-            }
-          }}
-          disabled={disabled}
+          className="w-113 h-36 rounded-8 bg-gray-eb items-center justify-center"
+          onPress={() => setOpenedTimePicker(openedTimePicker === 'start' ? null : 'start')}
+          disabled={!pushNotificationOn}
         >
           <FontText
-            value={selectedStartTime}
-            textColor={disabled ? COLOR.GRAY_BE : '#346BF7'}
+            value={resTimeToTimeIndicatorFormat(savedStartTime)}
+            textColor={!pushNotificationOn ? COLOR.GRAY_BE : '#346BF7'}
             textSize="16px"
             textWeight="Regular"
           />
         </Pressable>
       </View>
-
-      {!disabled && whichTimePickerIsOpened === 'start' && (
+      {pushNotificationOn && openedTimePicker === 'start' && (
         <Animated.View style={{ transform: [{ translateY: translateYStart }] }}>
-          <TimePicker selectedTime={selectedStartTime} setSelectedTime={setSelectedStartTime} />
+          <TimePicker setSelectedTime={setSavedStartTime} />
         </Animated.View>
       )}
 
@@ -81,31 +87,24 @@ const SetNotiTimesBtn = ({ disabled }: SetNotiTimesBtnProps) => {
           value="종료 시간"
           textSize="16px"
           textWeight="Regular"
-          textColor={disabled ? COLOR.GRAY_BE : COLOR.BASIC_BLACK}
+          textColor={!pushNotificationOn ? COLOR.GRAY_BE : COLOR.BASIC_BLACK}
         />
         <Pressable
-          className="w-76 h-36 rounded-8 bg-gray-eb items-center justify-center"
-          onPress={() => {
-            if (whichTimePickerIsOpened === 'end') {
-              setWhichTimePickerIsOpened(null);
-            } else {
-              setWhichTimePickerIsOpened('end');
-            }
-          }}
-          disabled={disabled}
+          className="w-113 h-36 rounded-8 bg-gray-eb items-center justify-center"
+          onPress={() => setOpenedTimePicker(openedTimePicker === 'end' ? null : 'end')}
+          disabled={!pushNotificationOn}
         >
           <FontText
-            value={selectedEndTime}
-            textColor={disabled ? COLOR.GRAY_BE : '#346BF7'}
+            value={resTimeToTimeIndicatorFormat(savedEndTime)}
+            textColor={!pushNotificationOn ? COLOR.GRAY_BE : '#346BF7'}
             textSize="16px"
             textWeight="Regular"
           />
         </Pressable>
       </View>
-
-      {!disabled && whichTimePickerIsOpened === 'end' && (
+      {pushNotificationOn && openedTimePicker === 'end' && (
         <Animated.View style={{ transform: [{ translateY: translateYEnd }] }}>
-          <TimePicker selectedTime={selectedEndTime} setSelectedTime={setSelectedEndTime} />
+          <TimePicker setSelectedTime={setSavedEndTime} />
         </Animated.View>
       )}
     </>

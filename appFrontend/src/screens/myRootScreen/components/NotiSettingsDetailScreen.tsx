@@ -6,18 +6,50 @@ import IconLeftArrowHead from '@assets/icons/left_arrow_head.svg';
 import { useMyPageNavigation } from '@/navigation/MyPageNavigation';
 import { useRoute } from '@react-navigation/native';
 import { MyRoutesType } from '@/global/apis/entity';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import cn from 'classname';
 import SetNotiTimesBtn from './SetNotiTimesBtn';
+import {
+  useAddPathNotiSettingsMutation,
+  useDisablePathNotiMutation,
+  useGetPathNotiQuery,
+  usePathUpdateNotiSettingsMutation,
+} from '../apis/hooks';
+import { rawTimeToReqTimeFormat } from '../util/timeFormatChange';
 
 const NotiSettingsDetailScreen = () => {
   const myPageNavigation = useMyPageNavigation();
   const { myRoutes } = useRoute().params as { myRoutes: MyRoutesType };
-  const [pushNotificationOn, setPushNotificationOn] = useState<boolean>(false); //FIXME: api 나오면
-  const [selectedDays, setSelectedDays] = useState<string[]>([]);
 
+  const { pathNotiData } = useGetPathNotiQuery(myRoutes.id);
+  const [pushNotificationOn, setPushNotificationOn] = useState<boolean>(false);
+  const [savedStartTime, setSavedStartTime] = useState<string>('07:00');
+  const [savedEndTime, setSavedEndTime] = useState<string>('09:00');
+
+  // 저장된 설정 불러오기
+  useEffect(() => {
+    if (pathNotiData?.enabled) {
+      setPushNotificationOn(true);
+      setSelectedDays(pathNotiData.notificationTimes.map((notiTimes) => notiTimes.dayOfWeek));
+      setSavedStartTime(pathNotiData?.notificationTimes[0].fromTime);
+      setSavedEndTime(pathNotiData?.notificationTimes[0].toTime);
+    } else {
+      setPushNotificationOn(false);
+      setSavedStartTime('07:00');
+      setSavedEndTime('09:00');
+      setSelectedDays([]);
+    }
+  }, [pathNotiData]);
+
+  // 푸시 알림 on 토글
+  const handlePushNotificationOnToggle = () => {
+    setPushNotificationOn(!pushNotificationOn);
+    setSelectedDays([]);
+  };
+
+  // 알림 받을 요일 선택
   const days = ['월', '화', '수', '목', '금', '토', '일'];
-
+  const [selectedDays, setSelectedDays] = useState<string[]>([]);
   const toggleDay = (day: string) => {
     setSelectedDays((prevSelectedDays) => {
       if (prevSelectedDays.includes(day)) {
@@ -28,9 +60,37 @@ const NotiSettingsDetailScreen = () => {
     });
   };
 
-  const handlePushNotificationOnToggle = () => {
-    setPushNotificationOn(!pushNotificationOn);
-    setSelectedDays([]);
+  // 완료 버튼 클릭 시 요청 전송
+  const { addPathNotiSettingsMutate } = useAddPathNotiSettingsMutation({
+    onSuccess: async () => myPageNavigation.goBack(),
+  });
+  const { updatePathNotiSettingsMutate } = usePathUpdateNotiSettingsMutation({
+    onSuccess: async () => myPageNavigation.goBack(),
+  });
+  const { disablePathNotiMutate } = useDisablePathNotiMutation({
+    onSuccess: async () => myPageNavigation.goBack(),
+  });
+
+  const createNotiSettingsBody = (selectedDays: string[], myRoutesId: number) => {
+    return {
+      myPathId: myRoutesId,
+      dayTimeRanges: selectedDays.map((day) => ({
+        day,
+        fromTime: rawTimeToReqTimeFormat(savedStartTime),
+        toTime: rawTimeToReqTimeFormat(savedEndTime),
+      })),
+    };
+  };
+
+  const saveSettingsHandler = () => {
+    const notiSettings = createNotiSettingsBody(selectedDays, myRoutes.id);
+    if (!pushNotificationOn) {
+      disablePathNotiMutate(myRoutes.id);
+    } else if (pathNotiData?.enabled) {
+      updatePathNotiSettingsMutate(notiSettings);
+    } else {
+      addPathNotiSettingsMutate(notiSettings);
+    }
   };
 
   return (
@@ -62,7 +122,13 @@ const NotiSettingsDetailScreen = () => {
           <Toggle isOn={pushNotificationOn} onToggle={handlePushNotificationOnToggle} />
         </View>
 
-        <SetNotiTimesBtn disabled={!pushNotificationOn} />
+        <SetNotiTimesBtn
+          pushNotificationOn={pushNotificationOn}
+          savedStartTime={savedStartTime}
+          setSavedStartTime={setSavedStartTime}
+          savedEndTime={savedEndTime}
+          setSavedEndTime={setSavedEndTime}
+        />
 
         <View className="px-16 py-12 border-b-1 border-gray-eb bg-white">
           <FontText
@@ -96,8 +162,12 @@ const NotiSettingsDetailScreen = () => {
       </View>
 
       <TouchableOpacity
-        className="h-48 mx-16 mb-10 bg-black-17 rounded-5 items-center justify-center"
-        onPress={() => {}} //FIXME: api 나오면
+        className={cn('h-48 mx-16 mb-10 rounded-5 items-center justify-center', {
+          'bg-black-17 ': !pushNotificationOn || selectedDays.length !== 0,
+          'bg-gray-dd': pushNotificationOn && selectedDays.length === 0,
+        })}
+        onPress={saveSettingsHandler}
+        disabled={pushNotificationOn && selectedDays.length === 0}
       >
         <FontText value="완료" textSize="17px" textWeight="SemiBold" textColor={COLOR.WHITE} />
       </TouchableOpacity>
