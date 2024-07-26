@@ -3,22 +3,13 @@ import { View } from 'react-native';
 import DatePicker from 'react-native-date-picker';
 
 interface TimePickerProps {
-  selectedTime: string;
   setSelectedTime: (time: string) => void;
 }
 
-const TimePicker = ({ selectedTime, setSelectedTime }: TimePickerProps) => {
+const TimePicker = ({ setSelectedTime }: TimePickerProps) => {
   const [date, setDate] = useState(new Date());
 
-  let hours = date.getHours();
-  const period = hours >= 12 ? '오후' : '오전';
-
-  hours = hours % 12;
-  hours = hours ? hours : 12;
-
-  if (selectedTime) {
-    setSelectedTime(`${period} ${hours}시`);
-  }
+  setSelectedTime(`${date.getHours()}:${date.getMinutes()}`);
 
   return (
     <View className="border-b-1 border-gray-eb bg-gray-f9">
