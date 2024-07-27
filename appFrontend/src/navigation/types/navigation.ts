@@ -19,6 +19,7 @@ export type AuthStackStackParamList = {
 
 export type HomeStackParamList = {
   Home: undefined;
+  NotiHistory: undefined;
   SubwayPathResult: undefined;
   SubwayPathDetail: { state?: Path | SubPath[]; pathId?: number | null };
   SavedRoutes: undefined;
