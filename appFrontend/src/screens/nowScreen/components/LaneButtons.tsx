@@ -19,13 +19,13 @@ const LaneButtons = ({ activeButton, setActiveButton, titleNotShown }: LaneButto
   const isVerifiedUser = useAppSelect((state) => state.auth.isVerifiedUser);
 
   // 내가 저장한 경로의 노선만 가져옴
-  const { data: savedRoutes } = useGetSavedRoutesQuery();
+  const { myRoutes } = useGetSavedRoutesQuery();
 
   let savedStations: string[] | undefined;
 
   // isVerifiedUser 상태에 따라 표시할 노선 캡슐 변경
   if (isVerifiedUser === 'success auth') {
-    savedStations = savedRoutes?.reduce((acc, current) => {
+    savedStations = myRoutes?.reduce((acc, current) => {
       const { subPaths } = current;
       const lineOfSubPath = subPaths.map((sub: SubPath) => {
         return pathSubwayLineNameInLine(sub.lanes[0].stationCode);

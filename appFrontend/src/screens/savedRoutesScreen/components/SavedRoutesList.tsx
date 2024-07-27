@@ -20,7 +20,7 @@ const SavedRoutesList = () => {
     },
   });
 
-  const { data: savedRoutes } = useGetSavedRoutesQuery();
+  const { myRoutes } = useGetSavedRoutesQuery();
 
   const showDeletePopup = (id: number) => {
     setRouteToDelete(id);
@@ -36,7 +36,7 @@ const SavedRoutesList = () => {
 
   return (
     <>
-      {savedRoutes?.map((item) => (
+      {myRoutes?.map((item) => (
         <View className="px-16 pt-20 pb-8 border-b-1 border-gray-eb" key={item.id}>
           <View className="flex-row items-center justify-between mb-24">
             <FontText

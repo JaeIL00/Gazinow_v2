@@ -12,7 +12,7 @@ const NotiSettings = () => {
   const [myRoutesNotification, setMyRoutesNotification] = useState<boolean>(false);
   const [routeDetailSettings, setRouteDetailSettings] = useState<boolean>(false);
 
-  const { data: myRoutes } = useGetSavedRoutesQuery();
+  const { myRoutes } = useGetSavedRoutesQuery();
 
   useEffect(() => {
     if (!pushNotificationOn) {
