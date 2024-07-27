@@ -1,18 +1,31 @@
 import { View } from 'react-native';
-import { FontText, TextButton } from '@/global/ui';
+import { FontText } from '@/global/ui';
 import { COLOR } from '@/global/constants';
 import { useGetSavedRoutesQuery } from '@/global/apis/hooks';
 import { useRootNavigation } from '@/navigation/RootNavigation';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { NonLoggedIn, RouteItem, NoRoutes } from '.';
+import { useEffect } from 'react';
+import { useQueryClient } from 'react-query';
 
 interface MyRoutesProps {
   isVerifiedUser: 'success auth' | 'fail auth' | 'yet';
+  isRefreshing: boolean;
+  setIsRefreshing: (isRefreshing: boolean) => void;
 }
 
-const MyRoutes = ({ isVerifiedUser }: MyRoutesProps) => {
+const MyRoutes = ({ isVerifiedUser, isRefreshing, setIsRefreshing }: MyRoutesProps) => {
   const navigation = useRootNavigation();
-  const { data: myRoutes } = useGetSavedRoutesQuery();
+  const { myRoutes, getSavedRoutesRefetch } = useGetSavedRoutesQuery();
+  const queryClient = useQueryClient();
+
+  useEffect(() => {
+    queryClient.invalidateQueries(['getRoads']);
+    if (isRefreshing) {
+      getSavedRoutesRefetch();
+    }
+    setIsRefreshing(false);
+  }, [isRefreshing]);
 
   const editMyRoutesHandler = () =>
     isVerifiedUser === 'success auth'

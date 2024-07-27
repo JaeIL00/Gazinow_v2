@@ -1,6 +1,6 @@
-import { SafeAreaView, ScrollView, View } from 'react-native';
+import { RefreshControl, SafeAreaView, ScrollView, View } from 'react-native';
 import { IssueCarrousel, SwapStation, MyRoutes } from './components';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import SplashScreen from 'react-native-splash-screen';
 import { useTryAuthorization } from './hooks';
 import IconBell from '@assets/icons/bell.svg';
@@ -30,12 +30,21 @@ const HomeScreen = () => {
       ? homeNavigation.push('NotiHistory')
       : rootNavigation.navigate('AuthStack', { screen: 'Landing' });
 
+  const [isRefreshing, setIsRefreshing] = useState<boolean>(false);
+
   return (
     <SafeAreaView className="flex-1 bg-gray-f9">
       <ScrollView
         contentContainerStyle={{ paddingHorizontal: 16 }}
         showsVerticalScrollIndicator={false}
         scrollEnabled={isVerifiedUser === 'success auth'}
+        refreshControl={
+          <RefreshControl
+            onRefresh={() => setIsRefreshing(true)}
+            refreshing={isRefreshing}
+            progressViewOffset={-10}
+          />
+        }
       >
         <TouchableOpacity
           onPress={authStateHandler}
@@ -45,10 +54,14 @@ const HomeScreen = () => {
           {/* 아이콘 교체 */}
           <IconBell />
         </TouchableOpacity>
-        <IssueCarrousel />
+        <IssueCarrousel isRefreshing={isRefreshing} setIsRefreshing={setIsRefreshing} />
         <View className="h-16" />
         <SwapStation />
-        <MyRoutes isVerifiedUser={isVerifiedUser} />
+        <MyRoutes
+          isVerifiedUser={isVerifiedUser}
+          isRefreshing={isRefreshing}
+          setIsRefreshing={setIsRefreshing}
+        />
       </ScrollView>
     </SafeAreaView>
   );
