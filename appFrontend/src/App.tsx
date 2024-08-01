@@ -1,11 +1,9 @@
 import React, { useEffect } from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { Provider } from 'react-redux';
-
 import { RootNavigation } from '@/navigation';
 import { store } from '@/store';
 import { NavigationContainer, createNavigationContainerRef } from '@react-navigation/native';
-import Toast from 'react-native-toast-message';
 import * as Sentry from '@sentry/react-native';
 import { MODE, SENTRY_DSN } from '@env';
 import { version as currentVersion } from '../package.json';
@@ -13,6 +11,13 @@ import { fetch } from '@react-native-community/netinfo';
 import { Alert } from 'react-native';
 import RNExitApp from 'react-native-exit-app';
 import { RootStackParamList } from './navigation/types/navigation';
+import messaging, { FirebaseMessagingTypes } from '@react-native-firebase/messaging';
+import notifee, {
+  AndroidImportance,
+  AndroidVisibility,
+  EventDetail,
+  EventType,
+} from '@notifee/react-native';
 
 Sentry.init({
   enabled: MODE === 'production',
@@ -49,6 +54,15 @@ const App = (): JSX.Element => {
       }
     };
     checkNetworkAndRetry();
+  }, []);
+
+  // 첫 실행 시 알림 권한 요청
+  useEffect(() => {
+    const requestPermission = async () => {
+      await messaging().requestPermission();
+    };
+
+    requestPermission();
   }, []);
 
   return (
