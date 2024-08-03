@@ -135,7 +135,7 @@ const SearchStationScreen = () => {
                 <IconClock />
                 <StationInfoBox>
                   <FontText
-                    value={stationName}
+                    value={stationName.split('(')[0]}
                     textSize="16px"
                     textWeight="Medium"
                     lineHeight={21}
@@ -163,7 +163,7 @@ const SearchStationScreen = () => {
                 <IconLocationPin />
                 <StationInfoBox>
                   <FontText
-                    value={stationName}
+                    value={stationName.split('(')[0]}
                     textSize="16px"
                     textWeight="Medium"
                     lineHeight={21}

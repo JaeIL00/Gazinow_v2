@@ -42,7 +42,7 @@ const PathLineNumName = ({ lane, stationName }: PathLineNumNameProps) => {
       </View>
 
       <View
-        className="absolute flex flex-row justify-center w-46"
+        className="absolute flex flex-col justify-center w-54"
         style={{
           top: Dimensions.get('window').fontScale * 22,
         }}
@@ -53,12 +53,11 @@ const PathLineNumName = ({ lane, stationName }: PathLineNumNameProps) => {
           textWeight="Medium"
           textColor={subwayLineColor(lane.stationCode)}
           textAlign="center"
-          className="text-center"
         />
         {lane.direct && (
           <FontText
-            className="ml-2"
             value="급행"
+            textAlign="center"
             textSize="12px"
             textWeight="Regular"
             textColor="#EB5147"
