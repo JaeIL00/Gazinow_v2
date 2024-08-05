@@ -18,7 +18,7 @@ const PathLineNumName = ({ lane, stationName }: PathLineNumNameProps) => {
         marginBottom: Dimensions.get('window').fontScale * 22,
       }}
     >
-      <View style={{ width: 42 }} />
+      <View className="w-42" />
       <View
         style={{
           width: Dimensions.get('window').fontScale * 18,
@@ -42,13 +42,13 @@ const PathLineNumName = ({ lane, stationName }: PathLineNumNameProps) => {
       </View>
 
       <View
-        className="absolute flex-row"
+        className="absolute flex flex-col justify-center w-54"
         style={{
           top: Dimensions.get('window').fontScale * 22,
         }}
       >
         <FontText
-          value={subwayNameCutting(stationName)}
+          value={subwayNameCutting(stationName.split('(')[0])}
           textSize="12px"
           textWeight="Medium"
           textColor={subwayLineColor(lane.stationCode)}
@@ -56,8 +56,8 @@ const PathLineNumName = ({ lane, stationName }: PathLineNumNameProps) => {
         />
         {lane.direct && (
           <FontText
-            className="ml-2"
             value="급행"
+            textAlign="center"
             textSize="12px"
             textWeight="Regular"
             textColor="#EB5147"
