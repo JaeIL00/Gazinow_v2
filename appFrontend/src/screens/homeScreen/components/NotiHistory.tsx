@@ -4,12 +4,13 @@ import { SafeAreaView, TouchableOpacity, View } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import IconLeftArrowHead from '@assets/icons/left_arrow_head.svg';
 import IconNoNoti from '@assets/icons/no_result_icon.svg';
-import TextNoNoti from '@/assets/icons/no_result_text.svg';
+import TextNoNoti from '@/assets/icons/no_notihistory_text.svg';
 import { useRootNavigation } from '@/navigation/RootNavigation';
 import { COLOR } from '@/global/constants';
 import { useAppDispatch } from '@/store';
 import { getIssueId } from '@/store/modules';
 import IssueKeywordIcon from '@/global/components/IssueKeywordIcon';
+import SettingsIcon from '@/assets/icons/icon_setting.svg';
 
 const NotiHistory = () => {
   const navigation = useRootNavigation();
@@ -28,8 +29,7 @@ const NotiHistory = () => {
           onPress={() => navigation.push('MyPageNavigation', { screen: 'NotiSettingsScreen' })}
           hitSlop={20}
         >
-          {/* TODO: 아이콘 교체 */}
-          <IconLeftArrowHead color="#3F3F46" width={24} />
+          <SettingsIcon />
         </TouchableOpacity>
       </View>
 
@@ -80,7 +80,6 @@ const NotiHistory = () => {
         ListEmptyComponent={
           <View className="flex-1 pt-250 items-center justify-center gap-17">
             <IconNoNoti />
-            {/* TODO: 아이콘 교체 */}
             <TextNoNoti />
           </View>
         }

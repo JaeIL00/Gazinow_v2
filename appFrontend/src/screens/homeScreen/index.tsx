@@ -51,7 +51,6 @@ const HomeScreen = () => {
           hitSlop={20}
           className="flex-row-reverse mt-15 ml-11"
         >
-          {/* 아이콘 교체 */}
           <IconBell />
         </TouchableOpacity>
         <IssueCarrousel isRefreshing={isRefreshing} setIsRefreshing={setIsRefreshing} />
