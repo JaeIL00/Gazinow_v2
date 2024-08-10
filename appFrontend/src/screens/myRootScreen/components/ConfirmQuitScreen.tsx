@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { FontText, TextButton } from '@/global/ui';
+import { FontText } from '@/global/ui';
 import { COLOR } from '@/global/constants';
 import MyTabModal from '@/global/components/MyTabModal';
 import { SafeAreaView, TouchableOpacity, View } from 'react-native';
@@ -22,19 +22,20 @@ const ConfirmQuitScreen = () => {
     <SafeAreaView className="flex-1 bg-white">
       <View className="flex-1 px-16">
         <TouchableOpacity
-          className="flex-row items-center h-56 pl-4"
+          className="flex-row items-center h-56"
           onPress={() => myPageNavigation.goBack()}
         >
-          <IconLeftArrowHead color="#3F3F46" />
+          <IconLeftArrowHead width={24} color="#3F3F46" />
         </TouchableOpacity>
 
-        <View className="flex-1 gap-20 pt-29">
+        <View className="flex-1 space-20 pt-29">
           <FontText
             value={`${nickname}님,\n정말 탈퇴하시겠어요?`}
             textSize="24px"
             textWeight="Bold"
             lineHeight={32}
           />
+          <View className="h-20" />
           <FontText
             value={`탈퇴 시 계정의 모든 정보는 삭제되고\n재가입 시에도 복구하기 어려워요.`}
             textSize="16px"
@@ -56,7 +57,7 @@ const ConfirmQuitScreen = () => {
           />
         </TouchableOpacity>
 
-        <TouchableOpacity className="items-center mb-79" onPress={() => setPopupVisible(true)}>
+        <TouchableOpacity className="items-center mb-36" onPress={() => setPopupVisible(true)}>
           <View className="border-b-1 border-gray-99">
             <FontText
               value="탈퇴하기"

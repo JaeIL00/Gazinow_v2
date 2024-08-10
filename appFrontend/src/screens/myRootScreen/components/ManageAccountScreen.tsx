@@ -51,10 +51,10 @@ const ManageAccountScreen = () => {
   return (
     <SafeAreaView className="flex-1 bg-white">
       <TouchableOpacity
-        className="flex-row items-center py-16 pl-22 gap-21"
+        className="flex-row items-center p-16"
         onPress={() => myPageNavigation.goBack()}
       >
-        <IconLeftArrowHead color="#3F3F46" />
+        <IconLeftArrowHead width={24} color="#3F3F46" className="mr-12" />
         <FontText value="계정 관리" textSize="18px" lineHeight={23} textWeight="Medium" />
       </TouchableOpacity>
       <View className="h-1 bg-gray-eb" />

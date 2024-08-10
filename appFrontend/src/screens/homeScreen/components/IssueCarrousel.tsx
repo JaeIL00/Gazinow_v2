@@ -10,9 +10,16 @@ import { getIssueId } from '@/store/modules';
 import dayjs from 'dayjs';
 import { rawLineNameToColor } from '@/global/utils/subwayLine';
 import { IssueContent } from '@/global/apis/entity';
+import { useQueryClient } from 'react-query';
 
-const IssueCarrousel = () => {
+interface IssueCarrouselProps {
+  isRefreshing: boolean;
+  setIsRefreshing: (isRefreshing: boolean) => void;
+}
+
+const IssueCarrousel = ({ isRefreshing, setIsRefreshing }: IssueCarrouselProps) => {
   const navigation = useRootNavigation();
+  const queryClient = useQueryClient();
   const dispatch = useAppDispatch();
   const { popularIssues, popularIssuesRefetch, isPopularIssuesLoading } =
     useGetPopularIssuesQuery();
@@ -28,6 +35,15 @@ const IssueCarrousel = () => {
   //     allIssues?.pages[0].content.filter((issue) => new Date(issue.expireDate) >= currentDate),
   //   ),
   // ).slice(0, 3);
+
+  useEffect(() => {
+    //TODO: 현재이슈로 바꾸면 쿼리 키도 바꾸기
+    queryClient.invalidateQueries(['getPopularIssues']);
+    if (isRefreshing) {
+      popularIssuesRefetch();
+    }
+    setIsRefreshing(false);
+  }, [isRefreshing]);
 
   const [newPopularIssues, setNewPopularIssues] = useState<IssueContent[]>();
 

@@ -165,11 +165,11 @@ export const useGetSavedRoutesQuery = ({
   onSuccess,
 }: { onSuccess?: (data: MyRoutesType[]) => void } = {}) => {
   const isVerifiedUser = useAppSelect((state) => state.auth.isVerifiedUser);
-  const { data } = useQuery(['getRoads'], getSavedRoutesFetch, {
+  const { data, refetch } = useQuery(['getRoads'], getSavedRoutesFetch, {
     enabled: isVerifiedUser === 'success auth',
     onSuccess,
   });
-  return { data };
+  return { myRoutes: data, getSavedRoutesRefetch: refetch };
 };
 
 /**

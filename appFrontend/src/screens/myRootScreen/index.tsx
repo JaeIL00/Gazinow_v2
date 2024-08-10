@@ -1,7 +1,6 @@
 import { Platform, Pressable, SafeAreaView, View } from 'react-native';
 import { FontText } from '@/global/ui';
 import { COLOR } from '@/global/constants';
-// import { RESULTS, requestNotifications } from 'react-native-permissions';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store/configureStore';
 import packageJson from '../../../package.json';
@@ -17,18 +16,6 @@ interface RenderMenuProps {
   onPress?: () => void;
   versionText?: string;
 }
-// const ALLOWED_PERMISSIONS = {
-//   [RESULTS.GRANTED]: true,
-//   [RESULTS.LIMITED]: true,
-//   [RESULTS.UNAVAILABLE]: true,
-//   [RESULTS.BLOCKED]: false,
-//   [RESULTS.DENIED]: false,
-// };
-
-const requestNotificationPermission = async () => {
-  // const { status } = await requestNotifications(['alert']);
-  // return ALLOWED_PERMISSIONS[status];
-};
 
 const MyRootScreen = () => {
   const rootNavigation = useRootNavigation();
@@ -36,15 +23,6 @@ const MyRootScreen = () => {
   const currentVersionInfo = packageJson.version;
 
   const [versionText, setVersionText] = useState<string>('');
-
-  const confirmUserNotificationOn = async () => {
-    // const result = await requestNotificationPermission();
-    // if (!result) {
-    //   setIsNotiOnScreenOpen(true);
-    // } else {
-    //   setIsNotiSettingsScreenOpen(true);
-    // }
-  };
 
   useEffect(() => {
     VersionCheck.getLatestVersion({
@@ -78,7 +56,7 @@ const MyRootScreen = () => {
       <View className="pl-16 pt-45 pb-37">
         {isVerifiedUser !== 'success auth' ? (
           <Pressable
-            className="flex-row items-center gap-6"
+            className="flex-row items-center space-x-6"
             onPress={() => rootNavigation.navigate('AuthStack', { screen: 'Landing' })}
           >
             <FontText value="로그인하세요" textSize="18px" textWeight="SemiBold" />
@@ -92,7 +70,7 @@ const MyRootScreen = () => {
         ) : (
           <>
             <TouchableOpacity
-              className="flex-row items-center gap-5"
+              className="flex-row items-center space-x-5"
               hitSlop={20}
               onPress={() =>
                 rootNavigation.navigate('MyPageNavigation', { screen: 'ChangeNickNameScreen' })
@@ -113,14 +91,21 @@ const MyRootScreen = () => {
         )}
       </View>
       <View className="flex-1 bg-white">
-        {isVerifiedUser === 'success auth' &&
-          renderMenu({
-            text: '계정 관리',
-            onPress: () =>
-              rootNavigation.navigate('MyPageNavigation', { screen: 'ManageAccountScreen' }),
-          })}
-        {/* TODO: 페이지 들어가서 퍼미션 컨펌창 띄우는 로직으로 수정하기 */}
-        {/* {renderMenu({ text: '알림 설정', onPress: () => confirmUserNotificationOn() })} */}
+        {isVerifiedUser === 'success auth' && (
+          <>
+            {renderMenu({
+              text: '계정 관리',
+              onPress: () =>
+                rootNavigation.navigate('MyPageNavigation', { screen: 'ManageAccountScreen' }),
+            })}
+            {renderMenu({
+              text: '알림 설정',
+              onPress: () =>
+                rootNavigation.push('MyPageNavigation', { screen: 'NotiSettingsScreen' }),
+            })}
+          </>
+        )}
+
         {renderMenu({
           text: '약관 및 정책',
           onPress: () =>
