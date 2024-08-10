@@ -14,11 +14,8 @@ const SavedRoutesScreen = () => {
 
   return (
     <SafeAreaView className="flex-1 bg-gray-f9">
-      <TouchableOpacity
-        className="flex-row items-center gap-12 p-16"
-        onPress={() => navigation.goBack()}
-      >
-        <IconLeftArrowHead color="#3F3F46" width={24} />
+      <TouchableOpacity className="flex-row items-center p-16" onPress={() => navigation.goBack()}>
+        <IconLeftArrowHead color="#3F3F46" width={24} style={{ marginRight: 12 }} />
         <FontText value="저장경로 편집" textSize="18px" textWeight="Medium" />
       </TouchableOpacity>
 
