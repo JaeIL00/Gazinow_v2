@@ -50,7 +50,7 @@ authServiceAPI.interceptors.response.use(
     console.log(error.response);
     if (
       !error.response ||
-      error.response.status !== 401 ||
+      error.response.status !== 403 ||
       error.response.config.url === '/api/v1/member/reissue'
     ) {
       throw error;
