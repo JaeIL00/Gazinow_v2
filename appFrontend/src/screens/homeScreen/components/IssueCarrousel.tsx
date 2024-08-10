@@ -79,7 +79,7 @@ const IssueCarrousel = ({ isRefreshing, setIsRefreshing }: IssueCarrouselProps) 
 
   const newListIndex = () => {
     if (popularIssues && currentIndex === popularIssues.length) return 1;
-    else return currentIndex + 1;
+    return currentIndex + 1;
   };
 
   if (!popularIssues || !newPopularIssues || newPopularIssues.length < 1) return null;
