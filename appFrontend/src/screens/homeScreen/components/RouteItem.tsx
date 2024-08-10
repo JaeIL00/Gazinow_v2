@@ -47,15 +47,17 @@ const RouteItem = ({ route, hasIssues }: RouteItemProps) => {
         </View>
         <View className="flex-1" />
 
-        <TouchableOpacity className="flex-row items-center">
-          <TextButton
+        <TouchableOpacity
+          className="flex-row items-center"
+          onPress={() => homeNavigation.push('SubwayPathDetail', { state: route })}
+          hitSlop={20}
+        >
+          <FontText
             value={'세부정보'}
             textSize={'13px'}
             textWeight={'Regular'}
             lineHeight={19}
             textColor={COLOR.GRAY_999}
-            onPress={() => homeNavigation.push('SubwayPathDetail', { state: route })}
-            hitSlop={20}
           />
           <View className="w-4" />
           <IconRightArrowHead color={COLOR.GRAY_999} />

@@ -8,6 +8,7 @@ import { HOME, SUBWAY_PATH_DETAIL } from '@/global/constants/navigation';
 import { HomeStackParamList } from '@/navigation/types/navigation';
 import SearchPathResultScreen from '@/screens/searchPathResultScreen';
 import SearchPathResultDetailScreen from '@/screens/searchPathResultDetailScreen';
+import NotiHistoryScreen from '@/screens/homeScreen/components/NotiHistory';
 import HomeScreen from '@/screens/homeScreen';
 import SavedRoutesScreen from '@/screens/savedRoutesScreen';
 import toastConfig from '@global/utils/ToastConfig';
@@ -23,6 +24,7 @@ const HomeNavigation = () => {
     <>
       <Stack.Navigator initialRouteName={HOME} screenOptions={screenOption}>
         <Stack.Screen name={HOME} component={HomeScreen} />
+        <Stack.Screen name="NotiHistory" component={NotiHistoryScreen} />
         <Stack.Screen name={SUBWAY_PATH_RESULT} component={SearchPathResultScreen} />
         <Stack.Screen name={SUBWAY_PATH_DETAIL} component={SearchPathResultDetailScreen} />
         <Stack.Screen name="SavedRoutes" component={SavedRoutesScreen} />

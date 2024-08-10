@@ -80,13 +80,9 @@ const SearchStation = () => {
 
       {!searchTextValue ? (
         <View className="flex-1 pt-18">
-          <FontText
-            className="pl-16"
-            value="최근검색"
-            textSize="14px"
-            textWeight="Regular"
-            textColor="#757575"
-          />
+          <View style={{ paddingLeft: 16 }}>
+            <FontText value="최근검색" textSize="14px" textWeight="Regular" textColor="#757575" />
+          </View>
 
           <ScrollView className="mt-18" keyboardShouldPersistTaps="handled">
             {historyData?.map(({ stationName, stationLine }, index) => (
