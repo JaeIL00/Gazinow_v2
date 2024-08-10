@@ -62,14 +62,8 @@ const SignInScreen = () => {
   };
 
   const submitFormData = async () => {
-    const accessToken = await getEncryptedStorage('access_token');
-
-    if (accessToken === null) {
-      const firebaseToken = await messaging().getToken();
-      signInMutate({ ...formData, firebaseToken });
-    } else {
-      signInMutate(formData);
-    }
+    const firebaseToken = await messaging().getToken();
+    signInMutate({ ...formData, firebaseToken });
   };
 
   return (
