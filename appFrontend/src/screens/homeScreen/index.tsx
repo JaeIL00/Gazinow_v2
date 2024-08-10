@@ -46,13 +46,14 @@ const HomeScreen = () => {
           />
         }
       >
-        <TouchableOpacity
+        {/* TODO: 배포 이후 백엔드 api 완성되면 주석 해제 */}
+        {/* <TouchableOpacity
           onPress={authStateHandler}
           hitSlop={20}
           className="flex-row-reverse mt-15 ml-11"
         >
           <IconBell />
-        </TouchableOpacity>
+        </TouchableOpacity> */}
         <IssueCarrousel isRefreshing={isRefreshing} setIsRefreshing={setIsRefreshing} />
         <View className="h-16" />
         <SwapStation />
