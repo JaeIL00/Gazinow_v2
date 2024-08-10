@@ -22,19 +22,19 @@ const NotiSettingsDetailScreen = () => {
   const { myRoutes } = useRoute().params as { myRoutes: MyRoutesType };
 
   const { pathNotiData } = useGetPathNotiQuery(myRoutes.id);
-  const [pushNotificationOn, setPushNotificationOn] = useState<boolean>(false);
+  const [isPushNotificationOn, setIsPushNotificationOn] = useState<boolean>(false);
   const [savedStartTime, setSavedStartTime] = useState<string>('07:00');
   const [savedEndTime, setSavedEndTime] = useState<string>('09:00');
 
   // 저장된 설정 불러오기
   useEffect(() => {
     if (pathNotiData?.enabled) {
-      setPushNotificationOn(true);
+      setIsPushNotificationOn(true);
       setSelectedDays(pathNotiData.notificationTimes.map((notiTimes) => notiTimes.dayOfWeek));
       setSavedStartTime(pathNotiData?.notificationTimes[0].fromTime);
       setSavedEndTime(pathNotiData?.notificationTimes[0].toTime);
     } else {
-      setPushNotificationOn(false);
+      setIsPushNotificationOn(false);
       setSavedStartTime('07:00');
       setSavedEndTime('09:00');
       setSelectedDays([]);
@@ -43,7 +43,7 @@ const NotiSettingsDetailScreen = () => {
 
   // 푸시 알림 on 토글
   const handlePushNotificationOnToggle = () => {
-    setPushNotificationOn(!pushNotificationOn);
+    setIsPushNotificationOn(!isPushNotificationOn);
     setSelectedDays([]);
   };
 
@@ -84,7 +84,7 @@ const NotiSettingsDetailScreen = () => {
 
   const saveSettingsHandler = () => {
     const notiSettings = createNotiSettingsBody(selectedDays, myRoutes.id);
-    if (!pushNotificationOn) {
+    if (!isPushNotificationOn) {
       disablePathNotiMutate(myRoutes.id);
     } else if (pathNotiData?.enabled) {
       updatePathNotiSettingsMutate(notiSettings);
@@ -119,11 +119,11 @@ const NotiSettingsDetailScreen = () => {
 
         <View className="flex-row h-53 px-16 items-center justify-between border-b-1 border-gray-eb">
           <FontText value="푸시 알림 on" textSize="16px" textWeight="Regular" />
-          <Toggle isOn={pushNotificationOn} onToggle={handlePushNotificationOnToggle} />
+          <Toggle isOn={isPushNotificationOn} onToggle={handlePushNotificationOnToggle} />
         </View>
 
         <SetNotiTimesBtn
-          pushNotificationOn={pushNotificationOn}
+          isPushNotificationOn={isPushNotificationOn}
           savedStartTime={savedStartTime}
           setSavedStartTime={setSavedStartTime}
           savedEndTime={savedEndTime}
@@ -135,7 +135,7 @@ const NotiSettingsDetailScreen = () => {
             value="반복 요일"
             textSize="16px"
             textWeight="Regular"
-            textColor={pushNotificationOn ? COLOR.BASIC_BLACK : COLOR.GRAY_BE}
+            textColor={isPushNotificationOn ? COLOR.BASIC_BLACK : COLOR.GRAY_BE}
           />
           <View className="flex-row pt-16 justify-between">
             {days.map((day) => (
@@ -146,7 +146,7 @@ const NotiSettingsDetailScreen = () => {
                   'bg-gray-f2': !selectedDays.includes(day),
                 })}
                 onPress={() => toggleDay(day)}
-                disabled={!pushNotificationOn}
+                disabled={!isPushNotificationOn}
                 hitSlop={10}
               >
                 <FontText
@@ -163,11 +163,11 @@ const NotiSettingsDetailScreen = () => {
 
       <TouchableOpacity
         className={cn('h-48 mx-16 mb-10 rounded-5 items-center justify-center', {
-          'bg-black-17 ': !pushNotificationOn || selectedDays.length !== 0,
-          'bg-gray-dd': pushNotificationOn && selectedDays.length === 0,
+          'bg-black-17 ': !isPushNotificationOn || selectedDays.length !== 0,
+          'bg-gray-dd': isPushNotificationOn && selectedDays.length === 0,
         })}
         onPress={saveSettingsHandler}
-        disabled={pushNotificationOn && selectedDays.length === 0}
+        disabled={isPushNotificationOn && selectedDays.length === 0}
       >
         <FontText value="완료" textSize="17px" textWeight="SemiBold" textColor={COLOR.WHITE} />
       </TouchableOpacity>
