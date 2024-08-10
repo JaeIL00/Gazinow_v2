@@ -121,44 +121,41 @@ const NotiSettingsDetailScreen = () => {
           <FontText value="푸시 알림 on" textSize="16px" textWeight="Regular" />
           <Toggle isOn={isPushNotificationOn} onToggle={handlePushNotificationOnToggle} />
         </View>
+        {isPushNotificationOn && (
+          <>
+            <SetNotiTimesBtn
+              isPushNotificationOn
+              savedStartTime={savedStartTime}
+              setSavedStartTime={setSavedStartTime}
+              savedEndTime={savedEndTime}
+              setSavedEndTime={setSavedEndTime}
+            />
 
-        <SetNotiTimesBtn
-          isPushNotificationOn={isPushNotificationOn}
-          savedStartTime={savedStartTime}
-          setSavedStartTime={setSavedStartTime}
-          savedEndTime={savedEndTime}
-          setSavedEndTime={setSavedEndTime}
-        />
-
-        <View className="px-16 py-12 border-b-1 border-gray-eb bg-white">
-          <FontText
-            value="반복 요일"
-            textSize="16px"
-            textWeight="Regular"
-            textColor={isPushNotificationOn ? COLOR.BASIC_BLACK : COLOR.GRAY_BE}
-          />
-          <View className="flex-row pt-16 justify-between">
-            {days.map((day) => (
-              <Pressable
-                key={day}
-                className={cn('w-40 h-40 rounded-full items-center justify-center', {
-                  'bg-[#49454F]': selectedDays.includes(day),
-                  'bg-gray-f2': !selectedDays.includes(day),
-                })}
-                onPress={() => toggleDay(day)}
-                disabled={!isPushNotificationOn}
-                hitSlop={10}
-              >
-                <FontText
-                  value={day}
-                  textColor={selectedDays.includes(day) ? 'white' : COLOR.GRAY_999}
-                  textSize="16px"
-                  textWeight="Medium"
-                />
-              </Pressable>
-            ))}
-          </View>
-        </View>
+            <View className="px-16 py-12 border-b-1 border-gray-eb bg-white">
+              <FontText value="반복 요일" textSize="16px" textWeight="Regular" />
+              <View className="flex-row pt-16 justify-between">
+                {days.map((day) => (
+                  <Pressable
+                    key={day}
+                    className={cn('w-40 h-40 rounded-full items-center justify-center', {
+                      'bg-[#49454F]': selectedDays.includes(day),
+                      'bg-gray-f2': !selectedDays.includes(day),
+                    })}
+                    onPress={() => toggleDay(day)}
+                    hitSlop={10}
+                  >
+                    <FontText
+                      value={day}
+                      textColor={selectedDays.includes(day) ? 'white' : COLOR.GRAY_999}
+                      textSize="16px"
+                      textWeight="Medium"
+                    />
+                  </Pressable>
+                ))}
+              </View>
+            </View>
+          </>
+        )}
       </View>
 
       <TouchableOpacity
