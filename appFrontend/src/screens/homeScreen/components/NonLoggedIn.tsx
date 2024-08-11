@@ -12,6 +12,8 @@ const NonLoggedIn = () => {
         justifyContent: 'center',
         height: Dimensions.get('screen').height * 0.431,
         paddingBottom: 10,
+        borderTopColor: COLOR.GRAY_EB,
+        borderTopWidth: 1,
       }}
     >
       <FontText
