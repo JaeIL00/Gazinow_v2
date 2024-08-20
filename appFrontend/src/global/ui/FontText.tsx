@@ -1,4 +1,4 @@
-import { Text } from 'react-native';
+import { Text, View } from 'react-native';
 import type { TextProps } from 'react-native/types';
 
 interface NormalTextProps extends TextProps {
@@ -21,19 +21,21 @@ const FontText = ({
   const { value } = props;
 
   return (
-    <Text
-      {...props}
-      allowFontScaling
-      style={{
-        fontFamily: `Pretendard-${textWeight}`,
-        lineHeight,
-        textAlign,
-        fontSize: Number(textSize.split('px')[0]),
-        color: textColor,
-      }}
-    >
-      {value}
-    </Text>
+    <View {...props}>
+      <Text
+        {...props}
+        allowFontScaling
+        style={{
+          fontFamily: `Pretendard-${textWeight}`,
+          lineHeight,
+          textAlign,
+          fontSize: Number(textSize.split('px')[0]),
+          color: textColor,
+        }}
+      >
+        {value}
+      </Text>
+    </View>
   );
 };
 
