@@ -1,7 +1,5 @@
 import React from 'react';
-import { FontText, Space } from '@/global/ui';
-import { COLOR } from '@/global/constants';
-import styled from '@emotion/native';
+import { FontText } from '@/global/ui';
 import { IssueSummary, Lane, SubPath } from '@/global/apis/entity';
 import MoreBtn from '@/assets/icons/moreBtn.svg';
 import { subwayLineColor } from '@/global/utils';
@@ -9,6 +7,7 @@ import { useAppDispatch } from '@/store';
 import { getIssueId } from '@/store/modules';
 import { useRootNavigation } from '@/navigation/RootNavigation';
 import IssueKeywordIcon from '@/global/components/IssueKeywordIcon';
+import { TouchableOpacity } from 'react-native';
 
 interface IssuesBannerProps {
   subPathss: SubPath[];
@@ -30,60 +29,32 @@ const IssuesBanner = ({ subPathss }: IssuesBannerProps) => {
     <>
       {hasIssueLane.map((lane: Lane, index: number) =>
         lane.issueSummary.map((issue: IssueSummary, issueIndex: number) => (
-          <Container
+          <TouchableOpacity
             key={`${index}-${issueIndex}`}
             onPress={() => {
               dispatch(getIssueId(issue.id));
               navigation.navigate('IssueStack', { screen: 'IssueDetail' });
             }}
+            className="overflow-hidden flex-row px-12 py-8 mb-8 border-gray-eb border-1 rounded-full items-center justify-between"
           >
-            <Issue>
-              <IssueKeywordIcon
-                width={16}
-                height={16}
-                keyword={issue.keyword}
-                color={subwayLineColor(lane.stationCode)}
-              />
-              <Space width="10px" />
-              <FontText
-                value={issue.title}
-                textSize="13px"
-                textWeight="SemiBold"
-                textColor={COLOR.BASIC_BLACK}
-                numberOfLines={1}
-                style={{ marginBottom: 3 }}
-              />
-            </Issue>
-            <More>
-              <MoreBtn />
-            </More>
-          </Container>
+            <IssueKeywordIcon
+              width={16}
+              height={16}
+              keyword={issue.keyword}
+              color={subwayLineColor(lane.stationCode)}
+            />
+            <FontText
+              className="flex-1 ml-10 mr-30"
+              value={issue.title}
+              textSize="13px"
+              textWeight="SemiBold"
+              numberOfLines={1}
+            />
+            <MoreBtn />
+          </TouchableOpacity>
         )),
       )}
     </>
   );
 };
 export default IssuesBanner;
-
-const Container = styled.Pressable`
-  padding: 8px 12.5px 7px 16px;
-  align-items: center;
-  justify-content: space-between;
-  flex-direction: row;
-  border-color: ${COLOR.GRAY_EB};
-  border-width: 1px;
-  border-radius: 999px;
-  margin: 0 0 8px;
-`;
-const Issue = styled.View`
-  align-items: center;
-  flex-direction: row;
-  flex: 1;
-  overflow: hidden;
-  padding-right: 30px;
-`;
-const More = styled.View`
-  align-items: center;
-  flex-direction: row;
-  // flex: 1;
-`;
