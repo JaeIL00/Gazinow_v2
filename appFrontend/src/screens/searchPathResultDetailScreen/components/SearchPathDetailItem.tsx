@@ -198,13 +198,14 @@ const SearchPathDetailItem = ({ data, isLastLane, lineLength }: SearchPathDetail
             backgroundColor: subwayLineColor(data.lanes[0].stationCode),
           }}
         />
-        <FontText
-          value={data.stations[lastIdx].stationName}
-          textSize="18px"
-          textWeight="SemiBold"
-          textColor={subwayLineColor(data.lanes[0].stationCode)}
-          className="absolute top-[-1px] left-36"
-        />
+        <View className="ml-16">
+          <FontText
+            value={data.stations[lastIdx].stationName}
+            textSize="18px"
+            textWeight="SemiBold"
+            textColor={subwayLineColor(data.lanes[0].stationCode)}
+          />
+        </View>
       </View>
       {!isLastLane && (
         <View className="mt-[-20px] ml-[-25px] flex-row items-center">

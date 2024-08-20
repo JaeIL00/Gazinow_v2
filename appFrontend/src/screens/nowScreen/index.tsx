@@ -55,7 +55,7 @@ const NowScreen = () => {
       setIssuesList(laneIssues?.pages.flatMap((page) => page.content));
     }
     setRefresh(false);
-  }, [allIssues, laneIssues, activeButton, isRefresh]);
+  }, [activeButton, isRefresh]);
 
   const onEndReached = () => {
     if (activeButton === '전체' && allIssuesHasNextPage) {

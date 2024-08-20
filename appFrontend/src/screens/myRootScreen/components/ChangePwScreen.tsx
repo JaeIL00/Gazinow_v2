@@ -111,10 +111,10 @@ const ChangePwScreen = () => {
       <View className="px-16">
         <View className="flex-row items-center justify-between mb-39">
           <TouchableOpacity
-            className="flex-row items-center gap-16 py-16"
+            className="flex-row items-center py-16"
             onPress={() => myPageNavigation.goBack()}
           >
-            <IconLeftArrowHead color="#3F3F46" width={24} />
+            <IconLeftArrowHead color="#3F3F46" width={24} className="mr-12" />
             <FontText value="비밀번호 변경" textSize="18px" lineHeight={23} textWeight="Medium" />
           </TouchableOpacity>
           <TouchableOpacity onPress={onPressDone} disabled={isDoneBtnDisabled}>
@@ -146,7 +146,7 @@ const ChangePwScreen = () => {
           secureTextEntry
         />
         {curPassword !== '' && (
-          <View className="flex-row items-center mt-6 ml-9">
+          <View className="flex-row items-center mt-6 mb-10 ml-9">
             {isPwRight ? <IconCheck stroke={COLOR.LIGHT_GREEN} /> : <XCircle width={14} />}
             <FontText
               value={isPwRight ? ' 비밀번호가 확인되었습니다' : ' 비밀번호가 틀립니다'}
@@ -181,7 +181,7 @@ const ChangePwScreen = () => {
               value=" 기존 비밀번호는 사용할 수 없어요"
               textSize="12px"
               textWeight="Medium"
-              lineHeight="14px"
+              lineHeight={14}
               textColor={COLOR.LIGHT_RED}
             />
           </View>
@@ -196,7 +196,7 @@ const ChangePwScreen = () => {
               textWeight="Medium"
               textColor={lengValidColor}
             />
-            <IconCheck stroke={comValidColor} />
+            <IconCheck stroke={comValidColor} className="ml-12" />
             <FontText
               value=" 영어, 숫자, 특수문자 포함"
               textSize="12px"

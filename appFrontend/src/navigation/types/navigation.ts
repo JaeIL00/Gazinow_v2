@@ -1,4 +1,4 @@
-import { Path, SubPath } from '@/global/apis/entity';
+import { MyRoutesType, Path, SubPath } from '@/global/apis/entity';
 import { SocialLoginType } from '@/screens/landingScreen/components/SocialLoginButtons';
 
 export type RootStackParamList = {
@@ -21,6 +21,7 @@ export type AuthStackStackParamList = {
 
 export type HomeStackParamList = {
   Home: undefined;
+  NotiHistory: undefined;
   SubwayPathResult: undefined;
   SubwayPathDetail: { state?: Path | SubPath[]; pathId?: number | null };
   SavedRoutes: undefined;
@@ -44,6 +45,7 @@ export type MyPageStackParamList = {
   ManageAccountScreen: undefined;
   NotiOnScreen: undefined;
   NotiSettingsScreen: undefined;
+  NotiSettingsDetailScreen: { myRoutes?: MyRoutesType };
   SubscribeTermsScreen: undefined;
   PersonalTermsScreen: undefined;
 };

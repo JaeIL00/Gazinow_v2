@@ -1,11 +1,9 @@
 import React, { useEffect } from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { Provider } from 'react-redux';
-
 import { RootNavigation } from '@/navigation';
 import { store } from '@/store';
 import { NavigationContainer, createNavigationContainerRef } from '@react-navigation/native';
-import Toast from 'react-native-toast-message';
 import * as Sentry from '@sentry/react-native';
 import { MODE, SENTRY_DSN } from '@env';
 import { version as currentVersion } from '../package.json';
@@ -13,6 +11,13 @@ import { fetch } from '@react-native-community/netinfo';
 import { Alert } from 'react-native';
 import RNExitApp from 'react-native-exit-app';
 import { RootStackParamList } from './navigation/types/navigation';
+import messaging, { FirebaseMessagingTypes } from '@react-native-firebase/messaging';
+import notifee, {
+  AndroidImportance,
+  AndroidVisibility,
+  EventDetail,
+  EventType,
+} from '@notifee/react-native';
 
 Sentry.init({
   enabled: MODE === 'production',
@@ -50,6 +55,49 @@ const App = (): JSX.Element => {
     };
     checkNetworkAndRetry();
   }, []);
+
+  // 첫 실행 시 알림 권한 요청
+  useEffect(() => {
+    const requestPermission = async () => {
+      await messaging().requestPermission();
+    };
+
+    requestPermission();
+  }, []);
+
+  // 포그라운드 알림 수신
+  useEffect(() => {
+    const unsubscribe = messaging().onMessage(async (remoteMessage) => {
+      onMessageReceived(remoteMessage);
+    });
+    return unsubscribe;
+  }, []);
+
+  // 백그라운드 알림 수신 및 표시
+  messaging().setBackgroundMessageHandler(async (remoteMessage) => {});
+
+  // 포그라운드 알림 화면에 표시
+  const onMessageReceived = async (message: FirebaseMessagingTypes.RemoteMessage) => {
+    const { title, body } = message.notification!;
+
+    // 채널 생성
+    const channelId = await notifee.createChannel({
+      id: 'important',
+      name: 'Important Notifications',
+      importance: AndroidImportance.HIGH,
+    });
+
+    // 디바이스에 알림 표시
+    await notifee.displayNotification({
+      title,
+      body,
+      android: {
+        channelId,
+        importance: AndroidImportance.HIGH,
+        visibility: AndroidVisibility.PUBLIC,
+      },
+    });
+  };
 
   return (
     <Provider store={store}>

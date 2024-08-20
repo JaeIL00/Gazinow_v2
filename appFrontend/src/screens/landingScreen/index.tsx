@@ -85,13 +85,9 @@ const LandingScreen = () => {
             onPress={() => navigation.navigate('SignIn')}
             hitSlop={20}
           />
-          <FontText
-            value="|"
-            textSize="13px"
-            textWeight="Regular"
-            textColor={COLOR.WHITE}
-            style={{ marginHorizontal: 8 }}
-          />
+          <View style={{ marginHorizontal: 8 }}>
+            <FontText value="|" textSize="13px" textWeight="Regular" textColor={COLOR.WHITE} />
+          </View>
           <TextButton
             value="이메일 회원가입"
             textSize="13px"

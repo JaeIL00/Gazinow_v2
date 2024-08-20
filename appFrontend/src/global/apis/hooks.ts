@@ -18,6 +18,7 @@ import { RawSubwayLineName, MyRoutesType, SubwayStrEnd } from './entity';
 import { AxiosError } from 'axios';
 import { subwayFreshLineName } from '@/global/utils';
 import { useAppSelect } from '@/store';
+import { useMemo } from 'react';
 
 /**
  * 지하철역 검색 훅
@@ -37,8 +38,20 @@ export const useSearchStationName = (nameValue: string) => {
 
   const freshData = data ? subwayFreshLineName(data) : [];
 
+  const deduplicatedStationData = useMemo(() => {
+    if (!freshData) return [];
+    const uniqueStations = new Set();
+    return freshData.filter((item) => {
+      const key = `${item.stationName.split('(')[0]}-${item.stationLine}`;
+      const isDuplicate = uniqueStations.has(key);
+      uniqueStations.add(key);
+      return !isDuplicate;
+    });
+  }, [freshData]);
   return {
-    searchResultData: freshData.sort((a, b) => a.stationName.localeCompare(b.stationName)),
+    searchResultData: deduplicatedStationData.sort((a, b) =>
+      a.stationName.localeCompare(b.stationName),
+    ),
   };
 };
 
@@ -51,7 +64,20 @@ export const useGetSearchHistory = () => {
     enabled: isVerifiedUser === 'success auth',
   });
   const freshData = data?.map((item) => ({ name: item.stationName, line: item.stationLine }));
-  return { historyData: freshData ? subwayFreshLineName(freshData) : [] };
+
+  const deduplicatedStationData = useMemo(() => {
+    if (!freshData) return [];
+    const uniqueStations = new Set();
+    return freshData.filter((item) => {
+      const key = `${item.name.split('(')[0]}-${item.line}`;
+      const isDuplicate = uniqueStations.has(key);
+      uniqueStations.add(key);
+      return !isDuplicate;
+    });
+  }, [freshData]);
+  return {
+    historyData: deduplicatedStationData ? subwayFreshLineName(deduplicatedStationData) : [],
+  };
 };
 
 /**
@@ -139,11 +165,11 @@ export const useGetSavedRoutesQuery = ({
   onSuccess,
 }: { onSuccess?: (data: MyRoutesType[]) => void } = {}) => {
   const isVerifiedUser = useAppSelect((state) => state.auth.isVerifiedUser);
-  const { data } = useQuery(['getRoads'], getSavedRoutesFetch, {
+  const { data, refetch } = useQuery(['getRoads'], getSavedRoutesFetch, {
     enabled: isVerifiedUser === 'success auth',
     onSuccess,
   });
-  return { data };
+  return { myRoutes: data, getSavedRoutesRefetch: refetch };
 };
 
 /**
