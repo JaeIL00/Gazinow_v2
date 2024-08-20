@@ -7,7 +7,6 @@ import { getSeletedStation } from '@/store/modules/stationSearchModule';
 import styled from '@emotion/native';
 import { useState } from 'react';
 import { SafeAreaView, TouchableOpacity } from 'react-native';
-import { SelectedStationTypes } from '../searchPathResultScreen';
 import { Input } from '@/global/ui';
 import IconLocationPin from '@assets/icons/location_pin.svg';
 import { useHomeNavigation } from '@/navigation/HomeNavigation';
@@ -117,7 +116,7 @@ const SearchStationScreen = () => {
               value="최근검색"
               textSize="14px"
               textWeight="Regular"
-              lineHeight="24px"
+              lineHeight={24}
               textColor="#757575"
             />
           </Header>
@@ -136,17 +135,17 @@ const SearchStationScreen = () => {
                 <IconClock />
                 <StationInfoBox>
                   <FontText
-                    value={stationName}
+                    value={stationName.split('(')[0]}
                     textSize="16px"
                     textWeight="Medium"
-                    lineHeight="21px"
+                    lineHeight={21}
                     textColor="#000"
                   />
                   <FontText
                     value={stationLine!}
                     textSize="14px"
                     textWeight="Regular"
-                    lineHeight="21px"
+                    lineHeight={21}
                     textColor={COLOR.GRAY_999}
                   />
                 </StationInfoBox>
@@ -164,17 +163,17 @@ const SearchStationScreen = () => {
                 <IconLocationPin />
                 <StationInfoBox>
                   <FontText
-                    value={stationName}
+                    value={stationName.split('(')[0]}
                     textSize="16px"
                     textWeight="Medium"
-                    lineHeight="21px"
+                    lineHeight={21}
                     textColor="#000"
                   />
                   <FontText
                     value={stationLine!}
                     textSize="14px"
                     textWeight="Regular"
-                    lineHeight="21px"
+                    lineHeight={21}
                     textColor={COLOR.GRAY_999}
                   />
                 </StationInfoBox>

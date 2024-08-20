@@ -10,15 +10,17 @@ const NonLoggedIn = () => {
       style={{
         alignItems: 'center',
         justifyContent: 'center',
-        height: Dimensions.get('screen').height * 0.531,
+        height: Dimensions.get('screen').height * 0.431,
         paddingBottom: 10,
+        borderTopColor: COLOR.GRAY_EB,
+        borderTopWidth: 1,
       }}
     >
       <FontText
         value={`로그인하고 자주 가는 경로의\n이슈를 바로 확인하세요`}
         textSize="13px"
         textWeight="Medium"
-        lineHeight="16px"
+        lineHeight={16}
         textColor={COLOR.GRAY_999}
         style={{ textAlign: 'center' }}
       />

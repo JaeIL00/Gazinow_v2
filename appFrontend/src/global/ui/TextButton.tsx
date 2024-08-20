@@ -8,7 +8,7 @@ interface TextButtonProps extends PressableProps {
   textSize: string;
   textWeight: 'Bold' | 'SemiBold' | 'Medium' | 'Regular';
   textColor?: string;
-  lineHeight?: string;
+  lineHeight?: number;
   isTextUnderline?: boolean;
 }
 

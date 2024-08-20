@@ -1,8 +1,4 @@
 import {
-  changeNicknameFetch,
-  changePasswordFetch,
-  checkPasswordFetch,
-  deleteAccountFetch,
   getPopularIssuesFetch,
   getSavedRoutesFetch,
   getSearchRoutesFetch,
@@ -18,16 +14,11 @@ import {
   getAllIssuesFetch,
   getIssuesByLaneFetch,
 } from '@/global/apis/func';
-import {
-  AllIssues,
-  IssueContent,
-  RawSubwayLineName,
-  RenderSavedRoutesType,
-  SubwayStrEnd,
-} from './entity';
+import { RawSubwayLineName, MyRoutesType, SubwayStrEnd } from './entity';
 import { AxiosError } from 'axios';
 import { subwayFreshLineName } from '@/global/utils';
 import { useAppSelect } from '@/store';
+import { useMemo } from 'react';
 
 /**
  * 지하철역 검색 훅
@@ -47,8 +38,20 @@ export const useSearchStationName = (nameValue: string) => {
 
   const freshData = data ? subwayFreshLineName(data) : [];
 
+  const deduplicatedStationData = useMemo(() => {
+    if (!freshData) return [];
+    const uniqueStations = new Set();
+    return freshData.filter((item) => {
+      const key = `${item.stationName.split('(')[0]}-${item.stationLine}`;
+      const isDuplicate = uniqueStations.has(key);
+      uniqueStations.add(key);
+      return !isDuplicate;
+    });
+  }, [freshData]);
   return {
-    searchResultData: freshData.sort((a, b) => a.stationName.localeCompare(b.stationName)),
+    searchResultData: deduplicatedStationData.sort((a, b) =>
+      a.stationName.localeCompare(b.stationName),
+    ),
   };
 };
 
@@ -61,7 +64,20 @@ export const useGetSearchHistory = () => {
     enabled: isVerifiedUser === 'success auth',
   });
   const freshData = data?.map((item) => ({ name: item.stationName, line: item.stationLine }));
-  return { historyData: freshData ? subwayFreshLineName(freshData) : [] };
+
+  const deduplicatedStationData = useMemo(() => {
+    if (!freshData) return [];
+    const uniqueStations = new Set();
+    return freshData.filter((item) => {
+      const key = `${item.name.split('(')[0]}-${item.line}`;
+      const isDuplicate = uniqueStations.has(key);
+      uniqueStations.add(key);
+      return !isDuplicate;
+    });
+  }, [freshData]);
+  return {
+    historyData: deduplicatedStationData ? subwayFreshLineName(deduplicatedStationData) : [],
+  };
 };
 
 /**
@@ -132,20 +148,6 @@ export const useAddRecentSearch = ({
 };
 
 /**
- * 회원 탈퇴 훅
- */
-export const useDeleteAccountMutation = ({
-  onSuccess,
-  onError,
-}: {
-  onSuccess: () => void;
-  onError: (error: any) => void;
-}) => {
-  const { mutate: deleteAccountMutate } = useMutation(deleteAccountFetch, { onSuccess, onError });
-  return { deleteAccountMutate };
-};
-
-/**
  * 검색한 지하철 경로 조회 훅
  */
 export const useGetSearchRoutesQuery = () => {
@@ -161,64 +163,13 @@ export const useGetSearchRoutesQuery = () => {
  */
 export const useGetSavedRoutesQuery = ({
   onSuccess,
-}: { onSuccess?: (data: RenderSavedRoutesType[]) => void } = {}) => {
+}: { onSuccess?: (data: MyRoutesType[]) => void } = {}) => {
   const isVerifiedUser = useAppSelect((state) => state.auth.isVerifiedUser);
-  const { data } = useQuery(['getRoads'], getSavedRoutesFetch, {
+  const { data, refetch } = useQuery(['getRoads'], getSavedRoutesFetch, {
     enabled: isVerifiedUser === 'success auth',
     onSuccess,
   });
-  return { data };
-};
-
-/**
- * 닉네임 변경 훅
- */
-export const useChangeNicknameQuery = ({
-  onSuccess,
-  onError,
-}: {
-  onSuccess: () => void;
-  onError?: (error: any) => void;
-}) => {
-  const { data, mutate } = useMutation(changeNicknameFetch, {
-    onSuccess,
-    onError,
-  });
-  return { data, mutate };
-};
-
-/**
- * 비밀번호 확인 훅
- */
-export const useCheckPasswordQuery = ({
-  onSuccess,
-  onError,
-}: {
-  onSuccess: () => void;
-  onError?: (error: any) => void;
-}) => {
-  const { mutate: checkPasswordMutate } = useMutation(checkPasswordFetch, {
-    onSuccess,
-    onError,
-  });
-  return { checkPasswordMutate };
-};
-
-/**
- * 비밀번호 변경 훅
- */
-export const useChangePasswordQuery = ({
-  onSuccess,
-  onError,
-}: {
-  onSuccess: () => void;
-  onError?: (error: any) => void;
-}) => {
-  const { mutate: changePasswordMutate } = useMutation(changePasswordFetch, {
-    onSuccess,
-    onError,
-  });
-  return { changePasswordMutate };
+  return { myRoutes: data, getSavedRoutesRefetch: refetch };
 };
 
 /**

@@ -4,6 +4,7 @@
 export interface SignInFormTypes {
   email: string;
   password: string;
+  firebaseToken?: string;
 }
 
 /**
@@ -22,12 +23,4 @@ export interface SignInFetchResponse {
   notificationByRepost: boolean;
   notificationByLike: boolean;
   firebaseToken: boolean;
-}
-
-/**
- * 로그아웃
- */
-export interface LogoutFetchData {
-  accessToken: string;
-  refreshToken: string;
 }

@@ -4,21 +4,21 @@ import {
   Platform,
   SafeAreaView,
   ScrollView,
-  TextInput,
   TouchableOpacity,
   View,
 } from 'react-native';
 
 import { FontText, Input, Space, TextButton } from '@/global/ui';
-import { setEncryptedStorage } from '@/global/utils';
+import { getEncryptedStorage, setEncryptedStorage } from '@/global/utils';
 import { useRootNavigation } from '@/navigation/RootNavigation';
 import { SignInFormTypes } from './apis/entity';
-import { useSignInMutation } from './apis/hook';
+import { useSignInMutation } from './apis/hooks';
 import { COLOR } from '@/global/constants';
 import { useAppDispatch } from '@/store';
 import { getAuthorizationState, saveUserInfo } from '@/store/modules';
 import IconXCircle from '@assets/icons/x-circle-standard.svg';
 import IconLeftArrow from '@assets/icons/left_arrow_round.svg';
+import messaging from '@react-native-firebase/messaging';
 
 const emailValidation = new RegExp(
   /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i,
@@ -61,8 +61,9 @@ const SignInScreen = () => {
     }
   };
 
-  const submitFormData = () => {
-    signInMutate(formData);
+  const submitFormData = async () => {
+    const firebaseToken = await messaging().getToken();
+    signInMutate({ ...formData, firebaseToken });
   };
 
   return (

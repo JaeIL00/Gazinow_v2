@@ -1,15 +1,23 @@
-import styled from '@emotion/native';
 import { useCallback, useState } from 'react';
-import { Alert, KeyboardAvoidingView, Platform, Pressable, SafeAreaView } from 'react-native';
-import { FontText, Input, Space, TextButton } from '@/global/ui';
+import {
+  Alert,
+  KeyboardAvoidingView,
+  Platform,
+  SafeAreaView,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import { FontText, Input } from '@/global/ui';
 import { COLOR } from '@/global/constants';
-import { useCheckPasswordQuery, useDeleteAccountMutation } from '@/global/apis/hooks';
 import { useRootNavigation } from '@/navigation/RootNavigation';
 import IconLeftArrowHead from '@assets/icons/left_arrow_head.svg';
 import { removeEncryptedStorage } from '@/global/utils';
 import { debounce } from 'lodash';
 import { useMyPageNavigation } from '@/navigation/MyPageNavigation';
 import { showToast } from '@/global/utils/toast';
+import { useCheckPasswordMutation, useDeleteAccountMutation } from '../apis/hooks';
+import * as Sentry from '@sentry/react-native';
+import cn from 'classname';
 
 const ConfirmPwScreen = () => {
   const myPageNavigation = useMyPageNavigation();
@@ -19,6 +27,7 @@ const ConfirmPwScreen = () => {
 
   const { deleteAccountMutate } = useDeleteAccountMutation({
     onSuccess: () => {
+      Sentry.captureMessage('유저가 탈퇴했어요');
       removeEncryptedStorage('access_token');
       removeEncryptedStorage('refresh_token');
       navigation.reset({ routes: [{ name: 'MainBottomTab' }] });
@@ -41,7 +50,7 @@ const ConfirmPwScreen = () => {
     checkPasswordDebounce(curPassword);
   };
 
-  const { checkPasswordMutate } = useCheckPasswordQuery({
+  const { checkPasswordMutate } = useCheckPasswordMutation({
     onSuccess: () => {
       setIsPwRight(true);
     },
@@ -53,91 +62,65 @@ const ConfirmPwScreen = () => {
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-      style={{ flex: 1 }}
+      className="flex-1"
     >
-      <SafeAreaView style={{ flex: 1, backgroundColor: COLOR.WHITE }}>
-        <Header>
-          <Pressable hitSlop={20} onPress={() => myPageNavigation.goBack()}>
-            <IconLeftArrowHead color="#3F3F46" />
-          </Pressable>
-        </Header>
-        <Container>
-          <AlertContainer>
-            <FontText
-              value="비밀번호 입력"
-              textSize="24px"
-              textWeight="SemiBold"
-              lineHeight="35px"
-            />
-            <Space height="20px" />
-            <FontText
-              value="탈퇴를 위해 비밀번호를 입력해주세요."
-              textSize="16px"
-              textWeight="Regular"
-              lineHeight="21px"
-            />
-          </AlertContainer>
-          <PwContainer>
+      <SafeAreaView className="flex-1 bg-white">
+        <View className="flex-1 px-16">
+          <TouchableOpacity
+            className="flex-row items-center h-56"
+            onPress={() => myPageNavigation.goBack()}
+          >
+            <IconLeftArrowHead width={24} color="#3F3F46" />
+          </TouchableOpacity>
+
+          <View className="flex-1">
+            <View className="pt-43 pb-29">
+              <FontText value="비밀번호 입력" textSize="24px" textWeight="SemiBold" />
+              <View className="h-20" />
+              <FontText
+                value="탈퇴를 위해 비밀번호를 입력해주세요."
+                textSize="16px"
+                textWeight="Regular"
+              />
+            </View>
+
             <FontText
               value="Password"
               textSize="14px"
               textWeight="Medium"
-              lineHeight="21px"
+              lineHeight={21}
               textColor="#7C8183 "
             />
-            <InputBox>
-              <Input
-                placeholder="비밀번호를 입력해주세요"
-                value={passwordInput}
-                onChangeText={(text) => handleCurPasswordChange(text)}
-                inputMode="text"
-                placeholderTextColor={COLOR.GRAY_999}
-                secureTextEntry
-              />
-            </InputBox>
-          </PwContainer>
-          <TextButton
-            value="탈퇴하기"
-            textSize="17px"
-            textWeight="SemiBold"
-            textColor={COLOR.WHITE}
-            disabled={!isPwRight}
+
+            <Input
+              className="px-16 py-12 my-7 rounded-5 bg-gray-f2"
+              placeholder="비밀번호를 입력해주세요"
+              value={passwordInput}
+              onChangeText={(text) => handleCurPasswordChange(text)}
+              inputMode="text"
+              placeholderTextColor={COLOR.GRAY_999}
+              secureTextEntry
+            />
+          </View>
+
+          <TouchableOpacity
+            className={cn('py-11 mb-40 rounded-5 items-center', {
+              'bg-black-17': isPwRight,
+              'bg-gray-dd': !isPwRight,
+            })}
             onPress={() => deleteAccountMutate()}
-            style={{
-              backgroundColor: isPwRight ? COLOR.BASIC_BLACK : COLOR.GRAY_DDD,
-              borderRadius: 5,
-              alignItems: 'center',
-              paddingVertical: 11,
-              marginBottom: 40,
-            }}
-          />
-        </Container>
+            disabled={!isPwRight}
+          >
+            <FontText
+              value="탈퇴하기"
+              textSize="17px"
+              textWeight="SemiBold"
+              textColor={COLOR.WHITE}
+            />
+          </TouchableOpacity>
+        </View>
       </SafeAreaView>
     </KeyboardAvoidingView>
   );
 };
 export default ConfirmPwScreen;
-
-const Header = styled.View`
-  padding: 0 0 0 22px;
-  height: 56px;
-  flex-direction: row;
-  align-items: center;
-`;
-const Container = styled.View`
-  background-color: white;
-  padding: 0 16px;
-  flex: 1;
-`;
-const PwContainer = styled.View`
-  flex: 1;
-`;
-const AlertContainer = styled.Pressable`
-  margin: 43px 0 29px;
-`;
-const InputBox = styled.Pressable`
-  padding: 12px 16px;
-  margin-vertical: 7px;
-  border-radius: 5px;
-  background-color: ${COLOR.GRAY_F2};
-`;

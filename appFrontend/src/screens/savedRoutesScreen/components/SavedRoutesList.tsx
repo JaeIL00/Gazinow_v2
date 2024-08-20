@@ -1,16 +1,14 @@
 import React, { useState } from 'react';
-import { View } from 'react-native';
-import { FontText, Space, TextButton } from '@/global/ui';
+import { TouchableOpacity, View } from 'react-native';
+import { FontText } from '@/global/ui';
 import { COLOR } from '@/global/constants';
 import { useDeleteSavedSubwayRoute, useGetSavedRoutesQuery } from '@/global/apis/hooks';
 import MyTabModal from '@/global/components/MyTabModal';
 import { useQueryClient } from 'react-query';
 import { SubwaySimplePath } from '@/global/components';
-import { RenderSavedRoutesType } from '@/global/apis/entity';
-import styled from '@emotion/native';
 import { showToast } from '@/global/utils/toast';
 
-const EditSavedRoutesList = () => {
+const SavedRoutesList = () => {
   const [popupVisible, setPopupVisible] = useState<boolean>(false);
   const [routeToDelete, setRouteToDelete] = useState<number | null>(null);
   const queryClient = useQueryClient();
@@ -22,7 +20,7 @@ const EditSavedRoutesList = () => {
     },
   });
 
-  const { data: savedRoutes } = useGetSavedRoutesQuery();
+  const { myRoutes } = useGetSavedRoutesQuery();
 
   const showDeletePopup = (id: number) => {
     setRouteToDelete(id);
@@ -36,41 +34,35 @@ const EditSavedRoutesList = () => {
     hideModal();
   };
 
-  const renderSavedRoutes = () =>
-    savedRoutes?.map((item: RenderSavedRoutesType) => (
-      <View key={item.id}>
-        <RouteContainer>
-          <TitleContainer>
+  return (
+    <>
+      {myRoutes?.map((item) => (
+        <View className="px-16 pt-20 pb-8 border-b-1 border-gray-eb" key={item.id}>
+          <View className="flex-row items-center justify-between mb-24">
             <FontText
               value={item.roadName}
               textSize="18px"
               textWeight="SemiBold"
-              lineHeight="23px"
+              lineHeight={23}
               textColor={COLOR.BASIC_BLACK}
             />
-            <TextButton
-              value="삭제"
-              textSize="13px"
-              textColor={COLOR.GRAY_999}
-              textWeight="Regular"
-              onPress={() => showDeletePopup(item.id)}
-              lineHeight="19px"
-            />
-          </TitleContainer>
+            <TouchableOpacity onPress={() => showDeletePopup(item.id)} hitSlop={20}>
+              <FontText
+                value="삭제"
+                textSize="13px"
+                textColor={COLOR.GRAY_999}
+                textWeight="Regular"
+                lineHeight={19}
+              />
+            </TouchableOpacity>
+          </View>
           <SubwaySimplePath
             pathData={item.subPaths}
             arriveStationName={item.lastEndStation}
             betweenPathMargin={24}
           />
-          <Space height="8px" />
-        </RouteContainer>
-        <Space height="1px" backgroundColor={COLOR.GRAY_EB} />
-      </View>
-    ));
-
-  return (
-    <View>
-      {renderSavedRoutes()}
+        </View>
+      ))}
       <MyTabModal
         isVisible={popupVisible}
         onCancel={hideModal}
@@ -79,18 +71,8 @@ const EditSavedRoutesList = () => {
         confirmText="삭제"
         cancelText="취소"
       />
-    </View>
+    </>
   );
 };
 
-export default EditSavedRoutesList;
-
-const RouteContainer = styled.View`
-  padding: 20px 16px 0;
-`;
-const TitleContainer = styled.View`
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 24px;
-`;
+export default SavedRoutesList;

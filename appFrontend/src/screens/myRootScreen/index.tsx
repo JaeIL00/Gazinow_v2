@@ -1,8 +1,6 @@
-import styled from '@emotion/native';
-import { Platform, Pressable, View } from 'react-native';
-import { FontText, Space, TextButton } from '@/global/ui';
+import { Platform, Pressable, SafeAreaView, View } from 'react-native';
+import { FontText } from '@/global/ui';
 import { COLOR } from '@/global/constants';
-// import { RESULTS, requestNotifications } from 'react-native-permissions';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store/configureStore';
 import packageJson from '../../../package.json';
@@ -11,24 +9,13 @@ import IconRightArrowHead from '@/assets/icons/right_arrow_head.svg';
 import { useRootNavigation } from '@/navigation/RootNavigation';
 import VersionCheck from 'react-native-version-check';
 import { useEffect, useState } from 'react';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 interface RenderMenuProps {
   text: string;
   onPress?: () => void;
-  versionInfo?: string;
+  versionText?: string;
 }
-// const ALLOWED_PERMISSIONS = {
-//   [RESULTS.GRANTED]: true,
-//   [RESULTS.LIMITED]: true,
-//   [RESULTS.UNAVAILABLE]: true,
-//   [RESULTS.BLOCKED]: false,
-//   [RESULTS.DENIED]: false,
-// };
-
-const requestNotificationPermission = async () => {
-  // const { status } = await requestNotifications(['alert']);
-  // return ALLOWED_PERMISSIONS[status];
-};
 
 const MyRootScreen = () => {
   const rootNavigation = useRootNavigation();
@@ -36,15 +23,6 @@ const MyRootScreen = () => {
   const currentVersionInfo = packageJson.version;
 
   const [versionText, setVersionText] = useState<string>('');
-
-  const confirmUserNotificationOn = async () => {
-    // const result = await requestNotificationPermission();
-    // if (!result) {
-    //   setIsNotiOnScreenOpen(true);
-    // } else {
-    //   setIsNotiSettingsScreenOpen(true);
-    // }
-  };
 
   useEffect(() => {
     VersionCheck.getLatestVersion({
@@ -55,37 +33,33 @@ const MyRootScreen = () => {
     });
   }, []);
 
-  const renderMenu = ({ text, onPress, versionInfo }: RenderMenuProps) => (
-    <MenuContainer onPress={onPress}>
-      <TextButton
-        value={text}
-        textSize="16px"
-        textWeight="Regular"
-        lineHeight="21px"
+  const renderMenu = ({ text, onPress, versionText }: RenderMenuProps) => (
+    <>
+      <TouchableOpacity
+        className="flex-row items-center justify-between px-16 h-53"
         onPress={onPress}
-      />
-      {versionInfo ? (
-        <FontText value={versionText} textSize="12px" textWeight="Regular" lineHeight="17px" />
-      ) : (
-        <IconRightArrowHead width={14} color={COLOR.GRAY_999} />
-      )}
-    </MenuContainer>
+        disabled={versionText ? true : false}
+      >
+        <FontText value={text} textSize="16px" textWeight="Regular" lineHeight={21} />
+        {versionText ? (
+          <FontText value={versionText} textSize="12px" textWeight="Regular" lineHeight={17} />
+        ) : (
+          <IconRightArrowHead width={14} color={COLOR.GRAY_999} />
+        )}
+      </TouchableOpacity>
+      <View className="h-1 bg-gray-eb" />
+    </>
   );
 
   return (
-    <Container>
-      <ProfileContainer>
+    <SafeAreaView className="flex-1 bg-gray-f9">
+      <View className="pl-16 pt-45 pb-37">
         {isVerifiedUser !== 'success auth' ? (
           <Pressable
-            style={{ flexDirection: 'row', alignItems: 'center' }}
+            className="flex-row items-center space-x-6"
             onPress={() => rootNavigation.navigate('AuthStack', { screen: 'Landing' })}
           >
-            <FontText
-              value="로그인하세요"
-              textSize="18px"
-              textWeight="SemiBold"
-              style={{ marginRight: 6 }}
-            />
+            <FontText value="로그인하세요" textSize="18px" textWeight="SemiBold" />
             <IconRightArrowHead
               width={11}
               height={11}
@@ -95,37 +69,43 @@ const MyRootScreen = () => {
           </Pressable>
         ) : (
           <>
-            <NickNameContainer>
-              <FontText value={nickname} textSize="16px" textWeight="SemiBold" />
-              <Space width="5px" />
-              <Pressable
-                hitSlop={20}
-                onPress={() =>
-                  rootNavigation.navigate('MyPageNavigation', { screen: 'ChangeNickNameScreen' })
-                }
-              >
-                <IconPencil width={15} />
-              </Pressable>
-            </NickNameContainer>
+            <TouchableOpacity
+              className="flex-row items-center space-x-5"
+              hitSlop={20}
+              onPress={() =>
+                rootNavigation.navigate('MyPageNavigation', { screen: 'ChangeNickNameScreen' })
+              }
+            >
+              <FontText value={nickname} textSize="18px" lineHeight={23} textWeight="SemiBold" />
+              <IconPencil width={18} />
+            </TouchableOpacity>
+
             <FontText
               value={email}
-              textSize="12px"
+              textSize="14px"
+              lineHeight={21}
               textWeight="Regular"
-              lineHeight="15px"
               textColor={COLOR.GRAY_999}
             />
           </>
         )}
-      </ProfileContainer>
-      <BtnContainer>
-        {isVerifiedUser === 'success auth' &&
-          renderMenu({
-            text: '계정 관리',
-            onPress: () =>
-              rootNavigation.navigate('MyPageNavigation', { screen: 'ManageAccountScreen' }),
-          })}
-        {/* TODO: 페이지 들어가서 퍼미션 컨펌창 띄우는 로직으로 수정하기 */}
-        {/* {renderMenu({ text: '알림 설정', onPress: () => confirmUserNotificationOn() })} */}
+      </View>
+      <View className="flex-1 bg-white">
+        {isVerifiedUser === 'success auth' && (
+          <>
+            {renderMenu({
+              text: '계정 관리',
+              onPress: () =>
+                rootNavigation.navigate('MyPageNavigation', { screen: 'ManageAccountScreen' }),
+            })}
+            {renderMenu({
+              text: '알림 설정',
+              onPress: () =>
+                rootNavigation.push('MyPageNavigation', { screen: 'NotiSettingsScreen' }),
+            })}
+          </>
+        )}
+
         {renderMenu({
           text: '약관 및 정책',
           onPress: () =>
@@ -140,36 +120,10 @@ const MyRootScreen = () => {
               screen: 'PersonalTermsScreen',
             }),
         })}
-        {renderMenu({ text: '버전', versionInfo: versionText })}
-      </BtnContainer>
-    </Container>
+        {renderMenu({ text: '버전', versionText })}
+      </View>
+    </SafeAreaView>
   );
 };
 
 export default MyRootScreen;
-
-const Container = styled.SafeAreaView`
-  flex: 1;
-  background-color: ${COLOR.GRAY_F9};
-`;
-const NickNameContainer = styled.Pressable`
-  flex-direction: row;
-  align-items: center;
-`;
-const ProfileContainer = styled.Pressable`
-  padding: 45px 16px;
-  background-color: ${COLOR.GRAY_F9};
-`;
-const MenuContainer = styled.Pressable`
-  flex-direction: row;
-  justify-content: space-between;
-  padding: 0 16px;
-  height: 53px;
-  align-items: center;
-  border-bottom-width: 1px;
-  border-bottom-color: ${COLOR.GRAY_EB};
-`;
-const BtnContainer = styled.View`
-  background-color: white;
-  flex: 1;
-`;

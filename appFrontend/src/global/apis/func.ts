@@ -2,14 +2,14 @@ import { AxiosError } from 'axios';
 import { authServiceAPI, publicServiceAPI } from '.';
 import {
   AllIssues,
-  RenderSavedRoutesType,
-  SavedRoute,
+  MyRoutesType,
   SearchHistoryStationNameTypes,
   SearchPathsTypes,
   SearchStationNameTypes,
   RawSubwayLineName,
   SubwayStrEnd,
   IssueContent,
+  SaveMyRoutesType,
 } from './entity';
 import { SignInFetchResponse } from '@/screens/signInScreen/apis/entity';
 import { API_BASE_URL } from '@env';
@@ -38,8 +38,8 @@ export const tokenReissueFetch = async ({
     );
     return res.data.data;
   } catch (err) {
-    const er = err as AxiosError;
-    throw er;
+    const error = err as AxiosError;
+    throw error;
   }
 };
 
@@ -53,9 +53,13 @@ export const searchStationName = async (params: { stationName: string }) => {
     });
     return res.data.data;
   } catch (err) {
-    Sentry.captureException(err);
-    const er = err as AxiosError;
-    throw er;
+    const error = err as AxiosError;
+    Sentry.captureException({
+      target: '지하철역 검색',
+      input: { params, request: error.request },
+      output: { status: error.response?.status, error: error.message, response: error.response },
+    });
+    throw error;
   }
 };
 
@@ -69,9 +73,13 @@ export const searchHistoryFetch = async () => {
     );
     return res.data.data;
   } catch (err) {
-    Sentry.captureException(err);
-    const er = err as AxiosError;
-    throw er;
+    const error = err as AxiosError;
+    Sentry.captureException({
+      target: '지하철역 히스토리 조회',
+      input: { request: error.request },
+      output: { status: error.response?.status, error: error.message, response: error.response },
+    });
+    throw error;
   }
 };
 
@@ -89,9 +97,13 @@ export const searchAddHistoryFetch = async (data: {
     );
     return res.data.data;
   } catch (err) {
-    Sentry.captureException(err);
-    const er = err as AxiosError;
-    throw er;
+    const error = err as AxiosError;
+    Sentry.captureException({
+      target: '지하철역 히스토리 저장',
+      input: { data, request: error.request },
+      output: { status: error.response?.status, error: error.message, response: error.response },
+    });
+    throw error;
   }
 };
 
@@ -118,23 +130,31 @@ export const searchPathsFetch = async ({
       return res.data.data;
     }
   } catch (err) {
-    Sentry.captureException(err);
-    const er = err as AxiosError;
-    throw er;
+    const error = err as AxiosError;
+    Sentry.captureException({
+      target: '지하철 경로 검색 조회',
+      input: { params, isVerifiedUser, request: error.request },
+      output: { status: error.response?.status, error: error.message, response: error.response },
+    });
+    throw error;
   }
 };
 
 /**
  * 지하철 경로 저장 axios
  */
-export const searchPathSaveFetch = async (data: SavedRoute) => {
+export const searchPathSaveFetch = async (data: SaveMyRoutesType) => {
   try {
     const res = await authServiceAPI.post('/api/v1/my_find_road/add_route', data);
     return res.data.data;
   } catch (err) {
-    Sentry.captureException(err);
-    const er = err as AxiosError;
-    throw er;
+    const error = err as AxiosError;
+    Sentry.captureException({
+      target: '지하철 경로 저장',
+      input: { data, request: error.request },
+      output: { status: error.response?.status, error: error.message, response: error.response },
+    });
+    throw error;
   }
 };
 
@@ -146,27 +166,18 @@ export const searchPathDeleteFetch = async (params: { id: number | null }) => {
     const res = await authServiceAPI.delete('/api/v1/my_find_road/delete_route', { params });
     return res.data.data;
   } catch (err) {
-    Sentry.captureException(err);
-    const er = err as AxiosError;
-    throw er;
+    const error = err as AxiosError;
+    Sentry.captureException({
+      target: '저장된 지하철 경로 삭제',
+      input: { params, request: error.request },
+      output: { status: error.response?.status, error: error.message, response: error.response },
+    });
+    throw error;
   }
 };
 
 /**
- * 회원 탈퇴 axios
- */
-export const deleteAccountFetch = async () => {
-  try {
-    await authServiceAPI.delete('/api/v1/member/delete_member', { data: {} });
-  } catch (err) {
-    Sentry.captureException(err);
-    const er = err as AxiosError;
-    throw er;
-  }
-};
-
-/**
- * 검색한 지하철 경로 조회 axios
+ * 지하철 경로 히스토리 조회 axios
  */
 export const getSearchRoutesFetch = async () => {
   try {
@@ -174,67 +185,28 @@ export const getSearchRoutesFetch = async () => {
     const res = await authServiceAPI.get(`/api/v1/recentSearch`);
     return res.data.data;
   } catch (err) {
-    Sentry.captureException(err);
-    const er = err as AxiosError;
-    throw er;
+    const error = err as AxiosError;
+    throw error;
   }
 };
 
 /**
- * 저장한 지하철 경로 조회 axios
+ * 저장된 지하철 경로 조회 axios
  */
 export const getSavedRoutesFetch = async () => {
   try {
-    const res = await authServiceAPI.get<{ data: RenderSavedRoutesType[] }>(
+    const res = await authServiceAPI.get<{ data: MyRoutesType[] }>(
       `/api/v1/my_find_road/get_roads`,
     );
     return res.data.data;
   } catch (err) {
-    Sentry.captureException(err);
-    const er = err as AxiosError;
-    throw er;
-  }
-};
-
-/**
- * 닉네임 변경 axios
- */
-export const changeNicknameFetch = async (newNickname: string) => {
-  try {
-    await authServiceAPI.post(`/api/v1/member/change_nickname`, {
-      nickName: newNickname,
+    const error = err as AxiosError;
+    Sentry.captureException({
+      target: '저장된 지하철 경로 조회',
+      input: { request: error.request },
+      output: { status: error.response?.status, error: error.message, response: error.response },
     });
-  } catch (err) {
-    Sentry.captureException(err);
-    const er = err as AxiosError;
-    throw er;
-  }
-};
-
-/**
- * 비밀번호 확인 axios
- */
-export const checkPasswordFetch = async (passwordInput: string) => {
-  try {
-    await authServiceAPI.post(`/api/v1/member/check_password`, {
-      checkPassword: passwordInput,
-    });
-  } catch (err) {
-    const er = err as AxiosError;
-    throw er;
-  }
-};
-
-/**
- * 비밀번호 변경 axios
- */
-export const changePasswordFetch = async (data: object) => {
-  try {
-    const res = await authServiceAPI.post(`/api/v1/member/change_password`, data);
-  } catch (err) {
-    Sentry.captureException(err);
-    const er = err as AxiosError;
-    throw er;
+    throw error;
   }
 };
 
@@ -248,9 +220,13 @@ export const getAllIssuesFetch = async (params: { page: number }) => {
     });
     return res.data.data;
   } catch (err) {
-    Sentry.captureException(err);
-    const er = err as AxiosError;
-    throw er;
+    const error = err as AxiosError;
+    Sentry.captureException({
+      target: '전체 이슈 조회',
+      input: { request: error.request },
+      output: { status: error.response?.status, error: error.message, response: error.response },
+    });
+    throw error;
   }
 };
 
@@ -264,9 +240,13 @@ export const getIssuesByLaneFetch = async (params: { page: number; line: string 
     });
     return res.data.data;
   } catch (err) {
-    Sentry.captureException(err);
-    const er = err as AxiosError;
-    throw er;
+    const error = err as AxiosError;
+    Sentry.captureException({
+      target: '노선별 이슈 조회',
+      input: { request: error.request },
+      output: { status: error.response?.status, error: error.message, response: error.response },
+    });
+    throw error;
   }
 };
 
@@ -278,8 +258,12 @@ export const getPopularIssuesFetch = async () => {
     const res = await publicServiceAPI.get<{ data: IssueContent[] }>(`/api/v1/issue/get_popular`);
     return res.data.data;
   } catch (err) {
-    Sentry.captureException(err);
-    const er = err as AxiosError;
-    throw er;
+    const error = err as AxiosError;
+    Sentry.captureException({
+      target: '도움돼요 순 이슈 조회',
+      input: { request: error.request },
+      output: { status: error.response?.status, error: error.message, response: error.response },
+    });
+    throw error;
   }
 };

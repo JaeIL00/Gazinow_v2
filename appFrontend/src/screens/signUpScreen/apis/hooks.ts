@@ -1,8 +1,8 @@
 import { useMutation } from 'react-query';
-import { checkNicknameFetch, emailConfirmFetch, signUpFetch } from '../func';
+import { checkNicknameFetch, emailConfirmFetch, signUpFetch } from './func';
 import { useState } from 'react';
-import { SightUpResponse } from '../../type';
 import { AxiosError } from 'axios';
+import { SignUpResponse } from './entity';
 
 /**
  * 이메일 인증 요청 axios
@@ -52,7 +52,7 @@ export const useCheckNickname = ({
 /**
  * 닉네임 중복 확인 axios
  */
-export const useSighUp = ({ onSuccess }: { onSuccess: (data: SightUpResponse) => void }) => {
+export const useSighUp = ({ onSuccess }: { onSuccess: (data: SignUpResponse) => void }) => {
   const { mutate: signUpMutate } = useMutation(signUpFetch, {
     onSuccess,
   });

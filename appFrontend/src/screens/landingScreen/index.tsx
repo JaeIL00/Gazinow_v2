@@ -52,14 +52,14 @@ const LandingScreen = () => {
             value="가는길 지금,"
             textSize="27.34px"
             textWeight="Bold"
-            lineHeight="36.454px"
+            lineHeight={36.454}
             textColor={COLOR.WHITE}
           />
           <FontText
             value={`무슨 일이\n일어나고 있을까요?`}
             textSize="27.34px"
             textWeight="Regular"
-            lineHeight="36.454px"
+            lineHeight={36.454}
             textColor={COLOR.WHITE}
           />
         </View>
@@ -82,13 +82,9 @@ const LandingScreen = () => {
             onPress={() => navigation.navigate('SignIn')}
             hitSlop={20}
           />
-          <FontText
-            value="|"
-            textSize="13px"
-            textWeight="Regular"
-            textColor={COLOR.WHITE}
-            style={{ marginHorizontal: 8 }}
-          />
+          <View style={{ marginHorizontal: 8 }}>
+            <FontText value="|" textSize="13px" textWeight="Regular" textColor={COLOR.WHITE} />
+          </View>
           <TextButton
             value="이메일 회원가입"
             textSize="13px"
