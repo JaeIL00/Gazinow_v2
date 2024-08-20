@@ -44,17 +44,30 @@ const NowScreen = () => {
   useEffect(() => {
     queryClient.invalidateQueries(['getAllIssues', 'getIssuesByLane', 'getPopularIssues']);
     setIssuesList([]);
+
     if (isRefresh) {
-      popularIssuesRefetch();
+      const refetchPopularIssues = async () => {
+        await popularIssuesRefetch();
+        setRefresh(false);
+      };
+      refetchPopularIssues();
     }
-    if (activeButton === '전체' && allIssues) {
-      allIssuesRefetch();
-      setIssuesList(allIssues?.pages.flatMap((page) => page.content));
-    } else if (activeButton !== '전체' && laneIssues) {
-      laneIssuesRefetch();
-      setIssuesList(laneIssues?.pages.flatMap((page) => page.content));
-    }
-    setRefresh(false);
+
+    const refetchFilteredIssues = async () => {
+      if (activeButton === '전체') {
+        const allIssuesResult = await allIssuesRefetch();
+        if (allIssuesResult?.data) {
+          setIssuesList(allIssuesResult.data.pages.flatMap((page) => page.content));
+        }
+      } else {
+        const laneIssuesResult = await laneIssuesRefetch();
+        if (laneIssuesResult?.data) {
+          setIssuesList(laneIssuesResult.data.pages.flatMap((page) => page.content));
+        }
+      }
+    };
+
+    refetchFilteredIssues();
   }, [activeButton, isRefresh]);
 
   const onEndReached = () => {
