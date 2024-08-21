@@ -40,13 +40,9 @@ const SelectNewRoute = () => {
   });
 
   const pathTime = (item: Path) => {
-    const hasIssue = item.subPaths.some(
-      (sub) => !!sub.lanes[0] && !!sub.lanes[0].issueSummary.length,
-    );
-    const minute = hasIssue ? '분 이상' : '분';
     return item.totalTime > 60
-      ? Math.floor(item.totalTime / 60) + '시간 ' + (item.totalTime % 60) + minute
-      : item.totalTime + minute;
+      ? Math.floor(item.totalTime / 60) + '시간 ' + (item.totalTime % 60) + '분'
+      : item.totalTime + '분';
   };
 
   return (
