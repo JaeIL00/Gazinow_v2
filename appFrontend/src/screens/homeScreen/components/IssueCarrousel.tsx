@@ -89,6 +89,7 @@ const IssueCarrousel = ({ isRefreshing, setIsRefreshing }: IssueCarrouselProps) 
       ref={scrollViewRef}
       horizontal
       scrollEventThrottle={200}
+      scrollEnabled={false}
       decelerationRate="normal"
       showsHorizontalScrollIndicator={false}
       contentContainerStyle={{ width: `${100 * newPopularIssues.length}%` }}
