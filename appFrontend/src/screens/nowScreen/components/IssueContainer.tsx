@@ -33,7 +33,7 @@ const IssueContainer = ({ issue, isLastItem, isHeader }: IssueDetailProps) => {
         <FontText value={issue.title} textSize="16px" textWeight="SemiBold" numberOfLines={2} />
         <View className="h-4" />
         <FontText
-          value={dayjs(issue.agoTime).fromNow()}
+          value={dayjs(issue.startDate).fromNow()}
           textSize="14px"
           textWeight="Regular"
           textColor={COLOR.GRAY_999}
