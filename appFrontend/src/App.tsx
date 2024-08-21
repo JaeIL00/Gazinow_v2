@@ -82,7 +82,8 @@ const App = (): JSX.Element => {
 
     // 채널 생성
     const channelId = await notifee.createChannel({
-      id: 'important',
+      // Miscellaneous 채널 삭제, Important Notifications로 통임
+      id: 'fcm_fallback_notification_channel',
       name: 'Important Notifications',
       importance: AndroidImportance.HIGH,
     });
