@@ -96,6 +96,7 @@ const App = (): JSX.Element => {
         channelId,
         importance: AndroidImportance.HIGH,
         visibility: AndroidVisibility.PUBLIC,
+        timeoutAfter: 2000,
       },
     });
   };
