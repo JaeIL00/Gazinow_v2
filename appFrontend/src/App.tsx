@@ -59,7 +59,7 @@ const App = (): JSX.Element => {
   // 첫 실행 시 알림 권한 요청
   useEffect(() => {
     const requestPermission = async () => {
-      await messaging().requestPermission();
+      await notifee.requestPermission();
     };
 
     requestPermission();
