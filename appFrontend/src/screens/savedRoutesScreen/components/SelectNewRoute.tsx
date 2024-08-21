@@ -108,6 +108,7 @@ const SelectNewRoute = () => {
                   pathData={item.subPaths}
                   arriveStationName={item.lastEndStation}
                   betweenPathMargin={24}
+                  isHideIsuue
                 />
               </TouchableOpacity>
             </View>

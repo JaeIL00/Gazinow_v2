@@ -67,6 +67,7 @@ const SaveNewRoute = () => {
               pathData={freshSubPathData}
               arriveStationName={resultData.lastEndStation}
               betweenPathMargin={24}
+              isHideIsuue
             />
           </View>
           <FontText
