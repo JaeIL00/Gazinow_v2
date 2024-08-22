@@ -6,3 +6,4 @@ export { default as NoRoutes } from './NoRoutes';
 export { default as NotiHistory } from './NotiHistory';
 export { default as RouteItem } from './RouteItem';
 export { default as SwapStation } from './SwapStation';
+export { default as Walkthrough } from './Walkthrough';
