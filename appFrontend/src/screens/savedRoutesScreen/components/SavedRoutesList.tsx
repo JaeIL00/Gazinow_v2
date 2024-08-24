@@ -60,6 +60,7 @@ const SavedRoutesList = () => {
             pathData={item.subPaths}
             arriveStationName={item.lastEndStation}
             betweenPathMargin={24}
+            isHideIsuue
           />
         </View>
       ))}
