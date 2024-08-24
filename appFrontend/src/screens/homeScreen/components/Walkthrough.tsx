@@ -1,4 +1,4 @@
-import { Dimensions, SafeAreaView, TouchableHighlight, View } from 'react-native';
+import { Dimensions, Pressable, SafeAreaView, View } from 'react-native';
 import React, { useState } from 'react';
 import ImageMyPath from '@assets/icons/img_walkthrough_mypath.svg';
 import ImageNoti from '@assets/icons/img_walkthrough_noti.svg';
@@ -17,7 +17,7 @@ const Walkthrough = ({ setIsWalkthroughClosed }: WalkthroughProps) => {
   return (
     <SafeAreaView className="flex-1 absolute w-full h-full bg-[#000000BF]">
       {visibleWalkthrough === 'Path' && (
-        <TouchableHighlight onPress={() => setVisibleWalkthrough('Noti')} className="flex-1">
+        <Pressable onPress={() => setVisibleWalkthrough('Noti')} className="flex-1">
           <>
             <View style={{ height: height * 0.21 }} />
             <TextMyPath
@@ -29,10 +29,10 @@ const Walkthrough = ({ setIsWalkthroughClosed }: WalkthroughProps) => {
             />
             <ImageMyPath className="mx-16" width={width - 32} />
           </>
-        </TouchableHighlight>
+        </Pressable>
       )}
       {visibleWalkthrough === 'Noti' && (
-        <TouchableHighlight onPress={() => setIsWalkthroughClosed(true)} className="flex-1">
+        <Pressable onPress={() => setIsWalkthroughClosed(true)} className="flex-1">
           <>
             <View style={{ height: height * 0.21 + textLayoutHeight }} />
             <View className="bg-white mx-16 rounded-15">
@@ -45,7 +45,7 @@ const Walkthrough = ({ setIsWalkthroughClosed }: WalkthroughProps) => {
             </View>
             <ImageNoti style={{ marginLeft: width * 0.745 }} />
           </>
-        </TouchableHighlight>
+        </Pressable>
       )}
     </SafeAreaView>
   );
