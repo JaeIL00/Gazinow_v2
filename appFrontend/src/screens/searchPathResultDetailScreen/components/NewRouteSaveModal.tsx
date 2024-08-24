@@ -43,8 +43,8 @@ const NewRouteSaveModal = ({
   const saveHandler = () => {
     if (routeName.length === 0) return;
     mutate({
-      roadName: routeName,
       ...freshData,
+      roadName: routeName,
     });
   };
 

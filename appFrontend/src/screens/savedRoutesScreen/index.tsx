@@ -23,10 +23,11 @@ const SavedRoutesScreen = () => {
         <View className="mx-16 bg-white rounded-15">
           <SavedRoutesList />
           <TouchableOpacity
-            className="flex-row items-center justify-center gap-6 py-20"
+            className="flex-row items-center justify-center py-20"
             onPress={() => newRouteNavigation.navigate('Swap')}
           >
             <IconPlusBtn />
+            <View className="w-6" />
             <FontText
               value="경로 추가하기"
               textSize="14px"
