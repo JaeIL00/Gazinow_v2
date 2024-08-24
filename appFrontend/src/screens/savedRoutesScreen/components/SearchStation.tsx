@@ -98,13 +98,14 @@ const SearchStation = () => {
                   }
                 >
                   <IconClock />
-                  <View className="gap-3">
+                  <View>
                     <FontText
-                      value={stationName}
+                      value={stationName.split('(')[0]}
                       textSize="16px"
                       textWeight="Medium"
                       textColor="#000"
                     />
+                    <View className="h-3" />
                     <FontText
                       value={stationLine!}
                       textSize="14px"
@@ -129,7 +130,7 @@ const SearchStation = () => {
           )}
           {/* 입력어가 있고 && 검색 결과가 있으면 결과 표시 */}
           {searchResultData.length > 0 && (
-            <ScrollView className="mt-28">
+            <ScrollView className="mt-28" keyboardShouldPersistTaps="handled">
               {searchResultData.map(({ stationName, stationLine }, idx) => (
                 <>
                   <TouchableOpacity
@@ -138,14 +139,15 @@ const SearchStation = () => {
                     onPress={() => stationBtnHandler({ stationLine, stationName })}
                   >
                     <IconLocationPin />
-                    <View className="gap-3">
+                    <View>
                       <FontText
-                        value={stationName}
+                        value={stationName.split('(')[0]}
                         textSize="16px"
                         textWeight="Medium"
                         lineHeight={21}
                         textColor="#000"
                       />
+                      <View className="h-3" />
                       <FontText
                         value={stationLine!}
                         textSize="14px"

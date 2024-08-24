@@ -33,7 +33,7 @@ const IssueContainer = ({ issue, isLastItem, isHeader }: IssueDetailProps) => {
         <FontText value={issue.title} textSize="16px" textWeight="SemiBold" numberOfLines={2} />
         <View className="h-4" />
         <FontText
-          value={dayjs(issue.agoTime).fromNow()}
+          value={dayjs(issue.startDate).fromNow()}
           textSize="14px"
           textWeight="Regular"
           textColor={COLOR.GRAY_999}
@@ -47,13 +47,10 @@ const IssueContainer = ({ issue, isLastItem, isHeader }: IssueDetailProps) => {
           numberOfLines={2}
         />
       </TouchableOpacity>
-      {!isLastItem && <View className="h-1 w-999 bg-gray-f8" />}
-      {isHeader && isLastItem && (
-        <>
-          <View className="h-12 bg-white w-999" />
-          <View className="h-8 w-999 bg-gray-f8" />
-          <View className="h-12 bg-white w-999" />
-        </>
+      {isLastItem ? (
+        isHeader && <View className="w-999 h-8 my-12 bg-gray-f8" />
+      ) : (
+        <View className="h-1 w-999 bg-gray-f8" />
       )}
     </>
   );

@@ -114,6 +114,7 @@ const NotiSettingsDetailScreen = () => {
             pathData={myRoutes.subPaths}
             arriveStationName={myRoutes.lastEndStation}
             betweenPathMargin={24}
+            isHideIsuue
           />
         </View>
 
