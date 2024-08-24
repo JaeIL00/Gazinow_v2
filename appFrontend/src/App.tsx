@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { Provider } from 'react-redux';
 import { RootNavigation } from '@/navigation';
@@ -18,6 +18,8 @@ import notifee, {
   EventDetail,
   EventType,
 } from '@notifee/react-native';
+import { Walkthrough } from './screens/homeScreen/components';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 Sentry.init({
   enabled: MODE === 'production',
@@ -31,6 +33,7 @@ const queryClient = new QueryClient();
 export const navigationRef = createNavigationContainerRef<RootStackParamList>();
 
 const App = (): JSX.Element => {
+  // 앱 진입 시 네트워크 확인
   useEffect(() => {
     const checkNetworkAndRetry = async () => {
       const state = await fetch();
@@ -56,14 +59,37 @@ const App = (): JSX.Element => {
     checkNetworkAndRetry();
   }, []);
 
-  // 첫 실행 시 알림 권한 요청
+  // 워크스루를 위한 첫 실행 여부 확인
+  const [isFirstRun, setIsFirstRun] = useState<boolean>(false);
   useEffect(() => {
-    const requestPermission = async () => {
-      await notifee.requestPermission();
+    const checkFirstRun = async () => {
+      try {
+        const hasRun = await AsyncStorage.getItem('hasRun');
+        if (hasRun === null) {
+          await AsyncStorage.setItem('hasRun', 'true');
+          setIsFirstRun(true);
+        } else {
+          setIsFirstRun(false);
+        }
+      } catch (error) {
+        console.error('Error checking first run', error);
+      }
     };
 
-    requestPermission();
+    checkFirstRun();
   }, []);
+
+  // 워크스루 종료 시 알림 권한 요청
+  const [isWalkthroughClosed, setIsWalkthroughClosed] = useState<boolean>(false);
+  useEffect(() => {
+    if (isWalkthroughClosed) {
+      const requestPermission = async () => {
+        await notifee.requestPermission();
+      };
+
+      requestPermission();
+    }
+  }, [isWalkthroughClosed]);
 
   // 포그라운드 알림 수신
   useEffect(() => {
@@ -106,6 +132,9 @@ const App = (): JSX.Element => {
       <QueryClientProvider client={queryClient}>
         <NavigationContainer ref={navigationRef}>
           <RootNavigation />
+          {!isFirstRun && isWalkthroughClosed && (
+            <Walkthrough setIsWalkthroughClosed={setIsWalkthroughClosed} />
+          )}
         </NavigationContainer>
       </QueryClientProvider>
     </Provider>
