@@ -1,4 +1,4 @@
-import { View, Platform, TouchableOpacity } from 'react-native';
+import { View, Platform, TouchableOpacity, Linking } from 'react-native';
 import LoginKakao from '@assets/icons/login_kakao.svg';
 import LoginNaver from '@assets/icons/login_naver.svg';
 import LoginApple from '@assets/icons/login_apple.svg';
@@ -7,6 +7,7 @@ import { FontText } from '@/global/ui';
 import { ReactNode } from 'react';
 import cn from 'classname';
 import { useAuthNavigation } from '@/navigation/AuthNavigation';
+import { API_BASE_URL } from '@env';
 
 export type SocialLoginType = 'naver' | 'google' | 'kakao' | 'apple';
 
@@ -29,7 +30,11 @@ const SocialLoginButton = ({
   return (
     <TouchableOpacity
       className={`flex-row justify-center items-center px-16 py-6 mb-12 rounded-30 ${bgColor}`}
-      onPress={() => authNavigation.push('SocialLogin', { socialLoginType: socialLoginTypeProps })}
+      onPress={() =>
+        Linking.openURL(
+          `${API_BASE_URL}/api/v1/oauth/login?socialLoginType=${socialLoginTypeProps}`,
+        )
+      }
     >
       {icon}
       <View className="flex-grow flex-row items-center justify-center pr-34">
