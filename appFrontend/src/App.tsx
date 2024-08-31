@@ -132,7 +132,7 @@ const App = (): JSX.Element => {
       <QueryClientProvider client={queryClient}>
         <NavigationContainer ref={navigationRef}>
           <RootNavigation />
-          {!isFirstRun && isWalkthroughClosed && (
+          {isFirstRun && !isWalkthroughClosed && (
             <Walkthrough setIsWalkthroughClosed={setIsWalkthroughClosed} />
           )}
         </NavigationContainer>
