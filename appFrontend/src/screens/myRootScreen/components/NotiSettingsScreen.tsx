@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { AppState, AppStateStatus, SafeAreaView, TouchableOpacity, View } from 'react-native';
 import { COLOR } from '@/global/constants';
 import { FontText } from '@/global/ui';
