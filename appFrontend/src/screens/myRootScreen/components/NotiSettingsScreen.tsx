@@ -31,7 +31,7 @@ const NotiSettingsScreen = () => {
     return () => {
       subscription.remove();
     };
-  }, []);
+  }, [checkNotificationPermission]);
 
   const submitNotificationSettings = () => {};
 
