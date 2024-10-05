@@ -5,9 +5,12 @@ import { ScrollView, TouchableOpacity, View } from 'react-native';
 import { useMyPageNavigation } from '@/navigation/MyPageNavigation';
 import { useGetSavedRoutesQuery } from '@/global/apis/hooks';
 import MoreBtn from '@/assets/icons/moreBtn.svg';
+import IconExclamation from '@assets/icons/circle_exclamation_mark.svg';
+import { useRootNavigation } from '@/navigation/RootNavigation';
 
 const NotiSettings = () => {
   const myPageNavigation = useMyPageNavigation();
+  const rootNavigation = useRootNavigation();
   const [pushNotificationOn, setPushNotificationOn] = useState<boolean>(false);
   const [myRoutesNotification, setMyRoutesNotification] = useState<boolean>(false);
   const [routeDetailSettings, setRouteDetailSettings] = useState<boolean>(false);
@@ -57,6 +60,8 @@ const NotiSettings = () => {
         />
       </View>
       <View className="h-1 bg-gray-eb" />
+      {myRoutes && myRoutes.length > 0 && (
+        <>
       <View className="flex-row mx-16 h-72 items-center justify-between">
         <View className="gap-6">
           <TextButton
@@ -84,9 +89,11 @@ const NotiSettings = () => {
         />
       </View>
       <View className="h-1 bg-gray-eb" />
+        </>
+      )}
+      {myRoutesNotification && routeDetailSettings && myRoutes && myRoutes.length > 0 && (
       <ScrollView>
-        {routeDetailSettings &&
-          myRoutes?.map((myRoutes, index) => (
+          {myRoutes.map((myRoutes, index) => (
             <View key={myRoutes.roadName + index}>
               <TouchableOpacity
                 className="flex-row ml-24 mr-16 h-53 items-center justify-between"
@@ -113,6 +120,34 @@ const NotiSettings = () => {
             </View>
           ))}
       </ScrollView>
+      )}
+      {myRoutesNotification && myRoutes && myRoutes.length < 1 && (
+        <View className="mx-16 mt-20 py-16 bg-gray-f9 items-center rounded-12">
+          <View className="flex-row items-center">
+            <IconExclamation />
+            <FontText
+              className="pl-5"
+              value={'저장한 경로가 아직 없어요'}
+              textSize={'14'}
+              textWeight={'Regular'}
+              textColor="#999999"
+            />
+          </View>
+          <TouchableOpacity>
+            <TextButton
+              className="mt-8"
+              value={'내 경로 저장하고 알림받기'}
+              textSize={'13'}
+              textWeight={'SemiBold'}
+              textColor="#999999"
+              onPress={() =>
+                rootNavigation.navigate('NewRouteNavigation', { screen: 'SavedRoutes' })
+              }
+              isTextUnderline
+            />
+          </TouchableOpacity>
+        </View>
+      )}
     </>
   );
 };
