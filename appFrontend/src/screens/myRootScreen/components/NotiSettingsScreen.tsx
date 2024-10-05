@@ -10,17 +10,12 @@ import notifee from '@notifee/react-native';
 
 const NotiSettingsScreen = () => {
   const myPageNavigation = useMyPageNavigation();
-
   const [isNotiPermissionOn, setIsNotiPermissionOn] = useState<boolean>(false);
 
-  const checkNotificationPermission = async () => {
-    const settings = await notifee.requestPermission();
-    if (settings.authorizationStatus) {
-      setIsNotiPermissionOn(true);
-    } else {
-      setIsNotiPermissionOn(false);
-    }
-  };
+  const checkNotificationPermission = useCallback(async () => {
+    const settings = await notifee.getNotificationSettings();
+    setIsNotiPermissionOn(settings.authorizationStatus >= 1);
+  }, []);
 
   useEffect(() => {
     checkNotificationPermission();
