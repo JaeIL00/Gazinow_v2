@@ -3,7 +3,6 @@ import { AuthStackStackParamList } from './types/navigation';
 import LandingScreen from '@/screens/landingScreen';
 import SignInScreen from '@/screens/signInScreen';
 import SignUpScreen from '@/screens/signUpScreen';
-import SocialLoginScreen from '@/screens/landingScreen/components/SocialLoginScreen';
 import { useNavigation } from '@react-navigation/native';
 
 const Stack = createStackNavigator<AuthStackStackParamList>();
@@ -18,7 +17,6 @@ const AuthNavigation = () => {
       <Stack.Screen name="Landing" component={LandingScreen} />
       <Stack.Screen name="SignIn" component={SignInScreen} />
       <Stack.Screen name="SignUp" component={SignUpScreen} />
-      <Stack.Screen name="SocialLogin" component={SocialLoginScreen} />
     </Stack.Navigator>
   );
 };

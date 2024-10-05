@@ -3,7 +3,7 @@ import { FontText, TextButton } from '@/global/ui';
 import { useAuthNavigation } from '@/navigation/AuthNavigation';
 import { Animated, SafeAreaView, TouchableOpacity, View } from 'react-native';
 import IconLeftArrow from '@assets/icons/left_arrow_head.svg';
-import SocialLoginButtons from './components/SocialLoginButtons';
+import SocialLogin from './components/SocialLogin';
 
 const LandingScreen = () => {
   const navigation = useAuthNavigation();
@@ -67,7 +67,7 @@ const LandingScreen = () => {
 
         <View style={{ flex: 1 }} />
 
-        <SocialLoginButtons />
+        <SocialLogin />
 
         <View
           style={{
