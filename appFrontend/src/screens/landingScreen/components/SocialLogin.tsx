@@ -42,8 +42,8 @@ const SocialLogin = () => {
       const params = parseUrlParams(url);
       dispatch(saveUserInfo({ nickname: params.nickName, email: params.email }));
       dispatch(getAuthorizationState('success auth'));
-      setEncryptedStorage('access_token', params.accessToken);
-      setEncryptedStorage('refresh_token', params.refreshToken);
+      await setEncryptedStorage('access_token', params.accessToken);
+      await setEncryptedStorage('refresh_token', params.refreshToken);
 
       // 닉네임, 이메일, 토큰 저장했으면 파이어베이스 토큰을 서버에 전송
       const firebaseToken = await messaging().getToken();
