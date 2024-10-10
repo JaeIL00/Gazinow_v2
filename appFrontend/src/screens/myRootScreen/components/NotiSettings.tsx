@@ -55,7 +55,12 @@ const NotiSettings = () => {
     <>
       <View className="h-1 bg-gray-eb" />
       <View className="flex-row mx-16 h-53 items-center justify-between">
-        <TextButton value="푸시 알림 받기" textSize="16px" textWeight="SemiBold" />
+        <TextButton
+          value="푸시 알림 받기"
+          textSize="16px"
+          textWeight="SemiBold"
+          textColor={isPushNotiOn ? COLOR.BASIC_BLACK : COLOR.GRAY_BE}
+        />
         <Toggle
           isOn={isPushNotiOn!}
           onToggle={() => setPushNotiOnMutate({ email, alertAgree: !isPushNotiOn })}
@@ -67,7 +72,7 @@ const NotiSettings = () => {
           value="내가 저장한 경로 알림"
           textSize="16px"
           textWeight="SemiBold"
-          textColor={isPushNotiOn ? COLOR.BASIC_BLACK : COLOR.GRAY_BE}
+          textColor={isMyPathPushNotiOn ? COLOR.BASIC_BLACK : COLOR.GRAY_BE}
         />
         <Toggle
           isOn={isMyPathPushNotiOn!}
@@ -84,14 +89,14 @@ const NotiSettings = () => {
                 value="경로 상세 설정"
                 textSize="16px"
                 textWeight="SemiBold"
-                textColor={isPushNotiOn && isMyPathPushNotiOn ? COLOR.BASIC_BLACK : COLOR.GRAY_BE}
+                textColor={isDetailPushNotiOn ? COLOR.BASIC_BLACK : COLOR.GRAY_BE}
               />
               <TextButton
                 value="개별 경로의 알림이 활성화되는 시간을 설정해요"
                 textSize="12px"
                 textWeight="Regular"
                 lineHeight={14}
-                textColor={isPushNotiOn && isMyPathPushNotiOn ? COLOR.BASIC_BLACK : COLOR.GRAY_BE}
+                textColor={isDetailPushNotiOn ? COLOR.BASIC_BLACK : COLOR.GRAY_BE}
               />
             </View>
             <Toggle
