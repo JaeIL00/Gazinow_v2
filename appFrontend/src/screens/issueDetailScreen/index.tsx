@@ -1,14 +1,15 @@
 import { COLOR } from '@/global/constants';
+import cn from 'classname';
 import { useAppSelect } from '@/store';
 import { useMemo, useState } from 'react';
-import { Modal, SafeAreaView, ScrollView, TouchableOpacity, View } from 'react-native';
+import { Modal, Pressable, SafeAreaView, ScrollView, TouchableOpacity, View } from 'react-native';
 import IconLeftArrowHead from '@assets/icons/left_arrow_head.svg';
 import { useRootNavigation } from '@/navigation/RootNavigation';
 import { useDeletePostLike, useGetIssue, usePostLike } from './api/hooks';
 import { debounce } from 'lodash';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
-import { FontText, TextButton } from '@/global/ui';
+import { FontText } from '@/global/ui';
 import IconThumsUp from '@assets/icons/thumbs_up.svg';
 
 dayjs.locale('ko');
@@ -73,44 +74,26 @@ const IssueDetailScreen = () => {
               }}
             >
               <FontText
-                value={`로그인 후 이용할 수 있어요`}
-                textSize="18px"
-                textWeight="SemiBold"
-                style={{ textAlign: 'center' }}
+                text="로그인 후 이용할 수 있어요"
+                className="text-center text-18"
+                fontWeight="500"
               />
               <View style={{ flexDirection: 'row', width: '100%', columnGap: 8, marginTop: 30 }}>
-                <TextButton
-                  value="취소"
-                  textSize="14px"
-                  textColor={COLOR.GRAY_999}
-                  textWeight="SemiBold"
+                <Pressable
+                  className="items-center flex-1 py-12 border rounded-5 border-gray-999"
                   onPress={() => setIsOpenLoginModal(false)}
-                  style={{
-                    flex: 1,
-                    borderRadius: 5,
-                    borderWidth: 1,
-                    borderColor: COLOR.GRAY_999,
-                    alignItems: 'center',
-                    paddingVertical: 12,
-                  }}
-                />
-                <TextButton
-                  value="로그인"
-                  textSize="14px"
-                  textColor={COLOR.WHITE}
-                  textWeight="SemiBold"
+                >
+                  <FontText text="취소" className="text-gray-999 text-14" fontWeight="600" />
+                </Pressable>
+                <Pressable
+                  className="items-center flex-1 py-12 rounded-5 bg-black-717"
                   onPress={() => {
                     setIsOpenLoginModal(false);
                     navigation.navigate('AuthStack', { screen: 'Landing' });
                   }}
-                  style={{
-                    flex: 1,
-                    borderRadius: 5,
-                    alignItems: 'center',
-                    paddingVertical: 12,
-                    backgroundColor: COLOR.BASIC_BLACK,
-                  }}
-                />
+                >
+                  <FontText text="로그인" className="text-white text-14" fontWeight="600" />
+                </Pressable>
               </View>
             </View>
           </View>
@@ -129,8 +112,8 @@ const IssueDetailScreen = () => {
             showsVerticalScrollIndicator={false}
           >
             <View style={{ marginBottom: 20 }}>
-              <FontText value={issueData.title} textSize="20px" textWeight="SemiBold" />
-              <FontText value={startIssueDate} textSize="12px" textWeight="Regular" />
+              <FontText text={issueData.title} className="text-20" fontWeight="600" />
+              <FontText text={startIssueDate} className="text-12" />
             </View>
             <View
               style={{
@@ -140,13 +123,7 @@ const IssueDetailScreen = () => {
                 borderBottomWidth: 1,
               }}
             >
-              <FontText
-                value={issueData.content}
-                textSize="16px"
-                textWeight="Regular"
-                lineHeight={21}
-                textColor={COLOR.REAL_BLACK}
-              />
+              <FontText text={issueData.content} className="text-black leading-21" />
             </View>
 
             <View
@@ -164,11 +141,12 @@ const IssueDetailScreen = () => {
                 hitSlop={20}
               >
                 <FontText
-                  value="도움돼요"
-                  textSize="14px"
-                  textWeight="Medium"
-                  textColor={issueData.isLike ? COLOR.LIGHT_BLUE : COLOR.GRAY_999}
-                  style={{ marginRight: 5, letterSpacing: -0.2 }}
+                  text="도움돼요"
+                  className={cn('text-14 mr-5 -tracking-[0.2]', {
+                    'text-light-blue': issueData.isLike,
+                    'text-gray-999': !issueData.isLike,
+                  })}
+                  fontWeight="500"
                 />
                 <IconThumsUp
                   color={issueData?.isLike ? COLOR.LIGHT_BLUE : COLOR.GRAY_999}
@@ -177,15 +155,17 @@ const IssueDetailScreen = () => {
                   style={{ marginRight: 1 }}
                 />
                 <FontText
-                  value={issueData.likeCount + ''}
-                  textSize="12px"
-                  textWeight="Medium"
-                  textColor={issueData.isLike ? COLOR.LIGHT_BLUE : COLOR.GRAY_999}
+                  text={issueData.likeCount + ''}
+                  className={cn('text-12', {
+                    'text-light-blue': issueData.isLike,
+                    'text-gray-999': !issueData.isLike,
+                  })}
+                  fontWeight="500"
                 />
               </TouchableOpacity>
               {/* TODO: MVP에서 빠짐 */}
               {/* <button>
-            <p className="text-xs font-medium text-gray-99">잘못된 정보 신고</p>
+            <p className="text-xs font-medium text-gray-999">잘못된 정보 신고</p>
           </button> */}
             </View>
           </ScrollView>

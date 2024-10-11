@@ -1,7 +1,7 @@
 import { COLOR } from '@/global/constants';
-import { FontText, TextButton } from '@/global/ui';
+import { FontText } from '@/global/ui';
 import { useRootNavigation } from '@/navigation/RootNavigation';
-import { Dimensions, View } from 'react-native';
+import { Dimensions, Pressable, View } from 'react-native';
 
 const NonLoggedIn = () => {
   const navigation = useRootNavigation();
@@ -17,28 +17,16 @@ const NonLoggedIn = () => {
       }}
     >
       <FontText
-        value={`로그인하고 자주 가는 경로의\n이슈를 바로 확인하세요`}
-        textSize="13px"
-        textWeight="Medium"
-        lineHeight={16}
-        textColor={COLOR.GRAY_999}
-        style={{ textAlign: 'center' }}
+        text={`로그인하고 자주 가는 경로의\n이슈를 바로 확인하세요`}
+        className="text-center text-13 leading-16 text-gray-999"
+        fontWeight="500"
       />
-      <TextButton
-        value="로그인"
-        textSize="14px"
-        textColor={COLOR.WHITE}
-        textWeight="SemiBold"
+      <Pressable
+        className="bg-black-717 w-[120px] py-12 items-center rounded-5 mt-24"
         onPress={() => navigation.navigate('AuthStack', { screen: 'Landing' })}
-        style={{
-          backgroundColor: COLOR.BASIC_BLACK,
-          width: 120,
-          paddingVertical: 12,
-          alignItems: 'center',
-          borderRadius: 5,
-          marginTop: 24,
-        }}
-      />
+      >
+        <FontText text="로그인" className="text-white text-14" fontWeight="600" />
+      </Pressable>
     </View>
   );
 };

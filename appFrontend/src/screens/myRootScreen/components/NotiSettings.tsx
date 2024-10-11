@@ -1,5 +1,5 @@
-import { FontText, TextButton, Toggle } from '@/global/ui';
-import { COLOR } from '@/global/constants';
+import { FontText, Toggle } from '@/global/ui';
+import cn from 'classname';
 import { ScrollView, TouchableOpacity, View } from 'react-native';
 import { useMyPageNavigation } from '@/navigation/MyPageNavigation';
 import { useGetSavedRoutesQuery } from '@/global/apis/hooks';
@@ -59,26 +59,28 @@ const NotiSettings = () => {
 
   return (
     <>
-      <View className="h-1 bg-gray-eb" />
-      <View className="flex-row mx-16 h-53 items-center justify-between">
-        <TextButton
-          value="푸시 알림 받기"
-          textSize="16px"
-          textWeight="SemiBold"
-          textColor={isPushNotiOn ? COLOR.BASIC_BLACK : COLOR.GRAY_BE}
+      <View className="h-1 bg-gray-beb" />
+      <View className="flex-row items-center justify-between mx-16 h-53">
+        <FontText
+          text="푸시 알림 받기"
+          className={cn({
+            'text-gray-ebe': !isPushNotiOn,
+          })}
+          fontWeight="600"
         />
         <Toggle
           isOn={isPushNotiOn!}
           onToggle={() => setPushNotiOnMutate({ email, alertAgree: !isPushNotiOn })}
         />
       </View>
-      <View className="h-20 bg-gray-f9" />
-      <View className="flex-row mx-16 h-53 items-center justify-between">
-        <TextButton
-          value="내가 저장한 경로 알림"
-          textSize="16px"
-          textWeight="SemiBold"
-          textColor={isMyPathPushNotiOn ? COLOR.BASIC_BLACK : COLOR.GRAY_BE}
+      <View className="h-20 bg-gray-9f9" />
+      <View className="flex-row items-center justify-between mx-16 h-53">
+        <FontText
+          text="내가 저장한 경로 알림"
+          className={cn({
+            'text-gray-ebe': !isMyPathPushNotiOn,
+          })}
+          fontWeight="600"
         />
         <Toggle
           isOn={isMyPathPushNotiOn!}
@@ -89,20 +91,22 @@ const NotiSettings = () => {
       <View className="h-1 bg-gray-eb" />
       {myRoutes && myRoutes.length > 0 && (
         <>
-          <View className="flex-row mx-16 h-72 items-center justify-between">
+          <View className="flex-row items-center justify-between mx-16 h-72">
             <View className="gap-6">
-              <TextButton
-                value="경로 상세 설정"
-                textSize="16px"
-                textWeight="SemiBold"
-                textColor={isDetailPushNotiOn ? COLOR.BASIC_BLACK : COLOR.GRAY_BE}
+              <FontText
+                text="경로 상세 설정"
+                className={cn({
+                  'text-gray-ebe': !isDetailPushNotiOn,
+                })}
+                fontWeight="600"
               />
-              <TextButton
-                value="개별 경로의 알림이 활성화되는 시간을 설정해요"
-                textSize="12px"
-                textWeight="Regular"
-                lineHeight={14}
-                textColor={isDetailPushNotiOn ? COLOR.BASIC_BLACK : COLOR.GRAY_BE}
+
+              <FontText
+                text="개별 경로의 알림이 활성화되는 시간을 설정해요"
+                className={cn('text-12 leading-14', {
+                  'text-gray-ebe': !isDetailPushNotiOn,
+                })}
+                fontWeight="600"
               />
             </View>
             <Toggle
@@ -119,54 +123,36 @@ const NotiSettings = () => {
           {myRoutes.map((myRoutes, index) => (
             <View key={myRoutes.roadName + index}>
               <TouchableOpacity
-                className="flex-row ml-24 mr-16 h-53 items-center justify-between"
+                className="flex-row items-center justify-between ml-24 mr-16 h-53"
                 onPress={() => myPageNavigation.push('NotiSettingsDetailScreen', { myRoutes })}
               >
-                <FontText
-                  value={myRoutes.roadName}
-                  textColor={COLOR.GRAY_999}
-                  textSize="16px"
-                  textWeight="Medium"
-                />
+                <FontText text={myRoutes.roadName} className="text-gray-999" fontWeight="500" />
                 <View className="flex-row items-center">
-                  <FontText
-                    value="편집"
-                    textColor={COLOR.GRAY_999}
-                    textSize="13px"
-                    textWeight="Regular"
-                    lineHeight={19}
-                  />
+                  <FontText text="편집" className="text-gray-999 text-13 leading-19" />
                   <MoreBtn height={19} className="ml-4" />
                 </View>
               </TouchableOpacity>
-              <View className="h-1 bg-gray-eb" />
+              <View className="h-1 bg-gray-beb" />
             </View>
           ))}
         </ScrollView>
       )}
       {isMyPathPushNotiOn && myRoutes && myRoutes.length < 1 && (
-        <View className="mx-16 mt-20 py-16 bg-gray-f9 items-center rounded-12">
+        <View className="items-center py-16 mx-16 mt-20 bg-gray-f9 rounded-12">
           <View className="flex-row items-center">
             <IconExclamation />
-            <FontText
-              className="pl-5 text-gray-99"
-              value={'저장한 경로가 아직 없어요'}
-              textSize={'14'}
-              textWeight={'Regular'}
-            />
+            <FontText className="pl-5 text-gray-99 text-14" text={'저장한 경로가 아직 없어요'} />
           </View>
-          <TouchableOpacity>
-            <TextButton
-              className="mt-8"
-              value={'내 경로 저장하고 알림받기'}
-              textSize={'13'}
-              textWeight={'SemiBold'}
-              textColor="#999999"
-              onPress={() =>
-                rootNavigation.navigate('NewRouteNavigation', { screen: 'SavedRoutes' })
-              }
-              isTextUnderline
+          <TouchableOpacity
+            className="mt-8"
+            onPress={() => rootNavigation.navigate('NewRouteNavigation', { screen: 'SavedRoutes' })}
+          >
+            <FontText
+              text={'내 경로 저장하고 알림받기'}
+              className="text-13 text-gray-999"
+              fontWeight="600"
             />
+            <View className="border-b-[1.5px] border-b-gray-999" />
           </TouchableOpacity>
         </View>
       )}

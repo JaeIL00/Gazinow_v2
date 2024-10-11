@@ -1,8 +1,8 @@
-import styled from '@emotion/native';
-import type { TextInput, TextInputProps } from 'react-native/types';
+import { TextInput } from 'react-native';
+import type { TextInputProps } from 'react-native/types';
 
-import { COLOR } from '@/global/constants';
 import { useEffect, useRef } from 'react';
+import cn from 'classname';
 
 interface InputProps extends TextInputProps {
   fontSize?: string;
@@ -10,7 +10,7 @@ interface InputProps extends TextInputProps {
 }
 
 const Input = (props: InputProps) => {
-  const { fontSize, isBlur } = props;
+  const { className, isBlur } = props;
 
   const ref = useRef<TextInput>(null);
 
@@ -18,15 +18,13 @@ const Input = (props: InputProps) => {
     if (isBlur) ref.current?.blur();
   }, [isBlur]);
 
-  return <StyleInput ref={ref} size={fontSize} {...props} />;
+  return (
+    <TextInput
+      ref={ref}
+      className={cn('font-[Pretendard-Regular] text-16 leadinig-21 p-0 text-black-717', className)}
+      {...props}
+    />
+  );
 };
 
 export default Input;
-
-const StyleInput = styled.TextInput<{ size?: string }>`
-  font-family: Pretendard-Regular;
-  font-size: ${({ size }) => (size ? size : '16px')};
-  line-height: 21px;
-  padding: 0;
-  color: ${COLOR.BASIC_BLACK};
-`;

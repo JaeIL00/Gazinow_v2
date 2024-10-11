@@ -98,7 +98,7 @@ const IssueCarrousel = ({ isRefreshing, setIsRefreshing }: IssueCarrouselProps) 
       {newPopularIssues.map((issue, index: number) => (
         <View style={{ width: itemWidth }} key={index}>
           <TouchableOpacity
-            className="flex-row m-16 mb-0 p-16 rounded-12 bg-white"
+            className="flex-row p-16 m-16 mb-0 bg-white rounded-12"
             onPress={() => {
               dispatch(getIssueId(issue.id));
               navigation.navigate('IssueStack', { screen: 'IssueDetail' });
@@ -112,38 +112,29 @@ const IssueCarrousel = ({ isRefreshing, setIsRefreshing }: IssueCarrouselProps) 
             />
             <View className="flex-1 mx-14">
               <FontText
-                value={issue.title}
-                textSize="13px"
-                lineHeight={19}
-                textWeight="SemiBold"
-                textColor={COLOR.BASIC_BLACK}
+                text={issue.title}
+                className="text-black text-13 leading-19"
+                fontWeight="600"
                 numberOfLines={1}
               />
               <FontText
-                value={dayjs(issue.startDate).fromNow()}
-                textSize="11px"
-                lineHeight={13}
-                textWeight="Medium"
-                textColor={COLOR.GRAY_999}
+                text={dayjs(issue.startDate).fromNow()}
+                className="text-11 leading-13 text-gray-999"
+                fontWeight="500"
               />
             </View>
 
             <View className="items-end">
               <FontText
-                value="NOW"
-                textSize="12px"
-                lineHeight={14}
-                textWeight="Bold"
-                textColor="#346BF7"
+                text="NOW"
+                className="text-12 leading-14 text-light-blue"
+                fontWeight="700"
               />
               <View className="bg-[#F3F3F3] rounded-27 w-36 h-16 mt-4 justify-center">
                 <FontText
-                  value={`${newListIndex()}/${popularIssues.length}`}
-                  textSize="11px"
-                  lineHeight={13}
-                  textWeight="Medium"
-                  textColor="#B4B4B4"
-                  textAlign="center"
+                  text={`${newListIndex()}/${popularIssues.length}`}
+                  className="text-center text-11 leading-13 text-gray-4b4"
+                  fontWeight="700"
                 />
               </View>
             </View>

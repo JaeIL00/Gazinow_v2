@@ -42,7 +42,7 @@ const SignUpScreen = () => {
   };
 
   return (
-    <SafeAreaView className="flex-1 bg-gray-f9">
+    <SafeAreaView className="flex-1 bg-gray-9f9">
       <View className="flex-1 pt-30 px-16">
         <TouchableOpacity
           hitSlop={10}

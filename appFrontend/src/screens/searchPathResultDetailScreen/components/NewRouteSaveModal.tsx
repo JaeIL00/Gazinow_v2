@@ -1,6 +1,7 @@
-import { FontText, Input, Space, TextButton } from '@/global/ui';
+import { FontText, Input, Space } from '@/global/ui';
+import cn from 'classname';
 import { COLOR } from '@/global/constants';
-import { KeyboardAvoidingView, Modal, Platform, View } from 'react-native';
+import { KeyboardAvoidingView, Modal, Platform, Pressable, View } from 'react-native';
 import { useState } from 'react';
 import { SubwaySimplePath } from '@/global/components';
 import { useSavedSubwayRoute } from '@/global/apis/hooks';
@@ -72,12 +73,7 @@ const NewRouteSaveModal = ({
             width: '100%',
           }}
         >
-          <FontText
-            value="새 경로 저장"
-            textSize="18px"
-            textWeight="SemiBold"
-            textColor={COLOR.BASIC_BLACK}
-          />
+          <FontText text="새 경로 저장" className="text-18" fontWeight="600" />
 
           <View style={{ width: '100%', marginVertical: 4 }}>
             <SubwaySimplePath
@@ -88,13 +84,8 @@ const NewRouteSaveModal = ({
             />
           </View>
 
-          <View style={{ width: '100%' }}>
-            <FontText
-              value="새 경로 이름"
-              textSize="14px"
-              textWeight="Medium"
-              textColor={COLOR.BASIC_BLACK}
-            />
+          <View className="w-full">
+            <FontText text="새 경로 이름" className="text-14" fontWeight="500" />
             <View
               style={{
                 borderRadius: 5,
@@ -132,56 +123,37 @@ const NewRouteSaveModal = ({
               }}
             >
               <FontText
-                value="이미 존재하는 이름입니다"
-                textSize="12px"
-                textWeight="Medium"
-                textColor={isDuplicatedError ? COLOR.LIGHT_RED : 'transparent'}
+                text="이미 존재하는 이름입니다"
+                className={cn('text-12 text-transparent', {
+                  'text-light-red': isDuplicatedError,
+                })}
+                fontWeight="500"
               />
               <FontText
-                value={routeName.length + '/10'}
-                textSize="12px"
-                textWeight="Medium"
-                textColor={COLOR.GRAY_BE}
-                // style={{ textAlign: 'right' }}
+                text={routeName.length + '/10'}
+                className="text-12 text-gray-ebe"
+                fontWeight="500"
               />
             </View>
           </View>
 
           <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 20 }}>
-            <TextButton
-              value="취소"
-              textSize="14px"
-              textWeight="SemiBold"
-              textColor={COLOR.GRAY_999}
-              style={{
-                paddingVertical: 12,
-                borderRadius: 5,
-                borderWidth: 1,
-                borderColor: COLOR.GRAY_999,
-                flex: 1,
-                alignItems: 'center',
-              }}
+            <Pressable
+              className="items-center flex-1 py-12 border rounded-5 border-gray-999"
               onPress={closeModal}
-            />
-            <Space width="8px" />
-            <TextButton
-              value="확인"
-              textSize="14px"
-              textWeight="SemiBold"
-              textColor={COLOR.WHITE}
-              style={{
-                paddingVertical: 12,
-                borderRadius: 5,
-                backgroundColor:
-                  isLoading || isDuplicatedError || routeName.length < 1
-                    ? COLOR.GRAY_DDD
-                    : COLOR.BASIC_BLACK,
-                flex: 1,
-                alignItems: 'center',
-              }}
+            >
+              <FontText text="취소" className="text-gray-999 text-14" fontWeight="600" />
+            </Pressable>
+            <Space width={8} />
+            <Pressable
+              className={cn('py-12 rounded-5 flex-1 items-center', {
+                'text-gray-ddd': isLoading || isDuplicatedError || routeName.length < 1,
+              })}
               onPress={saveHandler}
               disabled={isLoading || isDuplicatedError}
-            />
+            >
+              <FontText text="확인" className="text-white text-14" fontWeight="600" />
+            </Pressable>
           </View>
         </View>
       </KeyboardAvoidingView>

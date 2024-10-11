@@ -81,7 +81,7 @@ const SearchStation = () => {
       {!searchTextValue ? (
         <View className="flex-1 pt-18">
           <View style={{ paddingLeft: 16 }}>
-            <FontText value="최근검색" textSize="14px" textWeight="Regular" textColor="#757575" />
+            <FontText text="최근검색" className="text-14 text-[#757575]" />
           </View>
 
           <ScrollView className="mt-18" keyboardShouldPersistTaps="handled">
@@ -100,21 +100,15 @@ const SearchStation = () => {
                   <IconClock />
                   <View>
                     <FontText
-                      value={stationName.split('(')[0]}
-                      textSize="16px"
-                      textWeight="Medium"
-                      textColor="#000"
+                      text={stationName.split('(')[0]}
+                      className="text-black"
+                      fontWeight="500"
                     />
                     <View className="h-3" />
-                    <FontText
-                      value={stationLine!}
-                      textSize="14px"
-                      textWeight="Regular"
-                      textColor={COLOR.GRAY_999}
-                    />
+                    <FontText text={stationLine!} className="text-14 text-gray-999" />
                   </View>
                 </TouchableOpacity>
-                <View className="h-1 bg-gray-eb" />
+                <View className="h-1 bg-gray-beb" />
               </>
             ))}
           </ScrollView>
@@ -141,23 +135,15 @@ const SearchStation = () => {
                     <IconLocationPin />
                     <View>
                       <FontText
-                        value={stationName.split('(')[0]}
-                        textSize="16px"
-                        textWeight="Medium"
-                        lineHeight={21}
-                        textColor="#000"
+                        text={stationName.split('(')[0]}
+                        className="text-black leading-21"
+                        fontWeight="500"
                       />
                       <View className="h-3" />
-                      <FontText
-                        value={stationLine!}
-                        textSize="14px"
-                        textWeight="Regular"
-                        lineHeight={21}
-                        textColor={COLOR.GRAY_999}
-                      />
+                      <FontText text={stationLine!} className="text-14 text-gray-999 leading-21" />
                     </View>
                   </TouchableOpacity>
-                  <View className="h-1 bg-gray-eb" />
+                  <View className="h-1 bg-gray-beb" />
                 </>
               ))}
             </ScrollView>

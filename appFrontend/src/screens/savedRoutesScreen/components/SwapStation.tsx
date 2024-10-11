@@ -44,15 +44,14 @@ const SwapStation = ({ setSelectedStation }: SwapStationProps) => {
 
   const renderStationButton = (station: StationDataTypes, type: StationTypes) => (
     <TouchableOpacity
-      className="w-[100%] h-41 pl-10 rounded-8 justify-center bg-gray-f9"
+      className="w-[100%] h-41 pl-10 rounded-8 justify-center bg-gray-9f9"
       onPress={() => navigateSearchStation(type)}
     >
       <FontText
-        value={station.stationName || type}
-        textSize="16px"
-        textWeight="Regular"
-        lineHeight={21}
-        textColor={station.stationName ? COLOR.BASIC_BLACK : COLOR.GRAY_999}
+        text={station.stationName || type}
+        className={cn('leading-21', {
+          'text-gray-999': !station.stationName,
+        })}
       />
     </TouchableOpacity>
   );

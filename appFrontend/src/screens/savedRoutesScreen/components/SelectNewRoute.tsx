@@ -57,7 +57,7 @@ const SelectNewRoute = () => {
         <ScrollView>
           {data?.paths.map((item) => (
             <View key={item.firstStartStation + item.totalTime}>
-              <View className="h-1 bg-gray-eb" />
+              <View className="h-1 bg-gray-beb" />
               <TouchableOpacity
                 className="px-16 pt-20 pb-8"
                 onPress={() => {
@@ -70,22 +70,16 @@ const SelectNewRoute = () => {
                 <View className="flex-row items-center justify-between mb-8">
                   <View className="gap-4">
                     <FontText
-                      value="평균 소요시간"
-                      textSize="11px"
-                      textWeight="SemiBold"
-                      textColor="#999"
+                      text="평균 소요시간"
+                      className="text-11 text-gray-999"
+                      fontWeight="600"
                     />
-                    <FontText
-                      value={pathTime(item)}
-                      textSize="20px"
-                      textWeight="SemiBold"
-                      textColor={COLOR.BASIC_BLACK}
-                    />
+                    <FontText text={pathTime(item)} className="text-20" fontWeight="600" />
                   </View>
 
                   <TouchableOpacity
                     className={cn(
-                      'w-24 h-24 rounded-full border-1 items-center justify-center border-gray-be',
+                      'w-24 h-24 rounded-full border-1 items-center justify-center border-gray-ebe',
                       {
                         'border-[#346BF7]': selectedRoutePath === item,
                       },
@@ -109,7 +103,7 @@ const SelectNewRoute = () => {
               </TouchableOpacity>
             </View>
           ))}
-          {!isLoading && <View className="h-1 bg-gray-eb" />}
+          {!isLoading && <View className="h-1 bg-gray-beb" />}
         </ScrollView>
       </View>
 
@@ -124,7 +118,7 @@ const SelectNewRoute = () => {
         }
         disabled={selectedRoutePath === null}
       >
-        <FontText value="다음" textSize="17px" textWeight="SemiBold" textColor={COLOR.WHITE} />
+        <FontText text="다음" className="text-white text-17" fontWeight="600" />
       </TouchableOpacity>
     </SafeAreaView>
   );

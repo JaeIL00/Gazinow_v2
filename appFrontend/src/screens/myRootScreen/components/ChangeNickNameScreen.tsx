@@ -14,6 +14,7 @@ import { useMyPageNavigation } from '@/navigation/MyPageNavigation';
 import { showToast } from '@/global/utils/toast';
 import { useChangeNicknameMutation, useCheckNicknameMutation } from '../apis/hooks';
 import { debounce } from 'lodash';
+import cn from 'classname';
 
 const ChangeNickNameScreen = () => {
   const myPageNavigation = useMyPageNavigation();
@@ -84,7 +85,7 @@ const ChangeNickNameScreen = () => {
         <TouchableOpacity hitSlop={20} onPress={() => myPageNavigation.goBack()}>
           <IconCrossX width={24} className="mr-12" />
         </TouchableOpacity>
-        <FontText value="닉네임 수정" textSize="18px" lineHeight={23} textWeight="Medium" />
+        <FontText text="닉네임 수정" className="text-18 leading-23" fontWeight="500" />
         <View className="flex-1" />
         <TouchableOpacity
           onPress={() => changeNicknameMutate(newNickname)}
@@ -92,16 +93,16 @@ const ChangeNickNameScreen = () => {
           hitSlop={20}
         >
           <FontText
-            value="완료"
-            textSize="16px"
-            textColor={isNicknameValid ? COLOR.BASIC_BLACK : COLOR.GRAY_999}
-            textWeight="SemiBold"
-            lineHeight={21}
+            text="완료"
+            className={cn('leading-21', {
+              'text-gray-999': !isNicknameValid,
+            })}
+            fontWeight="600"
           />
         </TouchableOpacity>
       </View>
 
-      <View className="flex-1 px-16 bg-gray-f9">
+      <View className="flex-1 px-16 bg-gray-9f9">
         <View className="flex-row items-center px-16 py-8 mt-34 mb-8 rounded-5 border-1 border-[#d4d4d4] bg-white">
           <Input
             className="flex-1 h-36"
@@ -125,11 +126,12 @@ const ChangeNickNameScreen = () => {
               <IconXCircle width={14} className="mr-4" />
             )}
             <FontText
-              value={isNicknameValid ? '사용 가능한 닉네임입니다' : errorMessage}
-              textSize="14px"
-              textWeight="Medium"
-              lineHeight={16}
-              textColor={isNicknameValid ? COLOR.LIGHT_GREEN : COLOR.LIGHT_RED}
+              text={isNicknameValid ? '사용 가능한 닉네임입니다' : errorMessage}
+              className={cn('text-14 leading-16', {
+                'text-light-green': isNicknameValid,
+                'text-light-red': !isNicknameValid,
+              })}
+              fontWeight="500"
             />
           </View>
         )}

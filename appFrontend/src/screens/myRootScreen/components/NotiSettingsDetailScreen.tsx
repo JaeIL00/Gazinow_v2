@@ -111,16 +111,15 @@ const NotiSettingsDetailScreen = () => {
           <IconLeftArrowHead color="#3F3F46" width={24} />
         </TouchableOpacity>
         <FontText
-          value={`${myRoutes.roadName} 알림설정`}
-          textSize="18px"
-          textWeight="Medium"
-          lineHeight={23}
+          text={`${myRoutes.roadName} 알림설정`}
+          className="text-18 leading-23"
+          fontWeight="500"
         />
         <View className="w-24" />
       </View>
 
       <View className="flex-1 mt-20 bg-white">
-        <View className="mx-50 mb-40">
+        <View className="mb-40 mx-50">
           <SubwaySimplePath
             pathData={myRoutes.subPaths}
             arriveStationName={myRoutes.lastEndStation}
@@ -129,8 +128,8 @@ const NotiSettingsDetailScreen = () => {
           />
         </View>
 
-        <View className="flex-row h-53 px-16 items-center justify-between border-b-1 border-gray-eb">
-          <FontText value="푸시 알림 on" textSize="16px" textWeight="Regular" />
+        <View className="flex-row items-center justify-between px-16 h-53 border-b-1 border-gray-beb">
+          <FontText text="푸시 알림 on" />
           <Toggle isOn={isPushNotificationOn} onToggle={handlePushNotificationOnToggle} />
         </View>
         {isPushNotificationOn && (
@@ -143,9 +142,9 @@ const NotiSettingsDetailScreen = () => {
               setSavedEndTime={setSavedEndTime}
             />
 
-            <View className="px-16 py-12 border-b-1 border-gray-eb bg-white">
-              <FontText value="반복 요일" textSize="16px" textWeight="Regular" />
-              <View className="flex-row pt-16 justify-between">
+            <View className="px-16 py-12 bg-white border-b-1 border-gray-beb">
+              <FontText text="반복 요일" />
+              <View className="flex-row justify-between pt-16">
                 {days.map((day) => (
                   <Pressable
                     key={day}
@@ -157,10 +156,12 @@ const NotiSettingsDetailScreen = () => {
                     hitSlop={10}
                   >
                     <FontText
-                      value={day}
-                      textColor={selectedDays.includes(day) ? 'white' : COLOR.GRAY_999}
-                      textSize="16px"
-                      textWeight="Medium"
+                      text={day}
+                      className={cn({
+                        'text-white': selectedDays.includes(day),
+                        'text-gray-999': !selectedDays.includes(day),
+                      })}
+                      fontWeight="500"
                     />
                   </Pressable>
                 ))}
@@ -178,7 +179,7 @@ const NotiSettingsDetailScreen = () => {
         onPress={saveSettingsHandler}
         disabled={isPushNotificationOn && selectedDays.length === 0}
       >
-        <FontText value="완료" textSize="17px" textWeight="SemiBold" textColor={COLOR.WHITE} />
+        <FontText text="완료" className="text-white text-17" fontWeight="600" />
       </TouchableOpacity>
     </SafeAreaView>
   );

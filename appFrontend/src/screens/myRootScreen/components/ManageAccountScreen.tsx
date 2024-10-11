@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useRootNavigation } from '@/navigation/RootNavigation';
 import { getEncryptedStorage, removeEncryptedStorage } from '@/global/utils';
-import { FontText, TextButton } from '@/global/ui';
+import { FontText } from '@/global/ui';
 import MyTabModal from '@/global/components/MyTabModal';
 import { SafeAreaView, TouchableOpacity, View } from 'react-native';
 import IconLeftArrowHead from '@assets/icons/left_arrow_head.svg';
@@ -42,9 +42,9 @@ const ManageAccountScreen = () => {
   const renderMenu = ({ text, onPress }: RenderMenuProps) => (
     <>
       <TouchableOpacity className="flex-row items-center px-16 h-53" onPress={onPress}>
-        <TextButton value={text} textSize="16px" textWeight="Regular" onPress={onPress} />
+        <FontText text={text} />
       </TouchableOpacity>
-      <View className="h-1 bg-gray-eb" />
+      <View className="h-1 bg-gray-beb" />
     </>
   );
 
@@ -55,9 +55,9 @@ const ManageAccountScreen = () => {
         onPress={() => myPageNavigation.goBack()}
       >
         <IconLeftArrowHead width={24} color="#3F3F46" className="mr-12" />
-        <FontText value="계정 관리" textSize="18px" lineHeight={23} textWeight="Medium" />
+        <FontText text="계정 관리" className="text-18 leading-23" fontWeight="500" />
       </TouchableOpacity>
-      <View className="h-1 bg-gray-eb" />
+      <View className="h-1 bg-gray-beb" />
       {renderMenu({
         text: '비밀번호 변경',
         onPress: () => myPageNavigation.navigate('ChangePwScreen'),

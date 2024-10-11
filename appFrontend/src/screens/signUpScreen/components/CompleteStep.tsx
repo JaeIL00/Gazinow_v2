@@ -14,13 +14,12 @@ const CompleteStep = ({ nickname }: CompleteStepProps) => {
   return (
     <View className="flex-1">
       <FontText
-        value={`${nickname}님의 \n회원가입을 축하드립니다!`}
-        textSize="24px"
-        textWeight="Bold"
-        textColor={COLOR.BASIC_BLACK}
+        text={`${nickname}님의 \n회원가입을 축하드립니다!`}
+        className="text-24"
+        fontWeight="700"
       />
 
-      <View className="flex-1 items-center mt-52">
+      <View className="items-center flex-1 mt-52">
         <Image source={require('../../../assets/images/clap_3d.png')} className="w-328 h-342" />
       </View>
 

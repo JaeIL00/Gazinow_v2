@@ -1,15 +1,17 @@
 import { useState } from 'react';
+import cn from 'classname';
 import {
   KeyboardAvoidingView,
   Platform,
+  Pressable,
   SafeAreaView,
   ScrollView,
   TouchableOpacity,
   View,
 } from 'react-native';
 
-import { FontText, Input, Space, TextButton } from '@/global/ui';
-import { getEncryptedStorage, setEncryptedStorage } from '@/global/utils';
+import { FontText, Input, Space } from '@/global/ui';
+import { setEncryptedStorage } from '@/global/utils';
 import { useRootNavigation } from '@/navigation/RootNavigation';
 import { SignInFormTypes } from './apis/entity';
 import { useSignInMutation } from './apis/hooks';
@@ -81,17 +83,12 @@ const SignInScreen = () => {
           <IconLeftArrow color={COLOR.BASIC_BLACK} />
         </TouchableOpacity>
 
-        <FontText
-          value="이메일로 로그인"
-          textSize="24px"
-          textWeight="Bold"
-          textColor={COLOR.REAL_BLACK}
-        />
+        <FontText text="이메일로 로그인" className="text-black text-24" fontWeight="700" />
 
-        <Space height="75px" />
+        <Space height={75} />
 
         <ScrollView style={{ flex: 1 }}>
-          <FontText value="Email" textSize="14px" textWeight="Medium" textColor="#7c8183" />
+          <FontText text="Email" className="text-14 text-gray-183" fontWeight="500" />
           <View
             style={{
               backgroundColor: COLOR.GRAY_F2,
@@ -115,9 +112,9 @@ const SignInScreen = () => {
             />
           </View>
 
-          <Space height="20px" />
+          <Space height={20} />
 
-          <FontText value="Password" textSize="14px" textWeight="Medium" textColor="#7c8183" />
+          <FontText text="Password" className="text-14 text-gray-183" fontWeight="500" />
           <View
             style={{
               backgroundColor: COLOR.GRAY_F2,
@@ -145,37 +142,23 @@ const SignInScreen = () => {
               style={{ flexDirection: 'row', alignItems: 'center', marginTop: 8, marginLeft: 9 }}
             >
               <IconXCircle width={14} height={14} />
-              <Space width="3px" />
-              <FontText
-                value={errorMessage}
-                textSize="12px"
-                textWeight="Medium"
-                textColor={COLOR.LIGHT_RED}
-              />
+              <Space width={3} />
+              <FontText text={errorMessage} className="text-12 text-light-red" fontWeight="500" />
             </View>
           )}
         </ScrollView>
-
-        <TextButton
-          value="로그인"
-          textSize="16px"
-          textWeight="SemiBold"
-          textColor={COLOR.WHITE}
+        <Pressable
+          className={cn('rounded-5 justify-center items-center h-48 mb-20', {
+            'text-gray-ddd': !(isValidEmail && !!formData.password),
+          })}
           onPress={submitFormData}
           disabled={!isValidEmail || !formData.password}
-          style={{
-            backgroundColor:
-              isValidEmail && !!formData.password ? COLOR.BASIC_BLACK : COLOR.GRAY_DDD,
-            borderRadius: 5,
-            justifyContent: 'center',
-            alignItems: 'center',
-            height: 48,
-            marginBottom: 20,
-          }}
-        />
+        >
+          <FontText text="로그인" className="text-white" fontWeight="600" />
+        </Pressable>
       </KeyboardAvoidingView>
 
-      <Space height="20px" />
+      <Space height={20} />
     </SafeAreaView>
   );
 };

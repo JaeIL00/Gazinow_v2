@@ -12,9 +12,9 @@ const TimePicker = ({ setSelectedTime }: TimePickerProps) => {
   setSelectedTime(`${date.getHours()}:${date.getMinutes()}`);
 
   return (
-    <View className="border-b-1 border-gray-eb bg-gray-f9">
+    <View className="border-b-1 border-gray-beb bg-gray-9f9">
       <DatePicker
-        className="h-144 my-5 w-full rounded-8 bg-gray-f9"
+        className="h-144 my-5 w-full rounded-8 bg-gray-9f9"
         date={date}
         onDateChange={setDate}
         locale="ko-KR"

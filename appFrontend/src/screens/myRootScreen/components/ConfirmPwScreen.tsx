@@ -75,21 +75,15 @@ const ConfirmPwScreen = () => {
 
           <View className="flex-1">
             <View className="pt-43 pb-29">
-              <FontText value="비밀번호 입력" textSize="24px" textWeight="SemiBold" />
+              <FontText text="비밀번호 입력" className="text-24" fontWeight="600" />
               <View className="h-20" />
-              <FontText
-                value="탈퇴를 위해 비밀번호를 입력해주세요."
-                textSize="16px"
-                textWeight="Regular"
-              />
+              <FontText text="탈퇴를 위해 비밀번호를 입력해주세요." />
             </View>
 
             <FontText
-              value="Password"
-              textSize="14px"
-              textWeight="Medium"
-              lineHeight={21}
-              textColor="#7C8183 "
+              text="Password"
+              className="text-14 leadinig-21 text-gray-183"
+              fontWeight="500"
             />
 
             <Input
@@ -105,18 +99,13 @@ const ConfirmPwScreen = () => {
 
           <TouchableOpacity
             className={cn('py-11 mb-41 rounded-5 items-center', {
-              'bg-black-17': isPwRight,
-              'bg-gray-dd': !isPwRight,
+              'bg-black-717': isPwRight,
+              'bg-gray-ddd': !isPwRight,
             })}
             onPress={() => deleteAccountMutate()}
             disabled={!isPwRight}
           >
-            <FontText
-              value="탈퇴하기"
-              textSize="17px"
-              textWeight="SemiBold"
-              textColor={COLOR.WHITE}
-            />
+            <FontText text="탈퇴하기" className="text-white text-17" fontWeight="600" />
           </TouchableOpacity>
         </View>
       </SafeAreaView>
