@@ -171,7 +171,7 @@ const NotiSettingsDetailScreen = () => {
       </View>
 
       <TouchableOpacity
-        className={cn('h-48 mx-16 mb-10 rounded-5 items-center justify-center', {
+        className={cn('h-48 mx-16 mb-41 rounded-5 items-center justify-center', {
           'bg-black-17 ': !isPushNotificationOn || selectedDays.length !== 0,
           'bg-gray-dd': isPushNotificationOn && selectedDays.length === 0,
         })}
