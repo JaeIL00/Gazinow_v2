@@ -108,8 +108,8 @@ const SelectNewRoute = () => {
       </View>
 
       <TouchableOpacity
-        className={cn('py-11 mx-16 mb-40 rounded-5 items-center bg-gray-ddd', {
-          'bg-black-717': selectedRoutePath !== null,
+        className={cn('py-11 mx-16 mb-41 rounded-5 items-center bg-gray-dd', {
+          'bg-black-17': selectedRoutePath !== null,
         })}
         onPress={() =>
           newRouteNavigation.push('Name', {

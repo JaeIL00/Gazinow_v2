@@ -98,7 +98,7 @@ const ConfirmPwScreen = () => {
           </View>
 
           <TouchableOpacity
-            className={cn('py-11 mb-40 rounded-5 items-center', {
+            className={cn('py-11 mb-41 rounded-5 items-center', {
               'bg-black-717': isPwRight,
               'bg-gray-ddd': !isPwRight,
             })}

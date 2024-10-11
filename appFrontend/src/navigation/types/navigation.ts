@@ -1,4 +1,5 @@
 import { MyRoutesType, Path, SubPath } from '@/global/apis/entity';
+import { SocialLoginType } from '@/screens/landingScreen/components/SocialLoginButtons';
 
 export type RootStackParamList = {
   AuthStack: { screen: 'Landing' };
@@ -9,12 +10,14 @@ export type RootStackParamList = {
   MainBottomTab: { screen: 'homeStack' };
   NewRouteNavigation: { screen: 'SavedRoutes' };
   MyPageNavigation: { screen: unknown };
+  SubwayPathDetail: { state?: Path | SubPath[]; pathId?: number | null };
 };
 
 export type AuthStackStackParamList = {
   Landing: undefined;
   SignIn: undefined;
   SignUp: undefined;
+  SocialLogin: { socialLoginType: SocialLoginType };
 };
 
 export type HomeStackParamList = {

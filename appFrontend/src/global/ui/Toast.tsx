@@ -1,12 +1,14 @@
 import { View } from 'react-native';
 import { FontText } from '.';
 import ToastCheck from '@assets/icons/toast_check.svg';
+import ToastWarning from '@assets/icons/toast_warning.svg';
 
 interface ToastProps {
   text: string;
+  isWarning?: boolean;
 }
 
-const Toast = ({ text }: ToastProps) => {
+const Toast = ({ text, isWarning }: ToastProps) => {
   return (
     <View
       style={{
@@ -18,7 +20,7 @@ const Toast = ({ text }: ToastProps) => {
         borderRadius: 999,
       }}
     >
-      <ToastCheck />
+      {isWarning ? <ToastWarning /> : <ToastCheck />}
       <FontText text={text} className="ml-10 text-white text-14" fontWeight="500" />
     </View>
   );

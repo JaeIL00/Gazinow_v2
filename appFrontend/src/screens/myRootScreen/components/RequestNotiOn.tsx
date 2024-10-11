@@ -20,7 +20,7 @@ const RequestNotiOn = () => {
       </View>
 
       <TouchableOpacity
-        className="items-center justify-center h-48 mx-16 mb-40 rounded-5 bg-black-717"
+        className="items-center justify-center h-48 mx-16 mb-41 rounded-5 bg-black-17"
         onPress={goToDeviceSettings}
       >
         <FontText text="기기 알림 켜기" className="text-white text-17" fontWeight="600" />
