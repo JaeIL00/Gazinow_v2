@@ -85,12 +85,7 @@ const SearchPathDetailItem = ({ data, isLastLane, lineLength }: SearchPathDetail
                 navigation.navigate('IssueStack', { screen: 'IssueDetail' });
               }}
             >
-              <View
-                style={{
-                  marginTop: 4,
-                  marginRight: 8,
-                }}
-              >
+              <View className="mt-4 mr-8">
                 <IssueKeywordIcon
                   width={18}
                   height={18}
