@@ -6,17 +6,17 @@ import { useGetSavedRoutesQuery } from '@/global/apis/hooks';
 import MoreBtn from '@/assets/icons/moreBtn.svg';
 import IconExclamation from '@assets/icons/circle_exclamation_mark.svg';
 import { useRootNavigation } from '@/navigation/RootNavigation';
-import {
-  useGetDetailPushNotiOnStatusQuery,
-  useGetMyPathPushNotiOnStatusQuery,
-  useGetPushNotiOnStatusQuery,
-  useSetDetailPushNotiOnMutation,
-  useSetMyPathPushNotiOnMutation,
-  useSetPushNotiOnMutation,
-} from '../apis/hooks';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store/configureStore';
-import { useQueryClient } from 'react-query';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
+import {
+  getDetailPushNotiOnStatusFetch,
+  getMyPathPushNotiOnStatusFetch,
+  getPushNotiOnStatusFetch,
+  setDetailPushNotiOnFetch,
+  setMyPathPushNotiOnFetch,
+  setPushNotiOnFetch,
+} from '../apis/func';
 
 const NotiSettings = () => {
   const myPageNavigation = useMyPageNavigation();
@@ -27,25 +27,31 @@ const NotiSettings = () => {
   const { myRoutes } = useGetSavedRoutesQuery();
 
   // 토글 on/off 여부
-  const { isPushNotiOn } = useGetPushNotiOnStatusQuery(email);
-  const { isMyPathPushNotiOn } = useGetMyPathPushNotiOnStatusQuery(email);
-  const { isDetailPushNotiOn } = useGetDetailPushNotiOnStatusQuery(email);
+  const { data: isPushNotiOn } = useQuery(['getPushNotiOnStatus'], () =>
+    getPushNotiOnStatusFetch(email),
+  );
+  const { data: isMyPathPushNotiOn } = useQuery(['getMyPathPushNotiOnStatus'], () =>
+    getMyPathPushNotiOnStatusFetch(email),
+  );
+  const { data: isDetailPushNotiOn } = useQuery(['getDetailPushNotiOnStatus'], () =>
+    getDetailPushNotiOnStatusFetch(email),
+  );
 
   // 토글 on/off 설정
-  const { setPushNotiOnMutate } = useSetPushNotiOnMutation({
+  const { mutate: setPushNotiOnMutate } = useMutation(setPushNotiOnFetch, {
     onSuccess: async () => {
       await queryClient.invalidateQueries(['getPushNotiOnStatus']);
       await queryClient.invalidateQueries(['getMyPathPushNotiOnStatus']);
       await queryClient.invalidateQueries(['getDetailPushNotiOnStatus']);
     },
   });
-  const { setMyPathPushNotiOnMutate } = useSetMyPathPushNotiOnMutation({
+  const { mutate: setMyPathPushNotiOnMutate } = useMutation(setMyPathPushNotiOnFetch, {
     onSuccess: async () => {
       await queryClient.invalidateQueries(['getMyPathPushNotiOnStatus']);
       await queryClient.invalidateQueries(['getDetailPushNotiOnStatus']);
     },
   });
-  const { setDetailPushNotiOnMutate } = useSetDetailPushNotiOnMutation({
+  const { mutate: setDetailPushNotiOnMutate } = useMutation(setDetailPushNotiOnFetch, {
     onSuccess: async () => {
       await queryClient.invalidateQueries(['getDetailPushNotiOnStatus']);
     },

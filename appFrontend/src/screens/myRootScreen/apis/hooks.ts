@@ -110,64 +110,6 @@ export const useCheckNicknameMutation = ({
 };
 
 /**
- * 푸시 알림 on/off 설정 훅
- */
-export const useSetPushNotiOnMutation = ({ onSuccess }: { onSuccess: () => void }) => {
-  const { mutate } = useMutation(setPushNotiOnFetch, {
-    onSuccess,
-  });
-  return { setPushNotiOnMutate: mutate };
-};
-
-/**
- * 푸시 알림 on/off 조회 훅
- */
-export const useGetPushNotiOnStatusQuery = (email: string) => {
-  const { data } = useQuery(['getPushNotiOnStatus'], () => getPushNotiOnStatusFetch(email));
-  return { isPushNotiOn: data };
-};
-
-/**
- * 내가 저장한 경로 알림 on/off 설정 훅
- */
-export const useSetMyPathPushNotiOnMutation = ({ onSuccess }: { onSuccess: () => void }) => {
-  const { mutate } = useMutation(setMyPathPushNotiOnFetch, {
-    onSuccess,
-  });
-  return { setMyPathPushNotiOnMutate: mutate };
-};
-
-/**
- * 내가 저장한 경로 알림 on/off 조회 훅
- */
-export const useGetMyPathPushNotiOnStatusQuery = (email: string) => {
-  const { data } = useQuery(['getMyPathPushNotiOnStatus'], () =>
-    getMyPathPushNotiOnStatusFetch(email),
-  );
-  return { isMyPathPushNotiOn: data };
-};
-
-/**
- * 경로 상세 설정 알림 on/off 설정 훅
- */
-export const useSetDetailPushNotiOnMutation = ({ onSuccess }: { onSuccess: () => void }) => {
-  const { mutate } = useMutation(setDetailPushNotiOnFetch, {
-    onSuccess,
-  });
-  return { setDetailPushNotiOnMutate: mutate };
-};
-
-/**
- * 경로 상세 설정 알림 on/off 조회 훅
- */
-export const useGetDetailPushNotiOnStatusQuery = (email: string) => {
-  const { data } = useQuery(['getDetailPushNotiOnStatus'], () =>
-    getDetailPushNotiOnStatusFetch(email),
-  );
-  return { isDetailPushNotiOn: data };
-};
-
-/**
  * 알림 비활성화 훅
  */
 export const useDisablePathNotiMutation = ({
