@@ -88,7 +88,7 @@ const NotiSettings = () => {
           disabled={!isPushNotiOn}
         />
       </View>
-      <View className="h-1 bg-gray-eb" />
+      <View className="h-1 bg-gray-beb" />
       {myRoutes && myRoutes.length > 0 && (
         <>
           <View className="flex-row items-center justify-between mx-16 h-72">
@@ -115,7 +115,7 @@ const NotiSettings = () => {
               disabled={!isPushNotiOn || !isMyPathPushNotiOn}
             />
           </View>
-          <View className="h-1 bg-gray-eb" />
+          <View className="h-1 bg-gray-beb" />
         </>
       )}
       {isMyPathPushNotiOn && isDetailPushNotiOn && myRoutes && myRoutes.length > 0 && (
@@ -138,10 +138,10 @@ const NotiSettings = () => {
         </ScrollView>
       )}
       {isMyPathPushNotiOn && myRoutes && myRoutes.length < 1 && (
-        <View className="items-center py-16 mx-16 mt-20 bg-gray-f9 rounded-12">
+        <View className="items-center py-16 mx-16 mt-20 bg-gray-9f9 rounded-12">
           <View className="flex-row items-center">
             <IconExclamation />
-            <FontText className="pl-5 text-gray-99 text-14" text={'저장한 경로가 아직 없어요'} />
+            <FontText className="pl-5 text-gray-999 text-14" text={'저장한 경로가 아직 없어요'} />
           </View>
           <TouchableOpacity
             className="mt-8"

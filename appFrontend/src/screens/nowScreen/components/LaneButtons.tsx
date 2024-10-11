@@ -65,7 +65,7 @@ const LaneButtons = ({ activeButton, setActiveButton, titleNotShown }: LaneButto
                 onPress={() => setActiveButton(text as NowScreenCapsules)}
                 className={cn('px-12 py-8 mr-6 rounded-999 border-1', {
                   'bg-black-717 border-transparent': activeButton === text,
-                  'bg-white border-gray-eb': activeButton !== text,
+                  'bg-white border-gray-beb': activeButton !== text,
                 })}
               >
                 <FontText

@@ -42,7 +42,7 @@ const MyRootScreen = () => {
       >
         <FontText text={text} className="leading-21" />
         {versionText ? (
-          <FontText text={versionText} className="text-21 leading-17" />
+          <FontText text={versionText} className="text-12 leading-17" />
         ) : (
           <IconRightArrowHead width={14} color={COLOR.GRAY_999} />
         )}

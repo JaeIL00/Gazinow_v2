@@ -195,7 +195,7 @@ const ChangePwScreen = () => {
               className="text-12"
               fontWeight="500"
               style={{
-                color: lengValidColor,
+                color: comValidColor,
               }}
             />
           </View>
