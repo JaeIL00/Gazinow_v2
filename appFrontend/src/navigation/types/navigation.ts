@@ -10,6 +10,7 @@ export type RootStackParamList = {
   MainBottomTab: { screen: 'homeStack' };
   NewRouteNavigation: { screen: 'SavedRoutes' };
   MyPageNavigation: { screen: unknown };
+  SubwayPathDetail: { state?: Path | SubPath[]; pathId?: number | null };
 };
 
 export type AuthStackStackParamList = {

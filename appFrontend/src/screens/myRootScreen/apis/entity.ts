@@ -7,6 +7,14 @@ export interface LogoutFetchData {
 }
 
 /**
+ * 알림 수신 동의 토글 on/off req값
+ */
+export interface SetNotiOnOffType {
+  email: string;
+  alertAgree: boolean;
+}
+
+/**
  * 알림 활성화
  */
 export interface NotiSettingsType {

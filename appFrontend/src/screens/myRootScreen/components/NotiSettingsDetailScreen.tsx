@@ -16,6 +16,7 @@ import {
   usePathUpdateNotiSettingsMutation,
 } from '../apis/hooks';
 import { rawTimeToReqTimeFormat } from '../util/timeFormatChange';
+import { showToast } from '@/global/utils/toast';
 
 const NotiSettingsDetailScreen = () => {
   const myPageNavigation = useMyPageNavigation();
@@ -63,9 +64,19 @@ const NotiSettingsDetailScreen = () => {
   // 완료 버튼 클릭 시 요청 전송
   const { addPathNotiSettingsMutate } = useAddPathNotiSettingsMutation({
     onSuccess: async () => myPageNavigation.goBack(),
+    onError: async (error) => {
+      if (error.response?.status == 502) {
+        showToast('saveNotiSettingsFailed');
+      }
+    },
   });
   const { updatePathNotiSettingsMutate } = usePathUpdateNotiSettingsMutation({
     onSuccess: async () => myPageNavigation.goBack(),
+    onError: async (error) => {
+      if (error.response?.status == 502) {
+        showToast('saveNotiSettingsFailed');
+      }
+    },
   });
   const { disablePathNotiMutate } = useDisablePathNotiMutation({
     onSuccess: async () => myPageNavigation.goBack(),
@@ -160,7 +171,7 @@ const NotiSettingsDetailScreen = () => {
       </View>
 
       <TouchableOpacity
-        className={cn('h-48 mx-16 mb-10 rounded-5 items-center justify-center', {
+        className={cn('h-48 mx-16 mb-41 rounded-5 items-center justify-center', {
           'bg-black-17 ': !isPushNotificationOn || selectedDays.length !== 0,
           'bg-gray-dd': isPushNotificationOn && selectedDays.length === 0,
         })}

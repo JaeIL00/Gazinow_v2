@@ -27,7 +27,7 @@ const RequestNotiOn = () => {
       </View>
 
       <TouchableOpacity
-        className="h-48 mb-40 mx-16 rounded-5 justify-center items-center bg-black-17"
+        className="h-48 mb-41 mx-16 rounded-5 justify-center items-center bg-black-17"
         onPress={goToDeviceSettings}
       >
         <FontText
