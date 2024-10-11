@@ -1,4 +1,3 @@
-import styled from '@emotion/native';
 import { SafeAreaView, ScrollView, TouchableOpacity, View } from 'react-native';
 
 import { FontText, Space } from '@/global/ui';
@@ -215,12 +214,3 @@ const SearchPathResultScreen = () => {
 };
 
 export default SearchPathResultScreen;
-
-const LeftIconBox = styled.View`
-  margin-top: 13px;
-  margin-right: 16px;
-`;
-const MoreIcon = styled.Image`
-  width: 4.5px;
-  height: 8px;
-`;
