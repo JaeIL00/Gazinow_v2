@@ -85,38 +85,6 @@ const App = (): JSX.Element => {
     }
   }, [isWalkthroughClosed]);
 
-  // const handleNotificationPress = (remoteMessage) => {
-  //   const pathJsonString = remoteMessage.notification?.data?.path;
-  //   (pathJsonString: string) => {
-  //     try {
-  //       console.log('알림 클릭: ', pathJsonString);
-  //       return JSON.parse(pathJsonString);
-  //     } catch (error) {
-  //       console.error('JSON 파싱 오류:', error);
-  //     }
-  //   };
-  // };
-
-  // useEffect(() => {
-  //   // foreground일때 notifee 알림제어
-  //   notifee.onForegroundEvent(async ({ type, detail }) => {
-  //     if (type === EventType.PRESS) {
-  //       const pathJsonString = detail.notification?.data?.path as string;
-  //       console.log('detail', detail);
-  //       const aaa = await JSON.parse(pathJsonString);
-  //       await console.log('파싱값aaa:', aaa);
-  //     }
-  //   });
-
-  //   // background, quit일떄 알림제어 -> ios는 quit상태가 없어서 필요없지만 더 공부해봄
-  //   notifee.onBackgroundEvent(async ({ type, detail }) => {
-  //     if (type === EventType.PRESS) {
-  //       const pathJsonString = detail.notification?.data?.path as string;
-  //       JSON.parse(pathJsonString);
-  //     }
-  //   });
-  // }, []);
-
   return (
     <Provider store={store}>
       <QueryClientProvider client={queryClient}>
