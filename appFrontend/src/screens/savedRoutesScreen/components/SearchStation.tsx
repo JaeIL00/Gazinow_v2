@@ -114,7 +114,7 @@ const SearchStation = () => {
                     />
                   </View>
                 </TouchableOpacity>
-                <View className="h-1 bg-gray-eb" />
+                <View className="h-1 bg-gray-beb" />
               </>
             ))}
           </ScrollView>
@@ -157,7 +157,7 @@ const SearchStation = () => {
                       />
                     </View>
                   </TouchableOpacity>
-                  <View className="h-1 bg-gray-eb" />
+                  <View className="h-1 bg-gray-beb" />
                 </>
               ))}
             </ScrollView>

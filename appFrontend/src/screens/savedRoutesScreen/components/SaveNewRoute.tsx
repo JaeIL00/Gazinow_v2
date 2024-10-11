@@ -78,7 +78,7 @@ const SaveNewRoute = () => {
             textColor={COLOR.BASIC_BLACK}
           />
           <Input
-            className="px-16 py-12 my-7 rounded-5 bg-gray-f9"
+            className="px-16 py-12 my-7 rounded-5 bg-gray-9f9"
             placeholder="경로 이름을 입력하세요"
             value={roadName}
             onChangeText={(text) => {
@@ -115,8 +115,8 @@ const SaveNewRoute = () => {
         </View>
         <TouchableOpacity
           className={cn('py-11 items-center', {
-            'bg-gray-dd': !roadName || isLoading || isDuplicatedName,
-            'bg-black-17': roadName && !isLoading && !isDuplicatedName,
+            'bg-gray-ddd': !roadName || isLoading || isDuplicatedName,
+            'bg-black-717': roadName && !isLoading && !isDuplicatedName,
             'mb-41 mx-16 rounded-5': !isKeyboardVisible,
           })}
           onPress={() => {

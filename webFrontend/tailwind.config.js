@@ -6,9 +6,9 @@ export default {
       colors: {
         black: "#171717",
         "real-black": "#000000",
-        "gray-eb": "#EBEBEB",
-        "gray-be": "#BEBEBE",
-        "gray-99": "#999999",
+        "gray-beb": "#EBEBEB",
+        "gray-ebe": "#BEBEBE",
+        "gray-999": "#999999",
         "gray-77": "#777777",
         purple: "#8446E7",
         blue: "#346BF7",

@@ -47,12 +47,12 @@ const MyRootScreen = () => {
           <IconRightArrowHead width={14} color={COLOR.GRAY_999} />
         )}
       </TouchableOpacity>
-      <View className="h-1 bg-gray-eb" />
+      <View className="h-1 bg-gray-beb" />
     </>
   );
 
   return (
-    <SafeAreaView className="flex-1 bg-gray-f9">
+    <SafeAreaView className="flex-1 bg-gray-9f9">
       <View className="pl-16 pt-45 pb-37">
         {isVerifiedUser !== 'success auth' ? (
           <Pressable

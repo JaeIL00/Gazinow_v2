@@ -1,4 +1,5 @@
 import { COLOR } from '@/global/constants';
+import cn from 'classname';
 import { useAppSelect } from '@/store';
 import { useMemo, useState } from 'react';
 import { Modal, SafeAreaView, ScrollView, TouchableOpacity, View } from 'react-native';
@@ -73,10 +74,9 @@ const IssueDetailScreen = () => {
               }}
             >
               <FontText
-                value={`로그인 후 이용할 수 있어요`}
-                textSize="18px"
-                textWeight="SemiBold"
-                style={{ textAlign: 'center' }}
+                text="로그인 후 이용할 수 있어요"
+                className="text-center text-18"
+                fontWeight="500"
               />
               <View style={{ flexDirection: 'row', width: '100%', columnGap: 8, marginTop: 30 }}>
                 <TextButton
@@ -129,8 +129,8 @@ const IssueDetailScreen = () => {
             showsVerticalScrollIndicator={false}
           >
             <View style={{ marginBottom: 20 }}>
-              <FontText value={issueData.title} textSize="20px" textWeight="SemiBold" />
-              <FontText value={startIssueDate} textSize="12px" textWeight="Regular" />
+              <FontText text={issueData.title} className="text-20" fontWeight="600" />
+              <FontText text={startIssueDate} className="text-12" />
             </View>
             <View
               style={{
@@ -140,13 +140,7 @@ const IssueDetailScreen = () => {
                 borderBottomWidth: 1,
               }}
             >
-              <FontText
-                value={issueData.content}
-                textSize="16px"
-                textWeight="Regular"
-                lineHeight={21}
-                textColor={COLOR.REAL_BLACK}
-              />
+              <FontText text={issueData.content} className="text-black leading-21" />
             </View>
 
             <View
@@ -164,11 +158,12 @@ const IssueDetailScreen = () => {
                 hitSlop={20}
               >
                 <FontText
-                  value="도움돼요"
-                  textSize="14px"
-                  textWeight="Medium"
-                  textColor={issueData.isLike ? COLOR.LIGHT_BLUE : COLOR.GRAY_999}
-                  style={{ marginRight: 5, letterSpacing: -0.2 }}
+                  text="도움돼요"
+                  className={cn('text-14 mr-5 -tracking-[0.2]', {
+                    'text-light-blue': issueData.isLike,
+                    'text-gray-999': !issueData.isLike,
+                  })}
+                  fontWeight="500"
                 />
                 <IconThumsUp
                   color={issueData?.isLike ? COLOR.LIGHT_BLUE : COLOR.GRAY_999}
@@ -177,15 +172,17 @@ const IssueDetailScreen = () => {
                   style={{ marginRight: 1 }}
                 />
                 <FontText
-                  value={issueData.likeCount + ''}
-                  textSize="12px"
-                  textWeight="Medium"
-                  textColor={issueData.isLike ? COLOR.LIGHT_BLUE : COLOR.GRAY_999}
+                  text={issueData.likeCount + ''}
+                  className={cn('text-12', {
+                    'text-light-blue': issueData.isLike,
+                    'text-gray-999': !issueData.isLike,
+                  })}
+                  fontWeight="500"
                 />
               </TouchableOpacity>
               {/* TODO: MVP에서 빠짐 */}
               {/* <button>
-            <p className="text-xs font-medium text-gray-99">잘못된 정보 신고</p>
+            <p className="text-xs font-medium text-gray-999">잘못된 정보 신고</p>
           </button> */}
             </View>
           </ScrollView>

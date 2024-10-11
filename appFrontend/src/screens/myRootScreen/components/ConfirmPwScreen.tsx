@@ -105,8 +105,8 @@ const ConfirmPwScreen = () => {
 
           <TouchableOpacity
             className={cn('py-11 mb-40 rounded-5 items-center', {
-              'bg-black-17': isPwRight,
-              'bg-gray-dd': !isPwRight,
+              'bg-black-717': isPwRight,
+              'bg-gray-ddd': !isPwRight,
             })}
             onPress={() => deleteAccountMutate()}
             disabled={!isPwRight}

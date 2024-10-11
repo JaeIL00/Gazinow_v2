@@ -82,7 +82,7 @@ const IssueDetailPage = () => {
           <p className="text-xs">{createIssueDate}</p>
         </header>
 
-        <article className="py-6 border-y border-gray-eb">
+        <article className="py-6 border-y border-gray-beb">
           <p className="text-sm whitespace-pre-wrap text-real-black">
             {issueData?.content}
           </p>
@@ -93,7 +93,7 @@ const IssueDetailPage = () => {
             <p
               className={cn("text-xs font-medium mr-[5px]", {
                 "text-blue": issueData?.isLike,
-                "text-gray-99": !issueData?.isLike,
+                "text-gray-999": !issueData?.isLike,
               })}
             >
               도움돼요
@@ -108,7 +108,7 @@ const IssueDetailPage = () => {
             <p
               className={cn("text-xs font-medium mt-[0.5px]", {
                 "text-blue": issueData?.isLike,
-                "text-gray-99": !issueData?.isLike,
+                "text-gray-999": !issueData?.isLike,
               })}
             >
               {issueData?.likeCount}
@@ -116,7 +116,7 @@ const IssueDetailPage = () => {
           </button>
           {/* TODO: MVP에서 빠짐 */}
           {/* <button>
-            <p className="text-xs font-medium text-gray-99">잘못된 정보 신고</p>
+            <p className="text-xs font-medium text-gray-999">잘못된 정보 신고</p>
           </button> */}
         </footer>
       </section>

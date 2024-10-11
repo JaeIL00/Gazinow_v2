@@ -23,14 +23,9 @@ const RouteItem = ({ route, hasIssues }: RouteItemProps) => {
       : route.totalTime + '분';
 
   return (
-    <View className="px-16 pt-20 pb-23 border-t-1 border-gray-eb">
-      <View className="flex-row justify-between items-center mb-24">
-        <FontText
-          value={route.roadName}
-          textSize={'18px'}
-          textWeight={'Bold'}
-          textColor={COLOR.BASIC_BLACK}
-        />
+    <View className="px-16 pt-20 pb-23 border-t-1 border-gray-beb">
+      <View className="flex-row items-center justify-between mb-24">
+        <FontText text={route.roadName} className="text-18 text-black-717" fontWeight="700" />
         <View
           className={cn('px-6 py-4 ml-8 rounded-16', {
             'bg-[#FBDCDA]': hasIssues,
@@ -38,11 +33,12 @@ const RouteItem = ({ route, hasIssues }: RouteItemProps) => {
           })}
         >
           <FontText
-            value={hasIssues ? `${filteredTotalTime} 이상 예상` : `평균 ${filteredTotalTime}`}
-            textSize={'12px'}
-            textWeight={'Medium'}
-            textColor={hasIssues ? COLOR.LIGHT_RED : COLOR.GRAY_999}
-            lineHeight={14}
+            text={hasIssues ? `${filteredTotalTime} 이상 예상` : `평균 ${filteredTotalTime}`}
+            className={cn('text-12 leading-14', {
+              'text-light-red': hasIssues,
+              'text-gray-999': !hasIssues,
+            })}
+            fontWeight="500"
           />
         </View>
         <View className="flex-1" />
@@ -52,13 +48,7 @@ const RouteItem = ({ route, hasIssues }: RouteItemProps) => {
           onPress={() => homeNavigation.push('SubwayPathDetail', { state: route })}
           hitSlop={20}
         >
-          <FontText
-            value={'세부정보'}
-            textSize={'13px'}
-            textWeight={'Regular'}
-            lineHeight={19}
-            textColor={COLOR.GRAY_999}
-          />
+          <FontText text="세부정보" className="text-13 leading-19 text-gray-999" />
           <View className="w-4" />
           <IconRightArrowHead color={COLOR.GRAY_999} />
         </TouchableOpacity>

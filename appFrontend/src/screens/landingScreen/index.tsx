@@ -49,18 +49,13 @@ const LandingScreen = () => {
 
         <View style={{ marginLeft: 37, marginTop: 68 }}>
           <FontText
-            value="가는길 지금,"
-            textSize="27.34px"
-            textWeight="Bold"
-            lineHeight={36.454}
-            textColor={COLOR.WHITE}
+            text="가는길 지금,"
+            className="text-27 leading-[36.454px] text-white"
+            fontWeight="700"
           />
           <FontText
-            value={`무슨 일이\n일어나고 있을까요?`}
-            textSize="27.34px"
-            textWeight="Regular"
-            lineHeight={36.454}
-            textColor={COLOR.WHITE}
+            text={`무슨 일이\n일어나고 있을까요?`}
+            className="text-27 leading-[36.454px] text-white"
           />
         </View>
 
@@ -83,7 +78,7 @@ const LandingScreen = () => {
             hitSlop={20}
           />
           <View style={{ marginHorizontal: 8 }}>
-            <FontText value="|" textSize="13px" textWeight="Regular" textColor={COLOR.WHITE} />
+            <FontText text="|" className="text-white text-13" />
           </View>
           <TextButton
             value="이메일 회원가입"

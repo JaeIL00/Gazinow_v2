@@ -34,7 +34,7 @@ const NotiSettings = () => {
 
   return (
     <>
-      <View className="h-1 bg-gray-eb" />
+      <View className="h-1 bg-gray-beb" />
       <View className="flex-row mx-16 h-53 items-center justify-between">
         <TextButton value="푸시 알림 받기" textSize="16px" textWeight="SemiBold" />
         <Toggle
@@ -42,7 +42,7 @@ const NotiSettings = () => {
           onToggle={() => setPushNotificationOn(!pushNotificationOn)}
         />
       </View>
-      <View className="h-20 bg-gray-f9" />
+      <View className="h-20 bg-gray-9f9" />
       <View className="flex-row mx-16 h-53 items-center justify-between">
         <TextButton
           value="내가 저장한 경로 알림"
@@ -56,7 +56,7 @@ const NotiSettings = () => {
           disabled={!pushNotificationOn}
         />
       </View>
-      <View className="h-1 bg-gray-eb" />
+      <View className="h-1 bg-gray-beb" />
       <View className="flex-row mx-16 h-72 items-center justify-between">
         <View className="gap-6">
           <TextButton
@@ -83,7 +83,7 @@ const NotiSettings = () => {
           disabled={!pushNotificationOn}
         />
       </View>
-      <View className="h-1 bg-gray-eb" />
+      <View className="h-1 bg-gray-beb" />
       <ScrollView>
         {routeDetailSettings &&
           myRoutes?.map((myRoutes, index) => (
@@ -109,7 +109,7 @@ const NotiSettings = () => {
                   <MoreBtn height={19} className="ml-4" />
                 </View>
               </TouchableOpacity>
-              <View className="h-1 bg-gray-eb" />
+              <View className="h-1 bg-gray-beb" />
             </View>
           ))}
       </ScrollView>

@@ -101,7 +101,7 @@ const ChangeNickNameScreen = () => {
         </TouchableOpacity>
       </View>
 
-      <View className="flex-1 px-16 bg-gray-f9">
+      <View className="flex-1 px-16 bg-gray-9f9">
         <View className="flex-row items-center px-16 py-8 mt-34 mb-8 rounded-5 border-1 border-[#d4d4d4] bg-white">
           <Input
             className="flex-1 h-36"

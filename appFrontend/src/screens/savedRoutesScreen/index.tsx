@@ -13,7 +13,7 @@ const SavedRoutesScreen = () => {
   const newRouteNavigation = useNewRouteNavigation();
 
   return (
-    <SafeAreaView className="flex-1 bg-gray-f9">
+    <SafeAreaView className="flex-1 bg-gray-9f9">
       <TouchableOpacity className="flex-row items-center p-16" onPress={() => navigation.goBack()}>
         <IconLeftArrowHead color="#3F3F46" width={24} style={{ marginRight: 12 }} />
         <FontText value="저장경로 편집" textSize="18px" textWeight="Medium" />

@@ -1,41 +1,25 @@
 import { Text } from 'react-native';
 import type { TextProps } from 'react-native/types';
+import cn from 'classname';
 
-interface NormalTextProps extends TextProps {
-  value: string;
-  textSize: string;
-  textWeight: 'Bold' | 'SemiBold' | 'Medium' | 'Regular';
-  textColor?: string;
-  lineHeight?: number;
-  textAlign?: 'center';
+interface FontTextProps extends TextProps {
+  text: string;
+  fontWeight?: '400' | '500' | '600' | '700';
 }
 
-const FontText = ({
-  textWeight,
-  lineHeight,
-  textAlign,
-  textSize,
-  textColor = '#171717',
-  ...props
-}: NormalTextProps) => {
-  const { value } = props;
-
+const FontText = ({ text, fontWeight = '400', className, ...props }: FontTextProps) => {
   return (
     <Text
-      {...props}
       allowFontScaling
-      style={[
-        props.style,
-        {
-          fontFamily: `Pretendard-${textWeight}`,
-          lineHeight,
-          textAlign,
-          fontSize: Number(textSize.split('px')[0]),
-          color: textColor,
-        },
-      ]}
+      className={cn('text-16 text-black-717', className, {
+        'font-[Pretendard-Regular]': fontWeight === '400',
+        'font-[Pretendard-Medium]': fontWeight === '500',
+        'font-[Pretendard-SemiBold]': fontWeight === '600',
+        'font-[Pretendard-Bold]': fontWeight === '700',
+      })}
+      {...props}
     >
-      {value}
+      {text}
     </Text>
   );
 };

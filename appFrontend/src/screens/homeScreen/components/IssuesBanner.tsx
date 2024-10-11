@@ -35,7 +35,7 @@ const IssuesBanner = ({ subPathss }: IssuesBannerProps) => {
               dispatch(getIssueId(issue.id));
               navigation.navigate('IssueStack', { screen: 'IssueDetail' });
             }}
-            className="overflow-hidden flex-row px-12 py-8 mb-8 border-gray-eb border-1 rounded-full items-center justify-between"
+            className="flex-row items-center justify-between px-12 py-8 mb-8 overflow-hidden rounded-full border-gray-beb border-1"
           >
             <IssueKeywordIcon
               width={16}
@@ -44,10 +44,9 @@ const IssuesBanner = ({ subPathss }: IssuesBannerProps) => {
               color={subwayLineColor(lane.stationCode)}
             />
             <FontText
-              className="flex-1 ml-10 mr-30"
-              value={issue.title}
-              textSize="13px"
-              textWeight="SemiBold"
+              className="flex-1 ml-10 mr-30 text-13"
+              text={issue.title}
+              fontWeight="600"
               numberOfLines={1}
             />
             <MoreBtn />

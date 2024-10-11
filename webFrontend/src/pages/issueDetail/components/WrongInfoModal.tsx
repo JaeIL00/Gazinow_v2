@@ -25,7 +25,7 @@ const WrongInfoModal = ({ closeModal }: WrongInfoModalProps) => {
             >
               <div
                 className={cn(
-                  "border-2 border-gray-be rounded-full size-[22px] flex items-center justify-center",
+                  "border-2 border-gray-ebe rounded-full size-[22px] flex items-center justify-center",
                   {
                     "border-purple": selectRadio === "end",
                   }
@@ -48,7 +48,7 @@ const WrongInfoModal = ({ closeModal }: WrongInfoModalProps) => {
             >
               <div
                 className={cn(
-                  "border-2 border-gray-be rounded-full size-[22px] flex items-center justify-center",
+                  "border-2 border-gray-ebe rounded-full size-[22px] flex items-center justify-center",
                   {
                     "border-purple": selectRadio === "wrong",
                   }
@@ -62,9 +62,9 @@ const WrongInfoModal = ({ closeModal }: WrongInfoModalProps) => {
             </button>
           </li>
           {selectRadio === "wrong" && (
-            <li className="pb-1.5 border-b border-gray-be">
+            <li className="pb-1.5 border-b border-gray-ebe">
               <textarea
-                className="w-full placeholder-gray-be text-gray-77 text-sm tracking-[0.2px] focus:outline-none resize-none"
+                className="w-full placeholder-gray-ebe text-gray-77 text-sm tracking-[0.2px] focus:outline-none resize-none"
                 rows={1}
                 value={wrongInputText}
                 onChange={(event) =>
@@ -78,12 +78,12 @@ const WrongInfoModal = ({ closeModal }: WrongInfoModalProps) => {
 
         <div className="flex gap-x-2">
           <button
-            className="border py-3 border-gray-99 rounded-[5px] flex-1"
+            className="border py-3 border-gray-999 rounded-[5px] flex-1"
             onClick={closeModal}
           >
-            <p className="text-sm font-semibold text-gray-99">취소</p>
+            <p className="text-sm font-semibold text-gray-999">취소</p>
           </button>
-          <button className="border py-3 border-gray-99 rounded-[5px] flex-1 bg-black">
+          <button className="border py-3 border-gray-999 rounded-[5px] flex-1 bg-black">
             <p className="text-sm font-semibold text-white">확인</p>
           </button>
         </div>

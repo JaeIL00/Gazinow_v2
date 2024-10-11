@@ -89,10 +89,8 @@ const SearchPathResultScreen = () => {
           }}
         >
           <FontText
-            value={'오늘 ' + dayjs().format('A HH시 mm분') + ' 기준'}
-            textSize="16px"
-            textWeight="Regular"
-            textColor="#49454F"
+            text={'오늘 ' + dayjs().format('A HH시 mm분') + ' 기준'}
+            className="text-brown-54f"
           />
         </View>
         <ScrollView style={{ backgroundColor: COLOR.WHITE }}>
@@ -122,10 +120,9 @@ const SearchPathResultScreen = () => {
                     }}
                   >
                     <FontText
-                      value="평균 소요시간"
-                      textSize="11px"
-                      textWeight="SemiBold"
-                      textColor="#999"
+                      text="평균 소요시간"
+                      className="text-11 text-gray-999"
+                      fontWeight="600"
                     />
                     <TouchableOpacity
                       style={{ flexDirection: 'row', alignItems: 'center' }}
@@ -135,23 +132,13 @@ const SearchPathResultScreen = () => {
                         })
                       }
                     >
-                      <FontText
-                        value="세부정보"
-                        textSize="13px"
-                        textWeight="Regular"
-                        textColor="#999"
-                      />
+                      <FontText text="세부정보" className="text-13 text-gray-999" />
                       <Space width="4px" />
                       <IconRightArrowHead color={COLOR.GRAY_999} />
                     </TouchableOpacity>
                   </View>
                   <View style={{ height: 4 }} />
-                  <FontText
-                    value={pathTime(item)}
-                    textSize="20px"
-                    textWeight="SemiBold"
-                    textColor={COLOR.BASIC_BLACK}
-                  />
+                  <FontText text={pathTime(item)} className="text-20" fontWeight="600" />
                 </View>
 
                 {/* 지하철 경로 UI */}
@@ -203,12 +190,10 @@ const SearchPathResultScreen = () => {
                                     color={subwayLineColor(linePath.lanes[0].stationCode)}
                                   />
                                   <FontText
-                                    value={title}
-                                    textSize="13px"
-                                    textWeight="SemiBold"
-                                    textColor={COLOR.BASIC_BLACK}
+                                    text={title}
+                                    className="ml-10 text-13"
+                                    fontWeight="600"
                                     numberOfLines={1}
-                                    style={{ marginLeft: 10 }}
                                   />
                                 </View>
                                 <View style={{ marginBottom: 4, marginLeft: 40 }}>

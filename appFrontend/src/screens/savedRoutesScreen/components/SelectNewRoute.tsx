@@ -57,7 +57,7 @@ const SelectNewRoute = () => {
         <ScrollView>
           {data?.paths.map((item) => (
             <View key={item.firstStartStation + item.totalTime}>
-              <View className="h-1 bg-gray-eb" />
+              <View className="h-1 bg-gray-beb" />
               <TouchableOpacity
                 className="px-16 pt-20 pb-8"
                 onPress={() => {
@@ -85,7 +85,7 @@ const SelectNewRoute = () => {
 
                   <TouchableOpacity
                     className={cn(
-                      'w-24 h-24 rounded-full border-1 items-center justify-center border-gray-be',
+                      'w-24 h-24 rounded-full border-1 items-center justify-center border-gray-ebe',
                       {
                         'border-[#346BF7]': selectedRoutePath === item,
                       },
@@ -109,13 +109,13 @@ const SelectNewRoute = () => {
               </TouchableOpacity>
             </View>
           ))}
-          {!isLoading && <View className="h-1 bg-gray-eb" />}
+          {!isLoading && <View className="h-1 bg-gray-beb" />}
         </ScrollView>
       </View>
 
       <TouchableOpacity
-        className={cn('py-11 mx-16 mb-40 rounded-5 items-center bg-gray-dd', {
-          'bg-black-17': selectedRoutePath !== null,
+        className={cn('py-11 mx-16 mb-40 rounded-5 items-center bg-gray-ddd', {
+          'bg-black-717': selectedRoutePath !== null,
         })}
         onPress={() =>
           newRouteNavigation.push('Name', {

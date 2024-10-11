@@ -81,17 +81,12 @@ const SignInScreen = () => {
           <IconLeftArrow color={COLOR.BASIC_BLACK} />
         </TouchableOpacity>
 
-        <FontText
-          value="이메일로 로그인"
-          textSize="24px"
-          textWeight="Bold"
-          textColor={COLOR.REAL_BLACK}
-        />
+        <FontText text="이메일로 로그인" className="text-black text-24" fontWeight="700" />
 
         <Space height="75px" />
 
         <ScrollView style={{ flex: 1 }}>
-          <FontText value="Email" textSize="14px" textWeight="Medium" textColor="#7c8183" />
+          <FontText text="Email" className="text-14 text-gray-183" fontWeight="500" />
           <View
             style={{
               backgroundColor: COLOR.GRAY_F2,
@@ -117,7 +112,7 @@ const SignInScreen = () => {
 
           <Space height="20px" />
 
-          <FontText value="Password" textSize="14px" textWeight="Medium" textColor="#7c8183" />
+          <FontText text="Password" className="text-14 text-gray-183" fontWeight="500" />
           <View
             style={{
               backgroundColor: COLOR.GRAY_F2,
@@ -146,12 +141,7 @@ const SignInScreen = () => {
             >
               <IconXCircle width={14} height={14} />
               <Space width="3px" />
-              <FontText
-                value={errorMessage}
-                textSize="12px"
-                textWeight="Medium"
-                textColor={COLOR.LIGHT_RED}
-              />
+              <FontText text={errorMessage} className="text-12 text-light-red" fontWeight="500" />
             </View>
           )}
         </ScrollView>

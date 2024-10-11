@@ -112,13 +112,7 @@ const SearchStationScreen = () => {
       {isVerifiedUser === 'success auth' && !searchTextValue && (
         <ResultContainer>
           <Header>
-            <FontText
-              value="최근검색"
-              textSize="14px"
-              textWeight="Regular"
-              lineHeight={24}
-              textColor="#757575"
-            />
+            <FontText text="최근검색" className="text-14 leading-24 text-gray-575" />
           </Header>
 
           <Ul marginTop="18px" keyboardShouldPersistTaps="handled">
@@ -135,19 +129,11 @@ const SearchStationScreen = () => {
                 <IconClock />
                 <StationInfoBox>
                   <FontText
-                    value={stationName.split('(')[0]}
-                    textSize="16px"
-                    textWeight="Medium"
-                    lineHeight={21}
-                    textColor="#000"
+                    text={stationName.split('(')[0]}
+                    className="text-black leading-21"
+                    fontWeight="500"
                   />
-                  <FontText
-                    value={stationLine!}
-                    textSize="14px"
-                    textWeight="Regular"
-                    lineHeight={21}
-                    textColor={COLOR.GRAY_999}
-                  />
+                  <FontText text={stationLine!} className="text-14 leading-21 text-gray-999" />
                 </StationInfoBox>
               </Li>
             ))}
@@ -163,19 +149,11 @@ const SearchStationScreen = () => {
                 <IconLocationPin />
                 <StationInfoBox>
                   <FontText
-                    value={stationName.split('(')[0]}
-                    textSize="16px"
-                    textWeight="Medium"
-                    lineHeight={21}
-                    textColor="#000"
+                    text={stationName.split('(')[0]}
+                    className="text-black leading-21"
+                    fontWeight="500"
                   />
-                  <FontText
-                    value={stationLine!}
-                    textSize="14px"
-                    textWeight="Regular"
-                    lineHeight={21}
-                    textColor={COLOR.GRAY_999}
-                  />
+                  <FontText text={stationLine!} className="text-14 leading-21 text-gray-99" />
                 </StationInfoBox>
               </Li>
             ))}

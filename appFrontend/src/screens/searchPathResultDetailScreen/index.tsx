@@ -103,7 +103,7 @@ const SearchPathResultDetailScreen = () => {
                         textColor={COLOR.GRAY_999}
                         textWeight="SemiBold"
                         onPress={() => setIsSaveRouteModalOpen(false)}
-                        className="items-center flex-1 py-12 border rounded-5 border-gray-99"
+                        className="items-center flex-1 py-12 border rounded-5 border-gray-999"
                       />
                       <TextButton
                         value="로그인"
@@ -114,7 +114,7 @@ const SearchPathResultDetailScreen = () => {
                           setIsSaveRouteModalOpen(false);
                           rootNavigation.navigate('AuthStack', { screen: 'Landing' });
                         }}
-                        className="items-center flex-1 py-12 rounded-5 bg-black-17"
+                        className="items-center flex-1 py-12 rounded-5 bg-black-717"
                       />
                     </View>
                   </View>
@@ -161,7 +161,7 @@ const SearchPathResultDetailScreen = () => {
         </View>
 
         {/* 경계선 */}
-        <View className="h-px mt-16 mb-21 bg-gray-eb" />
+        <View className="h-px mt-16 mb-21 bg-gray-beb" />
 
         <FlatList
           data={freshSubPathData}

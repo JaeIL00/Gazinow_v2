@@ -22,7 +22,7 @@ const StepButton = ({
   return (
     <>
       {isLoading ? (
-        <View className="bg-black-17 rounded-5 items-center justify-center h-48 mb-41 pt-8">
+        <View className="bg-black-717 rounded-5 items-center justify-center h-48 mb-41 pt-8">
           <LoadingDots width={200} height={90} />
         </View>
       ) : (
@@ -32,8 +32,8 @@ const StepButton = ({
           textWeight="SemiBold"
           textColor={COLOR.WHITE}
           className={cn('rounded-5 items-center justify-center h-48 mb-41', {
-            'bg-black-17': backgroundCondition,
-            'bg-gray-dd': !backgroundCondition,
+            'bg-black-717': backgroundCondition,
+            'bg-gray-ddd': !backgroundCondition,
           })}
           onPress={onPress}
           disabled={disabled}

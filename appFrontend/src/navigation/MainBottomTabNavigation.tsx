@@ -2,6 +2,7 @@ import {
   BottomTabNavigationOptions,
   createBottomTabNavigator,
 } from '@react-navigation/bottom-tabs';
+import cn from 'classname';
 import { COLOR, HOME, MY_ROOT } from '@/global/constants';
 import HomeNavigation from './HomeNavigation';
 import NowScreen from '@screens/nowScreen';
@@ -33,11 +34,12 @@ const MainBottomTabNavigation = () => {
         options={{
           tabBarLabel: ({ focused }) => (
             <FontText
-              value="홈"
-              textSize="10px"
-              textWeight="SemiBold"
-              textColor={focused ? COLOR.LIGHT_BLUE : COLOR.GRAY_7D}
-              style={{ marginTop: 5 }}
+              text="홈"
+              className={cn('text-10 mt-5', {
+                'text-light-blue': focused,
+                'text-gray-d7d': !focused,
+              })}
+              fontWeight="600"
             />
           ),
           tabBarIcon: ({ focused }) => {
@@ -51,11 +53,12 @@ const MainBottomTabNavigation = () => {
         options={{
           tabBarLabel: ({ focused }) => (
             <FontText
-              value="NOW"
-              textSize="10px"
-              textWeight="SemiBold"
-              textColor={focused ? COLOR.LIGHT_BLUE : COLOR.GRAY_7D}
-              style={{ marginTop: 5 }}
+              text="NOW"
+              className={cn('text-10 mt-5', {
+                'text-light-blue': focused,
+                'text-gray-d7d': !focused,
+              })}
+              fontWeight="600"
             />
           ),
           tabBarIcon: ({ focused }) => (
@@ -73,11 +76,12 @@ const MainBottomTabNavigation = () => {
         options={{
           tabBarLabel: ({ focused }) => (
             <FontText
-              value="마이"
-              textSize="10px"
-              textWeight="SemiBold"
-              textColor={focused ? COLOR.LIGHT_BLUE : COLOR.GRAY_7D}
-              style={{ marginTop: 5 }}
+              text="마이"
+              className={cn('text-10 mt-5', {
+                'text-light-blue': focused,
+                'text-gray-d7d': !focused,
+              })}
+              fontWeight="600"
             />
           ),
           tabBarIcon: ({ focused }) => (

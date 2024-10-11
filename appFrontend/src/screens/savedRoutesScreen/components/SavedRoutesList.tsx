@@ -37,7 +37,7 @@ const SavedRoutesList = () => {
   return (
     <>
       {myRoutes?.map((item) => (
-        <View className="px-16 pt-20 pb-8 border-b-1 border-gray-eb" key={item.id}>
+        <View className="px-16 pt-20 pb-8 border-b-1 border-gray-beb" key={item.id}>
           <View className="flex-row items-center justify-between mb-24">
             <FontText
               value={item.roadName}

@@ -55,10 +55,10 @@ const SetNotiTimesBtn = ({
 
   return (
     <>
-      <View className="flex-row h-53 px-16 items-center justify-between border-b-1 border-gray-eb">
+      <View className="flex-row h-53 px-16 items-center justify-between border-b-1 border-gray-beb">
         <FontText value="시작 시간" textSize="16px" textWeight="Regular" />
         <Pressable
-          className="w-113 h-36 rounded-8 bg-gray-eb items-center justify-center"
+          className="w-113 h-36 rounded-8 bg-gray-beb items-center justify-center"
           onPress={() => setOpenedTimePicker(openedTimePicker === 'start' ? null : 'start')}
         >
           <FontText
@@ -75,10 +75,10 @@ const SetNotiTimesBtn = ({
         </Animated.View>
       )}
 
-      <View className="flex-row h-53 px-16 items-center justify-between border-b-1 border-gray-eb">
+      <View className="flex-row h-53 px-16 items-center justify-between border-b-1 border-gray-beb">
         <FontText value="종료 시간" textSize="16px" textWeight="Regular" />
         <Pressable
-          className="w-113 h-36 rounded-8 bg-gray-eb items-center justify-center"
+          className="w-113 h-36 rounded-8 bg-gray-beb items-center justify-center"
           onPress={() => setOpenedTimePicker(openedTimePicker === 'end' ? null : 'end')}
         >
           <FontText

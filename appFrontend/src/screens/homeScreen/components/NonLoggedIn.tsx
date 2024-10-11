@@ -17,12 +17,9 @@ const NonLoggedIn = () => {
       }}
     >
       <FontText
-        value={`로그인하고 자주 가는 경로의\n이슈를 바로 확인하세요`}
-        textSize="13px"
-        textWeight="Medium"
-        lineHeight={16}
-        textColor={COLOR.GRAY_999}
-        style={{ textAlign: 'center' }}
+        text={`로그인하고 자주 가는 경로의\n이슈를 바로 확인하세요`}
+        className="text-center text-13 leading-16 text-gray-999"
+        fontWeight="500"
       />
       <TextButton
         value="로그인"

@@ -45,7 +45,7 @@ const ConfirmQuitScreen = () => {
         </View>
 
         <TouchableOpacity
-          className="items-center mb-24 py-11 rounded-5 bg-black-17"
+          className="items-center mb-24 py-11 rounded-5 bg-black-717"
           onPress={() => myPageNavigation.goBack()}
         >
           <FontText
@@ -58,7 +58,7 @@ const ConfirmQuitScreen = () => {
         </TouchableOpacity>
 
         <TouchableOpacity className="items-center mb-36" onPress={() => setPopupVisible(true)}>
-          <View className="border-b-1 border-gray-99">
+          <View className="border-b-1 border-gray-999">
             <FontText
               value="탈퇴하기"
               textSize="13px"

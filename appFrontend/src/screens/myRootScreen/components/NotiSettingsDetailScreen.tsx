@@ -118,7 +118,7 @@ const NotiSettingsDetailScreen = () => {
           />
         </View>
 
-        <View className="flex-row h-53 px-16 items-center justify-between border-b-1 border-gray-eb">
+        <View className="flex-row h-53 px-16 items-center justify-between border-b-1 border-gray-beb">
           <FontText value="푸시 알림 on" textSize="16px" textWeight="Regular" />
           <Toggle isOn={isPushNotificationOn} onToggle={handlePushNotificationOnToggle} />
         </View>
@@ -132,7 +132,7 @@ const NotiSettingsDetailScreen = () => {
               setSavedEndTime={setSavedEndTime}
             />
 
-            <View className="px-16 py-12 border-b-1 border-gray-eb bg-white">
+            <View className="px-16 py-12 border-b-1 border-gray-beb bg-white">
               <FontText value="반복 요일" textSize="16px" textWeight="Regular" />
               <View className="flex-row pt-16 justify-between">
                 {days.map((day) => (
@@ -161,8 +161,8 @@ const NotiSettingsDetailScreen = () => {
 
       <TouchableOpacity
         className={cn('h-48 mx-16 mb-10 rounded-5 items-center justify-center', {
-          'bg-black-17 ': !isPushNotificationOn || selectedDays.length !== 0,
-          'bg-gray-dd': isPushNotificationOn && selectedDays.length === 0,
+          'bg-black-717 ': !isPushNotificationOn || selectedDays.length !== 0,
+          'bg-gray-ddd': isPushNotificationOn && selectedDays.length === 0,
         })}
         onPress={saveSettingsHandler}
         disabled={isPushNotificationOn && selectedDays.length === 0}

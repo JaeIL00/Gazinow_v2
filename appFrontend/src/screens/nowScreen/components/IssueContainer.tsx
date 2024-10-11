@@ -48,9 +48,9 @@ const IssueContainer = ({ issue, isLastItem, isHeader }: IssueDetailProps) => {
         />
       </TouchableOpacity>
       {isLastItem ? (
-        isHeader && <View className="w-999 h-8 my-12 bg-gray-f8" />
+        isHeader && <View className="w-999 h-8 my-12 bg-gray-8f8" />
       ) : (
-        <View className="h-1 w-999 bg-gray-f8" />
+        <View className="h-1 w-999 bg-gray-8f8" />
       )}
     </>
   );

@@ -213,7 +213,7 @@ const SearchPathDetailItem = ({ data, isLastLane, lineLength }: SearchPathDetail
             <IconWalkHuman width={24} height={24} />
           </View>
           <View className="overflow-hidden">
-            <View className="ml-9 w-4 h-60 z-[-1] bg-gray-dd" />
+            <View className="ml-9 w-4 h-60 z-[-1] bg-gray-ddd" />
           </View>
         </View>
       )}
