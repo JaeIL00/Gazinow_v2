@@ -30,7 +30,7 @@ const PathLineNumName = ({ lane, stationName }: PathLineNumNameProps) => {
           alignItems: 'center',
         }}
       >
-        {lane.stationCode > 9 && <Space height="1px" />}
+        {lane.stationCode > 9 && <Space height={1} />}
         <FontText
           text={pathSubwayLineName(lane.stationCode)}
           fontWeight={lane.stationCode <= 9 ? '600' : '700'}
@@ -39,7 +39,7 @@ const PathLineNumName = ({ lane, stationName }: PathLineNumNameProps) => {
             'leading-[6px] -tracking-[0.3]': lane.stationCode > 9,
           })}
         />
-        {lane.stationCode <= 9 && <Space height="1px" />}
+        {lane.stationCode <= 9 && <Space height={1} />}
       </View>
 
       <View

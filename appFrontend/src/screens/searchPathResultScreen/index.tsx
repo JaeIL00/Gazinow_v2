@@ -133,7 +133,7 @@ const SearchPathResultScreen = () => {
                       }
                     >
                       <FontText text="세부정보" className="text-13 text-gray-999" />
-                      <Space width="4px" />
+                      <Space width={4} />
                       <IconRightArrowHead color={COLOR.GRAY_999} />
                     </TouchableOpacity>
                   </View>

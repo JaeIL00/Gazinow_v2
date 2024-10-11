@@ -134,7 +134,7 @@ const SearchPathDetailItem = ({ data, isLastLane, lineLength }: SearchPathDetail
             />
             {data.stations.length > 2 && (
               <>
-                <Space width="4px" />
+                <Space width={4} />
                 <IconDownArrowHead width={10} height={10} rotation={isOpenPathList ? 180 : 0} />
               </>
             )}

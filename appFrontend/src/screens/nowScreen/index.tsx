@@ -184,7 +184,7 @@ const NowScreen = () => {
               } else if (issuesList.length < 1) {
                 return null;
               } else {
-                return <Space height={`${700 - issuesList.length * 100}px`} />;
+                return <Space height={700 - issuesList.length * 100} />;
               }
             }}
             keyExtractor={(item, index) => `${item.id}_${index}`}

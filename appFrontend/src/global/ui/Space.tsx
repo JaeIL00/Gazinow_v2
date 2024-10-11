@@ -1,19 +1,21 @@
-import styled from '@emotion/native';
+import { View } from 'react-native';
 
 interface SpaceProps {
-  width?: string;
-  height?: string;
+  width?: number;
+  height?: number;
   backgroundColor?: string;
 }
 
 const Space = ({ width, height, backgroundColor }: SpaceProps) => {
-  return <SpaceComponent width={width} height={height} backgroundColor={backgroundColor} />;
+  return (
+    <View
+      style={{
+        width: width,
+        height: height,
+        backgroundColor: backgroundColor,
+      }}
+    />
+  );
 };
 
 export default Space;
-
-const SpaceComponent = styled.View<SpaceProps>`
-  width: ${({ width }) => width};
-  height: ${({ height }) => height};
-  backgroundcolor: ${({ backgroundColor }) => backgroundColor};
-`;

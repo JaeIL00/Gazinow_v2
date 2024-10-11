@@ -135,7 +135,7 @@ const SearchPathResultDetailScreen = () => {
                 fontWeight="700"
               />
 
-              <Space width="8px" />
+              <Space width={8} />
 
               <View>
                 <View className="flex-1" />

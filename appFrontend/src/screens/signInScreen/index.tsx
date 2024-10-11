@@ -85,7 +85,7 @@ const SignInScreen = () => {
 
         <FontText text="이메일로 로그인" className="text-black text-24" fontWeight="700" />
 
-        <Space height="75px" />
+        <Space height={75} />
 
         <ScrollView style={{ flex: 1 }}>
           <FontText text="Email" className="text-14 text-gray-183" fontWeight="500" />
@@ -112,7 +112,7 @@ const SignInScreen = () => {
             />
           </View>
 
-          <Space height="20px" />
+          <Space height={20} />
 
           <FontText text="Password" className="text-14 text-gray-183" fontWeight="500" />
           <View
@@ -142,7 +142,7 @@ const SignInScreen = () => {
               style={{ flexDirection: 'row', alignItems: 'center', marginTop: 8, marginLeft: 9 }}
             >
               <IconXCircle width={14} height={14} />
-              <Space width="3px" />
+              <Space width={3} />
               <FontText text={errorMessage} className="text-12 text-light-red" fontWeight="500" />
             </View>
           )}
@@ -158,7 +158,7 @@ const SignInScreen = () => {
         </Pressable>
       </KeyboardAvoidingView>
 
-      <Space height="20px" />
+      <Space height={20} />
     </SafeAreaView>
   );
 };

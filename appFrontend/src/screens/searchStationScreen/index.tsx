@@ -84,7 +84,7 @@ const SearchStationScreen = () => {
         <TouchableOpacity activeOpacity={1} hitSlop={10} onPress={() => navigation.goBack()}>
           <IconLeftArrow />
         </TouchableOpacity>
-        <Space width="16px" />
+        <Space width={16} />
         <SearchInput
           value={searchTextValue}
           placeholder={`${stationType}을 검색해보세요`}
@@ -103,7 +103,7 @@ const SearchStationScreen = () => {
       {!!searchTextValue && searchResultData.length < 1 && (
         <NoResult>
           <NoResultIcon />
-          <Space height="17px" />
+          <Space height={17} />
           <NoResultText />
         </NoResult>
       )}

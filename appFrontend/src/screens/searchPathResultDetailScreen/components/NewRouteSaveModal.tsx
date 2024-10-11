@@ -144,7 +144,7 @@ const NewRouteSaveModal = ({
             >
               <FontText text="취소" className="text-gray-999 text-14" fontWeight="600" />
             </Pressable>
-            <Space width="8px" />
+            <Space width={8} />
             <Pressable
               className={cn('py-12 rounded-5 flex-1 items-center', {
                 'text-gray-ddd': isLoading || isDuplicatedError || routeName.length < 1,
