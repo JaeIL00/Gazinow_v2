@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react';
-import { FlatList, Modal, SafeAreaView, TouchableOpacity, View } from 'react-native';
+import { FlatList, Modal, Pressable, SafeAreaView, TouchableOpacity, View } from 'react-native';
 
-import { FontText, Space, TextButton } from '@/global/ui';
+import { FontText, Space } from '@/global/ui';
 import { useRoute } from '@react-navigation/native';
 import NewRouteSaveModal from './components/NewRouteSaveModal';
 import SearchPathDetailItem from './components/SearchPathDetailItem';
@@ -91,31 +91,26 @@ const SearchPathResultDetailScreen = () => {
                   <View className="bg-[#00000099] absolute top-0 w-full h-full" />
                   <View className="absolute w-4/5 px-24 pt-32 pb-24 bg-white rounded-12">
                     <FontText
-                      value={`로그인하면 관심 경로의\n이슈를 알려드려요`}
-                      textSize="18px"
-                      textWeight="SemiBold"
-                      className="text-center"
+                      text={`로그인하면 관심 경로의\n이슈를 알려드려요`}
+                      className="text-center text-18"
+                      fontWeight="600"
                     />
                     <View className="flex-row w-full gap-x-8 mt-30">
-                      <TextButton
-                        value="취소"
-                        textSize="14px"
-                        textColor={COLOR.GRAY_999}
-                        textWeight="SemiBold"
-                        onPress={() => setIsSaveRouteModalOpen(false)}
+                      <Pressable
                         className="items-center flex-1 py-12 border rounded-5 border-gray-999"
-                      />
-                      <TextButton
-                        value="로그인"
-                        textSize="14px"
-                        textColor={COLOR.WHITE}
-                        textWeight="SemiBold"
+                        onPress={() => setIsSaveRouteModalOpen(false)}
+                      >
+                        <FontText text="취소" className="text-gray-999 text-14" fontWeight="600" />
+                      </Pressable>
+                      <Pressable
+                        className="items-center flex-1 py-12 rounded-5 bg-black-717"
                         onPress={() => {
                           setIsSaveRouteModalOpen(false);
                           rootNavigation.navigate('AuthStack', { screen: 'Landing' });
                         }}
-                        className="items-center flex-1 py-12 rounded-5 bg-black-717"
-                      />
+                      >
+                        <FontText text="로그인" className="text-white text-14" fontWeight="600" />
+                      </Pressable>
                     </View>
                   </View>
                 </View>
@@ -125,10 +120,10 @@ const SearchPathResultDetailScreen = () => {
 
         <View className="flex-row items-center justify-between pl-10">
           <View>
-            <FontText value="평균 소요시간" textSize="13px" textWeight="Medium" textColor="#999" />
+            <FontText text="평균 소요시간" className="text-13 text-gray-999" fontWeight="500" />
             <View className="flex-row mt-2">
               <FontText
-                value={
+                text={
                   resultData.totalTime > 60
                     ? Math.floor(resultData.totalTime / 60) +
                       '시간 ' +
@@ -136,8 +131,8 @@ const SearchPathResultDetailScreen = () => {
                       `분 ${isOccurIssue ? '이상' : ''}`
                     : resultData.totalTime + `분 ${isOccurIssue ? '이상' : ''}`
                 }
-                textSize="28px"
-                textWeight="Bold"
+                className="text-28"
+                fontWeight="700"
               />
 
               <Space width="8px" />
@@ -145,15 +140,12 @@ const SearchPathResultDetailScreen = () => {
               <View>
                 <View className="flex-1" />
                 <FontText
-                  value={
+                  text={
                     freshSubPathData.length - 1 === 0
                       ? '환승없음'
                       : '환승 ' + (freshSubPathData.length - 1) + '회'
                   }
-                  textSize="16px"
-                  textWeight="Regular"
-                  textColor="#999"
-                  className="mb-2"
+                  className="mb-2 text-gray-999"
                 />
               </View>
             </View>

@@ -1,7 +1,7 @@
-import { FontText, Input, Space, TextButton } from '@/global/ui';
+import { FontText, Input, Space } from '@/global/ui';
 import cn from 'classname';
 import { COLOR } from '@/global/constants';
-import { KeyboardAvoidingView, Modal, Platform, View } from 'react-native';
+import { KeyboardAvoidingView, Modal, Platform, Pressable, View } from 'react-native';
 import { useState } from 'react';
 import { SubwaySimplePath } from '@/global/components';
 import { useSavedSubwayRoute } from '@/global/apis/hooks';
@@ -138,40 +138,22 @@ const NewRouteSaveModal = ({
           </View>
 
           <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 20 }}>
-            <TextButton
-              value="취소"
-              textSize="14px"
-              textWeight="SemiBold"
-              textColor={COLOR.GRAY_999}
-              style={{
-                paddingVertical: 12,
-                borderRadius: 5,
-                borderWidth: 1,
-                borderColor: COLOR.GRAY_999,
-                flex: 1,
-                alignItems: 'center',
-              }}
+            <Pressable
+              className="items-center flex-1 py-12 border rounded-5 border-gray-999"
               onPress={closeModal}
-            />
+            >
+              <FontText text="취소" className="text-gray-999 text-14" fontWeight="600" />
+            </Pressable>
             <Space width="8px" />
-            <TextButton
-              value="확인"
-              textSize="14px"
-              textWeight="SemiBold"
-              textColor={COLOR.WHITE}
-              style={{
-                paddingVertical: 12,
-                borderRadius: 5,
-                backgroundColor:
-                  isLoading || isDuplicatedError || routeName.length < 1
-                    ? COLOR.GRAY_DDD
-                    : COLOR.BASIC_BLACK,
-                flex: 1,
-                alignItems: 'center',
-              }}
+            <Pressable
+              className={cn('py-12 rounded-5 flex-1 items-center', {
+                'text-gray-ddd': isLoading || isDuplicatedError || routeName.length < 1,
+              })}
               onPress={saveHandler}
               disabled={isLoading || isDuplicatedError}
-            />
+            >
+              <FontText text="확인" className="text-white text-14" fontWeight="600" />
+            </Pressable>
           </View>
         </View>
       </KeyboardAvoidingView>

@@ -1,12 +1,13 @@
 import { COLOR } from '@/global/constants';
 import cn from 'classname';
-import { FontText, Input, TextButton } from '@/global/ui';
+import { FontText, Input } from '@/global/ui';
 import { useEffect, useRef, useState } from 'react';
 import {
   Animated,
   KeyboardAvoidingView,
   Modal,
   Platform,
+  Pressable,
   TouchableOpacity,
   View,
 } from 'react-native';
@@ -130,14 +131,10 @@ const ConfirmEmailModal = ({
                 {isLoading ? (
                   <LoadingCircle color="gray" width={34} height={27} />
                 ) : (
-                  <TextButton
-                    value="재전송"
-                    textSize="13px"
-                    textWeight="Bold"
-                    textColor={COLOR.GRAY_999}
-                    isTextUnderline
-                    onPress={emailConfirmMutateHandler}
-                  />
+                  <Pressable onPress={emailConfirmMutateHandler}>
+                    <FontText text="재전송" className="text-13 text-gray-999" fontWeight="700" />
+                    <View style={{ borderBottomWidth: 1.5, borderBottomColor: COLOR.GRAY_999 }} />
+                  </Pressable>
                 )}
               </View>
             </View>

@@ -1,15 +1,17 @@
 import { useState } from 'react';
+import cn from 'classname';
 import {
   KeyboardAvoidingView,
   Platform,
+  Pressable,
   SafeAreaView,
   ScrollView,
   TouchableOpacity,
   View,
 } from 'react-native';
 
-import { FontText, Input, Space, TextButton } from '@/global/ui';
-import { getEncryptedStorage, setEncryptedStorage } from '@/global/utils';
+import { FontText, Input, Space } from '@/global/ui';
+import { setEncryptedStorage } from '@/global/utils';
 import { useRootNavigation } from '@/navigation/RootNavigation';
 import { SignInFormTypes } from './apis/entity';
 import { useSignInMutation } from './apis/hooks';
@@ -145,24 +147,15 @@ const SignInScreen = () => {
             </View>
           )}
         </ScrollView>
-
-        <TextButton
-          value="로그인"
-          textSize="16px"
-          textWeight="SemiBold"
-          textColor={COLOR.WHITE}
+        <Pressable
+          className={cn('rounded-5 justify-center items-center h-48 mb-20', {
+            'text-gray-ddd': !(isValidEmail && !!formData.password),
+          })}
           onPress={submitFormData}
           disabled={!isValidEmail || !formData.password}
-          style={{
-            backgroundColor:
-              isValidEmail && !!formData.password ? COLOR.BASIC_BLACK : COLOR.GRAY_DDD,
-            borderRadius: 5,
-            justifyContent: 'center',
-            alignItems: 'center',
-            height: 48,
-            marginBottom: 20,
-          }}
-        />
+        >
+          <FontText text="로그인" className="text-white" fontWeight="600" />
+        </Pressable>
       </KeyboardAvoidingView>
 
       <Space height="20px" />

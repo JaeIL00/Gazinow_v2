@@ -1,5 +1,5 @@
-import { FontText, TextButton, Toggle } from '@/global/ui';
-import { COLOR } from '@/global/constants';
+import { FontText, Toggle } from '@/global/ui';
+import cn from 'classname';
 import { useEffect, useState } from 'react';
 import { ScrollView, TouchableOpacity, View } from 'react-native';
 import { useMyPageNavigation } from '@/navigation/MyPageNavigation';
@@ -35,20 +35,21 @@ const NotiSettings = () => {
   return (
     <>
       <View className="h-1 bg-gray-beb" />
-      <View className="flex-row mx-16 h-53 items-center justify-between">
-        <TextButton value="푸시 알림 받기" textSize="16px" textWeight="SemiBold" />
+      <View className="flex-row items-center justify-between mx-16 h-53">
+        <FontText text="푸시 알림 받기" fontWeight="600" />
         <Toggle
           isOn={pushNotificationOn}
           onToggle={() => setPushNotificationOn(!pushNotificationOn)}
         />
       </View>
       <View className="h-20 bg-gray-9f9" />
-      <View className="flex-row mx-16 h-53 items-center justify-between">
-        <TextButton
-          value="내가 저장한 경로 알림"
-          textSize="16px"
-          textWeight="SemiBold"
-          textColor={pushNotificationOn ? COLOR.BASIC_BLACK : COLOR.GRAY_BE}
+      <View className="flex-row items-center justify-between mx-16 h-53">
+        <FontText
+          text="내가 저장한 경로 알림"
+          className={cn({
+            'text-gray-ebe': !pushNotificationOn,
+          })}
+          fontWeight="600"
         />
         <Toggle
           isOn={myRoutesNotification}
@@ -57,24 +58,21 @@ const NotiSettings = () => {
         />
       </View>
       <View className="h-1 bg-gray-beb" />
-      <View className="flex-row mx-16 h-72 items-center justify-between">
+      <View className="flex-row items-center justify-between mx-16 h-72">
         <View className="gap-6">
-          <TextButton
-            value="경로 상세 설정"
-            textSize="16px"
-            textWeight="SemiBold"
-            textColor={
-              pushNotificationOn && myRoutesNotification ? COLOR.BASIC_BLACK : COLOR.GRAY_BE
-            }
+          <FontText
+            text="경로 상세 설정"
+            className={cn({
+              'text-gray-ebe': !(pushNotificationOn && myRoutesNotification),
+            })}
+            fontWeight="600"
           />
-          <TextButton
-            value="개별 경로의 알림이 활성화되는 시간을 설정해요"
-            textSize="12px"
-            textWeight="Regular"
-            lineHeight={14}
-            textColor={
-              pushNotificationOn && myRoutesNotification ? COLOR.BASIC_BLACK : COLOR.GRAY_BE
-            }
+          <FontText
+            text="개별 경로의 알림이 활성화되는 시간을 설정해요"
+            className={cn('text-12 leading-14', {
+              'text-gray-ebe': !(pushNotificationOn && myRoutesNotification),
+            })}
+            fontWeight="600"
           />
         </View>
         <Toggle
@@ -89,23 +87,12 @@ const NotiSettings = () => {
           myRoutes?.map((myRoutes, index) => (
             <View key={myRoutes.roadName + index}>
               <TouchableOpacity
-                className="flex-row ml-24 mr-16 h-53 items-center justify-between"
+                className="flex-row items-center justify-between ml-24 mr-16 h-53"
                 onPress={() => myPageNavigation.push('NotiSettingsDetailScreen', { myRoutes })}
               >
-                <FontText
-                  value={myRoutes.roadName}
-                  textColor={COLOR.GRAY_999}
-                  textSize="16px"
-                  textWeight="Medium"
-                />
+                <FontText text={myRoutes.roadName} className="text-gray-999" fontWeight="500" />
                 <View className="flex-row items-center">
-                  <FontText
-                    value="편집"
-                    textColor={COLOR.GRAY_999}
-                    textSize="13px"
-                    textWeight="Regular"
-                    lineHeight={19}
-                  />
+                  <FontText text="편집" className="text-gray-999 text-13 leading-19" />
                   <MoreBtn height={19} className="ml-4" />
                 </View>
               </TouchableOpacity>

@@ -1,7 +1,7 @@
 import { MyRoutesType } from '@/global/apis/entity';
 import { SubwaySimplePath } from '@/global/components';
 import { COLOR } from '@/global/constants';
-import { FontText, TextButton } from '@/global/ui';
+import { FontText } from '@/global/ui';
 import { useHomeNavigation } from '@/navigation/HomeNavigation';
 import { View } from 'react-native';
 import IssuesBanner from './IssuesBanner';

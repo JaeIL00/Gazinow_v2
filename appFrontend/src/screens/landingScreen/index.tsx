@@ -1,7 +1,7 @@
 import { COLOR } from '@/global/constants';
-import { FontText, TextButton } from '@/global/ui';
+import { FontText } from '@/global/ui';
 import { useAuthNavigation } from '@/navigation/AuthNavigation';
-import { Animated, SafeAreaView, TouchableOpacity, View } from 'react-native';
+import { Animated, Pressable, SafeAreaView, TouchableOpacity, View } from 'react-native';
 import IconLeftArrow from '@assets/icons/left_arrow_head.svg';
 
 const LandingScreen = () => {
@@ -69,25 +69,15 @@ const LandingScreen = () => {
             flexDirection: 'row',
           }}
         >
-          <TextButton
-            value="이메일 로그인"
-            textSize="13px"
-            textWeight="Medium"
-            textColor={COLOR.WHITE}
-            onPress={() => navigation.navigate('SignIn')}
-            hitSlop={20}
-          />
+          <Pressable hitSlop={20} onPress={() => navigation.navigate('SignIn')}>
+            <FontText text="이메일 로그인" className="text-white text-13" fontWeight="500" />
+          </Pressable>
           <View style={{ marginHorizontal: 8 }}>
             <FontText text="|" className="text-white text-13" />
           </View>
-          <TextButton
-            value="이메일 회원가입"
-            textSize="13px"
-            textWeight="Medium"
-            textColor={COLOR.WHITE}
-            onPress={() => navigation.navigate('SignUp')}
-            hitSlop={20}
-          />
+          <Pressable hitSlop={20} onPress={() => navigation.navigate('SignUp')}>
+            <FontText text="이메일 회원가입" className="text-white text-13" fontWeight="500" />
+          </Pressable>
         </View>
       </SafeAreaView>
     </View>

@@ -1,7 +1,6 @@
 import LoadingDots from '@/global/components/animations/LoadingDots';
-import { COLOR } from '@/global/constants';
-import { TextButton } from '@/global/ui';
-import { View } from 'react-native';
+import { FontText } from '@/global/ui';
+import { Pressable, View } from 'react-native';
 import cn from 'classname';
 
 interface StepButtonProps {
@@ -22,22 +21,20 @@ const StepButton = ({
   return (
     <>
       {isLoading ? (
-        <View className="bg-black-717 rounded-5 items-center justify-center h-48 mb-41 pt-8">
+        <View className="items-center justify-center h-48 pt-8 bg-black-717 rounded-5 mb-41">
           <LoadingDots width={200} height={90} />
         </View>
       ) : (
-        <TextButton
-          value={value}
-          textSize="17px"
-          textWeight="SemiBold"
-          textColor={COLOR.WHITE}
+        <Pressable
           className={cn('rounded-5 items-center justify-center h-48 mb-41', {
             'bg-black-717': backgroundCondition,
             'bg-gray-ddd': !backgroundCondition,
           })}
           onPress={onPress}
           disabled={disabled}
-        />
+        >
+          <FontText text={value} className="text-white text-17" fontWeight="600" />
+        </Pressable>
       )}
     </>
   );

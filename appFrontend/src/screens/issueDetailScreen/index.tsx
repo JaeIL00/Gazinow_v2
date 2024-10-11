@@ -2,14 +2,14 @@ import { COLOR } from '@/global/constants';
 import cn from 'classname';
 import { useAppSelect } from '@/store';
 import { useMemo, useState } from 'react';
-import { Modal, SafeAreaView, ScrollView, TouchableOpacity, View } from 'react-native';
+import { Modal, Pressable, SafeAreaView, ScrollView, TouchableOpacity, View } from 'react-native';
 import IconLeftArrowHead from '@assets/icons/left_arrow_head.svg';
 import { useRootNavigation } from '@/navigation/RootNavigation';
 import { useDeletePostLike, useGetIssue, usePostLike } from './api/hooks';
 import { debounce } from 'lodash';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
-import { FontText, TextButton } from '@/global/ui';
+import { FontText } from '@/global/ui';
 import IconThumsUp from '@assets/icons/thumbs_up.svg';
 
 dayjs.locale('ko');
@@ -79,38 +79,21 @@ const IssueDetailScreen = () => {
                 fontWeight="500"
               />
               <View style={{ flexDirection: 'row', width: '100%', columnGap: 8, marginTop: 30 }}>
-                <TextButton
-                  value="취소"
-                  textSize="14px"
-                  textColor={COLOR.GRAY_999}
-                  textWeight="SemiBold"
+                <Pressable
+                  className="items-center flex-1 py-12 border rounded-5 border-gray-999"
                   onPress={() => setIsOpenLoginModal(false)}
-                  style={{
-                    flex: 1,
-                    borderRadius: 5,
-                    borderWidth: 1,
-                    borderColor: COLOR.GRAY_999,
-                    alignItems: 'center',
-                    paddingVertical: 12,
-                  }}
-                />
-                <TextButton
-                  value="로그인"
-                  textSize="14px"
-                  textColor={COLOR.WHITE}
-                  textWeight="SemiBold"
+                >
+                  <FontText text="취소" className="text-gray-999 text-14" fontWeight="600" />
+                </Pressable>
+                <Pressable
+                  className="items-center flex-1 py-12 rounded-5 bg-black-717"
                   onPress={() => {
                     setIsOpenLoginModal(false);
                     navigation.navigate('AuthStack', { screen: 'Landing' });
                   }}
-                  style={{
-                    flex: 1,
-                    borderRadius: 5,
-                    alignItems: 'center',
-                    paddingVertical: 12,
-                    backgroundColor: COLOR.BASIC_BLACK,
-                  }}
-                />
+                >
+                  <FontText text="로그인" className="text-white text-14" fontWeight="600" />
+                </Pressable>
               </View>
             </View>
           </View>
