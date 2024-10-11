@@ -12,7 +12,6 @@ import NotiHistoryScreen from '@/screens/homeScreen/components/NotiHistory';
 import HomeScreen from '@/screens/homeScreen';
 import SavedRoutesScreen from '@/screens/savedRoutesScreen';
 import toastConfig from '@global/utils/ToastConfig';
-import { pushNotification } from '@/global/utils/pushNotification';
 
 const Stack = createStackNavigator<HomeStackParamList>();
 
@@ -21,7 +20,6 @@ const screenOption = {
 };
 
 const HomeNavigation = () => {
-  pushNotification();
   return (
     <>
       <Stack.Navigator initialRouteName={HOME} screenOptions={screenOption}>
