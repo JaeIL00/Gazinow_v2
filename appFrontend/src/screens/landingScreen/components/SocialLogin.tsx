@@ -7,15 +7,19 @@ import { setEncryptedStorage } from '@/global/utils';
 import { useSendFirebaseToken } from '../apis/hooks';
 import messaging from '@react-native-firebase/messaging';
 import SocialLoginButtons from './SocialLoginButtons';
+import { showToast } from '@/global/utils/toast';
 
 const SocialLogin = () => {
   const navigation = useRootNavigation();
   const dispatch = useAppDispatch();
   const { sendFirebaseTokenMutate } = useSendFirebaseToken({
-    onSuccess: () => navigation.reset({ routes: [{ name: 'MainBottomTab' }] }),
+    onSuccess: () => {
+      showToast('socialLoginSuccess');
+      navigation.reset({ routes: [{ name: 'MainBottomTab' }] });
+    },
     onError: ({ status }) => {
       if (status === 401) {
-        /* TODO: 에러처리 */
+        showToast('socialLoginFailed');
       }
     },
   });
