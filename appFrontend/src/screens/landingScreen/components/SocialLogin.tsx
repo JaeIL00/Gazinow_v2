@@ -26,7 +26,7 @@ const SocialLogin = () => {
 
   useEffect(() => {
     // 외부 브라우저에서 소셜로그인 성공 시 앱으로 이동 후 url에 담긴 정보로 로그인 처리
-    const handleSocialLogin = async ({ url }: any) => {
+    const handleSocialLogin = async ({ url }: { url: string }) => {
       // url 파싱 (accesstoken, 이메일, 닉네임 값)
       const parseUrlParams = (url: string): Record<string, string> => {
         const params: Record<string, string> = {};
