@@ -25,7 +25,6 @@ const FontText = ({
       {...props}
       allowFontScaling
       style={[
-        props.style,
         {
           fontFamily: `Pretendard-${textWeight}`,
           lineHeight,
@@ -33,6 +32,7 @@ const FontText = ({
           fontSize: Number(textSize.split('px')[0]),
           color: textColor,
         },
+        props.style,
       ]}
     >
       {value}
