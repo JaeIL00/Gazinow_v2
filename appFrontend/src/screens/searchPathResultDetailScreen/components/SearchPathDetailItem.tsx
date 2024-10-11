@@ -83,50 +83,49 @@ const SearchPathDetailItem = ({ data, isLastLane, lineLength }: SearchPathDetail
           </View>
 
           {/* 이슈박스 */}
-          {!data.lanes[0].issueSummary.length &&
-            data.lanes[0].issueSummary.map((issue) => (
-              <TouchableOpacity
-                className="flex-row pt-10 pb-12 pl-12 pr-10 mt-4 bg-white border border-[#f0f0f0] rounded-10"
-                activeOpacity={1}
-                onPress={() => {
-                  dispatch(getIssueId(issue.id));
-                  navigation.navigate('IssueStack', { screen: 'IssueDetail' });
+          {data.lanes[0].issueSummary.map((issue) => (
+            <TouchableOpacity
+              className="flex-row pt-10 pb-12 pl-12 pr-10 mt-4 bg-white border border-[#f0f0f0] rounded-10"
+              activeOpacity={1}
+              onPress={() => {
+                dispatch(getIssueId(issue.id));
+                navigation.navigate('IssueStack', { screen: 'IssueDetail' });
+              }}
+            >
+              <View
+                style={{
+                  marginTop: 4,
+                  marginRight: 8,
                 }}
               >
-                <View
-                  style={{
-                    marginTop: 4,
-                    marginRight: 8,
-                  }}
-                >
-                  <IssueKeywordIcon
-                    width={18}
-                    height={18}
-                    keyword={issue.keyword}
-                    color={subwayLineColor(data.lanes[0].stationCode)}
-                  />
-                </View>
-                <View className="flex-1 mr-8">
-                  <FontText
-                    value={issue.title}
-                    textSize="13px"
-                    textWeight="SemiBold"
-                    textColor={COLOR.BASIC_BLACK}
-                    numberOfLines={1}
-                    className="mb-2"
-                  />
-                  <FontText
-                    value={`도움돼요 ${issue.likeCount}개`}
-                    textSize="11px"
-                    textWeight="Medium"
-                    textColor={COLOR.GRAY_999}
-                  />
-                </View>
-                <View className="justify-center">
-                  <IconRightArrowHead className="mb-2" color={COLOR.GRAY_999} />
-                </View>
-              </TouchableOpacity>
-            ))}
+                <IssueKeywordIcon
+                  width={18}
+                  height={18}
+                  keyword={issue.keyword}
+                  color={subwayLineColor(data.lanes[0].stationCode)}
+                />
+              </View>
+              <View className="flex-1 mr-8">
+                <FontText
+                  value={issue.title}
+                  textSize="13px"
+                  textWeight="SemiBold"
+                  textColor={COLOR.BASIC_BLACK}
+                  numberOfLines={1}
+                  className="mb-2"
+                />
+                <FontText
+                  value={`도움돼요 ${issue.likeCount}개`}
+                  textSize="11px"
+                  textWeight="Medium"
+                  textColor={COLOR.GRAY_999}
+                />
+              </View>
+              <View className="justify-center">
+                <IconRightArrowHead className="mb-2" color={COLOR.GRAY_999} />
+              </View>
+            </TouchableOpacity>
+          ))}
 
           <TouchableOpacity
             className="flex-row items-center mt-8"
