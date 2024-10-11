@@ -17,18 +17,18 @@ const SOCIAL_LOGIN_BUTTONS = [
     textColor: 'text-white',
   },
   {
-    type: 'apple',
-    icon: LoginApple,
-    label: 'Apple로 계속하기',
-    bgColor: 'bg-black',
-    textColor: 'text-white',
-  },
-  {
     type: 'google',
     icon: LoginGoogle,
     label: '구글로 계속하기',
     bgColor: 'bg-white',
     textColor: 'text-black',
+  },
+  {
+    type: 'apple',
+    icon: LoginApple,
+    label: 'Apple로 계속하기',
+    bgColor: 'bg-black',
+    textColor: 'text-white',
   },
 ];
 
@@ -59,7 +59,7 @@ const SocialLoginButton = ({
 );
 
 const SocialLoginButtons = () => (
-  <View className="mx-30 mb-18 items-center">
+  <View className="mx-30 mb-20 items-center">
     {SOCIAL_LOGIN_BUTTONS.map(
       (button) =>
         (Platform.OS === 'ios' || button.type !== 'apple') && (
