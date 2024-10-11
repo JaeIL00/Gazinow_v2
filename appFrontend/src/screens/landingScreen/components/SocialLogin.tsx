@@ -4,21 +4,24 @@ import { useRootNavigation } from '@/navigation/RootNavigation';
 import { useAppDispatch } from '@/store';
 import { getAuthorizationState, saveUserInfo } from '@/store/modules';
 import { setEncryptedStorage } from '@/global/utils';
-import { useSendFirebaseToken } from '../apis/hooks';
 import messaging from '@react-native-firebase/messaging';
 import SocialLoginButtons from './SocialLoginButtons';
 import { showToast } from '@/global/utils/toast';
+import { sendFirebaseTokenFetch } from '../apis/func';
+import { AxiosError } from 'axios';
+import { useMutation } from 'react-query';
 
 const SocialLogin = () => {
   const navigation = useRootNavigation();
   const dispatch = useAppDispatch();
-  const { sendFirebaseTokenMutate } = useSendFirebaseToken({
+
+  const { mutate: sendFirebaseTokenMutate } = useMutation(sendFirebaseTokenFetch, {
     onSuccess: () => {
       showToast('socialLoginSuccess');
       navigation.reset({ routes: [{ name: 'MainBottomTab' }] });
     },
-    onError: ({ status }) => {
-      if (status === 401) {
+    onError: (error: AxiosError) => {
+      if (error.response?.status === 401) {
         showToast('socialLoginFailed');
       }
     },
