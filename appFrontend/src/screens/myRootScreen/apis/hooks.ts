@@ -17,6 +17,7 @@ import {
   setDetailPushNotiOnFetch,
   getDetailPushNotiOnStatusFetch,
 } from './func';
+import { AxiosError } from 'axios';
 
 /**
  * 로그아웃 요청 훅
@@ -34,7 +35,7 @@ export const useDeleteAccountMutation = ({
   onError,
 }: {
   onSuccess: () => void;
-  onError: (error: any) => void;
+  onError: (error: AxiosError) => void;
 }) => {
   const { mutate: deleteAccountMutate } = useMutation(deleteAccountFetch, { onSuccess, onError });
   return { deleteAccountMutate };
@@ -48,7 +49,7 @@ export const useCheckPasswordMutation = ({
   onError,
 }: {
   onSuccess: () => void;
-  onError?: (error: any) => void;
+  onError?: (error: AxiosError) => void;
 }) => {
   const { mutate: checkPasswordMutate } = useMutation(checkPasswordFetch, {
     onSuccess,
@@ -65,7 +66,7 @@ export const useChangePasswordMutation = ({
   onError,
 }: {
   onSuccess: () => void;
-  onError?: (error: any) => void;
+  onError?: (error: AxiosError) => void;
 }) => {
   const { mutate: changePasswordMutate } = useMutation(changePasswordFetch, {
     onSuccess,
@@ -82,7 +83,7 @@ export const useChangeNicknameMutation = ({
   onError,
 }: {
   onSuccess: () => void;
-  onError?: (error: any) => void;
+  onError?: (error: AxiosError) => void;
 }) => {
   const { mutate } = useMutation(changeNicknameFetch, {
     onSuccess,
@@ -99,7 +100,7 @@ export const useCheckNicknameMutation = ({
   onError,
 }: {
   onSuccess: () => void;
-  onError?: (error: any) => void;
+  onError?: (error: AxiosError) => void;
 }) => {
   const { mutate } = useMutation(checkNicknameFetch, {
     onSuccess,
@@ -174,7 +175,7 @@ export const useDisablePathNotiMutation = ({
   onError,
 }: {
   onSuccess: () => void;
-  onError?: (error: any) => void;
+  onError?: (error: AxiosError) => void;
 }) => {
   const { mutate } = useMutation(disablePathNotiFetch, {
     onSuccess,
@@ -191,7 +192,7 @@ export const useAddPathNotiSettingsMutation = ({
   onError,
 }: {
   onSuccess: () => void;
-  onError?: (error: any) => void;
+  onError?: (error: AxiosError) => void;
 }) => {
   const { mutate } = useMutation(addPathNotiSettingsFetch, {
     onSuccess,
@@ -208,7 +209,7 @@ export const usePathUpdateNotiSettingsMutation = ({
   onError,
 }: {
   onSuccess: () => void;
-  onError?: (error: any) => void;
+  onError?: (error: AxiosError) => void;
 }) => {
   const { mutate } = useMutation(updatePathNotiSettingsFetch, {
     onSuccess,
