@@ -147,7 +147,7 @@ const NewRouteSaveModal = ({
             <Space width={8} />
             <Pressable
               className={cn('py-12 rounded-5 flex-1 items-center', {
-                'text-gray-ddd': isLoading || isDuplicatedError || routeName.length < 1,
+                'bg-gray-ddd': isLoading || isDuplicatedError || routeName.length < 1,
               })}
               onPress={saveHandler}
               disabled={isLoading || isDuplicatedError}

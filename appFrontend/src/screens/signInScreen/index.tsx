@@ -149,7 +149,7 @@ const SignInScreen = () => {
         </ScrollView>
         <Pressable
           className={cn('rounded-5 justify-center items-center h-48 mb-20', {
-            'text-gray-ddd': !(isValidEmail && !!formData.password),
+            'bg-gray-ddd': !(isValidEmail && !!formData.password),
           })}
           onPress={submitFormData}
           disabled={!isValidEmail || !formData.password}

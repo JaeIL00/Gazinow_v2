@@ -1,4 +1,5 @@
 import React from 'react';
+import cn from 'classname';
 import { View, Platform, TouchableOpacity, Linking } from 'react-native';
 import { FontText } from '@/global/ui';
 import { API_BASE_URL } from '@env';
@@ -52,14 +53,14 @@ const SocialLoginButton = ({
     onPress={() => Linking.openURL(`${API_BASE_URL}/api/v1/oauth/login?socialLoginType=${type}`)}
   >
     <Icon />
-    <View className="flex-grow items-center pr-34">
-      <FontText className={textColor} value={label} textSize="14px" textWeight="Medium" />
+    <View className="items-center flex-grow pr-34">
+      <FontText className={cn('text-14', textColor)} text={label} fontWeight="500" />
     </View>
   </TouchableOpacity>
 );
 
 const SocialLoginButtons = () => (
-  <View className="mx-30 mb-20 items-center">
+  <View className="items-center mb-20 mx-30">
     {SOCIAL_LOGIN_BUTTONS.map(
       (button) =>
         (Platform.OS === 'ios' || button.type !== 'apple') && (
