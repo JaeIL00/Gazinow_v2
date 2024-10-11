@@ -1,6 +1,5 @@
 import { View } from 'react-native';
 import { FontText } from '.';
-import { COLOR } from '../constants';
 import ToastCheck from '@assets/icons/toast_check.svg';
 
 interface ToastProps {
@@ -20,13 +19,7 @@ const Toast = ({ text }: ToastProps) => {
       }}
     >
       <ToastCheck />
-      <FontText
-        value={text}
-        textSize="14px"
-        textWeight="Medium"
-        textColor={COLOR.WHITE}
-        style={{ marginLeft: 10 }}
-      />
+      <FontText text={text} className="ml-10 text-white text-14" fontWeight="500" />
     </View>
   );
 };

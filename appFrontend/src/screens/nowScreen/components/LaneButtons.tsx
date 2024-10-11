@@ -44,12 +44,11 @@ const LaneButtons = ({ activeButton, setActiveButton, titleNotShown }: LaneButto
   return (
     <View className="bg-white">
       {!titleNotShown ? (
-        <View className="pt-24 px-16 pb-12">
+        <View className="px-16 pt-24 pb-12">
           <FontText
-            value={activeButton === '전체' ? '전체' : `${activeButton} NOW`}
-            textSize="20px"
-            textWeight="SemiBold"
-            lineHeight={25}
+            text={activeButton === '전체' ? '전체' : `${activeButton} NOW`}
+            className="text-20 leading-25"
+            fontWeight="600"
           />
         </View>
       ) : (
@@ -70,10 +69,12 @@ const LaneButtons = ({ activeButton, setActiveButton, titleNotShown }: LaneButto
                 })}
               >
                 <FontText
-                  value={text}
-                  textSize="14px"
-                  textWeight="Medium"
-                  textColor={activeButton === text ? 'white' : '#969696'}
+                  text={text}
+                  className={cn('text-14', {
+                    'text-white': activeButton === text,
+                    'text-[#969696]': activeButton !== text,
+                  })}
+                  fontWeight="500"
                 />
               </TouchableOpacity>
             ))}

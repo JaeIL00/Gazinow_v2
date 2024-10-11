@@ -40,9 +40,9 @@ const MyRootScreen = () => {
         onPress={onPress}
         disabled={versionText ? true : false}
       >
-        <FontText value={text} textSize="16px" textWeight="Regular" lineHeight={21} />
+        <FontText text={text} className="leading-21" />
         {versionText ? (
-          <FontText value={versionText} textSize="12px" textWeight="Regular" lineHeight={17} />
+          <FontText text={versionText} className="text-21 leading-17" />
         ) : (
           <IconRightArrowHead width={14} color={COLOR.GRAY_999} />
         )}
@@ -59,7 +59,7 @@ const MyRootScreen = () => {
             className="flex-row items-center space-x-6"
             onPress={() => rootNavigation.navigate('AuthStack', { screen: 'Landing' })}
           >
-            <FontText value="로그인하세요" textSize="18px" textWeight="SemiBold" />
+            <FontText text="로그인하세요" className="text-18" fontWeight="600" />
             <IconRightArrowHead
               width={11}
               height={11}
@@ -76,17 +76,11 @@ const MyRootScreen = () => {
                 rootNavigation.navigate('MyPageNavigation', { screen: 'ChangeNickNameScreen' })
               }
             >
-              <FontText value={nickname} textSize="18px" lineHeight={23} textWeight="SemiBold" />
+              <FontText text={nickname} className="text-18 leading-23" fontWeight="600" />
               <IconPencil width={18} />
             </TouchableOpacity>
 
-            <FontText
-              value={email}
-              textSize="14px"
-              lineHeight={21}
-              textWeight="Regular"
-              textColor={COLOR.GRAY_999}
-            />
+            <FontText text={email} className="text-14 leading-21 text-gray-999" />
           </>
         )}
       </View>

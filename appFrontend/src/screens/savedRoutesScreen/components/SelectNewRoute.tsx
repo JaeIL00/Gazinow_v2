@@ -70,17 +70,11 @@ const SelectNewRoute = () => {
                 <View className="flex-row items-center justify-between mb-8">
                   <View className="gap-4">
                     <FontText
-                      value="평균 소요시간"
-                      textSize="11px"
-                      textWeight="SemiBold"
-                      textColor="#999"
+                      text="평균 소요시간"
+                      className="text-11 text-gray-999"
+                      fontWeight="600"
                     />
-                    <FontText
-                      value={pathTime(item)}
-                      textSize="20px"
-                      textWeight="SemiBold"
-                      textColor={COLOR.BASIC_BLACK}
-                    />
+                    <FontText text={pathTime(item)} className="text-20" fontWeight="600" />
                   </View>
 
                   <TouchableOpacity
@@ -124,7 +118,7 @@ const SelectNewRoute = () => {
         }
         disabled={selectedRoutePath === null}
       >
-        <FontText value="다음" textSize="17px" textWeight="SemiBold" textColor={COLOR.WHITE} />
+        <FontText text="다음" className="text-white text-17" fontWeight="600" />
       </TouchableOpacity>
     </SafeAreaView>
   );

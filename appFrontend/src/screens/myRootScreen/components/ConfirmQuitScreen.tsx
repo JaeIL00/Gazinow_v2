@@ -30,17 +30,14 @@ const ConfirmQuitScreen = () => {
 
         <View className="flex-1 space-20 pt-29">
           <FontText
-            value={`${nickname}님,\n정말 탈퇴하시겠어요?`}
-            textSize="24px"
-            textWeight="Bold"
-            lineHeight={32}
+            text={`${nickname}님,\n정말 탈퇴하시겠어요?`}
+            className="text-24 leading-32"
+            fontWeight="700"
           />
           <View className="h-20" />
           <FontText
-            value={`탈퇴 시 계정의 모든 정보는 삭제되고\n재가입 시에도 복구하기 어려워요.`}
-            textSize="16px"
-            textWeight="Regular"
-            lineHeight={21}
+            text={`탈퇴 시 계정의 모든 정보는 삭제되고\n재가입 시에도 복구하기 어려워요.`}
+            className="leading-21"
           />
         </View>
 
@@ -48,23 +45,12 @@ const ConfirmQuitScreen = () => {
           className="items-center mb-24 py-11 rounded-5 bg-black-717"
           onPress={() => myPageNavigation.goBack()}
         >
-          <FontText
-            value="이전으로 돌아가기"
-            textSize="17px"
-            textWeight="Regular"
-            lineHeight={26}
-            textColor={COLOR.WHITE}
-          />
+          <FontText text="이전으로 돌아가기" className="text-white text-17 leading-26" />
         </TouchableOpacity>
 
         <TouchableOpacity className="items-center mb-36" onPress={() => setPopupVisible(true)}>
           <View className="border-b-1 border-gray-999">
-            <FontText
-              value="탈퇴하기"
-              textSize="13px"
-              textWeight="Regular"
-              textColor={COLOR.GRAY_999}
-            />
+            <FontText text="탈퇴하기" className="text-13 text-gray-999" />
           </View>
         </TouchableOpacity>
 

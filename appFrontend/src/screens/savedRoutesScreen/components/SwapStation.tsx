@@ -48,11 +48,10 @@ const SwapStation = ({ setSelectedStation }: SwapStationProps) => {
       onPress={() => navigateSearchStation(type)}
     >
       <FontText
-        value={station.stationName || type}
-        textSize="16px"
-        textWeight="Regular"
-        lineHeight={21}
-        textColor={station.stationName ? COLOR.BASIC_BLACK : COLOR.GRAY_999}
+        text={station.stationName || type}
+        className={cn('leading-21', {
+          'text-gray-999': !station.stationName,
+        })}
       />
     </TouchableOpacity>
   );

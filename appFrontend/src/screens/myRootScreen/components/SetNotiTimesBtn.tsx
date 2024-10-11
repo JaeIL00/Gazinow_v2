@@ -55,17 +55,15 @@ const SetNotiTimesBtn = ({
 
   return (
     <>
-      <View className="flex-row h-53 px-16 items-center justify-between border-b-1 border-gray-beb">
-        <FontText value="시작 시간" textSize="16px" textWeight="Regular" />
+      <View className="flex-row items-center justify-between px-16 h-53 border-b-1 border-gray-beb">
+        <FontText text="시작 시간" />
         <Pressable
-          className="w-113 h-36 rounded-8 bg-gray-beb items-center justify-center"
+          className="items-center justify-center w-113 h-36 rounded-8 bg-gray-beb"
           onPress={() => setOpenedTimePicker(openedTimePicker === 'start' ? null : 'start')}
         >
           <FontText
-            value={resTimeToTimeIndicatorFormat(savedStartTime)}
-            textColor="#346BF7"
-            textSize="16px"
-            textWeight="Regular"
+            text={resTimeToTimeIndicatorFormat(savedStartTime)}
+            className="text-[#346BF7]"
           />
         </Pressable>
       </View>
@@ -75,18 +73,13 @@ const SetNotiTimesBtn = ({
         </Animated.View>
       )}
 
-      <View className="flex-row h-53 px-16 items-center justify-between border-b-1 border-gray-beb">
-        <FontText value="종료 시간" textSize="16px" textWeight="Regular" />
+      <View className="flex-row items-center justify-between px-16 h-53 border-b-1 border-gray-beb">
+        <FontText text="종료 시간" />
         <Pressable
-          className="w-113 h-36 rounded-8 bg-gray-beb items-center justify-center"
+          className="items-center justify-center w-113 h-36 rounded-8 bg-gray-beb"
           onPress={() => setOpenedTimePicker(openedTimePicker === 'end' ? null : 'end')}
         >
-          <FontText
-            value={resTimeToTimeIndicatorFormat(savedEndTime)}
-            textColor="#346BF7"
-            textSize="16px"
-            textWeight="Regular"
-          />
+          <FontText text={resTimeToTimeIndicatorFormat(savedEndTime)} className="text-[#346BF7]" />
         </Pressable>
       </View>
       {openedTimePicker === 'end' && (
