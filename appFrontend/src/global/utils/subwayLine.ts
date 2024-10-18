@@ -449,8 +449,6 @@ export const subwayNameCutting = (name: string) => {
       return '용인\n중앙시장';
     case '시청.용인대':
       return '시청.\n용인대';
-    case '운동장.송담대':
-      return '운동장.\n송담대';
     case '전대.에버랜드':
       return '전대.\n에버랜드';
     case '주안국가산단':
