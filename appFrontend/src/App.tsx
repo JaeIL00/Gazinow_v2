@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { Provider } from 'react-redux';
 import { RootNavigation } from '@/navigation';
@@ -14,6 +14,7 @@ import { RootStackParamList } from './navigation/types/navigation';
 import notifee from '@notifee/react-native';
 import { Walkthrough } from './screens/homeScreen/components';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import analytics from '@react-native-firebase/analytics';
 
 Sentry.init({
   enabled: MODE === 'production',
@@ -85,10 +86,36 @@ const App = (): JSX.Element => {
     }
   }, [isWalkthroughClosed]);
 
+  const routeNameRef = useRef<string | null>(null);
+
   return (
     <Provider store={store}>
       <QueryClientProvider client={queryClient}>
-        <NavigationContainer ref={navigationRef}>
+        <NavigationContainer
+          ref={navigationRef}
+          onReady={async () => {
+            if (!navigationRef.current) return;
+            const cur = navigationRef.current.getCurrentRoute();
+            if (cur) {
+              routeNameRef.current = cur.name;
+              await analytics().logScreenView({
+                screen_name: cur.name,
+                screen_class: cur.name,
+              });
+            }
+          }}
+          onStateChange={async () => {
+            if (!navigationRef.current) return;
+            const previousRouteName = routeNameRef.current;
+            const cur = navigationRef.current.getCurrentRoute();
+            if (cur && previousRouteName !== cur.name) {
+              await analytics().logScreenView({
+                screen_name: cur.name,
+                screen_class: cur.name,
+              });
+            }
+          }}
+        >
           <RootNavigation />
           {isFirstRun && !isWalkthroughClosed && (
             <Walkthrough setIsWalkthroughClosed={setIsWalkthroughClosed} />
