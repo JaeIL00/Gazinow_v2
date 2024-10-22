@@ -1,8 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { ScrollView, TouchableOpacity, View } from 'react-native';
+import {
+  NativeScrollEvent,
+  NativeSyntheticEvent,
+  ScrollView,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import { useGetAllIssuesQuery, useGetPopularIssuesQuery } from '@/global/apis/hooks';
 import IssueKeywordIcon from '@/global/components/IssueKeywordIcon';
-import { COLOR } from '@/global/constants';
 import { FontText } from '@/global/ui';
 import { useRootNavigation } from '@/navigation/RootNavigation';
 import { useAppDispatch } from '@/store';
@@ -82,18 +87,26 @@ const IssueCarrousel = ({ isRefreshing, setIsRefreshing }: IssueCarrouselProps) 
     return currentIndex + 1;
   };
 
+  // 수동 스크롤 시 인덱스 변경
+  const handleMomentumScrollEnd = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
+    const contentOffsetX = event.nativeEvent.contentOffset.x;
+    const index = Math.round(contentOffsetX / itemWidth);
+    setCurrentIndex(index);
+  };
+
   if (!popularIssues || !newPopularIssues || newPopularIssues.length < 1) return null;
   return (
     <ScrollView
       className="mx-[-16px] flex-row rounded-13"
       ref={scrollViewRef}
       horizontal
+      pagingEnabled
       scrollEventThrottle={200}
-      scrollEnabled={false}
       decelerationRate="normal"
       showsHorizontalScrollIndicator={false}
       contentContainerStyle={{ width: `${100 * newPopularIssues.length}%` }}
       onContentSizeChange={(width) => setItemWidth(width / newPopularIssues.length)}
+      onMomentumScrollEnd={handleMomentumScrollEnd} // Handle manual scroll end
     >
       {newPopularIssues.map((issue, index: number) => (
         <View style={{ width: itemWidth }} key={index}>
