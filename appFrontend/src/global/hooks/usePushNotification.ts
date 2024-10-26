@@ -5,7 +5,7 @@ import { useRootNavigation } from '@/navigation/RootNavigation';
 
 const rootNavigation = useRootNavigation();
 
-export const pushNotification = () => {
+export const usePushNotification = () => {
   // 포그라운드 알림 수신
   useEffect(() => {
     const unsubscribe = messaging().onMessage(async (remoteMessage) => {
@@ -65,7 +65,7 @@ export const pushNotification = () => {
     };
 
     const parsedPathObject = parseJsonString(pathJsonString as string);
-    
+
     await rootNavigation.navigate('SubwayPathDetail', { state: parsedPathObject });
   };
 };
