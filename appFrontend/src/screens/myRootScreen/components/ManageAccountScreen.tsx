@@ -23,20 +23,20 @@ const ManageAccountScreen = () => {
   const dispatch = useAppDispatch();
 
   const { logoutMutate } = useLogoutMutation({
-    onSuccess: () => {
-      removeEncryptedStorage('access_token');
-      removeEncryptedStorage('refresh_token');
-      showToast('logout');
+    onSuccess: async () => {
+      await removeEncryptedStorage('access_token');
+      await removeEncryptedStorage('refresh_token');
       dispatch(getAuthorizationState('fail auth'));
-      navigation.goBack();
+      navigation.reset({ routes: [{ name: 'MainBottomTab' }] });
+      showToast('logout');
     },
   });
 
   const handleConfirm = async () => {
     const accessToken = await getEncryptedStorage('access_token');
     const refreshToken = await getEncryptedStorage('refresh_token');
-    logoutMutate({ accessToken, refreshToken });
     setPopupVisible(false);
+    logoutMutate({ accessToken, refreshToken });
   };
 
   const renderMenu = ({ text, onPress }: RenderMenuProps) => (

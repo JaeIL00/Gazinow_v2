@@ -17,8 +17,8 @@ const SocialLogin = () => {
 
   const { mutate: sendFirebaseTokenMutate } = useMutation(sendFirebaseTokenFetch, {
     onSuccess: () => {
-      showToast('socialLoginSuccess');
       navigation.reset({ routes: [{ name: 'MainBottomTab' }] });
+      showToast('socialLoginSuccess');
     },
     onError: (error: AxiosError) => {
       if (error.response?.status === 401) {
