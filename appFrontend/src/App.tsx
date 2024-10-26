@@ -15,6 +15,7 @@ import notifee from '@notifee/react-native';
 import { Walkthrough } from './screens/homeScreen/components';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import analytics from '@react-native-firebase/analytics';
+import { PushNotification } from './global/utils/pushNotification';
 
 Sentry.init({
   enabled: MODE === 'production',
@@ -57,6 +58,7 @@ const App = (): JSX.Element => {
   // 워크스루를 위한 첫 실행 여부 확인
   const [isFirstRun, setIsFirstRun] = useState<boolean>(false);
   useEffect(() => {
+    console.log({ MODE });
     const checkFirstRun = async () => {
       try {
         const hasRun = await AsyncStorage.getItem('hasRun');
@@ -116,6 +118,7 @@ const App = (): JSX.Element => {
             }
           }}
         >
+          <PushNotification />
           <RootNavigation />
           {isFirstRun && !isWalkthroughClosed && (
             <Walkthrough setIsWalkthroughClosed={setIsWalkthroughClosed} />

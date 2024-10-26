@@ -3,9 +3,8 @@ import messaging, { FirebaseMessagingTypes } from '@react-native-firebase/messag
 import notifee, { AndroidImportance, AndroidVisibility, EventType } from '@notifee/react-native';
 import { useRootNavigation } from '@/navigation/RootNavigation';
 
-const rootNavigation = useRootNavigation();
-
-export const usePushNotification = () => {
+export const PushNotification = () => {
+  const rootNavigation = useRootNavigation();
   // 포그라운드 알림 수신
   useEffect(() => {
     const unsubscribe = messaging().onMessage(async (remoteMessage) => {
@@ -68,4 +67,6 @@ export const usePushNotification = () => {
 
     await rootNavigation.navigate('SubwayPathDetail', { state: parsedPathObject });
   };
+
+  return null;
 };
