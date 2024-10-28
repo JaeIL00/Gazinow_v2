@@ -12,7 +12,6 @@ import {
   SaveMyRoutesType,
 } from './entity';
 import { SignInFetchResponse } from '@/screens/signInScreen/apis/entity';
-import { API_BASE_URL } from '@env';
 import * as Sentry from '@sentry/react-native';
 
 /**
@@ -26,14 +25,11 @@ export const tokenReissueFetch = async ({
   refreshToken: string;
 }) => {
   try {
-    const res = await authServiceAPI.post<{ data: SignInFetchResponse }>(
+    const res = await publicServiceAPI.post<{ data: SignInFetchResponse }>(
       '/api/v1/member/reissue',
       {
         accessToken,
         refreshToken,
-      },
-      {
-        baseURL: API_BASE_URL,
       },
     );
     return res.data.data;
