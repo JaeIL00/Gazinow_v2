@@ -11,4 +11,14 @@ import { name as appName } from './app.json';
 //   require('./ReactotronConfig');
 // }
 
-AppRegistry.registerComponent(appName, () => App);
+function HeadlessCheck({ isHeadless }) {
+  if (isHeadless) {
+    return null;
+  }
+
+  return <App />;
+}
+
+AppRegistry.registerComponent(appName, () => HeadlessCheck);
+
+// AppRegistry.registerComponent(appName, () => App);

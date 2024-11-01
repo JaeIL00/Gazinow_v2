@@ -7,6 +7,9 @@ import IconBell from '@assets/icons/bell.svg';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useRootNavigation } from '@/navigation/RootNavigation';
 import { useHomeNavigation } from '@/navigation/HomeNavigation';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Path } from '@/global/apis/entity';
+import { useAppDispatch } from '@/store';
 
 const HomeScreen = () => {
   const { isVerifiedUser, tryAuthorization } = useTryAuthorization();
@@ -18,6 +21,31 @@ const HomeScreen = () => {
       setTimeout(() => {
         SplashScreen.hide();
       }, 500);
+    }
+
+    if (isVerifiedUser === 'success auth') {
+      // 앱 종료 상태에서 푸시알림 클릭했을 때 저장한 상세 정보를 불러온 후 경로 상세 페이지 화면으로 이동
+      const navigatePushNotiClick = async () => {
+        const pushNotiParams = await AsyncStorage.getItem('pushNotiParams');
+
+        if (pushNotiParams) {
+          const parseJsonString = (pathJsonString: string) => {
+            try {
+              return JSON.parse(pathJsonString) as Path;
+            } catch (error) {
+              console.error('JSON 파싱 오류:', error);
+            }
+          };
+
+          const parsedPathObject = parseJsonString(pushNotiParams);
+
+          await rootNavigation.navigate('SubwayPathDetail', { state: parsedPathObject });
+
+          await AsyncStorage.removeItem('pushNotiParams');
+        }
+      };
+
+      navigatePushNotiClick();
     }
   }, [isVerifiedUser]);
 
