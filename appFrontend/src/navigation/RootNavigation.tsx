@@ -7,7 +7,6 @@ import type { RootStackParamList } from '@/navigation/types/navigation';
 import AuthNavigation from './AuthNavigation';
 import IssueNavigation from './IssueNavigation';
 import SearchPathResultDetailScreen from '@/screens/searchPathResultDetailScreen';
-import { usePushNotification } from '@/global/hooks';
 
 const Stack = createStackNavigator<RootStackParamList>();
 
@@ -16,7 +15,6 @@ const screenOption = {
 };
 
 const RootNavigation = () => {
-  usePushNotification();
   return (
     <Stack.Navigator screenOptions={screenOption} initialRouteName="MainBottomTab">
       <Stack.Screen name="AuthStack" component={AuthNavigation} />
