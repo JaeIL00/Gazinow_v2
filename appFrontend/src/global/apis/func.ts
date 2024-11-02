@@ -17,20 +17,15 @@ import * as Sentry from '@sentry/react-native';
 /**
  * 인증 토큰 재인증 axios
  */
-export const tokenReissueFetch = async ({
-  accessToken,
-  refreshToken,
-}: {
+export const tokenReissueFetch = async (body: {
   accessToken: string;
   refreshToken: string;
+  firebaseToken: string;
 }) => {
   try {
     const res = await publicServiceAPI.post<{ data: SignInFetchResponse }>(
       '/api/v1/member/reissue',
-      {
-        accessToken,
-        refreshToken,
-      },
+      body,
     );
     return res.data.data;
   } catch (err) {
