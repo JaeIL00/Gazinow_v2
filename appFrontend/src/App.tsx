@@ -59,7 +59,6 @@ const App = (): JSX.Element => {
   // 워크스루를 위한 첫 실행 여부 확인
   const [isFirstRun, setIsFirstRun] = useState<boolean>(false);
   useEffect(() => {
-    console.log({ MODE });
     const checkFirstRun = async () => {
       try {
         const hasRun = await AsyncStorage.getItem('hasRun');
