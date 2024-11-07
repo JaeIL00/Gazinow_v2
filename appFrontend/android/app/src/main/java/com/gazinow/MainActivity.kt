@@ -1,4 +1,4 @@
-package com.gazi.now
+package com.gazinow.now
 
 import com.facebook.react.ReactActivity
 import com.facebook.react.ReactActivityDelegate
