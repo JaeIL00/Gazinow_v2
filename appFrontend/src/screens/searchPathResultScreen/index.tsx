@@ -157,20 +157,7 @@ const SearchPathResultScreen = () => {
                             return (
                               <TouchableOpacity
                                 key={id + title + innerIdx + 'idx' + idx}
-                                style={{
-                                  borderWidth: 1,
-                                  borderColor: 'rgba(0, 0, 0, 0.06)',
-                                  borderRadius: 999,
-                                  paddingLeft: 17,
-                                  paddingRight: 12.5,
-                                  paddingTop: 9,
-                                  paddingBottom: 6,
-                                  flexDirection: 'row',
-                                  alignItems: 'center',
-                                  justifyContent: 'space-between',
-                                  flex: 1,
-                                  marginBottom: 8,
-                                }}
+                                className="flex-row items-center justify-between px-12 py-8 mb-8 overflow-hidden rounded-full border-gray-beb border-1"
                                 onPress={
                                   () => {
                                     dispatch(getIssueId(id));
@@ -181,23 +168,19 @@ const SearchPathResultScreen = () => {
                                   // homeNavigation.navigate('SubwayPathDetail', { state: item })
                                 }
                               >
-                                <View style={{ flexDirection: 'row', flex: 1 }}>
-                                  <IssueKeywordIcon
-                                    width={24}
-                                    height={24}
-                                    keyword={keyword}
-                                    color={subwayLineColor(linePath.lanes[0].stationCode)}
-                                  />
-                                  <FontText
-                                    text={title}
-                                    className="ml-10 text-13"
-                                    fontWeight="600"
-                                    numberOfLines={1}
-                                  />
-                                </View>
-                                <View style={{ marginBottom: 4, marginLeft: 40 }}>
-                                  <IconRightArrowHead width={8} height={8} color={COLOR.GRAY_999} />
-                                </View>
+                                <IssueKeywordIcon
+                                  width={24}
+                                  height={24}
+                                  keyword={keyword}
+                                  color={subwayLineColor(linePath.lanes[0].stationCode)}
+                                />
+                                <FontText
+                                  text={title}
+                                  className="flex-1 ml-10 mr-10 text-13"
+                                  fontWeight="600"
+                                  numberOfLines={1}
+                                />
+                                <IconRightArrowHead width={8} height={8} color={COLOR.GRAY_999} />
                               </TouchableOpacity>
                             );
                           })}

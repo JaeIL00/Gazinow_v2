@@ -47,7 +47,6 @@ authServiceAPI.interceptors.request.use(async (requestConfig) => {
 authServiceAPI.interceptors.response.use(
   (response) => response,
   async (error: AxiosError) => {
-    console.log(error.response);
     if (
       !error.response ||
       error.response.status !== 403 ||
