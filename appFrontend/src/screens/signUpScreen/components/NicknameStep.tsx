@@ -12,6 +12,9 @@ import { setEncryptedStorage } from '@/global/utils';
 import IconCheck from '@assets/icons/check.svg';
 import IconXCircle from '@assets/icons/x-circle-standard.svg';
 import { SignUpParams } from '../apis/entity';
+import messaging from '@react-native-firebase/messaging';
+import { useMutation } from 'react-query';
+import { sendFirebaseTokenFetch } from '@/screens/landingScreen/apis/func';
 
 interface NicknameStepProps {
   nicknameValue: string;
@@ -30,6 +33,8 @@ const NicknameStep = ({
 
   const [checkMessage, setCheckMessage] = useState<string>('');
 
+  const { mutate: sendFirebaseTokenMutate } = useMutation(sendFirebaseTokenFetch);
+
   const { signUpMutate } = useSighUp({
     onSuccess: async ({ email, nickName, accessToken, refreshToken }) => {
       dispatch(saveUserInfo({ email, nickname: nickName }));
@@ -37,8 +42,11 @@ const NicknameStep = ({
       await setEncryptedStorage('access_token', accessToken);
       await setEncryptedStorage('refresh_token', refreshToken);
       setStep();
+      const firebaseToken = await messaging().getToken();
+      sendFirebaseTokenMutate({ email: signUpData.email, firebaseToken });
     },
   });
+
   const { data, isLoading, checkNicknameMutate } = useCheckNickname({
     onSettled: (data, error) => {
       if (!!data) setCheckMessage(data.message);
