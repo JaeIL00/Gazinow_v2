@@ -7,6 +7,7 @@ export const getEncryptedStorage = async (key: string) => {
   } catch (error) {
     // debug
     console.error('Failed token get storage from sign-in feature');
+    throw error;
   }
 };
 
@@ -17,6 +18,7 @@ export const setEncryptedStorage = async <T>(key: string, data: T) => {
   } catch (error) {
     // debug
     console.error('Failed token set storage from sign-in response');
+    throw error;
   }
 };
 
@@ -26,5 +28,6 @@ export const removeEncryptedStorage = async (key: string) => {
   } catch (error) {
     // debug
     console.error('Failed token set storage from sign-in response');
+    throw error;
   }
 };

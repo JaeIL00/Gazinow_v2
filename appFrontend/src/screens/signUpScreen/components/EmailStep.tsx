@@ -10,9 +10,7 @@ import StepButton from '../ui/StepButton';
 import IconCheck from '@assets/icons/check.svg';
 import IconXCircle from '@assets/icons/x-circle-standard.svg';
 
-const emailValidation = new RegExp(
-  /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i,
-);
+const emailValidation = new RegExp(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/);
 
 export interface TimerType {
   minutes: number;
