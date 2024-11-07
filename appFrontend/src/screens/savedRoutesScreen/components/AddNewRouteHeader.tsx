@@ -16,7 +16,7 @@ const AddNewRouteHeader = () => {
         <IconLeftArrowHead color="#3F3F46" width={24} />
       </TouchableOpacity>
 
-      <FontText value="새 경로 저장" textSize="18px" textWeight="Medium" />
+      <FontText text="새 경로 저장" className="text-18" fontWeight="500" />
 
       <TouchableOpacity hitSlop={20} onPress={() => homeNavigation.popToTop()}>
         <IconCrossX />

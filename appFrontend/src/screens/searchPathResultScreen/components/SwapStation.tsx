@@ -1,14 +1,13 @@
-import styled from '@emotion/native';
-import { useState } from 'react';
+import cn from 'classname';
 
-import { TextButton } from '@/global/ui';
-import { COLOR, ARRIVAL_STATION, DEPARTURE_STATION } from '@/global/constants';
+import { ARRIVAL_STATION, DEPARTURE_STATION } from '@/global/constants';
 import { useAppDispatch } from '@/store';
 import { getSeletedStation, getStationType } from '@/store/modules';
-import { TouchableOpacity, View } from 'react-native';
+import { Pressable, TouchableOpacity, View } from 'react-native';
 import { SelectedStationTypes } from '..';
 import IconSwapChange from '@assets/icons/swap_change.svg';
 import { useRootNavigation } from '@/navigation/RootNavigation';
+import { FontText } from '@/global/ui';
 
 interface SwapStationProps {
   selectedStation: SelectedStationTypes;
@@ -31,36 +30,42 @@ const SwapStation = ({ selectedStation }: SwapStationProps) => {
     <>
       <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
         <View style={{ flex: 1, marginRight: 15, rowGap: 8 }}>
-          <StationButton
-            value={
-              selectedStation.departure.stationName
-                ? selectedStation.departure.stationName
-                : DEPARTURE_STATION
-            }
-            textSize="16px"
-            textWeight="Regular"
-            lineHeight={21}
-            textColor={selectedStation.departure.stationName ? COLOR.BASIC_BLACK : COLOR.GRAY_999}
+          <Pressable
+            className="justify-center w-full pl-10 bg-gray-9f9 h-41 rounded-8 pr-15"
             onPress={() => {
               dispatch(getStationType(DEPARTURE_STATION));
               navigation.navigate('IssueStack', { screen: 'SearchStation' });
             }}
-          />
-          <StationButton
-            value={
-              selectedStation.arrival.stationName
-                ? selectedStation.arrival.stationName
-                : ARRIVAL_STATION
-            }
-            textSize="16px"
-            textWeight="Regular"
-            lineHeight={21}
-            textColor={selectedStation.arrival.stationName ? COLOR.BASIC_BLACK : COLOR.GRAY_999}
+          >
+            <FontText
+              text={
+                selectedStation.departure.stationName
+                  ? selectedStation.departure.stationName
+                  : DEPARTURE_STATION
+              }
+              className={cn('leading-21', {
+                'text-gray-999': !selectedStation.departure.stationName,
+              })}
+            />
+          </Pressable>
+          <Pressable
+            className="justify-center w-full pl-10 bg-gray-9f9 h-41 rounded-8 pr-15"
             onPress={() => {
               dispatch(getStationType(ARRIVAL_STATION));
               navigation.navigate('IssueStack', { screen: 'SearchStation' });
             }}
-          />
+          >
+            <FontText
+              text={
+                selectedStation.arrival.stationName
+                  ? selectedStation.arrival.stationName
+                  : ARRIVAL_STATION
+              }
+              className={cn('leading-21', {
+                'text-gray-999': !selectedStation.arrival.stationName,
+              })}
+            />
+          </Pressable>
         </View>
 
         <TouchableOpacity onPress={swapStationHandler}>
@@ -72,13 +77,3 @@ const SwapStation = ({ selectedStation }: SwapStationProps) => {
 };
 
 export default SwapStation;
-
-const StationButton = styled(TextButton)`
-  background-color: ${COLOR.GRAY_F9};
-  width: 100%;
-  height: 41px;
-  border-radius: 8px;
-  justify-content: center;
-  padding-left: 10px;
-  padding-right: 15px;
-`;

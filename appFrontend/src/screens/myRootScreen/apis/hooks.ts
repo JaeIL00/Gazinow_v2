@@ -1,4 +1,4 @@
-import { useMutation } from 'react-query';
+import { useMutation, useQuery } from 'react-query';
 import {
   changePasswordFetch,
   checkPasswordFetch,
@@ -6,7 +6,18 @@ import {
   logoutFetch,
   changeNicknameFetch,
   checkNicknameFetch,
+  addPathNotiSettingsFetch,
+  disablePathNotiFetch,
+  updatePathNotiSettingsFetch,
+  getPathNotiFetch,
+  setPushNotiOnFetch,
+  getPushNotiOnStatusFetch,
+  getMyPathPushNotiOnStatusFetch,
+  setMyPathPushNotiOnFetch,
+  setDetailPushNotiOnFetch,
+  getDetailPushNotiOnStatusFetch,
 } from './func';
+import { AxiosError } from 'axios';
 
 /**
  * 로그아웃 요청 훅
@@ -24,7 +35,7 @@ export const useDeleteAccountMutation = ({
   onError,
 }: {
   onSuccess: () => void;
-  onError: (error: any) => void;
+  onError: (error: AxiosError) => void;
 }) => {
   const { mutate: deleteAccountMutate } = useMutation(deleteAccountFetch, { onSuccess, onError });
   return { deleteAccountMutate };
@@ -38,7 +49,7 @@ export const useCheckPasswordMutation = ({
   onError,
 }: {
   onSuccess: () => void;
-  onError?: (error: any) => void;
+  onError?: (error: AxiosError) => void;
 }) => {
   const { mutate: checkPasswordMutate } = useMutation(checkPasswordFetch, {
     onSuccess,
@@ -55,7 +66,7 @@ export const useChangePasswordMutation = ({
   onError,
 }: {
   onSuccess: () => void;
-  onError?: (error: any) => void;
+  onError?: (error: AxiosError) => void;
 }) => {
   const { mutate: changePasswordMutate } = useMutation(changePasswordFetch, {
     onSuccess,
@@ -72,13 +83,13 @@ export const useChangeNicknameMutation = ({
   onError,
 }: {
   onSuccess: () => void;
-  onError?: (error: any) => void;
+  onError?: (error: AxiosError) => void;
 }) => {
-  const { data, mutate } = useMutation(changeNicknameFetch, {
+  const { mutate } = useMutation(changeNicknameFetch, {
     onSuccess,
     onError,
   });
-  return { data, changeNicknameMutate: mutate };
+  return { changeNicknameMutate: mutate };
 };
 
 /**
@@ -89,11 +100,70 @@ export const useCheckNicknameMutation = ({
   onError,
 }: {
   onSuccess: () => void;
-  onError?: (error: any) => void;
+  onError?: (error: AxiosError) => void;
 }) => {
-  const { data, mutate } = useMutation(checkNicknameFetch, {
+  const { mutate } = useMutation(checkNicknameFetch, {
     onSuccess,
     onError,
   });
-  return { data, checkNicknameMutate: mutate };
+  return { checkNicknameMutate: mutate };
+};
+
+/**
+ * 알림 비활성화 훅
+ */
+export const useDisablePathNotiMutation = ({
+  onSuccess,
+  onError,
+}: {
+  onSuccess: () => void;
+  onError?: (error: AxiosError) => void;
+}) => {
+  const { mutate } = useMutation(disablePathNotiFetch, {
+    onSuccess,
+    onError,
+  });
+  return { disablePathNotiMutate: mutate };
+};
+
+/**
+ * 알림 설정 등록 훅
+ */
+export const useAddPathNotiSettingsMutation = ({
+  onSuccess,
+  onError,
+}: {
+  onSuccess: () => void;
+  onError?: (error: AxiosError) => void;
+}) => {
+  const { mutate } = useMutation(addPathNotiSettingsFetch, {
+    onSuccess,
+    onError,
+  });
+  return { addPathNotiSettingsMutate: mutate };
+};
+
+/**
+ * 알림 설정 수정 훅
+ */
+export const usePathUpdateNotiSettingsMutation = ({
+  onSuccess,
+  onError,
+}: {
+  onSuccess: () => void;
+  onError?: (error: AxiosError) => void;
+}) => {
+  const { mutate } = useMutation(updatePathNotiSettingsFetch, {
+    onSuccess,
+    onError,
+  });
+  return { updatePathNotiSettingsMutate: mutate };
+};
+
+/**
+ * 경로별 알림 설정 불러오기 훅
+ */
+export const useGetPathNotiQuery = (myPathId: number) => {
+  const { data } = useQuery(['getPathNoti'], () => getPathNotiFetch(myPathId));
+  return { pathNotiData: data };
 };

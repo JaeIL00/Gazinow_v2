@@ -40,13 +40,9 @@ const SelectNewRoute = () => {
   });
 
   const pathTime = (item: Path) => {
-    const hasIssue = item.subPaths.some(
-      (sub) => !!sub.lanes[0] && !!sub.lanes[0].issueSummary.length,
-    );
-    const minute = hasIssue ? '분 이상' : '분';
     return item.totalTime > 60
-      ? Math.floor(item.totalTime / 60) + '시간 ' + (item.totalTime % 60) + minute
-      : item.totalTime + minute;
+      ? Math.floor(item.totalTime / 60) + '시간 ' + (item.totalTime % 60) + '분'
+      : item.totalTime + '분';
   };
 
   return (
@@ -61,7 +57,7 @@ const SelectNewRoute = () => {
         <ScrollView>
           {data?.paths.map((item) => (
             <View key={item.firstStartStation + item.totalTime}>
-              <View className="h-1 bg-gray-eb" />
+              <View className="h-1 bg-gray-beb" />
               <TouchableOpacity
                 className="px-16 pt-20 pb-8"
                 onPress={() => {
@@ -74,22 +70,16 @@ const SelectNewRoute = () => {
                 <View className="flex-row items-center justify-between mb-8">
                   <View className="gap-4">
                     <FontText
-                      value="평균 소요시간"
-                      textSize="11px"
-                      textWeight="SemiBold"
-                      textColor="#999"
+                      text="평균 소요시간"
+                      className="text-11 text-gray-999"
+                      fontWeight="600"
                     />
-                    <FontText
-                      value={pathTime(item)}
-                      textSize="20px"
-                      textWeight="SemiBold"
-                      textColor={COLOR.BASIC_BLACK}
-                    />
+                    <FontText text={pathTime(item)} className="text-20" fontWeight="600" />
                   </View>
 
                   <TouchableOpacity
                     className={cn(
-                      'w-24 h-24 rounded-full border-1 items-center justify-center border-gray-be',
+                      'w-24 h-24 rounded-full border-1 items-center justify-center border-gray-ebe',
                       {
                         'border-[#346BF7]': selectedRoutePath === item,
                       },
@@ -108,17 +98,18 @@ const SelectNewRoute = () => {
                   pathData={item.subPaths}
                   arriveStationName={item.lastEndStation}
                   betweenPathMargin={24}
+                  isHideIsuue
                 />
               </TouchableOpacity>
             </View>
           ))}
-          {!isLoading && <View className="h-1 bg-gray-eb" />}
+          {!isLoading && <View className="h-1 bg-gray-beb" />}
         </ScrollView>
       </View>
 
       <TouchableOpacity
-        className={cn('py-11 mx-16 mb-40 rounded-5 items-center bg-gray-dd', {
-          'bg-black-17': selectedRoutePath !== null,
+        className={cn('py-11 mx-16 mb-41 rounded-5 items-center bg-gray-ddd', {
+          'bg-black-717': selectedRoutePath !== null,
         })}
         onPress={() =>
           newRouteNavigation.push('Name', {
@@ -127,7 +118,7 @@ const SelectNewRoute = () => {
         }
         disabled={selectedRoutePath === null}
       >
-        <FontText value="다음" textSize="17px" textWeight="SemiBold" textColor={COLOR.WHITE} />
+        <FontText text="다음" className="text-white text-17" fontWeight="600" />
       </TouchableOpacity>
     </SafeAreaView>
   );

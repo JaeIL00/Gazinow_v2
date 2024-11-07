@@ -13,29 +13,25 @@ const SavedRoutesScreen = () => {
   const newRouteNavigation = useNewRouteNavigation();
 
   return (
-    <SafeAreaView className="flex-1 bg-gray-f9">
-      <TouchableOpacity
-        className="flex-row items-center gap-12 p-16"
-        onPress={() => navigation.goBack()}
-      >
-        <IconLeftArrowHead color="#3F3F46" width={24} />
-        <FontText value="저장경로 편집" textSize="18px" textWeight="Medium" />
+    <SafeAreaView className="flex-1 bg-gray-9f9">
+      <TouchableOpacity className="flex-row items-center p-16" onPress={() => navigation.goBack()}>
+        <IconLeftArrowHead color="#3F3F46" width={24} style={{ marginRight: 12 }} />
+        <FontText text="저장경로 편집" className="text-18" fontWeight="500" />
       </TouchableOpacity>
 
       <ScrollView>
         <View className="mx-16 bg-white rounded-15">
           <SavedRoutesList />
           <TouchableOpacity
-            className="flex-row items-center justify-center gap-6 py-20"
+            className="flex-row items-center justify-center py-20"
             onPress={() => newRouteNavigation.navigate('Swap')}
           >
             <IconPlusBtn />
+            <View className="w-6" />
             <FontText
-              value="경로 추가하기"
-              textSize="14px"
-              textWeight="Medium"
-              lineHeight={21}
-              textColor={COLOR.GRAY_999}
+              text="경로 추가하기"
+              className="text-14 leading-21 text-gray-999"
+              fontWeight="500"
             />
           </TouchableOpacity>
         </View>

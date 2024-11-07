@@ -55,78 +55,62 @@ const SearchPathDetailItem = ({ data, isLastLane, lineLength }: SearchPathDetail
         </View>
         <View className="flex-1 ml-16">
           <FontText
-            value={data.stations[0].stationName}
-            textSize="18px"
-            textWeight="SemiBold"
-            textColor={subwayLineColor(data.lanes[0].stationCode)}
+            text={data.stations[0].stationName}
+            className="text-18"
+            fontWeight="600"
+            style={{
+              color: subwayLineColor(data.lanes[0].stationCode),
+            }}
           />
           <View className="flex-row items-center mt-4">
+            <FontText text={data.way + ' 방향'} className="text-13 text-gray-999" />
+            {data.lanes[0].direct && <FontText text=" 급행" className="text-12 text-[#EB5147]" />}
             <FontText
-              value={data.way + ' 방향'}
-              textSize="13px"
-              textWeight="Regular"
-              textColor={COLOR.GRAY_999}
-            />
-            {data.lanes[0].direct && (
-              <FontText value=" 급행" textSize="12px" textWeight="Regular" textColor="#EB5147" />
-            )}
-            <FontText
-              value={
+              text={
                 data.door !== 'null'
                   ? ` | 빠른환승 ${data.door === '0-0' ? '모든 칸' : data.door}`
                   : ''
               }
-              textSize="13px"
-              textWeight="Regular"
-              textColor={COLOR.GRAY_999}
+              className="text-13 text-gray-999"
             />
           </View>
 
           {/* 이슈박스 */}
-          {!data.lanes[0].issueSummary.length &&
-            data.lanes[0].issueSummary.map((issue) => (
-              <TouchableOpacity
-                className="flex-row pt-10 pb-12 pl-12 pr-10 mt-4 bg-white border border-[#f0f0f0] rounded-10"
-                activeOpacity={1}
-                onPress={() => {
-                  dispatch(getIssueId(issue.id));
-                  navigation.navigate('IssueStack', { screen: 'IssueDetail' });
-                }}
-              >
-                <View
-                  style={{
-                    marginTop: 4,
-                    marginRight: 8,
-                  }}
-                >
-                  <IssueKeywordIcon
-                    width={18}
-                    height={18}
-                    keyword={issue.keyword}
-                    color={subwayLineColor(data.lanes[0].stationCode)}
-                  />
-                </View>
-                <View className="flex-1 mr-8">
-                  <FontText
-                    value={issue.title}
-                    textSize="13px"
-                    textWeight="SemiBold"
-                    textColor={COLOR.BASIC_BLACK}
-                    numberOfLines={1}
-                    className="mb-2"
-                  />
-                  <FontText
-                    value={`도움돼요 ${issue.likeCount}개`}
-                    textSize="11px"
-                    textWeight="Medium"
-                    textColor={COLOR.GRAY_999}
-                  />
-                </View>
-                <View className="justify-center">
-                  <IconRightArrowHead className="mb-2" color={COLOR.GRAY_999} />
-                </View>
-              </TouchableOpacity>
-            ))}
+          {data.lanes[0].issueSummary.map((issue) => (
+            <TouchableOpacity
+              className="flex-row pt-10 pb-12 pl-12 pr-10 mt-4 bg-white border border-[#f0f0f0] rounded-10"
+              activeOpacity={1}
+              onPress={() => {
+                dispatch(getIssueId(issue.id));
+                navigation.navigate('IssueStack', { screen: 'IssueDetail' });
+              }}
+            >
+              <View className="mt-4 mr-8">
+                <IssueKeywordIcon
+                  width={18}
+                  height={18}
+                  keyword={issue.keyword}
+                  color={subwayLineColor(data.lanes[0].stationCode)}
+                />
+              </View>
+              <View className="flex-1 mr-8">
+                <FontText
+                  text={issue.title}
+                  numberOfLines={1}
+                  className="mb-2 text-13"
+                  fontWeight="600"
+                />
+                <FontText
+                  text={`도움돼요 ${issue.likeCount}개`}
+                  className="text-11 text-gray-999"
+                  fontWeight="500"
+                />
+              </View>
+              <View className="justify-center">
+                <IconRightArrowHead className="mb-2" color={COLOR.GRAY_999} />
+              </View>
+            </TouchableOpacity>
+          ))}
 
           <TouchableOpacity
             className="flex-row items-center mt-8"
@@ -136,7 +120,7 @@ const SearchPathDetailItem = ({ data, isLastLane, lineLength }: SearchPathDetail
             hitSlop={20}
           >
             <FontText
-              value={
+              text={
                 data.sectionTime > 60
                   ? data.stationCount +
                     '개역 (' +
@@ -146,13 +130,11 @@ const SearchPathDetailItem = ({ data, isLastLane, lineLength }: SearchPathDetail
                     '분)'
                   : data.stationCount + '개역 (' + data.sectionTime + '분)'
               }
-              textSize="13px"
-              textWeight="Regular"
-              textColor="#49454f"
+              className="text-13 text-[#49454f]"
             />
             {data.stations.length > 2 && (
               <>
-                <Space width="4px" />
+                <Space width={4} />
                 <IconDownArrowHead width={10} height={10} rotation={isOpenPathList ? 180 : 0} />
               </>
             )}
@@ -176,12 +158,7 @@ const SearchPathDetailItem = ({ data, isLastLane, lineLength }: SearchPathDetail
                           borderColor: subwayLineColor(data.lanes[0].stationCode),
                         }}
                       />
-                      <FontText
-                        value={item.stationName}
-                        textSize="13px"
-                        textWeight="Regular"
-                        textColor={COLOR.GRAY_999}
-                      />
+                      <FontText text={item.stationName} className="text-13 text-gray-999" />
                     </View>
                   );
                 }
@@ -198,13 +175,16 @@ const SearchPathDetailItem = ({ data, isLastLane, lineLength }: SearchPathDetail
             backgroundColor: subwayLineColor(data.lanes[0].stationCode),
           }}
         />
-        <FontText
-          value={data.stations[lastIdx].stationName}
-          textSize="18px"
-          textWeight="SemiBold"
-          textColor={subwayLineColor(data.lanes[0].stationCode)}
-          className="absolute top-[-1px] left-36"
-        />
+        <View className="ml-16">
+          <FontText
+            text={data.stations[lastIdx].stationName}
+            className="text-18"
+            fontWeight="600"
+            style={{
+              color: subwayLineColor(data.lanes[0].stationCode),
+            }}
+          />
+        </View>
       </View>
       {!isLastLane && (
         <View className="mt-[-20px] ml-[-25px] flex-row items-center">
@@ -212,7 +192,7 @@ const SearchPathDetailItem = ({ data, isLastLane, lineLength }: SearchPathDetail
             <IconWalkHuman width={24} height={24} />
           </View>
           <View className="overflow-hidden">
-            <View className="ml-9 w-4 h-60 z-[-1] bg-gray-dd" />
+            <View className="ml-9 w-4 h-60 z-[-1] bg-gray-ddd" />
           </View>
         </View>
       )}
@@ -223,12 +203,7 @@ const SearchPathDetailItem = ({ data, isLastLane, lineLength }: SearchPathDetail
             paddingTop: lineLength > 1 ? '66%' : '100%',
           }}
         >
-          <FontText
-            value="powered by www.ODsay.com"
-            textSize="10px"
-            textWeight="Regular"
-            textColor={COLOR.GRAY_DDD}
-          />
+          <FontText text="powered by www.ODsay.com" className="text-10 text-gray-ddd" />
         </View>
       )}
     </View>

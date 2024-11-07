@@ -4,9 +4,8 @@ import { FontText, Space } from '@/global/ui';
 import { subwayReturnLineName } from '@/global/utils/subwayLine';
 import { useAppDispatch, useAppSelect } from '@/store';
 import { getSeletedStation } from '@/store/modules/stationSearchModule';
-import styled from '@emotion/native';
 import { useState } from 'react';
-import { SafeAreaView, TouchableOpacity } from 'react-native';
+import { Pressable, SafeAreaView, ScrollView, TouchableOpacity, View } from 'react-native';
 import { Input } from '@/global/ui';
 import IconLocationPin from '@assets/icons/location_pin.svg';
 import { useHomeNavigation } from '@/navigation/HomeNavigation';
@@ -16,6 +15,7 @@ import IconXCircleFill from '@assets/icons/x_circle_fill.svg';
 import { RawSubwayLineName } from '@/global/apis/entity';
 import NoResultIcon from '@/assets/icons/no_result_icon.svg';
 import NoResultText from '@/assets/icons/no_result_text.svg';
+import cn from 'classname';
 
 const SearchStationScreen = () => {
   const navigation = useHomeNavigation();
@@ -80,50 +80,45 @@ const SearchStationScreen = () => {
         backgroundColor: COLOR.WHITE,
       }}
     >
-      <Container>
+      <View className="py-4 pl-[18.25px] pr-16 mx-16 mt-16 flex-row items-center rounded-28 border border-[#d4d4d4]">
         <TouchableOpacity activeOpacity={1} hitSlop={10} onPress={() => navigation.goBack()}>
           <IconLeftArrow />
         </TouchableOpacity>
-        <Space width="16px" />
-        <SearchInput
+        <Space width={16} />
+        <Input
           value={searchTextValue}
           placeholder={`${stationType}을 검색해보세요`}
           placeholderTextColor={COLOR.GRAY_BE}
           inputMode="search"
           onChangeText={changeSearchText}
           autoFocus
-          isSavingNewRoute
+          className="ml-[18.25px] mr-[31.2px] flex-1 h-36"
         />
         <TouchableOpacity activeOpacity={1} onPress={deleteInputText}>
           <IconXCircleFill />
         </TouchableOpacity>
-      </Container>
+      </View>
 
       {/* 입력어가 있고 && 검색 결과가 없으면 없음 표시 */}
       {!!searchTextValue && searchResultData.length < 1 && (
-        <NoResult>
+        <View className="items-center justify-center flex-1">
           <NoResultIcon />
-          <Space height="17px" />
+          <Space height={17} />
           <NoResultText />
-        </NoResult>
+        </View>
       )}
 
       {/* 최근 검색 목록 */}
       {isVerifiedUser === 'success auth' && !searchTextValue && (
-        <ResultContainer>
-          <Header>
-            <FontText
-              value="최근검색"
-              textSize="14px"
-              textWeight="Regular"
-              lineHeight={24}
-              textColor="#757575"
-            />
-          </Header>
+        <View className="flex-1">
+          <View className="pl-16 mt-18">
+            <FontText text="최근검색" className="text-14 leading-24 text-gray-575" />
+          </View>
 
-          <Ul marginTop="18px" keyboardShouldPersistTaps="handled">
+          <ScrollView className="mt-18" keyboardShouldPersistTaps="handled">
             {historyData?.map(({ stationName, stationLine }, index) => (
-              <Li
+              <Pressable
+                className="flex-row px-16 py-12 border-b gap-7 border-gray-beb"
                 key={index}
                 onPress={() =>
                   stationBtnHandler({
@@ -133,101 +128,45 @@ const SearchStationScreen = () => {
                 }
               >
                 <IconClock />
-                <StationInfoBox>
+                <View className="gap-[2.95px]">
                   <FontText
-                    value={stationName}
-                    textSize="16px"
-                    textWeight="Medium"
-                    lineHeight={21}
-                    textColor="#000"
+                    text={stationName.split('(')[0]}
+                    className="text-black leading-21"
+                    fontWeight="500"
                   />
-                  <FontText
-                    value={stationLine!}
-                    textSize="14px"
-                    textWeight="Regular"
-                    lineHeight={21}
-                    textColor={COLOR.GRAY_999}
-                  />
-                </StationInfoBox>
-              </Li>
+                  <FontText text={stationLine!} className="text-14 leading-21 text-gray-999" />
+                </View>
+              </Pressable>
             ))}
-          </Ul>
-        </ResultContainer>
+          </ScrollView>
+        </View>
       )}
 
       {!!searchTextValue && searchResultData.length > 0 && (
-        <ResultContainer>
-          <Ul marginTop="28px" keyboardShouldPersistTaps="handled">
+        <View className="flex-1">
+          <ScrollView className="mt-28" keyboardShouldPersistTaps="handled">
             {searchResultData.map(({ stationName, stationLine }, idx) => (
-              <Li key={idx} onPress={() => stationBtnHandler({ stationLine, stationName })}>
+              <Pressable
+                className="flex-row px-16 py-12 border-b gap-7 border-gray-beb"
+                key={idx}
+                onPress={() => stationBtnHandler({ stationLine, stationName })}
+              >
                 <IconLocationPin />
-                <StationInfoBox>
+                <View className="gap-[2.95px]">
                   <FontText
-                    value={stationName}
-                    textSize="16px"
-                    textWeight="Medium"
-                    lineHeight={21}
-                    textColor="#000"
+                    text={stationName.split('(')[0]}
+                    className="text-black leading-21"
+                    fontWeight="500"
                   />
-                  <FontText
-                    value={stationLine!}
-                    textSize="14px"
-                    textWeight="Regular"
-                    lineHeight={21}
-                    textColor={COLOR.GRAY_999}
-                  />
-                </StationInfoBox>
-              </Li>
+                  <FontText text={stationLine!} className="text-14 leading-21 text-gray-99" />
+                </View>
+              </Pressable>
             ))}
-          </Ul>
-        </ResultContainer>
+          </ScrollView>
+        </View>
       )}
     </SafeAreaView>
   );
 };
 
 export default SearchStationScreen;
-
-const Container = styled.View`
-  flex-direction: row;
-  align-items: center;
-  border-radius: 28px;
-  border: 1px solid #d4d4d4;
-  padding: 4px 16px 4px 18.25px;
-  margin: 16px 16px 0;
-`;
-const SearchInput = styled(Input)<{ isSavingNewRoute?: boolean }>`
-  height: 36px;
-  flex: 1;
-  margin-left: ${({ isSavingNewRoute }) => (isSavingNewRoute ? '1.75px' : '18.25px')};
-  margin-right: 31.2px;
-`;
-const ResultContainer = styled.View`
-  flex: 1;
-`;
-const Header = styled.View`
-  padding-left: 16px;
-  margin-top: 18px;
-`;
-const Ul = styled.ScrollView<{ marginTop: string }>`
-  margin-top: ${({ marginTop }) => marginTop};
-`;
-const Li = styled.Pressable`
-  flex-direction: row;
-  gap: 7px;
-  padding: 12px 16px;
-  border-bottom-width: 1px;
-  border-bottom-color: ${COLOR.GRAY_EB};
-`;
-const StationInfoBox = styled.View`
-  gap: 2.95px;
-`;
-const LocateIcon = styled.Image`
-  width: 25px;
-  height: 25px;
-`;
-const NoResult = styled.View`
-  flex: 1;
-  align-items: center;
-  justify-content: center;
-`;

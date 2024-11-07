@@ -80,13 +80,9 @@ const SearchStation = () => {
 
       {!searchTextValue ? (
         <View className="flex-1 pt-18">
-          <FontText
-            className="pl-16"
-            value="최근검색"
-            textSize="14px"
-            textWeight="Regular"
-            textColor="#757575"
-          />
+          <View style={{ paddingLeft: 16 }}>
+            <FontText text="최근검색" className="text-14 text-[#757575]" />
+          </View>
 
           <ScrollView className="mt-18" keyboardShouldPersistTaps="handled">
             {historyData?.map(({ stationName, stationLine }, index) => (
@@ -102,22 +98,17 @@ const SearchStation = () => {
                   }
                 >
                   <IconClock />
-                  <View className="gap-3">
+                  <View>
                     <FontText
-                      value={stationName}
-                      textSize="16px"
-                      textWeight="Medium"
-                      textColor="#000"
+                      text={stationName.split('(')[0]}
+                      className="text-black"
+                      fontWeight="500"
                     />
-                    <FontText
-                      value={stationLine!}
-                      textSize="14px"
-                      textWeight="Regular"
-                      textColor={COLOR.GRAY_999}
-                    />
+                    <View className="h-3" />
+                    <FontText text={stationLine!} className="text-14 text-gray-999" />
                   </View>
                 </TouchableOpacity>
-                <View className="h-1 bg-gray-eb" />
+                <View className="h-1 bg-gray-beb" />
               </>
             ))}
           </ScrollView>
@@ -133,7 +124,7 @@ const SearchStation = () => {
           )}
           {/* 입력어가 있고 && 검색 결과가 있으면 결과 표시 */}
           {searchResultData.length > 0 && (
-            <ScrollView className="mt-28">
+            <ScrollView className="mt-28" keyboardShouldPersistTaps="handled">
               {searchResultData.map(({ stationName, stationLine }, idx) => (
                 <>
                   <TouchableOpacity
@@ -142,24 +133,17 @@ const SearchStation = () => {
                     onPress={() => stationBtnHandler({ stationLine, stationName })}
                   >
                     <IconLocationPin />
-                    <View className="gap-3">
+                    <View>
                       <FontText
-                        value={stationName}
-                        textSize="16px"
-                        textWeight="Medium"
-                        lineHeight="21px"
-                        textColor="#000"
+                        text={stationName.split('(')[0]}
+                        className="text-black leading-21"
+                        fontWeight="500"
                       />
-                      <FontText
-                        value={stationLine!}
-                        textSize="14px"
-                        textWeight="Regular"
-                        lineHeight="21px"
-                        textColor={COLOR.GRAY_999}
-                      />
+                      <View className="h-3" />
+                      <FontText text={stationLine!} className="text-14 text-gray-999 leading-21" />
                     </View>
                   </TouchableOpacity>
-                  <View className="h-1 bg-gray-eb" />
+                  <View className="h-1 bg-gray-beb" />
                 </>
               ))}
             </ScrollView>

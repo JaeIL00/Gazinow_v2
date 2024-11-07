@@ -93,7 +93,7 @@ const SubscribeTermsModal = ({ setStep, closeModal }: SubscribeTermsModalProps) 
     <Modal visible onRequestClose={!!openUrl ? () => setOpenUrl('') : closeModal} transparent>
       {!!openUrl ? (
         <SafeAreaView className="flex-1">
-          <View className="pl-16 pt-13 pb-10 bg-white border-b-1 border-gray-dd">
+          <View className="pb-10 pl-16 bg-white pt-13 border-b-1 border-gray-ddd">
             <TouchableOpacity hitSlop={20} activeOpacity={1} onPress={() => setOpenUrl('')}>
               <IconX width={24} height={24} />
             </TouchableOpacity>
@@ -114,18 +114,13 @@ const SubscribeTermsModal = ({ setStep, closeModal }: SubscribeTermsModalProps) 
             >
               <Pressable
                 hitSlop={10}
-                className="flex-row items-center mb-15 py-13 pl-10 bg-gray-f9 rounded-5"
+                className="flex-row items-center pl-10 mb-15 py-13 bg-gray-9f9 rounded-5"
                 onPress={allChangeAgreeTerms}
               >
-                <View className="bg-gray-e3 rounded-3 w-22 h-22 mr-10 items-center justify-center">
+                <View className="items-center justify-center mr-10 bg-gray-3e3 rounded-3 w-22 h-22">
                   {isCheckAll && <IconCheck width={18} height={18} color={COLOR.WHITE} />}
                 </View>
-                <FontText
-                  value="약관 전체 동의"
-                  textSize="14px"
-                  textWeight="SemiBold"
-                  textColor={COLOR.BASIC_BLACK}
-                />
+                <FontText text="약관 전체 동의" className="text-14" fontWeight="600" />
               </Pressable>
 
               <View className="flex-1">
@@ -133,21 +128,16 @@ const SubscribeTermsModal = ({ setStep, closeModal }: SubscribeTermsModalProps) 
                   <Pressable
                     key={text}
                     hitSlop={10}
-                    className="flex-row items-center justify-between mb-24 pl-10"
+                    className="flex-row items-center justify-between pl-10 mb-24"
                     onPress={() => changeAgreeTerms(text)}
                   >
                     <View className="flex-row items-center">
-                      <View className="rounded-3 bg-gray-e3 w-22 h-22 mr-10 items-center justify-center">
+                      <View className="items-center justify-center mr-10 rounded-3 bg-gray-3e3 w-22 h-22">
                         {agreeTerms.includes(text) && (
                           <IconCheck width={18} height={18} color={COLOR.WHITE} />
                         )}
                       </View>
-                      <FontText
-                        value={text}
-                        textSize="14px"
-                        textWeight="SemiBold"
-                        textColor={COLOR.BASIC_BLACK}
-                      />
+                      <FontText text={text} className="test-14" fontWeight="600" />
                     </View>
                     <TouchableOpacity hitSlop={20} onPress={() => webViewHandler(text)}>
                       <IconRightArrowHead width={12} height={12} color={COLOR.GRAY_CA} />

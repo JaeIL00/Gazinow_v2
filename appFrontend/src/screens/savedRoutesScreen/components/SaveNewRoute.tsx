@@ -67,17 +67,12 @@ const SaveNewRoute = () => {
               pathData={freshSubPathData}
               arriveStationName={resultData.lastEndStation}
               betweenPathMargin={24}
+              isHideIsuue
             />
           </View>
-          <FontText
-            value="새 경로 이름"
-            textSize="14px"
-            textWeight="Medium"
-            lineHeight={21}
-            textColor={COLOR.BASIC_BLACK}
-          />
+          <FontText text="새 경로 이름" className="text-14 leading-21" fontWeight="500" />
           <Input
-            className="px-16 py-12 my-7 rounded-5 bg-gray-f9"
+            className="px-16 py-12 my-7 rounded-5 bg-gray-9f9"
             placeholder="경로 이름을 입력하세요"
             value={roadName}
             onChangeText={(text) => {
@@ -93,29 +88,24 @@ const SaveNewRoute = () => {
               <View className="flex-row items-center h-14 ml-9">
                 <XCircle width={14} />
                 <FontText
-                  value={` 이미 존재하는 이름입니다`}
-                  textSize="12px"
-                  textWeight="Medium"
-                  lineHeight={14}
-                  textColor={COLOR.LIGHT_RED}
+                  text={` 이미 존재하는 이름입니다`}
+                  className="text-12 text-light-red leading-14"
+                  fontWeight="500"
                 />
               </View>
             ) : (
               <View />
             )}
             <FontText
-              value={`${roadName?.length ? roadName.length : 0}/10`}
-              textSize="12px"
-              textWeight="Regular"
-              textColor={COLOR.GRAY_999}
-              lineHeight={14}
+              text={`${roadName?.length ? roadName.length : 0}/10`}
+              className="text-12 text-gray-999 leading-14"
             />
           </View>
         </View>
         <TouchableOpacity
           className={cn('py-11 items-center', {
-            'bg-gray-dd': !roadName || isLoading || isDuplicatedName,
-            'bg-black-17': roadName && !isLoading && !isDuplicatedName,
+            'bg-gray-ddd': !roadName || isLoading || isDuplicatedName,
+            'bg-black-717': roadName && !isLoading && !isDuplicatedName,
             'mb-41 mx-16 rounded-5': !isKeyboardVisible,
           })}
           onPress={() => {
@@ -127,7 +117,7 @@ const SaveNewRoute = () => {
           }}
           disabled={!roadName || isLoading || isDuplicatedName}
         >
-          <FontText value="완료" textSize="17px" textWeight="SemiBold" textColor={COLOR.WHITE} />
+          <FontText text="완료" className="text-white text-17" fontWeight="600" />
         </TouchableOpacity>
       </SafeAreaView>
     </KeyboardAvoidingView>

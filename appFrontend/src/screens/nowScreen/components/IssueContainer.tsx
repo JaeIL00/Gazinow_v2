@@ -30,30 +30,16 @@ const IssueContainer = ({ issue, isLastItem, isHeader }: IssueDetailProps) => {
         }}
       >
         <LaneCapsulesPerIssue lanes={issue.lines} />
-        <FontText value={issue.title} textSize="16px" textWeight="SemiBold" numberOfLines={2} />
+        <FontText text={issue.title} fontWeight="600" numberOfLines={2} />
         <View className="h-4" />
-        <FontText
-          value={dayjs(issue.agoTime).fromNow()}
-          textSize="14px"
-          textWeight="Regular"
-          textColor={COLOR.GRAY_999}
-        />
+        <FontText text={dayjs(issue.startDate).fromNow()} className="text-14 text-gray-999" />
         <View className="h-4" />
-        <FontText
-          value={issue.content}
-          textSize="14px"
-          textWeight="Regular"
-          textColor="#6A6A6A"
-          numberOfLines={2}
-        />
+        <FontText text={issue.content} className="text-14 text-[#6A6A6A]" numberOfLines={2} />
       </TouchableOpacity>
-      {!isLastItem && <View className="h-1 w-999 bg-gray-f8" />}
-      {isHeader && isLastItem && (
-        <>
-          <View className="h-12 bg-white w-999" />
-          <View className="h-8 w-999 bg-gray-f8" />
-          <View className="h-12 bg-white w-999" />
-        </>
+      {isLastItem ? (
+        isHeader && <View className="h-8 my-12 w-999 bg-gray-8f8" />
+      ) : (
+        <View className="h-1 w-999 bg-gray-8f8" />
       )}
     </>
   );

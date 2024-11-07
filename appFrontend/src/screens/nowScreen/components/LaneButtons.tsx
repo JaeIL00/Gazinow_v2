@@ -19,13 +19,13 @@ const LaneButtons = ({ activeButton, setActiveButton, titleNotShown }: LaneButto
   const isVerifiedUser = useAppSelect((state) => state.auth.isVerifiedUser);
 
   // 내가 저장한 경로의 노선만 가져옴
-  const { data: savedRoutes } = useGetSavedRoutesQuery();
+  const { myRoutes } = useGetSavedRoutesQuery();
 
   let savedStations: string[] | undefined;
 
   // isVerifiedUser 상태에 따라 표시할 노선 캡슐 변경
   if (isVerifiedUser === 'success auth') {
-    savedStations = savedRoutes?.reduce((acc, current) => {
+    savedStations = myRoutes?.reduce((acc, current) => {
       const { subPaths } = current;
       const lineOfSubPath = subPaths.map((sub: SubPath) => {
         return pathSubwayLineNameInLine(sub.lanes[0].stationCode);
@@ -44,12 +44,11 @@ const LaneButtons = ({ activeButton, setActiveButton, titleNotShown }: LaneButto
   return (
     <View className="bg-white">
       {!titleNotShown ? (
-        <View className="pt-24 px-16 pb-12">
+        <View className="px-16 pt-24 pb-12">
           <FontText
-            value={activeButton === '전체' ? '전체' : `${activeButton} NOW`}
-            textSize="20px"
-            textWeight="SemiBold"
-            lineHeight={25}
+            text={activeButton === '전체' ? '전체' : `${activeButton} NOW`}
+            className="text-20 leading-25"
+            fontWeight="600"
           />
         </View>
       ) : (
@@ -65,15 +64,17 @@ const LaneButtons = ({ activeButton, setActiveButton, titleNotShown }: LaneButto
                 key={text}
                 onPress={() => setActiveButton(text as NowScreenCapsules)}
                 className={cn('px-12 py-8 mr-6 rounded-999 border-1', {
-                  'bg-black-17 border-transparent': activeButton === text,
-                  'bg-white border-gray-eb': activeButton !== text,
+                  'bg-black-717 border-transparent': activeButton === text,
+                  'bg-white border-gray-beb': activeButton !== text,
                 })}
               >
                 <FontText
-                  value={text}
-                  textSize="14px"
-                  textWeight="Medium"
-                  textColor={activeButton === text ? 'white' : '#969696'}
+                  text={text}
+                  className={cn('text-14', {
+                    'text-white': activeButton === text,
+                    'text-[#969696]': activeButton !== text,
+                  })}
+                  fontWeight="500"
                 />
               </TouchableOpacity>
             ))}

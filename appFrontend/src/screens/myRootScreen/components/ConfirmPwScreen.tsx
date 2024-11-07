@@ -67,28 +67,23 @@ const ConfirmPwScreen = () => {
       <SafeAreaView className="flex-1 bg-white">
         <View className="flex-1 px-16">
           <TouchableOpacity
-            className="flex-row items-center h-56 pl-4"
+            className="flex-row items-center h-56"
             onPress={() => myPageNavigation.goBack()}
           >
-            <IconLeftArrowHead color="#3F3F46" />
+            <IconLeftArrowHead width={24} color="#3F3F46" />
           </TouchableOpacity>
 
-          <View className="flex-1 bg-white">
-            <View className="gap-20 pt-43 pb-29">
-              <FontText value="비밀번호 입력" textSize="24px" textWeight="SemiBold" />
-              <FontText
-                value="탈퇴를 위해 비밀번호를 입력해주세요."
-                textSize="16px"
-                textWeight="Regular"
-              />
+          <View className="flex-1">
+            <View className="pt-43 pb-29">
+              <FontText text="비밀번호 입력" className="text-24" fontWeight="600" />
+              <View className="h-20" />
+              <FontText text="탈퇴를 위해 비밀번호를 입력해주세요." />
             </View>
 
             <FontText
-              value="Password"
-              textSize="14px"
-              textWeight="Medium"
-              lineHeight={21}
-              textColor="#7C8183 "
+              text="Password"
+              className="text-14 leadinig-21 text-gray-183"
+              fontWeight="500"
             />
 
             <Input
@@ -103,19 +98,14 @@ const ConfirmPwScreen = () => {
           </View>
 
           <TouchableOpacity
-            className={cn('py-11 mb-40 rounded-5 items-center', {
-              'bg-black-17': isPwRight,
-              'bg-gray-dd': !isPwRight,
+            className={cn('py-11 mb-41 rounded-5 items-center', {
+              'bg-black-717': isPwRight,
+              'bg-gray-ddd': !isPwRight,
             })}
             onPress={() => deleteAccountMutate()}
             disabled={!isPwRight}
           >
-            <FontText
-              value="탈퇴하기"
-              textSize="17px"
-              textWeight="SemiBold"
-              textColor={COLOR.WHITE}
-            />
+            <FontText text="탈퇴하기" className="text-white text-17" fontWeight="600" />
           </TouchableOpacity>
         </View>
       </SafeAreaView>

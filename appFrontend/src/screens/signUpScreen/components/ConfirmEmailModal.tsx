@@ -1,11 +1,13 @@
 import { COLOR } from '@/global/constants';
-import { FontText, Input, TextButton } from '@/global/ui';
+import cn from 'classname';
+import { FontText, Input } from '@/global/ui';
 import { useEffect, useRef, useState } from 'react';
 import {
   Animated,
   KeyboardAvoidingView,
   Modal,
   Platform,
+  Pressable,
   TouchableOpacity,
   View,
 } from 'react-native';
@@ -72,9 +74,9 @@ const ConfirmEmailModal = ({
       {/* 백그라운드 */}
       <View className="flex-1 bg-[#00000099]">
         {/* 콘텐츠 */}
-        <KeyboardAvoidingView behavior="height" className="flex-1 justify-end">
+        <KeyboardAvoidingView behavior="height" className="justify-end flex-1">
           <Animated.View
-            className="flex-1 bg-white pt-32 px-16"
+            className="flex-1 px-16 pt-32 bg-white"
             style={{
               borderTopStartRadius: 14,
               borderTopEndRadius: 14,
@@ -87,14 +89,13 @@ const ConfirmEmailModal = ({
             </TouchableOpacity>
 
             <FontText
-              value={`메일로 받은 인증번호를\n입력해주세요`}
-              textSize="24px"
-              textWeight="Bold"
-              textColor={COLOR.BASIC_BLACK}
+              text={`메일로 받은 인증번호를\n입력해주세요`}
+              className="text-24"
+              fontWeight="700"
             />
 
             <View className="flex-1 mt-57">
-              <View className="bg-gray-f2 px-16 py-13 justify-center rounded-5 flex-row items-center">
+              <View className="flex-row items-center justify-center px-16 bg-gray-f2 py-13 rounded-5">
                 <Input
                   value={authNumberValue}
                   placeholder="인증번호 4자리"
@@ -105,48 +106,35 @@ const ConfirmEmailModal = ({
                   className="flex-1 h-25"
                   maxLength={4}
                 />
-                <FontText
-                  value={timerValue.minutes + ':' + freshTimerSeconds}
-                  textSize="13px"
-                  textWeight="Regular"
-                  textColor={COLOR.BASIC_BLACK}
-                />
+                <FontText text={timerValue.minutes + ':' + freshTimerSeconds} className="text-13" />
               </View>
 
               <View className="flex-row items-center ml-[10.17] mt-7">
                 {isNotPass && <IconXCircle width={14} height={14} />}
                 <View className="w-3" />
                 <FontText
-                  value={
+                  text={
                     timerValue.minutes === 0 && timerValue.seconds === 0
                       ? '인증번호 만료시간이 지났습니다'
                       : '인증번호가 일치하지 않습니다'
                   }
-                  textSize="12px"
-                  textWeight="Medium"
-                  textColor={isNotPass ? COLOR.LIGHT_RED : 'transparent'}
+                  className={cn('text-12 text-transparent', {
+                    'text-light-red': isNotPass,
+                  })}
+                  fontWeight="500"
                 />
               </View>
 
-              <View className="flex-row justify-center mt-34 items-start">
-                <FontText
-                  value="메일을 받지 못하셨나요?"
-                  textSize="13px"
-                  textWeight="Regular"
-                  textColor={COLOR.GRAY_999}
-                />
+              <View className="flex-row items-start justify-center mt-34">
+                <FontText text="메일을 받지 못하셨나요?" className="text-13 text-gray-9999" />
                 <View className="w-8" />
                 {isLoading ? (
                   <LoadingCircle color="gray" width={34} height={27} />
                 ) : (
-                  <TextButton
-                    value="재전송"
-                    textSize="13px"
-                    textWeight="Bold"
-                    textColor={COLOR.GRAY_999}
-                    isTextUnderline
-                    onPress={emailConfirmMutateHandler}
-                  />
+                  <Pressable onPress={emailConfirmMutateHandler}>
+                    <FontText text="재전송" className="text-13 text-gray-999" fontWeight="700" />
+                    <View style={{ borderBottomWidth: 1.5, borderBottomColor: COLOR.GRAY_999 }} />
+                  </Pressable>
                 )}
               </View>
             </View>

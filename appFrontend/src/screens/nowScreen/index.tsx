@@ -44,18 +44,31 @@ const NowScreen = () => {
   useEffect(() => {
     queryClient.invalidateQueries(['getAllIssues', 'getIssuesByLane', 'getPopularIssues']);
     setIssuesList([]);
+
     if (isRefresh) {
-      popularIssuesRefetch();
+      const refetchPopularIssues = async () => {
+        await popularIssuesRefetch();
+        setRefresh(false);
+      };
+      refetchPopularIssues();
     }
-    if (activeButton === '전체' && allIssues) {
-      allIssuesRefetch();
-      setIssuesList(allIssues?.pages.flatMap((page) => page.content));
-    } else if (activeButton !== '전체' && laneIssues) {
-      laneIssuesRefetch();
-      setIssuesList(laneIssues?.pages.flatMap((page) => page.content));
-    }
-    setRefresh(false);
-  }, [allIssues, laneIssues, activeButton, isRefresh]);
+
+    const refetchFilteredIssues = async () => {
+      if (activeButton === '전체') {
+        const allIssuesResult = await allIssuesRefetch();
+        if (allIssuesResult?.data) {
+          setIssuesList(allIssuesResult.data.pages.flatMap((page) => page.content));
+        }
+      } else {
+        const laneIssuesResult = await laneIssuesRefetch();
+        if (laneIssuesResult?.data) {
+          setIssuesList(laneIssuesResult.data.pages.flatMap((page) => page.content));
+        }
+      }
+    };
+
+    refetchFilteredIssues();
+  }, [activeButton, isRefresh]);
 
   const onEndReached = () => {
     if (activeButton === '전체' && allIssuesHasNextPage) {
@@ -82,7 +95,7 @@ const NowScreen = () => {
       ) : (
         <>
           <View className="pt-32 pl-16 pb-11">
-            <FontText value="NOW" textSize="24px" textWeight="SemiBold" lineHeight={34} />
+            <FontText text="NOW" className="text-24 leading-34" fontWeight="600" />
           </View>
           <FlatList
             ListHeaderComponent={
@@ -97,10 +110,9 @@ const NowScreen = () => {
                     >
                       <View className="pt-24 pb-12 pl-16">
                         <FontText
-                          value="지금 인기"
-                          textSize="20px"
-                          textWeight="SemiBold"
-                          lineHeight={25}
+                          text="지금 인기"
+                          className="text-20 leadiing-20"
+                          fontWeight="600"
                         />
                       </View>
                       {popularIssues?.map((item, index) => (
@@ -149,12 +161,9 @@ const NowScreen = () => {
                 } else if (index === 2 && issuesList.length < 1) {
                   return (
                     <FontText
-                      value="올라온 이슈가 없어요"
-                      textSize="18px"
-                      textWeight="Regular"
-                      lineHeight={700}
-                      textColor={COLOR.GRAY_999}
-                      textAlign="center"
+                      text="올라온 이슈가 없어요"
+                      className="text-18 text-gray-999 leading-[700px] text-center"
+                      fontWeight="700"
                     />
                   );
                 } else if (index === issuesList.length + 2) return null;
@@ -175,7 +184,7 @@ const NowScreen = () => {
               } else if (issuesList.length < 1) {
                 return null;
               } else {
-                return <Space height={`${700 - issuesList.length * 100}px`} />;
+                return <Space height={700 - issuesList.length * 100} />;
               }
             }}
             keyExtractor={(item, index) => `${item.id}_${index}`}

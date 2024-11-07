@@ -10,7 +10,7 @@ const SubscribeTermsScreen = () => {
       <TouchableOpacity className="pl-16 pt-13 pb-10" onPress={() => myPageNavigation.goBack()}>
         <IconCrossX width="24px" />
       </TouchableOpacity>
-      <View className="bg-gray-eb h-1" />
+      <View className="bg-gray-beb h-1" />
       <WebView
         source={{
           uri: 'https://reflective-pincushion-d6c.notion.site/ver-1-12bd734b37b34bbaa58741e7f72bbda0',

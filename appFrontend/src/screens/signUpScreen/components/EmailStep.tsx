@@ -10,9 +10,7 @@ import StepButton from '../ui/StepButton';
 import IconCheck from '@assets/icons/check.svg';
 import IconXCircle from '@assets/icons/x-circle-standard.svg';
 
-const emailValidation = new RegExp(
-  /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i,
-);
+const emailValidation = new RegExp(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/);
 
 export interface TimerType {
   minutes: number;
@@ -104,24 +102,17 @@ const EmailStep = ({ emailValue, setStep, changeEmailValue }: EmailStepProps) =>
       )}
 
       <View className="flex-1">
-        <View className="mb-51 gap-10">
+        <View className="gap-10 mb-51">
+          <FontText text="회원가입" className="text-24" fontWeight="700" />
           <FontText
-            value="회원가입"
-            textSize="24px"
-            textWeight="Bold"
-            textColor={COLOR.BASIC_BLACK}
-          />
-          <FontText
-            value="본인인증을 위한 이메일을 입력해주세요"
-            textSize="13px"
-            textWeight="Regular"
-            textColor={COLOR.GRAY_999}
+            text="본인인증을 위한 이메일을 입력해주세요"
+            className="text-13 text-gray-9999"
           />
         </View>
 
         <View className="flex-1">
-          <FontText value="Email" textSize="14px" textWeight="Medium" textColor="#7c8183" />
-          <View className="bg-gray-f2 py-13 mt-6 mb-8 justify-center pl-16 rounded-5">
+          <FontText text="Email" className="text-14 text-gray-183" fontWeight="500" />
+          <View className="justify-center pl-16 mt-6 mb-8 bg-gray-f2 py-13 rounded-5">
             <Input
               isBlur={isOpenConfirmModal}
               value={emailValue}
@@ -139,10 +130,9 @@ const EmailStep = ({ emailValue, setStep, changeEmailValue }: EmailStepProps) =>
                 <IconCheck width={14} height={14} color={COLOR.LIGHT_GREEN} />
                 <View className="w-3" />
                 <FontText
-                  value="올바른 이메일 형식입니다"
-                  textSize="12px"
-                  textWeight="Medium"
-                  textColor={COLOR.LIGHT_GREEN}
+                  text="올바른 이메일 형식입니다"
+                  className="text-12 text-light-green"
+                  fontWeight="500"
                 />
               </>
             )}
@@ -151,10 +141,9 @@ const EmailStep = ({ emailValue, setStep, changeEmailValue }: EmailStepProps) =>
                 <IconXCircle width={14} height={14} />
                 <View className="w-3" />
                 <FontText
-                  value="올바른 이메일 형식이 아닙니다"
-                  textSize="12px"
-                  textWeight="Medium"
-                  textColor={COLOR.LIGHT_RED}
+                  text="올바른 이메일 형식이 아닙니다"
+                  className="text-12 text-light-red"
+                  fontWeight="500"
                 />
               </>
             )}
@@ -162,12 +151,7 @@ const EmailStep = ({ emailValue, setStep, changeEmailValue }: EmailStepProps) =>
               <>
                 <IconXCircle width={14} height={14} />
                 <View className="w-3" />
-                <FontText
-                  value={errorMessage}
-                  textSize="12px"
-                  textWeight="Medium"
-                  textColor={COLOR.LIGHT_RED}
-                />
+                <FontText text={errorMessage} className="text-12 text-light-red" fontWeight="500" />
               </>
             )}
           </View>

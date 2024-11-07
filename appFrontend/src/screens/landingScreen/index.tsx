@@ -1,8 +1,9 @@
 import { COLOR } from '@/global/constants';
-import { FontText, TextButton } from '@/global/ui';
+import { FontText } from '@/global/ui';
 import { useAuthNavigation } from '@/navigation/AuthNavigation';
-import { Animated, SafeAreaView, TouchableOpacity, View } from 'react-native';
+import { Animated, Pressable, SafeAreaView, TouchableOpacity, View } from 'react-native';
 import IconLeftArrow from '@assets/icons/left_arrow_head.svg';
+import SocialLogin from './components/SocialLogin';
 
 const LandingScreen = () => {
   const navigation = useAuthNavigation();
@@ -49,22 +50,19 @@ const LandingScreen = () => {
 
         <View style={{ marginLeft: 37, marginTop: 68 }}>
           <FontText
-            value="가는길 지금,"
-            textSize="27.34px"
-            textWeight="Bold"
-            lineHeight={36.454}
-            textColor={COLOR.WHITE}
+            text="가는길 지금,"
+            className="text-27 leading-[36.454px] text-white"
+            fontWeight="700"
           />
           <FontText
-            value={`무슨 일이\n일어나고 있을까요?`}
-            textSize="27.34px"
-            textWeight="Regular"
-            lineHeight={36.454}
-            textColor={COLOR.WHITE}
+            text={`무슨 일이\n일어나고 있을까요?`}
+            className="text-27 leading-[36.454px] text-white"
           />
         </View>
 
         <View style={{ flex: 1 }} />
+
+        <SocialLogin />
 
         <View
           style={{
@@ -74,29 +72,15 @@ const LandingScreen = () => {
             flexDirection: 'row',
           }}
         >
-          <TextButton
-            value="이메일 로그인"
-            textSize="13px"
-            textWeight="Medium"
-            textColor={COLOR.WHITE}
-            onPress={() => navigation.navigate('SignIn')}
-            hitSlop={20}
-          />
-          <FontText
-            value="|"
-            textSize="13px"
-            textWeight="Regular"
-            textColor={COLOR.WHITE}
-            style={{ marginHorizontal: 8 }}
-          />
-          <TextButton
-            value="이메일 회원가입"
-            textSize="13px"
-            textWeight="Medium"
-            textColor={COLOR.WHITE}
-            onPress={() => navigation.navigate('SignUp')}
-            hitSlop={20}
-          />
+          <Pressable hitSlop={20} onPress={() => navigation.navigate('SignIn')}>
+            <FontText text="이메일 로그인" className="text-white text-13" fontWeight="500" />
+          </Pressable>
+          <View style={{ marginHorizontal: 8 }}>
+            <FontText text="|" className="text-white text-13" />
+          </View>
+          <Pressable hitSlop={20} onPress={() => navigation.navigate('SignUp')}>
+            <FontText text="이메일 회원가입" className="text-white text-13" fontWeight="500" />
+          </Pressable>
         </View>
       </SafeAreaView>
     </View>

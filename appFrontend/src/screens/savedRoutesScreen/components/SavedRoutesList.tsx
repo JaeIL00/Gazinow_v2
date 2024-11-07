@@ -20,7 +20,7 @@ const SavedRoutesList = () => {
     },
   });
 
-  const { data: savedRoutes } = useGetSavedRoutesQuery();
+  const { myRoutes } = useGetSavedRoutesQuery();
 
   const showDeletePopup = (id: number) => {
     setRouteToDelete(id);
@@ -36,30 +36,19 @@ const SavedRoutesList = () => {
 
   return (
     <>
-      {savedRoutes?.map((item) => (
-        <View className="px-16 pt-20 pb-8 border-b-1 border-gray-eb" key={item.id}>
+      {myRoutes?.map((item) => (
+        <View className="px-16 pt-20 pb-8 border-b-1 border-gray-beb" key={item.id}>
           <View className="flex-row items-center justify-between mb-24">
-            <FontText
-              value={item.roadName}
-              textSize="18px"
-              textWeight="SemiBold"
-              lineHeight="23px"
-              textColor={COLOR.BASIC_BLACK}
-            />
+            <FontText text={item.roadName} className="text-18 leading-23" fontWeight="600" />
             <TouchableOpacity onPress={() => showDeletePopup(item.id)} hitSlop={20}>
-              <FontText
-                value="삭제"
-                textSize="13px"
-                textColor={COLOR.GRAY_999}
-                textWeight="Regular"
-                lineHeight="19px"
-              />
+              <FontText text="삭제" className="text-13 text-gray-999 leading-19" />
             </TouchableOpacity>
           </View>
           <SubwaySimplePath
             pathData={item.subPaths}
             arriveStationName={item.lastEndStation}
             betweenPathMargin={24}
+            isHideIsuue
           />
         </View>
       ))}

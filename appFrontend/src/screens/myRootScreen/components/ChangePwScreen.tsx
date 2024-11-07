@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
+import cn from 'classname';
 import { Alert, SafeAreaView, TouchableOpacity, View } from 'react-native';
 import { FontText, Input } from '@/global/ui';
 import { COLOR } from '@/global/constants';
@@ -111,29 +112,28 @@ const ChangePwScreen = () => {
       <View className="px-16">
         <View className="flex-row items-center justify-between mb-39">
           <TouchableOpacity
-            className="flex-row items-center gap-16 py-16"
+            className="flex-row items-center py-16"
             onPress={() => myPageNavigation.goBack()}
           >
-            <IconLeftArrowHead color="#3F3F46" width={24} />
-            <FontText value="비밀번호 변경" textSize="18px" lineHeight={23} textWeight="Medium" />
+            <IconLeftArrowHead color="#3F3F46" width={24} className="mr-12" />
+            <FontText text="비밀번호 변경" className="text-18 leading-23" fontWeight="500" />
           </TouchableOpacity>
           <TouchableOpacity onPress={onPressDone} disabled={isDoneBtnDisabled}>
             <FontText
-              value="완료"
-              textSize="16px"
-              textColor={isDoneBtnDisabled ? COLOR.GRAY_999 : COLOR.BASIC_BLACK}
-              textWeight="SemiBold"
-              lineHeight={21}
+              text="완료"
+              className={cn('leading-21', {
+                'text-gray-999': isDoneBtnDisabled,
+                'text-black-717': !isDoneBtnDisabled,
+              })}
+              fontWeight="600"
             />
           </TouchableOpacity>
         </View>
 
         <FontText
-          value="현재 비밀번호"
-          textSize="14px"
-          textWeight="Medium"
-          lineHeight={21}
-          textColor={COLOR.BASIC_BLACK}
+          text="현재 비밀번호"
+          className="text-14 leading-21 text-black-717"
+          fontWeight="500"
         />
         <Input
           className="py-12 mt-6 mb-2 px-18 rounded-5 bg-gray-f2"
@@ -146,25 +146,19 @@ const ChangePwScreen = () => {
           secureTextEntry
         />
         {curPassword !== '' && (
-          <View className="flex-row items-center mt-6 ml-9">
+          <View className="flex-row items-center mt-6 mb-10 ml-9">
             {isPwRight ? <IconCheck stroke={COLOR.LIGHT_GREEN} /> : <XCircle width={14} />}
             <FontText
-              value={isPwRight ? ' 비밀번호가 확인되었습니다' : ' 비밀번호가 틀립니다'}
-              textSize="12px"
-              textWeight="Medium"
-              lineHeight={14}
-              textColor={isPwRight ? COLOR.LIGHT_GREEN : COLOR.LIGHT_RED}
+              text={isPwRight ? ' 비밀번호가 확인되었습니다' : ' 비밀번호가 틀립니다'}
+              className={cn('text-12 leading-14', {
+                'text-light-green': isPwRight,
+                'text-light-red': !isPwRight,
+              })}
+              fontWeight="500"
             />
           </View>
         )}
-        <FontText
-          className="mt-28"
-          value="새로운 비밀번호"
-          textSize="14px"
-          textWeight="Medium"
-          lineHeight={21}
-          textColor={COLOR.BASIC_BLACK}
-        />
+        <FontText className="mt-28 text-14 leading-21" text="새로운 비밀번호" fontWeight="500" />
         <Input
           className="py-12 mt-6 mb-2 px-18 rounded-5 bg-gray-f2"
           value={changePassword}
@@ -178,11 +172,9 @@ const ChangePwScreen = () => {
           <View className="flex-row items-center mt-6 mb-10 ml-9">
             <XCircle height={14} />
             <FontText
-              value=" 기존 비밀번호는 사용할 수 없어요"
-              textSize="12px"
-              textWeight="Medium"
-              lineHeight="14px"
-              textColor={COLOR.LIGHT_RED}
+              text=" 기존 비밀번호는 사용할 수 없어요"
+              className="text-12 leading-14 text-light-red"
+              fontWeight="500"
             />
           </View>
         )}
@@ -190,18 +182,21 @@ const ChangePwScreen = () => {
           <View className="flex-row items-center mt-6 mb-10 ml-9">
             <IconCheck stroke={lengValidColor} />
             <FontText
-              className="mr-12"
-              value=" 8자-20자 이내"
-              textSize="12px"
-              textWeight="Medium"
-              textColor={lengValidColor}
+              className="mr-12 text-12"
+              text=" 8자-20자 이내"
+              fontWeight="500"
+              style={{
+                color: lengValidColor,
+              }}
             />
-            <IconCheck stroke={comValidColor} />
+            <IconCheck stroke={comValidColor} className="ml-12" />
             <FontText
-              value=" 영어, 숫자, 특수문자 포함"
-              textSize="12px"
-              textWeight="Medium"
-              textColor={comValidColor}
+              text=" 영어, 숫자, 특수문자 포함"
+              className="text-12"
+              fontWeight="500"
+              style={{
+                color: comValidColor,
+              }}
             />
           </View>
         )}
@@ -222,15 +217,16 @@ const ChangePwScreen = () => {
               <IconCheck stroke={COLOR.LIGHT_GREEN} />
             )}
             <FontText
-              value={
+              text={
                 confirmPassword !== changePassword
                   ? ' 비밀번호가 일치하지 않습니다'
                   : ' 비밀번호가 일치합니다'
               }
-              textSize="12px"
-              textWeight="Medium"
-              lineHeight={14}
-              textColor={confirmPassword !== changePassword ? COLOR.LIGHT_RED : COLOR.LIGHT_GREEN}
+              className={cn('text-12 leading-14', {
+                'text-light-red': confirmPassword !== changePassword,
+                'text-light-green': confirmPassword === changePassword,
+              })}
+              fontWeight="500"
             />
           </View>
         )}

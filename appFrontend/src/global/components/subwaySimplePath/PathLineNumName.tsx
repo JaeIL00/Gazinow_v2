@@ -1,7 +1,8 @@
+import { Dimensions, View } from 'react-native';
+import cn from 'classname';
 import { FontText, Space } from '@/global/ui';
 import { COLOR } from '@/global/constants';
 import { subwayLineColor, pathSubwayLineName, subwayNameCutting } from '@/global/utils';
-import { Dimensions, View } from 'react-native';
 import { Lane } from '@/global/apis/entity';
 
 interface PathLineNumNameProps {
@@ -18,7 +19,7 @@ const PathLineNumName = ({ lane, stationName }: PathLineNumNameProps) => {
         marginBottom: Dimensions.get('window').fontScale * 22,
       }}
     >
-      <View style={{ width: 42 }} />
+      <View className="w-42" />
       <View
         style={{
           width: Dimensions.get('window').fontScale * 18,
@@ -29,40 +30,31 @@ const PathLineNumName = ({ lane, stationName }: PathLineNumNameProps) => {
           alignItems: 'center',
         }}
       >
-        {lane.stationCode > 9 && <Space height="1px" />}
+        {lane.stationCode > 9 && <Space height={1} />}
         <FontText
-          value={pathSubwayLineName(lane.stationCode)}
-          textSize={lane.stationCode <= 9 ? '13px' : '6px'}
-          textWeight={lane.stationCode <= 9 ? 'SemiBold' : 'Bold'}
-          textColor={COLOR.WHITE}
-          lineHeight={lane.stationCode > 9 ? 6 : undefined}
-          style={{ letterSpacing: lane.stationCode > 9 ? -0.3 : undefined }}
+          text={pathSubwayLineName(lane.stationCode)}
+          fontWeight={lane.stationCode <= 9 ? '600' : '700'}
+          className={cn('text-6 text-white', {
+            'text-13': lane.stationCode <= 9,
+            'leading-[6px] -tracking-[0.3]': lane.stationCode > 9,
+          })}
         />
-        {lane.stationCode <= 9 && <Space height="1px" />}
+        {lane.stationCode <= 9 && <Space height={1} />}
       </View>
 
       <View
-        className="absolute flex-row"
+        className="absolute flex flex-col justify-center w-54"
         style={{
           top: Dimensions.get('window').fontScale * 22,
         }}
       >
         <FontText
-          value={subwayNameCutting(stationName)}
-          textSize="12px"
-          textWeight="Medium"
-          textColor={subwayLineColor(lane.stationCode)}
-          textAlign="center"
+          text={subwayNameCutting(stationName.split('(')[0])}
+          className="text-xs text-center"
+          fontWeight="500"
+          style={{ color: subwayLineColor(lane.stationCode) }}
         />
-        {lane.direct && (
-          <FontText
-            className="ml-2"
-            value="급행"
-            textSize="12px"
-            textWeight="Regular"
-            textColor="#EB5147"
-          />
-        )}
+        {lane.direct && <FontText text="급행" className="text-xs text-center text-light-red" />}
       </View>
     </View>
   );

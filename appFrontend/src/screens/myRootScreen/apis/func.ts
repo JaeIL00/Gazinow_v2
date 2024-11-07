@@ -1,6 +1,11 @@
 import { authServiceAPI } from '@/global/apis';
 import { AxiosError } from 'axios';
-import { LogoutFetchData } from './entity';
+import {
+  LogoutFetchData,
+  NotiSettingsType,
+  PathNotiSettingsResType,
+  SetNotiOnOffType,
+} from './entity';
 import * as Sentry from '@sentry/react-native';
 
 /**
@@ -80,6 +85,138 @@ export const changeNicknameFetch = async (nickName: string) => {
 export const checkNicknameFetch = async (nickName: string) => {
   try {
     await authServiceAPI.post(`/api/v1/member/check-nickname`, { nickName });
+  } catch (err) {
+    const error = err as AxiosError;
+    throw error;
+  }
+};
+
+/**
+ * 푸시 알림 on/off 설정 axios
+ */
+export const setPushNotiOnFetch = async ({ email, alertAgree }: SetNotiOnOffType) => {
+  try {
+    await authServiceAPI.post('/api/v1/member/notifications/push', { email, alertAgree });
+  } catch (err) {
+    const error = err as AxiosError;
+    throw error;
+  }
+};
+
+/**
+ * 푸시 알림 on/off 조회 axios
+ */
+export const getPushNotiOnStatusFetch = async (email: string) => {
+  try {
+    const res = await authServiceAPI.get<{ data: { alertAgree: boolean } }>(
+      `/api/v1/member/notifications/push/status?email=${email}`,
+    );
+    return res.data.data.alertAgree;
+  } catch (err) {
+    const error = err as AxiosError;
+    throw error;
+  }
+};
+
+/**
+ * 내가 저장한 경로 알림 on/off 설정 axios
+ */
+export const setMyPathPushNotiOnFetch = async ({ email, alertAgree }: SetNotiOnOffType) => {
+  try {
+    await authServiceAPI.post('/api/v1/member/notifications/my-saved-route', { email, alertAgree });
+  } catch (err) {
+    const error = err as AxiosError;
+    throw error;
+  }
+};
+
+/**
+ * 내가 저장한 경로 알림 on/off 조회 axios
+ */
+export const getMyPathPushNotiOnStatusFetch = async (email: string) => {
+  try {
+    const res = await authServiceAPI.get<{ data: { alertAgree: boolean } }>(
+      `/api/v1/member/notifications/my-saved-route/status?email=${email}`,
+    );
+    return res.data.data.alertAgree;
+  } catch (err) {
+    const error = err as AxiosError;
+    throw error;
+  }
+};
+
+/**
+ * 경로 상세 설정 알림 on/off 설정 axios
+ */
+export const setDetailPushNotiOnFetch = async ({ email, alertAgree }: SetNotiOnOffType) => {
+  try {
+    await authServiceAPI.post('/api/v1/member/notifications/route-detail', { email, alertAgree });
+  } catch (err) {
+    const error = err as AxiosError;
+    throw error;
+  }
+};
+
+/**
+ * 경로 상세 설정 알림 on/off 조회 axios
+ */
+export const getDetailPushNotiOnStatusFetch = async (email: string) => {
+  try {
+    const res = await authServiceAPI.get<{ data: { alertAgree: boolean } }>(
+      `/api/v1/member/notifications/route-detail/status?email=${email}`,
+    );
+    return res.data.data.alertAgree;
+  } catch (err) {
+    const error = err as AxiosError;
+    throw error;
+  }
+};
+
+/**
+ * 알림 비활성화 axios
+ */
+export const disablePathNotiFetch = async (id: number) => {
+  try {
+    await authServiceAPI.post(`/api/v1/my_find_road/disable_notification?id=${id}`);
+  } catch (err) {
+    const error = err as AxiosError;
+    throw error;
+  }
+};
+
+/**
+ * 알림 설정 등록 axios
+ */
+export const addPathNotiSettingsFetch = async (notiSettings: NotiSettingsType) => {
+  try {
+    await authServiceAPI.post(`/api/v1/my_find_road/enable_notification`, notiSettings);
+  } catch (err) {
+    const error = err as AxiosError;
+    throw error;
+  }
+};
+
+/**
+ * 알림 설정 수정 axios
+ */
+export const updatePathNotiSettingsFetch = async (notiSettings: NotiSettingsType) => {
+  try {
+    await authServiceAPI.post(`/api/v1/my_find_road/update_notification`, notiSettings);
+  } catch (err) {
+    const error = err as AxiosError;
+    throw error;
+  }
+};
+
+/**
+ * 경로별 알림 설정 불러오기 axios
+ */
+export const getPathNotiFetch = async (myPathId: number) => {
+  try {
+    const res = await authServiceAPI.get<{ data: PathNotiSettingsResType }>(
+      `/api/v1/my_find_road/get_notifications?myPathId=${myPathId}`,
+    );
+    return res.data.data;
   } catch (err) {
     const error = err as AxiosError;
     throw error;

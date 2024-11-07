@@ -1,109 +1,51 @@
-import styled from '@emotion/native';
-import { FontText, Space, TextButton } from '@/global/ui';
-import { COLOR } from '@/global/constants';
-import { useState } from 'react';
-import { SafeAreaView, Switch } from 'react-native';
+import React, { useEffect, useState, useCallback } from 'react';
+import { AppState, AppStateStatus, SafeAreaView, TouchableOpacity, View } from 'react-native';
+import { FontText } from '@/global/ui';
 import IconLeftArrowHead from '@assets/icons/left_arrow_head.svg';
 import { useMyPageNavigation } from '@/navigation/MyPageNavigation';
-
-//TODO: 토글 디자인, 기능 구현
+import RequestNotiOn from './RequestNotiOn';
+import NotiSettings from './NotiSettings';
+import notifee from '@notifee/react-native';
 
 const NotiSettingsScreen = () => {
   const myPageNavigation = useMyPageNavigation();
-  const [pushNotification, setPushNotification] = useState(false);
-  const [savedPathNotification, setSavedPathNotification] = useState(true);
-  const [newsNotification, setNewsNotification] = useState(true);
+  const [isNotiPermissionOn, setIsNotiPermissionOn] = useState<boolean>(false);
 
-  const handlePushNotificationToggle = () => {
-    setPushNotification(!pushNotification);
-  };
+  const checkNotificationPermission = useCallback(async () => {
+    const settings = await notifee.getNotificationSettings();
+    setIsNotiPermissionOn(settings.authorizationStatus >= 1);
+  }, []);
 
-  const submitNotificationSettings = () => {};
+  useEffect(() => {
+    checkNotificationPermission();
+
+    const handleAppStateChange = (nextAppState: AppStateStatus) => {
+      if (nextAppState === 'active') {
+        checkNotificationPermission();
+      }
+    };
+
+    const subscription = AppState.addEventListener('change', handleAppStateChange);
+
+    return () => {
+      subscription.remove();
+    };
+  }, [checkNotificationPermission]);
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: COLOR.WHITE }}>
-      <Header>
-        <TitleContainer>
-          <IconLeftArrowHead
-            color="#3F3F46"
-            width="24px"
-            onPress={() => myPageNavigation.goBack()}
-          />
-          <Space width="12px" />
-          <FontText value="알림 설정" textSize="18px" lineHeight={23} textWeight="Medium" />
-        </TitleContainer>
-        <TextButton
-          value="완료    "
-          textSize="16px"
-          textColor={COLOR.GRAY_999}
-          textWeight="Medium"
-          lineHeight={21}
-          onPress={() => submitNotificationSettings()}
-        />
-      </Header>
-      <Container>
-        <MenuContainer>
-          <TextButton value="푸시 알림 받기" textSize="16px" textWeight="Regular" lineHeight={21} />
-          <Switch value={pushNotification} onValueChange={handlePushNotificationToggle} />
-        </MenuContainer>
-        {pushNotification && (
-          <>
-            <Space height="20px" backgroundColor={COLOR.GRAY_F9} />
-            <MenuContainer>
-              <TextButton
-                value="내가 저장한 경로 알림"
-                textSize="16px"
-                textWeight="Regular"
-                lineHeight={21}
-              />
-              <Switch
-                value={savedPathNotification}
-                onValueChange={() => setSavedPathNotification(!savedPathNotification)}
-              />
-            </MenuContainer>
-            <MenuContainer>
-              <TextButton
-                value="새소식 알림"
-                textSize="16px"
-                textWeight="Regular"
-                lineHeight={21}
-              />
-              <Switch
-                value={newsNotification}
-                onValueChange={() => setNewsNotification(!newsNotification)}
-              />
-            </MenuContainer>
-          </>
-        )}
-      </Container>
+    <SafeAreaView className="flex-1 bg-white">
+      <View className="flex-row items-center justify-between px-16">
+        <TouchableOpacity
+          className="flex-row items-center py-16"
+          onPress={() => myPageNavigation.goBack()}
+        >
+          <IconLeftArrowHead color="#3F3F46" className="ml-6 mr-21" />
+          <FontText text="알림 설정" className="text-18 leading-23" fontWeight="500" />
+        </TouchableOpacity>
+      </View>
+      {isNotiPermissionOn ? <NotiSettings /> : <RequestNotiOn />}
     </SafeAreaView>
   );
 };
-export default NotiSettingsScreen;
 
-const Header = styled.View`
-  padding: 16px;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-`;
-const TitleContainer = styled.View`
-  flex-direction: row;
-  align-items: center;
-`;
-const Container = styled.View`
-  background-color: white;
-  padding: 0 16px;
-  flex: 1;
-  background-color: white;
-  flex: 1;
-`;
-const MenuContainer = styled.Pressable`
-  flex-direction: row;
-  justify-content: space-between;
-  padding: 0 16px;
-  height: 53px;
-  align-items: center;
-  border-bottom-width: 1px;
-  border-bottom-color: ${COLOR.GRAY_EB};
-`;
+export default NotiSettingsScreen;

@@ -47,32 +47,17 @@ const PasswordStep = ({
       {isTermsOpenModal && <SubscribeTermsModal setStep={setStep} closeModal={closeModal} />}
       <View className="flex-1">
         <View className="gap-10">
-          <FontText
-            value="회원가입"
-            textSize="24px"
-            textWeight="Bold"
-            textColor={COLOR.BASIC_BLACK}
-          />
-          <FontText
-            value="비밀번호를 입력해주세요"
-            textSize="13px"
-            textWeight="Regular"
-            textColor={COLOR.GRAY_999}
-          />
+          <FontText text="회원가입" className="text-24" fontWeight="700" />
+          <FontText text="비밀번호를 입력해주세요" className="text-13 text-gray-999" />
         </View>
 
         <ScrollView className="flex-1 mt-51">
-          <FontText value="Email" textSize="14px" textWeight="Medium" textColor="#7C8183" />
-          <View className="h-48 px-16 rounded-5 bg-gray-f2 justify-center mt-6 mb-20">
-            <FontText
-              value={emailValue}
-              textSize="16px"
-              textWeight="Medium"
-              textColor={COLOR.BASIC_BLACK}
-            />
+          <FontText text="Email" className="text-14 text-gray-183" fontWeight="500" />
+          <View className="justify-center h-48 px-16 mt-6 mb-20 rounded-5 bg-gray-f2">
+            <FontText text={emailValue} fontWeight="500" />
           </View>
-          <FontText value="Password" textSize="14px" textWeight="Medium" textColor="#7C8183" />
-          <View className="px-16 py-13 rounded-5 bg-gray-f2 justify-center mt-6">
+          <FontText text="Password" className="text-14 text-gray-183" fontWeight="500" />
+          <View className="justify-center px-16 mt-6 py-13 rounded-5 bg-gray-f2">
             <Input
               value={passwordValue}
               placeholder="비밀번호 입력"
@@ -83,22 +68,20 @@ const PasswordStep = ({
               className="h-25"
             />
           </View>
-          <View className="flex-row items-center ml-9 mt-8 mb-40">
+          <View className="flex-row items-center mt-8 mb-40 ml-9">
             <IconCheck width={12} height={12} color={lengValidColor} />
             <FontText
-              value="8자-20자 이내"
-              textSize="12px"
-              textWeight="Medium"
-              textColor={lengValidColor}
-              className="ml-4 mr-12"
+              text="8자-20자 이내"
+              fontWeight="500"
+              style={{ color: lengValidColor }}
+              className="ml-4 mr-12 text-12"
             />
             <IconCheck width={12} height={12} color={comValidColor} />
             <FontText
-              value="영어, 숫자, 특수문자 포함"
-              textSize="12px"
-              textWeight="Medium"
-              textColor={comValidColor}
-              className="mr-12"
+              text="영어, 숫자, 특수문자 포함"
+              fontWeight="500"
+              style={{ color: comValidColor }}
+              className="mr-12 text-12"
             />
           </View>
         </ScrollView>

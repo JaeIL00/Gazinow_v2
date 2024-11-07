@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useRootNavigation } from '@/navigation/RootNavigation';
 import { getEncryptedStorage, removeEncryptedStorage } from '@/global/utils';
-import { FontText, TextButton } from '@/global/ui';
+import { FontText } from '@/global/ui';
 import MyTabModal from '@/global/components/MyTabModal';
 import { SafeAreaView, TouchableOpacity, View } from 'react-native';
 import IconLeftArrowHead from '@assets/icons/left_arrow_head.svg';
@@ -23,41 +23,41 @@ const ManageAccountScreen = () => {
   const dispatch = useAppDispatch();
 
   const { logoutMutate } = useLogoutMutation({
-    onSuccess: () => {
-      removeEncryptedStorage('access_token');
-      removeEncryptedStorage('refresh_token');
-      showToast('logout');
+    onSuccess: async () => {
+      await removeEncryptedStorage('access_token');
+      await removeEncryptedStorage('refresh_token');
       dispatch(getAuthorizationState('fail auth'));
-      navigation.goBack();
+      navigation.reset({ routes: [{ name: 'MainBottomTab' }] });
+      showToast('logout');
     },
   });
 
   const handleConfirm = async () => {
     const accessToken = await getEncryptedStorage('access_token');
     const refreshToken = await getEncryptedStorage('refresh_token');
-    logoutMutate({ accessToken, refreshToken });
     setPopupVisible(false);
+    logoutMutate({ accessToken, refreshToken });
   };
 
   const renderMenu = ({ text, onPress }: RenderMenuProps) => (
     <>
       <TouchableOpacity className="flex-row items-center px-16 h-53" onPress={onPress}>
-        <TextButton value={text} textSize="16px" textWeight="Regular" onPress={onPress} />
+        <FontText text={text} />
       </TouchableOpacity>
-      <View className="h-1 bg-gray-eb" />
+      <View className="h-1 bg-gray-beb" />
     </>
   );
 
   return (
     <SafeAreaView className="flex-1 bg-white">
       <TouchableOpacity
-        className="flex-row items-center py-16 pl-22 gap-21"
+        className="flex-row items-center p-16"
         onPress={() => myPageNavigation.goBack()}
       >
-        <IconLeftArrowHead color="#3F3F46" />
-        <FontText value="계정 관리" textSize="18px" lineHeight="23px" textWeight="Medium" />
+        <IconLeftArrowHead width={24} color="#3F3F46" className="mr-12" />
+        <FontText text="계정 관리" className="text-18 leading-23" fontWeight="500" />
       </TouchableOpacity>
-      <View className="h-1 bg-gray-eb" />
+      <View className="h-1 bg-gray-beb" />
       {renderMenu({
         text: '비밀번호 변경',
         onPress: () => myPageNavigation.navigate('ChangePwScreen'),
