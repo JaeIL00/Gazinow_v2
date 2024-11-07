@@ -44,6 +44,8 @@ export const displayReceivedNotification = async (
       importance: AndroidImportance.HIGH,
       visibility: AndroidVisibility.PUBLIC,
       timeoutAfter: 5000,
+      smallIcon: 'ic_notification',
+      color: '#346BF7',
     },
   });
 };
