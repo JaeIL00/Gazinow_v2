@@ -20,7 +20,7 @@ import * as Sentry from '@sentry/react-native';
 export const tokenReissueFetch = async (body: {
   accessToken: string;
   refreshToken: string;
-  firebaseToken: string;
+  firebaseToken?: string;
 }) => {
   try {
     const res = await publicServiceAPI.post<{ data: SignInFetchResponse }>(
