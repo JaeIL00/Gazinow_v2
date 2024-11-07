@@ -22,9 +22,7 @@ import IconXCircle from '@assets/icons/x-circle-standard.svg';
 import IconLeftArrow from '@assets/icons/left_arrow_round.svg';
 import messaging from '@react-native-firebase/messaging';
 
-const emailValidation = new RegExp(
-  /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i,
-);
+const emailValidation = new RegExp(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/);
 
 const initialFormState: SignInFormTypes = {
   email: '',
@@ -148,7 +146,7 @@ const SignInScreen = () => {
           )}
         </ScrollView>
         <Pressable
-          className={cn('rounded-5 justify-center items-center h-48 mb-20', {
+          className={cn('rounded-5 justify-center items-center h-48 mb-20 bg-black-717', {
             'bg-gray-ddd': !(isValidEmail && !!formData.password),
           })}
           onPress={submitFormData}

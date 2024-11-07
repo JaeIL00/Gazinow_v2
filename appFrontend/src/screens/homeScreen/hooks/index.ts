@@ -3,6 +3,7 @@ import { getEncryptedStorage, removeEncryptedStorage, setEncryptedStorage } from
 import { useAppDispatch, useAppSelect } from '@/store';
 import { getAuthorizationState, saveUserInfo } from '@/store/modules';
 import { useMutation } from 'react-query';
+import messaging from '@react-native-firebase/messaging';
 
 export const useTryAuthorization = () => {
   const dispatch = useAppDispatch();
@@ -29,9 +30,12 @@ export const useTryAuthorization = () => {
       dispatch(getAuthorizationState('fail auth'));
       return;
     } else {
+      const firebaseToken = await messaging().getToken();
+      console.log({ firebaseToken });
       mutate({
         accessToken,
         refreshToken,
+        firebaseToken,
       });
     }
   };

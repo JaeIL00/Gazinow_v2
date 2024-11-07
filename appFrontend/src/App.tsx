@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useCallback, useRef, useState } from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { Provider } from 'react-redux';
 import { RootNavigation } from '@/navigation';
@@ -16,6 +16,7 @@ import { Walkthrough } from './screens/homeScreen/components';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { handleNotificationPress } from './global/utils/pushNotification';
 import messaging from '@react-native-firebase/messaging';
+import analytics from '@react-native-firebase/analytics';
 
 Sentry.init({
   enabled: MODE === 'production',
@@ -58,6 +59,7 @@ const App = (): JSX.Element => {
   // 워크스루를 위한 첫 실행 여부 확인
   const [isFirstRun, setIsFirstRun] = useState<boolean>(false);
   useEffect(() => {
+    console.log({ MODE });
     const checkFirstRun = async () => {
       try {
         const hasRun = await AsyncStorage.getItem('hasRun');
@@ -87,11 +89,6 @@ const App = (): JSX.Element => {
     }
   }, [isWalkthroughClosed]);
 
-  messaging().setBackgroundMessageHandler(async (remoteMessage) => {
-    await AsyncStorage.setItem('pushNotiParams', remoteMessage.data?.path as string);
-    await handleNotificationPress(remoteMessage);
-  });
-
   // 안드로이드 앱 종료 상태일 때 알림 클릭 핸들러
   if (Platform.OS === 'android') {
     const getNotification = useCallback(async () => {
@@ -119,11 +116,36 @@ const App = (): JSX.Element => {
       };
     }, [getNotification]);
   }
+  const routeNameRef = useRef<string | null>(null);
 
   return (
     <Provider store={store}>
       <QueryClientProvider client={queryClient}>
-        <NavigationContainer ref={navigationRef}>
+        <NavigationContainer
+          ref={navigationRef}
+          onReady={async () => {
+            if (!navigationRef.current) return;
+            const cur = navigationRef.current.getCurrentRoute();
+            if (cur) {
+              routeNameRef.current = cur.name;
+              await analytics().logScreenView({
+                screen_name: cur.name,
+                screen_class: cur.name,
+              });
+            }
+          }}
+          onStateChange={async () => {
+            if (!navigationRef.current) return;
+            const previousRouteName = routeNameRef.current;
+            const cur = navigationRef.current.getCurrentRoute();
+            if (cur && previousRouteName !== cur.name) {
+              await analytics().logScreenView({
+                screen_name: cur.name,
+                screen_class: cur.name,
+              });
+            }
+          }}
+        >
           <RootNavigation />
           {isFirstRun && !isWalkthroughClosed && (
             <Walkthrough setIsWalkthroughClosed={setIsWalkthroughClosed} />

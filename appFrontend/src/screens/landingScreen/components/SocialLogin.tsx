@@ -20,10 +20,8 @@ const SocialLogin = () => {
       navigation.reset({ routes: [{ name: 'MainBottomTab' }] });
       showToast('socialLoginSuccess');
     },
-    onError: (error: AxiosError) => {
-      if (error.response?.status === 401) {
-        showToast('socialLoginFailed');
-      }
+    onError: () => {
+      showToast('socialLoginFailed');
     },
   });
 
