@@ -1,4 +1,4 @@
-package com.gazi.now
+package com.gazinow.now
 
 import android.app.Application
 import com.facebook.react.PackageList

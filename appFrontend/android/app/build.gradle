@@ -77,9 +77,9 @@ android {
     buildToolsVersion rootProject.ext.buildToolsVersion
     compileSdk rootProject.ext.compileSdkVersion
 
-    namespace "com.gazi.now"
+    namespace "com.gazinow.now"
     defaultConfig {
-        applicationId "com.gazi.now"
+        applicationId "com.gazinow.now"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 5
