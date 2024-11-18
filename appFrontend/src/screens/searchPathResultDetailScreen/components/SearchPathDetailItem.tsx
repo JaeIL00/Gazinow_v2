@@ -112,6 +112,7 @@ const SearchPathDetailItem = ({ data, isLastLane, lineLength }: SearchPathDetail
           ))}
 
           <TouchableOpacity
+            activeOpacity={0.5}
             className="flex-row items-center mt-8"
             onPress={() => setIsOpenPathList((prev) => !prev)}
             disabled={data.stations.length < 3}

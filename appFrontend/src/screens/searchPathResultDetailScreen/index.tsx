@@ -96,13 +96,15 @@ const SearchPathResultDetailScreen = () => {
                       fontWeight="600"
                     />
                     <View className="flex-row w-full gap-x-8 mt-30">
-                      <Pressable
+                      <TouchableOpacity
+                        activeOpacity={0.5}
                         className="items-center flex-1 py-12 border rounded-5 border-gray-999"
                         onPress={() => setIsSaveRouteModalOpen(false)}
                       >
                         <FontText text="취소" className="text-gray-999 text-14" fontWeight="600" />
-                      </Pressable>
-                      <Pressable
+                      </TouchableOpacity>
+                      <TouchableOpacity
+                        activeOpacity={0.5}
                         className="items-center flex-1 py-12 rounded-5 bg-black-717"
                         onPress={() => {
                           setIsSaveRouteModalOpen(false);
@@ -110,7 +112,7 @@ const SearchPathResultDetailScreen = () => {
                         }}
                       >
                         <FontText text="로그인" className="text-white text-14" fontWeight="600" />
-                      </Pressable>
+                      </TouchableOpacity>
                     </View>
                   </View>
                 </View>

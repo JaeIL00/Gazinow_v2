@@ -79,13 +79,15 @@ const IssueDetailScreen = () => {
                 fontWeight="500"
               />
               <View style={{ flexDirection: 'row', width: '100%', columnGap: 8, marginTop: 30 }}>
-                <Pressable
+                <TouchableOpacity
+                  activeOpacity={0.5}
                   className="items-center flex-1 py-12 border rounded-5 border-gray-999"
                   onPress={() => setIsOpenLoginModal(false)}
                 >
                   <FontText text="취소" className="text-gray-999 text-14" fontWeight="600" />
-                </Pressable>
-                <Pressable
+                </TouchableOpacity>
+                <TouchableOpacity
+                  activeOpacity={0.5}
                   className="items-center flex-1 py-12 rounded-5 bg-black-717"
                   onPress={() => {
                     setIsOpenLoginModal(false);
@@ -93,7 +95,7 @@ const IssueDetailScreen = () => {
                   }}
                 >
                   <FontText text="로그인" className="text-white text-14" fontWeight="600" />
-                </Pressable>
+                </TouchableOpacity>
               </View>
             </View>
           </View>
@@ -137,6 +139,7 @@ const IssueDetailScreen = () => {
               <TouchableOpacity
                 style={{ flexDirection: 'row', alignItems: 'center' }}
                 onPress={likeHandler}
+                activeOpacity={0.5}
                 hitSlop={20}
               >
                 <FontText
