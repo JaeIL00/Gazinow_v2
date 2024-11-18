@@ -8,17 +8,18 @@ import messaging from '@react-native-firebase/messaging';
 import SocialLoginButtons from './SocialLoginButtons';
 import { showToast } from '@/global/utils/toast';
 import { sendFirebaseTokenFetch } from '../apis/func';
-import { AxiosError } from 'axios';
 import { useMutation } from 'react-query';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const SocialLogin = () => {
   const navigation = useRootNavigation();
   const dispatch = useAppDispatch();
 
   const { mutate: sendFirebaseTokenMutate } = useMutation(sendFirebaseTokenFetch, {
-    onSuccess: () => {
+    onSuccess: async () => {
       navigation.reset({ routes: [{ name: 'MainBottomTab' }] });
       showToast('socialLoginSuccess');
+      await AsyncStorage.setItem('isSocialLoggedIn', 'true');
     },
     onError: () => {
       showToast('socialLoginFailed');
