@@ -84,7 +84,7 @@ const ConfirmEmailModal = ({
               transform: [{ translateY: animRef }],
             }}
           >
-            <TouchableOpacity hitSlop={10} activeOpacity={1} className="mb-28" onPress={closeModal}>
+            <TouchableOpacity hitSlop={10} className="mb-28" onPress={closeModal}>
               <IconLeftArrow color={COLOR.BASIC_BLACK} />
             </TouchableOpacity>
 

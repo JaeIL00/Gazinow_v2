@@ -1,4 +1,4 @@
-import { SafeAreaView, ScrollView, TouchableOpacity, View } from 'react-native';
+import { Pressable, SafeAreaView, ScrollView, TouchableOpacity, View } from 'react-native';
 import { FontText } from '@/global/ui';
 import { COLOR } from '@/global/constants';
 import { SubwaySimplePath } from '@/global/components';
@@ -58,8 +58,13 @@ const SelectNewRoute = () => {
           {data?.paths.map((item) => (
             <View key={item.firstStartStation + item.totalTime}>
               <View className="h-1 bg-gray-beb" />
-              <TouchableOpacity
-                className="px-16 pt-20 pb-8"
+              <Pressable
+                style={({ pressed }) => ({
+                  backgroundColor: pressed ? COLOR.GRAY_E5 : 'transparent',
+                  paddingHorizontal: 16,
+                  paddingTop: 20,
+                  paddingBottom: 8,
+                })}
                 onPress={() => {
                   setSelectedRoutePath(item);
                   newRouteNavigation.push('Detail', {
@@ -100,7 +105,7 @@ const SelectNewRoute = () => {
                   betweenPathMargin={24}
                   isHideIsuue
                 />
-              </TouchableOpacity>
+              </Pressable>
             </View>
           ))}
           {!isLoading && <View className="h-1 bg-gray-beb" />}

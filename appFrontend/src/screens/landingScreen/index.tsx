@@ -35,7 +35,6 @@ const LandingScreen = () => {
         }}
       >
         <TouchableOpacity
-          activeOpacity={1}
           style={{
             width: 32,
             height: 32,

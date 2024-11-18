@@ -1,6 +1,6 @@
 import { FontText, Toggle } from '@/global/ui';
 import cn from 'classname';
-import { ScrollView, TouchableOpacity, View } from 'react-native';
+import { Pressable, ScrollView, TouchableOpacity, View } from 'react-native';
 import { useMyPageNavigation } from '@/navigation/MyPageNavigation';
 import { useGetSavedRoutesQuery } from '@/global/apis/hooks';
 import MoreBtn from '@/assets/icons/moreBtn.svg';
@@ -17,6 +17,7 @@ import {
   setMyPathPushNotiOnFetch,
   setPushNotiOnFetch,
 } from '../apis/func';
+import { COLOR } from '@/global/constants';
 
 const NotiSettings = () => {
   const myPageNavigation = useMyPageNavigation();
@@ -122,8 +123,16 @@ const NotiSettings = () => {
         <ScrollView>
           {myRoutes.map((myRoutes, index) => (
             <View key={myRoutes.roadName + index}>
-              <TouchableOpacity
-                className="flex-row items-center justify-between ml-24 mr-16 h-53"
+              <Pressable
+                style={({ pressed }) => ({
+                  backgroundColor: pressed ? COLOR.GRAY_E5 : 'transparent',
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  paddingLeft: 24,
+                  paddingRight: 16,
+                  height: 53,
+                })}
                 onPress={() => myPageNavigation.push('NotiSettingsDetailScreen', { myRoutes })}
               >
                 <FontText text={myRoutes.roadName} className="text-gray-999" fontWeight="500" />
@@ -131,7 +140,7 @@ const NotiSettings = () => {
                   <FontText text="편집" className="text-gray-999 text-13 leading-19" />
                   <MoreBtn height={19} className="ml-4" />
                 </View>
-              </TouchableOpacity>
+              </Pressable>
               <View className="h-1 bg-gray-beb" />
             </View>
           ))}

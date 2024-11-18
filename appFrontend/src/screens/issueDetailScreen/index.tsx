@@ -100,7 +100,7 @@ const IssueDetailScreen = () => {
         </Modal>
       )}
       <View style={{ padding: 16 }}>
-        <TouchableOpacity activeOpacity={1} hitSlop={20} onPress={() => navigation.goBack()}>
+        <TouchableOpacity hitSlop={20} onPress={() => navigation.goBack()}>
           <IconLeftArrowHead color="#3F3F46" />
         </TouchableOpacity>
       </View>
@@ -137,7 +137,6 @@ const IssueDetailScreen = () => {
               <TouchableOpacity
                 style={{ flexDirection: 'row', alignItems: 'center' }}
                 onPress={likeHandler}
-                activeOpacity={1}
                 hitSlop={20}
               >
                 <FontText

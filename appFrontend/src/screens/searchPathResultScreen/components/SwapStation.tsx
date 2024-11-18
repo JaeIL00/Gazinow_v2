@@ -30,7 +30,7 @@ const SwapStation = ({ selectedStation }: SwapStationProps) => {
     <>
       <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
         <View style={{ flex: 1, marginRight: 15, rowGap: 8 }}>
-          <Pressable
+          <TouchableOpacity
             className="justify-center w-full pl-10 bg-gray-9f9 h-41 rounded-8 pr-15"
             onPress={() => {
               dispatch(getStationType(DEPARTURE_STATION));
@@ -47,8 +47,8 @@ const SwapStation = ({ selectedStation }: SwapStationProps) => {
                 'text-gray-999': !selectedStation.departure.stationName,
               })}
             />
-          </Pressable>
-          <Pressable
+          </TouchableOpacity>
+          <TouchableOpacity
             className="justify-center w-full pl-10 bg-gray-9f9 h-41 rounded-8 pr-15"
             onPress={() => {
               dispatch(getStationType(ARRIVAL_STATION));
@@ -65,7 +65,7 @@ const SwapStation = ({ selectedStation }: SwapStationProps) => {
                 'text-gray-999': !selectedStation.arrival.stationName,
               })}
             />
-          </Pressable>
+          </TouchableOpacity>
         </View>
 
         <TouchableOpacity onPress={swapStationHandler}>

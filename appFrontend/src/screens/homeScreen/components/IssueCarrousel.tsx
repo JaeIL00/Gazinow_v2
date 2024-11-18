@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import {
   NativeScrollEvent,
   NativeSyntheticEvent,
+  Pressable,
   ScrollView,
   TouchableOpacity,
   View,
@@ -16,6 +17,7 @@ import dayjs from 'dayjs';
 import { rawLineNameToColor } from '@/global/utils/subwayLine';
 import { IssueContent } from '@/global/apis/entity';
 import { useQueryClient } from 'react-query';
+import { COLOR } from '@/global/constants';
 
 interface IssueCarrouselProps {
   isRefreshing: boolean;
@@ -110,8 +112,15 @@ const IssueCarrousel = ({ isRefreshing, setIsRefreshing }: IssueCarrouselProps) 
     >
       {newPopularIssues.map((issue, index: number) => (
         <View style={{ width: itemWidth }} key={index}>
-          <TouchableOpacity
-            className="flex-row p-16 m-16 mb-0 bg-white rounded-12"
+          <Pressable
+            style={({ pressed }) => ({
+              backgroundColor: pressed ? COLOR.GRAY_E5 : COLOR.WHITE,
+              flexDirection: 'row',
+              padding: 16,
+              margin: 16,
+              marginBottom: 0,
+              borderRadius: 12,
+            })}
             onPress={() => {
               dispatch(getIssueId(issue.id));
               navigation.navigate('IssueStack', { screen: 'IssueDetail' });
@@ -151,7 +160,7 @@ const IssueCarrousel = ({ isRefreshing, setIsRefreshing }: IssueCarrouselProps) 
                 />
               </View>
             </View>
-          </TouchableOpacity>
+          </Pressable>
         </View>
       ))}
     </ScrollView>

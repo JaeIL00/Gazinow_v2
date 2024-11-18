@@ -79,7 +79,6 @@ const SearchPathDetailItem = ({ data, isLastLane, lineLength }: SearchPathDetail
           {data.lanes[0].issueSummary.map((issue) => (
             <TouchableOpacity
               className="flex-row pt-10 pb-12 pl-12 pr-10 mt-4 bg-white border border-[#f0f0f0] rounded-10"
-              activeOpacity={1}
               onPress={() => {
                 dispatch(getIssueId(issue.id));
                 navigation.navigate('IssueStack', { screen: 'IssueDetail' });
@@ -114,7 +113,6 @@ const SearchPathDetailItem = ({ data, isLastLane, lineLength }: SearchPathDetail
 
           <TouchableOpacity
             className="flex-row items-center mt-8"
-            activeOpacity={1}
             onPress={() => setIsOpenPathList((prev) => !prev)}
             disabled={data.stations.length < 3}
             hitSlop={20}

@@ -74,7 +74,6 @@ const SignInScreen = () => {
       >
         <TouchableOpacity
           hitSlop={10}
-          activeOpacity={1}
           style={{ marginBottom: 43, marginTop: 30 }}
           onPress={() => navigation.goBack()}
         >

@@ -3,13 +3,14 @@ import { useRootNavigation } from '@/navigation/RootNavigation';
 import { getEncryptedStorage, removeEncryptedStorage } from '@/global/utils';
 import { FontText } from '@/global/ui';
 import MyTabModal from '@/global/components/MyTabModal';
-import { SafeAreaView, TouchableOpacity, View } from 'react-native';
+import { Pressable, SafeAreaView, TouchableOpacity, View } from 'react-native';
 import IconLeftArrowHead from '@assets/icons/left_arrow_head.svg';
 import { useMyPageNavigation } from '@/navigation/MyPageNavigation';
 import { showToast } from '@/global/utils/toast';
 import { useAppDispatch } from '@/store';
 import { getAuthorizationState } from '@/store/modules';
 import { useLogoutMutation } from '../apis/hooks';
+import { COLOR } from '@/global/constants';
 
 interface RenderMenuProps {
   text: string;
@@ -41,9 +42,18 @@ const ManageAccountScreen = () => {
 
   const renderMenu = ({ text, onPress }: RenderMenuProps) => (
     <>
-      <TouchableOpacity className="flex-row items-center px-16 h-53" onPress={onPress}>
+      <Pressable
+        style={({ pressed }) => ({
+          backgroundColor: pressed ? COLOR.GRAY_E5 : 'transparent',
+          flexDirection: 'row',
+          alignItems: 'center',
+          paddingHorizontal: 16,
+          height: 53,
+        })}
+        onPress={onPress}
+      >
         <FontText text={text} />
-      </TouchableOpacity>
+      </Pressable>
       <View className="h-1 bg-gray-beb" />
     </>
   );

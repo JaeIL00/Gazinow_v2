@@ -1,4 +1,4 @@
-import { SafeAreaView, ScrollView, TouchableOpacity, View } from 'react-native';
+import { Pressable, SafeAreaView, ScrollView, TouchableOpacity, View } from 'react-native';
 
 import { FontText, Space } from '@/global/ui';
 import { COLOR } from '@/global/constants';
@@ -100,15 +100,21 @@ const SearchPathResultScreen = () => {
           )}
           {data &&
             data.paths.map((item, idx) => (
-              <View
+              <Pressable
                 key={item.firstStartStation + item.subPaths.length + idx}
-                style={{
+                style={({ pressed }) => ({
+                  backgroundColor: pressed ? COLOR.GRAY_E5 : 'transparent',
                   paddingHorizontal: 18,
                   paddingBottom: 24,
                   paddingTop: 20,
                   borderBottomColor: data.paths.length - 1 !== idx ? COLOR.GRAY_EB : 'none',
                   borderBottomWidth: data.paths.length - 1 !== idx ? 1 : 0,
-                }}
+                })}
+                onPress={() =>
+                  homeNavigation.push('SubwayPathDetail', {
+                    state: item,
+                  })
+                }
               >
                 <View style={{ marginBottom: 16 }}>
                   <View
@@ -123,18 +129,11 @@ const SearchPathResultScreen = () => {
                       className="text-11 text-gray-999"
                       fontWeight="600"
                     />
-                    <TouchableOpacity
-                      style={{ flexDirection: 'row', alignItems: 'center' }}
-                      onPress={() =>
-                        homeNavigation.push('SubwayPathDetail', {
-                          state: item,
-                        })
-                      }
-                    >
+                    <View className="flex-row items-center">
                       <FontText text="세부정보" className="text-13 text-gray-999" />
                       <Space width={4} />
                       <IconRightArrowHead color={COLOR.GRAY_999} />
-                    </TouchableOpacity>
+                    </View>
                   </View>
                   <View style={{ height: 4 }} />
                   <FontText text={pathTime(item)} className="text-20" fontWeight="600" />
@@ -188,7 +187,7 @@ const SearchPathResultScreen = () => {
                     );
                   })}
                 </View>
-              </View>
+              </Pressable>
             ))}
         </ScrollView>
       </View>

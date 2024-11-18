@@ -35,8 +35,15 @@ const MyRootScreen = () => {
 
   const renderMenu = ({ text, onPress, versionText }: RenderMenuProps) => (
     <>
-      <TouchableOpacity
-        className="flex-row items-center justify-between px-16 h-53"
+      <Pressable
+        style={({ pressed }) => ({
+          backgroundColor: pressed ? COLOR.GRAY_E5 : 'transparent',
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          paddingHorizontal: 16,
+          height: 53,
+        })}
         onPress={onPress}
         disabled={versionText ? true : false}
       >
@@ -46,7 +53,7 @@ const MyRootScreen = () => {
         ) : (
           <IconRightArrowHead width={14} color={COLOR.GRAY_999} />
         )}
-      </TouchableOpacity>
+      </Pressable>
       <View className="h-1 bg-gray-beb" />
     </>
   );

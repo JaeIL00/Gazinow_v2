@@ -5,7 +5,7 @@ import { getSeletedStation } from '@/store/modules/stationSearchModule';
 import { useAddRecentSearch, useGetSearchHistory, useSearchStationName } from '@/global/apis/hooks';
 import { useState } from 'react';
 import IconXCircleFill from '@assets/icons/x_circle_fill.svg';
-import { SafeAreaView, ScrollView, TouchableOpacity, View } from 'react-native';
+import { Pressable, SafeAreaView, ScrollView, TouchableOpacity, View } from 'react-native';
 import { subwayReturnLineName } from '@/global/utils/subwayLine';
 import IconLocationPin from '@assets/icons/location_pin.svg';
 import AddNewRouteHeader from './AddNewRouteHeader';
@@ -87,9 +87,14 @@ const SearchStation = () => {
           <ScrollView className="mt-18" keyboardShouldPersistTaps="handled">
             {historyData?.map(({ stationName, stationLine }, index) => (
               <>
-                <TouchableOpacity
-                  className="flex-row py-12 pl-16 gap-7"
-                  key={index}
+                <Pressable
+                  style={({ pressed }) => ({
+                    backgroundColor: pressed ? COLOR.GRAY_E5 : 'transparent',
+                    flexDirection: 'row',
+                    paddingVertical: 12,
+                    paddingLeft: 16,
+                    gap: 7,
+                  })}
                   onPress={() =>
                     stationBtnHandler({
                       stationName,
@@ -107,7 +112,7 @@ const SearchStation = () => {
                     <View className="h-3" />
                     <FontText text={stationLine!} className="text-14 text-gray-999" />
                   </View>
-                </TouchableOpacity>
+                </Pressable>
                 <View className="h-1 bg-gray-beb" />
               </>
             ))}

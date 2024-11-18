@@ -3,7 +3,7 @@ import { SubwaySimplePath } from '@/global/components';
 import { COLOR } from '@/global/constants';
 import { FontText } from '@/global/ui';
 import { useHomeNavigation } from '@/navigation/HomeNavigation';
-import { View } from 'react-native';
+import { Pressable, View } from 'react-native';
 import IssuesBanner from './IssuesBanner';
 import IconRightArrowHead from '@/assets/icons/right_arrow_head.svg';
 import { TouchableOpacity } from 'react-native-gesture-handler';
@@ -23,7 +23,17 @@ const RouteItem = ({ route, hasIssues }: RouteItemProps) => {
       : route.totalTime + '분';
 
   return (
-    <View className="px-16 pt-20 pb-23 border-t-1 border-gray-beb">
+    <Pressable
+      style={({ pressed }) => ({
+        backgroundColor: pressed ? COLOR.GRAY_E5 : 'transparent',
+        paddingHorizontal: 16,
+        paddingTop: 20,
+        paddingBottom: 23,
+        borderTopColor: COLOR.GRAY_EB,
+        borderTopWidth: 1,
+      })}
+      onPress={() => homeNavigation.push('SubwayPathDetail', { state: route })}
+    >
       <View className="flex-row items-center justify-between mb-24">
         <FontText text={route.roadName} className="text-18 text-black-717" fontWeight="700" />
         <View
@@ -43,15 +53,11 @@ const RouteItem = ({ route, hasIssues }: RouteItemProps) => {
         </View>
         <View className="flex-1" />
 
-        <TouchableOpacity
-          className="flex-row items-center"
-          onPress={() => homeNavigation.push('SubwayPathDetail', { state: route })}
-          hitSlop={20}
-        >
+        <View className="flex-row items-center">
           <FontText text="세부정보" className="text-13 leading-19 text-gray-999" />
           <View className="w-4" />
           <IconRightArrowHead color={COLOR.GRAY_999} />
-        </TouchableOpacity>
+        </View>
       </View>
       <SubwaySimplePath
         pathData={route.subPaths}
@@ -59,7 +65,7 @@ const RouteItem = ({ route, hasIssues }: RouteItemProps) => {
         betweenPathMargin={24}
       />
       {hasIssues ? <IssuesBanner subPathss={route.subPaths} /> : null}
-    </View>
+    </Pressable>
   );
 };
 
