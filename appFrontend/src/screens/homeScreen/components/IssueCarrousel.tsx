@@ -1,13 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
-import {
-  NativeScrollEvent,
-  NativeSyntheticEvent,
-  Pressable,
-  ScrollView,
-  TouchableOpacity,
-  View,
-} from 'react-native';
-import { useGetAllIssuesQuery, useGetPopularIssuesQuery } from '@/global/apis/hooks';
+import { NativeScrollEvent, NativeSyntheticEvent, Pressable, ScrollView, View } from 'react-native';
+import { useGetPopularIssuesQuery } from '@/global/apis/hooks';
 import IssueKeywordIcon from '@/global/components/IssueKeywordIcon';
 import { FontText } from '@/global/ui';
 import { useRootNavigation } from '@/navigation/RootNavigation';
@@ -30,21 +23,11 @@ const IssueCarrousel = ({ isRefreshing, setIsRefreshing }: IssueCarrouselProps) 
   const dispatch = useAppDispatch();
   const { popularIssues, popularIssuesRefetch, isPopularIssuesLoading } =
     useGetPopularIssuesQuery();
-  const { allIssues } = useGetAllIssuesQuery();
   const [itemWidth, setItemWidth] = useState<number>(0);
   const scrollViewRef = useRef<ScrollView>(null);
   const [currentIndex, setCurrentIndex] = useState<number>(0);
 
-  //TODO: 현재 유효한 이슈 배열
-  // const currentDate = new Date();
-  // const currentIssues = Array.from(
-  //   new Set(
-  //     allIssues?.pages[0].content.filter((issue) => new Date(issue.expireDate) >= currentDate),
-  //   ),
-  // ).slice(0, 3);
-
   useEffect(() => {
-    //TODO: 현재이슈로 바꾸면 쿼리 키도 바꾸기
     queryClient.invalidateQueries(['getPopularIssues']);
     if (isRefreshing) {
       popularIssuesRefetch();
@@ -108,7 +91,7 @@ const IssueCarrousel = ({ isRefreshing, setIsRefreshing }: IssueCarrouselProps) 
       showsHorizontalScrollIndicator={false}
       contentContainerStyle={{ width: `${100 * newPopularIssues.length}%` }}
       onContentSizeChange={(width) => setItemWidth(width / newPopularIssues.length)}
-      onMomentumScrollEnd={handleMomentumScrollEnd} // Handle manual scroll end
+      onMomentumScrollEnd={handleMomentumScrollEnd}
     >
       {newPopularIssues.map((issue, index: number) => (
         <View style={{ width: itemWidth }} key={index}>
