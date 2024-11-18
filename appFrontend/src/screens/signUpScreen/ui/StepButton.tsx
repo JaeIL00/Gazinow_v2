@@ -21,8 +21,8 @@ const StepButton = ({
   return (
     <>
       {isLoading ? (
-        <View className="items-center justify-center h-48 pt-8 bg-black-717 rounded-5 mb-41">
-          <LoadingDots width={200} height={90} />
+        <View className="items-center justify-center h-48 pt-8 bg-gray-ddd rounded-5 mb-41">
+          <LoadingDots width={160} height={72} />
         </View>
       ) : (
         <Pressable
