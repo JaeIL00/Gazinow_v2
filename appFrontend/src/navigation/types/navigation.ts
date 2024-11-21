@@ -1,5 +1,4 @@
 import { MyRoutesType, Path, SubPath } from '@/global/apis/entity';
-import { SocialLoginType } from '@/screens/landingScreen/components/SocialLoginButtons';
 
 export type RootStackParamList = {
   AuthStack: { screen: 'Landing' };
@@ -17,7 +16,7 @@ export type AuthStackStackParamList = {
   Landing: undefined;
   SignIn: undefined;
   SignUp: undefined;
-  SocialLogin: { socialLoginType: SocialLoginType };
+  SocialLogin: { socialLoginType: 'naver' | 'google' | 'apple' };
 };
 
 export type HomeStackParamList = {
