@@ -28,8 +28,8 @@ const MyRootScreen = () => {
     VersionCheck.getLatestVersion({
       provider: Platform.OS === 'ios' ? 'appStore' : 'playStore',
     }).then((latestVersion) => {
-      if (currentVersionInfo === latestVersion) setVersionText(`v${latestVersion} 최신버전 입니다`);
-      else setVersionText(`v${currentVersionInfo}`);
+      if (currentVersionInfo === latestVersion) setVersionText(`v.${latestVersion} 최신버전 입니다`);
+      else setVersionText(`v.${currentVersionInfo}`);
     });
   }, []);
 
