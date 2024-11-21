@@ -1,6 +1,6 @@
 import { FontText } from '@/global/ui';
-import React from 'react';
-import { SafeAreaView, TouchableOpacity, View } from 'react-native';
+import React, { useMemo, useState } from 'react';
+import { Pressable, RefreshControl, SafeAreaView, TouchableOpacity, View } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import IconLeftArrowHead from '@assets/icons/left_arrow_head.svg';
 import IconNoNoti from '@assets/icons/no_result_icon.svg';
@@ -11,10 +11,22 @@ import { useAppDispatch } from '@/store';
 import { getIssueId } from '@/store/modules';
 import IssueKeywordIcon from '@/global/components/IssueKeywordIcon';
 import SettingsIcon from '@/assets/icons/icon_setting.svg';
+import { useGetNotiHistoriesQuery } from '@/global/apis/hooks';
+import cn from 'classname';
+import { useMutation } from 'react-query';
+import { updateNotiReadStatus } from '@/global/apis/func';
 
 const NotiHistory = () => {
   const navigation = useRootNavigation();
   const dispatch = useAppDispatch();
+  const [isRefreshing, setIsRefreshing] = useState<boolean>(false);
+
+  const { data, refetch, fetchNextPage, hasNextPage } = useGetNotiHistoriesQuery();
+  const flattenedData = useMemo(() => {
+    return data?.pages.flatMap((page) => page.content) ?? [];
+  }, [data]);
+
+  const { mutate } = useMutation(updateNotiReadStatus);
 
   return (
     <SafeAreaView className="flex-1 bg-white">
@@ -34,40 +46,53 @@ const NotiHistory = () => {
       </View>
 
       <FlatList
-        data={['undefined', 'sadfsfd', 'ewsdff']}
+        data={flattenedData}
         renderItem={({ item, index }) => {
           return (
-            <TouchableOpacity
+            <Pressable
+              style={({ pressed }) => ({
+                backgroundColor: pressed ? COLOR.GRAY_E5 : COLOR.WHITE,
+                flexDirection: 'row',
+                paddingHorizontal: 16,
+                paddingVertical: 20,
+                borderBottomWidth: 1,
+                borderColor: COLOR.GRAY_EB,
+              })}
               onPress={() => {
-                // dispatch(getIssueId(item.id));
+                dispatch(getIssueId(item.issueId));
                 navigation.navigate('IssueStack', { screen: 'IssueDetail' });
+                mutate(item.id);
               }}
-              className="flex-row px-16 py-20 border-b-1 border-gray-beb"
+              key={`${index}_${item.issueId}`}
             >
-              {/* TODO: 아이콘, 알림 내용, 시간 바꾸기 */}
-              {/* TODO: 읽은 알림은 회색으로 */}
-              {/* <IssueKeywordIcon keyword={item.keyword} color={'black'} width={24} height={24} /> */}
-              <IssueKeywordIcon keyword={'자연재해'} color="black" width={24} height={24} />
+              <IssueKeywordIcon
+                keyword={item.keyword}
+                color={item.read ? COLOR.GRAY_DDD : COLOR.BASIC_BLACK}
+                width={24}
+                height={24}
+              />
               <View className="flex-1 ml-12 mr-32">
                 <FontText
-                  text={`출근길 경로에 [${item}] 이슈가 생겼어요`}
-                  className="text-14 leading-21"
+                  text={item.notificationBody}
+                  className={cn('text-14 leading-21', {
+                    'text-gray-999': item.read,
+                    'text-black-717': !item.read,
+                  })}
                   numberOfLines={2}
                   fontWeight="600"
                 />
                 <View className="h-4" />
                 <FontText
-                  text={`4호선 신용산역-사당역 방면`}
+                  text={item.notificationTitle}
                   className="text-12 leading-15 text-gray-999"
-                  numberOfLines={2}
                 />
               </View>
               <FontText
-                text={`MM전`}
+                text={item.agoTime}
                 className="text-11 leading-13 text-gray-999"
                 fontWeight="500"
               />
-            </TouchableOpacity>
+            </Pressable>
           );
         }}
         ListFooterComponent={<View className="h-64" />}
@@ -78,7 +103,23 @@ const NotiHistory = () => {
           </View>
         }
         showsVerticalScrollIndicator={false}
-      ></FlatList>
+        onEndReached={() => {
+          if (hasNextPage) {
+            fetchNextPage();
+          }
+        }}
+        refreshControl={
+          <RefreshControl
+            onRefresh={async () => {
+              setIsRefreshing(true);
+              await refetch();
+              setIsRefreshing(false);
+            }}
+            refreshing={isRefreshing}
+            progressViewOffset={-10}
+          />
+        }
+      />
     </SafeAreaView>
   );
 };
