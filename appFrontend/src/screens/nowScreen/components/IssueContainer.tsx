@@ -8,7 +8,6 @@ import dayjs from 'dayjs';
 import { IssueContent } from '@/global/apis/entity';
 import { LaneCapsulesPerIssue } from '.';
 import { Pressable, View } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 
 interface IssueDetailProps {
   issue: IssueContent;

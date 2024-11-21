@@ -1,13 +1,11 @@
 import { useState } from 'react';
 import { TouchableOpacity, View } from 'react-native';
 import cn from 'classname';
-
 import { FontText, Space } from '@/global/ui';
 import { subwayLineColor } from '@/global/utils';
 import { SubPath } from '@/global/apis/entity';
 import { COLOR } from '@/global/constants';
 import IconWalkHuman from '@assets/icons/walk_human.svg';
-
 import IconRightArrowHead from '@assets/icons/right_arrow_head.svg';
 import { useRootNavigation } from '@/navigation/RootNavigation';
 import { useAppDispatch } from '@/store';
@@ -41,7 +39,7 @@ const SearchPathDetailItem = ({ data, isLastLane, lineLength }: SearchPathDetail
           <View
             className="w-20 h-20 rounded-full"
             style={{
-              backgroundColor: subwayLineColor(data.lanes[0].stationCode),
+              backgroundColor: subwayLineColor(data.stationCode),
             }}
           />
           <View
@@ -49,7 +47,7 @@ const SearchPathDetailItem = ({ data, isLastLane, lineLength }: SearchPathDetail
               'mb-[-40px]': !isOpenPathList,
             })}
             style={{
-              backgroundColor: subwayLineColor(data.lanes[0].stationCode),
+              backgroundColor: subwayLineColor(data.stationCode),
             }}
           />
         </View>
@@ -59,12 +57,12 @@ const SearchPathDetailItem = ({ data, isLastLane, lineLength }: SearchPathDetail
             className="text-18"
             fontWeight="600"
             style={{
-              color: subwayLineColor(data.lanes[0].stationCode),
+              color: subwayLineColor(data.stationCode),
             }}
           />
           <View className="flex-row items-center mt-4">
             <FontText text={data.way + ' 방향'} className="text-13 text-gray-999" />
-            {data.lanes[0].direct && <FontText text=" 급행" className="text-12 text-[#EB5147]" />}
+            {data.direct && <FontText text=" 급행" className="text-12 text-[#EB5147]" />}
             <FontText
               text={
                 data.door !== 'null'
@@ -76,7 +74,7 @@ const SearchPathDetailItem = ({ data, isLastLane, lineLength }: SearchPathDetail
           </View>
 
           {/* 이슈박스 */}
-          {data.lanes[0].issueSummary.map((issue) => (
+          {data.issueSummary.map((issue) => (
             <TouchableOpacity
               className="flex-row pt-10 pb-12 pl-12 pr-10 mt-4 bg-white border border-[#f0f0f0] rounded-10"
               onPress={() => {
@@ -89,7 +87,7 @@ const SearchPathDetailItem = ({ data, isLastLane, lineLength }: SearchPathDetail
                   width={18}
                   height={18}
                   keyword={issue.keyword}
-                  color={subwayLineColor(data.lanes[0].stationCode)}
+                  color={subwayLineColor(data.stationCode)}
                 />
               </View>
               <View className="flex-1 mr-8">
@@ -154,7 +152,7 @@ const SearchPathDetailItem = ({ data, isLastLane, lineLength }: SearchPathDetail
                       <View
                         className="w-12 h-12 mr-20 bg-white border-2 rounded-12"
                         style={{
-                          borderColor: subwayLineColor(data.lanes[0].stationCode),
+                          borderColor: subwayLineColor(data.stationCode),
                         }}
                       />
                       <FontText text={item.stationName} className="text-13 text-gray-999" />
@@ -171,7 +169,7 @@ const SearchPathDetailItem = ({ data, isLastLane, lineLength }: SearchPathDetail
         <View
           className="w-20 h-20 rounded-full"
           style={{
-            backgroundColor: subwayLineColor(data.lanes[0].stationCode),
+            backgroundColor: subwayLineColor(data.stationCode),
           }}
         />
         <View className="ml-16">
@@ -180,7 +178,7 @@ const SearchPathDetailItem = ({ data, isLastLane, lineLength }: SearchPathDetail
             className="text-18"
             fontWeight="600"
             style={{
-              color: subwayLineColor(data.lanes[0].stationCode),
+              color: subwayLineColor(data.stationCode),
             }}
           />
         </View>

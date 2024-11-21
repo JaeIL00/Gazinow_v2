@@ -56,51 +56,6 @@ export type FreshSubwayLineName =
   | '우이신설';
 
 /**
- * 나우탭 캡슐 타입
- */
-export type NowScreenCapsules = FreshSubwayLineName | '전체';
-
-/**
- * 지하철 검색 이력 타입
- */
-export interface SearchHistoryStationNameTypes {
-  id: number;
-  stationName: string;
-  stationLine: RawSubwayLineName;
-}
-
-/**
- * 지하철 검색 타입
- */
-export interface SearchStationNameTypes {
-  data: {
-    name: string;
-    line: RawSubwayLineName;
-  }[];
-}
-
-/**
- * 지하철 경로 데이터 api 응답
- */
-export interface SearchPathsTypes {
-  paths: Path[];
-}
-
-/**
- * 지하철 경로 데이터
- */
-export interface Path {
-  id?: number;
-  totalTime: number;
-  subwayTransitCount: number;
-  firstStartStation: string;
-  lastEndStation: string;
-  subPaths: SubPath[];
-  myPath: boolean;
-  myPathId: [number] | null;
-}
-
-/**
  * 지하철호선 코드
  *
  * @param oneToNine 1호선부터 9호선
@@ -119,6 +74,7 @@ export interface Path {
  * @param n116 수인분당선
  * @param n117 신림선
  */
+
 export type StationCode =
   | 1
   | 2
@@ -145,15 +101,41 @@ export type StationCode =
   | 117;
 
 /**
- * 지하철 경로 호선 데이터
+ * 나우탭 캡슐 타입
  */
-export interface Lane {
-  direct: boolean;
-  name: string;
-  stationCode: StationCode;
-  startName: string;
-  endName: string;
-  issueSummary: IssueSummary[];
+export type NowScreenCapsules = FreshSubwayLineName | '전체';
+
+/**
+ * 지하철 검색 이력 타입
+ */
+export interface SearchHistoryStationNameTypes {
+  id: number;
+  stationName: string;
+  stationLine: RawSubwayLineName;
+}
+
+/**
+ * 지하철 검색 타입
+ */
+export interface SearchStationNameTypes {
+  data: {
+    name: string;
+    line: RawSubwayLineName;
+  }[];
+}
+
+/**
+ * 지하철 경로 데이터
+ */
+export interface Path {
+  id?: number;
+  totalTime: number;
+  stationTransitCount: number;
+  firstStartStation: string;
+  lastEndStation: string;
+  subPaths: SubPath[];
+  myPath: boolean;
+  myPathId: [number] | null;
 }
 
 /**
@@ -166,7 +148,10 @@ export interface SubPath {
   stationCount: number;
   way: string; // 지하철 운행 방향
   door: string; // 빠른환승
-  lanes: Lane[];
+  name: RawSubwayLineName;
+  stationCode: StationCode;
+  direct: boolean;
+  issueSummary: IssueSummary[];
   stations: {
     index: number;
     stationName: string;
@@ -174,11 +159,11 @@ export interface SubPath {
   }[];
 }
 
-export interface SubwayStrEnd {
-  strStationName: string;
-  strStationLine: RawSubwayLineName;
-  endStationName: string;
-  endStationLine: RawSubwayLineName;
+/**
+ * 지하철 경로 데이터 api 응답
+ */
+export interface SearchPathsTypes {
+  paths: Path[];
 }
 
 export interface SaveMyRoutesType extends Path {
@@ -188,6 +173,13 @@ export interface SaveMyRoutesType extends Path {
 export interface MyRoutesType extends Path {
   id: number;
   roadName: string;
+}
+
+export interface SubwayStrEnd {
+  strStationName: string;
+  strStationLine: RawSubwayLineName;
+  endStationName: string;
+  endStationLine: RawSubwayLineName;
 }
 
 export type IssueKeywords = '자연재해' | '연착' | '혼잡' | '행사' | '사고' | '공사' | '시위';

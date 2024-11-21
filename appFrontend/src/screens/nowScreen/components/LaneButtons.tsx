@@ -28,7 +28,7 @@ const LaneButtons = ({ activeButton, setActiveButton, titleNotShown }: LaneButto
     savedStations = myRoutes?.reduce((acc, current) => {
       const { subPaths } = current;
       const lineOfSubPath = subPaths.map((sub: SubPath) => {
-        return pathSubwayLineNameInLine(sub.lanes[0].stationCode);
+        return pathSubwayLineNameInLine(sub.stationCode);
       });
       return Array.from(new Set([...acc, ...lineOfSubPath])).sort();
     }, [] as string[]);

@@ -6,7 +6,6 @@ import { useHomeNavigation } from '@/navigation/HomeNavigation';
 import { Pressable, View } from 'react-native';
 import IssuesBanner from './IssuesBanner';
 import IconRightArrowHead from '@/assets/icons/right_arrow_head.svg';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 import cn from 'classname';
 
 interface RouteItemProps {
@@ -64,7 +63,7 @@ const RouteItem = ({ route, hasIssues }: RouteItemProps) => {
         arriveStationName={route.lastEndStation}
         betweenPathMargin={24}
       />
-      {hasIssues ? <IssuesBanner subPathss={route.subPaths} /> : null}
+      {hasIssues ? <IssuesBanner subPaths={route.subPaths} /> : null}
     </Pressable>
   );
 };

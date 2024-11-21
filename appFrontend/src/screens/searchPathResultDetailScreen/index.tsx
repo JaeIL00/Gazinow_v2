@@ -1,6 +1,5 @@
 import { useMemo, useState } from 'react';
-import { FlatList, Modal, Pressable, SafeAreaView, TouchableOpacity, View } from 'react-native';
-
+import { FlatList, Modal, SafeAreaView, TouchableOpacity, View } from 'react-native';
 import { FontText, Space } from '@/global/ui';
 import { useRoute } from '@react-navigation/native';
 import NewRouteSaveModal from './components/NewRouteSaveModal';
@@ -44,7 +43,7 @@ const SearchPathResultDetailScreen = () => {
   const freshSubPathData: SubPath[] = useMemo(() => {
     if (!resultData.subPaths) return [];
     const subPaths = resultData.subPaths;
-    return Object.values(subPaths).filter((item) => !!item.lanes.length && !!item.stations.length);
+    return Object.values(subPaths).filter((item) => !!item.stations.length);
   }, [resultData]);
 
   const bookmarkHandler = () => {
@@ -57,7 +56,7 @@ const SearchPathResultDetailScreen = () => {
   };
 
   const isOccurIssue = useMemo(() => {
-    return resultData.subPaths.some((item) => item.lanes[0] && !!item.lanes[0].issueSummary.length);
+    return resultData.subPaths.some((item) => !!item.issueSummary.length);
   }, [resultData]);
 
   return (

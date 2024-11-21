@@ -47,9 +47,7 @@ const SearchPathResultScreen = () => {
   });
 
   const pathTime = (item: Path) => {
-    const hasIssue = item.subPaths.some(
-      (sub) => !!sub.lanes[0] && !!sub.lanes[0].issueSummary.length,
-    );
+    const hasIssue = item.subPaths.some((sub) => !!sub.issueSummary);
     const minute = hasIssue ? '분 이상' : '분';
     return item.totalTime > 60
       ? Math.floor(item.totalTime / 60) + '시간 ' + (item.totalTime % 60) + minute
@@ -150,28 +148,25 @@ const SearchPathResultScreen = () => {
                   {item.subPaths.map((linePath, idx) => {
                     return (
                       <React.Fragment key={linePath.sectionTime + 'subPath' + idx}>
-                        {linePath.lanes[0] &&
-                          linePath.lanes[0].issueSummary.map(({ keyword, title, id }, innerIdx) => {
+                        {linePath.issueSummary &&
+                          linePath.issueSummary.map(({ keyword, title, id }, innerIdx) => {
                             if (innerIdx > 2) return <></>;
                             return (
                               <TouchableOpacity
                                 key={id + title + innerIdx + 'idx' + idx}
                                 className="flex-row items-center justify-between px-12 py-8 mb-8 overflow-hidden rounded-full border-gray-beb border-1"
-                                onPress={
-                                  () => {
-                                    dispatch(getIssueId(id));
-                                    rootNavigation.navigate('IssueStack', {
-                                      screen: 'IssueDetail',
-                                    });
-                                  }
-                                  // homeNavigation.navigate('SubwayPathDetail', { state: item })
-                                }
+                                onPress={() => {
+                                  dispatch(getIssueId(id));
+                                  rootNavigation.navigate('IssueStack', {
+                                    screen: 'IssueDetail',
+                                  });
+                                }}
                               >
                                 <IssueKeywordIcon
                                   width={24}
                                   height={24}
                                   keyword={keyword}
-                                  color={subwayLineColor(linePath.lanes[0].stationCode)}
+                                  color={subwayLineColor(linePath.stationCode)}
                                 />
                                 <FontText
                                   text={title}
