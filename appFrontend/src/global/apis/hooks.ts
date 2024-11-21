@@ -15,7 +15,6 @@ import {
   getIssuesByLaneFetch,
 } from '@/global/apis/func';
 import { RawSubwayLineName, MyRoutesType, SubwayStrEnd } from './entity';
-import { AxiosError } from 'axios';
 import { subwayFreshLineName } from '@/global/utils';
 import { useAppSelect } from '@/store';
 import { useMemo } from 'react';
@@ -109,7 +108,7 @@ export const useSavedSubwayRoute = ({
   onError,
 }: {
   onSuccess: (data: number) => void;
-  onError: (error: AxiosError) => void;
+  onError: (error: { response: { data: { message: string } } }) => void;
 }) => {
   const { data, isLoading, mutate } = useMutation(searchPathSaveFetch, {
     onSuccess,
