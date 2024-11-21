@@ -155,7 +155,15 @@ const SearchStationScreen = () => {
           <ScrollView className="mt-28" keyboardShouldPersistTaps="handled">
             {searchResultData.map(({ stationName, stationLine }, idx) => (
               <Pressable
-                className="flex-row px-16 py-12 border-b gap-7 border-gray-beb"
+                style={({ pressed }) => ({
+                  backgroundColor: pressed ? COLOR.GRAY_E5 : 'transparent',
+                  flexDirection: 'row',
+                  paddingHorizontal: 16,
+                  paddingVertical: 12,
+                  borderBottomWidth: 1,
+                  borderColor: COLOR.GRAY_EB,
+                  gap: 7,
+                })}
                 key={idx}
                 onPress={() => stationBtnHandler({ stationLine, stationName })}
               >

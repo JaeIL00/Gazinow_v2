@@ -86,35 +86,34 @@ const SearchStation = () => {
 
           <ScrollView className="mt-18" keyboardShouldPersistTaps="handled">
             {historyData?.map(({ stationName, stationLine }, index) => (
-              <>
-                <Pressable
-                  style={({ pressed }) => ({
-                    backgroundColor: pressed ? COLOR.GRAY_E5 : 'transparent',
-                    flexDirection: 'row',
-                    paddingVertical: 12,
-                    paddingLeft: 16,
-                    gap: 7,
-                  })}
-                  onPress={() =>
-                    stationBtnHandler({
-                      stationName,
-                      stationLine,
-                    })
-                  }
-                >
-                  <IconClock />
-                  <View>
-                    <FontText
-                      text={stationName.split('(')[0]}
-                      className="text-black"
-                      fontWeight="500"
-                    />
-                    <View className="h-3" />
-                    <FontText text={stationLine!} className="text-14 text-gray-999" />
-                  </View>
-                </Pressable>
-                <View className="h-1 bg-gray-beb" />
-              </>
+              <Pressable
+                style={({ pressed }) => ({
+                  backgroundColor: pressed ? COLOR.GRAY_E5 : 'transparent',
+                  flexDirection: 'row',
+                  paddingVertical: 12,
+                  paddingLeft: 16,
+                  borderBottomWidth: 1,
+                  borderColor: COLOR.GRAY_EB,
+                  gap: 7,
+                })}
+                onPress={() =>
+                  stationBtnHandler({
+                    stationName,
+                    stationLine,
+                  })
+                }
+              >
+                <IconClock />
+                <View>
+                  <FontText
+                    text={stationName.split('(')[0]}
+                    className="text-black"
+                    fontWeight="500"
+                  />
+                  <View className="h-3" />
+                  <FontText text={stationLine!} className="text-14 text-gray-999" />
+                </View>
+              </Pressable>
             ))}
           </ScrollView>
         </View>
@@ -131,25 +130,30 @@ const SearchStation = () => {
           {searchResultData.length > 0 && (
             <ScrollView className="mt-28" keyboardShouldPersistTaps="handled">
               {searchResultData.map(({ stationName, stationLine }, idx) => (
-                <>
-                  <TouchableOpacity
-                    className="flex-row py-12 pl-16 gap-7"
-                    key={idx}
-                    onPress={() => stationBtnHandler({ stationLine, stationName })}
-                  >
-                    <IconLocationPin />
-                    <View>
-                      <FontText
-                        text={stationName.split('(')[0]}
-                        className="text-black leading-21"
-                        fontWeight="500"
-                      />
-                      <View className="h-3" />
-                      <FontText text={stationLine!} className="text-14 text-gray-999 leading-21" />
-                    </View>
-                  </TouchableOpacity>
-                  <View className="h-1 bg-gray-beb" />
-                </>
+                <Pressable
+                  style={({ pressed }) => ({
+                    backgroundColor: pressed ? COLOR.GRAY_E5 : 'transparent',
+                    flexDirection: 'row',
+                    paddingHorizontal: 16,
+                    paddingVertical: 12,
+                    borderBottomWidth: 1,
+                    borderColor: COLOR.GRAY_EB,
+                    gap: 7,
+                  })}
+                  key={idx}
+                  onPress={() => stationBtnHandler({ stationLine, stationName })}
+                >
+                  <IconLocationPin />
+                  <View>
+                    <FontText
+                      text={stationName.split('(')[0]}
+                      className="text-black leading-21"
+                      fontWeight="500"
+                    />
+                    <View className="h-3" />
+                    <FontText text={stationLine!} className="text-14 text-gray-999 leading-21" />
+                  </View>
+                </Pressable>
               ))}
             </ScrollView>
           )}
