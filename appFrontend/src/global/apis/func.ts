@@ -10,6 +10,7 @@ import {
   SubwayStrEnd,
   IssueContent,
   SaveMyRoutesType,
+  NotiHistories,
 } from './entity';
 import { SignInFetchResponse } from '@/screens/signInScreen/apis/entity';
 import * as Sentry from '@sentry/react-native';
@@ -252,6 +253,44 @@ export const getPopularIssuesFetch = async () => {
     const error = err as AxiosError;
     Sentry.captureException({
       target: '도움돼요 순 이슈 조회',
+      input: { request: error.request },
+      output: { status: error.response?.status, error: error.message, response: error.response },
+    });
+    throw error;
+  }
+};
+
+/**
+ * 알림 히스토리 조회 axios
+ */
+export const getNotiHistoryFetch = async (page: number) => {
+  try {
+    const res = await authServiceAPI.get<{ data: NotiHistories }>(`/api/v1/notification`, {
+      params: { page },
+    });
+    return res.data.data;
+  } catch (err) {
+    const error = err as AxiosError;
+    Sentry.captureException({
+      target: '알림 히스토리 조회',
+      input: { request: error.request },
+      output: { status: error.response?.status, error: error.message, response: error.response },
+    });
+    throw error;
+  }
+};
+
+/**
+ * 알림 읽음 처리 axios
+ */
+export const updateNotiReadStatus = async (notificationId: number) => {
+  try {
+    const res = await authServiceAPI.patch(`/api/v1/notification/${notificationId}/read`);
+    return res.data.data;
+  } catch (err) {
+    const error = err as AxiosError;
+    Sentry.captureException({
+      target: '알림 읽음 처리',
       input: { request: error.request },
       output: { status: error.response?.status, error: error.message, response: error.response },
     });

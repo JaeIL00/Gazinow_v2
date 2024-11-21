@@ -210,8 +210,18 @@ export interface IssueContent {
   ];
 }
 
-export interface AllIssues {
-  content: IssueContent[];
+export interface NotiHistoryContent {
+  id: number;
+  issueId: number;
+  notificationTitle: string;
+  notificationBody: string;
+  agoTime: string;
+  keyword: IssueKeywords;
+  read: boolean;
+}
+
+interface Pagination<T> {
+  content: T[];
   pageable: {
     pageNumber: number;
     pageSize: number;
@@ -238,3 +248,6 @@ export interface AllIssues {
   first: boolean;
   empty: boolean;
 }
+
+export type AllIssues = Pagination<IssueContent>;
+export type NotiHistories = Pagination<NotiHistoryContent>;

@@ -1,4 +1,5 @@
 import {
+  getNotiHistoryFetch,
   getPopularIssuesFetch,
   getSavedRoutesFetch,
   getSearchRoutesFetch,
@@ -227,4 +228,21 @@ export const useGetPopularIssuesQuery = () => {
     popularIssuesRefetch: refetch,
     isPopularIssuesLoading: isLoading,
   };
+};
+
+/**
+ * 이슈 노선별 조회 훅
+ */
+export const useGetNotiHistoriesQuery = () => {
+  const { data, refetch, fetchNextPage, hasNextPage } = useInfiniteQuery(
+    'getNotiHistoryFetch',
+    ({ pageParam = 0 }) => getNotiHistoryFetch(pageParam),
+    {
+      getNextPageParam: (lastPage, allPages) => {
+        if (lastPage?.content && lastPage?.content.length < 15) return undefined;
+        return allPages.length;
+      },
+    },
+  );
+  return { data, refetch, fetchNextPage, hasNextPage };
 };
