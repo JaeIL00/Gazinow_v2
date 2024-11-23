@@ -33,7 +33,7 @@ const IssueDetailScreen = () => {
       debounce(() => {
         if (!issueData) return;
         if (isVerifiedUser !== 'success auth') setIsOpenLoginModal(true);
-        else if (issueData.isLike) deleteLikeMutate(issueData.id);
+        else if (issueData.like) deleteLikeMutate(issueData.id);
         else doLikeMutate(issueData.id);
       }, 300),
     [issueData, isVerifiedUser],
