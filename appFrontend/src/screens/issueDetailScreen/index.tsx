@@ -80,7 +80,7 @@ const IssueDetailScreen = () => {
               />
               <FontText
                 text={`도움돼요 ${issueData.likeCount}`}
-                className={cn('text-14 leading-21 tracking-[-0.2] ml-4', {
+                className={cn('text-14 leading-21 tracking-[-0.2px] ml-4', {
                   'text-light-blue': issueData.like,
                   'text-gray-999': !issueData.like,
                 })}
@@ -91,7 +91,7 @@ const IssueDetailScreen = () => {
             {/* <TouchableOpacity onPress={} activeOpacity={0.5} hitSlop={30}>
               <FontText
                 text="잘못된 정보 신고"
-                className="text-14 text-gray-999 leading-21 tracking-[-0.2]"
+                className="text-14 text-gray-999 leading-21 tracking-[-0.2px]"
                 fontWeight="500"
               />
             </TouchableOpacity> */}
