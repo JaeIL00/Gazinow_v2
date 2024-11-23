@@ -64,10 +64,10 @@ const SearchPathResultDetailScreen = () => {
       <View className="flex-1 px-16">
         {/* header */}
         <View className="flex-row items-center justify-between py-16">
-          <TouchableOpacity onPress={() => navigation.goBack()}>
+          <TouchableOpacity hitSlop={20} onPress={() => navigation.goBack()}>
             <IconLeftArrowHead color="#3F3F46" width={18} height={18} />
           </TouchableOpacity>
-          <TouchableOpacity onPress={bookmarkHandler} disabled={isLoading}>
+          <TouchableOpacity hitSlop={20} onPress={bookmarkHandler} disabled={isLoading}>
             <IconBookmark
               width={24}
               height={24}

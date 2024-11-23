@@ -31,7 +31,7 @@ const NotiHistory = () => {
   return (
     <SafeAreaView className="flex-1 bg-white">
       <View className="flex-row items-center justify-between p-16">
-        <TouchableOpacity onPress={() => navigation.goBack()}>
+        <TouchableOpacity onPress={() => navigation.goBack()} hitSlop={20}>
           <IconLeftArrowHead color="#3F3F46" width={24} />
         </TouchableOpacity>
 

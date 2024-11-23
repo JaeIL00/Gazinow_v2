@@ -73,13 +73,12 @@ const HomeScreen = () => {
           />
         }
       >
-        <TouchableOpacity
-          onPress={authStateHandler}
-          hitSlop={20}
-          className="flex-row-reverse mt-15 ml-11"
-        >
-          <IconBell />
-        </TouchableOpacity>
+        <View className="flex-row mt-15">
+          <View className="flex-1" />
+          <TouchableOpacity onPress={authStateHandler} hitSlop={20}>
+            <IconBell />
+          </TouchableOpacity>
+        </View>
         <IssueCarrousel isRefreshing={isRefreshing} setIsRefreshing={setIsRefreshing} />
         <View className="h-16" />
         <SwapStation />
