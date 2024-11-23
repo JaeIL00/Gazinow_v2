@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { Provider } from 'react-redux';
 import { RootNavigation } from '@/navigation';
@@ -8,14 +8,12 @@ import * as Sentry from '@sentry/react-native';
 import { MODE, SENTRY_DSN } from '@env';
 import { version as currentVersion } from '../package.json';
 import { fetch } from '@react-native-community/netinfo';
-import { Alert, AppState, AppStateStatus, Platform } from 'react-native';
+import { Alert } from 'react-native';
 import RNExitApp from 'react-native-exit-app';
 import { RootStackParamList } from './navigation/types/navigation';
 import notifee from '@notifee/react-native';
 import { Walkthrough } from './screens/homeScreen/components';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { handleNotificationPress } from './global/utils/pushNotification';
-import messaging from '@react-native-firebase/messaging';
 import analytics from '@react-native-firebase/analytics';
 
 Sentry.init({
@@ -88,33 +86,6 @@ const App = (): JSX.Element => {
     }
   }, [isWalkthroughClosed]);
 
-  // 안드로이드 앱 종료 상태일 때 알림 클릭 핸들러
-  if (Platform.OS === 'android') {
-    const getNotification = useCallback(async () => {
-      const remoteMessage = await messaging().getInitialNotification();
-      if (remoteMessage) {
-        const pathJsonString = remoteMessage?.data?.path;
-        await AsyncStorage.setItem('pushNotiParams', pathJsonString as string);
-        await handleNotificationPress(remoteMessage);
-      }
-    }, []);
-
-    useEffect(() => {
-      getNotification();
-
-      const handleAppStateChange = (nextAppState: AppStateStatus) => {
-        if (nextAppState === 'active') {
-          getNotification();
-        }
-      };
-
-      const subscription = AppState.addEventListener('change', handleAppStateChange);
-
-      return () => {
-        subscription.remove();
-      };
-    }, [getNotification]);
-  }
   const routeNameRef = useRef<string | null>(null);
 
   return (

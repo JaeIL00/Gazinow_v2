@@ -1,8 +1,8 @@
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import messaging, { FirebaseMessagingTypes } from '@react-native-firebase/messaging';
 import notifee, { AndroidImportance, AndroidVisibility, EventType } from '@notifee/react-native';
 import { useRootNavigation } from '@/navigation/RootNavigation';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { AppState, AppStateStatus, Platform } from 'react-native';
 
 const rootNavigation = useRootNavigation();
 
@@ -67,3 +67,25 @@ export const handleNotificationPress = async (
   await rootNavigation.navigate('SubwayPathDetail', { state: parsedPathObject });
   await AsyncStorage.removeItem('pushNotiParams');
 };
+
+// 안드로이드 앱 종료 상태일 때 알림 클릭 핸들러
+if (Platform.OS === 'android') {
+  const getNotification = useCallback(async () => {
+    const remoteMessage = await messaging().getInitialNotification();
+    if (remoteMessage) {
+      await handleNotificationPress(remoteMessage);
+    }
+  }, []);
+
+  useEffect(() => {
+    getNotification();
+
+    const handleAppStateChange = (nextAppState: AppStateStatus) => {
+      if (nextAppState === 'active') getNotification();
+    };
+
+    const subscription = AppState.addEventListener('change', handleAppStateChange);
+
+    return () => subscription.remove();
+  }, [getNotification]);
+}
