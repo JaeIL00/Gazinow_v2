@@ -13,15 +13,15 @@ const SavedRoutesScreen = () => {
   const newRouteNavigation = useNewRouteNavigation();
 
   return (
-    <SafeAreaView className="flex-1 px-16 bg-gray-9f9">
-      <View className="flex-row items-center gap-12 py-16">
+    <SafeAreaView className="flex-1 bg-gray-9f9">
+      <View className="flex-row items-center gap-12 p-16">
         <TouchableOpacity onPress={() => navigation.goBack()} hitSlop={20}>
           <IconLeftArrowHead width={24} color="#3F3F46" />
         </TouchableOpacity>
         <FontText text="저장경로 편집" className="text-18 leading-23" fontWeight="500" />
       </View>
       <ScrollView>
-        <View className="bg-white rounded-15">
+        <View className="mx-16 bg-white rounded-15">
           <SavedRoutesList />
           <Pressable
             style={({ pressed }) => ({
@@ -36,10 +36,9 @@ const SavedRoutesScreen = () => {
             onPress={() => newRouteNavigation.navigate('Swap')}
           >
             <IconPlusBtn />
-            <View className="w-6" />
             <FontText
               text="경로 추가하기"
-              className="text-14 leading-21 text-gray-999"
+              className="ml-6 text-14 leading-21 text-gray-999"
               fontWeight="500"
             />
           </Pressable>

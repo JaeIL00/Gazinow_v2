@@ -50,8 +50,8 @@ const SearchPathResultScreen = () => {
   };
 
   return (
-    <SafeAreaView className="flex-1 bg-gray-f2">
-      <View className="flex-row p-16 mb-16 bg-white pb-15 pl-22">
+    <SafeAreaView className="flex-1 bg-white">
+      <View className="flex-row p-16 pb-15 pl-22 border-b-16 border-gray-f2">
         <TouchableOpacity className="mt-4 mr-16" onPress={() => homeNavigation.goBack()}>
           <IconLeftArrowHead color="#3F3F46" />
         </TouchableOpacity>
@@ -64,7 +64,7 @@ const SearchPathResultScreen = () => {
           className="text-brown-54f"
         />
       </View>
-      <ScrollView style={isLoading && { backgroundColor: 'white' }}>
+      <ScrollView style={!isLoading && { backgroundColor: COLOR.GRAY_F2 }}>
         {isLoading && (
           <View className="items-center mt-100">
             <LoadingCircle width={40} height={40} />
