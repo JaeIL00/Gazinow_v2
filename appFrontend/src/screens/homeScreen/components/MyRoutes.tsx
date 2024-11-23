@@ -39,9 +39,16 @@ const MyRoutes = ({ isVerifiedUser, isRefreshing, setIsRefreshing }: MyRoutesPro
     if (myRoutes && myRoutes.length < 1) {
       return <NoRoutes />;
     }
-    return myRoutes?.map((myRoute) => {
+    return myRoutes?.map((myRoute, index) => {
       const hasIssues = myRoute.subPaths.some((subPath) => !!subPath.issueSummary.length);
-      return <RouteItem key={myRoute.id} route={myRoute} hasIssues={hasIssues} />;
+      return (
+        <RouteItem
+          key={myRoute.id}
+          route={myRoute}
+          hasIssues={hasIssues}
+          isLastItem={index === myRoutes.length - 1}
+        />
+      );
     });
   };
 

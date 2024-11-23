@@ -11,9 +11,10 @@ import cn from 'classname';
 interface RouteItemProps {
   route: MyRoutesType;
   hasIssues: boolean;
+  isLastItem: boolean;
 }
 
-const RouteItem = ({ route, hasIssues }: RouteItemProps) => {
+const RouteItem = ({ route, hasIssues, isLastItem }: RouteItemProps) => {
   const homeNavigation = useHomeNavigation();
 
   const filteredTotalTime =
@@ -30,6 +31,8 @@ const RouteItem = ({ route, hasIssues }: RouteItemProps) => {
         paddingBottom: 23,
         borderTopColor: COLOR.GRAY_EB,
         borderTopWidth: 1,
+        borderBottomLeftRadius: isLastItem ? 15 : 0,
+        borderBottomRightRadius: isLastItem ? 15 : 0,
       })}
       onPress={() => homeNavigation.push('SubwayPathDetail', { state: route })}
     >

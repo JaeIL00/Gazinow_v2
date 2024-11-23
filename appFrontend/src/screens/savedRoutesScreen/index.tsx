@@ -3,7 +3,7 @@ import SavedRoutesList from './components/SavedRoutesList';
 import { FontText } from '@/global/ui';
 import { COLOR } from '@/global/constants';
 import { useRootNavigation } from '@/navigation/RootNavigation';
-import { SafeAreaView, ScrollView, TouchableOpacity, View } from 'react-native';
+import { Pressable, SafeAreaView, ScrollView, TouchableOpacity, View } from 'react-native';
 import IconPlusBtn from '@assets/icons/plus_circle.svg';
 import IconLeftArrowHead from '@assets/icons/left_arrow_head.svg';
 import { useNewRouteNavigation } from '@/navigation/NewRouteNavigation';
@@ -13,17 +13,26 @@ const SavedRoutesScreen = () => {
   const newRouteNavigation = useNewRouteNavigation();
 
   return (
-    <SafeAreaView className="flex-1 bg-gray-9f9">
-      <TouchableOpacity className="flex-row items-center p-16" onPress={() => navigation.goBack()}>
-        <IconLeftArrowHead color="#3F3F46" width={24} style={{ marginRight: 12 }} />
-        <FontText text="저장경로 편집" className="text-18" fontWeight="500" />
-      </TouchableOpacity>
-
+    <SafeAreaView className="flex-1 px-16 bg-gray-9f9">
+      <View className="flex-row items-center gap-12 py-16">
+        <TouchableOpacity onPress={() => navigation.goBack()} hitSlop={20}>
+          <IconLeftArrowHead width={24} color="#3F3F46" />
+        </TouchableOpacity>
+        <FontText text="저장경로 편집" className="text-18 leading-23" fontWeight="500" />
+      </View>
       <ScrollView>
-        <View className="mx-16 bg-white rounded-15">
+        <View className="bg-white rounded-15">
           <SavedRoutesList />
-          <TouchableOpacity
-            className="flex-row items-center justify-center py-20"
+          <Pressable
+            style={({ pressed }) => ({
+              backgroundColor: pressed ? COLOR.GRAY_E5 : COLOR.WHITE,
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'center',
+              paddingVertical: 20,
+              borderBottomLeftRadius: 15,
+              borderBottomRightRadius: 15,
+            })}
             onPress={() => newRouteNavigation.navigate('Swap')}
           >
             <IconPlusBtn />
@@ -33,7 +42,7 @@ const SavedRoutesScreen = () => {
               className="text-14 leading-21 text-gray-999"
               fontWeight="500"
             />
-          </TouchableOpacity>
+          </Pressable>
         </View>
       </ScrollView>
     </SafeAreaView>
