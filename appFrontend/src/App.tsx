@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { Provider } from 'react-redux';
 import { RootNavigation } from '@/navigation';
@@ -11,9 +11,6 @@ import { fetch } from '@react-native-community/netinfo';
 import { Alert } from 'react-native';
 import RNExitApp from 'react-native-exit-app';
 import { RootStackParamList } from './navigation/types/navigation';
-import notifee from '@notifee/react-native';
-import { Walkthrough } from './screens/homeScreen/components';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import analytics from '@react-native-firebase/analytics';
 
 Sentry.init({
@@ -54,38 +51,6 @@ const App = (): JSX.Element => {
     checkNetworkAndRetry();
   }, []);
 
-  // 워크스루를 위한 첫 실행 여부 확인
-  const [isFirstRun, setIsFirstRun] = useState<boolean>(false);
-  useEffect(() => {
-    const checkFirstRun = async () => {
-      try {
-        const hasRun = await AsyncStorage.getItem('hasRun');
-        if (hasRun === null) {
-          await AsyncStorage.setItem('hasRun', 'true');
-          setIsFirstRun(true);
-        } else {
-          setIsFirstRun(false);
-        }
-      } catch (error) {
-        console.error('Error checking first run', error);
-      }
-    };
-
-    checkFirstRun();
-  }, []);
-
-  // 워크스루 종료 시 알림 권한 요청
-  const [isWalkthroughClosed, setIsWalkthroughClosed] = useState<boolean>(false);
-  useEffect(() => {
-    if (isWalkthroughClosed) {
-      const requestPermission = async () => {
-        await notifee.requestPermission();
-      };
-
-      requestPermission();
-    }
-  }, [isWalkthroughClosed]);
-
   const routeNameRef = useRef<string | null>(null);
 
   return (
@@ -117,9 +82,6 @@ const App = (): JSX.Element => {
           }}
         >
           <RootNavigation />
-          {isFirstRun && !isWalkthroughClosed && (
-            <Walkthrough setIsWalkthroughClosed={setIsWalkthroughClosed} />
-          )}
         </NavigationContainer>
       </QueryClientProvider>
     </Provider>
