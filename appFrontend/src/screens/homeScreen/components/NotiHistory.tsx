@@ -1,5 +1,5 @@
 import { FontText } from '@/global/ui';
-import React, { useMemo, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import { Pressable, RefreshControl, SafeAreaView, TouchableOpacity, View } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import IconLeftArrowHead from '@assets/icons/left_arrow_head.svg';
@@ -15,16 +15,22 @@ import { useGetNotiHistoriesQuery } from '@/global/apis/hooks';
 import cn from 'classname';
 import { useMutation } from 'react-query';
 import { updateNotiReadStatus } from '@/global/apis/func';
+import { useFocusEffect } from '@react-navigation/native';
 
 const NotiHistory = () => {
   const navigation = useRootNavigation();
   const dispatch = useAppDispatch();
   const [isRefreshing, setIsRefreshing] = useState<boolean>(false);
-
   const { data, refetch, fetchNextPage, hasNextPage } = useGetNotiHistoriesQuery();
   const flattenedData = useMemo(() => {
     return data?.pages.flatMap((page) => page.content) ?? [];
   }, [data]);
+
+  useFocusEffect(
+    useCallback(() => {
+      refetch();
+    }, []),
+  );
 
   const { mutate } = useMutation(updateNotiReadStatus);
 
