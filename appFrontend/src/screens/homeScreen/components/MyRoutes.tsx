@@ -7,6 +7,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import { NonLoggedIn, RouteItem, NoRoutes } from '.';
 import { useEffect } from 'react';
 import { useQueryClient } from 'react-query';
+import { useHomeNavigation } from '@/navigation/HomeNavigation';
 
 interface MyRoutesProps {
   isVerifiedUser: 'success auth' | 'fail auth' | 'yet';
@@ -16,6 +17,8 @@ interface MyRoutesProps {
 
 const MyRoutes = ({ isVerifiedUser, isRefreshing, setIsRefreshing }: MyRoutesProps) => {
   const navigation = useRootNavigation();
+  const homeNavigation = useHomeNavigation();
+
   const { myRoutes, getSavedRoutesRefetch } = useGetSavedRoutesQuery();
   const queryClient = useQueryClient();
 
@@ -29,7 +32,7 @@ const MyRoutes = ({ isVerifiedUser, isRefreshing, setIsRefreshing }: MyRoutesPro
 
   const editMyRoutesHandler = () =>
     isVerifiedUser === 'success auth'
-      ? navigation.navigate('NewRouteNavigation', { screen: 'SavedRoutes' })
+      ? homeNavigation.navigate('SavedRoutes')
       : navigation.navigate('AuthStack', { screen: 'Landing' });
 
   const renderMyRoutes = () => {
