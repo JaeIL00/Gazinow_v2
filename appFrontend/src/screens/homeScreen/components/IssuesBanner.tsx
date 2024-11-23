@@ -30,7 +30,7 @@ const IssuesBanner = ({ subPaths }: IssuesBannerProps) => {
               dispatch(getIssueId(issue.id));
               navigation.navigate('IssueStack', { screen: 'IssueDetail' });
             }}
-            className="flex-row items-center justify-between px-12 py-8 mb-8 overflow-hidden rounded-full border-gray-beb border-1"
+            className="flex-row items-center justify-between px-12 py-8 mb-8 overflow-hidden bg-white rounded-full border-gray-beb border-1"
           >
             <IssueKeywordIcon
               width={16}
