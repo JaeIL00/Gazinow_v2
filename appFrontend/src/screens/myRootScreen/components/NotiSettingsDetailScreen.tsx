@@ -65,7 +65,7 @@ const NotiSettingsDetailScreen = () => {
   const { addPathNotiSettingsMutate } = useAddPathNotiSettingsMutation({
     onSuccess: async () => myPageNavigation.goBack(),
     onError: async (error) => {
-      if (error.response?.status == 502) {
+      if (error.response?.status == 400) {
         showToast('saveNotiSettingsFailed');
       }
     },
@@ -73,7 +73,7 @@ const NotiSettingsDetailScreen = () => {
   const { updatePathNotiSettingsMutate } = usePathUpdateNotiSettingsMutation({
     onSuccess: async () => myPageNavigation.goBack(),
     onError: async (error) => {
-      if (error.response?.status == 502) {
+      if (error.response?.status == 400) {
         showToast('saveNotiSettingsFailed');
       }
     },

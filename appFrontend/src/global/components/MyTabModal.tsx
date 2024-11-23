@@ -29,7 +29,7 @@ const MyTabModal = ({
         className="items-center justify-center flex-1"
         style={{ backgroundColor: 'rgba(0, 0, 0, 0.3)' }}
       >
-        <View className="items-center bg-white w-350 h-160 p-30 rounded-10">
+        <View className="items-center bg-white mx-33 h-160 p-30 rounded-10">
           <FontText text={title} className="text-20 leading-30 text-black-717" fontWeight="600" />
           <View className="flex-row justify-between mt-20">
             <TouchableOpacity

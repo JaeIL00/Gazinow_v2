@@ -1,15 +1,17 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRootNavigation } from '@/navigation/RootNavigation';
 import { getEncryptedStorage, removeEncryptedStorage } from '@/global/utils';
 import { FontText } from '@/global/ui';
 import MyTabModal from '@/global/components/MyTabModal';
-import { SafeAreaView, TouchableOpacity, View } from 'react-native';
+import { Pressable, SafeAreaView, TouchableOpacity, View } from 'react-native';
 import IconLeftArrowHead from '@assets/icons/left_arrow_head.svg';
 import { useMyPageNavigation } from '@/navigation/MyPageNavigation';
 import { showToast } from '@/global/utils/toast';
 import { useAppDispatch } from '@/store';
 import { getAuthorizationState } from '@/store/modules';
 import { useLogoutMutation } from '../apis/hooks';
+import { COLOR } from '@/global/constants';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 interface RenderMenuProps {
   text: string;
@@ -19,13 +21,28 @@ interface RenderMenuProps {
 const ManageAccountScreen = () => {
   const myPageNavigation = useMyPageNavigation();
   const navigation = useRootNavigation();
-  const [popupVisible, setPopupVisible] = useState(false);
+  const [popupVisible, setPopupVisible] = useState<boolean>(false);
+  const [isSocialLoggedIn, setIsSocialLoggedIn] = useState<string | null>(null);
   const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    const checkSocialLogin = async () => {
+      try {
+        const isSocialLoggedIn = await AsyncStorage.getItem('isSocialLoggedIn');
+        setIsSocialLoggedIn(isSocialLoggedIn);
+      } catch (error) {
+        console.error('AsyncStorage 읽기 실패:', error);
+      }
+    };
+
+    checkSocialLogin();
+  }, []);
 
   const { logoutMutate } = useLogoutMutation({
     onSuccess: async () => {
       await removeEncryptedStorage('access_token');
       await removeEncryptedStorage('refresh_token');
+      await AsyncStorage.removeItem('isSocialLoggedIn');
       dispatch(getAuthorizationState('fail auth'));
       navigation.reset({ routes: [{ name: 'MainBottomTab' }] });
       showToast('logout');
@@ -41,9 +58,18 @@ const ManageAccountScreen = () => {
 
   const renderMenu = ({ text, onPress }: RenderMenuProps) => (
     <>
-      <TouchableOpacity className="flex-row items-center px-16 h-53" onPress={onPress}>
+      <Pressable
+        style={({ pressed }) => ({
+          backgroundColor: pressed ? COLOR.GRAY_E5 : 'transparent',
+          flexDirection: 'row',
+          alignItems: 'center',
+          paddingHorizontal: 16,
+          height: 53,
+        })}
+        onPress={onPress}
+      >
         <FontText text={text} />
-      </TouchableOpacity>
+      </Pressable>
       <View className="h-1 bg-gray-beb" />
     </>
   );
@@ -58,10 +84,11 @@ const ManageAccountScreen = () => {
         <FontText text="계정 관리" className="text-18 leading-23" fontWeight="500" />
       </TouchableOpacity>
       <View className="h-1 bg-gray-beb" />
-      {renderMenu({
-        text: '비밀번호 변경',
-        onPress: () => myPageNavigation.navigate('ChangePwScreen'),
-      })}
+      {isSocialLoggedIn !== 'true' &&
+        renderMenu({
+          text: '비밀번호 변경',
+          onPress: () => myPageNavigation.navigate('ChangePwScreen'),
+        })}
       {renderMenu({ text: '로그아웃', onPress: () => setPopupVisible(true) })}
       {renderMenu({
         text: '회원 탈퇴',

@@ -1,7 +1,7 @@
 import { COLOR } from '@/global/constants';
 import { FontText } from '@/global/ui';
 import { useRootNavigation } from '@/navigation/RootNavigation';
-import { Dimensions, Pressable, View } from 'react-native';
+import { Dimensions, Pressable, TouchableOpacity, View } from 'react-native';
 
 const NonLoggedIn = () => {
   const navigation = useRootNavigation();
@@ -21,12 +21,13 @@ const NonLoggedIn = () => {
         className="text-center text-13 leading-16 text-gray-999"
         fontWeight="500"
       />
-      <Pressable
+      <TouchableOpacity
+        activeOpacity={0.5}
         className="bg-black-717 w-[120px] py-12 items-center rounded-5 mt-24"
         onPress={() => navigation.navigate('AuthStack', { screen: 'Landing' })}
       >
         <FontText text="로그인" className="text-white text-14" fontWeight="600" />
-      </Pressable>
+      </TouchableOpacity>
     </View>
   );
 };

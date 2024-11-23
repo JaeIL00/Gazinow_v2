@@ -40,9 +40,7 @@ const MyRoutes = ({ isVerifiedUser, isRefreshing, setIsRefreshing }: MyRoutesPro
       return <NoRoutes />;
     }
     return myRoutes?.map((myRoute) => {
-      const hasIssues = myRoute.subPaths.some(
-        (subPath) => subPath.lanes[0].issueSummary.length > 0,
-      );
+      const hasIssues = myRoute.subPaths.some((subPath) => !!subPath.issueSummary.length);
       return <RouteItem key={myRoute.id} route={myRoute} hasIssues={hasIssues} />;
     });
   };

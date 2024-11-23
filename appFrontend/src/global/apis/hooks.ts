@@ -1,4 +1,5 @@
 import {
+  getNotiHistoryFetch,
   getPopularIssuesFetch,
   getSavedRoutesFetch,
   getSearchRoutesFetch,
@@ -15,7 +16,6 @@ import {
   getIssuesByLaneFetch,
 } from '@/global/apis/func';
 import { RawSubwayLineName, MyRoutesType, SubwayStrEnd } from './entity';
-import { AxiosError } from 'axios';
 import { subwayFreshLineName } from '@/global/utils';
 import { useAppSelect } from '@/store';
 import { useMemo } from 'react';
@@ -109,7 +109,7 @@ export const useSavedSubwayRoute = ({
   onError,
 }: {
   onSuccess: (data: number) => void;
-  onError: (error: AxiosError) => void;
+  onError: (error: { response: { data: { message: string } } }) => void;
 }) => {
   const { data, isLoading, mutate } = useMutation(searchPathSaveFetch, {
     onSuccess,
@@ -228,4 +228,21 @@ export const useGetPopularIssuesQuery = () => {
     popularIssuesRefetch: refetch,
     isPopularIssuesLoading: isLoading,
   };
+};
+
+/**
+ * 이슈 노선별 조회 훅
+ */
+export const useGetNotiHistoriesQuery = () => {
+  const { data, refetch, fetchNextPage, hasNextPage } = useInfiniteQuery(
+    'getNotiHistoryFetch',
+    ({ pageParam = 0 }) => getNotiHistoryFetch(pageParam),
+    {
+      getNextPageParam: (lastPage, allPages) => {
+        if (lastPage?.content && lastPage?.content.length < 15) return undefined;
+        return allPages.length;
+      },
+    },
+  );
+  return { data, refetch, fetchNextPage, hasNextPage };
 };

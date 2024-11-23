@@ -24,6 +24,7 @@ const NewRouteSaveModal = ({
   const queryClient = useQueryClient();
 
   const [isDuplicatedError, setIsDuplicatedError] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState<string>('');
   const [routeName, setRouteName] = useState<string>('');
 
   const { isLoading, mutate } = useSavedSubwayRoute({
@@ -34,10 +35,9 @@ const NewRouteSaveModal = ({
       closeModal();
       showToast('saveRoute');
     },
-    onError: ({ response }) => {
-      if (response?.status === 409) {
-        setIsDuplicatedError(true);
-      }
+    onError: async ({ response }) => {
+      setIsDuplicatedError(true);
+      setErrorMessage(response.data.message);
     },
   });
 
@@ -123,7 +123,7 @@ const NewRouteSaveModal = ({
               }}
             >
               <FontText
-                text="이미 존재하는 이름입니다"
+                text={errorMessage}
                 className={cn('text-12 text-transparent', {
                   'text-light-red': isDuplicatedError,
                 })}

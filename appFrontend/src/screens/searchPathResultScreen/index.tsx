@@ -1,4 +1,4 @@
-import { SafeAreaView, ScrollView, TouchableOpacity, View } from 'react-native';
+import { Pressable, SafeAreaView, ScrollView, TouchableOpacity, View } from 'react-native';
 
 import { FontText, Space } from '@/global/ui';
 import { COLOR } from '@/global/constants';
@@ -47,9 +47,7 @@ const SearchPathResultScreen = () => {
   });
 
   const pathTime = (item: Path) => {
-    const hasIssue = item.subPaths.some(
-      (sub) => !!sub.lanes[0] && !!sub.lanes[0].issueSummary.length,
-    );
+    const hasIssue = item.subPaths.some((sub) => !!sub.issueSummary);
     const minute = hasIssue ? '분 이상' : '분';
     return item.totalTime > 60
       ? Math.floor(item.totalTime / 60) + '시간 ' + (item.totalTime % 60) + minute
@@ -100,15 +98,21 @@ const SearchPathResultScreen = () => {
           )}
           {data &&
             data.paths.map((item, idx) => (
-              <View
+              <Pressable
                 key={item.firstStartStation + item.subPaths.length + idx}
-                style={{
+                style={({ pressed }) => ({
+                  backgroundColor: pressed ? COLOR.GRAY_E5 : 'transparent',
                   paddingHorizontal: 18,
                   paddingBottom: 24,
                   paddingTop: 20,
                   borderBottomColor: data.paths.length - 1 !== idx ? COLOR.GRAY_EB : 'none',
                   borderBottomWidth: data.paths.length - 1 !== idx ? 1 : 0,
-                }}
+                })}
+                onPress={() =>
+                  homeNavigation.push('SubwayPathDetail', {
+                    state: item,
+                  })
+                }
               >
                 <View style={{ marginBottom: 16 }}>
                   <View
@@ -123,18 +127,11 @@ const SearchPathResultScreen = () => {
                       className="text-11 text-gray-999"
                       fontWeight="600"
                     />
-                    <TouchableOpacity
-                      style={{ flexDirection: 'row', alignItems: 'center' }}
-                      onPress={() =>
-                        homeNavigation.push('SubwayPathDetail', {
-                          state: item,
-                        })
-                      }
-                    >
+                    <View className="flex-row items-center">
                       <FontText text="세부정보" className="text-13 text-gray-999" />
                       <Space width={4} />
                       <IconRightArrowHead color={COLOR.GRAY_999} />
-                    </TouchableOpacity>
+                    </View>
                   </View>
                   <View style={{ height: 4 }} />
                   <FontText text={pathTime(item)} className="text-20" fontWeight="600" />
@@ -151,28 +148,25 @@ const SearchPathResultScreen = () => {
                   {item.subPaths.map((linePath, idx) => {
                     return (
                       <React.Fragment key={linePath.sectionTime + 'subPath' + idx}>
-                        {linePath.lanes[0] &&
-                          linePath.lanes[0].issueSummary.map(({ keyword, title, id }, innerIdx) => {
+                        {linePath.issueSummary &&
+                          linePath.issueSummary.map(({ keyword, title, id }, innerIdx) => {
                             if (innerIdx > 2) return <></>;
                             return (
                               <TouchableOpacity
                                 key={id + title + innerIdx + 'idx' + idx}
                                 className="flex-row items-center justify-between px-12 py-8 mb-8 overflow-hidden rounded-full border-gray-beb border-1"
-                                onPress={
-                                  () => {
-                                    dispatch(getIssueId(id));
-                                    rootNavigation.navigate('IssueStack', {
-                                      screen: 'IssueDetail',
-                                    });
-                                  }
-                                  // homeNavigation.navigate('SubwayPathDetail', { state: item })
-                                }
+                                onPress={() => {
+                                  dispatch(getIssueId(id));
+                                  rootNavigation.navigate('IssueStack', {
+                                    screen: 'IssueDetail',
+                                  });
+                                }}
                               >
                                 <IssueKeywordIcon
                                   width={24}
                                   height={24}
                                   keyword={keyword}
-                                  color={subwayLineColor(linePath.lanes[0].stationCode)}
+                                  color={subwayLineColor(linePath.stationCode)}
                                 />
                                 <FontText
                                   text={title}
@@ -188,7 +182,7 @@ const SearchPathResultScreen = () => {
                     );
                   })}
                 </View>
-              </View>
+              </Pressable>
             ))}
         </ScrollView>
       </View>

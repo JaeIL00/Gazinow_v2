@@ -177,7 +177,7 @@ export const getDetailPushNotiOnStatusFetch = async (email: string) => {
  */
 export const disablePathNotiFetch = async (id: number) => {
   try {
-    await authServiceAPI.post(`/api/v1/my_find_road/disable_notification?id=${id}`);
+    await authServiceAPI.post(`/api/v1/notification/disable?id=${id}`);
   } catch (err) {
     const error = err as AxiosError;
     throw error;
@@ -189,7 +189,7 @@ export const disablePathNotiFetch = async (id: number) => {
  */
 export const addPathNotiSettingsFetch = async (notiSettings: NotiSettingsType) => {
   try {
-    await authServiceAPI.post(`/api/v1/my_find_road/enable_notification`, notiSettings);
+    await authServiceAPI.post(`/api/v1/notification/enable`, notiSettings);
   } catch (err) {
     const error = err as AxiosError;
     throw error;
@@ -201,7 +201,7 @@ export const addPathNotiSettingsFetch = async (notiSettings: NotiSettingsType) =
  */
 export const updatePathNotiSettingsFetch = async (notiSettings: NotiSettingsType) => {
   try {
-    await authServiceAPI.post(`/api/v1/my_find_road/update_notification`, notiSettings);
+    await authServiceAPI.post(`/api/v1/notification/update`, notiSettings);
   } catch (err) {
     const error = err as AxiosError;
     throw error;
@@ -214,7 +214,7 @@ export const updatePathNotiSettingsFetch = async (notiSettings: NotiSettingsType
 export const getPathNotiFetch = async (myPathId: number) => {
   try {
     const res = await authServiceAPI.get<{ data: PathNotiSettingsResType }>(
-      `/api/v1/my_find_road/get_notifications?myPathId=${myPathId}`,
+      `/api/v1/notification/settings?myPathId=${myPathId}`,
     );
     return res.data.data;
   } catch (err) {

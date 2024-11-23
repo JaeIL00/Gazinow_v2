@@ -1,6 +1,5 @@
 import { useMemo, useState } from 'react';
-import { FlatList, Modal, Pressable, SafeAreaView, TouchableOpacity, View } from 'react-native';
-
+import { FlatList, Modal, SafeAreaView, TouchableOpacity, View } from 'react-native';
 import { FontText, Space } from '@/global/ui';
 import { useRoute } from '@react-navigation/native';
 import NewRouteSaveModal from './components/NewRouteSaveModal';
@@ -44,7 +43,7 @@ const SearchPathResultDetailScreen = () => {
   const freshSubPathData: SubPath[] = useMemo(() => {
     if (!resultData.subPaths) return [];
     const subPaths = resultData.subPaths;
-    return Object.values(subPaths).filter((item) => !!item.lanes.length && !!item.stations.length);
+    return Object.values(subPaths).filter((item) => !!item.stations.length);
   }, [resultData]);
 
   const bookmarkHandler = () => {
@@ -57,7 +56,7 @@ const SearchPathResultDetailScreen = () => {
   };
 
   const isOccurIssue = useMemo(() => {
-    return resultData.subPaths.some((item) => item.lanes[0] && !!item.lanes[0].issueSummary.length);
+    return resultData.subPaths.some((item) => !!item.issueSummary.length);
   }, [resultData]);
 
   return (
@@ -96,13 +95,15 @@ const SearchPathResultDetailScreen = () => {
                       fontWeight="600"
                     />
                     <View className="flex-row w-full gap-x-8 mt-30">
-                      <Pressable
+                      <TouchableOpacity
+                        activeOpacity={0.5}
                         className="items-center flex-1 py-12 border rounded-5 border-gray-999"
                         onPress={() => setIsSaveRouteModalOpen(false)}
                       >
                         <FontText text="취소" className="text-gray-999 text-14" fontWeight="600" />
-                      </Pressable>
-                      <Pressable
+                      </TouchableOpacity>
+                      <TouchableOpacity
+                        activeOpacity={0.5}
                         className="items-center flex-1 py-12 rounded-5 bg-black-717"
                         onPress={() => {
                           setIsSaveRouteModalOpen(false);
@@ -110,7 +111,7 @@ const SearchPathResultDetailScreen = () => {
                         }}
                       >
                         <FontText text="로그인" className="text-white text-14" fontWeight="600" />
-                      </Pressable>
+                      </TouchableOpacity>
                     </View>
                   </View>
                 </View>

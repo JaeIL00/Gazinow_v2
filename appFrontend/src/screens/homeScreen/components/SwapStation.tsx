@@ -5,7 +5,7 @@ import { COLOR, ARRIVAL_STATION, DEPARTURE_STATION } from '@/global/constants';
 import { useAppDispatch, useAppSelect } from '@/store';
 import { getStationType, initialize, swapStation } from '@/store/modules';
 import type { StationDataTypes } from '@/store/modules';
-import { Pressable, TouchableOpacity, View } from 'react-native';
+import { TouchableOpacity, View } from 'react-native';
 import IconSwapChange from '@assets/icons/swap_change.svg';
 import { useRootNavigation } from '@/navigation/RootNavigation';
 import { useFocusEffect } from '@react-navigation/native';
@@ -51,7 +51,7 @@ const SwapStation = () => {
       }}
     >
       <View className="flex-1 gap-8 mr-15">
-        <Pressable
+        <TouchableOpacity
           className="justify-center w-full pl-10 bg-gray-9f9 h-41 rounded-8 pr-15"
           onPress={() => navigateSearchStation(DEPARTURE_STATION)}
         >
@@ -65,8 +65,8 @@ const SwapStation = () => {
               'text-gray-999': !selectedStation.departure.stationName,
             })}
           />
-        </Pressable>
-        <Pressable
+        </TouchableOpacity>
+        <TouchableOpacity
           className="justify-center w-full pl-10 bg-gray-9f9 h-41 rounded-8 pr-15"
           onPress={() => navigateSearchStation(ARRIVAL_STATION)}
         >
@@ -80,7 +80,7 @@ const SwapStation = () => {
               'text-gray-999': !selectedStation.arrival.stationName,
             })}
           />
-        </Pressable>
+        </TouchableOpacity>
       </View>
       <TouchableOpacity onPress={() => dispatch(swapStation(selectedStation))}>
         <IconSwapChange />
