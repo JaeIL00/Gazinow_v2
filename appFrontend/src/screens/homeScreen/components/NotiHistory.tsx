@@ -76,7 +76,6 @@ const NotiHistory = () => {
                   text={item.notificationBody}
                   className={cn('text-14 leading-21', {
                     'text-gray-999': item.read,
-                    'text-black-717': !item.read,
                   })}
                   numberOfLines={2}
                   fontWeight="600"

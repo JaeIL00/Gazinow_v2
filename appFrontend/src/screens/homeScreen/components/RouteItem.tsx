@@ -34,7 +34,7 @@ const RouteItem = ({ route, hasIssues }: RouteItemProps) => {
       onPress={() => homeNavigation.push('SubwayPathDetail', { state: route })}
     >
       <View className="flex-row items-center justify-between mb-24">
-        <FontText text={route.roadName} className="text-18 text-black-717" fontWeight="700" />
+        <FontText text={route.roadName} className="text-18" fontWeight="700" />
         <View
           className={cn('px-6 py-4 ml-8 rounded-16', {
             'bg-[#FBDCDA]': hasIssues,
