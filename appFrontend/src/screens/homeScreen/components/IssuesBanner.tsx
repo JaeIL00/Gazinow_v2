@@ -33,13 +33,13 @@ const IssuesBanner = ({ subPaths }: IssuesBannerProps) => {
             className="flex-row items-center justify-between px-12 py-8 mb-8 overflow-hidden bg-white rounded-full border-gray-beb border-1"
           >
             <IssueKeywordIcon
-              width={16}
-              height={16}
+              width={20}
+              height={20}
               keyword={issue.keyword}
               color={subwayLineColor(stationCode)}
             />
             <FontText
-              className="flex-1 ml-10 mr-30 text-13"
+              className="flex-1 ml-10 mr-10 text-13"
               text={issue.title}
               fontWeight="600"
               numberOfLines={1}
