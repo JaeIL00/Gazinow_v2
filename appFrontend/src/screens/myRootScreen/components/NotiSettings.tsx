@@ -107,7 +107,7 @@ const NotiSettings = () => {
                 className={cn('text-12 leading-14', {
                   'text-gray-ebe': !isDetailPushNotiOn,
                 })}
-                fontWeight="600"
+                fontWeight="400"
               />
             </View>
             <Toggle
