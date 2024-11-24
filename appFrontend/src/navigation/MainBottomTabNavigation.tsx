@@ -11,7 +11,7 @@ import IconUnFocusedMap from '@assets/icons/tab_map_border.svg';
 import IconNow from '@assets/icons/tab_now.svg';
 import IconMy from '@assets/icons/tab_my.svg';
 import { FontText } from '@/global/ui';
-import { Platform } from 'react-native';
+import { Platform, StatusBar } from 'react-native';
 import { MyPageNavigation } from '.';
 import notifee from '@notifee/react-native';
 import { Walkthrough } from '@/screens/homeScreen/components';
@@ -127,6 +127,7 @@ const MainBottomTabNavigation = () => {
         />
       </Tab.Navigator>
       {isFirstRun === 'isFirstRun' && <Walkthrough setIsFirstRun={setIsFirstRun} />}
+      <StatusBar backgroundColor="transparent" barStyle="dark-content" />
     </>
   );
 };
