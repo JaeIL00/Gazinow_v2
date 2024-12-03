@@ -1,13 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { NativeScrollEvent, NativeSyntheticEvent, Pressable, ScrollView, View } from 'react-native';
 import { useGetPopularIssuesQuery } from '@/global/apis/hooks';
-import IssueKeywordIcon from '@/global/components/IssueKeywordIcon';
 import { FontText } from '@/global/ui';
 import { useRootNavigation } from '@/navigation/RootNavigation';
 import { useAppDispatch } from '@/store';
 import { getIssueId } from '@/store/modules';
 import dayjs from 'dayjs';
-import { rawLineNameToColor } from '@/global/utils/subwayLine';
 import { IssueContent } from '@/global/apis/entity';
 import { useQueryClient } from 'react-query';
 import { COLOR } from '@/global/constants';
@@ -121,12 +119,18 @@ const IssueCarrousel = ({ isRefreshing, setIsRefreshing }: IssueCarrouselProps) 
               <View className="flex-row justify-between mt-4">
                 <FontText
                   text={dayjs(issue.startDate).fromNow()}
-                  className="text-13 leading-19 text-gray-999"
+                  className="text-13 leading-18 text-gray-999"
                 />
                 <View className="bg-[#F3F3F3] rounded-full flex-row px-8">
-                  <FontText text={`${newListIndex()}`} className="text-13 text-gray-4b4" />
-                  <FontText text="/" className="mx-2 text-13 text-gray-4b4" />
-                  <FontText text={`${popularIssues.length}`} className="text-13 text-gray-4b4" />
+                  <FontText
+                    text={`${newListIndex()}`}
+                    className="text-13 text-gray-4b4 leading-18"
+                  />
+                  <FontText text="/" className="mx-2 text-13 text-gray-4b4 leading-18" />
+                  <FontText
+                    text={`${popularIssues.length}`}
+                    className="text-13 text-gray-4b4 leading-18"
+                  />
                 </View>
               </View>
             </View>

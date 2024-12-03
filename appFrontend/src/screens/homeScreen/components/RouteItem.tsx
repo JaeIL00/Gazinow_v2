@@ -5,7 +5,6 @@ import { FontText } from '@/global/ui';
 import { useHomeNavigation } from '@/navigation/HomeNavigation';
 import { Pressable, View } from 'react-native';
 import IssuesBanner from './IssuesBanner';
-import IconRightArrowHead from '@/assets/icons/right_arrow_head.svg';
 import cn from 'classname';
 
 interface RouteItemProps {
@@ -37,14 +36,19 @@ const RouteItem = ({ route, hasIssues, isLastItem }: RouteItemProps) => {
     >
       <View className="gap-6 mb-20">
         <View className="flex-row">
-          <FontText
-            text={hasIssues ? `${filteredTotalTime} 이상 예상` : `평균 ${filteredTotalTime}`}
-            className={cn(
-              'text-12 text-gray-999 leading-14 rounded-16 px-6 py-4 text-center bg-gray-beb',
-              { 'text-light-red bg-[#FBDCDA] mb-2': hasIssues },
-            )}
-            fontWeight="500"
-          />
+          <View
+            className={cn('rounded-16 px-6 py-4 bg-gray-beb', {
+              'bg-[#FBDCDA] mb-2': hasIssues,
+            })}
+          >
+            <FontText
+              text={hasIssues ? `${filteredTotalTime} 이상 예상` : `평균 ${filteredTotalTime}`}
+              className={cn('text-12 text-gray-999 leading-14 text-center', {
+                'text-light-red': hasIssues,
+              })}
+              fontWeight="500"
+            />
+          </View>
         </View>
         <FontText
           text={route.roadName}
