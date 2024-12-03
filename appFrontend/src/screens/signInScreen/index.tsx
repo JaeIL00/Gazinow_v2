@@ -8,7 +8,6 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-
 import { FontText, Input, Space } from '@/global/ui';
 import { setEncryptedStorage } from '@/global/utils';
 import { useRootNavigation } from '@/navigation/RootNavigation';
@@ -83,9 +82,9 @@ const SignInScreen = () => {
 
         <Space height={75} />
 
-        <ScrollView style={{ flex: 1 }}>
+        <ScrollView className="flex-1">
           <FontText text="Email" className="text-14 text-gray-183" fontWeight="500" />
-          <View className="justify-center pl-16 mt-6 bg-gray-f2 py-13 rounded-15">
+          <View className="justify-center pl-16 mt-6 bg-gray-f2 py-13 rounded-5">
             <Input
               value={formData.email}
               placeholder="이메일을 입력해주세요"
@@ -102,7 +101,7 @@ const SignInScreen = () => {
           <Space height={20} />
 
           <FontText text="Password" className="text-14 text-gray-183" fontWeight="500" />
-          <View className="justify-center pl-16 mt-6 bg-gray-f2 py-13 rounded-15">
+          <View className="justify-center pl-16 mt-6 bg-gray-f2 py-13 rounded-5">
             <Input
               placeholder="비밀번호를 입력해주세요"
               value={formData.password}
