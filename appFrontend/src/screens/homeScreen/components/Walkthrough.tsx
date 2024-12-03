@@ -18,7 +18,7 @@ const Walkthrough = ({ setIsFirstRun }: WalkthroughProps) => {
     <SafeAreaView className="absolute flex-1 w-full h-full bg-[#000000BF]">
       {walkthroughStep === 'Path' && (
         <Pressable onPress={() => setWalkthroughStep('Noti')}>
-          <View style={{ height: height * 0.26 }} />
+          <View style={{ height: height * 0.33 }} />
           <TextMyPath className="mb-16 ml-21" />
           <ImageMyPath className="mx-16" width={width - 32} />
         </Pressable>
