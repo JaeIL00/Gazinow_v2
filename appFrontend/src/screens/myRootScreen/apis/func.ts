@@ -119,33 +119,6 @@ export const getPushNotiOnStatusFetch = async (email: string) => {
 };
 
 /**
- * 내가 저장한 경로 알림 on/off 설정 axios
- */
-export const setMyPathPushNotiOnFetch = async ({ email, alertAgree }: SetNotiOnOffType) => {
-  try {
-    await authServiceAPI.post('/api/v1/member/notifications/my-saved-route', { email, alertAgree });
-  } catch (err) {
-    const error = err as AxiosError;
-    throw error;
-  }
-};
-
-/**
- * 내가 저장한 경로 알림 on/off 조회 axios
- */
-export const getMyPathPushNotiOnStatusFetch = async (email: string) => {
-  try {
-    const res = await authServiceAPI.get<{ data: { alertAgree: boolean } }>(
-      `/api/v1/member/notifications/my-saved-route/status?email=${email}`,
-    );
-    return res.data.data.alertAgree;
-  } catch (err) {
-    const error = err as AxiosError;
-    throw error;
-  }
-};
-
-/**
  * 경로 상세 설정 알림 on/off 설정 axios
  */
 export const setDetailPushNotiOnFetch = async ({ email, alertAgree }: SetNotiOnOffType) => {
