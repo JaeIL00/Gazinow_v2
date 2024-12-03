@@ -34,7 +34,8 @@ const PathLineNumName = ({ stationCode, direct, stationName }: PathLineNumNamePr
           text={pathSubwayLineName(stationCode)}
           fontWeight={stationCode <= 9 ? '600' : '700'}
           className={cn('text-14 text-white', {
-            'text-8 tracking-[-0.4px]': stationCode > 9,
+            'text-[8.2px] tracking-[-0.4px]': stationCode > 9,
+            'text-[9.273px] tracking-[-0.4px]': pathSubwayLineName(stationCode).length === 2,
           })}
         />
       </View>
