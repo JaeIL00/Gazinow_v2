@@ -98,49 +98,36 @@ const IssueCarrousel = ({ isRefreshing, setIsRefreshing }: IssueCarrouselProps) 
           <Pressable
             style={({ pressed }) => ({
               backgroundColor: pressed ? COLOR.GRAY_E5 : COLOR.WHITE,
-              flexDirection: 'row',
               padding: 16,
+              paddingVertical: 20,
               margin: 16,
               marginBottom: 0,
               borderRadius: 12,
+              gap: 6,
             })}
             onPress={() => {
               dispatch(getIssueId(issue.id));
               navigation.navigate('IssueStack', { screen: 'IssueDetail' });
             }}
           >
-            <IssueKeywordIcon
-              width={30}
-              height={30}
-              keyword={issue.keyword}
-              color={rawLineNameToColor(issue.lines[0])}
-            />
-            <View className="flex-1 mx-14">
+            <FontText text="NOW" className="text-13 leading-19 text-light-blue" fontWeight="600" />
+            <View>
               <FontText
                 text={issue.title}
-                className="text-black text-13 leading-19"
-                fontWeight="600"
+                className="leading-21"
+                fontWeight="500"
                 numberOfLines={1}
               />
-              <FontText
-                text={dayjs(issue.startDate).fromNow()}
-                className="text-11 leading-13 text-gray-999"
-                fontWeight="500"
-              />
-            </View>
-
-            <View className="items-end">
-              <FontText
-                text="NOW"
-                className="text-12 leading-14 text-light-blue"
-                fontWeight="700"
-              />
-              <View className="bg-[#F3F3F3] rounded-27 w-36 h-16 mt-4 justify-center">
+              <View className="flex-row justify-between mt-4">
                 <FontText
-                  text={`${newListIndex()}/${popularIssues.length}`}
-                  className="text-center text-11 leading-13 text-gray-4b4"
-                  fontWeight="700"
+                  text={dayjs(issue.startDate).fromNow()}
+                  className="text-13 leading-19 text-gray-999"
                 />
+                <View className="bg-[#F3F3F3] rounded-full flex-row px-8">
+                  <FontText text={`${newListIndex()}`} className="text-13 text-gray-4b4" />
+                  <FontText text="/" className="mx-2 text-13 text-gray-4b4" />
+                  <FontText text={`${popularIssues.length}`} className="text-13 text-gray-4b4" />
+                </View>
               </View>
             </View>
           </Pressable>

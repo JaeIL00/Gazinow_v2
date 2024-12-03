@@ -56,18 +56,17 @@ const MyRoutes = ({ isVerifiedUser, isRefreshing, setIsRefreshing }: MyRoutesPro
   };
 
   return (
-    <View className="my-16 bg-white rounded-14">
+    <View className="mt-16 bg-white rounded-14">
       <View className="flex-row items-center justify-between p-16">
         <FontText
           text="내가 저장한 경로"
           className={cn('text-18 leading-23', {
-            'text-black': isVerifiedUser === 'success auth',
             'text-gray-999': isVerifiedUser !== 'success auth',
           })}
           fontWeight="600"
         />
         <TouchableOpacity onPress={editMyRoutesHandler} hitSlop={20}>
-          <FontText text="저장경로 편집" className="text-12 leading-15 text-gray-999" />
+          <FontText text="저장경로 편집" className="text-13 leading-19 text-gray-999" />
         </TouchableOpacity>
       </View>
       {renderMyRoutes()}

@@ -35,7 +35,7 @@ const HomeScreen = () => {
   return (
     <SafeAreaView className="flex-1 bg-gray-9f9">
       <ScrollView
-        contentContainerStyle={{ paddingHorizontal: 16 }}
+        contentContainerStyle={{ paddingHorizontal: 16, paddingBottom: 64 }}
         showsVerticalScrollIndicator={false}
         scrollEnabled={isVerifiedUser === 'success auth'}
         refreshControl={

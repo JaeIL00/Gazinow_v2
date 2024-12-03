@@ -22,8 +22,8 @@ const PathLineNumName = ({ stationCode, direct, stationName }: PathLineNumNamePr
       <View className="w-42" />
       <View
         style={{
-          width: Dimensions.get('window').fontScale * 18,
-          height: Dimensions.get('window').fontScale * 18,
+          width: Dimensions.get('window').fontScale * 24,
+          height: Dimensions.get('window').fontScale * 24,
           borderRadius: 9999,
           backgroundColor: subwayLineColor(stationCode),
           justifyContent: 'center',
@@ -33,18 +33,15 @@ const PathLineNumName = ({ stationCode, direct, stationName }: PathLineNumNamePr
         <FontText
           text={pathSubwayLineName(stationCode)}
           fontWeight={stationCode <= 9 ? '600' : '700'}
-          className={cn('text-6 leading-15 text-white', {
-            'text-13': stationCode <= 9,
-            'leading-6 tracking-[-0.3px] mt-1': stationCode > 9,
+          className={cn('text-14 text-white', {
+            'text-8 tracking-[-0.4px]': stationCode > 9,
           })}
         />
       </View>
 
       <View
         className="absolute flex flex-col justify-center w-54"
-        style={{
-          top: Dimensions.get('window').fontScale * 22,
-        }}
+        style={{ top: Dimensions.get('window').fontScale * 30 }}
       >
         <FontText
           text={subwayNameCutting(stationName.split('(')[0])}

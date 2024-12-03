@@ -18,7 +18,7 @@ const PathBar = ({ stationCode, isFirst, isLast, issues, isHideIsuue }: PathBarP
         backgroundColor: subwayLineColor(stationCode),
         height: 3,
         flex: 1,
-        marginTop: 7.5,
+        marginTop: 11,
         marginRight: isLast ? 18 : null,
         marginLeft: isFirst ? 18 : null,
         position: 'relative',
@@ -43,8 +43,8 @@ const PathBar = ({ stationCode, isFirst, isLast, issues, isHideIsuue }: PathBarP
             return (
               <IssueKeywordIcon
                 key={issue.id + issue.title}
-                width={24}
-                height={24}
+                width={25}
+                height={25}
                 keyword={issue.keyword}
                 color={subwayLineColor(stationCode)}
                 isPath

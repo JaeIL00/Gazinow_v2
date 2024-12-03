@@ -23,6 +23,10 @@ const SubwaySimplePath = ({
   }, [pathData]);
   const maxLength = freshLanesPathData.length;
 
+  const isLastTwoPathsDirect = useMemo(() => {
+    return freshLanesPathData.slice(-2).some((item) => !!item.direct);
+  }, [freshLanesPathData]);
+
   const renderStationName = freshLanesPathData.reduce((acc, cur, idx) => {
     const arr = cur.stations
       .filter((_, idx) => idx === cur.stations.length - 1 || !idx)
@@ -34,7 +38,7 @@ const SubwaySimplePath = ({
   const isOverNameLength = renderStationName.some((item) => item.length > 5);
 
   return (
-    <View style={{ marginBottom: isOverNameLength ? 32 : 16, marginTop: 16 }}>
+    <View style={{ marginBottom: isOverNameLength || isLastTwoPathsDirect ? 32 : 16, marginTop: 16 }}>
       <View
         style={{
           flexDirection: 'row',
