@@ -18,7 +18,7 @@ interface IssueKeywordIconProps {
 
 const IssueKeywordIcon = ({ keyword, color, width, height, isPath }: IssueKeywordIconProps) => {
   return (
-    <View style={{ alignItems: 'center', position: 'relative' }}>
+    <View style={{ alignItems: 'center', position: 'relative', bottom: 6 }}>
       {isPath && (
         <View
           style={{

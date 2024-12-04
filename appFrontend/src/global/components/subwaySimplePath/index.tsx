@@ -23,10 +23,6 @@ const SubwaySimplePath = ({
   }, [pathData]);
   const maxLength = freshLanesPathData.length;
 
-  const isLastTwoPathsDirect = useMemo(() => {
-    return freshLanesPathData.slice(-2).some((item) => !!item.direct);
-  }, [freshLanesPathData]);
-
   const renderStationName = freshLanesPathData.reduce((acc, cur, idx) => {
     const arr = cur.stations
       .filter((_, idx) => idx === cur.stations.length - 1 || !idx)
@@ -35,10 +31,26 @@ const SubwaySimplePath = ({
     return [...acc, ...arr.slice(0, 1), ...arr.slice(2)];
   }, [] as string[]);
 
-  const isOverNameLength = renderStationName.some((item) => item.length > 5);
+  const isOverNameLength = useMemo(() => {
+    if (maxLength > 3) {
+      return renderStationName.slice(-4).some((item) => item.length > 5);
+    }
+    return renderStationName.some((item) => item.length > 5);
+  }, [freshLanesPathData]);
+
+  const isBottomPathsDirect = useMemo(() => {
+    switch (maxLength) {
+      case 5:
+        return freshLanesPathData.slice(-3).some((item) => !!item.direct);
+      case 4:
+        return freshLanesPathData.slice(-2).some((item) => !!item.direct);
+      default:
+        return freshLanesPathData.some((item) => !!item.direct);
+    }
+  }, [freshLanesPathData]);
 
   return (
-    <View style={{ marginBottom: isOverNameLength || isLastTwoPathsDirect ? 32 : 16, marginTop: 16 }}>
+    <View style={{ marginBottom: isOverNameLength || isBottomPathsDirect ? 32 : 16, marginTop: 16 }}>
       <View
         style={{
           flexDirection: 'row',

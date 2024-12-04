@@ -30,12 +30,14 @@ const PathLineNumName = ({ stationCode, direct, stationName }: PathLineNumNamePr
           alignItems: 'center',
         }}
       >
+        {stationCode > 9 && <View className="h-1" />}
         <FontText
           text={pathSubwayLineName(stationCode)}
           fontWeight={stationCode <= 9 ? '600' : '700'}
           className={cn('text-14 text-white', {
-            'text-[8.2px] tracking-[-0.4px]': stationCode > 9,
-            'text-[9.273px] tracking-[-0.4px]': pathSubwayLineName(stationCode).length === 2,
+            'text-[8.2px] leading-9 tracking-[-0.4px]': stationCode > 9,
+            'text-[9.273px] leading-10 tracking-[-0.4px]':
+              pathSubwayLineName(stationCode).length === 2,
           })}
         />
       </View>

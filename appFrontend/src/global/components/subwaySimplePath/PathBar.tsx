@@ -16,9 +16,9 @@ const PathBar = ({ stationCode, isFirst, isLast, issues, isHideIsuue }: PathBarP
     <View
       style={{
         backgroundColor: subwayLineColor(stationCode),
-        height: 3,
+        height: 2,
         flex: 1,
-        marginTop: 11,
+        marginTop: 10,
         marginRight: isLast ? 18 : null,
         marginLeft: isFirst ? 18 : null,
         position: 'relative',
