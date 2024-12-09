@@ -67,7 +67,7 @@ const NotiHistory = () => {
               onPress={() => {
                 dispatch(getIssueId(item.issueId));
                 navigation.navigate('IssueStack', { screen: 'IssueDetail' });
-                mutate(item.id);
+                if (!item.read) mutate(item.id);
               }}
               key={`${index}_${item.issueId}`}
             >
