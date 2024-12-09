@@ -65,14 +65,14 @@ export const changePasswordFetch = async (data: {
 /**
  * 닉네임 변경 axios
  */
-export const changeNicknameFetch = async (nickName: string) => {
+export const changeNicknameFetch = async (nickname: string) => {
   try {
-    await authServiceAPI.post(`/api/v1/member/change_nickname`, { nickName });
+    await authServiceAPI.post(`/api/v1/member/change_nickname`, { nickname });
   } catch (err) {
     const error = err as AxiosError;
     Sentry.captureException({
       target: '닉네임 변경',
-      input: { nickName, request: error.request },
+      input: { nickname, request: error.request },
       output: { status: error.response?.status, error: error.message, response: error.response },
     });
     throw error;
