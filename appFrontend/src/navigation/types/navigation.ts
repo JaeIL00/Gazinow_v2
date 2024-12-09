@@ -9,7 +9,18 @@ export type RootStackParamList = {
   MainBottomTab: { screen: 'homeStack' };
   NewRouteNavigation: { screen: 'SavedRoutes' | 'Swap' };
   MyPageNavigation: {
-    screen: 'NotiSettingsDetailScreen';
+    screen:
+      | 'NotiSettingsDetailScreen'
+      | 'MyRootScreen'
+      | 'ChangeNickNameScreen'
+      | 'ChangePwScreen'
+      | 'ConfirmPwScreen'
+      | 'ConfirmQuitScreen'
+      | 'ManageAccountScreen'
+      | 'NotiOnScreen'
+      | 'NotiSettingsScreen'
+      | 'SubscribeTermsScreen'
+      | 'PersonalTermsScreen';
     params?: { myRoutes?: MyRoutesType; isRightAfterAddingNewPath?: boolean };
   };
   SubwayPathDetail: { state?: Path | SubPath[]; notificationId?: number | null };
@@ -48,7 +59,7 @@ export type MyPageStackParamList = {
   ManageAccountScreen: undefined;
   NotiOnScreen: undefined;
   NotiSettingsScreen: undefined;
-  NotiSettingsDetailScreen: { myRoutes?: MyRoutesType; isRightAfterAddingNewPath?: boolean };
+  NotiSettingsDetailScreen: { myRoutes?: MyRoutesType };
   SubscribeTermsScreen: undefined;
   PersonalTermsScreen: undefined;
 };
