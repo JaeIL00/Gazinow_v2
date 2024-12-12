@@ -12,9 +12,12 @@ import * as Sentry from '@sentry/react-native';
 import { removeEncryptedStorage } from '@/global/utils';
 import { useRootNavigation } from '@/navigation/RootNavigation';
 import { showToast } from '@/global/utils/toast';
+import { useAppDispatch } from '@/store';
+import { getAuthorizationState } from '@/store/modules';
 
 const ConfirmQuitScreen = () => {
   const myPageNavigation = useMyPageNavigation();
+  const dispatch = useAppDispatch();
   const { nickname } = useSelector((state: RootState) => state.auth);
   const [popupVisible, setPopupVisible] = useState(false);
   const [isSocialLoggedIn, setIsSocialLoggedIn] = useState<string | null>(null);
@@ -39,6 +42,7 @@ const ConfirmQuitScreen = () => {
       removeEncryptedStorage('access_token');
       removeEncryptedStorage('refresh_token');
       navigation.reset({ routes: [{ name: 'MainBottomTab' }] });
+      dispatch(getAuthorizationState('fail auth'));
       showToast('quit');
     },
     onError: () => {
