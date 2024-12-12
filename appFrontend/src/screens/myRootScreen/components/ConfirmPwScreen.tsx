@@ -18,10 +18,13 @@ import { showToast } from '@/global/utils/toast';
 import { useCheckPasswordMutation, useDeleteAccountMutation } from '../apis/hooks';
 import * as Sentry from '@sentry/react-native';
 import cn from 'classname';
+import { useAppDispatch } from '@/store';
+import { getAuthorizationState } from '@/store/modules';
 
 const ConfirmPwScreen = () => {
   const myPageNavigation = useMyPageNavigation();
   const navigation = useRootNavigation();
+  const dispatch = useAppDispatch();
   const [passwordInput, setPasswordInput] = useState<string>('');
   const [isPwRight, setIsPwRight] = useState<boolean>(false);
 
@@ -31,6 +34,7 @@ const ConfirmPwScreen = () => {
       removeEncryptedStorage('access_token');
       removeEncryptedStorage('refresh_token');
       navigation.reset({ routes: [{ name: 'MainBottomTab' }] });
+      dispatch(getAuthorizationState('fail auth'));
       showToast('quit');
     },
     onError: () => {
@@ -67,8 +71,9 @@ const ConfirmPwScreen = () => {
       <SafeAreaView className="flex-1 bg-white">
         <View className="flex-1 px-16">
           <TouchableOpacity
-            className="flex-row items-center h-56"
+            className="flex-row items-center h-56 w-30"
             onPress={() => myPageNavigation.goBack()}
+            hitSlop={20}
           >
             <IconLeftArrowHead width={24} color="#3F3F46" />
           </TouchableOpacity>
