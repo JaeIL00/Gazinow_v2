@@ -19,6 +19,7 @@ import { getAuthorizationState, saveUserInfo } from '@/store/modules';
 import IconXCircle from '@assets/icons/x-circle-standard.svg';
 import IconLeftArrow from '@assets/icons/left_arrow_round.svg';
 import messaging from '@react-native-firebase/messaging';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const emailValidation = new RegExp(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/);
 
@@ -37,6 +38,7 @@ const SignInScreen = () => {
       dispatch(getAuthorizationState('success auth'));
       await setEncryptedStorage('access_token', data.accessToken);
       await setEncryptedStorage('refresh_token', data.refreshToken);
+      await AsyncStorage.removeItem('isSocialLoggedIn');
       navigation.reset({ routes: [{ name: 'MainBottomTab' }] });
     },
     onError: ({ status }) => {
