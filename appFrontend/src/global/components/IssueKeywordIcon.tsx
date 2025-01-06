@@ -46,7 +46,6 @@ const IssueKeywordIcon = ({ keyword, color, width, height, isPath }: IssueKeywor
       {keyword === '행사' && <IconEvent width={width} height={height} color={color} />}
     </View>
   );
-  return <></>;
 };
 
 export default IssueKeywordIcon;
