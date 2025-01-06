@@ -61,7 +61,7 @@ const SearchPathResultScreen = () => {
       <View className="px-16 bg-white py-14 border-b-1 border-gray-beb">
         <FontText
           text={'오늘 ' + dayjs().format('A HH시 mm분') + ' 기준'}
-          className="text-brown-54f"
+          className="text-purple-gray"
         />
       </View>
       <ScrollView style={!isLoading && { backgroundColor: COLOR.GRAY_F2 }}>
