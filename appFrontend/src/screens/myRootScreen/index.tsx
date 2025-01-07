@@ -30,9 +30,9 @@ const MyRootScreen = () => {
   }, []);
 
   return (
-    <SafeAreaView className="flex-1 space-y-20 bg-gray-9f9">
+    <SafeAreaView className="flex-1 bg-white">
       {isVerifiedUser !== 'success auth' ? (
-        <View className="px-32 bg-white py-44">
+        <View className="px-32 py-44">
           <TouchableOpacity
             className="flex-row items-center space-x-7"
             onPress={() => rootNavigation.navigate('AuthStack', { screen: 'Landing' })}
@@ -42,7 +42,7 @@ const MyRootScreen = () => {
           </TouchableOpacity>
         </View>
       ) : (
-        <View className="px-32 pb-24 bg-white pt-36">
+        <View className="px-32 pb-24 pt-36">
           <View className="space-y-15">
             <View>
               <TouchableOpacity
@@ -74,7 +74,7 @@ const MyRootScreen = () => {
         </View>
       )}
 
-      <View className="flex-1 space-y-10">
+      <View className="flex-1 pt-20 space-y-10 bg-gray-9f9">
         {isVerifiedUser === 'success auth' && (
           <View className="mx-16 bg-white rounded-12">
             <Pressable
