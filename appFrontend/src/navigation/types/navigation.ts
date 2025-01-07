@@ -13,6 +13,7 @@ export type RootStackParamList = {
       | 'NotiSettingsDetailScreen'
       | 'MyRootScreen'
       | 'ChangeNickNameScreen'
+      | 'MyCommentsScreen'
       | 'ChangePwScreen'
       | 'ConfirmPwScreen'
       | 'ConfirmQuitScreen'
@@ -53,6 +54,7 @@ export type NewRouteStackParamList = {
 export type MyPageStackParamList = {
   MyRootScreen: undefined;
   ChangeNickNameScreen: undefined;
+  MyCommentsScreen: undefined;
   ChangePwScreen: undefined;
   ConfirmPwScreen: undefined;
   ConfirmQuitScreen: undefined;
