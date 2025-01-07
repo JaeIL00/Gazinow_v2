@@ -184,6 +184,9 @@ export interface SubwayStrEnd {
 
 export type IssueKeywords = '자연재해' | '연착' | '혼잡' | '행사' | '사고' | '공사' | '시위';
 
+/**
+ * 이슈 배너 등의 요약 데이터
+ */
 export interface IssueSummary {
   id: number;
   title: string;
@@ -192,6 +195,9 @@ export interface IssueSummary {
   agoTime: string;
 }
 
+/**
+ * 이슈 본문 데이터
+ */
 export interface IssueContent {
   id: number;
   title: string;
@@ -210,6 +216,9 @@ export interface IssueContent {
   ];
 }
 
+/**
+ * 이슈 알림 기록 데이터
+ */
 export interface NotiHistoryContent {
   id: number;
   issueId: number;
@@ -236,6 +245,21 @@ export interface CommentContent {
   issueKeyword: IssueKeywords;
   commentsCount: number;
 }
+
+/**
+ * 페이징 처리 된 이슈 목록 (나우탭) 데이터
+ */
+export type AllIssues = Pagination<IssueContent>;
+
+/**
+ * 페이징 처리 된 알림 히스토리 목록 데이터
+ */
+export type NotiHistories = Pagination<NotiHistoryContent>;
+
+/**
+ * 페이징 처리 된 이슈 댓글/나의 댓글 목록 데이터
+ */
+export type AllComments = Pagination<CommentContent>;
 
 /**
  * 페이징 처리 된 데이터 응답 형식
@@ -268,11 +292,3 @@ export interface Pagination<T> {
   first: boolean;
   empty: boolean;
 }
-
-export type AllIssues = Pagination<IssueContent>;
-export type NotiHistories = Pagination<NotiHistoryContent>;
-
-/**
- * 페이징 처리 된 이슈 댓글/나의 댓글 목록 데이터
- */
-export type AllComments = Pagination<CommentContent>;
