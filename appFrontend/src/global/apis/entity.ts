@@ -220,7 +220,27 @@ export interface NotiHistoryContent {
   read: boolean;
 }
 
-interface Pagination<T> {
+/**
+ * 이슈 댓글 데이터
+ */
+export interface CommentContent {
+  issueCommentId: number;
+  issueCommentContent: string;
+  createdBy: string;
+  agoTime: string;
+  likesCount: number;
+  mine: boolean;
+  liked: boolean;
+  issueId: number;
+  issueTitle: string;
+  issueKeyword: IssueKeywords;
+  commentsCount: number;
+}
+
+/**
+ * 페이징 처리 된 데이터 응답 형식
+ */
+export interface Pagination<T> {
   content: T[];
   pageable: {
     pageNumber: number;
@@ -251,3 +271,8 @@ interface Pagination<T> {
 
 export type AllIssues = Pagination<IssueContent>;
 export type NotiHistories = Pagination<NotiHistoryContent>;
+
+/**
+ * 페이징 처리 된 이슈 댓글/나의 댓글 목록 데이터
+ */
+export type AllComments = Pagination<CommentContent>;
