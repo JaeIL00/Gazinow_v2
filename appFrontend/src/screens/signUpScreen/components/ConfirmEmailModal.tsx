@@ -74,7 +74,10 @@ const ConfirmEmailModal = ({
       {/* 백그라운드 */}
       <View className="flex-1 bg-[#00000099]">
         {/* 콘텐츠 */}
-        <KeyboardAvoidingView behavior="height" className="justify-end flex-1">
+        <KeyboardAvoidingView
+          behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+          className="justify-end flex-1"
+        >
           <Animated.View
             className="flex-1 px-16 pt-32 bg-white"
             style={{

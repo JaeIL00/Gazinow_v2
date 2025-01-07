@@ -5,17 +5,12 @@ import { useSelector } from 'react-redux';
 import { RootState } from '@/store/configureStore';
 import packageJson from '../../../package.json';
 import IconPencil from '@assets/icons/pencil.svg';
-import IconRightArrowHead from '@/assets/icons/right_arrow_head.svg';
+import IconArrowRight from '@/assets/icons/arrow_right.svg';
+import IconComment from '@/assets/icons/icon-chat-bubble-mini.svg';
 import { useRootNavigation } from '@/navigation/RootNavigation';
 import VersionCheck from 'react-native-version-check';
 import { useEffect, useState } from 'react';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-
-interface RenderMenuProps {
-  text: string;
-  onPress?: () => void;
-  versionText?: string;
-}
 
 const MyRootScreen = () => {
   const rootNavigation = useRootNavigation();
@@ -34,94 +29,148 @@ const MyRootScreen = () => {
     });
   }, []);
 
-  const renderMenu = ({ text, onPress, versionText }: RenderMenuProps) => (
-    <Pressable
-      style={({ pressed }) => ({
-        backgroundColor: pressed ? COLOR.GRAY_E5 : 'transparent',
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        paddingHorizontal: 16,
-        height: 53,
-        borderBottomColor: COLOR.GRAY_EB,
-        borderBottomWidth: 1,
-      })}
-      onPress={onPress}
-      disabled={versionText ? true : false}
-    >
-      <FontText text={text} className="leading-21" />
-      {versionText ? (
-        <FontText text={versionText} className="text-12 leading-17" />
-      ) : (
-        <IconRightArrowHead width={14} color={COLOR.GRAY_999} />
-      )}
-    </Pressable>
-  );
-
   return (
-    <SafeAreaView className="flex-1 bg-gray-9f9">
-      <View className="pl-16 pt-45 pb-37">
-        {isVerifiedUser !== 'success auth' ? (
+    <SafeAreaView className="flex-1 bg-white">
+      {isVerifiedUser !== 'success auth' ? (
+        <View className="px-32 py-44">
           <TouchableOpacity
-            className="flex-row items-center space-x-6"
+            className="flex-row items-center space-x-7"
             onPress={() => rootNavigation.navigate('AuthStack', { screen: 'Landing' })}
           >
             <FontText text="로그인하세요" className="text-18" fontWeight="600" />
-            <IconRightArrowHead
-              width={11}
-              height={11}
-              strokeWidth={1.2}
-              color={COLOR.BASIC_BLACK}
-            />
+            <IconArrowRight color={COLOR.BASIC_BLACK} />
           </TouchableOpacity>
-        ) : (
-          <>
+        </View>
+      ) : (
+        <View className="px-32 pb-24 pt-36">
+          <View className="space-y-15">
+            <View>
+              <TouchableOpacity
+                className="flex-row items-center space-x-3"
+                hitSlop={20}
+                onPress={() =>
+                  rootNavigation.navigate('MyPageNavigation', { screen: 'ChangeNickNameScreen' })
+                }
+              >
+                <FontText text={nickname} className="text-18 leading-23" fontWeight="600" />
+                <IconPencil width={18} />
+              </TouchableOpacity>
+
+              <FontText text={email} className="text-14 leading-21 text-purple-gray" />
+            </View>
+
             <TouchableOpacity
-              className="flex-row items-center space-x-5"
+              className="flex-row items-center space-x-4"
               hitSlop={20}
               onPress={() =>
-                rootNavigation.navigate('MyPageNavigation', { screen: 'ChangeNickNameScreen' })
+                rootNavigation.navigate('MyPageNavigation', { screen: 'MyCommentsScreen' })
               }
             >
-              <FontText text={nickname} className="text-18 leading-23" fontWeight="600" />
-              <IconPencil width={18} />
+              <IconComment />
+              <FontText text="내가 쓴 댓글" className="text-13 leading-19 text-gray-999" />
+              <IconArrowRight color={COLOR.GRAY_DDD} />
             </TouchableOpacity>
+          </View>
+        </View>
+      )}
 
-            <FontText text={email} className="text-14 leading-21 text-gray-999" />
-          </>
-        )}
-      </View>
-      <View className="flex-1 bg-white">
+      <View className="flex-1 pt-20 space-y-10 bg-gray-9f9">
         {isVerifiedUser === 'success auth' && (
-          <>
-            {renderMenu({
-              text: '계정 관리',
-              onPress: () =>
-                rootNavigation.navigate('MyPageNavigation', { screen: 'ManageAccountScreen' }),
-            })}
-            {renderMenu({
-              text: '알림 설정',
-              onPress: () =>
-                rootNavigation.push('MyPageNavigation', { screen: 'NotiSettingsScreen' }),
-            })}
-          </>
+          <View className="mx-16 bg-white rounded-12">
+            <Pressable
+              style={({ pressed }) => ({
+                backgroundColor: pressed ? COLOR.GRAY_E5 : 'transparent',
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                padding: 16,
+                borderTopLeftRadius: 12,
+                borderTopRightRadius: 12,
+              })}
+              onPress={() =>
+                rootNavigation.navigate('MyPageNavigation', { screen: 'ManageAccountScreen' })
+              }
+            >
+              <FontText text="계정관리" className="leading-21 text-purple-gray" />
+              <IconArrowRight color="#D7D7D7" />
+            </Pressable>
+            <View className="h-1 bg-gray-beb" />
+            <Pressable
+              style={({ pressed }) => ({
+                backgroundColor: pressed ? COLOR.GRAY_E5 : 'transparent',
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                padding: 16,
+              })}
+              onPress={() =>
+                rootNavigation.navigate('MyPageNavigation', { screen: 'NotiSettingsScreen' })
+              }
+            >
+              <FontText text="알림 설정" className="leading-21 text-purple-gray" />
+              <IconArrowRight color="#D7D7D7" />
+            </Pressable>
+            <View className="h-1 bg-gray-beb" />
+            <Pressable
+              style={({ pressed }) => ({
+                backgroundColor: pressed ? COLOR.GRAY_E5 : 'transparent',
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                padding: 16,
+                borderBottomLeftRadius: 12,
+                borderBottomRightRadius: 12,
+              })}
+              //TODO: 기획 나오면 차단 사용자 관리 화면으로 이동
+              // onPress={() =>
+              //   rootNavigation.navigate('MyPageNavigation', { screen: 'ManageBlockedUsersScreen' })
+              // }
+            >
+              <FontText text="차단 사용자 관리" className="leading-21 text-purple-gray" />
+              <IconArrowRight color="#D7D7D7" />
+            </Pressable>
+          </View>
         )}
-
-        {renderMenu({
-          text: '약관 및 정책',
-          onPress: () =>
-            rootNavigation.navigate('MyPageNavigation', {
-              screen: 'SubscribeTermsScreen',
-            }),
-        })}
-        {renderMenu({
-          text: '개인정보처리방침',
-          onPress: () =>
-            rootNavigation.navigate('MyPageNavigation', {
-              screen: 'PersonalTermsScreen',
-            }),
-        })}
-        {renderMenu({ text: '버전', versionText })}
+        <View className="mx-16 bg-white rounded-12">
+          <Pressable
+            style={({ pressed }) => ({
+              backgroundColor: pressed ? COLOR.GRAY_E5 : 'transparent',
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              padding: 16,
+              borderTopLeftRadius: 12,
+              borderTopRightRadius: 12,
+            })}
+            onPress={() =>
+              rootNavigation.navigate('MyPageNavigation', { screen: 'SubscribeTermsScreen' })
+            }
+          >
+            <FontText text="약관 및 정책" className="leading-21 text-purple-gray" />
+            <IconArrowRight color="#D7D7D7" />
+          </Pressable>
+          <View className="h-1 bg-gray-beb" />
+          <Pressable
+            style={({ pressed }) => ({
+              backgroundColor: pressed ? COLOR.GRAY_E5 : 'transparent',
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              padding: 16,
+            })}
+            onPress={() =>
+              rootNavigation.navigate('MyPageNavigation', { screen: 'PersonalTermsScreen' })
+            }
+          >
+            <FontText text="개인정보처리방침" className="leading-21 text-purple-gray" />
+            <IconArrowRight color="#D7D7D7" />
+          </Pressable>
+          <View className="h-1 bg-gray-beb" />
+          <View className="flex-row justify-between p-16 rounded-b-12">
+            <FontText text="버전" className="leading-21 text-purple-gray" />
+            <FontText text={versionText} className="text-12 leading-17" />
+          </View>
+        </View>
       </View>
     </SafeAreaView>
   );
