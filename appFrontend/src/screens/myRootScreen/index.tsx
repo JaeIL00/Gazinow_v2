@@ -31,17 +31,18 @@ const MyRootScreen = () => {
 
   return (
     <SafeAreaView className="flex-1 space-y-20 bg-gray-9f9">
-      <View className="px-32 pb-24 bg-white rounded-16 pt-36">
-        {isVerifiedUser !== 'success auth' ? (
-          //TODO: 미로그인 시 디자인
+      {isVerifiedUser !== 'success auth' ? (
+        <View className="px-32 bg-white py-44">
           <TouchableOpacity
-            className="flex-row items-center space-x-6"
+            className="flex-row items-center space-x-7"
             onPress={() => rootNavigation.navigate('AuthStack', { screen: 'Landing' })}
           >
             <FontText text="로그인하세요" className="text-18" fontWeight="600" />
             <IconArrowRight color={COLOR.BASIC_BLACK} />
           </TouchableOpacity>
-        ) : (
+        </View>
+      ) : (
+        <View className="px-32 pb-24 bg-white pt-36">
           <View className="space-y-15">
             <View>
               <TouchableOpacity
@@ -70,8 +71,8 @@ const MyRootScreen = () => {
               <IconArrowRight color={COLOR.GRAY_DDD} />
             </TouchableOpacity>
           </View>
-        )}
-      </View>
+        </View>
+      )}
 
       <View className="flex-1 space-y-10">
         {isVerifiedUser === 'success auth' && (
