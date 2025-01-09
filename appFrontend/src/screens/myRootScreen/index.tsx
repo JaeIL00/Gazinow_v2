@@ -56,7 +56,7 @@ const MyRootScreen = () => {
                 <IconPencil width={18} />
               </TouchableOpacity>
 
-              <FontText text={email} className="text-14 leading-21 text-purple-gray" />
+              <FontText text={email} className="text-14 leading-21 text-purple-54f" />
             </View>
 
             <TouchableOpacity
@@ -91,7 +91,7 @@ const MyRootScreen = () => {
                 rootNavigation.navigate('MyPageNavigation', { screen: 'ManageAccountScreen' })
               }
             >
-              <FontText text="계정관리" className="leading-21 text-purple-gray" />
+              <FontText text="계정관리" className="leading-21 text-purple-54f" />
               <IconArrowRight color="#D7D7D7" />
             </Pressable>
             <View className="h-1 bg-gray-beb" />
@@ -107,7 +107,7 @@ const MyRootScreen = () => {
                 rootNavigation.navigate('MyPageNavigation', { screen: 'NotiSettingsScreen' })
               }
             >
-              <FontText text="알림 설정" className="leading-21 text-purple-gray" />
+              <FontText text="알림 설정" className="leading-21 text-purple-54f" />
               <IconArrowRight color="#D7D7D7" />
             </Pressable>
             <View className="h-1 bg-gray-beb" />
@@ -126,7 +126,7 @@ const MyRootScreen = () => {
               //   rootNavigation.navigate('MyPageNavigation', { screen: 'ManageBlockedUsersScreen' })
               // }
             >
-              <FontText text="차단 사용자 관리" className="leading-21 text-purple-gray" />
+              <FontText text="차단 사용자 관리" className="leading-21 text-purple-54f" />
               <IconArrowRight color="#D7D7D7" />
             </Pressable>
           </View>
@@ -146,7 +146,7 @@ const MyRootScreen = () => {
               rootNavigation.navigate('MyPageNavigation', { screen: 'SubscribeTermsScreen' })
             }
           >
-            <FontText text="약관 및 정책" className="leading-21 text-purple-gray" />
+            <FontText text="약관 및 정책" className="leading-21 text-purple-54f" />
             <IconArrowRight color="#D7D7D7" />
           </Pressable>
           <View className="h-1 bg-gray-beb" />
@@ -162,12 +162,12 @@ const MyRootScreen = () => {
               rootNavigation.navigate('MyPageNavigation', { screen: 'PersonalTermsScreen' })
             }
           >
-            <FontText text="개인정보처리방침" className="leading-21 text-purple-gray" />
+            <FontText text="개인정보처리방침" className="leading-21 text-purple-54f" />
             <IconArrowRight color="#D7D7D7" />
           </Pressable>
           <View className="h-1 bg-gray-beb" />
           <View className="flex-row justify-between p-16 rounded-b-12">
-            <FontText text="버전" className="leading-21 text-purple-gray" />
+            <FontText text="버전" className="leading-21 text-purple-54f" />
             <FontText text={versionText} className="text-12 leading-17" />
           </View>
         </View>

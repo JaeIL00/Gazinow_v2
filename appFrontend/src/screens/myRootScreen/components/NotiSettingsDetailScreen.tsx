@@ -157,7 +157,7 @@ const NotiSettingsDetailScreen = () => {
                   <Pressable
                     key={day}
                     className={cn('w-40 h-40 rounded-full items-center justify-center', {
-                      'bg-purple-gray': selectedDays.includes(day),
+                      'bg-purple-54f': selectedDays.includes(day),
                       'bg-gray-f2': !selectedDays.includes(day),
                     })}
                     onPress={() => toggleDay(day)}
