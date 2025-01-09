@@ -127,7 +127,7 @@ const SearchPathDetailItem = ({ data, isLastLane, lineLength }: SearchPathDetail
                     '분)'
                   : data.stationCount + '개역 (' + data.sectionTime + '분)'
               }
-              className="text-13 text-[#49454f]"
+              className="text-13 text-purple-54f"
             />
             {data.stations.length > 2 && (
               <IconDownArrowHead

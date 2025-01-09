@@ -36,6 +36,7 @@ const ConfirmEmailModal = ({
   isLoading,
 }: ConfirmEmailModalProps) => {
   const StatusBarHeight = Platform.OS === 'ios' ? getStatusBarHeight(true) + 30 : 30;
+  const [resendTextWidth, setResendTextWidth] = useState<number>(0);
 
   const animRef = useRef(new Animated.Value(500)).current;
 
@@ -74,7 +75,10 @@ const ConfirmEmailModal = ({
       {/* 백그라운드 */}
       <View className="flex-1 bg-[#00000099]">
         {/* 콘텐츠 */}
-        <KeyboardAvoidingView behavior="height" className="justify-end flex-1">
+        <KeyboardAvoidingView
+          behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+          className="justify-end flex-1"
+        >
           <Animated.View
             className="flex-1 px-16 pt-32 bg-white"
             style={{
@@ -125,15 +129,24 @@ const ConfirmEmailModal = ({
                 />
               </View>
 
-              <View className="flex-row items-start justify-center mt-34">
-                <FontText text="메일을 받지 못하셨나요?" className="text-13 text-gray-9999" />
-                <View className="w-8" />
+              <View className="flex-row justify-center space-x-8 mt-34">
+                <FontText
+                  text="메일을 받지 못하셨나요?"
+                  className="text-13 leading-19 text-gray-999"
+                />
                 {isLoading ? (
-                  <LoadingCircle color="gray" width={34} height={27} />
+                  <View style={{ width: resendTextWidth }}>
+                    <LoadingCircle color="gray" width={25} height={20} />
+                  </View>
                 ) : (
                   <Pressable onPress={emailConfirmMutateHandler}>
-                    <FontText text="재전송" className="text-13 text-gray-999" fontWeight="700" />
-                    <View style={{ borderBottomWidth: 1.5, borderBottomColor: COLOR.GRAY_999 }} />
+                    <FontText
+                      onLayout={(e) => setResendTextWidth(e.nativeEvent.layout.width)}
+                      text="재전송"
+                      className="text-13 leading-18 text-gray-999"
+                      fontWeight="700"
+                      style={{ textDecorationLine: 'underline' }}
+                    />
                   </Pressable>
                 )}
               </View>

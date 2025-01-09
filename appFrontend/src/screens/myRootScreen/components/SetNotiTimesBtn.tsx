@@ -63,7 +63,7 @@ const SetNotiTimesBtn = ({
         >
           <FontText
             text={resTimeToTimeIndicatorFormat(savedStartTime)}
-            className="text-[#346BF7]"
+            className="text-light-blue"
           />
         </Pressable>
       </View>
@@ -79,7 +79,7 @@ const SetNotiTimesBtn = ({
           className="items-center justify-center w-113 h-36 rounded-8 bg-gray-beb"
           onPress={() => setOpenedTimePicker(openedTimePicker === 'end' ? null : 'end')}
         >
-          <FontText text={resTimeToTimeIndicatorFormat(savedEndTime)} className="text-[#346BF7]" />
+          <FontText text={resTimeToTimeIndicatorFormat(savedEndTime)} className="text-light-blue" />
         </Pressable>
       </View>
       {openedTimePicker === 'end' && (

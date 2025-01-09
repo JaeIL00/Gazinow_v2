@@ -90,7 +90,7 @@ const SelectNewRoute = () => {
                     className={cn(
                       'w-24 h-24 rounded-full border-1 items-center justify-center border-gray-ebe',
                       {
-                        'border-[#346BF7]': selectedRoutePath === item,
+                        'border-light-blue': selectedRoutePath === item,
                       },
                     )}
                     onPress={() => {
@@ -99,7 +99,7 @@ const SelectNewRoute = () => {
                     hitSlop={20}
                   >
                     {selectedRoutePath === item && (
-                      <View className="w-11 h-11 rounded-full bg-[#346BF7]" />
+                      <View className="rounded-full w-11 h-11 bg-light-blue" />
                     )}
                   </TouchableOpacity>
                 </View>
