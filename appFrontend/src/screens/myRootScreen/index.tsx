@@ -102,31 +102,14 @@ const MyRootScreen = () => {
                 alignItems: 'center',
                 justifyContent: 'space-between',
                 padding: 16,
+                borderBottomLeftRadius: 12,
+                borderBottomRightRadius: 12,
               })}
               onPress={() =>
                 rootNavigation.navigate('MyPageNavigation', { screen: 'NotiSettingsScreen' })
               }
             >
               <FontText text="알림 설정" className="leading-21 text-purple-54f" />
-              <IconArrowRight color="#D7D7D7" />
-            </Pressable>
-            <View className="h-1 bg-gray-beb" />
-            <Pressable
-              style={({ pressed }) => ({
-                backgroundColor: pressed ? COLOR.GRAY_E5 : 'transparent',
-                flexDirection: 'row',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                padding: 16,
-                borderBottomLeftRadius: 12,
-                borderBottomRightRadius: 12,
-              })}
-              //TODO: 기획 나오면 차단 사용자 관리 화면으로 이동
-              // onPress={() =>
-              //   rootNavigation.navigate('MyPageNavigation', { screen: 'ManageBlockedUsersScreen' })
-              // }
-            >
-              <FontText text="차단 사용자 관리" className="leading-21 text-purple-54f" />
               <IconArrowRight color="#D7D7D7" />
             </Pressable>
           </View>
