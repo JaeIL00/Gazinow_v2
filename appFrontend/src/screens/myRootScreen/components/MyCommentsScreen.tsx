@@ -1,6 +1,5 @@
-import { useCallback, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { SafeAreaView, View, TouchableOpacity, FlatList, RefreshControl } from 'react-native';
-import { useFocusEffect } from '@react-navigation/native';
 import { FontText } from '@/global/ui';
 import { useMyPageNavigation } from '@/navigation/MyPageNavigation';
 import { useGetMyComments } from '@screens/myRootScreen/apis/hooks';
@@ -17,12 +16,6 @@ const MyCommentsScreen = () => {
   const flattenedData = useMemo(() => {
     return myComments?.pages.flatMap((page) => page.content) ?? [];
   }, [myComments]);
-
-  useFocusEffect(
-    useCallback(() => {
-      myCommentsRefetch();
-    }, []),
-  );
 
   return (
     <SafeAreaView className="flex-1 bg-white">
@@ -43,7 +36,6 @@ const MyCommentsScreen = () => {
         ListFooterComponent={<View className="h-64" />}
         ListEmptyComponent={
           <View className="items-center justify-center flex-1">
-            {/* TODO: 디자인 나오면 수정 */}
             <FontText text="내가 쓴 댓글이 없어요" className="text-[#DEDEDE]" />
           </View>
         }
