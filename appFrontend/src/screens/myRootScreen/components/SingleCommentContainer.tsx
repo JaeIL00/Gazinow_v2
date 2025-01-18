@@ -1,4 +1,4 @@
-import { Pressable, View } from 'react-native';
+import { Platform, Pressable, View } from 'react-native';
 import { useRootNavigation } from '@/navigation/RootNavigation';
 import { getIssueId } from '@/store/modules';
 import { useAppDispatch } from '@/store';
@@ -35,7 +35,7 @@ const SingleCommentContainer = ({ item }: CommentProps) => {
         <FontText text={issueCommentContent} className="leading-24" numberOfLines={2} />
       </View>
 
-      <View className="flex-row w-64 space-x-4">
+      <View className={'flex-row w-64 space-x-4 ' + (Platform.OS === 'ios' ? 'items-center' : '')}>
         <IconHeart color="#D1D6DB" />
         <FontText text={'' + likesCount} className="text-13 leading-19 text-gray-999" />
       </View>
