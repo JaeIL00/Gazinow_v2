@@ -54,7 +54,7 @@ const IssueContent = ({ numOfComments, setIsOpenLoginModal }: IssueContentProps)
 
   const startIssueDate = dayjs(issueData?.startDate).fromNow();
 
-  if (issueData)
+  if (!issueData) return null;
     return (
       <View>
         <ModalReportWrongInfo
@@ -72,9 +72,7 @@ const IssueContent = ({ numOfComments, setIsOpenLoginModal }: IssueContentProps)
           <View className="flex-row justify-between py-8">
             <View className="flex-row space-x-8">
               <TouchableOpacity
-                className={
-                  'flex-row w-64 space-x-4 ' + (Platform.OS === 'ios' ? 'items-center' : '')
-                }
+              className={'flex-row w-64 space-x-4 ' + (Platform.OS === 'ios' ? 'items-center' : '')}
                 onPress={likeHandler}
                 activeOpacity={0.5}
                 hitSlop={30}
@@ -83,9 +81,7 @@ const IssueContent = ({ numOfComments, setIsOpenLoginModal }: IssueContentProps)
                 <FontText text={'' + issueData.likeCount} className="text-13 text-gray-999" />
               </TouchableOpacity>
               <View
-                className={
-                  'flex-row w-64 space-x-4 ' + (Platform.OS === 'ios' ? 'items-center' : '')
-                }
+              className={'flex-row w-64 space-x-4 ' + (Platform.OS === 'ios' ? 'items-center' : '')}
               >
                 <IconComment />
                 <FontText text={'' + numOfComments} className="text-13 text-gray-999" />
