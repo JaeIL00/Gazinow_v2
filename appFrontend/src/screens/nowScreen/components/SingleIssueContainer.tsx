@@ -25,14 +25,15 @@ const SingleIssueContainer = ({ issue }: SingleIssueContainerProps) => {
   const isExpired = dayjs().isAfter(dayjs(expireDate));
 
   const relatedSubwayLines = useMemo(() => {
-  const sortedLines = Array.from(new Set(lines)).sort();
+    const sortedLines = Array.from(new Set(lines)).sort();
     return sortedLines
       .map((line, index) =>
         index > 0 ? `･${rawLineNameToNowCapsuleText(line)}` : rawLineNameToNowCapsuleText(line),
-    )
-    .join('');
+      )
+      .join('');
   }, [lines]);
 
+  const timeAgo = dayjs(startDate).fromNow();
 
   return (
     <Pressable
@@ -87,10 +88,7 @@ const SingleIssueContainer = ({ issue }: SingleIssueContainerProps) => {
             <FontText text={'' + likeCount} className="text-13 leading-19 text-gray-999" />
           </View>
           <View className="w-1 h-10 bg-[#D9D9D9]" />
-          <FontText
-            text={dayjs(startDate).fromNow()}
-            className="text-gray-999 text-13 leading-19"
-          />
+          <FontText text={timeAgo} className="text-gray-999 text-13 leading-19" />
         </View>
       </View>
     </Pressable>
