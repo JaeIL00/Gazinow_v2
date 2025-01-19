@@ -7,6 +7,7 @@ import {
   SetNotiOnOffType,
 } from './entity';
 import * as Sentry from '@sentry/react-native';
+import { AllComments } from '@/global/apis/entity';
 
 /**
  * 로그아웃 요청 axios
@@ -192,6 +193,26 @@ export const getPathNotiFetch = async (myPathId: number) => {
     return res.data.data;
   } catch (err) {
     const error = err as AxiosError;
+    throw error;
+  }
+};
+
+/**
+ * 내가 쓴 댓글 조회 axios
+ */
+export const getMyCommentsFetch = async (params: { page: number }) => {
+  try {
+    const res = await authServiceAPI.get<{ data: AllComments }>(`/api/v1/comments`, {
+      params,
+    });
+    return res.data.data;
+  } catch (err) {
+    const error = err as AxiosError;
+    Sentry.captureException({
+      target: '내가 쓴 댓글 조회',
+      input: { request: error.request },
+      output: { status: error.response?.status, error: error.message, response: error.response },
+    });
     throw error;
   }
 };
