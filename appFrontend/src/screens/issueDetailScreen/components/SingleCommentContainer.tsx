@@ -1,6 +1,6 @@
 import { FontText } from '@/global/ui';
 import { Platform, TouchableOpacity, View } from 'react-native';
-import { useMemo, useState } from 'react';
+import { useCallback, useState } from 'react';
 import ModalReportComment from './ModalReportComment';
 import IconHeart from '@assets/icons/icon-heart-mono.svg';
 import BottomSheetCommentExtraOptions from './BottomSheetCommentExtraOptions';
@@ -30,7 +30,7 @@ const SingleCommentContainer = ({ item, setIsOpenLoginModal }: CommentProps) => 
     onSuccess: () => queryClient.invalidateQueries('getCommentsOnAIssue'),
   });
 
-  const commentLikeHandler = useMemo(
+  const commentLikeHandler = useCallback(
     () =>
       debounce(() => {
         if (isVerifiedUser !== 'success auth') setIsOpenLoginModal(true);
