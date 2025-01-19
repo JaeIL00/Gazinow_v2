@@ -35,7 +35,7 @@ interface ModalProps {
 const ModalReportComment = ({ isVisible, onCancel, issueCommentId }: ModalProps) => {
   const queryClient = useQueryClient();
   const [selectedReason, setSelectedReason] = useState<CommentReportReasonType | null>(null);
-  const [reasonDescription, setReasonDescription] = useState<string | ''>('');
+  const [reasonDescription, setReasonDescription] = useState<string>('');
 
   const { mutate: reportCommentMutate } = useMutation(reportComment, {
     onSuccess: () => {
