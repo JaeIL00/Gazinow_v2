@@ -10,6 +10,7 @@ import {
 import { useAppSelect } from '@/store';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import cn from 'classname';
+import { useMemo } from 'react';
 
 interface LaneButtonsProps {
   activeButton: NowScreenCapsules;
@@ -24,14 +25,16 @@ const LaneButtons = ({ activeButton, setActiveButton }: LaneButtonsProps) => {
   const { myRoutes } = useGetSavedRoutesQuery();
 
   // 로그인 되어있으면 저장된 경로에 해당하는 노선 캡슐을 앞쪽에 배치
-  const myLines =
-    isVerifiedUser === 'success auth'
-      ? [
-          ...(myRoutes?.flatMap((route) =>
-            route.subPaths.map((sub: SubPath) => pathSubwayLineNameInLine(sub.stationCode)),
-          ) ?? []),
-        ].sort()
-      : [];
+  const myLines = useMemo(() => {
+    if (isVerifiedUser !== 'success auth') return [];
+    return (
+      myRoutes
+        ?.flatMap((route) =>
+          route.subPaths.map((sub: SubPath) => pathSubwayLineNameInLine(sub.stationCode)),
+        )
+        ?.sort() ?? []
+    );
+  }, [isVerifiedUser, myRoutes]);
 
   // myLines에 없는 나머지 노선
   const otherStations: FreshSubwayLineName[] = allLines.filter((line) => !myLines?.includes(line));

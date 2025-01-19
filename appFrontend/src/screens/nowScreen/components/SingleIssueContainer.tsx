@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { FontText } from '@/global/ui';
 import { COLOR } from '@/global/constants';
 import { useAppDispatch } from '@/store';
@@ -24,13 +24,15 @@ const SingleIssueContainer = ({ issue }: SingleIssueContainerProps) => {
 
   const isExpired = dayjs().isAfter(dayjs(expireDate));
 
+  const relatedSubwayLines = useMemo(() => {
   const sortedLines = Array.from(new Set(lines)).sort();
-
-  const allLines = sortedLines
-    .map((line: RawSubwayLineName, index) =>
-      index !== 0 ? '･' + rawLineNameToNowCapsuleText(line) : rawLineNameToNowCapsuleText(line),
+    return sortedLines
+      .map((line, index) =>
+        index > 0 ? `･${rawLineNameToNowCapsuleText(line)}` : rawLineNameToNowCapsuleText(line),
     )
     .join('');
+  }, [lines]);
+
 
   return (
     <Pressable
@@ -64,7 +66,7 @@ const SingleIssueContainer = ({ issue }: SingleIssueContainerProps) => {
         <View className="flex-row space-x-8">
           <FontText text="영향권" className="text-[#58606A] text-13 leading-19" fontWeight="600" />
           <FontText
-            text={allLines}
+            text={relatedSubwayLines}
             className="flex-1 text-gray-999 text-13 leading-19"
             numberOfLines={1}
           />

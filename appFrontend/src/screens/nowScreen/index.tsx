@@ -29,13 +29,12 @@ const NowScreen = () => {
     useGetIssuesByLaneQuery(subwayReturnLineName(activeButton as FreshSubwayLineName)!);
 
   // 선택된 캡슐에 따른 데이터 렌더링
-  const flattenedData = useMemo(
-    () =>
-      activeButton === '전체'
-        ? allIssues?.pages.flatMap((page) => page.content) ?? []
-        : laneIssues?.pages.flatMap((page) => page.content) ?? [],
-    [activeButton, allIssues, laneIssues],
-  );
+  const flattenedData = useMemo(() => {
+    if (activeButton === '전체') {
+      return allIssues?.pages.flatMap((page) => page.content) ?? [];
+    }
+    return laneIssues?.pages.flatMap((page) => page.content) ?? [];
+  }, [activeButton, allIssues, laneIssues]);
 
   const onRefreshHandler = async () => {
     setIsRefreshing(true);
@@ -45,7 +44,7 @@ const NowScreen = () => {
         activeButton === '전체' ? allIssuesRefetch() : laneIssuesRefetch(),
       ]);
     } catch (error) {
-      // 에러 처리
+      // TODO: 에러 처리
     } finally {
       setIsRefreshing(false);
     }
