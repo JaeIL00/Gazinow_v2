@@ -9,7 +9,6 @@ import {
 } from '@/global/utils/subwayLine';
 import { useAppSelect } from '@/store';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import cn from 'classname';
 import { useMemo } from 'react';
 
 interface LaneButtonsProps {
@@ -56,29 +55,31 @@ const LaneButtons = ({ activeButton, setActiveButton }: LaneButtonsProps) => {
         showsHorizontalScrollIndicator={false}
         className="pt-4 pb-12 mx-16 space-x-12"
       >
-        {myLines &&
-          ['전체', ...myLines, ...otherStations].map((capsule) => (
-            <TouchableOpacity
-              key={capsule}
-              onPress={() => setActiveButton(capsule as NowScreenCapsules)}
-              className={cn('px-[8.48px] py-[6.79px] rounded-17 bg-[#F5F5F5]', {
-                'bg-black-717': activeButton === capsule,
-              })}
-              hitSlop={5}
-            >
-              <FontText
-                text={capsule}
-                style={{
-                  color:
-                    activeButton === capsule
-                      ? 'white'
-                      : freshSubwayLineNameToNowCapsuleColor(capsule as NowScreenCapsules),
-                }}
-                className="text-[12.92px] leading-[15.51px]"
-                fontWeight="600"
-              />
-            </TouchableOpacity>
-          ))}
+        {['전체', ...myLines, ...otherStations].map((capsule) => (
+          <TouchableOpacity
+            key={capsule}
+            onPress={() => setActiveButton(capsule as NowScreenCapsules)}
+            className="px-[8.48px] py-[6.79px] rounded-17"
+            style={{
+              backgroundColor:
+                activeButton === capsule
+                  ? freshSubwayLineNameToNowCapsuleColor(capsule as NowScreenCapsules)
+                  : '#F5F5F5',
+            }}
+          >
+            <FontText
+              text={capsule}
+              style={{
+                color:
+                  activeButton === capsule
+                    ? 'white'
+                    : freshSubwayLineNameToNowCapsuleColor(capsule as NowScreenCapsules),
+              }}
+              className="text-[12.92px] leading-[15.51px]"
+              fontWeight="600"
+            />
+          </TouchableOpacity>
+        ))}
       </ScrollView>
     </View>
   );
