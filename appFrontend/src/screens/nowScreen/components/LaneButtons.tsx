@@ -28,11 +28,13 @@ const LaneButtons = ({ activeButton, setActiveButton }: LaneButtonsProps) => {
   const myLines = useMemo(() => {
     if (isVerifiedUser !== 'success auth') return [];
     return (
-      myRoutes
-        ?.flatMap((route) =>
-          route.subPaths.map((sub: SubPath) => pathSubwayLineNameInLine(sub.stationCode)),
-        )
-        ?.sort() ?? []
+      [
+        ...new Set(
+          myRoutes?.flatMap((route) =>
+            route.subPaths.map((sub) => pathSubwayLineNameInLine(sub.stationCode)),
+          ) ?? [],
+        ),
+      ].sort() ?? []
     );
   }, [isVerifiedUser, myRoutes]);
 
