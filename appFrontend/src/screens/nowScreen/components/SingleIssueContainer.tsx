@@ -5,7 +5,7 @@ import { useAppDispatch } from '@/store';
 import { getIssueId } from '@/store/modules';
 import { useRootNavigation } from '@/navigation/RootNavigation';
 import dayjs from 'dayjs';
-import { IssueContent, RawSubwayLineName } from '@/global/apis/entity';
+import { IssueContent } from '@/global/apis/entity';
 import { Pressable, View } from 'react-native';
 import cn from 'classname';
 import { rawLineNameToNowCapsuleText } from '@/global/utils/subwayLine';

@@ -1,5 +1,5 @@
 import { useAppSelect } from '@/store';
-import { useCallback, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { Platform, TouchableOpacity, View } from 'react-native';
 import { useGetIssue } from '../api/hooks';
 import { debounce } from 'lodash';
@@ -36,7 +36,7 @@ const IssueContent = ({ numOfComments, setIsOpenLoginModal }: IssueContentProps)
     onSuccess: () => refetchIssue(),
   });
 
-  const likeHandler = useCallback(
+  const likeHandler = useMemo(
     () =>
       debounce(() => {
         if (!issueData) return;
