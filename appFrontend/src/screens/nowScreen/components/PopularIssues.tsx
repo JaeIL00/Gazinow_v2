@@ -7,10 +7,10 @@ import { useRootNavigation } from '@/navigation/RootNavigation';
 import dayjs from 'dayjs';
 import cn from 'classname';
 import IconHeart from '@/assets/icons/icon-heart-mono.svg';
-import { IssueContent } from '@/global/apis/entity';
+import { IssueGet } from '@/global/apis/entity';
 
 interface PopularIssuesProps {
-  popularIssues: IssueContent[];
+  popularIssues: IssueGet[];
 }
 
 const PopularIssues = ({ popularIssues }: PopularIssuesProps) => {

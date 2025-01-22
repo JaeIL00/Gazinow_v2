@@ -5,15 +5,15 @@ import { useAppDispatch } from '@/store';
 import { getIssueId } from '@/store/modules';
 import { useRootNavigation } from '@/navigation/RootNavigation';
 import dayjs from 'dayjs';
-import { IssueContent } from '@/global/apis/entity';
 import { Pressable, View } from 'react-native';
 import cn from 'classname';
 import { rawLineNameToNowCapsuleText } from '@/global/utils/subwayLine';
 import IconHeart from '@/assets/icons/icon-heart-mono.svg';
 import IconComment from '@/assets/icons/icon-chat-bubble-mono.svg';
+import { IssueGet } from '@/global/apis/entity';
 
 interface SingleIssueContainerProps {
-  issue: IssueContent;
+  issue: IssueGet;
 }
 
 const SingleIssueContainer = ({ issue }: SingleIssueContainerProps) => {

@@ -6,7 +6,7 @@ import { useRootNavigation } from '@/navigation/RootNavigation';
 import { useAppDispatch } from '@/store';
 import { getIssueId } from '@/store/modules';
 import dayjs from 'dayjs';
-import { IssueContent } from '@/global/apis/entity';
+import { IssueGet } from '@/global/apis/entity';
 import { useQueryClient } from 'react-query';
 import { COLOR } from '@/global/constants';
 
@@ -33,7 +33,7 @@ const IssueCarrousel = ({ isRefreshing, setIsRefreshing }: IssueCarrouselProps) 
     setIsRefreshing(false);
   }, [isRefreshing]);
 
-  const [newPopularIssues, setNewPopularIssues] = useState<IssueContent[]>();
+  const [newPopularIssues, setNewPopularIssues] = useState<IssueGet[]>();
 
   useEffect(() => {
     if (!popularIssues || popularIssues.length === 0) return;

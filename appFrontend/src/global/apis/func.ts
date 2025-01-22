@@ -8,7 +8,7 @@ import {
   SearchStationNameTypes,
   RawSubwayLineName,
   SubwayStrEnd,
-  IssueContent,
+  IssueGet,
   SaveMyRoutesType,
   NotiHistories,
 } from './entity';
@@ -247,7 +247,7 @@ export const getIssuesByLaneFetch = async (params: { page: number; line: string 
  */
 export const getPopularIssuesFetch = async () => {
   try {
-    const res = await publicServiceAPI.get<{ data: IssueContent[] }>(`/api/v1/issue/get_popular`);
+    const res = await publicServiceAPI.get<{ data: IssueGet[] }>(`/api/v1/issue/get_popular`);
     return res.data.data;
   } catch (err) {
     const error = err as AxiosError;

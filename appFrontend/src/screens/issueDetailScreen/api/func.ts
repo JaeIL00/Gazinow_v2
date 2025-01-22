@@ -1,8 +1,8 @@
 import { AxiosError } from 'axios';
-import { CommentReportType, IssueGet, PostCommentType } from './entity';
+import { CommentReportType, PostCommentType } from './entity';
 import * as Sentry from '@sentry/react';
 import { authServiceAPI, publicServiceAPI } from '@/global/apis';
-import { AllComments } from '@/global/apis/entity';
+import { AllComments, IssueGet } from '@/global/apis/entity';
 
 /**
  * 이슈 본문 조회

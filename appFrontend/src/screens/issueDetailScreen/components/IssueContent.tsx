@@ -1,7 +1,6 @@
 import { useAppSelect } from '@/store';
 import { useMemo, useState } from 'react';
 import { Platform, TouchableOpacity, View } from 'react-native';
-import { useGetIssue } from '../api/hooks';
 import { debounce } from 'lodash';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
@@ -11,6 +10,7 @@ import IconHeart from '@assets/icons/icon-heart-mono.svg';
 import ModalReportWrongInfo from './ModalReportWrongInfo';
 import { deletePostLike, postLike } from '../api/func';
 import { useMutation } from 'react-query';
+import { IssueGet } from '@/global/apis/entity';
 
 dayjs.locale('ko');
 dayjs.extend(relativeTime);
