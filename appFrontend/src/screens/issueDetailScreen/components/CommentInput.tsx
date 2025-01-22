@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Keyboard, Pressable, TouchableOpacity, View } from 'react-native';
+import { Alert, Keyboard, Pressable, TouchableOpacity, View } from 'react-native';
 import { Input } from '@/global/ui';
 import { COLOR } from '@/global/constants';
 import IconArrowUp from '@assets/icons/up_arrow.svg';
@@ -30,10 +30,8 @@ const CommentInput = ({ issueData, issueId, setIsOpenLoginModal }: CommentInputP
       queryClient.invalidateQueries('getCommentsOnAIssue');
       queryClient.invalidateQueries('getMyComments');
     },
-    onError: (error: AxiosError) => {
-      if (error.response?.status === 403) {
-        //TODO: 기획 나오면 수정
-      }
+    onError: () => {
+      Alert.alert('댓글 등록에 실패했습니다.', '다시 시도해주세요.');
     },
   });
 
