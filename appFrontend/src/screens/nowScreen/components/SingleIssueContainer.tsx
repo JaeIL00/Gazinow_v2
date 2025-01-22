@@ -20,7 +20,7 @@ const SingleIssueContainer = ({ issue }: SingleIssueContainerProps) => {
   const dispatch = useAppDispatch();
   const navigation = useRootNavigation();
 
-  const { id, title, content, startDate, expireDate, likeCount, lines } = issue;
+  const { id, title, content, startDate, expireDate, likeCount, commentCount, lines } = issue;
 
   const isExpired = dayjs().isAfter(dayjs(expireDate));
 
@@ -84,8 +84,7 @@ const SingleIssueContainer = ({ issue }: SingleIssueContainerProps) => {
           </View>
           <View className="flex-row items-center w-48 space-x-4">
             <IconComment width={18} height={18} />
-            {/* TODO: api 수정되면 댓글 개수 반영하기 */}
-            <FontText text={'' + likeCount} className="text-13 leading-19 text-gray-999" />
+            <FontText text={'' + commentCount} className="text-13 leading-19 text-gray-999" />
           </View>
           <View className="w-1 h-10 bg-[#D9D9D9]" />
           <FontText text={timeAgo} className="text-gray-999 text-13 leading-19" />
