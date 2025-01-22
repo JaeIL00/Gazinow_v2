@@ -16,17 +16,17 @@ dayjs.locale('ko');
 dayjs.extend(relativeTime);
 
 interface IssueContentProps {
-  numOfComments: number;
+  issueData: IssueGet;
+  refetchIssue: () => void;
   setIsOpenLoginModal: (value: boolean) => void;
 }
 
-const IssueContent = ({ numOfComments, setIsOpenLoginModal }: IssueContentProps) => {
+const IssueContent = ({ issueData, refetchIssue, setIsOpenLoginModal }: IssueContentProps) => {
+  const { title, content, like, likeCount, commentCount, id } = issueData;
+
   const isVerifiedUser = useAppSelect((state) => state.auth.isVerifiedUser);
-  const issueId = useAppSelect((state) => state.subwaySearch.issueId);
 
   const [isOpenModalReportWrongInfo, setIsOpenModalReportWrongInfo] = useState<boolean>(false);
-
-  const { issueData, refetchIssue } = useGetIssue({ issueId });
 
   const { mutate: doLikeMutate } = useMutation(postLike, {
     onSuccess: () => refetchIssue(),
@@ -41,8 +41,8 @@ const IssueContent = ({ numOfComments, setIsOpenLoginModal }: IssueContentProps)
       debounce(() => {
         if (!issueData) return;
         if (isVerifiedUser !== 'success auth') setIsOpenLoginModal(true);
-        else if (issueData.like) deleteLikeMutate(issueData.id);
-        else doLikeMutate(issueData.id);
+        else if (like) deleteLikeMutate(id);
+        else doLikeMutate(id);
       }, 300),
     [issueData, isVerifiedUser],
   );
@@ -64,9 +64,9 @@ const IssueContent = ({ numOfComments, setIsOpenLoginModal }: IssueContentProps)
 
         <View className="px-16">
           <FontText text={startIssueDate} className="mt-16 mb-12 text-14 text-gray-999" />
-          <FontText text={issueData.title} className="text-20 leading-26" fontWeight="500" />
+        <FontText text={title} className="text-20 leading-26" fontWeight="500" />
           <View className="h-1 my-28 bg-gray-beb" />
-          <FontText text={issueData.content} className="text-black leading-25" />
+        <FontText text={content} className="text-black leading-25" />
           <View className="h-28" />
 
           <View className="flex-row justify-between py-8">
@@ -77,16 +77,16 @@ const IssueContent = ({ numOfComments, setIsOpenLoginModal }: IssueContentProps)
                 activeOpacity={0.5}
                 hitSlop={30}
               >
-                <IconHeart color={issueData.like ? '#EB5147' : '#D1D6DB'} />
-                <FontText text={'' + issueData.likeCount} className="text-13 text-gray-999" />
+              <IconHeart color={like ? '#EB5147' : '#D1D6DB'} />
+              <FontText text={'' + likeCount} className="text-13 text-gray-999" />
               </TouchableOpacity>
               <View
               className={'flex-row w-64 space-x-4 ' + (Platform.OS === 'ios' ? 'items-center' : '')}
               >
                 <IconComment />
-                <FontText text={'' + numOfComments} className="text-13 text-gray-999" />
-              </View>
+              <FontText text={'' + commentCount} className="text-13 text-gray-999" />
             </View>
+          </View>
             {/* TODO: 다음 업데이트 때 구현 */}
             {/* <TouchableOpacity onPress={reportWrongInfoHandler} activeOpacity={0.5} hitSlop={30}>
               <FontText text="잘못된 정보 신고" className="text-14 text-gray-999 leading-21" />
