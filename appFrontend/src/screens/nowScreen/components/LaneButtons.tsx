@@ -1,6 +1,6 @@
 import { FontText } from '@/global/ui';
 import { useGetSavedRoutesQuery } from '@/global/apis/hooks';
-import { FreshSubwayLineName, NowScreenCapsules, SubPath } from '@/global/apis/entity';
+import { FreshSubwayLineName, NowScreenCapsules } from '@/global/apis/entity';
 import { ScrollView, View } from 'react-native';
 import {
   allLines,
@@ -44,7 +44,6 @@ const LaneButtons = ({ activeButton, setActiveButton }: LaneButtonsProps) => {
     <View className="bg-white">
       <View className="p-16 pt-32">
         <FontText
-          //TODO: 기획나오면 워딩 수정
           text={activeButton === '전체' ? '전체 이슈' : `${activeButton} NOW`}
           className="text-20 leading-25"
           fontWeight="600"
