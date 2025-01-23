@@ -69,8 +69,9 @@ const NowScreen = () => {
         <FlatList
           ListHeaderComponent={
             <>
-              {/* TODO: 인기 이슈 없을 때 기획 나오면 수정 */}
-              {popularIssues && <PopularIssues popularIssues={popularIssues} />}
+              {popularIssues && popularIssues.length > 0 && (
+                <PopularIssues popularIssues={popularIssues} />
+              )}
               <LaneButtons activeButton={activeButton} setActiveButton={setActiveButton} />
             </>
           }
