@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Pressable, TouchableOpacity, View } from 'react-native';
+import { TouchableOpacity, View } from 'react-native';
 import { FontText } from '@/global/ui';
 import { getIssueId } from '@/store/modules';
 import { useAppDispatch } from '@/store';
@@ -30,12 +30,8 @@ const PopularIssues = ({ popularIssues }: PopularIssuesProps) => {
             const isExpired = dayjs().isAfter(dayjs(expireDate));
             if (!isExpanded && index !== 0) return null;
             return (
-              <Pressable
-                style={({ pressed }) => ({
-                  //TODO: Pressed 디자인 나오면
-                  //   backgroundColor: pressed ? COLOR.GRAY_E5 : 'transparent',
-                  marginTop: index === 0 ? 0 : 36,
-                })}
+              <TouchableOpacity
+                className={index === 0 ? 'mt-0' : 'mt-36'}
                 onPress={() => {
                   dispatch(getIssueId(id));
                   navigation.navigate('IssueStack', { screen: 'IssueDetail' });
@@ -71,7 +67,7 @@ const PopularIssues = ({ popularIssues }: PopularIssuesProps) => {
                     </View>
                   </View>
                 </View>
-              </Pressable>
+              </TouchableOpacity>
             );
           })}
           <View className="flex-row-reverse">
