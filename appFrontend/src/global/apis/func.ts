@@ -173,7 +173,6 @@ export const searchPathDeleteFetch = async (params: { id: number | null }) => {
  */
 export const getSearchRoutesFetch = async () => {
   try {
-    // TODO: 기획 최종 나오고 서버 api 개발 된다면 헤더에 토큰유무 필요에 맞는 인스턴스로 교체
     const res = await authServiceAPI.get(`/api/v1/recentSearch`);
     return res.data.data;
   } catch (err) {
