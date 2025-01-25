@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from 'react';
 import { SingleIssueContainer, LaneButtons, PopularIssues } from './components';
-import { FreshSubwayLineName, NowScreenCapsules } from '@/global/apis/entity';
+import { FreshSubwayLineName, IssueGet, NowScreenCapsules } from '@/global/apis/entity';
 import { FlatList, RefreshControl, SafeAreaView, View } from 'react-native';
 import {
   useGetAllIssuesQuery,
@@ -36,6 +36,37 @@ const NowScreen = () => {
     return laneIssues?.pages.flatMap((page) => page.content) ?? [];
   }, [activeButton, allIssues, laneIssues]);
 
+  const isDataEmpty = flattenedData.length < 1;
+
+  const data = isDataEmpty ? ['LaneButtons', ''] : ['LaneButtons', ...flattenedData];
+
+  const renderItem = ({ item, index }: { item: IssueGet | string; index: number }) => {
+    if (index === 0) {
+      return <LaneButtons activeButton={activeButton} setActiveButton={setActiveButton} />;
+    } else if (isDataEmpty) {
+      return (
+        <View className="items-center justify-center h-[70%]">
+          <FontText text="올라온 이슈가 없어요" className="text-18 text-gray-999" />
+        </View>
+      );
+    } else {
+      return <SingleIssueContainer key={`${item}_${index}`} issue={item as IssueGet} />;
+    }
+  };
+
+  const ListHeaderComponent = (
+    <>
+      <PopularIssues popularIssues={popularIssues ?? []} />
+      <FontText
+        text={`${activeButton} ${activeButton === '전체' ? '이슈' : 'NOW'}`}
+        className="mx-16 mt-32 text-20 leading-25"
+        fontWeight="600"
+      />
+    </>
+  );
+
+  const ListFooterComponent = !isDataEmpty ? <View className="h-64" /> : <></>;
+
   const onRefreshHandler = async () => {
     setIsRefreshing(true);
     try {
@@ -49,6 +80,8 @@ const NowScreen = () => {
       setIsRefreshing(false);
     }
   };
+
+  const refreshControl = <RefreshControl onRefresh={onRefreshHandler} refreshing={isRefreshing} />;
 
   const onEndReachedHandler = () => {
     if (activeButton === '전체' && allIssuesHasNextPage) {
@@ -66,39 +99,16 @@ const NowScreen = () => {
         </View>
       ) : (
         <FlatList
-          ListHeaderComponent={
-            <>
-              <PopularIssues popularIssues={popularIssues ?? []} />
-              <FontText
-                text={`${activeButton} ${activeButton === '전체' ? '이슈' : 'NOW'}`}
-                className="mx-16 mt-32 text-20 leading-25"
-                fontWeight="600"
-              />
-            </>
-          }
-          data={flattenedData.length < 1 ? ['LaneButtons', ''] : ['LaneButtons', ...flattenedData]}
-          renderItem={({ item, index }) => {
-            if (index === 0) {
-              return <LaneButtons activeButton={activeButton} setActiveButton={setActiveButton} />;
-            } else if (flattenedData.length < 1) {
-              return (
-                <View className="items-center justify-center h-[70%]">
-                  <FontText text="올라온 이슈가 없어요" className="text-18 text-gray-999" />
-                </View>
-              );
-            } else {
-              return <SingleIssueContainer key={`${item.id}_${index}`} issue={item} />;
-            }
-          }}
-          ListFooterComponent={() => {
-            if (flattenedData.length > 0) return <View className="h-64" />;
-          }}
-          stickyHeaderIndices={[1]}
-          refreshControl={<RefreshControl onRefresh={onRefreshHandler} refreshing={isRefreshing} />}
-          contentContainerStyle={{ flexGrow: 1 }}
+          data={data}
+          renderItem={renderItem}
+          ListHeaderComponent={ListHeaderComponent}
+          ListFooterComponent={ListFooterComponent}
+          refreshControl={refreshControl}
           onEndReached={onEndReachedHandler}
           onEndReachedThreshold={0.7}
-          keyExtractor={(item, index) => `${item.id}_${index}`}
+          stickyHeaderIndices={[1]}
+          contentContainerStyle={{ flexGrow: 1 }}
+          keyExtractor={(item, index) => `${item}_${index}`}
         />
       )}
     </SafeAreaView>
