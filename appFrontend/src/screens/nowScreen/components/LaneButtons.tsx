@@ -52,8 +52,9 @@ const LaneButtons = ({ activeButton, setActiveButton }: LaneButtonsProps) => {
       <ScrollView
         horizontal={true}
         showsHorizontalScrollIndicator={false}
-        className="pt-4 pb-12 mx-16 space-x-12"
+        className="pt-4 pb-12 space-x-12"
       >
+        <View className="w-4" />
         {['전체', ...myLines, ...otherStations].map((capsule) => (
           <TouchableOpacity
             key={capsule}
@@ -79,6 +80,7 @@ const LaneButtons = ({ activeButton, setActiveButton }: LaneButtonsProps) => {
             />
           </TouchableOpacity>
         ))}
+        <View className="w-4" />
       </ScrollView>
     </View>
   );
