@@ -8,9 +8,9 @@ import { name as appName } from './app.json';
 import messaging from '@react-native-firebase/messaging';
 import { handleNotificationPress } from '@/global/utils/pushNotification';
 
-// if (__DEV__) {
-//   require('./ReactotronConfig');
-// }
+if (__DEV__) {
+  require('./ReactotronConfig');
+}
 
 if (Platform.OS !== 'android') {
   messaging().setBackgroundMessageHandler(async (remoteMessage) => {
