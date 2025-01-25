@@ -48,7 +48,6 @@ const NowScreen = () => {
     } finally {
       setIsRefreshing(false);
     }
-    setIsRefreshing(false);
   };
 
   const onEndReachedHandler = () => {
@@ -69,24 +68,32 @@ const NowScreen = () => {
         <FlatList
           ListHeaderComponent={
             <>
-              {popularIssues && popularIssues.length > 0 && (
-                <PopularIssues popularIssues={popularIssues} />
-              )}
-              <LaneButtons activeButton={activeButton} setActiveButton={setActiveButton} />
+              <PopularIssues popularIssues={popularIssues ?? []} />
+              <FontText
+                text={`${activeButton} ${activeButton === '전체' ? '이슈' : 'NOW'}`}
+                className="mx-16 mt-32 text-20 leading-25"
+                fontWeight="600"
+              />
             </>
           }
-          data={flattenedData}
-          renderItem={({ item, index }) => (
-            <SingleIssueContainer key={`${item.id}_${index}`} issue={item} />
-          )}
-          ListEmptyComponent={
-            <View className="items-center justify-center flex-1">
-              <FontText text="올라온 이슈가 없어요" className="text-center text-18 text-gray-999" />
-            </View>
-          }
+          data={flattenedData.length < 1 ? ['LaneButtons', ''] : ['LaneButtons', ...flattenedData]}
+          renderItem={({ item, index }) => {
+            if (index === 0) {
+              return <LaneButtons activeButton={activeButton} setActiveButton={setActiveButton} />;
+            } else if (flattenedData.length < 1) {
+              return (
+                <View className="items-center justify-center h-[70%]">
+                  <FontText text="올라온 이슈가 없어요" className="text-18 text-gray-999" />
+                </View>
+              );
+            } else {
+              return <SingleIssueContainer key={`${item.id}_${index}`} issue={item} />;
+            }
+          }}
           ListFooterComponent={() => {
             if (flattenedData.length > 0) return <View className="h-64" />;
           }}
+          stickyHeaderIndices={[1]}
           refreshControl={<RefreshControl onRefresh={onRefreshHandler} refreshing={isRefreshing} />}
           contentContainerStyle={{ flexGrow: 1 }}
           onEndReached={onEndReachedHandler}

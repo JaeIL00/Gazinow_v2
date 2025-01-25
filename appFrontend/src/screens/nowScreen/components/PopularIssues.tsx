@@ -14,8 +14,12 @@ interface PopularIssuesProps {
 }
 
 const PopularIssues = ({ popularIssues }: PopularIssuesProps) => {
+  if (popularIssues.length < 1) return null;
+
   const dispatch = useAppDispatch();
+
   const navigation = useRootNavigation();
+
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
 
   return (

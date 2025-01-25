@@ -41,14 +41,7 @@ const LaneButtons = ({ activeButton, setActiveButton }: LaneButtonsProps) => {
   const otherStations: FreshSubwayLineName[] = allLines.filter((line) => !myLines?.includes(line));
 
   return (
-    <View className="bg-white">
-      <View className="p-16 pt-32">
-        <FontText
-          text={activeButton === '전체' ? '전체 이슈' : `${activeButton} NOW`}
-          className="text-20 leading-25"
-          fontWeight="600"
-        />
-      </View>
+    <View className="pt-16 bg-white">
       <ScrollView
         horizontal={true}
         showsHorizontalScrollIndicator={false}
