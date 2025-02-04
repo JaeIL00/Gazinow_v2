@@ -15,6 +15,7 @@ import { showToast } from '@/global/utils/toast';
 import { useChangeNicknameMutation, useCheckNicknameMutation } from '../apis/hooks';
 import { debounce } from 'lodash';
 import cn from 'classname';
+import { AxiosError } from 'axios';
 
 const ChangeNickNameScreen = () => {
   const myPageNavigation = useMyPageNavigation();
@@ -30,10 +31,9 @@ const ChangeNickNameScreen = () => {
       dispatch(saveUserInfo({ email: email, nickname: newNickname }));
       showToast('nickNameChanged');
     },
-    onError: (error: any) => {
+    onError: (error: AxiosError) => {
       setIsNicknameValid(false);
       setErrorMessage(getErrorMessage(error.response?.status));
-      console.error(error);
     },
   });
 
@@ -41,10 +41,9 @@ const ChangeNickNameScreen = () => {
     onSuccess: () => {
       setIsNicknameValid(true);
     },
-    onError: (error: any) => {
+    onError: (error: AxiosError) => {
       setIsNicknameValid(false);
       setErrorMessage(getErrorMessage(error.response?.status));
-      console.error(error);
     },
   });
 
