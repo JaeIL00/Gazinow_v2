@@ -16,7 +16,6 @@ interface LaneButtonsProps {
   setActiveButton: (activeButton: NowScreenCapsules) => void;
 }
 
-//TODO: 측면 그라데이션
 const LaneButtons = ({ activeButton, setActiveButton }: LaneButtonsProps) => {
   const isVerifiedUser = useAppSelect((state) => state.auth.isVerifiedUser);
 
@@ -43,6 +42,8 @@ const LaneButtons = ({ activeButton, setActiveButton }: LaneButtonsProps) => {
   return (
     <View className="pt-16 bg-white">
       <ScrollView
+        //TODO: iOS 측면 그라데이션
+        fadingEdgeLength={130}
         horizontal={true}
         showsHorizontalScrollIndicator={false}
         className="pt-4 pb-12 space-x-12"
