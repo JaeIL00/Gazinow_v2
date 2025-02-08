@@ -1,23 +1,27 @@
 import { useState } from 'react';
-import { Keyboard, Pressable, TouchableOpacity, View } from 'react-native';
+import { Alert, Keyboard, Pressable, TouchableOpacity, View } from 'react-native';
 import { Input } from '@/global/ui';
 import { COLOR } from '@/global/constants';
 import IconArrowUp from '@assets/icons/up_arrow.svg';
 import cn from 'classname';
 import { postComment } from '../api/func';
 import { useMutation, useQueryClient } from 'react-query';
-import { AxiosError } from 'axios';
+import { IssueGet } from '@/global/apis/entity';
 import { useAppSelect } from '@/store';
 
 interface CommentInputProps {
+  issueData: IssueGet;
   issueId: number;
   setIsOpenLoginModal: (value: boolean) => void;
 }
 
-const CommentInput = ({ issueId, setIsOpenLoginModal }: CommentInputProps) => {
+const CommentInput = ({ issueData, issueId, setIsOpenLoginModal }: CommentInputProps) => {
   const isVerifiedUser = useAppSelect((state) => state.auth.isVerifiedUser);
   const queryClient = useQueryClient();
+
   const [commentText, setCommentText] = useState<string>('');
+
+  const isBannedUser = issueData.commentRestricted;
 
   const { mutate: postCommentMutate } = useMutation(postComment, {
     onSuccess: () => {
@@ -26,10 +30,8 @@ const CommentInput = ({ issueId, setIsOpenLoginModal }: CommentInputProps) => {
       queryClient.invalidateQueries('getCommentsOnAIssue');
       queryClient.invalidateQueries('getMyComments');
     },
-    onError: (error: AxiosError) => {
-      if (error.response?.status === 403) {
-        //TODO: 기획 나오면 수정
-      }
+    onError: () => {
+      Alert.alert('댓글 등록에 실패했습니다.', '다시 시도해주세요.');
     },
   });
 
@@ -52,12 +54,12 @@ const CommentInput = ({ issueId, setIsOpenLoginModal }: CommentInputProps) => {
           className="flex-1"
           multiline
           maxLength={500}
-          placeholder="댓글을 입력해주세요"
+          placeholder={isBannedUser ? '댓글 작성이 제한되었습니다' : '댓글을 입력해주세요'}
           placeholderTextColor={COLOR.GRAY_BE}
           value={commentText}
           onChangeText={(text) => setCommentText(text)}
           onPressIn={handlePressInput}
-          editable={isVerifiedUser === 'success auth'}
+          editable={isVerifiedUser === 'success auth' && !isBannedUser}
         />
         <TouchableOpacity
           disabled={!commentText}

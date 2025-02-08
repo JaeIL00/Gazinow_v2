@@ -66,7 +66,7 @@ const SearchPathResultScreen = () => {
       </View>
       <ScrollView style={!isLoading && { backgroundColor: COLOR.GRAY_F2 }}>
         {isLoading && (
-          <View className="items-center mt-100">
+          <View className="items-center justify-center h-full">
             <LoadingCircle width={40} height={40} />
           </View>
         )}

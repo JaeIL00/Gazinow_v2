@@ -8,7 +8,7 @@ import {
   SearchStationNameTypes,
   RawSubwayLineName,
   SubwayStrEnd,
-  IssueContent,
+  IssueGet,
   SaveMyRoutesType,
   NotiHistories,
 } from './entity';
@@ -173,7 +173,6 @@ export const searchPathDeleteFetch = async (params: { id: number | null }) => {
  */
 export const getSearchRoutesFetch = async () => {
   try {
-    // TODO: 기획 최종 나오고 서버 api 개발 된다면 헤더에 토큰유무 필요에 맞는 인스턴스로 교체
     const res = await authServiceAPI.get(`/api/v1/recentSearch`);
     return res.data.data;
   } catch (err) {
@@ -247,7 +246,7 @@ export const getIssuesByLaneFetch = async (params: { page: number; line: string 
  */
 export const getPopularIssuesFetch = async () => {
   try {
-    const res = await publicServiceAPI.get<{ data: IssueContent[] }>(`/api/v1/issue/get_popular`);
+    const res = await publicServiceAPI.get<{ data: IssueGet[] }>(`/api/v1/issue/get_popular`);
     return res.data.data;
   } catch (err) {
     const error = err as AxiosError;

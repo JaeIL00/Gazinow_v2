@@ -31,7 +31,6 @@ export type AuthStackStackParamList = {
   Landing: undefined;
   SignIn: undefined;
   SignUp: undefined;
-  SocialLogin: { socialLoginType: 'naver' | 'google' | 'apple' };
 };
 
 export type HomeStackParamList = {

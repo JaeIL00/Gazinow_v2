@@ -1,3 +1,3 @@
-export { default as IssueContainer } from './IssueContainer';
+export { default as SingleIssueContainer } from './SingleIssueContainer';
 export { default as LaneButtons } from './LaneButtons';
-export { default as LaneCapsulesPerIssue } from './LaneCapsulesPerIssue';
+export { default as PopularIssues } from './PopularIssues';

@@ -4,6 +4,7 @@ import {
   StationCode,
   RawSubwayLineName,
   FreshSubwayLineName,
+  NowScreenCapsules,
 } from '../apis/entity';
 
 /**
@@ -127,57 +128,57 @@ export const rawLineNameToColor = (lineName: RawSubwayLineName) => {
 };
 
 /**
- * 오디세이 지하철 호선 표기를 나우탭 캡슐 컬러로
+ * 오디세이 지하철 호선 표기를 나우탭 캡슐 텍스트 컬러로
  * @param lineName 응답받은 지하철 검색 결과
  */
-export const rawLineNameToNowCapsuleColor = (lineName: RawSubwayLineName) => {
+export const freshSubwayLineNameToNowCapsuleColor = (lineName: NowScreenCapsules) => {
   switch (lineName) {
-    case '수도권 1호선':
-      return COLOR.NOW_LINE1;
-    case '수도권 2호선':
-      return COLOR.NOW_LINE2;
-    case '수도권 3호선':
-      return COLOR.NOW_LINE3;
-    case '수도권 4호선':
-      return COLOR.NOW_LINE4;
-    case '수도권 5호선':
-      return COLOR.NOW_LINE5;
-    case '수도권 6호선':
-      return COLOR.NOW_LINE6;
-    case '수도권 7호선':
-      return COLOR.NOW_LINE7;
-    case '수도권 8호선':
-      return COLOR.NOW_LINE8;
-    case '수도권 9호선':
-      return COLOR.NOW_LINE9;
-    case '인천 1호선':
-      return COLOR.NOW_LINEIO;
-    case '인천 2호선':
-      return COLOR.NOW_LINEIT;
-    case '수도권 공항철도':
-      return COLOR.NOW_LINEGH;
-    case '경의중앙선':
-      return COLOR.NOW_LINEKJ;
-    case '수도권 에버라인':
-      return COLOR.NOW_LINEEL;
-    case '수도권 경춘선':
-      return COLOR.NOW_LINEKC;
-    case '수도권 신분당선':
-      return COLOR.NOW_LINENBD;
-    case '수도권 수인.분당선':
-      return COLOR.NOW_LINESBD;
-    case '수도권 의정부경전철':
-      return COLOR.NOW_LINEEGB;
-    case '수도권 경강선':
-      return COLOR.NOW_LINEKK;
-    case '수도권 우이신설경전철':
-      return COLOR.NOW_LINEUS;
-    case '수도권 서해선(대곡-원시)':
-      return COLOR.NOW_LINESH;
-    case '수도권 김포골드라인':
-      return COLOR.NOW_LINEGG;
-    case '수도권 신림선':
-      return COLOR.NOW_LINESL;
+    case '1호선':
+      return COLOR.LINE1;
+    case '2호선':
+      return COLOR.LINE2;
+    case '3호선':
+      return COLOR.LINE3;
+    case '4호선':
+      return COLOR.LINE4;
+    case '5호선':
+      return COLOR.LINE5;
+    case '6호선':
+      return COLOR.LINE6;
+    case '7호선':
+      return COLOR.LINE7;
+    case '8호선':
+      return COLOR.LINE8;
+    case '9호선':
+      return COLOR.LINE9;
+    case '인천1호선':
+      return COLOR.LINEIO;
+    case '인천2호선':
+      return COLOR.LINEIT;
+    case '공항철도':
+      return COLOR.LINEGH;
+    case '경의중앙':
+      return COLOR.LINEKJ;
+    case '에버라인':
+      return COLOR.LINEEL;
+    case '경춘선':
+      return COLOR.LINEKC;
+    case '신분당':
+      return COLOR.LINENBD;
+    case '수인분당':
+      return COLOR.LINESBD;
+    case '의정부':
+      return COLOR.LINEEGB;
+    case '경강선':
+      return COLOR.LINEKK;
+    case '우이신설':
+      return COLOR.LINEUS;
+    case '서해선':
+      return COLOR.LINESH;
+    case '김포골드':
+      return COLOR.LINEGG;
+    case '신림선':
+      return COLOR.LINESL;
     default:
       return '#222';
   }

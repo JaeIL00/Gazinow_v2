@@ -4,9 +4,9 @@ import { FontText } from '@/global/ui';
 
 interface ModalProps {
   isVisible: boolean;
-  onCancel?: () => void;
-  onConfirm: () => void;
   title: string;
+  onConfirm: () => void;
+  onCancel?: () => void;
   confirmText: string;
   cancelText?: string;
 }
@@ -22,22 +22,27 @@ const MyTabModal = ({
   return (
     <Modal animationType="fade" transparent visible={isVisible} onRequestClose={onCancel}>
       <View className="items-center justify-center flex-1 bg-[#00000060]">
-        <View className="items-center justify-between bg-white w-[81%] h-160 p-24 pt-32 rounded-10">
+        <View className="items-center justify-between bg-white w-[81%] px-24 py-28 space-y-20 rounded-12">
           <FontText text={title} className="text-18" fontWeight="600" />
-          <View className="flex-row gap-8">
+          <View className="flex-row space-x-8">
             {cancelText && (
               <TouchableOpacity
-                className="items-center flex-1 p-12 border-1 border-gray-999 rounded-5"
+                className="flex-1 p-12 border-1 border-gray-999 rounded-5"
                 onPress={onCancel}
               >
-                <FontText text={cancelText} className="text-gray-999 leading-21" fontWeight="600" />
+                <FontText
+                  text={cancelText}
+                  className="text-center text-gray-999 text-14 leading-21"
+                  fontWeight="600"
+                />
               </TouchableOpacity>
             )}
-            <TouchableOpacity
-              className="items-center flex-1 p-12 bg-black-717 rounded-5"
-              onPress={onConfirm}
-            >
-              <FontText text={confirmText} className="text-white leading-21" fontWeight="600" />
+            <TouchableOpacity className="flex-1 p-12 bg-black-717 rounded-5" onPress={onConfirm}>
+              <FontText
+                text={confirmText}
+                className="text-center text-white text-14 leading-21"
+                fontWeight="600"
+              />
             </TouchableOpacity>
           </View>
         </View>

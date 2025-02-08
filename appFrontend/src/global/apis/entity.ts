@@ -196,18 +196,27 @@ export interface IssueSummary {
 }
 
 /**
- * 이슈 본문 데이터
+ * 상세 이슈 조회 응답
  */
-export interface IssueContent {
+export interface IssueGet {
   id: number;
   title: string;
   content: string;
   agoTime: string;
   lines: RawSubwayLineName[];
+  like: boolean;
   likeCount: number;
-  startDate: string;
-  expireDate: string;
   keyword: IssueKeywords;
+  commentCount: number;
+  commentRestricted: boolean;
+  /**
+   * @format timestamp
+   */
+  startDate: string;
+  /**
+   * @format timestamp
+   */
+  expireDate: string;
   stationDtos: [
     {
       line: RawSubwayLineName;
@@ -249,7 +258,7 @@ export interface CommentContent {
 /**
  * 페이징 처리 된 이슈 목록 (나우탭) 데이터
  */
-export type AllIssues = Pagination<IssueContent>;
+export type AllIssues = Pagination<IssueGet>;
 
 /**
  * 페이징 처리 된 알림 히스토리 목록 데이터

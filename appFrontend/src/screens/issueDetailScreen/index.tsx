@@ -13,7 +13,7 @@ import { useRootNavigation } from '@/navigation/RootNavigation';
 import { FontText } from '@/global/ui';
 import SingleCommentContainer from './components/SingleCommentContainer';
 import IssueContent from './components/IssueContent';
-import { useGetCommentsOnAIssue } from './api/hooks';
+import { useGetCommentsOnAIssue, useGetIssue } from './api/hooks';
 import { useAppSelect } from '@/store';
 import CommentInput from './components/CommentInput';
 import MyTabModal from '@/global/components/MyTabModal';
@@ -26,6 +26,8 @@ const IssueDetailScreen = () => {
   const issueId = useAppSelect((state) => state.subwaySearch.issueId);
   if (!issueId) return null;
 
+  const { issueData, refetchIssue } = useGetIssue({ issueId });
+
   const {
     commentsOnAIssue,
     commentsOnAIssueHasNextPage,
@@ -37,7 +39,7 @@ const IssueDetailScreen = () => {
     return commentsOnAIssue?.pages.flatMap((page) => page.content);
   }, [commentsOnAIssue]);
 
-  if (!flattenedData) return null;
+  if (!flattenedData || !issueData) return null;
 
   return (
     <KeyboardAvoidingView
@@ -74,7 +76,8 @@ const IssueDetailScreen = () => {
           contentContainerStyle={{ flexGrow: 1 }}
           ListHeaderComponent={
             <IssueContent
-              numOfComments={commentsOnAIssue?.pages[0].totalElements ?? 0}
+              issueData={issueData}
+              refetchIssue={refetchIssue}
               setIsOpenLoginModal={setIsOpenLoginModal}
             />
           }
@@ -101,7 +104,11 @@ const IssueDetailScreen = () => {
             />
           }
         />
-        <CommentInput issueId={issueId} setIsOpenLoginModal={setIsOpenLoginModal} />
+        <CommentInput
+          issueData={issueData}
+          issueId={issueId}
+          setIsOpenLoginModal={setIsOpenLoginModal}
+        />
       </SafeAreaView>
     </KeyboardAvoidingView>
   );

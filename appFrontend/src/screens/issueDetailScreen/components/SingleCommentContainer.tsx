@@ -31,12 +31,11 @@ const SingleCommentContainer = ({ item, setIsOpenLoginModal }: CommentProps) => 
   });
 
   const commentLikeHandler = useCallback(
-    () =>
-      debounce(() => {
-        if (isVerifiedUser !== 'success auth') setIsOpenLoginModal(true);
-        else if (liked) deleteCommentLikeMutate(issueCommentId);
-        else doLikeCommentMutate(issueCommentId);
-      }, 300),
+    debounce(() => {
+      if (isVerifiedUser !== 'success auth') setIsOpenLoginModal(true);
+      else if (liked) deleteCommentLikeMutate(issueCommentId);
+      else doLikeCommentMutate(issueCommentId);
+    }, 300),
     [isVerifiedUser, liked],
   );
 
