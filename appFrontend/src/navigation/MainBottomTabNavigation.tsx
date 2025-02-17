@@ -13,7 +13,7 @@ import IconMy from '@assets/icons/tab_my.svg';
 import { FontText } from '@/global/ui';
 import { Platform, StatusBar } from 'react-native';
 import { MyPageNavigation } from '.';
-import notifee from '@notifee/react-native';
+import notifee, { AndroidImportance, AndroidVisibility } from '@notifee/react-native';
 import { Walkthrough } from '@/screens/homeScreen/components';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useCallback, useEffect, useState } from 'react';
@@ -47,13 +47,22 @@ const MainBottomTabNavigation = () => {
     checkFirstRun();
   }, []);
 
-  // 워크스루 종료 시 알림 권한 요청
+  // 워크스루 종료 시 알림 권한 요청, 안드로이드 알림 default 채널 생성
   useEffect(() => {
     if (isFirstRun === 'finishedWalkThrough') {
       const requestPermission = async () => {
         await notifee.requestPermission();
       };
+      const createDefaultNotiChannel = async () => {
+        await notifee.createChannel({
+          id: 'high_priority_channel',
+          name: 'Important Notifications',
+          importance: AndroidImportance.HIGH,
+          visibility: AndroidVisibility.PUBLIC,
+        });
+      };
       requestPermission();
+      createDefaultNotiChannel();
     }
   }, [isFirstRun]);
 
