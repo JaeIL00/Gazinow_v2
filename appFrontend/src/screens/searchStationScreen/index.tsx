@@ -81,10 +81,9 @@ const SearchStationScreen = () => {
       }}
     >
       <View className="py-4 pl-[18.25px] pr-16 mx-16 mt-16 flex-row items-center rounded-28 border border-[#d4d4d4]">
-        <TouchableOpacity activeOpacity={1} hitSlop={10} onPress={() => navigation.goBack()}>
+        <TouchableOpacity hitSlop={20} onPress={() => navigation.goBack()}>
           <IconLeftArrow />
         </TouchableOpacity>
-        <Space width={16} />
         <Input
           value={searchTextValue}
           placeholder={`${stationType}을 검색해보세요`}
@@ -92,9 +91,9 @@ const SearchStationScreen = () => {
           inputMode="search"
           onChangeText={changeSearchText}
           autoFocus
-          className="ml-[18.25px] mr-[31.2px] flex-1 h-36"
+          className="ml-16 mr-[31.2px] flex-1 h-36"
         />
-        <TouchableOpacity activeOpacity={1} onPress={deleteInputText}>
+        <TouchableOpacity hitSlop={20} onPress={deleteInputText}>
           <IconXCircleFill />
         </TouchableOpacity>
       </View>
@@ -118,7 +117,15 @@ const SearchStationScreen = () => {
           <ScrollView className="mt-18" keyboardShouldPersistTaps="handled">
             {historyData?.map(({ stationName, stationLine }, index) => (
               <Pressable
-                className="flex-row px-16 py-12 border-b gap-7 border-gray-beb"
+                style={({ pressed }) => ({
+                  backgroundColor: pressed ? COLOR.GRAY_E5 : 'transparent',
+                  flexDirection: 'row',
+                  paddingHorizontal: 16,
+                  paddingVertical: 12,
+                  borderBottomWidth: 1,
+                  gap: 7,
+                  borderColor: COLOR.GRAY_EB,
+                })}
                 key={index}
                 onPress={() =>
                   stationBtnHandler({
@@ -147,7 +154,15 @@ const SearchStationScreen = () => {
           <ScrollView className="mt-28" keyboardShouldPersistTaps="handled">
             {searchResultData.map(({ stationName, stationLine }, idx) => (
               <Pressable
-                className="flex-row px-16 py-12 border-b gap-7 border-gray-beb"
+                style={({ pressed }) => ({
+                  backgroundColor: pressed ? COLOR.GRAY_E5 : 'transparent',
+                  flexDirection: 'row',
+                  paddingHorizontal: 16,
+                  paddingVertical: 12,
+                  borderBottomWidth: 1,
+                  borderColor: COLOR.GRAY_EB,
+                  gap: 7,
+                })}
                 key={idx}
                 onPress={() => stationBtnHandler({ stationLine, stationName })}
               >

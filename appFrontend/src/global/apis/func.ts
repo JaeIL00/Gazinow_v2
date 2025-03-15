@@ -8,8 +8,9 @@ import {
   SearchStationNameTypes,
   RawSubwayLineName,
   SubwayStrEnd,
-  IssueContent,
+  IssueGet,
   SaveMyRoutesType,
+  NotiHistories,
 } from './entity';
 import { SignInFetchResponse } from '@/screens/signInScreen/apis/entity';
 import * as Sentry from '@sentry/react-native';
@@ -172,7 +173,6 @@ export const searchPathDeleteFetch = async (params: { id: number | null }) => {
  */
 export const getSearchRoutesFetch = async () => {
   try {
-    // TODO: 기획 최종 나오고 서버 api 개발 된다면 헤더에 토큰유무 필요에 맞는 인스턴스로 교체
     const res = await authServiceAPI.get(`/api/v1/recentSearch`);
     return res.data.data;
   } catch (err) {
@@ -246,12 +246,50 @@ export const getIssuesByLaneFetch = async (params: { page: number; line: string 
  */
 export const getPopularIssuesFetch = async () => {
   try {
-    const res = await publicServiceAPI.get<{ data: IssueContent[] }>(`/api/v1/issue/get_popular`);
+    const res = await publicServiceAPI.get<{ data: IssueGet[] }>(`/api/v1/issue/get_popular`);
     return res.data.data;
   } catch (err) {
     const error = err as AxiosError;
     Sentry.captureException({
       target: '도움돼요 순 이슈 조회',
+      input: { request: error.request },
+      output: { status: error.response?.status, error: error.message, response: error.response },
+    });
+    throw error;
+  }
+};
+
+/**
+ * 알림 히스토리 조회 axios
+ */
+export const getNotiHistoryFetch = async (page: number) => {
+  try {
+    const res = await authServiceAPI.get<{ data: NotiHistories }>(`/api/v1/notification`, {
+      params: { page },
+    });
+    return res.data.data;
+  } catch (err) {
+    const error = err as AxiosError;
+    Sentry.captureException({
+      target: '알림 히스토리 조회',
+      input: { request: error.request },
+      output: { status: error.response?.status, error: error.message, response: error.response },
+    });
+    throw error;
+  }
+};
+
+/**
+ * 알림 읽음 처리 axios
+ */
+export const updateNotiReadStatus = async (notificationId: number) => {
+  try {
+    const res = await authServiceAPI.patch(`/api/v1/notification/${notificationId}/read`);
+    return res.data.data;
+  } catch (err) {
+    const error = err as AxiosError;
+    Sentry.captureException({
+      target: '알림 읽음 처리',
       input: { request: error.request },
       output: { status: error.response?.status, error: error.message, response: error.response },
     });

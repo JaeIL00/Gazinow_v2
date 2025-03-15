@@ -1,5 +1,5 @@
-import { useMutation, useQuery } from 'react-query';
-import { deletePostLike, getIssueDetail, postLike } from './func';
+import { useInfiniteQuery, useQuery } from 'react-query';
+import { getCommentsOnAIssueFetch, getIssueDetail } from './func';
 import { useAppSelect } from '@/store';
 
 /**
@@ -18,23 +18,26 @@ export const useGetIssue = ({ issueId }: { issueId: number | null }) => {
 };
 
 /**
- * 상세 이슈 도움돼요 추가 훅
+ * 이슈에 달린 댓글 조회 훅
  */
-export const usePostLike = ({ onSuccess }: { onSuccess: () => void }) => {
-  const { mutate } = useMutation({
-    mutationFn: postLike,
-    onSuccess,
-  });
-  return { doLikeMutate: mutate };
-};
-
-/**
- * 상세 이슈 도움돼요 삭제 훅
- */
-export const useDeletePostLike = ({ onSuccess }: { onSuccess: () => void }) => {
-  const { mutate } = useMutation({
-    mutationFn: deletePostLike,
-    onSuccess,
-  });
-  return { deleteLikeMutate: mutate };
+export const useGetCommentsOnAIssue = ({ issueId }: { issueId: number }) => {
+  const isVerifiedUser = useAppSelect((state) => state.auth.isVerifiedUser);
+  const { data, refetch, fetchNextPage, hasNextPage } = useInfiniteQuery(
+    ['getCommentsOnAIssue', issueId],
+    ({ pageParam = 0 }) =>
+      getCommentsOnAIssueFetch({ isVerifiedUser, params: { issueId: issueId, page: pageParam } }),
+    {
+      getNextPageParam: (lastPage, allPages) => {
+        if (lastPage?.content && lastPage?.content.length < 15) return undefined;
+        return allPages.length;
+      },
+      enabled: !!issueId,
+    },
+  );
+  return {
+    commentsOnAIssue: data,
+    commentsOnAIssueRefetch: refetch,
+    fetchCommentsOnAIssueNextPage: fetchNextPage,
+    commentsOnAIssueHasNextPage: hasNextPage,
+  };
 };

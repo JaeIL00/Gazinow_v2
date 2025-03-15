@@ -14,6 +14,7 @@ import SubscribeTermsScreen from '@/screens/myRootScreen/components/SubscribeTer
 import PersonalTermsScreen from '@/screens/myRootScreen/components/PersonalTermsScreen';
 import Toast from 'react-native-toast-message';
 import toastConfig from '@global/utils/ToastConfig';
+import MyCommentsScreen from '@/screens/myRootScreen/components/MyCommentsScreen';
 
 const Stack = createStackNavigator<MyPageStackParamList>();
 
@@ -27,6 +28,7 @@ const MyPageNavigation = () => {
       <Stack.Navigator initialRouteName="MyRootScreen" screenOptions={screenOption}>
         <Stack.Screen name="MyRootScreen" component={MyRootScreen} />
         <Stack.Screen name="ChangeNickNameScreen" component={ChangeNickNameScreen} />
+        <Stack.Screen name="MyCommentsScreen" component={MyCommentsScreen} />
         <Stack.Screen name="ChangePwScreen" component={ChangePwScreen} />
         <Stack.Screen name="ConfirmPwScreen" component={ConfirmPwScreen} />
         <Stack.Screen name="ConfirmQuitScreen" component={ConfirmQuitScreen} />

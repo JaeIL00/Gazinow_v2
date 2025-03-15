@@ -28,7 +28,7 @@ const Toggle = ({ isOn, onToggle, disabled }: ToggleProps) => {
   return (
     <Pressable
       className={cn('w-44 h-26 rounded-full justify-center', {
-        'bg-[#346BF7]': isOn,
+        'bg-light-blue': isOn,
         'bg-[#DFDFDF]': !isOn,
       })}
       onPress={onToggle}
@@ -36,7 +36,7 @@ const Toggle = ({ isOn, onToggle, disabled }: ToggleProps) => {
       disabled={disabled}
     >
       <Animated.View
-        className="w-24 h-24 rounded-full bg-white"
+        className="w-24 h-24 bg-white rounded-full"
         style={{
           transform: [{ translateX }],
         }}

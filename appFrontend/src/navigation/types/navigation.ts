@@ -1,5 +1,4 @@
 import { MyRoutesType, Path, SubPath } from '@/global/apis/entity';
-import { SocialLoginType } from '@/screens/landingScreen/components/SocialLoginButtons';
 
 export type RootStackParamList = {
   AuthStack: { screen: 'Landing' };
@@ -8,23 +7,37 @@ export type RootStackParamList = {
     params?: { searchType: '출발역' | '도착역' };
   };
   MainBottomTab: { screen: 'homeStack' };
-  NewRouteNavigation: { screen: 'SavedRoutes' };
-  MyPageNavigation: { screen: unknown };
-  SubwayPathDetail: { state?: Path | SubPath[]; pathId?: number | null };
+  NewRouteNavigation: { screen: 'SavedRoutes' | 'Swap' };
+  MyPageNavigation: {
+    screen:
+      | 'NotiSettingsDetailScreen'
+      | 'MyRootScreen'
+      | 'ChangeNickNameScreen'
+      | 'MyCommentsScreen'
+      | 'ChangePwScreen'
+      | 'ConfirmPwScreen'
+      | 'ConfirmQuitScreen'
+      | 'ManageAccountScreen'
+      | 'NotiOnScreen'
+      | 'NotiSettingsScreen'
+      | 'SubscribeTermsScreen'
+      | 'PersonalTermsScreen';
+    params?: { myRoutes?: MyRoutesType; isRightAfterAddingNewPath?: boolean };
+  };
+  SubwayPathDetail: { state?: Path | SubPath[]; notificationId?: number | null };
 };
 
 export type AuthStackStackParamList = {
   Landing: undefined;
   SignIn: undefined;
   SignUp: undefined;
-  SocialLogin: { socialLoginType: SocialLoginType };
 };
 
 export type HomeStackParamList = {
   Home: undefined;
   NotiHistory: undefined;
   SubwayPathResult: undefined;
-  SubwayPathDetail: { state?: Path | SubPath[]; pathId?: number | null };
+  SubwayPathDetail: { state?: Path | SubPath[]; notificationId?: number | null };
   SavedRoutes: undefined;
 };
 
@@ -40,6 +53,7 @@ export type NewRouteStackParamList = {
 export type MyPageStackParamList = {
   MyRootScreen: undefined;
   ChangeNickNameScreen: undefined;
+  MyCommentsScreen: undefined;
   ChangePwScreen: undefined;
   ConfirmPwScreen: undefined;
   ConfirmQuitScreen: undefined;

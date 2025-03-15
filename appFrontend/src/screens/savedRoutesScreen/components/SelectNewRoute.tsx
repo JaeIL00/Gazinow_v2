@@ -1,9 +1,9 @@
-import { SafeAreaView, ScrollView, TouchableOpacity, View } from 'react-native';
+import { Pressable, SafeAreaView, ScrollView, TouchableOpacity, View } from 'react-native';
 import { FontText } from '@/global/ui';
 import { COLOR } from '@/global/constants';
 import { SubwaySimplePath } from '@/global/components';
 import { useGetSearchPaths } from '@/global/apis/hooks';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Path } from '@/global/apis/entity';
 import { StationDataTypes } from '@/store/modules';
 import { useNewRouteNavigation } from '@/navigation/NewRouteNavigation';
@@ -45,6 +45,10 @@ const SelectNewRoute = () => {
       : item.totalTime + '분';
   };
 
+  useEffect(() => {
+    setSelectedRoutePath(null);
+  }, [data]);
+
   return (
     <SafeAreaView className="flex-1 bg-white">
       <SwapStation setSelectedStation={setSelectedStation} />
@@ -58,8 +62,13 @@ const SelectNewRoute = () => {
           {data?.paths.map((item) => (
             <View key={item.firstStartStation + item.totalTime}>
               <View className="h-1 bg-gray-beb" />
-              <TouchableOpacity
-                className="px-16 pt-20 pb-8"
+              <Pressable
+                style={({ pressed }) => ({
+                  backgroundColor: pressed ? COLOR.GRAY_E5 : 'transparent',
+                  paddingHorizontal: 16,
+                  paddingTop: 20,
+                  paddingBottom: 8,
+                })}
                 onPress={() => {
                   setSelectedRoutePath(item);
                   newRouteNavigation.push('Detail', {
@@ -81,7 +90,7 @@ const SelectNewRoute = () => {
                     className={cn(
                       'w-24 h-24 rounded-full border-1 items-center justify-center border-gray-ebe',
                       {
-                        'border-[#346BF7]': selectedRoutePath === item,
+                        'border-light-blue': selectedRoutePath === item,
                       },
                     )}
                     onPress={() => {
@@ -90,7 +99,7 @@ const SelectNewRoute = () => {
                     hitSlop={20}
                   >
                     {selectedRoutePath === item && (
-                      <View className="w-11 h-11 rounded-full bg-[#346BF7]" />
+                      <View className="rounded-full w-11 h-11 bg-light-blue" />
                     )}
                   </TouchableOpacity>
                 </View>
@@ -100,7 +109,7 @@ const SelectNewRoute = () => {
                   betweenPathMargin={24}
                   isHideIsuue
                 />
-              </TouchableOpacity>
+              </Pressable>
             </View>
           ))}
           {!isLoading && <View className="h-1 bg-gray-beb" />}

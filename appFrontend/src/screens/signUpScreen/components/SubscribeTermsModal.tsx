@@ -94,7 +94,7 @@ const SubscribeTermsModal = ({ setStep, closeModal }: SubscribeTermsModalProps) 
       {!!openUrl ? (
         <SafeAreaView className="flex-1">
           <View className="pb-10 pl-16 bg-white pt-13 border-b-1 border-gray-ddd">
-            <TouchableOpacity hitSlop={20} activeOpacity={1} onPress={() => setOpenUrl('')}>
+            <TouchableOpacity hitSlop={20} onPress={() => setOpenUrl('')}>
               <IconX width={24} height={24} />
             </TouchableOpacity>
           </View>

@@ -10,17 +10,18 @@ import { KeyboardAvoidingView, Platform } from 'react-native';
 import XCircle from '@assets/icons/x-circle-standard.svg';
 import AddNewRouteHeader from './AddNewRouteHeader';
 import { useRoute } from '@react-navigation/native';
-import { useHomeNavigation } from '@/navigation/HomeNavigation';
 import { showToast } from '@/global/utils/toast';
 import cn from 'classname';
+import { useRootNavigation } from '@/navigation/RootNavigation';
 
 const SaveNewRoute = () => {
   const { state: resultData } = useRoute().params as { state: Path };
-  const homeNavigation = useHomeNavigation();
+  const navigation = useRootNavigation();
   const queryClient = useQueryClient();
 
   const [roadName, setRoadName] = useState<string>('');
   const [isDuplicatedName, setIsDuplicatedName] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState<string>('');
   const [isKeyboardVisible, setIsKeyboardVisible] = useState<boolean>(false);
 
   useEffect(() => {
@@ -38,19 +39,21 @@ const SaveNewRoute = () => {
 
   const freshSubPathData: SubPath[] = useMemo(() => {
     const subPaths = resultData?.subPaths || [];
-    return subPaths.filter((subPath) => !!subPath.lanes.length && !!subPath.stations.length);
+    return subPaths.filter((subPath) => !!subPath.stations.length);
   }, [resultData]);
 
   const { mutate, isLoading } = useSavedSubwayRoute({
-    onSuccess: async () => {
+    onSuccess: async (id) => {
       await queryClient.invalidateQueries('getRoads');
-      homeNavigation.navigate('SavedRoutes');
+      navigation.navigate('MyPageNavigation', {
+        screen: 'NotiSettingsDetailScreen',
+        params: { myRoutes: { ...resultData, id, roadName }, isRightAfterAddingNewPath: true },
+      });
       showToast('saveRoute');
     },
-    onError: async (error: any) => {
-      if (error.response.status === 409) {
-        setIsDuplicatedName(true);
-      }
+    onError: async ({ response }) => {
+      setIsDuplicatedName(true);
+      setErrorMessage(response.data.message);
     },
   });
 
@@ -88,8 +91,8 @@ const SaveNewRoute = () => {
               <View className="flex-row items-center h-14 ml-9">
                 <XCircle width={14} />
                 <FontText
-                  text={` 이미 존재하는 이름입니다`}
-                  className="text-12 text-light-red leading-14"
+                  text={errorMessage}
+                  className="ml-4 text-12 text-light-red leading-14"
                   fontWeight="500"
                 />
               </View>

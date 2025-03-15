@@ -1,58 +1,54 @@
 import React from 'react';
 import { FontText } from '@/global/ui';
-import { IssueSummary, Lane, SubPath } from '@/global/apis/entity';
+import { SubPath } from '@/global/apis/entity';
 import MoreBtn from '@/assets/icons/moreBtn.svg';
-import { subwayLineColor } from '@/global/utils';
 import { useAppDispatch } from '@/store';
 import { getIssueId } from '@/store/modules';
 import { useRootNavigation } from '@/navigation/RootNavigation';
-import IssueKeywordIcon from '@/global/components/IssueKeywordIcon';
 import { TouchableOpacity } from 'react-native';
+import cn from 'classname';
 
 interface IssuesBannerProps {
-  subPathss: SubPath[];
+  subPaths: SubPath[];
 }
 
-const IssuesBanner = ({ subPathss }: IssuesBannerProps) => {
+const IssuesBanner = ({ subPaths }: IssuesBannerProps) => {
+  const issues = subPaths.filter((subPath) => !!subPath.issueSummary.length);
+  if (issues.length < 1) return null;
+
   const dispatch = useAppDispatch();
   const navigation = useRootNavigation();
 
-  const hasIssueLane = subPathss.reduce((accumulator: Lane[], subPaths: SubPath) => {
-    if (subPaths.lanes[0].issueSummary.length > 0) {
-      accumulator.push(subPaths.lanes[0]);
-    }
-    return accumulator;
-  }, []);
+  const allIssueSummary = issues.flatMap((issue) => issue.issueSummary);
 
-  if (hasIssueLane.length < 1) return null;
+  // title 기준으로 중복 제거
+  const uniqueIssueSummary = Array.from(
+    new Map(allIssueSummary.map((issue) => [issue.title, issue])).values(),
+  );
+
   return (
     <>
-      {hasIssueLane.map((lane: Lane, index: number) =>
-        lane.issueSummary.map((issue: IssueSummary, issueIndex: number) => (
-          <TouchableOpacity
-            key={`${index}-${issueIndex}`}
-            onPress={() => {
-              dispatch(getIssueId(issue.id));
-              navigation.navigate('IssueStack', { screen: 'IssueDetail' });
-            }}
-            className="flex-row items-center justify-between px-12 py-8 mb-8 overflow-hidden rounded-full border-gray-beb border-1"
-          >
-            <IssueKeywordIcon
-              width={16}
-              height={16}
-              keyword={issue.keyword}
-              color={subwayLineColor(lane.stationCode)}
-            />
-            <FontText
-              className="flex-1 ml-10 mr-30 text-13"
-              text={issue.title}
-              fontWeight="600"
-              numberOfLines={1}
-            />
-            <MoreBtn />
-          </TouchableOpacity>
-        )),
-      )}
+      {uniqueIssueSummary.map((issue, index: number) => (
+        <TouchableOpacity
+          key={`${index}-${issue}`}
+          onPress={() => {
+            dispatch(getIssueId(issue.id));
+            navigation.navigate('IssueStack', { screen: 'IssueDetail' });
+          }}
+          className={cn(
+            'flex-row items-center justify-between px-16 py-12 overflow-hidden bg-white rounded-full border-gray-beb border-1',
+            { 'mb-8': index !== uniqueIssueSummary.length - 1 },
+          )}
+        >
+          <FontText
+            className="mr-10 text-14 leading-21"
+            text={issue.title}
+            fontWeight="600"
+            numberOfLines={1}
+          />
+          <MoreBtn />
+        </TouchableOpacity>
+      ))}
     </>
   );
 };

@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from 'react-query';
+import { useInfiniteQuery, useMutation, useQuery } from 'react-query';
 import {
   changePasswordFetch,
   checkPasswordFetch,
@@ -10,12 +10,7 @@ import {
   disablePathNotiFetch,
   updatePathNotiSettingsFetch,
   getPathNotiFetch,
-  setPushNotiOnFetch,
-  getPushNotiOnStatusFetch,
-  getMyPathPushNotiOnStatusFetch,
-  setMyPathPushNotiOnFetch,
-  setDetailPushNotiOnFetch,
-  getDetailPushNotiOnStatusFetch,
+  getMyCommentsFetch,
 } from './func';
 import { AxiosError } from 'axios';
 
@@ -166,4 +161,26 @@ export const usePathUpdateNotiSettingsMutation = ({
 export const useGetPathNotiQuery = (myPathId: number) => {
   const { data } = useQuery(['getPathNoti'], () => getPathNotiFetch(myPathId));
   return { pathNotiData: data };
+};
+
+/**
+ * 내가 쓴 댓글 조회 훅
+ */
+export const useGetMyComments = () => {
+  const { data, refetch, fetchNextPage, hasNextPage } = useInfiniteQuery(
+    ['getMyComments'],
+    ({ pageParam = 0 }) => getMyCommentsFetch({ page: pageParam }),
+    {
+      getNextPageParam: (lastPage, allPages) => {
+        if (lastPage?.content && lastPage?.content.length < 15) return undefined;
+        return allPages.length;
+      },
+    },
+  );
+  return {
+    myComments: data,
+    myCommentsRefetch: refetch,
+    fetchMyCommentsNextPage: fetchNextPage,
+    myCommentsHasNextPage: hasNextPage,
+  };
 };

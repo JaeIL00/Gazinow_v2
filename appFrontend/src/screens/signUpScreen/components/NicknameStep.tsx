@@ -15,6 +15,7 @@ import { SignUpParams } from '../apis/entity';
 import messaging from '@react-native-firebase/messaging';
 import { useMutation } from 'react-query';
 import { sendFirebaseTokenFetch } from '@/screens/landingScreen/apis/func';
+import React from 'react';
 
 interface NicknameStepProps {
   nicknameValue: string;
@@ -119,8 +120,8 @@ const NicknameStep = ({
               <IconXCircle width={14} height={14} />
               <View className="w-3" />
               <FontText
-                text="2~7글자 입력해주세요 text-light-red"
-                className="text-12"
+                text="2~7글자 입력해주세요"
+                className="text-12 text-light-red"
                 fontWeight="500"
               />
             </>

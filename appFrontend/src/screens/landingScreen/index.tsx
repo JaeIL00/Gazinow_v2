@@ -35,7 +35,6 @@ const LandingScreen = () => {
         }}
       >
         <TouchableOpacity
-          activeOpacity={1}
           style={{
             width: 32,
             height: 32,
@@ -44,6 +43,7 @@ const LandingScreen = () => {
             margin: 16,
           }}
           onPress={() => navigation.goBack()}
+          hitSlop={20}
         >
           <IconLeftArrow color={COLOR.WHITE} />
         </TouchableOpacity>
@@ -72,15 +72,23 @@ const LandingScreen = () => {
             flexDirection: 'row',
           }}
         >
-          <Pressable hitSlop={20} onPress={() => navigation.navigate('SignIn')}>
+          <TouchableOpacity
+            hitSlop={20}
+            onPress={() => navigation.navigate('SignIn')}
+            activeOpacity={0.5}
+          >
             <FontText text="이메일 로그인" className="text-white text-13" fontWeight="500" />
-          </Pressable>
+          </TouchableOpacity>
           <View style={{ marginHorizontal: 8 }}>
             <FontText text="|" className="text-white text-13" />
           </View>
-          <Pressable hitSlop={20} onPress={() => navigation.navigate('SignUp')}>
+          <TouchableOpacity
+            hitSlop={20}
+            onPress={() => navigation.navigate('SignUp')}
+            activeOpacity={0.5}
+          >
             <FontText text="이메일 회원가입" className="text-white text-13" fontWeight="500" />
-          </Pressable>
+          </TouchableOpacity>
         </View>
       </SafeAreaView>
     </View>

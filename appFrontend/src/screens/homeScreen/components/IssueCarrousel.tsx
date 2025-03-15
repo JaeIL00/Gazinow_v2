@@ -1,21 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react';
-import {
-  NativeScrollEvent,
-  NativeSyntheticEvent,
-  ScrollView,
-  TouchableOpacity,
-  View,
-} from 'react-native';
-import { useGetAllIssuesQuery, useGetPopularIssuesQuery } from '@/global/apis/hooks';
-import IssueKeywordIcon from '@/global/components/IssueKeywordIcon';
+import { NativeScrollEvent, NativeSyntheticEvent, Pressable, ScrollView, View } from 'react-native';
+import { useGetPopularIssuesQuery } from '@/global/apis/hooks';
 import { FontText } from '@/global/ui';
 import { useRootNavigation } from '@/navigation/RootNavigation';
 import { useAppDispatch } from '@/store';
 import { getIssueId } from '@/store/modules';
 import dayjs from 'dayjs';
-import { rawLineNameToColor } from '@/global/utils/subwayLine';
-import { IssueContent } from '@/global/apis/entity';
+import { IssueGet } from '@/global/apis/entity';
 import { useQueryClient } from 'react-query';
+import { COLOR } from '@/global/constants';
 
 interface IssueCarrouselProps {
   isRefreshing: boolean;
@@ -28,21 +21,11 @@ const IssueCarrousel = ({ isRefreshing, setIsRefreshing }: IssueCarrouselProps) 
   const dispatch = useAppDispatch();
   const { popularIssues, popularIssuesRefetch, isPopularIssuesLoading } =
     useGetPopularIssuesQuery();
-  const { allIssues } = useGetAllIssuesQuery();
   const [itemWidth, setItemWidth] = useState<number>(0);
   const scrollViewRef = useRef<ScrollView>(null);
   const [currentIndex, setCurrentIndex] = useState<number>(0);
 
-  //TODO: 현재 유효한 이슈 배열
-  // const currentDate = new Date();
-  // const currentIssues = Array.from(
-  //   new Set(
-  //     allIssues?.pages[0].content.filter((issue) => new Date(issue.expireDate) >= currentDate),
-  //   ),
-  // ).slice(0, 3);
-
   useEffect(() => {
-    //TODO: 현재이슈로 바꾸면 쿼리 키도 바꾸기
     queryClient.invalidateQueries(['getPopularIssues']);
     if (isRefreshing) {
       popularIssuesRefetch();
@@ -50,7 +33,7 @@ const IssueCarrousel = ({ isRefreshing, setIsRefreshing }: IssueCarrouselProps) 
     setIsRefreshing(false);
   }, [isRefreshing]);
 
-  const [newPopularIssues, setNewPopularIssues] = useState<IssueContent[]>();
+  const [newPopularIssues, setNewPopularIssues] = useState<IssueGet[]>();
 
   useEffect(() => {
     if (!popularIssues || popularIssues.length === 0) return;
@@ -106,52 +89,52 @@ const IssueCarrousel = ({ isRefreshing, setIsRefreshing }: IssueCarrouselProps) 
       showsHorizontalScrollIndicator={false}
       contentContainerStyle={{ width: `${100 * newPopularIssues.length}%` }}
       onContentSizeChange={(width) => setItemWidth(width / newPopularIssues.length)}
-      onMomentumScrollEnd={handleMomentumScrollEnd} // Handle manual scroll end
+      onMomentumScrollEnd={handleMomentumScrollEnd}
     >
       {newPopularIssues.map((issue, index: number) => (
         <View style={{ width: itemWidth }} key={index}>
-          <TouchableOpacity
-            className="flex-row p-16 m-16 mb-0 bg-white rounded-12"
+          <Pressable
+            style={({ pressed }) => ({
+              backgroundColor: pressed ? COLOR.GRAY_E5 : COLOR.WHITE,
+              padding: 16,
+              paddingVertical: 20,
+              margin: 16,
+              marginBottom: 0,
+              borderRadius: 12,
+              gap: 6,
+            })}
             onPress={() => {
               dispatch(getIssueId(issue.id));
               navigation.navigate('IssueStack', { screen: 'IssueDetail' });
             }}
           >
-            <IssueKeywordIcon
-              width={30}
-              height={30}
-              keyword={issue.keyword}
-              color={rawLineNameToColor(issue.lines[0])}
-            />
-            <View className="flex-1 mx-14">
+            <FontText text="NOW" className="text-13 leading-19 text-light-blue" fontWeight="600" />
+            <View>
               <FontText
                 text={issue.title}
-                className="text-black text-13 leading-19"
-                fontWeight="600"
+                className="leading-21"
+                fontWeight="500"
                 numberOfLines={1}
               />
-              <FontText
-                text={dayjs(issue.startDate).fromNow()}
-                className="text-11 leading-13 text-gray-999"
-                fontWeight="500"
-              />
-            </View>
-
-            <View className="items-end">
-              <FontText
-                text="NOW"
-                className="text-12 leading-14 text-light-blue"
-                fontWeight="700"
-              />
-              <View className="bg-[#F3F3F3] rounded-27 w-36 h-16 mt-4 justify-center">
+              <View className="flex-row justify-between mt-4">
                 <FontText
-                  text={`${newListIndex()}/${popularIssues.length}`}
-                  className="text-center text-11 leading-13 text-gray-4b4"
-                  fontWeight="700"
+                  text={dayjs(issue.startDate).fromNow()}
+                  className="text-13 leading-18 text-gray-999"
                 />
+                <View className="bg-[#F3F3F3] rounded-full flex-row px-8">
+                  <FontText
+                    text={`${newListIndex()}`}
+                    className="text-13 text-gray-4b4 leading-18"
+                  />
+                  <FontText text="/" className="mx-2 text-13 text-gray-4b4 leading-18" />
+                  <FontText
+                    text={`${popularIssues.length}`}
+                    className="text-13 text-gray-4b4 leading-18"
+                  />
+                </View>
               </View>
             </View>
-          </TouchableOpacity>
+          </Pressable>
         </View>
       ))}
     </ScrollView>

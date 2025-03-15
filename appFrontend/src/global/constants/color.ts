@@ -14,6 +14,7 @@ const COLOR = {
   GRAY_EB: '#EBEBEB' as const,
   GRAY_7D: '#7d7d7d' as const,
   GRAY_999: '#999' as const,
+  GRAY_E5: '#e5e5e5' as const,
   LIGHT_GREEN: '#0BC73F' as const,
   LIGHT_RED: '#EB5147' as const,
   LIGHT_BLUE: '#346BF7' as const,

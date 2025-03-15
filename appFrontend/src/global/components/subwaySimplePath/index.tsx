@@ -19,7 +19,7 @@ const SubwaySimplePath = ({
   isHideIsuue = false,
 }: SubwaySimplePathProps) => {
   const freshLanesPathData = useMemo(() => {
-    return pathData.filter((item) => !!item.lanes.length && !!item.stations.length);
+    return pathData.filter((item) => !!item.stations.length);
   }, [pathData]);
   const maxLength = freshLanesPathData.length;
 
@@ -31,10 +31,26 @@ const SubwaySimplePath = ({
     return [...acc, ...arr.slice(0, 1), ...arr.slice(2)];
   }, [] as string[]);
 
-  const isOverNameLength = renderStationName.some((item) => item.length > 5);
+  const isOverNameLength = useMemo(() => {
+    if (maxLength > 3) {
+      return renderStationName.slice(-4).some((item) => item.length > 5);
+    }
+    return renderStationName.some((item) => item.length > 5);
+  }, [freshLanesPathData]);
+
+  const isBottomPathsDirect = useMemo(() => {
+    switch (maxLength) {
+      case 5:
+        return freshLanesPathData.slice(-3).some((item) => !!item.direct);
+      case 4:
+        return freshLanesPathData.slice(-2).some((item) => !!item.direct);
+      default:
+        return freshLanesPathData.some((item) => !!item.direct);
+    }
+  }, [freshLanesPathData]);
 
   return (
-    <View style={{ marginBottom: isOverNameLength ? 32 : 16, marginTop: 16 }}>
+    <View style={{ marginBottom: isOverNameLength || isBottomPathsDirect ? 32 : 16, marginTop: 16 }}>
       <View
         style={{
           flexDirection: 'row',
@@ -52,15 +68,15 @@ const SubwaySimplePath = ({
           }}
         >
           {/* 지하철 경로 라인, 환승역 3개 이하 */}
-          {freshLanesPathData.map(({ lanes, way }, idx) => {
+          {freshLanesPathData.map(({ way, name, stationCode, issueSummary }, idx) => {
             if (maxLength > 3 && idx <= 1) {
               return (
-                <React.Fragment key={lanes[0].name + 'a' + way + idx}>
+                <React.Fragment key={name + 'a' + way + idx}>
                   <PathBar
-                    stationCode={lanes[0].stationCode}
+                    stationCode={stationCode}
                     isLast={idx === 1}
                     isFirst={idx === 0}
-                    issues={lanes[0].issueSummary}
+                    issues={issueSummary}
                     isHideIsuue={isHideIsuue}
                   />
                 </React.Fragment>
@@ -68,12 +84,12 @@ const SubwaySimplePath = ({
             }
             if (maxLength <= 3) {
               return (
-                <React.Fragment key={lanes[0].name + 'b' + way + idx}>
+                <React.Fragment key={name + 'b' + way + idx}>
                   <PathBar
-                    stationCode={lanes[0].stationCode}
+                    stationCode={stationCode}
                     isLast={maxLength - 1 === idx}
                     isFirst={idx === 0}
-                    issues={lanes[0].issueSummary}
+                    issues={issueSummary}
                     isHideIsuue={isHideIsuue}
                   />
                 </React.Fragment>
@@ -83,16 +99,21 @@ const SubwaySimplePath = ({
           })}
         </View>
         {/* 지하철 호선 및 이름, 환승역 3개 이하 */}
-        {freshLanesPathData.map(({ stations, way, lanes }, idx) => {
+        {freshLanesPathData.map(({ way, name, stationCode, direct, stations }, idx) => {
           if (maxLength > 3 && idx <= 2) {
             return (
-              <React.Fragment key={stations[0].stationName + lanes[0].name + 'c' + way + idx}>
+              <React.Fragment key={stations[0].stationName + name + 'c' + way + idx}>
                 {idx < 2 && (
-                  <PathLineNumName lane={lanes[0]} stationName={stations[0].stationName} />
+                  <PathLineNumName
+                    stationCode={stationCode}
+                    direct={direct}
+                    stationName={stations[0].stationName}
+                  />
                 )}
                 {idx === 1 && (
                   <PathLineNumName
-                    lane={lanes[0]}
+                    stationCode={stationCode}
+                    direct={direct}
                     stationName={stations[stations.length - 1].stationName}
                   />
                 )}
@@ -101,10 +122,18 @@ const SubwaySimplePath = ({
           }
           if (maxLength <= 3) {
             return (
-              <React.Fragment key={stations[0].stationName + lanes[0].name + 'd' + way + idx}>
-                <PathLineNumName lane={lanes[0]} stationName={stations[0].stationName} />
+              <React.Fragment key={stations[0].stationName + name + 'd' + way + idx}>
+                <PathLineNumName
+                  stationCode={stationCode}
+                  direct={direct}
+                  stationName={stations[0].stationName}
+                />
                 {maxLength - 1 === idx && (
-                  <PathLineNumName lane={lanes[0]} stationName={arriveStationName} />
+                  <PathLineNumName
+                    stationCode={stationCode}
+                    direct={direct}
+                    stationName={arriveStationName}
+                  />
                 )}
               </React.Fragment>
             );
@@ -130,15 +159,15 @@ const SubwaySimplePath = ({
               flexDirection: 'row',
             }}
           >
-            {freshLanesPathData.map(({ lanes, way }, idx) => {
+            {freshLanesPathData.map(({ way, name, stationCode, issueSummary }, idx) => {
               return (
-                <React.Fragment key={lanes[0].name + 'e' + way + idx}>
+                <React.Fragment key={name + 'e' + way + idx}>
                   {idx >= 2 && (
                     <PathBar
-                      stationCode={lanes[0].stationCode}
+                      stationCode={stationCode}
                       isFirst={idx === 2}
                       isLast={maxLength === 3 ? false : maxLength - 1 === idx}
-                      issues={lanes[0].issueSummary}
+                      issues={issueSummary}
                       isHideIsuue={isHideIsuue}
                     />
                   )}
@@ -154,14 +183,22 @@ const SubwaySimplePath = ({
               justifyContent: 'space-between',
             }}
           >
-            {freshLanesPathData.map(({ stations, lanes, way }, idx) => {
+            {freshLanesPathData.map(({ way, name, stationCode, direct, stations }, idx) => {
               const key = useId();
               if (idx >= 2) {
                 return (
-                  <React.Fragment key={stations[0].stationName + lanes[0].name + 'f' + way + idx}>
-                    <PathLineNumName lane={lanes[0]} stationName={stations[0].stationName} />
+                  <React.Fragment key={stations[0].stationName + name + 'f' + way + idx}>
+                    <PathLineNumName
+                      stationCode={stationCode}
+                      direct={direct}
+                      stationName={stations[0].stationName}
+                    />
                     {maxLength - 1 === idx && (
-                      <PathLineNumName lane={lanes[0]} stationName={arriveStationName} />
+                      <PathLineNumName
+                        stationCode={stationCode}
+                        direct={direct}
+                        stationName={arriveStationName}
+                      />
                     )}
                   </React.Fragment>
                 );

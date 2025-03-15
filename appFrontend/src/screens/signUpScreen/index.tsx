@@ -43,11 +43,10 @@ const SignUpScreen = () => {
 
   return (
     <SafeAreaView className="flex-1 bg-gray-9f9">
-      <View className="flex-1 pt-30 px-16">
+      <View className="flex-1 px-16 pt-30">
         <TouchableOpacity
           hitSlop={10}
-          activeOpacity={1}
-          className="mb-43"
+          className="mb-43 w-30"
           disabled={step === 'complete'}
           onPress={backStepHandler}
         >

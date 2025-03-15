@@ -7,6 +7,7 @@ import {
   SetNotiOnOffType,
 } from './entity';
 import * as Sentry from '@sentry/react-native';
+import { AllComments } from '@/global/apis/entity';
 
 /**
  * 로그아웃 요청 axios
@@ -65,14 +66,14 @@ export const changePasswordFetch = async (data: {
 /**
  * 닉네임 변경 axios
  */
-export const changeNicknameFetch = async (nickName: string) => {
+export const changeNicknameFetch = async (nickname: string) => {
   try {
-    await authServiceAPI.post(`/api/v1/member/change_nickname`, { nickName });
+    await authServiceAPI.post(`/api/v1/member/change_nickname`, { nickname });
   } catch (err) {
     const error = err as AxiosError;
     Sentry.captureException({
       target: '닉네임 변경',
-      input: { nickName, request: error.request },
+      input: { nickname, request: error.request },
       output: { status: error.response?.status, error: error.message, response: error.response },
     });
     throw error;
@@ -119,38 +120,11 @@ export const getPushNotiOnStatusFetch = async (email: string) => {
 };
 
 /**
- * 내가 저장한 경로 알림 on/off 설정 axios
- */
-export const setMyPathPushNotiOnFetch = async ({ email, alertAgree }: SetNotiOnOffType) => {
-  try {
-    await authServiceAPI.post('/api/v1/member/notifications/my-saved-route', { email, alertAgree });
-  } catch (err) {
-    const error = err as AxiosError;
-    throw error;
-  }
-};
-
-/**
- * 내가 저장한 경로 알림 on/off 조회 axios
- */
-export const getMyPathPushNotiOnStatusFetch = async (email: string) => {
-  try {
-    const res = await authServiceAPI.get<{ data: { alertAgree: boolean } }>(
-      `/api/v1/member/notifications/my-saved-route/status?email=${email}`,
-    );
-    return res.data.data.alertAgree;
-  } catch (err) {
-    const error = err as AxiosError;
-    throw error;
-  }
-};
-
-/**
  * 경로 상세 설정 알림 on/off 설정 axios
  */
 export const setDetailPushNotiOnFetch = async ({ email, alertAgree }: SetNotiOnOffType) => {
   try {
-    await authServiceAPI.post('/api/v1/member/notifications/route-detail', { email, alertAgree });
+    await authServiceAPI.post('/api/v1/member/notifications/my-saved-route', { email, alertAgree });
   } catch (err) {
     const error = err as AxiosError;
     throw error;
@@ -163,7 +137,7 @@ export const setDetailPushNotiOnFetch = async ({ email, alertAgree }: SetNotiOnO
 export const getDetailPushNotiOnStatusFetch = async (email: string) => {
   try {
     const res = await authServiceAPI.get<{ data: { alertAgree: boolean } }>(
-      `/api/v1/member/notifications/route-detail/status?email=${email}`,
+      `/api/v1/member/notifications/my-saved-route/status?email=${email}`,
     );
     return res.data.data.alertAgree;
   } catch (err) {
@@ -177,7 +151,7 @@ export const getDetailPushNotiOnStatusFetch = async (email: string) => {
  */
 export const disablePathNotiFetch = async (id: number) => {
   try {
-    await authServiceAPI.post(`/api/v1/my_find_road/disable_notification?id=${id}`);
+    await authServiceAPI.post(`/api/v1/notification/disable?id=${id}`);
   } catch (err) {
     const error = err as AxiosError;
     throw error;
@@ -189,7 +163,7 @@ export const disablePathNotiFetch = async (id: number) => {
  */
 export const addPathNotiSettingsFetch = async (notiSettings: NotiSettingsType) => {
   try {
-    await authServiceAPI.post(`/api/v1/my_find_road/enable_notification`, notiSettings);
+    await authServiceAPI.post(`/api/v1/notification/enable`, notiSettings);
   } catch (err) {
     const error = err as AxiosError;
     throw error;
@@ -201,7 +175,7 @@ export const addPathNotiSettingsFetch = async (notiSettings: NotiSettingsType) =
  */
 export const updatePathNotiSettingsFetch = async (notiSettings: NotiSettingsType) => {
   try {
-    await authServiceAPI.post(`/api/v1/my_find_road/update_notification`, notiSettings);
+    await authServiceAPI.post(`/api/v1/notification/update`, notiSettings);
   } catch (err) {
     const error = err as AxiosError;
     throw error;
@@ -214,11 +188,31 @@ export const updatePathNotiSettingsFetch = async (notiSettings: NotiSettingsType
 export const getPathNotiFetch = async (myPathId: number) => {
   try {
     const res = await authServiceAPI.get<{ data: PathNotiSettingsResType }>(
-      `/api/v1/my_find_road/get_notifications?myPathId=${myPathId}`,
+      `/api/v1/notification/settings?myPathId=${myPathId}`,
     );
     return res.data.data;
   } catch (err) {
     const error = err as AxiosError;
+    throw error;
+  }
+};
+
+/**
+ * 내가 쓴 댓글 조회 axios
+ */
+export const getMyCommentsFetch = async (params: { page: number }) => {
+  try {
+    const res = await authServiceAPI.get<{ data: AllComments }>(`/api/v1/comments`, {
+      params,
+    });
+    return res.data.data;
+  } catch (err) {
+    const error = err as AxiosError;
+    Sentry.captureException({
+      target: '내가 쓴 댓글 조회',
+      input: { request: error.request },
+      output: { status: error.response?.status, error: error.message, response: error.response },
+    });
     throw error;
   }
 };

@@ -8,6 +8,7 @@ import { useSavedSubwayRoute } from '@/global/apis/hooks';
 import { Path } from '@/global/apis/entity';
 import { useQueryClient } from 'react-query';
 import { showToast } from '@/global/utils/toast';
+import { useRootNavigation } from '@/navigation/RootNavigation';
 
 interface NewRouteSaveModalProps {
   freshData: Path;
@@ -22,8 +23,10 @@ const NewRouteSaveModal = ({
   setMyPathId,
 }: NewRouteSaveModalProps) => {
   const queryClient = useQueryClient();
+  const navigation = useRootNavigation();
 
   const [isDuplicatedError, setIsDuplicatedError] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState<string>('');
   const [routeName, setRouteName] = useState<string>('');
 
   const { isLoading, mutate } = useSavedSubwayRoute({
@@ -32,12 +35,15 @@ const NewRouteSaveModal = ({
       setMyPathId(id);
       onBookmark();
       closeModal();
+      navigation.navigate('MyPageNavigation', {
+        screen: 'NotiSettingsDetailScreen',
+        params: { myRoutes: { ...freshData, id, roadName: routeName } },
+      });
       showToast('saveRoute');
     },
-    onError: ({ response }) => {
-      if (response?.status === 409) {
-        setIsDuplicatedError(true);
-      }
+    onError: async ({ response }) => {
+      setIsDuplicatedError(true);
+      setErrorMessage(response.data.message);
     },
   });
 
@@ -123,7 +129,7 @@ const NewRouteSaveModal = ({
               }}
             >
               <FontText
-                text="이미 존재하는 이름입니다"
+                text={errorMessage}
                 className={cn('text-12 text-transparent', {
                   'text-light-red': isDuplicatedError,
                 })}

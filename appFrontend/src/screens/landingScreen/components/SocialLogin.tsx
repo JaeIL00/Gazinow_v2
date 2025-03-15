@@ -1,15 +1,22 @@
-import React, { useEffect } from 'react';
-import { Linking } from 'react-native';
+import { View, Platform, TouchableOpacity } from 'react-native';
 import { useRootNavigation } from '@/navigation/RootNavigation';
 import { useAppDispatch } from '@/store';
 import { getAuthorizationState, saveUserInfo } from '@/store/modules';
 import { setEncryptedStorage } from '@/global/utils';
 import messaging from '@react-native-firebase/messaging';
-import SocialLoginButtons from './SocialLoginButtons';
 import { showToast } from '@/global/utils/toast';
 import { sendFirebaseTokenFetch } from '../apis/func';
-import { AxiosError } from 'axios';
 import { useMutation } from 'react-query';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { FontText } from '@/global/ui';
+import { API_BASE_URL } from '@env';
+import InAppBrowser from 'react-native-inappbrowser-reborn';
+
+import LoginNaver from '@assets/icons/login_naver.svg';
+import LoginApple from '@assets/icons/login_apple.svg';
+import LoginGoogle from '@assets/icons/login_google.svg';
+
+type SocialLoginTypes = 'naver' | 'google' | 'apple';
 
 const SocialLogin = () => {
   const navigation = useRootNavigation();
@@ -19,47 +26,85 @@ const SocialLogin = () => {
     onSuccess: () => {
       navigation.reset({ routes: [{ name: 'MainBottomTab' }] });
       showToast('socialLoginSuccess');
+      AsyncStorage.setItem('isSocialLoggedIn', 'true');
     },
-    onError: () => {
-      showToast('socialLoginFailed');
-    },
+    onError: () => showToast('socialLoginFailed'),
   });
 
-  useEffect(() => {
-    // 외부 브라우저에서 소셜로그인 성공 시 앱으로 이동 후 url에 담긴 정보로 로그인 처리
-    const handleSocialLogin = async ({ url }: { url: string }) => {
-      // url 파싱 (accesstoken, 이메일, 닉네임 값)
-      const parseUrlParams = (url: string): Record<string, string> => {
-        const params: Record<string, string> = {};
-        const queryString = url.split('?')[1];
+  // url 파싱 (access token, 이메일, 닉네임 값)
+  const parseUrlParams = (url: string): Record<string, string> => {
+    const params: Record<string, string> = {};
+    const queryString = url.split('?')[1];
 
-        if (queryString) {
-          const pairs = queryString.split('&');
-          for (const pair of pairs) {
-            const [key, value] = pair.split('=');
-            params[decodeURIComponent(key)] = decodeURIComponent(value);
-          }
-        }
+    if (queryString) {
+      const pairs = queryString.split('&');
+      for (const pair of pairs) {
+        const [key, value] = pair.split('=');
+        params[decodeURIComponent(key)] = decodeURIComponent(value);
+      }
+    }
 
-        return params;
-      };
+    return params;
+  };
 
-      const params = parseUrlParams(url);
-      dispatch(saveUserInfo({ nickname: params.nickName, email: params.email }));
-      dispatch(getAuthorizationState('success auth'));
-      await setEncryptedStorage('access_token', params.accessToken);
-      await setEncryptedStorage('refresh_token', params.refreshToken);
+  const onSocialLoginPress = async (socialLoginType: SocialLoginTypes) => {
+    const loginUrl = `${API_BASE_URL}/api/v1/oauth/login?socialLoginType=${socialLoginType}`;
+    const redirectUrl = 'gazinow://main';
 
-      // 닉네임, 이메일, 토큰 저장했으면 파이어베이스 토큰을 서버에 전송
-      const firebaseToken = await messaging().getToken();
-      sendFirebaseTokenMutate({ email: params.email, firebaseToken });
-    };
+    try {
+      const result = await InAppBrowser.openAuth(loginUrl, redirectUrl, {
+        ephemeralWebSession: true,
+      });
 
-    Linking.addEventListener('url', handleSocialLogin);
-    return () => Linking.removeAllListeners('url');
-  }, [dispatch, sendFirebaseTokenMutate]);
+      if (result.type === 'success' && result.url.startsWith(redirectUrl)) {
+        const urlParams = parseUrlParams(result.url);
 
-  return <SocialLoginButtons />;
+        dispatch(saveUserInfo({ nickname: urlParams.nickName, email: urlParams.email }));
+        dispatch(getAuthorizationState('success auth'));
+
+        await setEncryptedStorage('access_token', urlParams.accessToken);
+        await setEncryptedStorage('refresh_token', urlParams.refreshToken);
+
+        const firebaseToken = await messaging().getToken();
+        sendFirebaseTokenMutate({ email: urlParams.email, firebaseToken });
+      }
+    } catch (error) {
+      showToast('socialLoginFailed');
+    }
+  };
+
+  return (
+    <View className="mb-20 space-y-12 mx-30">
+      <TouchableOpacity
+        className="flex-row items-center justify-between px-19 py-6 rounded-30 bg-[#03C75A]"
+        onPress={() => onSocialLoginPress('naver')}
+      >
+        <LoginNaver />
+        <FontText className="text-white text-14" text="네이버로 계속하기" fontWeight="500" />
+        <View className="w-34" />
+      </TouchableOpacity>
+
+      <TouchableOpacity
+        className="flex-row items-center justify-between py-6 bg-white px-19 rounded-30"
+        onPress={() => onSocialLoginPress('google')}
+      >
+        <LoginGoogle />
+        <FontText className="text-14" text="구글로 계속하기" fontWeight="500" />
+        <View className="w-34" />
+      </TouchableOpacity>
+
+      {Platform.OS === 'ios' && (
+        <TouchableOpacity
+          className="flex-row items-center justify-between py-6 bg-black px-19 rounded-30"
+          onPress={() => onSocialLoginPress('apple')}
+        >
+          <LoginApple />
+          <FontText className="text-white text-14" text="Apple로 계속하기" fontWeight="500" />
+          <View className="w-34" />
+        </TouchableOpacity>
+      )}
+    </View>
+  );
 };
 
 export default SocialLogin;
