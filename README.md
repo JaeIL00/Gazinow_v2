@@ -38,7 +38,7 @@
 | **스타일링** | **Tailwind CSS (NativeWind)** | 웹과 앱에서 Utility-First 접근 방식을 통해 별도의 CSS 파일 없이 빠르고 일관된 UI 개발이 가능했습니다. |
 
 ## App Store
-[Apple](https://apps.apple.com/kr/app/%EA%B0%80%EB%8A%94%EA%B8%B8-%EC%A7%80%EA%B8%88/id6478457870)
+[IOS](https://apps.apple.com/kr/app/%EA%B0%80%EB%8A%94%EA%B8%B8-%EC%A7%80%EA%B8%88/id6478457870)
 
 ## Posting
 신규 앱 사용해보고 소개하는 채널에 후기가 작성됐다.
