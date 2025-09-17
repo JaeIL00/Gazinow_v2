@@ -33,7 +33,7 @@
 
 | 구분 | 기술 | 선택 이유 및 역할 |
 | :--- | :--- | :--- |
-| **코어 / 언어** | **React, React Native, TypeScript** | **React 생태계**를 활용하여 웹과 앱의 개발 경험을 통일했습니다. **TypeScript**를 공통으로 사용해 코드의 안정성을 확보하고, 두 플랫폼 간의 동일한 DX를 통해 향상된 생산성을 갖추도록 만들었습니다. |
+| **코어 / 언어** | **React, React Native, TypeScript** | **React 생태계**를 활용하여 웹과 앱의 개발 경험을 통일했습니다. **TypeScript**를 공통으로 사용해 코드의 안정성을 확보하고, 두 플랫폼 간의 개발 경험을 통일하여 유지보수 비용을 줄이고 개발 생산성을 극대화했습니다. |
 | **상태 관리** | **TanStack Query, Redux Toolkit, Recoil** | **서버 데이터는 TanStack Query**로 복잡한 비동기 로직을 관리했습니다. **클라이언트 데이터**는 규모가 큰 **모바일 앱에서는 Redux Toolkit**을, **웹에서는 Recoil**을 선택하여 상태 관리의 복잡도를 조절했습니다. |
 | **스타일링** | **Tailwind CSS (NativeWind)** | 웹과 앱에서 Utility-First 접근 방식을 통해 별도의 CSS 파일 없이 빠르고 일관된 UI 개발이 가능했습니다. |
 
