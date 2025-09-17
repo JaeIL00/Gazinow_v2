@@ -41,5 +41,5 @@
 [IOS](https://apps.apple.com/kr/app/%EA%B0%80%EB%8A%94%EA%B8%B8-%EC%A7%80%EA%B8%88/id6478457870)
 
 ## Posting
-신규 앱 사용해보고 소개하는 채널에 후기가 작성됐다.
+신규 앱 사용해보고 소개하는 채널에 후기가 작성됐다. <br />
 [가는길 지금, 무정차가 많아지는 요즘.](https://maily.so/whattheapp/posts/xyowm663z28)
