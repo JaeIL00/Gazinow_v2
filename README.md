@@ -1,4 +1,5 @@
 # 가는길지금 (프론트엔드)
+> 구버전 [가는길지금 App](https://github.com/JaeIL00/gazinow)
 
 ## 기획 이유
 
